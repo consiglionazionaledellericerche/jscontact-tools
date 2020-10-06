@@ -58,7 +58,7 @@
     <scm>
         <connection>scm:git:https://github.com/consiglionazionaledellericerche/jscontact-tools.git</connection>
         <developerConnection>scm:git:https://github.com/consiglionazionaledellericerche/jscontact-tools.git</developerConnection>
-        <url>https://github.com/consiglionazionaledellericerche/jscontact-tools/commits/master</url>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
