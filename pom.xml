@@ -10,7 +10,7 @@
     <name>jscontact-tools</name>
     <url>https://github.com/consiglionazionaledellericerche/jscontact-tools</url>
     <organization>
-        <name>.it Registry</name>
+        <name>Consiglio Nazionale delle Ricerche</name>
     </organization>
     <description>Java tools for JSContact building, validation, serialization/deserialization and conversion from vCard (RFC6350) and its transliterations, namely xCard (RFC6351) and jCard (RFC7095).</description>
 
@@ -18,6 +18,22 @@
         <license>
             <name>GNU AGPLv3</name>
             <url>https://www.gnu.org/licenses/agpl-3.0.html</url>
+            <comments>
+                Copyright (C) 2020 Consiglio Nazionale delle Ricerche
+
+                This program is free software: you can redistribute it and/or modify
+                it under the terms of the GNU Affero General Public License as
+                published by the Free Software Foundation, either version 3 of the
+                License, or (at your option) any later version.
+
+                This program is distributed in the hope that it will be useful,
+                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                GNU Affero General Public License for more details.
+
+                You should have received a copy of the GNU Affero General Public License
+                along with this program. If not, see https://www.gnu.org/licenses/
+            </comments>
         </license>
     </licenses>
 
@@ -25,8 +41,11 @@
         <developer>
             <name>Mario Loffredo</name>
             <email>mario.loffredo@iit.cnr.it</email>
+            <organization>Consiglio Nazionale delle Ricerche</organization>
+            <organizationUrl>http://www.cnr.it</organizationUrl>
             <roles>
-                <role>Lead Developer</role>
+                <role>project lead</role>
+                <role>developer</role>
             </roles>
         </developer>
     </developers>
