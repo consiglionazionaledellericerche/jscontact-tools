@@ -1,0 +1,52 @@
+/*
+ *    Copyright (C) 2020  Consiglio Nazionale delle Ricerche
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+package it.cnr.iit.jscontact.tools.dto;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
+import lombok.*;
+
+import javax.validation.constraints.NotNull;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PersonalInformation extends GroupableObject implements HasIndex, Comparable<PersonalInformation> {
+
+    @NotNull(message = "type is missing in PersonalInformation")
+    @NonNull
+    PersonalInformationType type;
+
+    @NotNull(message = "value is missing in PersonalInformation")
+    @NonNull
+    String value;
+
+    PersonalInformationLevel level;
+
+    @JsonIgnore
+    Integer index;
+
+    //to compare VCard HOBBY, INTEREST, EXPERTIZE instances based on index
+    @Override
+    public int compareTo(PersonalInformation o) {
+
+        return HasIndexUtils.compareTo(this, o);
+    }
+}

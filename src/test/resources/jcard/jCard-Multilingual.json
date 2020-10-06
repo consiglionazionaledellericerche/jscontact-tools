@@ -1,0 +1,29 @@
+[
+  "vcard",
+  [
+    [ "version", {}, "text", "4.0" ],
+    [ "fn",
+      { "language": "ja", "altid": "1" },
+      "text",
+      "大久保 正仁"
+    ],
+    [ "fn",
+      { "language": "en", "altid": "1" },
+      "text",
+      "Okubo Masahito"
+    ],
+    [ "title",
+      { "language": "ja", "altid": "1" },
+      "text",
+      "事務局長"
+    ],
+    [ "title",
+      { "language": "en", "altid": "1" },
+      "text",
+      "Secretary General"
+    ],
+    [ "kind", {}, "text", "individual" ],
+    [ "lang", { "pref": "1" }, "language-tag", "ja" ],
+    [ "lang", { "pref": "2" }, "language-tag", "en" ]
+  ]
+]

@@ -1,0 +1,25 @@
+[
+  "vcard",
+  [
+    [ "version", {}, "text", "4.0" ],
+    [ "fn",
+       { "altid": "1", "language": "zh-Hant-TW" },
+       "text",
+       "台灣固網股份有限公司"
+    ],
+    [ "fn",
+       { "altid": "1", "language": "en" },
+       "text",
+       "Taiwan Fixed Network CO.,LTD."
+    ],
+    [ "kind", {}, "text", "org" ],
+    [ "adr",
+       { "label": "8F., No.172-1, Sec.2, Ji-Lung Rd," },
+       "text",
+       [ "", "", "", "", "", "", "" ]
+    ],
+    [ "tel", { "type": "voice" }, "text", "" ],
+    [ "tel", { "type": "fax" }, "text", "" ],
+    [ "email", {}, "text", "" ]
+  ]
+]

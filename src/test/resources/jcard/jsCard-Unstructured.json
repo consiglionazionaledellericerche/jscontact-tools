@@ -1,0 +1,33 @@
+{
+"uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
+"fullName": {
+"value": "Taiwan Fixed Network CO.,LTD.",
+"language": "en",
+"localizations": {
+"zh-Hant-TW": "台灣固網股份有限公司"
+}
+},
+"kind": "org",
+"addresses": [
+{
+"fullAddress": {
+"value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
+}
+}
+],
+"phones": [
+{
+"type": "voice",
+"value": ""
+},
+{
+"type": "fax",
+"value": ""
+}
+],
+"emails": [
+{
+"value": ""
+}
+]
+}
