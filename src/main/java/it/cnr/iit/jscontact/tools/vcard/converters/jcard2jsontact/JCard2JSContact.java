@@ -63,6 +63,7 @@ public class JCard2JSContact extends EZVCard2JSContact {
      * @param jCard a jCard as an istance of Jackson library JsonNode class
      * @return a list of JSContact objects
      * @throws CardException if the jCard is not v4.0 compliant
+     * @throws JsonProcessingException if the jCard cannot be serialized
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
