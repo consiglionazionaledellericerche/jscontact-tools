@@ -20,17 +20,17 @@
           }
         ]
       },
-      "organization": [
+      "organizations": [
         {
           "value": "Example"
         }
       ],
-      "jobTitle": [
+      "jobTitles": [
         {
           "value": "Research Scientist"
         }
       ],
-      "role": [
+      "roles": [
         {
           "value": "Project Lead"
         }
@@ -101,7 +101,7 @@
           "en": "Okubo Masahito"
         }
       },
-      "jobTitle": [
+      "jobTitles": [
         {
           "value": "事務局長",
           "language": "ja",

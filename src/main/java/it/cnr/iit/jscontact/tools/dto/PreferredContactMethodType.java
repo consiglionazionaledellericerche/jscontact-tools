@@ -24,8 +24,7 @@ public enum PreferredContactMethodType {
 
     EMAILS("emails"),
     PHONES("phones"),
-    ONLINE("online"),
-    OTHER("other");
+    ONLINE("online");
 
     private String value;
 

@@ -31,10 +31,7 @@ import lombok.*;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -68,13 +65,13 @@ public class JSCard extends ValidableObject implements JSContact {
     NameComponent[] name;
 
     @Valid
-    LocalizedString[] organization;
+    LocalizedString[] organizations;
 
     @Valid
-    LocalizedString[] jobTitle;
+    LocalizedString[] jobTitles;
 
     @Valid
-    LocalizedString[] role;
+    LocalizedString[] roles;
 
     @Valid
     @EmailsConstraint(message = "invalid email Resource in JSCard")
@@ -104,7 +101,7 @@ public class JSCard extends ValidableObject implements JSContact {
     @Valid
     LocalizedString[] notes;
 
-    String[] categories;
+    Map<String,Boolean> categories;
 
     @JsonIgnore
     String[] members;
@@ -133,15 +130,15 @@ public class JSCard extends ValidableObject implements JSContact {
     }
 
     public void addOrganization(LocalizedString org) {
-        organization = ArrayUtils.add(organization, org);
+        organizations = ArrayUtils.add(organizations, org);
     }
 
     public void addTitle(LocalizedString title) {
-        jobTitle = ArrayUtils.add(jobTitle, title);
+        jobTitles = ArrayUtils.add(jobTitles, title);
     }
 
     public void addRole(LocalizedString rl) {
-        role = ArrayUtils.add(role, rl);
+        roles = ArrayUtils.add(roles, rl);
     }
 
     public void addNote(LocalizedString note) {
@@ -160,7 +157,22 @@ public class JSCard extends ValidableObject implements JSContact {
         addresses = ArrayUtils.add(addresses, address);
     }
 
-    public void addCategories(String[] categoriess) { categories = ArrayUtils.addAll(categories, categoriess); }
+    private void addCategory(String category) {
+
+        if(categories == null)
+            categories = new LinkedHashMap<String,Boolean>();
+
+        if (!categories.containsKey(category))
+            categories.put(category,Boolean.TRUE);
+    }
+
+    public void addCategories(String[] categories) {
+        if (categories==null)
+            return;
+
+        for (String category: categories)
+            addCategory(category);
+    }
 
     public void addMember(String uid) { members = ArrayUtils.add(members, uid); }
 

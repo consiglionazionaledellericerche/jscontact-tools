@@ -6,9 +6,9 @@
 "fr": [{ "preference": 1 }],
 "en": [{ "preference": 2 }]
 },
-"organization": [ { "value": "Example" } ],
-"jobTitle": [ { "value": "Research Scientist" } ],
-"role": [ { "value": "Project Lead" } ],
+"organizations": [ { "value": "Example" } ],
+"jobTitles": [ { "value": "Research Scientist" } ],
+"roles": [ { "value": "Project Lead" } ],
 "addresses": [
 {
 "context": "work",

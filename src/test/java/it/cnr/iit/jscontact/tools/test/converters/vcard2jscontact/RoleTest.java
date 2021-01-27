@@ -36,13 +36,13 @@ public class RoleTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testRoleWithAltid1 - 1",jsCard.getRole()!=null);
-        assertTrue("testRoleWithAltid1 - 2",jsCard.getRole().length == 1);
-        assertTrue("testRoleWithAltid1 - 3",jsCard.getRole()[0].getValue().equals("Project Leader"));
-        assertTrue("testRoleWithAltid1 - 4",jsCard.getRole()[0].getLanguage() == null);
-        assertTrue("testRoleWithAltid1 - 5",jsCard.getRole()[0].getLocalizations() != null);
-        assertTrue("testRoleWithAltid1 - 6",jsCard.getRole()[0].getLocalizations().size() == 1);
-        assertTrue("testRoleWithAltid1 - 7",jsCard.getRole()[0].getLocalizations().get("it").equals("Capo Progetto"));
+        assertTrue("testRoleWithAltid1 - 1",jsCard.getRoles()!=null);
+        assertTrue("testRoleWithAltid1 - 2",jsCard.getRoles().length == 1);
+        assertTrue("testRoleWithAltid1 - 3",jsCard.getRoles()[0].getValue().equals("Project Leader"));
+        assertTrue("testRoleWithAltid1 - 4",jsCard.getRoles()[0].getLanguage() == null);
+        assertTrue("testRoleWithAltid1 - 5",jsCard.getRoles()[0].getLocalizations() != null);
+        assertTrue("testRoleWithAltid1 - 6",jsCard.getRoles()[0].getLocalizations().size() == 1);
+        assertTrue("testRoleWithAltid1 - 7",jsCard.getRoles()[0].getLocalizations().get("it").equals("Capo Progetto"));
     }
 
     @Test
@@ -56,14 +56,14 @@ public class RoleTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testRoleWithoutAltid - 1",jsCard.getRole()!=null);
-        assertTrue("testRoleWithoutAltid - 2",jsCard.getRole().length == 2);
-        assertTrue("testRoleWithoutAltid - 3",jsCard.getRole()[0].getValue().equals("Project Leader"));
-        assertTrue("testRoleWithoutAltid - 4",jsCard.getRole()[0].getLanguage() == null);
-        assertTrue("testRoleWithoutAltid - 5",jsCard.getRole()[0].getLocalizations() == null);
-        assertTrue("testRoleWithoutAltid - 6",jsCard.getRole()[1].getValue().equals("Capo Progetto"));
-        assertTrue("testRoleWithoutAltid - 7",jsCard.getRole()[1].getLanguage().equals("it"));
-        assertTrue("testRoleWithoutAltid - 8",jsCard.getRole()[1].getLocalizations() == null);
+        assertTrue("testRoleWithoutAltid - 1",jsCard.getRoles()!=null);
+        assertTrue("testRoleWithoutAltid - 2",jsCard.getRoles().length == 2);
+        assertTrue("testRoleWithoutAltid - 3",jsCard.getRoles()[0].getValue().equals("Project Leader"));
+        assertTrue("testRoleWithoutAltid - 4",jsCard.getRoles()[0].getLanguage() == null);
+        assertTrue("testRoleWithoutAltid - 5",jsCard.getRoles()[0].getLocalizations() == null);
+        assertTrue("testRoleWithoutAltid - 6",jsCard.getRoles()[1].getValue().equals("Capo Progetto"));
+        assertTrue("testRoleWithoutAltid - 7",jsCard.getRoles()[1].getLanguage().equals("it"));
+        assertTrue("testRoleWithoutAltid - 8",jsCard.getRoles()[1].getLocalizations() == null);
     }
 
     @Test
@@ -78,14 +78,14 @@ public class RoleTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testRoleWithAltid2 - 1",jsCard.getRole()!=null);
-        assertTrue("testRoleWithAltid2 - 2",jsCard.getRole().length == 2);
-        assertTrue("testRoleWithAltid2 - 3",jsCard.getRole()[1].getValue().equals("Project Leader"));
-        assertTrue("testRoleWithAltid2 - 4",jsCard.getRole()[1].getLanguage() == null);
-        assertTrue("testRoleWithAltid2 - 5",jsCard.getRole()[1].getLocalizations() != null);
-        assertTrue("testRoleWithAltid2 - 6",jsCard.getRole()[1].getLocalizations().size() == 1);
-        assertTrue("testRoleWithAltid2 - 7",jsCard.getRole()[1].getLocalizations().get("it").equals("Capo Progetto"));
-        assertTrue("testRoleWithAltid2 - 8",jsCard.getRole()[0].getValue().equals("IETF Area Director"));
+        assertTrue("testRoleWithAltid2 - 1",jsCard.getRoles()!=null);
+        assertTrue("testRoleWithAltid2 - 2",jsCard.getRoles().length == 2);
+        assertTrue("testRoleWithAltid2 - 3",jsCard.getRoles()[1].getValue().equals("Project Leader"));
+        assertTrue("testRoleWithAltid2 - 4",jsCard.getRoles()[1].getLanguage() == null);
+        assertTrue("testRoleWithAltid2 - 5",jsCard.getRoles()[1].getLocalizations() != null);
+        assertTrue("testRoleWithAltid2 - 6",jsCard.getRoles()[1].getLocalizations().size() == 1);
+        assertTrue("testRoleWithAltid2 - 7",jsCard.getRoles()[1].getLocalizations().get("it").equals("Capo Progetto"));
+        assertTrue("testRoleWithAltid2 - 8",jsCard.getRoles()[0].getValue().equals("IETF Area Director"));
     }
 
 }
