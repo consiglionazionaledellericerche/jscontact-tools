@@ -85,6 +85,9 @@ public class JSCard extends ValidableObject implements JSContact {
     @OnlineConstraint(message = "invalid online Resource in JSCard")
     Resource[] online;
 
+    @Valid
+    File[] photos;
+
     PreferredContactMethodType preferredContactMethod;
 
     Map<String, ContactLanguage[]> preferredContactLanguages;
@@ -127,6 +130,10 @@ public class JSCard extends ValidableObject implements JSContact {
 
     public void addOnline(Resource ol) {
         online = ArrayUtils.add(online, ol);
+    }
+
+    public void addPhoto(File f) {
+        photos = ArrayUtils.add(photos, f);
     }
 
     public void addOrganization(LocalizedString org) {
@@ -258,11 +265,6 @@ public class JSCard extends ValidableObject implements JSContact {
     @JsonIgnore
     public Resource[] getOnlineUrl() {
         return getOnline(LabelKey.URL);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlinePhoto() {
-        return getOnline(LabelKey.PHOTO);
     }
 
     @JsonIgnore

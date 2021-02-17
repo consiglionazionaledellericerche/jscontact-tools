@@ -362,11 +362,8 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 9", jsCard.getName()[2].getValue().equals("Mr."));
         assertTrue("testCompleteJCard5 - 10", jsCard.getOrganizations()[0].getValue().equals("Bubba Gump Shrimp Co."));
         assertTrue("testCompleteJCard5 - 11", jsCard.getJobTitles()[0].getValue().equals("Shrimp Man"));
-        Resource[] photos = jsCard.getOnlinePhoto();
-        assertTrue("testCompleteJCard5 - 12", photos[0].getContext() == null);
-        assertTrue("testCompleteJCard5 - 13", photos[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testCompleteJCard5 - 14", photos[0].getLabels().get(LabelKey.PHOTO.getValue()) == Boolean.TRUE);
-        assertTrue("testCompleteJCard5 - 15", photos[0].getValue().equals("http://www.example.com/dir_photos/my_photo.gif"));
+        File[] photos = jsCard.getPhotos();
+        assertTrue("testCompleteJCard5 - 15", photos[0].getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
         assertTrue("testCompleteJCard5 - 16", photos[0].getMediaType().equals("image/gif"));
         assertTrue("testCompleteJCard5 - 17", jsCard.getPhones().length == 2);
         assertTrue("testCompleteJCard5 - 18", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));

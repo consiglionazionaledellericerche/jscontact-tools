@@ -234,6 +234,26 @@ public class EZVCard2JSContact {
 
     }
 
+
+    private static void addFile(VCardProperty property, JSCard jsCard) {
+
+        String value;
+        if (property instanceof UriProperty)
+            value = getValue((UriProperty) property);
+        else
+            value = getValue((BinaryProperty) property);
+
+        jsCard.addPhoto(File.builder()
+                .href(value)
+                .mediaType(getJcardParam(property.getParameters(), "MEDIATYPE"))
+                .isPreferred(getPreference(getJcardParam(property.getParameters(), "PREF")))
+                .build()
+        );
+
+    }
+
+
+
     private static String getValue(Date date) {
 
         Calendar cal = Calendar.getInstance();
@@ -711,7 +731,7 @@ public class EZVCard2JSContact {
             addOnline(source, jsCard, LabelKey.SOURCE);
 
         for (Photo photo : vcard.getPhotos())
-            addOnline(photo, jsCard, LabelKey.PHOTO);
+            addFile(photo, jsCard);
 
         for (Impp impp : vcard.getImpps()) {
             jcardType = getJcardParam(impp.getParameters(), "TYPE");
