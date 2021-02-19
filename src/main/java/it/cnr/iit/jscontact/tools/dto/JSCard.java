@@ -15,9 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.EmailsConstraint;
@@ -106,9 +104,6 @@ public class JSCard extends ValidableObject implements JSContact {
 
     Map<String,Boolean> categories;
 
-    @JsonIgnore
-    String[] members;
-
     Map<String,String> extensions;
 
     @JsonAnyGetter
@@ -180,8 +175,6 @@ public class JSCard extends ValidableObject implements JSContact {
         for (String category: categories)
             addCategory(category);
     }
-
-    public void addMember(String uid) { members = ArrayUtils.add(members, uid); }
 
     public void addRelation(String key, RelationType relType) {
 

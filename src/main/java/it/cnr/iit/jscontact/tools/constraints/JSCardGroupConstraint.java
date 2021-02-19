@@ -13,32 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto;
+package it.cnr.iit.jscontact.tools.constraints;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import it.cnr.iit.jscontact.tools.constraints.validators.JSCardGroupValidator;
 
-@Builder
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class KindType {
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
 
-    Kind rfcValue;
-    String extValue;
+@Target({ElementType.TYPE, java.lang.annotation.ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {JSCardGroupValidator.class})
+@Documented
+public @interface JSCardGroupConstraint {
 
-    public boolean isGroup() {
-        return (rfcValue!=null && rfcValue == Kind.GROUP);
-    }
+    String message() default "";
 
-    public boolean isIndividual() {
-        return (rfcValue!=null && rfcValue == Kind.INDIVIDUAL);
-    }
+    Class<?>[] groups() default { };
 
-    public boolean isOrg() {
-        return (rfcValue!=null && rfcValue == Kind.ORG);
-    }
-
+    Class<? extends Payload>[] payload() default { };
 }
+

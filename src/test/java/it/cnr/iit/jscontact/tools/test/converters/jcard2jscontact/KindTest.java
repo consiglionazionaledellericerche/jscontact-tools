@@ -34,7 +34,7 @@ public class KindTest extends JCard2JSContactTest {
                 "[\"kind\", {}, \"text\", \"individual\"]" +
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testKindValid - 1",jsCard.getKind().getRfcValue() == Kind.INDIVIDUAL);
+        assertTrue("testKindValid - 1",jsCard.getKind().isIndividual());
 
     }
 

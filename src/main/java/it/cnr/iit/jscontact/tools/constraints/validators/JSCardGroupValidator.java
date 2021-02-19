@@ -13,32 +13,29 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto;
+package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import it.cnr.iit.jscontact.tools.constraints.JSCardGroupConstraint;
+import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
+import it.cnr.iit.jscontact.tools.dto.Kind;
 
-@Builder
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class KindType {
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-    Kind rfcValue;
-    String extValue;
+public class JSCardGroupValidator implements ConstraintValidator<JSCardGroupConstraint, JSCardGroup> {
 
-    public boolean isGroup() {
-        return (rfcValue!=null && rfcValue == Kind.GROUP);
+    public void initialize(JSCardGroupConstraint constraintAnnotation) {
     }
 
-    public boolean isIndividual() {
-        return (rfcValue!=null && rfcValue == Kind.INDIVIDUAL);
-    }
+    public boolean isValid(JSCardGroup group, ConstraintValidatorContext context) {
 
-    public boolean isOrg() {
-        return (rfcValue!=null && rfcValue == Kind.ORG);
+        if (group.getKind().getExtValue() != null)
+            return false;
+
+        if (group.getKind().getRfcValue() != Kind.GROUP)
+            return false;
+
+        return true;
     }
 
 }

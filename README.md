@@ -122,12 +122,12 @@ JSContact serialization/deserializaion is performed through Jackson library that
 At present, the following converting methods are available:
 
 *   it.cnr.iit.jscontact.tools.vcard.converters.jcard2jscontact.JCard2JSContact
-    *   List<JSContact> convert(String json)
-    *   List<JSContact> convert(JsonNode jsonNode) 
+    *   List<? extends JSContact> convert(String json)
+    *   List<? extends JSContact> convert(JsonNode jsonNode) 
 *   VCard2JSContact
-    *   List<JSContact> convert(String vcf)
+    *   List<? extends JSContact> convert(String vcf)
 *   XCard2JSContact
-    *   List<JSContact> convert(String xml)
+    *   List<? extends JSContact> convert(String xml)
 
 All the methods return a list of JSContact (JSCard or JSCardGroup) instances and can raise a `CardException`.
 `JsonNode` represents the root of `com.fasterxml.jackson.databind`.
@@ -189,7 +189,7 @@ The conversion is executed according to the following rules:
 
 15. Categories appear in the "categories" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
-16. Members appear in a group card according to the values of the PREF parameter of the MEMBER properties.
+16. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
 ### Conversion examples
 
@@ -243,15 +243,23 @@ Here in the following two examples of conversion between jCard and JSContact top
                 "[\"uid\", {}, \"uri\", \"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"] " +
                 "]]" +
                 "]";
-        JSCardGroup jsCardGroup = (JSCardGroup) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testJCardGroupValid1 - 1",jsCardGroup != null);
-        assertTrue("testJCardGroupValid1 - 2", StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertTrue("testJCardGroupValid1 - 3",jsCardGroup.getName().equals("The Doe family"));
-        assertTrue("testJCardGroupValid1 - 4",jsCardGroup.getCards().length == 2);
-        assertTrue("testJCardGroupValid1 - 5",jsCardGroup.getCards()[0].getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
-        assertTrue("testJCardGroupValid1 - 6",jsCardGroup.getCards()[0].getFullName().getValue().equals("John Doe"));
-        assertTrue("testJCardGroupValid1 - 7",jsCardGroup.getCards()[1].getUid().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
-        assertTrue("testJCardGroupValid1 - 8",jsCardGroup.getCards()[1].getFullName().getValue().equals("Jane Doe"));
+                
+        List<? extends JSContact> jsCards = jCard2JSContact.convert(jcard);
+        assertTrue("testJCardGroupValid1 - 1",jsCards.size() == 3);
+        assertTrue("testJCardGroupValid1 - 2",jsCards.get(0) instanceof JSCardGroup);
+        JSCardGroup jsCardGroup = (JSCardGroup) jsCards.get(0);
+        assertTrue("testJCardGroupValid1 - 3", jsCardGroup.getKind().isGroup());
+        assertTrue("testJCardGroupValid1 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testJCardGroupValid1 - 5",jsCardGroup.getFullName().getValue().equals("The Doe family"));
+        assertTrue("testJCardGroupValid1 - 6",jsCardGroup.getMembers().size() == 2);
+        assertTrue("testJCardGroupValid1 - 7",jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
+        assertTrue("testJCardGroupValid1 - 8",jsCardGroup.getMembers().get("rn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
+        JSCard jsCard = (JSCard) jsCards.get(1);
+        assertTrue("testJCardGroupValid1 - 9",jsCard.getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
+        assertTrue("testJCardGroupValid1 - 10",jsCard.getFullName().getValue().equals("John Doe"));
+        jsCard = (JSCard) jsCards.get(2);
+        assertTrue("testJCardGroupValid1 - 11",jsCard.getUid().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
+        assertTrue("testJCardGroupValid1 - 12",jsCard.getFullName().getValue().equals("Jane Doe"));
 
     }
 

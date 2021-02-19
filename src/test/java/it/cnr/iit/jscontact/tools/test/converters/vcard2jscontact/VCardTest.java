@@ -124,7 +124,7 @@ public class VCardTest extends VCard2JSContactTest {
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7483.vcf"), Charset.forName("UTF-8"));
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard1 - 1", jsCard.getFullName().getValue().equals("Joe User"));
-        assertTrue("testCompleteVCard1 - 2", jsCard.getKind().getRfcValue() == Kind.INDIVIDUAL);
+        assertTrue("testCompleteVCard1 - 2", jsCard.getKind().isIndividual());
         assertTrue("testCompleteVCard1 - 3", jsCard.getName().length == 4);
         assertTrue("testCompleteVCard1 - 4", jsCard.getName()[0].getType() == NameComponentType.SURNAME);
         assertTrue("testCompleteVCard1 - 5", jsCard.getName()[0].getValue().equals("User"));
@@ -195,12 +195,12 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard2 - 1", jsCard.getFullName().getValue().equals("大久保 正仁"));
         assertTrue("testCompleteVCard2 - 2", jsCard.getFullName().getLanguage().equals("ja"));
         assertTrue("testCompleteVCard2 - 3", jsCard.getFullName().getLocalizations().get("en").equals("Okubo Masahito"));
-        assertTrue("testCompleteVCard2 - 4", jsCard.getKind().getRfcValue() == Kind.INDIVIDUAL);
+        assertTrue("testCompleteVCard2 - 4", jsCard.getKind().isIndividual());
         assertTrue("testCompleteVCard2 - 5", jsCard.getJobTitles().length == 1);
         assertTrue("testCompleteVCard2 - 6", jsCard.getJobTitles()[0].getValue().equals("事務局長"));
         assertTrue("testCompleteVCard2 - 7", jsCard.getJobTitles()[0].getLanguage().equals("ja"));
         assertTrue("testCompleteVCard2 - 8", jsCard.getJobTitles()[0].getLocalizations().get("en").equals("Secretary General"));
-        assertTrue("testCompleteVCard2 - 9", jsCard.getKind().getRfcValue() == Kind.INDIVIDUAL);
+        assertTrue("testCompleteVCard2 - 9", jsCard.getKind().isIndividual());
         assertTrue("testCompleteVCard2 - 10", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteVCard2 - 11", jsCard.getPreferredContactLanguages().get("ja")[0].getPreference() == 1);
         assertTrue("testCompleteVCard2 - 12", jsCard.getPreferredContactLanguages().get("en")[0].getPreference() == 2);
@@ -215,7 +215,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard3 - 1", jsCard.getFullName().getValue().equals("台灣固網股份有限公司"));
         assertTrue("testCompleteVCard3 - 2", jsCard.getFullName().getLanguage().equals("zh-Hant-TW"));
         assertTrue("testCompleteVCard3 - 3", jsCard.getFullName().getLocalizations().get("en").equals("Taiwan Fixed Network CO.,LTD."));
-        assertTrue("testCompleteVCard3 - 4", jsCard.getKind().getRfcValue() == Kind.ORG);
+        assertTrue("testCompleteVCard3 - 4", jsCard.getKind().isOrg());
         assertTrue("testCompleteVCard3 - 5", jsCard.getAddresses().length == 1);
         assertTrue("testCompleteVCard3 - 6", jsCard.getAddresses()[0].getFullAddress().getValue().equals("8F., No.172-1, Sec.2, Ji-Lung Rd,"));
         assertTrue("testCompleteVCard3 - 7", jsCard.getEmails().length == 1);

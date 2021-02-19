@@ -15,31 +15,44 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import it.cnr.iit.jscontact.tools.constraints.JSCardGroupConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JSContact;
 import lombok.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
+@JSCardGroupConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JSCardGroup extends ValidableObject implements JSContact {
+public class JSCardGroup extends JSCard implements JSContact {
 
-    @NotNull(message = "uid is missing in JSCardGroup")
-    @NonNull
-    String uid;
+    @Builder(builderMethodName = "jsCardGroupBuilder")
+    public JSCardGroup(String uid) {
+        super();
+        this.setUid(uid);
+        this.setKind(KindType.builder().rfcValue(it.cnr.iit.jscontact.tools.dto.Kind.GROUP).build());
+    }
 
-    String name;
+    @NotNull
+    @Size(min=1)
+    Map<String,Boolean> members;
 
-    @NotNull(message = "cards are missing in JSCardGroup")
-    @Size(min=1, message = "cards array is empty in JSCardGroup")
-    @NonNull
-    @Valid
-    JSCard[] cards;
+    public void addMember(String member) {
+
+        if(members == null)
+            members = new LinkedHashMap<String,Boolean>();
+
+        if (!members.containsKey(member))
+            members.put(member,Boolean.TRUE);
+    }
+
 
 }

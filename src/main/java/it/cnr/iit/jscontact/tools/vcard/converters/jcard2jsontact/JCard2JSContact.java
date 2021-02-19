@@ -47,7 +47,7 @@ public class JCard2JSContact extends EZVCard2JSContact {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public List<JSContact> convert(String jCard) throws CardException {
+    public List<? extends JSContact> convert(String jCard) throws CardException {
 
         List<VCard> vcards = Ezvcard.parseJson(jCard).all();
         if (vcards.size() == 0)
@@ -69,7 +69,7 @@ public class JCard2JSContact extends EZVCard2JSContact {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public List<JSContact> convert(JsonNode jCard) throws CardException, JsonProcessingException {
+    public List<? extends JSContact> convert(JsonNode jCard) throws CardException, JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         return convert(objectMapper.writeValueAsString(jCard));

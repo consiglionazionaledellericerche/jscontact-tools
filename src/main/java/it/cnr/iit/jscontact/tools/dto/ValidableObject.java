@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 @ToString
-public class ValidableObject {
+public abstract class ValidableObject {
 
     @JsonIgnore
     @Getter

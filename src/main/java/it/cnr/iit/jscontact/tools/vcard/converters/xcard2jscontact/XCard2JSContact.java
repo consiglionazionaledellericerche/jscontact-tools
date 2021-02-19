@@ -44,7 +44,7 @@ public class XCard2JSContact extends EZVCard2JSContact {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public List<JSContact> convert(String xCard) throws CardException {
+    public List<? extends JSContact> convert(String xCard) throws CardException {
 
         List<VCard> vcards = Ezvcard.parseXml(xCard).all();
         if (vcards.size() == 0)

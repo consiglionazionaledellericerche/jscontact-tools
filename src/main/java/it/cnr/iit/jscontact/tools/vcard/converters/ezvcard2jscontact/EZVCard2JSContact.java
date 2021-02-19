@@ -431,7 +431,7 @@ public class EZVCard2JSContact {
             jsCard.addFullName(ls.getValue(), ls.getLanguage());
     }
 
-    private static void fillMembers(VCard vcard, JSCard jsCard) {
+    private static void fillMembers(VCard vcard, JSCardGroup jsCardGroup) {
 
         List<MemberWrapper> wrappers = new ArrayList<MemberWrapper>();
         for (Member member : vcard.getMembers()) {
@@ -439,7 +439,7 @@ public class EZVCard2JSContact {
         }
         Collections.sort(wrappers);
         for (MemberWrapper wrapper : wrappers)
-            jsCard.addMember(wrapper.getValue());
+            jsCardGroup.addMember(wrapper.getValue());
 
     }
 
@@ -1029,15 +1029,21 @@ public class EZVCard2JSContact {
      */
     public JSCard convert(VCard vCard) throws CardException {
 
-        JSCard jsCard = JSCard.builder().uid(UUID.randomUUID().toString()).build();
-        jsCard.setKind(getKind(vCard.getKind()));
+        JSCard jsCard;
+        if ((vCard.getKind()!= null && vCard.getKind().isGroup()) || (vCard.getMembers() != null && vCard.getMembers().size() != 0)) {
+            JSCardGroup jsCardGroup = JSCardGroup.jsCardGroupBuilder().uid(UUID.randomUUID().toString()).build();
+            fillMembers(vCard, jsCardGroup);
+            jsCard = jsCardGroup;
+        } else {
+            jsCard = JSCard.builder().uid(UUID.randomUUID().toString()).build();
+            jsCard.setKind(getKind(vCard.getKind()));
+        }
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(getUpdated(vCard.getRevision()));
         if (vCard.getUid()!=null)
             jsCard.setUid(vCard.getUid().getValue());
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
-        fillMembers(vCard, jsCard);
         fillAddresses(vCard, jsCard);
         fillAnniversaries(vCard, jsCard);
         fillPersonalInfos(vCard, jsCard);
@@ -1057,60 +1063,6 @@ public class EZVCard2JSContact {
         return jsCard;
     }
 
-    private static boolean isGroupCard(JSCard jsCard) {
-
-        if (jsCard.getKind() == null)
-            return false;
-
-        return jsCard.getKind().getRfcValue() == it.cnr.iit.jscontact.tools.dto.Kind.GROUP;
-
-    }
-
-    private static List<JSContact> processGroupCards(List<JSCard> jsCards) {
-
-        List<String> groupUids = new ArrayList<String>();
-        for (JSCard jsCard : jsCards) {
-            if (isGroupCard(jsCard)) {
-                if (jsCard.getMembers() == null)
-                    continue;
-
-                Collections.addAll(groupUids, jsCard.getMembers());
-            }
-        }
-
-        List<JSContact> jscontacts = new ArrayList<JSContact>();
-        for (JSCard jsCard : jsCards) {
-            if (!isGroupCard(jsCard)) {
-                if (!groupUids.contains(jsCard.getUid()))
-                    jscontacts.add(jsCard);
-            } else {
-                if (jsCard.getMembers() == null) { // group card but no members specified, kind forced to org
-                    jsCard.setKind(KindType.builder().rfcValue(it.cnr.iit.jscontact.tools.dto.Kind.ORG).build());
-                    if (!groupUids.contains(jsCard.getUid()))
-                        jscontacts.add(jsCard);
-                } else {
-                    List<JSCard> groupMembers = new ArrayList<JSCard>();
-                    for (String memberUid : jsCard.getMembers()) {
-                        JSCard member = JSCard.builder().uid(memberUid).build();
-                        if (!jsCards.contains(member))
-                            groupMembers.add(member);
-                        else
-                            groupMembers.add(jsCards.get(jsCards.indexOf(member)));
-                    }
-                    jscontacts.add(
-                            JSCardGroup.builder()
-                                    .uid((jsCard.getUid() != null) ? jsCard.getUid() : UUID.randomUUID().toString())
-                                    .name((jsCard.getFullName() != null) ? jsCard.getFullName().getValue() : null)
-                                    .cards(groupMembers.toArray(new JSCard[groupMembers.size()]))
-                                    .build()
-                    );
-                }
-            }
-        }
-
-        return jscontacts;
-    }
-
     /**
      * Converts a complete vCard v4.0 [RFC6350] into a list of JSContact objects.
      * JSContact is defined in draft-ietf-jmap-jscontact.
@@ -1122,7 +1074,7 @@ public class EZVCard2JSContact {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public List<JSContact> convert(List<VCard> vCards) throws CardException {
+    public List<? extends JSContact> convert(List<VCard> vCards) throws CardException {
 
         List<JSCard> jsCards = new ArrayList<JSCard>();
 
@@ -1135,7 +1087,7 @@ public class EZVCard2JSContact {
             jsCards.add(convert(vCard));
         }
 
-        return processGroupCards(jsCards);
+        return jsCards;
     }
 
 }
