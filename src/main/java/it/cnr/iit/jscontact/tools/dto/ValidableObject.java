@@ -18,7 +18,9 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.ConstraintViolation;
 import java.util.ArrayList;
@@ -26,16 +28,18 @@ import java.util.List;
 import java.util.Set;
 
 @ToString
+@NoArgsConstructor
+@SuperBuilder
 public abstract class ValidableObject {
 
     @JsonIgnore
     @Getter
-    private List<String> validationMessages = new ArrayList<String>();
+    private List<String> validationMessages;
 
     @JsonIgnore
     public boolean isValid() {
 
-        validationMessages.clear();
+        validationMessages = new ArrayList<String>();
 
         Set<ConstraintViolation<ValidableObject>> constraintViolations = ValidatorBuilder.getValidator().validate(this);
         if (constraintViolations.size() > 0) {

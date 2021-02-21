@@ -29,10 +29,10 @@ public class JSCardGroupValidator implements ConstraintValidator<JSCardGroupCons
 
     public boolean isValid(JSCardGroup group, ConstraintValidatorContext context) {
 
-        if (group.getKind().getExtValue() != null)
-            return false;
+        if (group.getKind() == null)
+            return true;
 
-        if (group.getKind().getRfcValue() != Kind.GROUP)
+        if (group.getKind().getRfcValue() != null && group.getKind().getRfcValue() != Kind.GROUP)
             return false;
 
         return true;

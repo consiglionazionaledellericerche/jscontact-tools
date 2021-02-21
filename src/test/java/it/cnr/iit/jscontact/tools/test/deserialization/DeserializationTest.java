@@ -15,17 +15,18 @@
  */
 package it.cnr.iit.jscontact.tools.test.deserialization;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JSContact;
+import it.cnr.iit.jscontact.tools.dto.JSContact;
+import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertTrue;
 
@@ -62,21 +63,21 @@ public class DeserializationTest {
 
     }
 
-//TODO
-//    @Test
+    @Test
     public void testDeserialization4() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), Charset.forName("UTF-8"));
         ObjectMapper objectMapper = new ObjectMapper();
-        List<? extends JSContact> jsCards = objectMapper.readValue(json, List.class);
-        for (int i=0; i<jsCards.size(); i++ ) {
-            if (jsCards.get(i) instanceof JSCardGroup)
-                assertTrue("testDeserialization4", ((JSCardGroup) jsCards.get(i)).isValid());
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(JSContact.class, new JSContactListDeserializer());
+        objectMapper.registerModule(module);
+        JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
+        for (int i=0; i<jsContacts.length; i++ ) {
+            if (jsContacts[i] instanceof JSCardGroup)
+                assertTrue("testDeserialization4", ((JSCardGroup) jsContacts[i]).isValid());
             else
-                assertTrue("testDeserialization4", ((JSCard) jsCards.get(i)).isValid());
+                assertTrue("testDeserialization4", ((JSCard) jsContacts[i]).isValid());
         }
-
     }
-
 
 }

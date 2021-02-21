@@ -15,12 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.iit.jscontact.tools.constraints.JSCardGroupConstraint;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JSContact;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,20 +28,16 @@ import java.util.Map;
 
 @JSCardGroupConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class JSCardGroup extends JSCard implements JSContact {
-
-    @Builder(builderMethodName = "jsCardGroupBuilder")
-    public JSCardGroup(String uid) {
-        super();
-        this.setUid(uid);
-        this.setKind(KindType.builder().rfcValue(it.cnr.iit.jscontact.tools.dto.Kind.GROUP).build());
-    }
+@ToString(callSuper = true)
+@Getter
+@Setter
+@SuperBuilder
+public class JSCardGroup extends JSContact {
 
     @NotNull
     @Size(min=1)
+    @JsonProperty(required = true)
     Map<String,Boolean> members;
 
     public void addMember(String member) {

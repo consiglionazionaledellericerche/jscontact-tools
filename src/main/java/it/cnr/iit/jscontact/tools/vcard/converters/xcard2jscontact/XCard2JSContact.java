@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.vcard.converters.xcard2jscontact;
 
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JSContact;
+import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -44,7 +44,7 @@ public class XCard2JSContact extends EZVCard2JSContact {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public List<? extends JSContact> convert(String xCard) throws CardException {
+    public List<JSContact> convert(String xCard) throws CardException {
 
         List<VCard> vcards = Ezvcard.parseXml(xCard).all();
         if (vcards.size() == 0)

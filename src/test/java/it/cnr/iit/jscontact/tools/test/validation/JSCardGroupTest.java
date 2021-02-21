@@ -25,8 +25,7 @@ public class JSCardGroupTest extends AbstractTest {
     public void testInvalidJSCardGroupBuild() {
 
         //uid missing
-        JSCardGroup.jsCardGroupBuilder()
-               .build();
+        JSCardGroup.builder().build();
     }
 
 }

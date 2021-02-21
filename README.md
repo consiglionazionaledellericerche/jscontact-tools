@@ -116,18 +116,41 @@ JSContact serialization/deserializaion is performed through Jackson library that
         JSCard jsCard = objectMapper.readValue(json, JSCard.class);
 ```
 
+### Deserialization of a card group
+
+Deserialization of a card group and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. JSCard instances and JSCardGroup instances).
+
+```
+    @Test
+    public void testDeserialization4() throws IOException {
+
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), Charset.forName("UTF-8"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(JSContact.class, new JSContactListDeserializer());
+        objectMapper.registerModule(module);
+        JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
+        for (int i=0; i<jsContacts.length; i++ ) {
+            if (jsContacts[i] instanceof JSCardGroup) 
+                assertTrue("testDeserialization4", ((JSCardGroup) jsContacts[i]).isValid());
+            else
+                assertTrue("testDeserialization4", ((JSCard) jsContacts[i]).isValid());
+        }
+    }
+```
+
 <a name="vcard-conversion"></a>
 ## vCard Conversion
 
 At present, the following converting methods are available:
 
 *   it.cnr.iit.jscontact.tools.vcard.converters.jcard2jscontact.JCard2JSContact
-    *   List<? extends JSContact> convert(String json)
-    *   List<? extends JSContact> convert(JsonNode jsonNode) 
+    *   List<JSContact> convert(String json)
+    *   List<JSContact> convert(JsonNode jsonNode) 
 *   VCard2JSContact
-    *   List<? extends JSContact> convert(String vcf)
+    *   List<JSContact> convert(String vcf)
 *   XCard2JSContact
-    *   List<? extends JSContact> convert(String xml)
+    *   List<JSContact> convert(String xml)
 
 All the methods return a list of JSContact (JSCard or JSCardGroup) instances and can raise a `CardException`.
 `JsonNode` represents the root of `com.fasterxml.jackson.databind`.
@@ -140,36 +163,34 @@ The conversion is executed according to the following rules:
 
 2.  A card (i.e. vCard, xCard, jCard) is converted into a JSCardGroup object if it includes a KIND property set to `group`, otherwise into a JSCard object.
 
-3.  A group card without members is converted into a card where the KIND property is set to `org`.
+3.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) are matched.
 
-4.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) are matched.
+4.  An unmatched property is converted into a topmost JSCard/JSCardGroup member with prefix `ietf.org/rfc6350`
 
-5.  An unmatched property is converted into a topmost JSCard/JSCardGroup member with prefix `ietf.org/rfc6350`
-
-6.  An extension property is converted into a topmost JSCard/JSCardGroup member with prefix defined by the configuration property `extensionPrefix`.
+5.  An extension property is converted into a topmost JSCard/JSCardGroup member with prefix defined by the configuration property `extensionPrefix`.
   
-7.  Validation is performed before conversion if the configuration property `cardToValidate` is set to `true`.
+6.  Validation is performed before conversion if the configuration property `cardToValidate` is set to `true`.
 
-8.  Default values for the configuration properties are:
+7.  Default values for the configuration properties are:
     
     -  `extensionsPrefix = "extension/"`
     -  `cardToValidate = true`
 
-9.  Where a language is required to represent a localization and the language is not specified, `en` is used by default.
+8.  Where a language is required to represent a localization and the language is not specified, `en` is used by default.
 
-10.  Regardless of their positions inside the card, properties mapped as Anniversary objects appear in the following order:
+9.  Regardless of their positions inside the card, properties mapped as Anniversary objects appear in the following order:
 
     1. BDAY (BIRTHDATE)
     2. DEATHDAY (DEATHDATE)
     3. ANNIVERSARY
 
-11.  Regardless of their positions inside the card, properties mapped as PersonalInfo objects appear in the following order:
+10.  Regardless of their positions inside the card, properties mapped as PersonalInfo objects appear in the following order:
 
     1. HOBBY
     2. INTEREST
     3. EXPERTISE
 
-12. Regardless of their positions inside the card, properties mapped as online Resource objects appear in the following order:
+11. Regardless of their positions inside the card, properties mapped as online Resource objects appear in the following order:
 
     1. SOURCE
     2. IMPP
@@ -183,13 +204,13 @@ The conversion is executed according to the following rules:
     10. ORG-DIRECTORY
     11. CONTACT-URI
 
-13. If an ADR element doesn't include the LABEL parameter, the full address is generated by concatenating the non-empty address components.
+12. If an ADR element doesn't include the LABEL parameter, the full address is generated by concatenating the non-empty address components.
 
-14. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address reported in the card.
+13. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address reported in the card.
 
-15. Categories appear in the "categories" map according to the values of the PREF parameter of the CATEGORIES properties. 
+14. Categories appear in the "categories" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
-16. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
+15. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
 ### Conversion examples
 
@@ -244,7 +265,7 @@ Here in the following two examples of conversion between jCard and JSContact top
                 "]]" +
                 "]";
                 
-        List<? extends JSContact> jsCards = jCard2JSContact.convert(jcard);
+        List<JSContact> jsCards = jCard2JSContact.convert(jcard);
         assertTrue("testJCardGroupValid1 - 1",jsCards.size() == 3);
         assertTrue("testJCardGroupValid1 - 2",jsCards.get(0) instanceof JSCardGroup);
         JSCardGroup jsCardGroup = (JSCardGroup) jsCards.get(0);
@@ -288,8 +309,8 @@ Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all 
 <a name="drafts"></a>
 ### JSContact I-Ds
 
-*   [draft-ietf-jmap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/)
-*   [draft-ietf-jmap-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/)
+*   [draft-ietf-jmap-jscontact-04](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/)
+*   [draft-ietf-jmap-jscontact-vcard-02](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/)
 
 
 # Build Instructions
