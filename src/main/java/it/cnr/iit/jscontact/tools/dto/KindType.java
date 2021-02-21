@@ -28,4 +28,17 @@ public class KindType {
 
     Kind rfcValue;
     String extValue;
+
+    public boolean isGroup() {
+        return (rfcValue!=null && rfcValue == Kind.GROUP);
+    }
+
+    public boolean isIndividual() {
+        return (rfcValue!=null && rfcValue == Kind.INDIVIDUAL);
+    }
+
+    public boolean isOrg() {
+        return (rfcValue!=null && rfcValue == Kind.ORG);
+    }
+
 }

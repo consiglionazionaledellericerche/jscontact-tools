@@ -64,19 +64,17 @@ public class OnlineResourceTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testOnlineResourceValid3() throws IOException, CardException {
+    public void testPhotoValid() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"photo\", {}, \"uri\", \"http://www.example.com/pub/photos/jqpublic.gif\"]" +
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testOnlineResourceValid3 - 1",jsCard.getOnline().length == 1);
-        assertTrue("testOnlineResourceValid3 - 2",jsCard.getOnline()[0].getValue().equals("http://www.example.com/pub/photos/jqpublic.gif"));
-        assertTrue("testOnlineResourceValid3 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid3 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid3 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid3 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.PHOTO.getValue()) == Boolean.TRUE);
+        assertTrue("testPhotoValid - 1",jsCard.getPhotos().length == 1);
+        assertTrue("testPhotoValid - 2",jsCard.getPhotos()[0].getHref().equals("http://www.example.com/pub/photos/jqpublic.gif"));
+        assertTrue("testPhotoValid - 3",jsCard.getPhotos()[0].getIsPreferred() == null);
+        assertTrue("testPhotoValid - 4",jsCard.getPhotos()[0].getMediaType() == null);
 
     }
 

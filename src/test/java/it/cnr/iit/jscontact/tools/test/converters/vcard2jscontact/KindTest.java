@@ -36,7 +36,7 @@ public class KindTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testKindValid - 1",jsCard.getKind().getRfcValue() == Kind.INDIVIDUAL);
+        assertTrue("testKindValid - 1",jsCard.getKind().isIndividual());
 
     }
 

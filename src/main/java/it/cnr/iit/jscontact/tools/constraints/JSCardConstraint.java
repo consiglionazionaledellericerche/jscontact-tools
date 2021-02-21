@@ -13,7 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto.interfaces;
+package it.cnr.iit.jscontact.tools.constraints;
 
-public interface JSContact {
+import it.cnr.iit.jscontact.tools.constraints.validators.JSCardValidator;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
+
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {JSCardValidator.class})
+@Documented
+public @interface JSCardConstraint {
+
+    String message() default "";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
 }
+

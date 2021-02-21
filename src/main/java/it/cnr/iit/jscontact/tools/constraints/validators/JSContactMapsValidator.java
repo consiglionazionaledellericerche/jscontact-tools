@@ -15,9 +15,10 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.JSCardMapsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.JSContactMapsConstraint;
 import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.dto.Relation;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 
@@ -26,19 +27,19 @@ import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolation;
 import java.util.Set;
 
-public class JSCardMapsValidator implements ConstraintValidator<JSCardMapsConstraint, JSCard> {
+public class JSContactMapsValidator implements ConstraintValidator<JSContactMapsConstraint, JSContact> {
 
-    public void initialize(JSCardMapsConstraint constraintAnnotation) {
+    public void initialize(JSContactMapsConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(JSCard jsCard, ConstraintValidatorContext context) {
+    public boolean isValid(JSContact jsContact, ConstraintValidatorContext context) {
 
-        if (jsCard == null)
+        if (jsContact == null)
             return true;
 
-        if (jsCard.getPreferredContactLanguages() != null) {
+        if (jsContact.getPreferredContactLanguages() != null) {
 
-            for(ContactLanguage[] cls : jsCard.getPreferredContactLanguages().values()) {
+            for(ContactLanguage[] cls : jsContact.getPreferredContactLanguages().values()) {
 
                 if (cls == null)
                     return false;
@@ -55,9 +56,9 @@ public class JSCardMapsValidator implements ConstraintValidator<JSCardMapsConstr
             }
         }
 
-        if (jsCard.getRelatedTo() != null) {
+        if (jsContact.getRelatedTo() != null) {
 
-            for(Relation rel : jsCard.getRelatedTo().values()) {
+            for(Relation rel : jsContact.getRelatedTo().values()) {
 
                 if (rel == null)
                     return false;

@@ -21,7 +21,6 @@ import lombok.AllArgsConstructor;
 public enum LabelKey {
 
     KEY("key"),
-    PHOTO("photo"),
     LOGO("logo"),
     SOURCE("source"),
     SOUND("sound"),

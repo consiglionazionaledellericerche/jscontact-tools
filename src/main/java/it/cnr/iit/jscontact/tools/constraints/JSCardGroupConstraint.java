@@ -13,16 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto;
+package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.JSCardConstraint;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import it.cnr.iit.jscontact.tools.constraints.validators.JSCardGroupValidator;
 
-@JSCardConstraint
-@NoArgsConstructor
-@ToString(callSuper = true)
-@SuperBuilder
-public class JSCard extends JSContact {
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
 
+@Target({ElementType.TYPE, java.lang.annotation.ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {JSCardGroupValidator.class})
+@Documented
+public @interface JSCardGroupConstraint {
+
+    String message() default "";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
 }
+

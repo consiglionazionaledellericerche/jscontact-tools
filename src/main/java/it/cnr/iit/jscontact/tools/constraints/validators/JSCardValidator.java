@@ -13,16 +13,30 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto;
+package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.JSCardConstraint;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import it.cnr.iit.jscontact.tools.constraints.JSCardGroupConstraint;
+import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Kind;
 
-@JSCardConstraint
-@NoArgsConstructor
-@ToString(callSuper = true)
-@SuperBuilder
-public class JSCard extends JSContact {
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class JSCardValidator implements ConstraintValidator<JSCardConstraint, JSCard> {
+
+    public void initialize(JSCardConstraint constraintAnnotation) {
+    }
+
+    public boolean isValid(JSCard card, ConstraintValidatorContext context) {
+
+        if (card.getKind() == null)
+            return true;
+
+        if (card.getKind().getRfcValue()!= null && card.getKind().getRfcValue() == Kind.GROUP)
+            return false;
+
+        return true;
+    }
 
 }

@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.KindType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 

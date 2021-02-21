@@ -13,36 +13,29 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto;
+package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.AllArgsConstructor;
+import it.cnr.iit.jscontact.tools.constraints.JSCardGroupConstraint;
+import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
+import it.cnr.iit.jscontact.tools.dto.Kind;
 
-@AllArgsConstructor
-public enum PreferredContactMethodType {
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-    EMAILS("emails"),
-    PHONES("phones"),
-    ONLINE("online");
+public class JSCardGroupValidator implements ConstraintValidator<JSCardGroupConstraint, JSCardGroup> {
 
-    private String value;
-
-    @JsonValue
-    public String getValue() {
-        return value;
+    public void initialize(JSCardGroupConstraint constraintAnnotation) {
     }
 
-    @JsonCreator
-    public static PreferredContactMethodType getEnum(String value) throws IllegalArgumentException {
+    public boolean isValid(JSCardGroup group, ConstraintValidatorContext context) {
 
-        for(PreferredContactMethodType en : PreferredContactMethodType.values()) {
-            if (en.getValue().equals(value))
-                return en;
-        }
+        if (group.getKind() == null)
+            return true;
 
-        throw new IllegalArgumentException();
+        if (group.getKind().getRfcValue() != null && group.getKind().getRfcValue() != Kind.GROUP)
+            return false;
+
+        return true;
     }
 
 }
-

@@ -16,30 +16,38 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JSContact;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import it.cnr.iit.jscontact.tools.constraints.JSCardGroupConstraint;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
+@JSCardGroupConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class JSCardGroup extends ValidableObject implements JSContact {
+@ToString(callSuper = true)
+@Getter
+@Setter
+@SuperBuilder
+public class JSCardGroup extends JSContact {
 
-    @NotNull(message = "uid is missing in JSCardGroup")
-    @NonNull
-    String uid;
+    @NotNull
+    @Size(min=1)
+    @JsonProperty(required = true)
+    Map<String,Boolean> members;
 
-    String name;
+    public void addMember(String member) {
 
-    @NotNull(message = "cards are missing in JSCardGroup")
-    @Size(min=1, message = "cards array is empty in JSCardGroup")
-    @NonNull
-    @Valid
-    JSCard[] cards;
+        if(members == null)
+            members = new LinkedHashMap<String,Boolean>();
+
+        if (!members.containsKey(member))
+            members.put(member,Boolean.TRUE);
+    }
+
 
 }
