@@ -1016,7 +1016,7 @@ public class EZVCard2JSContact {
     }
 
     /**
-     * Converts a basic vCard v4.0 [RFC6350] into a JSContacts object.
+     * Converts a basic vCard v4.0 [RFC6350] into a JSContact object.
      * JSContact objects are defined in draft-ietf-jmap-jscontact.
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
      * @param vCard a vCard as an instance of the ez-vcard library VCard class
@@ -1065,12 +1065,12 @@ public class EZVCard2JSContact {
     }
 
     /**
-     * Converts a complete vCard v4.0 [RFC6350] into a list of JSContact objects.
+     * Converts a list of vCard v4.0 instances [RFC6350] into a list of JSContact objects.
      * JSContact is defined in draft-ietf-jmap-jscontact.
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
-     * @param vCards a vCard as a list of instances of the ez-vcard library VCard class
+     * @param vCards a list of instances of the ez-vcard library VCard class
      * @return a list of JSContact objects
-     * @throws CardException if the vCard is not v4.0 compliant
+     * @throws CardException if one of the vCard instances is not v4.0 compliant
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>

@@ -51,4 +51,13 @@ public abstract class ValidableObject {
         return true;
     }
 
-}
+    @JsonIgnore
+    public String getValidationMessage() {
+
+        if (validationMessages == null)
+            return null;
+
+        return String.join("\n", validationMessages);
+    }
+
+    }
