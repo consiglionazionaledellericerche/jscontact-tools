@@ -72,11 +72,11 @@ public class DeserializationTest {
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
         objectMapper.registerModule(module);
         JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
-        for (int i=0; i<jsContacts.length; i++ ) {
-            if (jsContacts[i] instanceof JSCardGroup)
-                assertTrue("testDeserialization4", ((JSCardGroup) jsContacts[i]).isValid());
+        for (JSContact jsContact : jsContacts) {
+            if (jsContact instanceof JSCardGroup)
+                assertTrue("testDeserialization4", ((JSCardGroup) jsContact).isValid());
             else
-                assertTrue("testDeserialization4", ((JSCard) jsContacts[i]).isValid());
+                assertTrue("testDeserialization4", ((JSCard) jsContact).isValid());
         }
     }
 
