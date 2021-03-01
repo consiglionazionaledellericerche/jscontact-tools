@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 
-public class RoleTest extends VCard2JSContactTest {
+public class RolesTest extends VCard2JSContactTest {
 
     @Test
     public void testRoleWithAltid1() throws IOException, CardException {
