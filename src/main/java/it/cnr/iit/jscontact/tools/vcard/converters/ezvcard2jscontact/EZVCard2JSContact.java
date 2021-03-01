@@ -25,6 +25,7 @@ import ezvcard.property.*;
 import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
@@ -45,13 +46,12 @@ import java.util.regex.Pattern;
 
 
 @NoArgsConstructor
-public class EZVCard2JSContact {
+public class EZVCard2JSContact extends AbstractConverter {
 
     private static final String AUTO_FULL_ADDRESS_DELIMITER = "\n";
     private static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
     private static final Pattern TIMEZONE_AS_UTC_OFFSET_PATTERN = Pattern.compile("[+-](\\d{2}):?(\\d{2})");
     private static final String DEFAULT_CALSCALE = "gregorian";
-    protected static final String JCARD_ARRAY_DELIMITER = ",";
     protected static final String UNMATCHED_PROPERTY_PREFIX = "ietf.org/rfc6350/";
 
     private static final List<String> fakeExtensions = Collections.singletonList("contact-uri");
@@ -63,7 +63,7 @@ public class EZVCard2JSContact {
         if (jcardTypeParam == null)
             return null;
 
-        String[] items = jcardTypeParam.split(JCARD_ARRAY_DELIMITER);
+        String[] items = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
         for (String item : items) {
             if (exclude!=null && exclude.contains(item))
                 continue;
@@ -129,7 +129,7 @@ public class EZVCard2JSContact {
         if (jcardTypeParam == null)
             return map;
 
-        String[] items = jcardTypeParam.split(JCARD_ARRAY_DELIMITER);
+        String[] items = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
         for (String item : items) {
             if (item.toLowerCase().equals("home")) item = "private";
 
@@ -183,7 +183,7 @@ public class EZVCard2JSContact {
         try {
             List<String> values = parameters.get(param);
             if (values.size()==0) return null;
-            return String.join(JCARD_ARRAY_DELIMITER, values);
+            return String.join(COMMA_ARRAY_DELIMITER, values);
         } catch (NullPointerException e) {
             return null;
         }
@@ -405,7 +405,7 @@ public class EZVCard2JSContact {
 
     private static String getValue(TextListProperty property) {
 
-        return StringUtils.join(property.getValues(), ";");
+        return StringUtils.join(property.getValues(), SEMICOMMA_ARRAY_DELIMITER);
     }
 
     private static String getValue(Impp property) {
@@ -877,7 +877,7 @@ public class EZVCard2JSContact {
     }
 
     private static String getValue(List<RelatedType> list) {
-        StringJoiner joiner = new StringJoiner(JCARD_ARRAY_DELIMITER);
+        StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
         for (RelatedType el : list)
             joiner.add(el.getValue());
         return joiner.toString();
@@ -949,7 +949,7 @@ public class EZVCard2JSContact {
         }
 
         if (property.getParameters().getPids() != null && property.getParameters().getPids().size()>0) {
-            StringJoiner joiner = new StringJoiner(JCARD_ARRAY_DELIMITER);
+            StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
             for (Pid pid : property.getParameters().getPids())
                 joiner.add(pid.getLocalId().toString());
             jsContact.addExtension(getUnmatchedParamName(propertyName,"pid"),

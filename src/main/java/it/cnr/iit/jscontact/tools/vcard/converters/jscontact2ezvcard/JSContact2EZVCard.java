@@ -11,9 +11,8 @@ import ezvcard.property.*;
 import ezvcard.property.Kind;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-public class JSContact2EZVCard {
+public class JSContact2EZVCard extends AbstractConverter {
 
     protected JSContact2VCardConfig config;
 
@@ -78,17 +77,17 @@ public class JSContact2EZVCard {
         return getTextProperty(property, language, null);
     }
 
-    private static <E extends TextListProperty> E getTextListProperty(E property, String text, String language, Integer altId) {
+    private static <E extends TextListProperty> E getTextListProperty(E property, String delimiter, String text, String language, Integer altId) {
 
-        for (String item : text.split(";"))
+        for (String item : text.split(delimiter))
             property.getValues().add(item);
         if (altId != null) property.getParameters().setAltId(altId.toString());
         if (language != null) property.getParameters().setLanguage(language);
         return property;
     }
 
-    private static <E extends TextListProperty > E getTextListProperty(E property, String text, String language) {
-        return getTextListProperty(property, text, language, null);
+    private static <E extends TextListProperty > E getTextListProperty(E property, String delimiter, String text, String language) {
+        return getTextListProperty(property, delimiter, text, language, null);
     }
 
 
@@ -130,6 +129,17 @@ public class JSContact2EZVCard {
     }
 
 
+    private static void fillCategories(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getCategories() == null)
+            return;
+
+        Integer altId = Integer.parseInt("1");
+        for (String category : jsContact.getCategories().keySet()) {
+            vcard.getCategoriesList().add(getTextListProperty(new Categories(), COMMA_ARRAY_DELIMITER, category, null));
+        }
+    }
+
     private static void fillOrganizations(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getOrganizations() == null)
@@ -138,15 +148,16 @@ public class JSContact2EZVCard {
         Integer altId = Integer.parseInt("1");
         for (LocalizedString localized : jsContact.getOrganizations()) {
             if (localized.getLocalizations() == null)
-                vcard.getOrganizations().add(getTextListProperty(new Organization(), localized.getValue(), localized.getLanguage()));
+                vcard.getOrganizations().add(getTextListProperty(new Organization(), SEMICOMMA_ARRAY_DELIMITER, localized.getValue(), localized.getLanguage()));
             else {
-                vcard.getOrganizations().add(getTextListProperty(new Organization(), localized.getValue(), localized.getLanguage(), altId));
+                vcard.getOrganizations().add(getTextListProperty(new Organization(), SEMICOMMA_ARRAY_DELIMITER, localized.getValue(), localized.getLanguage(), altId));
                 for (String key : localized.getLocalizations().keySet())
-                    vcard.getOrganizations().add(getTextListProperty(new Organization(), localized.getLocalizations().get(key), key, altId));
+                    vcard.getOrganizations().add(getTextListProperty(new Organization(), SEMICOMMA_ARRAY_DELIMITER, localized.getLocalizations().get(key), key, altId));
                 altId ++;
             }
         }
     }
+
 
     private static void fillNotes(VCard vcard, JSContact jsContact) {
 
@@ -237,7 +248,7 @@ public class JSContact2EZVCard {
         fillTitles(vCard, jsContact);
         fillRoles(vCard, jsContact);
         fillOrganizations(vCard, jsContact);
-//        fillCategories(vCard, jsContact);
+        fillCategories(vCard, jsContact);
         fillNotes(vCard, jsContact);
         fillRelations(vCard, jsContact);
 //        fillExtensions(vCard, jsContact);
