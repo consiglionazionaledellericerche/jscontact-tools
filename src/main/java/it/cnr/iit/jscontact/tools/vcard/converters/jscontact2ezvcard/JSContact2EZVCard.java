@@ -6,19 +6,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
-import ezvcard.ValidationWarnings;
+import ezvcard.parameter.RelatedType;
 import ezvcard.property.*;
 import ezvcard.property.Kind;
 import it.cnr.iit.jscontact.tools.dto.*;
-import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import lombok.NoArgsConstructor;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @NoArgsConstructor
 public class JSContact2EZVCard {
@@ -65,6 +65,46 @@ public class JSContact2EZVCard {
 
     }
 
+    private static Related getRelated(String uriOrText, List<String> types) {
+
+        Related related = getRelated(uriOrText);
+        for(String type : types)
+            related.getTypes().add(RelatedType.get(type));
+
+        return related;
+    }
+
+
+    private static Related getRelated(String uriOrText) {
+        Related related = new Related();
+        try {
+            URI uri = new URI(uriOrText);
+            if (uri.getScheme() == null)
+                related.setText(uriOrText);
+            else
+                related.setUri(uriOrText);
+        } catch (URISyntaxException e) {
+            related.setText(uriOrText);
+        }
+
+        return related;
+    }
+
+    private static void fillRelations(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getRelatedTo() == null)
+            return;
+
+        for (String key : jsContact.getRelatedTo().keySet()) {
+            if (jsContact.getRelatedTo().get(key).getRelation() == null)
+                vcard.addRelated(getRelated(key));
+            else {
+                vcard.addRelated(getRelated(key, new ArrayList<String>(jsContact.getRelatedTo().get(key).getRelation().keySet())));
+            }
+        }
+    }
+
+
     /**
      * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
      * JSContact objects are defined in draft-ietf-jmap-jscontact.
@@ -86,6 +126,22 @@ public class JSContact2EZVCard {
         vCard.setKind(getKind(jsContact.getKind()));
         vCard.setProductId(jsContact.getProdId());
         fillFormattedNames(vCard, jsContact);
+//        fillNames(vCard, jsContact);
+//        fillAddresses(vCard, jsContact);
+//        fillAnniversaries(vCard, jsContact);
+//        fillPersonalInfos(vCard, jsContact);
+//        fillContactLanguages(vCard, jsContact);
+//        fillPhones(vCard, jsContact);
+//        fillEmails(vCard, jsContact);
+//        fillOnlines(vCard, jsContact);
+//        fillTitles(vCard, jsContact);
+//        fillRoles(vCard, jsContact);
+//        fillOrganizations(vCard, jsContact);
+//        fillCategories(vCard, jsContact);
+//        fillNotes(vCard, jsContact);
+        fillRelations(vCard, jsContact);
+//        fillExtensions(vCard, jsContact);
+//        fillUnmatchedElments(vCard, jsContact);
 
         return vCard;
 
