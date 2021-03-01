@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
+import ezvcard.parameter.ExpertiseLevel;
+import ezvcard.parameter.HobbyLevel;
+import ezvcard.parameter.InterestLevel;
 import ezvcard.parameter.RelatedType;
 import ezvcard.property.*;
 import ezvcard.property.Kind;
@@ -98,6 +101,47 @@ public class JSContact2EZVCard extends AbstractConverter {
         vcard.setStructuredName(name);
         if (nicknames.size() > 0)
             vcard.setNickname(nicknames.toArray(new String[nicknames.size()]));
+    }
+
+    private static Expertise getExpertise(PersonalInformation pi) {
+
+        Expertise e = new Expertise(pi.getValue());
+        e.setLevel(ExpertiseLevel.get(PersonalInformationLevel.getExpertiseLevel(pi.getLevel())));
+        return e;
+    }
+
+    private static Hobby getHobby(PersonalInformation pi) {
+
+        Hobby h = new Hobby(pi.getValue());
+        h.setLevel(HobbyLevel.get(pi.getLevel().getValue()));
+        return h;
+    }
+
+    private static Interest getInterest(PersonalInformation pi) {
+
+        Interest i = new Interest(pi.getValue());
+        i.setLevel(InterestLevel.get(pi.getLevel().getValue()));
+        return i;
+    }
+
+    private static void fillPersonalInfos(VCard vcard, JSContact jsContact) throws CardException {
+
+        if (jsContact.getPersonalInfo() == null)
+            return;
+
+        for (PersonalInformation pi : jsContact.getPersonalInfo()) {
+            switch (pi.getType()) {
+                case EXPERTISE:
+                    vcard.getExpertise().add(getExpertise(pi));
+                    break;
+                case HOBBY:
+                    vcard.getHobbies().add(getHobby(pi));
+                    break;
+                case INTEREST:
+                    vcard.getInterests().add(getInterest(pi));
+                    break;
+            }
+        }
     }
 
     private static <E extends TextProperty > E getTextProperty(E property, String language, Integer altId) {
@@ -272,7 +316,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillNames(vCard, jsContact);
 //        fillAddresses(vCard, jsContact);
 //        fillAnniversaries(vCard, jsContact);
-//        fillPersonalInfos(vCard, jsContact);
+        fillPersonalInfos(vCard, jsContact);
 //        fillContactLanguages(vCard, jsContact);
 //        fillPhones(vCard, jsContact);
 //        fillEmails(vCard, jsContact);
