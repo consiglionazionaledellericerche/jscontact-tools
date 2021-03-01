@@ -11,6 +11,8 @@ import ezvcard.property.*;
 import ezvcard.property.Kind;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
+import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import lombok.NoArgsConstructor;
@@ -65,6 +67,72 @@ public class JSContact2EZVCard {
 
     }
 
+    private static <E extends TextProperty > E getTextProperty(E property, String language, Integer altId) {
+
+        if (altId != null) property.getParameters().setAltId(altId.toString());
+        if (language != null) property.getParameters().setLanguage(language);
+        return property;
+    }
+
+    private static <E extends TextProperty > E getTextProperty(E property, String language) {
+        return getTextProperty(property, language, null);
+    }
+
+    private static void fillTitles(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getJobTitles() == null)
+            return;
+
+        Integer altId = Integer.parseInt("1");
+        for (LocalizedString localized : jsContact.getJobTitles()) {
+            if (localized.getLocalizations() == null)
+                vcard.getTitles().add(getTextProperty(new Title(localized.getValue()), localized.getLanguage()));
+            else {
+                vcard.getTitles().add(getTextProperty(new Title(localized.getValue()), localized.getLanguage(), altId));
+                for (String key : localized.getLocalizations().keySet())
+                    vcard.getTitles().add(getTextProperty(new Title(localized.getLocalizations().get(key)), key, altId));
+                altId ++;
+            }
+        }
+    }
+
+
+    private static void fillRoles(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getRoles() == null)
+            return;
+
+        Integer altId = Integer.parseInt("1");
+        for (LocalizedString localized : jsContact.getRoles()) {
+            if (localized.getLocalizations() == null)
+                vcard.getRoles().add(getTextProperty(new Role(localized.getValue()), localized.getLanguage()));
+            else {
+                vcard.getRoles().add(getTextProperty(new Role(localized.getValue()), localized.getLanguage(), altId));
+                for (String key : localized.getLocalizations().keySet())
+                    vcard.getRoles().add(getTextProperty(new Role(localized.getLocalizations().get(key)), key, altId));
+                altId ++;
+            }
+        }
+    }
+
+    private static void fillNotes(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getNotes() == null)
+            return;
+
+        Integer altId = Integer.parseInt("1");
+        for (LocalizedString localized : jsContact.getNotes()) {
+            if (localized.getLocalizations() == null)
+                vcard.getNotes().add(getTextProperty(new Note(localized.getValue()), localized.getLanguage()));
+            else {
+                vcard.getNotes().add(getTextProperty(new Note(localized.getValue()), localized.getLanguage(), altId));
+                for (String key : localized.getLocalizations().keySet())
+                    vcard.getNotes().add(getTextProperty(new Note(localized.getLocalizations().get(key)), key, altId));
+                altId ++;
+            }
+        }
+    }
+
     private static Related getRelated(String uriOrText, List<String> types) {
 
         Related related = getRelated(uriOrText);
@@ -98,9 +166,8 @@ public class JSContact2EZVCard {
         for (String key : jsContact.getRelatedTo().keySet()) {
             if (jsContact.getRelatedTo().get(key).getRelation() == null)
                 vcard.addRelated(getRelated(key));
-            else {
+            else
                 vcard.addRelated(getRelated(key, new ArrayList<String>(jsContact.getRelatedTo().get(key).getRelation().keySet())));
-            }
         }
     }
 
@@ -134,11 +201,11 @@ public class JSContact2EZVCard {
 //        fillPhones(vCard, jsContact);
 //        fillEmails(vCard, jsContact);
 //        fillOnlines(vCard, jsContact);
-//        fillTitles(vCard, jsContact);
-//        fillRoles(vCard, jsContact);
+        fillTitles(vCard, jsContact);
+        fillRoles(vCard, jsContact);
 //        fillOrganizations(vCard, jsContact);
 //        fillCategories(vCard, jsContact);
-//        fillNotes(vCard, jsContact);
+        fillNotes(vCard, jsContact);
         fillRelations(vCard, jsContact);
 //        fillExtensions(vCard, jsContact);
 //        fillUnmatchedElments(vCard, jsContact);
