@@ -134,10 +134,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsContact.getCategories() == null)
             return;
 
-        Integer altId = Integer.parseInt("1");
-        for (String category : jsContact.getCategories().keySet()) {
-            vcard.getCategoriesList().add(getTextListProperty(new Categories(), COMMA_ARRAY_DELIMITER, category, null));
-        }
+        vcard.setCategories(jsContact.getCategories().keySet().toArray(new String[jsContact.getCategories().size()]));
     }
 
     private static void fillOrganizations(VCard vcard, JSContact jsContact) {
