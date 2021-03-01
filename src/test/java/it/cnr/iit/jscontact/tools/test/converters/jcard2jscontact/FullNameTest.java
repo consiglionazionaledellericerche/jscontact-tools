@@ -32,7 +32,7 @@ public class FullNameTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"\"] " +
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testEmptyFullNameValid1 - 1",jsCard.getFullName().getValue().isEmpty());
+        assertTrue("testEmptyFullNameValid - 1",jsCard.getFullName().getValue().isEmpty());
 
     }
 
