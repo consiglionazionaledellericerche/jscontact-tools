@@ -78,6 +78,20 @@ public class JSContact2EZVCard {
         return getTextProperty(property, language, null);
     }
 
+    private static <E extends TextListProperty> E getTextListProperty(E property, String text, String language, Integer altId) {
+
+        for (String item : text.split(";"))
+            property.getValues().add(item);
+        if (altId != null) property.getParameters().setAltId(altId.toString());
+        if (language != null) property.getParameters().setLanguage(language);
+        return property;
+    }
+
+    private static <E extends TextListProperty > E getTextListProperty(E property, String text, String language) {
+        return getTextListProperty(property, text, language, null);
+    }
+
+
     private static void fillTitles(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getJobTitles() == null)
@@ -110,6 +124,25 @@ public class JSContact2EZVCard {
                 vcard.getRoles().add(getTextProperty(new Role(localized.getValue()), localized.getLanguage(), altId));
                 for (String key : localized.getLocalizations().keySet())
                     vcard.getRoles().add(getTextProperty(new Role(localized.getLocalizations().get(key)), key, altId));
+                altId ++;
+            }
+        }
+    }
+
+
+    private static void fillOrganizations(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getOrganizations() == null)
+            return;
+
+        Integer altId = Integer.parseInt("1");
+        for (LocalizedString localized : jsContact.getOrganizations()) {
+            if (localized.getLocalizations() == null)
+                vcard.getOrganizations().add(getTextListProperty(new Organization(), localized.getValue(), localized.getLanguage()));
+            else {
+                vcard.getOrganizations().add(getTextListProperty(new Organization(), localized.getValue(), localized.getLanguage(), altId));
+                for (String key : localized.getLocalizations().keySet())
+                    vcard.getOrganizations().add(getTextListProperty(new Organization(), localized.getLocalizations().get(key), key, altId));
                 altId ++;
             }
         }
@@ -203,7 +236,7 @@ public class JSContact2EZVCard {
 //        fillOnlines(vCard, jsContact);
         fillTitles(vCard, jsContact);
         fillRoles(vCard, jsContact);
-//        fillOrganizations(vCard, jsContact);
+        fillOrganizations(vCard, jsContact);
 //        fillCategories(vCard, jsContact);
         fillNotes(vCard, jsContact);
         fillRelations(vCard, jsContact);
