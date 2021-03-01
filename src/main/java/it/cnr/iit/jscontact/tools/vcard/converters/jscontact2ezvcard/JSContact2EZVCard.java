@@ -66,6 +66,40 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
+    private static void fillNames(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getName() == null)
+            return;
+
+        StructuredName name = new StructuredName();
+        List<String> nicknames = new ArrayList<String>();
+        for (NameComponent component : jsContact.getName()) {
+            switch(component.getType()) {
+                case PREFIX:
+                    name.getPrefixes().add(component.getValue());
+                    break;
+                case PERSONAL:
+                    name.setGiven(component.getValue());
+                    break;
+                case SURNAME:
+                    name.setFamily(component.getValue());
+                    break;
+                case ADDITIONAL:
+                    name.getAdditionalNames().add(component.getValue());
+                    break;
+                case SUFFIX:
+                    name.getSuffixes().add(component.getValue());
+                    break;
+                case NICKNAME:
+                    nicknames.add(component.getValue());
+                    break;
+            }
+        }
+        vcard.setStructuredName(name);
+        if (nicknames.size() > 0)
+            vcard.setNickname(nicknames.toArray(new String[nicknames.size()]));
+    }
+
     private static <E extends TextProperty > E getTextProperty(E property, String language, Integer altId) {
 
         if (altId != null) property.getParameters().setAltId(altId.toString());
@@ -233,8 +267,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         vCard.setUid(getUid(jsContact.getUid()));
         vCard.setKind(getKind(jsContact.getKind()));
         vCard.setProductId(jsContact.getProdId());
+//        vCard.setRevision(jsContact.getUpdated());
         fillFormattedNames(vCard, jsContact);
-//        fillNames(vCard, jsContact);
+        fillNames(vCard, jsContact);
 //        fillAddresses(vCard, jsContact);
 //        fillAnniversaries(vCard, jsContact);
 //        fillPersonalInfos(vCard, jsContact);
