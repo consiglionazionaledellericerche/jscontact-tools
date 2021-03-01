@@ -130,12 +130,8 @@ Deserialization of a card group and the related cards is performed through a cus
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
         objectMapper.registerModule(module);
         JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
-        for (int i=0; i<jsContacts.length; i++ ) {
-            if (jsContacts[i] instanceof JSCardGroup) 
-                assertTrue("testDeserialization4", ((JSCardGroup) jsContacts[i]).isValid());
-            else
-                assertTrue("testDeserialization4", ((JSCard) jsContacts[i]).isValid());
-        }
+        for (JSContact jsContact : jsContacts) 
+            assertTrue("testDeserialization4", jsContact.isValid());
     }
 ```
 
