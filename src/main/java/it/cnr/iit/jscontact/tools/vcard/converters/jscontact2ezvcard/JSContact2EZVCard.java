@@ -56,6 +56,15 @@ public class JSContact2EZVCard extends AbstractConverter {
         return new Uid(uid);
     }
 
+
+    private static Revision getRevision(String update) {
+
+        if (update == null)
+            return null;
+
+        return new Revision(VCardDateFormat.parseAsCalendar(update));
+    }
+
     private static void fillFormattedNames(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getFullName() == null)
@@ -431,7 +440,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         vCard.setUid(getUid(jsContact.getUid()));
         vCard.setKind(getKind(jsContact.getKind()));
         vCard.setProductId(jsContact.getProdId());
-//        vCard.setRevision(jsContact.getUpdated());
+        vCard.setRevision(getRevision(jsContact.getUpdated()));
         fillFormattedNames(vCard, jsContact);
         fillNames(vCard, jsContact);
 //        fillAddresses(vCard, jsContact);
