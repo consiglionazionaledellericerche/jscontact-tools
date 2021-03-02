@@ -215,7 +215,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static Expertise getExpertise(PersonalInformation pi) {
 
         Expertise e = new Expertise(pi.getValue());
-        e.setLevel(ExpertiseLevel.get(PersonalInformationLevel.getExpertiseLevel(pi.getLevel())));
+        e.setLevel(ExpertiseLevel.get(PersonalInformationLevel.getVCardExpertiseLevel(pi.getLevel())));
         return e;
     }
 
@@ -271,6 +271,31 @@ public class JSContact2EZVCard extends AbstractConverter {
             for(ContactLanguage cl : jsContact.getPreferredContactLanguages().get(lang))
                 vcard.addLanguage(getLanguage(lang, cl));
         }
+    }
+
+    private static Email getEmail(Resource resource) {
+
+        Email email = new Email(resource.getValue());
+        email.setPref((resource.getIsPreferred() == Boolean.TRUE) ? 1 : null);
+        StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+        if (resource.getContext() != null)
+            joiner.add(ResourceContext.getVCardType(resource.getContext()));
+        if (resource.getLabels()!=null) {
+            for (String key : resource.getLabels().keySet())
+                joiner.add(key);
+        }
+        email.setParameter("TYPE", joiner.toString());
+        return email;
+    }
+
+
+    private static void fillEmails(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getEmails() == null)
+            return;
+
+        for (Resource email : jsContact.getEmails())
+            vcard.getEmails().add(getEmail(email));
     }
 
     private static <E extends TextProperty > E getTextProperty(E property, String language, Integer altId) {
@@ -448,7 +473,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillPersonalInfos(vCard, jsContact);
         fillContactLanguages(vCard, jsContact);
 //        fillPhones(vCard, jsContact);
-//        fillEmails(vCard, jsContact);
+        fillEmails(vCard, jsContact);
 //        fillOnlines(vCard, jsContact);
         fillTitles(vCard, jsContact);
         fillRoles(vCard, jsContact);

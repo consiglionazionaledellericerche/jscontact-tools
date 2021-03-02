@@ -47,7 +47,7 @@ public enum PersonalInformationLevel {
     }
 
     @JsonIgnore
-    public static String getExpertiseLevel(PersonalInformationLevel level) {
+    public static String getVCardExpertiseLevel(PersonalInformationLevel level) {
 
         for (String key : aliases.keySet())
             if (aliases.get(key).equals(level))
