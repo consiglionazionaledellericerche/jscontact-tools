@@ -13,6 +13,7 @@ import ezvcard.parameter.RelatedType;
 import ezvcard.property.*;
 import ezvcard.property.Kind;
 import ezvcard.util.GeoUri;
+import ezvcard.util.TelUri;
 import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
@@ -22,6 +23,7 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Constructor;
@@ -273,12 +275,45 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
+    private static Telephone getTelephone(Resource resource) {
+
+        Telephone tel;
+        try {
+            tel = new Telephone(TelUri.parse(resource.getValue()));
+        } catch(Exception e) {
+            tel = new Telephone(resource.getValue());
+        }
+        tel.setPref((resource.getIsPreferred() == Boolean.TRUE) ? 1 : null);
+        StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+        if (resource.getContext() != null && ResourceContext.getVCardType(resource.getContext())!=null)
+            joiner.add(ResourceContext.getVCardType(resource.getContext()));
+        PhoneResourceType telType = (resource.getType()!=null) ? PhoneResourceType.getEnum(resource.getType()): null;
+        if (resource.getType()!=null && telType!=null)
+            joiner.add(PhoneResourceType.getVCardType(telType));
+        if (resource.getLabels()!=null) {
+            for (String key : resource.getLabels().keySet())
+                joiner.add(key);
+        }
+        tel.setParameter("TYPE", joiner.toString());
+
+        return tel;
+    }
+
+    private static void fillPhones(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getPhones() == null)
+            return;
+
+        for (Resource resource : jsContact.getPhones())
+            vcard.getTelephoneNumbers().add(getTelephone(resource));
+    }
+
     private static Email getEmail(Resource resource) {
 
         Email email = new Email(resource.getValue());
         email.setPref((resource.getIsPreferred() == Boolean.TRUE) ? 1 : null);
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
-        if (resource.getContext() != null)
+        if (resource.getContext() != null && ResourceContext.getVCardType(resource.getContext())!=null)
             joiner.add(ResourceContext.getVCardType(resource.getContext()));
         if (resource.getLabels()!=null) {
             for (String key : resource.getLabels().keySet())
@@ -472,7 +507,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillAnniversaries(vCard, jsContact);
         fillPersonalInfos(vCard, jsContact);
         fillContactLanguages(vCard, jsContact);
-//        fillPhones(vCard, jsContact);
+        fillPhones(vCard, jsContact);
         fillEmails(vCard, jsContact);
 //        fillOnlines(vCard, jsContact);
         fillTitles(vCard, jsContact);

@@ -685,6 +685,20 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+
+    private static boolean labelsIncludesTelTypes(Map<String, Boolean> labels) {
+
+        if (labels == null)
+            return false;
+
+        for (String label : labels.keySet()) {
+            if (!label.equals("private") && !label.equals("work"))
+                return true;
+        }
+
+        return false;
+    }
+
     private static void fillPhones(VCard vcard, JSContact jsContact) {
 
         for (Telephone tel : vcard.getTelephoneNumbers()) {
@@ -693,12 +707,13 @@ public class EZVCard2JSContact extends AbstractConverter {
             PhoneResourceType telType = getPhoneResourceType(jcardType);
             String[] exclude = null;
             if (rcontext != null) exclude = ArrayUtils.add(exclude, rcontext.getValue());
-            if (telType != null) exclude = ArrayUtils.add(exclude, telType.getValue());
+            if (telType != PhoneResourceType.OTHER) exclude = ArrayUtils.add(exclude, telType.getValue());
+            Map<String, Boolean> labels = getLabels(jcardType, exclude, null);
             jsContact.addPhone(Resource.builder()
                     .value(getValue(tel))
-                    .type((telType != null) ? telType.getValue() : null)
+                    .type((telType == PhoneResourceType.OTHER && !labelsIncludesTelTypes(labels)) ? PhoneResourceType.VOICE.getValue() : telType.getValue())
                     .context(rcontext)
-                    .labels(getLabels(jcardType, exclude, null))
+                    .labels(labels)
                     .isPreferred(getPreference(tel.getPref()))
                     .build());
         }

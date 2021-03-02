@@ -13,92 +13,93 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
+package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.ResourceContext;
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
+import ezvcard.util.TelUri;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.dto.PhoneResourceType;
 import org.junit.Test;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 
-public class PhoneResourceTest extends VCard2JSContactTest {
+public class PhoneResourceTest extends JSContact2VCardTest {
+
 
     @Test
     public void testPhoneResourceValid1() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "TEL;VALUE=uri;TYPE=home:tel:+33-01-23-45-6\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneResourceValid1 - 1",jsCard.getPhones().length == 1);
-        assertTrue("testPhoneResourceValid1 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid1 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{" +
+                    "\"value\": \"test\"" +
+                "}," +
+                "\"phones\":[{\"context\":\"private\",\"type\":\"voice\",\"value\":\"tel:+33-01-23-45-6\"}]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testPhoneResourceValid1 - 1",vcard.getTelephoneNumbers().size() == 1);
+        assertTrue("testPhoneResourceValid1 - 2",vcard.getTelephoneNumbers().get(0).getUri().equals(TelUri.parse("tel:+33-01-23-45-6")));
+        assertTrue("testPhoneResourceValid1 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("home,voice"));
     }
+
 
     @Test
     public void testPhoneResourceValid2() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "TEL;VALUE=uri;TYPE=home:tel:+33-01-23-45-6\n" +
-                "TEL;VALUE=uri;TYPE=voice,home;PREF=1:tel:+1-555-555-5555;ext=555\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneResourceValid2 - 1",jsCard.getPhones().length == 2);
-        assertTrue("testPhoneResourceValid2 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid3 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
-        assertTrue("testPhoneResourceValid2 - 4",jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
-        assertTrue("testPhoneResourceValid2 - 5",jsCard.getPhones()[0].getLabels() == null);
-        assertTrue("testPhoneResourceValid2 - 6",jsCard.getPhones()[1].getValue().equals("tel:+1-555-555-5555;ext=555"));
-        assertTrue("testPhoneResourceValid2 - 7",jsCard.getPhones()[1].getType().equals(PhoneResourceType.VOICE.getValue()));
-        assertTrue("testPhoneResourceValid2 - 8",jsCard.getPhones()[1].getIsPreferred() == Boolean.TRUE);
-        assertTrue("testPhoneResourceValid2 - 9",jsCard.getPhones()[1].getLabels() == null);
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{" +
+                "\"value\": \"test\"" +
+                "}," +
+                "\"phones\":[ " +
+                      "{\"context\":\"private\",\"type\":\"voice\",\"value\":\"tel:+33-01-23-45-6\"}," +
+                      "{\"context\":\"private\",\"type\":\"voice\",\"isPreferred\":true,\"value\":\"tel:+1-555-555-5555;ext=555\"}" +
+                 "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testPhoneResourceValid2 - 1",vcard.getTelephoneNumbers().size() == 2);
+        assertTrue("testPhoneResourceValid2 - 2",vcard.getTelephoneNumbers().get(0).getUri().equals(TelUri.parse("tel:+33-01-23-45-6")));
+        assertTrue("testPhoneResourceValid2 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("home,voice"));
+        assertTrue("testPhoneResourceValid2 - 4",vcard.getTelephoneNumbers().get(1).getUri().equals(TelUri.parse("tel:+1-555-555-5555;ext=555")));
+        assertTrue("testPhoneResourceValid2 - 5",vcard.getTelephoneNumbers().get(1).getParameter("TYPE").equals("home,voice"));
+        assertTrue("testPhoneResourceValid2 - 6",vcard.getTelephoneNumbers().get(1).getPref() == 1);
     }
+
 
     @Test
     public void testPhoneResourceValid3() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "TEL;VALUE=uri;TYPE=work,fax:tel:+33-01-23-45-6\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneResourceValid3 - 1",jsCard.getPhones().length == 1);
-        assertTrue("testPhoneResourceValid3 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid3 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
-        assertTrue("testPhoneResourceValid3 - 4",jsCard.getPhones()[0].getType().equals(PhoneResourceType.FAX.getValue()));
-        assertTrue("testPhoneResourceValid3 - 5",jsCard.getPhones()[0].getLabels() == null);
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{" +
+                "\"value\": \"test\"" +
+                "}," +
+                "\"phones\":[{\"context\":\"work\",\"type\":\"fax\",\"value\":\"tel:+33-01-23-45-6\"}]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testPhoneResourceValid3 - 1",vcard.getTelephoneNumbers().size() == 1);
+        assertTrue("testPhoneResourceValid3 - 2",vcard.getTelephoneNumbers().get(0).getUri().equals(TelUri.parse("tel:+33-01-23-45-6")));
+        assertTrue("testPhoneResourceValid3 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("work,fax"));
 
     }
 
+        /*
     @Test
     public void testPhoneResourceValid4() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "TEL;VALUE=uri;TYPE=work,textphone:tel:+33-01-23-45-6\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneResourceValid4 - 1",jsCard.getPhones().length == 1);
-        assertTrue("testPhoneResourceValid4 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid4 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
-        assertTrue("testPhoneResourceValid4 - 4",jsCard.getPhones()[0].getType().equals(PhoneResourceType.OTHER.getValue()));
-        assertTrue("testPhoneResourceValid4 - 5",jsCard.getPhones()[0].getLabels().get("textphone") == Boolean.TRUE);
-        assertTrue("testPhoneResourceValid4 - 6",jsCard.getPhones()[0].getLabels().size() == 1);
-        assertTrue("testPhoneResourceValid4 - 7",jsCard.getPhones()[0].getType().equals(PhoneResourceType.OTHER.getValue()));
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{" +
+                "\"value\": \"test\"" +
+                "}," +
+                "\"phones\":[{\"context\":\"work\",\"type\":\"other\",\"value\":\"tel:+33-01-23-45-6\",\"labels\":{\"textphone\":true}}]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testPhoneResourceValid4 - 1",vcard.getTelephoneNumbers().size() == 1);
+        assertTrue("testPhoneResourceValid4 - 2",vcard.getTelephoneNumbers().get(0).getUri().equals(TelUri.parse("tel:+33-01-23-45-6")));
+        assertTrue("testPhoneResourceValid4 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("work,textphone"));
 
     }
 
@@ -118,7 +119,7 @@ public class PhoneResourceTest extends VCard2JSContactTest {
         assertTrue("testPhoneResourceValid5 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
         assertTrue("testPhoneResourceValid5 - 4",jsCard.getPhones()[0].getLabels().size() == 1);
         assertTrue("testPhoneResourceValid5 - 5",jsCard.getPhones()[0].getLabels().get("work") == Boolean.TRUE);
-        assertTrue("testPhoneResourceValid5 - 6",jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
+        assertTrue("testPhoneResourceValid5 - 6",jsCard.getPhones()[0].getType().equals(PhoneResourceType.OTHER.getValue()));
 
     }
 
@@ -137,7 +138,7 @@ public class PhoneResourceTest extends VCard2JSContactTest {
         assertTrue("testPhoneResourceValid6 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
         assertTrue("testPhoneResourceValid6 - 4",jsCard.getPhones()[0].getLabels().size() == 1);
         assertTrue("testPhoneResourceValid6 - 5",jsCard.getPhones()[0].getLabels().get("private") == Boolean.TRUE);
-        assertTrue("testPhoneResourceValid6 - 6",jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
+        assertTrue("testPhoneResourceValid6 - 6",jsCard.getPhones()[0].getType().equals(PhoneResourceType.OTHER.getValue()));
 
     }
 
@@ -197,5 +198,6 @@ public class PhoneResourceTest extends VCard2JSContactTest {
         assertTrue("testPhoneResourceValid9 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
 
     }
+*/
 
 }

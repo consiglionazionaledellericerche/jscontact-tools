@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
@@ -44,6 +45,15 @@ public enum PhoneResourceType implements JCardTypeDerivedEnum {
     @Override
     public String toString() {
         return value;
+    }
+
+    @JsonIgnore
+    public static String getVCardType(PhoneResourceType type) {
+
+        if (type == OTHER)
+            return null;
+
+        return type.getValue();
     }
 
 }
