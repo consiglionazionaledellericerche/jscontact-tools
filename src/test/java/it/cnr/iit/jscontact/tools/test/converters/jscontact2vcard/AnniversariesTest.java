@@ -18,7 +18,6 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.VCard;
 import ezvcard.util.GeoUri;
 import ezvcard.util.VCardDateFormat;
-import it.cnr.iit.jscontact.tools.dto.AnniversaryType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -213,10 +212,51 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
-        assertTrue("testAnniversariesValid6 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
-        assertTrue("testAnniversariesValid6 - 2",vcard.getBirthplace().getGeoUri().equals(GeoUri.parse("geo:34.15876,-118.45728")));
-        assertTrue("testAnniversariesValid6 - 3",vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")) == 0 );
-        assertTrue("testAnniversariesValid6 - 4",vcard.getDeathplace().getText().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 U.S.A."));
-        assertTrue("testAnniversariesValid6 - 5",vcard.getAnniversary().getDate().compareTo(VCardDateFormat.parse("1986-02-01T19:00:00Z")) == 0 );
+        assertTrue("testAnniversariesValid7 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
+        assertTrue("testAnniversariesValid7 - 2",vcard.getBirthplace().getGeoUri().equals(GeoUri.parse("geo:34.15876,-118.45728")));
+        assertTrue("testAnniversariesValid7 - 3",vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")) == 0 );
+        assertTrue("testAnniversariesValid7 - 4",vcard.getDeathplace().getText().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 U.S.A."));
+        assertTrue("testAnniversariesValid7 - 5",vcard.getAnniversary().getDate().compareTo(VCardDateFormat.parse("1986-02-01T19:00:00Z")) == 0 );
     }
+
+    @Test
+    public void testAnniversariesValid8() throws IOException, CardException {
+
+        String jsCard = "{ " +
+                "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"anniversaries\":[ " +
+                    "{" +
+                        "\"type\":\"birth\", " +
+                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"place\":{ " +
+                            "\"locality\":\"Los Angeles\"," +
+                            "\"region\":\"CA\"," +
+                            "\"country\":\"U.S.A.\"" +
+                        "}" +
+                    "}," +
+                    "{" +
+                        "\"type\":\"death\", " +
+                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"place\":{ " +
+                            "\"fullAddress\":{ " +
+                                "\"value\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 U.S.A.\"" +
+                            "}" +
+                        "}" +
+                    "}," +
+                    "{" +
+                        "\"type\":\"other\", " +
+                        "\"label\":\"marriage date\"," +
+                        "\"date\":\"1986-02-01T19:00:00Z\"" +
+                    "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        assertTrue("testAnniversariesValid8 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
+        assertTrue("testAnniversariesValid8 - 2",vcard.getBirthplace().getText().equals("Los Angeles\nCA\nU.S.A."));
+        assertTrue("testAnniversariesValid8 - 3",vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")) == 0 );
+        assertTrue("testAnniversariesValid8 - 4",vcard.getDeathplace().getText().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 U.S.A."));
+        assertTrue("testAnniversariesValid8 - 5",vcard.getAnniversary().getDate().compareTo(VCardDateFormat.parse("1986-02-01T19:00:00Z")) == 0 );
+    }
+
 }
