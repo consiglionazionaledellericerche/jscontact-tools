@@ -12,17 +12,25 @@ import ezvcard.parameter.InterestLevel;
 import ezvcard.parameter.RelatedType;
 import ezvcard.property.*;
 import ezvcard.property.Kind;
+import ezvcard.util.GeoUri;
+import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.Address;
+import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Constructor;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.StringJoiner;
 
 @NoArgsConstructor
 public class JSContact2EZVCard extends AbstractConverter {
@@ -101,6 +109,98 @@ public class JSContact2EZVCard extends AbstractConverter {
         vcard.setStructuredName(name);
         if (nicknames.size() > 0)
             vcard.setNickname(nicknames.toArray(new String[nicknames.size()]));
+    }
+
+    private static boolean isComposedAddress(Address address) {
+
+        return (address.getCountry() !=null ||
+                address.getCountryCode() !=null ||
+                address.getRegion() != null ||
+                address.getLocality() != null ||
+                address.getStreet() != null ||
+                address.getPostOfficeBox() != null ||
+                address.getPostcode() != null ||
+                address.getExtension() != null);
+    }
+
+    private static String getFullAddress(Address addr) {
+
+        StringJoiner joiner = new StringJoiner(AUTO_FULL_ADDRESS_DELIMITER);
+        if (StringUtils.isNotEmpty(addr.getPostOfficeBox())) joiner.add(addr.getPostOfficeBox());
+        if (StringUtils.isNotEmpty(addr.getExtension())) joiner.add(addr.getExtension());
+        if (StringUtils.isNotEmpty(addr.getStreet())) joiner.add(addr.getStreet());
+        if (StringUtils.isNotEmpty(addr.getLocality())) joiner.add(addr.getLocality());
+        if (StringUtils.isNotEmpty(addr.getRegion())) joiner.add(addr.getRegion());
+        if (StringUtils.isNotEmpty(addr.getPostcode())) joiner.add(addr.getPostcode());
+        if (StringUtils.isNotEmpty(addr.getCountry())) joiner.add(addr.getCountry());
+        if (StringUtils.isNotEmpty(addr.getCountryCode())) joiner.add(addr.getCountryCode());
+        return joiner.toString();
+    }
+
+    private static <T extends PlaceProperty> T getPlace(Class<T> classs,Anniversary anniversary) {
+
+        if (anniversary.getPlace() == null)
+            return null;
+
+        try {
+            Constructor<T> constructor;
+            if (anniversary.getPlace().getFullAddress() != null) {
+                constructor = classs.getDeclaredConstructor(String.class);
+                return constructor.newInstance(anniversary.getPlace().getFullAddress().getValue());
+            }
+
+            if (isComposedAddress(anniversary.getPlace())) {
+                constructor = classs.getDeclaredConstructor(String.class);
+                return constructor.newInstance(getFullAddress(anniversary.getPlace()));
+            }
+
+            if (anniversary.getPlace().getCoordinates() != null) {
+                GeoUri geoUri = GeoUri.parse(anniversary.getPlace().getCoordinates());
+                constructor = classs.getDeclaredConstructor(double.class, double.class);
+                return constructor.newInstance(geoUri.getCoordA(), geoUri.getCoordB());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+    private static <T extends DateOrTimeProperty> T getDate(Class<T> classs, Anniversary anniversary) {
+
+        try {
+            Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class);
+            return constructor.newInstance(VCardDateFormat.parseAsCalendar(anniversary.getDate()));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+    private static void fillAnniversaries(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getAnniversaries() == null)
+            return;
+
+        for (Anniversary anniversary : jsContact.getAnniversaries()) {
+
+            switch(anniversary.getType()) {
+                case BIRTH:
+                    vcard.setBirthday(getDate(Birthday.class, anniversary));
+                    vcard.setBirthplace(getPlace(Birthplace.class, anniversary));
+                    break;
+                case DEATH:
+                    vcard.setDeathdate(getDate(Deathdate.class, anniversary));
+                    vcard.setDeathplace(getPlace(Deathplace.class, anniversary));
+                    break;
+                case OTHER:
+                    if (anniversary.getLabel().equals(ANNIVERSAY_MARRIAGE_LABEL))
+                        vcard.setAnniversary(getDate(ezvcard.property.Anniversary.class,anniversary));
+                    break;
+            }
+        }
+
     }
 
     private static Expertise getExpertise(PersonalInformation pi) {
@@ -315,7 +415,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillFormattedNames(vCard, jsContact);
         fillNames(vCard, jsContact);
 //        fillAddresses(vCard, jsContact);
-//        fillAnniversaries(vCard, jsContact);
+        fillAnniversaries(vCard, jsContact);
         fillPersonalInfos(vCard, jsContact);
 //        fillContactLanguages(vCard, jsContact);
 //        fillPhones(vCard, jsContact);

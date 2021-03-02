@@ -48,8 +48,6 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 public class EZVCard2JSContact extends AbstractConverter {
 
-    private static final String AUTO_FULL_ADDRESS_DELIMITER = "\n";
-    private static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
     private static final Pattern TIMEZONE_AS_UTC_OFFSET_PATTERN = Pattern.compile("[+-](\\d{2}):?(\\d{2})");
     private static final String DEFAULT_CALSCALE = "gregorian";
     protected static final String UNMATCHED_PROPERTY_PREFIX = "ietf.org/rfc6350/";
