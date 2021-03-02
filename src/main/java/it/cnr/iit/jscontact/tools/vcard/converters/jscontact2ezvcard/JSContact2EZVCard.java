@@ -244,6 +244,26 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
+
+    private static Language getLanguage(String lang, ContactLanguage cl) {
+
+        Language language = new Language(lang);
+        language.setType(cl.getType());
+        language.setPref(cl.getPreference());
+        return language;
+    }
+
+    private static void fillContactLanguages(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getPreferredContactLanguages() == null)
+            return;
+
+        for (String lang : jsContact.getPreferredContactLanguages().keySet()) {
+            for(ContactLanguage cl : jsContact.getPreferredContactLanguages().get(lang))
+                vcard.addLanguage(getLanguage(lang, cl));
+        }
+    }
+
     private static <E extends TextProperty > E getTextProperty(E property, String language, Integer altId) {
 
         if (altId != null) property.getParameters().setAltId(altId.toString());
@@ -417,7 +437,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 //        fillAddresses(vCard, jsContact);
         fillAnniversaries(vCard, jsContact);
         fillPersonalInfos(vCard, jsContact);
-//        fillContactLanguages(vCard, jsContact);
+        fillContactLanguages(vCard, jsContact);
 //        fillPhones(vCard, jsContact);
 //        fillEmails(vCard, jsContact);
 //        fillOnlines(vCard, jsContact);
