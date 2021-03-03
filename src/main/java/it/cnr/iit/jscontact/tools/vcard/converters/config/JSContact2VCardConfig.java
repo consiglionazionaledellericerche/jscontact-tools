@@ -25,6 +25,8 @@ import lombok.Data;
 public class JSContact2VCardConfig {
 
     @Builder.Default
+    private String extensionsPrefix = "extension/";
+    @Builder.Default
     private boolean cardToValidate = true;
 
 }

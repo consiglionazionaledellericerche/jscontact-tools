@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
-import ezvcard.parameter.ExpertiseLevel;
-import ezvcard.parameter.HobbyLevel;
-import ezvcard.parameter.InterestLevel;
-import ezvcard.parameter.RelatedType;
+import ezvcard.parameter.*;
 import ezvcard.property.*;
 import ezvcard.property.Kind;
 import ezvcard.util.GeoUri;
@@ -23,7 +20,6 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Constructor;
@@ -148,7 +144,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner.toString();
     }
 
-    private static <T extends PlaceProperty> T getPlace(Class<T> classs,Anniversary anniversary) {
+    private static <T extends PlaceProperty> T getPlaceProperty(Class<T> classs, Anniversary anniversary) {
 
         if (anniversary.getPlace() == null)
             return null;
@@ -177,7 +173,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return null;
     }
 
-    private static <T extends DateOrTimeProperty> T getDate(Class<T> classs, Anniversary anniversary) {
+    private static <T extends DateOrTimeProperty> T getDateOrTimeProperty(Class<T> classs, Anniversary anniversary) {
 
         try {
             Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class);
@@ -198,16 +194,16 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             switch(anniversary.getType()) {
                 case BIRTH:
-                    vcard.setBirthday(getDate(Birthday.class, anniversary));
-                    vcard.setBirthplace(getPlace(Birthplace.class, anniversary));
+                    vcard.setBirthday(getDateOrTimeProperty(Birthday.class, anniversary));
+                    vcard.setBirthplace(getPlaceProperty(Birthplace.class, anniversary));
                     break;
                 case DEATH:
-                    vcard.setDeathdate(getDate(Deathdate.class, anniversary));
-                    vcard.setDeathplace(getPlace(Deathplace.class, anniversary));
+                    vcard.setDeathdate(getDateOrTimeProperty(Deathdate.class, anniversary));
+                    vcard.setDeathplace(getPlaceProperty(Deathplace.class, anniversary));
                     break;
                 case OTHER:
                     if (anniversary.getLabel().equals(ANNIVERSAY_MARRIAGE_LABEL))
-                        vcard.setAnniversary(getDate(ezvcard.property.Anniversary.class,anniversary));
+                        vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class,anniversary));
                     break;
             }
         }
@@ -334,6 +330,131 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Resource email : jsContact.getEmails())
             vcard.getEmails().add(getEmail(email));
+    }
+
+    private static ImageType getImageType(String mediaType) {
+
+        for (ImageType it : ImageType.all()) {
+            if (it.getMediaType().equals(mediaType))
+                return it;
+        }
+        return null;
+    }
+
+    private static Photo getPhoto(File file) {
+
+        ImageType it = getImageType(file.getMediaType());
+        if (it == null) return null;
+        Photo photo = new Photo(file.getHref(), it);
+        photo.setPref((file.getIsPreferred() == Boolean.TRUE) ? 1 : null);
+        photo.setContentType(it);
+        return photo;
+    }
+
+    private static <T extends VCardProperty> void fillVCardProperty(T property, Resource resource) {
+
+        if (resource.getMediaType()!=null)
+            property.setParameter("MEDIATYPE",resource.getMediaType());
+        if (resource.getIsPreferred() == Boolean.TRUE)
+            property.setParameter("PREF", "1");
+        if (resource.getContext()!=null)
+            property.setParameter("TYPE", ResourceContext.getVCardType(resource.getContext()));
+        if (resource.getIndex()!=null)
+            property.setParameter("INDEX", resource.getIndex().toString());
+
+    }
+
+
+    private static <T extends UriProperty> T getUriProperty(Class<T> classs, Resource resource) {
+
+        try {
+            Constructor<T> constructor = classs.getDeclaredConstructor(String.class);
+            T object = constructor.newInstance(resource.getValue());
+            fillVCardProperty(object,resource);
+            return object;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+    private static <T extends BinaryProperty> T getBinaryProperty(Class<T> classs, Resource resource) {
+
+        try {
+            ImageType it = getImageType(resource.getMediaType());
+            Constructor<T> constructor = classs.getDeclaredConstructor(String.class, ImageType.class);
+            T object = constructor.newInstance(resource.getValue(), it);
+            fillVCardProperty(object,resource);
+            return object;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+
+    private static void fillPhotos(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getPhotos() == null)
+            return;
+
+        for(File file : jsContact.getPhotos()) {
+            Photo photo = getPhoto(file);
+            if (photo == null) continue;
+            vcard.getPhotos().add(photo);
+        }
+    }
+
+
+    private static void fillOnlines(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getOnline() == null)
+            return;
+
+        for (Resource resource : jsContact.getOnline()) {
+            switch(LabelKey.getLabelKey(new ArrayList<String>(resource.getLabels().keySet()))) {
+                case SOUND:
+                    vcard.getSounds().add(getBinaryProperty(Sound.class,resource));
+                    break;
+                case SOURCE:
+                    vcard.getSources().add(getUriProperty(Source.class,resource));
+                    break;
+                case KEY:
+                    vcard.getKeys().add(getBinaryProperty(Key.class,resource));
+                    break;
+                case LOGO:
+                    vcard.getLogos().add(getBinaryProperty(Logo.class,resource));
+                    break;
+                case URL:
+                    vcard.getUrls().add(getUriProperty(Url.class,resource));
+                    break;
+                case FBURL:
+                    vcard.getFbUrls().add(getUriProperty(FreeBusyUrl.class,resource));
+                    break;
+                case CALADRURI:
+                    vcard.getCalendarRequestUris().add(getUriProperty(CalendarRequestUri.class,resource));
+                    break;
+                case CALURI:
+                    vcard.getCalendarUris().add(getUriProperty(CalendarUri.class,resource));
+                    break;
+                case ORG_DIRECTORY:
+                    vcard.getOrgDirectories().add(getUriProperty(OrgDirectory.class,resource));
+                    break;
+                case IMPP:
+
+                    Impp impp = new Impp(resource.getValue());
+                    fillVCardProperty(impp,resource);
+                    vcard.getImpps().add(impp);
+                    break;
+                case CONTACT_URI:
+                    RawProperty rp = new RawProperty("CONTACT-URI",resource.getValue());
+                    fillVCardProperty(rp,resource);
+                    vcard.getExtendedProperties().add(rp);
+                    break;
+            }
+        }
     }
 
     private static <E extends TextProperty > E getTextProperty(E property, String language, Integer altId) {
@@ -482,6 +603,15 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
+    private void fillExtensions(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getExtensions() == null)
+            return;
+
+        for (String key : jsContact.getExtensions().keySet())
+            vcard.getExtendedProperties().add(new RawProperty(key.replace(config.getExtensionsPrefix(),""),jsContact.getExtensions().get(key)));
+
+    }
 
     /**
      * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
@@ -512,18 +642,17 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillContactLanguages(vCard, jsContact);
         fillPhones(vCard, jsContact);
         fillEmails(vCard, jsContact);
-//        fillOnlines(vCard, jsContact);
+        fillPhotos(vCard, jsContact);
+        fillOnlines(vCard, jsContact);
         fillTitles(vCard, jsContact);
         fillRoles(vCard, jsContact);
         fillOrganizations(vCard, jsContact);
         fillCategories(vCard, jsContact);
         fillNotes(vCard, jsContact);
         fillRelations(vCard, jsContact);
-//        fillExtensions(vCard, jsContact);
-//        fillUnmatchedElments(vCard, jsContact);
+        fillExtensions(vCard, jsContact);
 
         return vCard;
-
     }
 
     /**

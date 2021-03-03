@@ -17,6 +17,8 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 public enum LabelKey {
 
@@ -38,4 +40,12 @@ public enum LabelKey {
         return value;
     }
 
+    public static LabelKey getLabelKey(List<String> labels) {
+
+        for (LabelKey key : LabelKey.values())
+            if (labels.contains(key.getValue()))
+                return key;
+
+         return null;
+    }
 }

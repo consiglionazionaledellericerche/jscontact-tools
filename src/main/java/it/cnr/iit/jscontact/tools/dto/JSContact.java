@@ -112,6 +112,15 @@ public abstract class JSContact extends ValidableObject {
         return extensions;
     }
 
+    @JsonAnySetter
+    public void setExtension(String name, String value) {
+
+        if (extensions == null)
+            extensions = new HashMap<String,String>();
+
+        extensions.put(name, value);
+    }
+
     public void addName(NameComponent nc) {
         name = ArrayUtils.add(name, nc);
     }
