@@ -58,8 +58,25 @@ public enum ResourceContext implements JCardTypeDerivedEnum {
         return value;
     }
 
+
+    @JsonIgnore
+    public static String getVCardType(String context) {
+
+        try {
+            ResourceContext rc = ResourceContext.getEnum(context);
+            return getVCardType(rc);
+        }
+        catch(Exception e) {
+            return context;
+        }
+
+    }
+
     @JsonIgnore
     public static String getVCardType(ResourceContext context) {
+
+        if (context == null)
+            return null;
 
         for (String key : aliases.keySet())
             if (aliases.get(key).equals(context))

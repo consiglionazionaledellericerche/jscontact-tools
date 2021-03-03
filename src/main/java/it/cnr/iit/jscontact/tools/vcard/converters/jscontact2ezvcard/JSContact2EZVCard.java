@@ -285,14 +285,15 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
         tel.setPref((resource.getIsPreferred() == Boolean.TRUE) ? 1 : null);
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
-        if (resource.getContext() != null && ResourceContext.getVCardType(resource.getContext())!=null)
-            joiner.add(ResourceContext.getVCardType(resource.getContext()));
+        String context = ResourceContext.getVCardType(resource.getContext());
+        if (context!=null)
+            joiner.add(context);
         PhoneResourceType telType = (resource.getType()!=null) ? PhoneResourceType.getEnum(resource.getType()): null;
-        if (resource.getType()!=null && telType!=null)
-            joiner.add(PhoneResourceType.getVCardType(telType));
+        if (telType!=null && telType!=PhoneResourceType.OTHER)
+            joiner.add(telType.getValue());
         if (resource.getLabels()!=null) {
             for (String key : resource.getLabels().keySet())
-                joiner.add(key);
+                joiner.add(ResourceContext.getVCardType(key));
         }
         tel.setParameter("TYPE", joiner.toString());
 
@@ -313,11 +314,13 @@ public class JSContact2EZVCard extends AbstractConverter {
         Email email = new Email(resource.getValue());
         email.setPref((resource.getIsPreferred() == Boolean.TRUE) ? 1 : null);
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
-        if (resource.getContext() != null && ResourceContext.getVCardType(resource.getContext())!=null)
-            joiner.add(ResourceContext.getVCardType(resource.getContext()));
+
+        String context = ResourceContext.getVCardType(resource.getContext());
+        if (context!=null)
+            joiner.add(context);
         if (resource.getLabels()!=null) {
             for (String key : resource.getLabels().keySet())
-                joiner.add(key);
+                joiner.add(ResourceContext.getVCardType(key));
         }
         email.setParameter("TYPE", joiner.toString());
         return email;
