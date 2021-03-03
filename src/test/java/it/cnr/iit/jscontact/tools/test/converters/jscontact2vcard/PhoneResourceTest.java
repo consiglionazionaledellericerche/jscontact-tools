@@ -31,9 +31,7 @@ public class PhoneResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"phones\":[{\"context\":\"private\",\"type\":\"voice\",\"value\":\"tel:+33-01-23-45-6\"}]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -47,9 +45,7 @@ public class PhoneResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"phones\":[ " +
                       "{\"context\":\"private\",\"type\":\"voice\",\"value\":\"tel:+33-01-23-45-6\"}," +
                       "{\"context\":\"private\",\"type\":\"voice\",\"isPreferred\":true,\"value\":\"tel:+1-555-555-5555;ext=555\"}" +
@@ -69,9 +65,7 @@ public class PhoneResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"phones\":[{\"context\":\"work\",\"type\":\"fax\",\"value\":\"tel:+33-01-23-45-6\"}]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -85,9 +79,7 @@ public class PhoneResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"phones\":[{\"context\":\"work\",\"type\":\"other\",\"value\":\"tel:+33-01-23-45-6\",\"labels\":{\"textphone\":true}}]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -101,9 +93,7 @@ public class PhoneResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"phones\":[{\"context\":\"work\",\"type\":\"voice\",\"value\":\"tel:+33-01-23-45-6\",\"labels\":{\"private\":true}}]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -117,9 +107,7 @@ public class PhoneResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                  "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"phones\":[{\"context\":\"work\",\"type\":\"other\",\"value\":\"tel:+33-01-23-45-6\",\"labels\":{\"textphone\":true,\"private\":true}}]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -133,9 +121,7 @@ public class PhoneResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"phones\":[{\"context\":\"work\",\"type\":\"voice\",\"value\":\"tel:+33-01-23-45-6\",\"labels\":{\"textphone\":true,\"private\":true}}]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

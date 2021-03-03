@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
+import ezvcard.parameter.ImageType;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.dto.LabelKey;
 import it.cnr.iit.jscontact.tools.dto.OnlineResourceType;
@@ -35,9 +36,7 @@ public class OnlineResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"online\":["+
                     "{" +
                         "\"type\": \"username\","+
@@ -61,9 +60,7 @@ public class OnlineResourceTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"online\":["+
                     "{" +
                         "\"type\": \"uri\","+
@@ -75,19 +72,14 @@ public class OnlineResourceTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineResourceValid2 - 1",vcard.getSources().size() == 1);
         assertTrue("testOnlineResourceValid2 - 2",vcard.getSources().get(0).getValue().equals("http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf"));
-
     }
-
-    /*
 
     @Test
     public void testPhotoValid() throws IOException, CardException {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                  "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"photos\":["+
                     "{" +
                         "\"mediaType\": \"image/gif\","+
@@ -96,123 +88,72 @@ public class OnlineResourceTest extends JSContact2VCardTest {
                 "]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(vcard);
         assertTrue("testPhotoValid - 1",vcard.getPhotos().size() == 1);
         assertTrue("testPhotoValid - 2",vcard.getPhotos().get(0).getUrl().equals("http://www.example.com/pub/photos/jqpublic.gif"));
-        assertTrue("testPhotoValid - 3",vcard.getPhotos().get(0).getContentType().equals("gif"));
-
+        assertTrue("testPhotoValid - 3",vcard.getPhotos().get(0).getContentType() == ImageType.GIF);
     }
 
     @Test
     public void testOnlineResourceValid4() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "LOGO:http://www.example.com/pub/logos/abccorp.jpg\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid4 - 1",jsCard.getOnline().length == 1);
-        assertTrue("testOnlineResourceValid4 - 2",jsCard.getOnline()[0].getValue().equals("http://www.example.com/pub/logos/abccorp.jpg"));
-        assertTrue("testOnlineResourceValid4 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid4 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid4 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid4 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.LOGO.getValue()) == Boolean.TRUE);
-
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                "{" +
+                    "\"type\": \"uri\","+
+                    "\"labels\": { \"logo\": true }," +
+                    "\"value\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
+                "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid4 - 1",vcard.getLogos().size() == 1);
+        assertTrue("testOnlineResourceValid4 - 2",vcard.getLogos().get(0).getUrl().equals("http://www.example.com/pub/logos/abccorp.jpg"));
     }
-
 
     @Test
     public void testOnlineResourceValid5() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "CONTACT-URI;PREF=1:mailto:contact@example.com\n" +
-                "END:VCARD";
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                    "{" +
+                    "\"type\": \"uri\","+
+                    "\"labels\": { \"contact-uri\": true }," +
+                    "\"value\": \"mailto:contact@example.com\"" +
+                    "}" +
+                "]" +
+                "}";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid5 - 1",jsCard.getOnline().length == 1);
-        assertTrue("testOnlineResourceValid5 - 2",jsCard.getOnline()[0].getValue().equals("mailto:contact@example.com"));
-        assertTrue("testOnlineResourceValid5 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid5 - 4",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid5 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid5 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.CONTACT_URI.getValue()) == Boolean.TRUE);
-
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid5 - 1",vcard.getExtendedProperties().size() == 1);
+        assertTrue("testOnlineResourceValid5 - 2",vcard.getExtendedProperties().get(0).getPropertyName().equals("CONTACT-URI"));
+        assertTrue("testOnlineResourceValid5 - 2",vcard.getExtendedProperties().get(0).getValue().equals("mailto:contact@example.com"));
     }
 
+    /*
     @Test
     public void testOnlineResourceValid6() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "ORG-DIRECTORY;PREF=1:ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering\n" +
-                "ORG-DIRECTORY;INDEX=1:http://directory.mycompany.example.com\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid6 - 1",jsCard.getOnline().length == 2);
-        assertTrue("testOnlineResourceValid6 - 2",jsCard.getOnline()[0].getValue().equals("http://directory.mycompany.example.com"));
-        assertTrue("testOnlineResourceValid6 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid6 - 4",jsCard.getOnline()[0].getLabels().get(LabelKey.ORG_DIRECTORY.getValue()) == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid6 - 5",jsCard.getOnline()[0].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid6 - 6",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid6 - 7",jsCard.getOnline()[1].getValue().equals("ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering"));
-        assertTrue("testOnlineResourceValid6 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid6 - 9",jsCard.getOnline()[1].getIsPreferred() == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid6 - 10",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid6 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.ORG_DIRECTORY.getValue()) == Boolean.TRUE);
-
-
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                    "{" +
+                    "\"type\": \"uri\","+
+                    "\"labels\": { \"sound\": true }," +
+                    "\"value\": \"CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com\"" +
+                    "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid6 - 1",vcard.getSounds().size() == 1);
+        assertTrue("testOnlineResourceValid6 - 2",vcard.getSounds().get(0).getUrl().equals("CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com"));
     }
 
-    @Test
-    public void testOnlineResourceValid7() throws IOException, CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "ORG-DIRECTORY;INDEX=2;PREF=1:ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering\n" +
-                "ORG-DIRECTORY;INDEX=1:http://directory.mycompany.example.com\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid7 - 1",jsCard.getOnline().length == 2);
-        assertTrue("testOnlineResourceValid7 - 2",jsCard.getOnline()[0].getValue().equals("http://directory.mycompany.example.com"));
-        assertTrue("testOnlineResourceValid7 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid7 - 4",jsCard.getOnline()[0].getLabels().get(LabelKey.ORG_DIRECTORY.getValue()) == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid7 - 5",jsCard.getOnline()[0].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid7 - 6",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid7 - 7",jsCard.getOnline()[1].getValue().equals("ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering"));
-        assertTrue("testOnlineResourceValid7 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid7 - 9",jsCard.getOnline()[1].getIsPreferred() == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid7 - 10",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid7 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.ORG_DIRECTORY.getValue()) == Boolean.TRUE);
-
-    }
-
-
-    @Test
-    public void testOnlineResourceValid8() throws IOException, CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "SOUND:CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid8 - 1",jsCard.getOnline().length == 1);
-        assertTrue("testOnlineResourceValid8 - 2",jsCard.getOnline()[0].getValue().equals("CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com"));
-        assertTrue("testOnlineResourceValid8 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid8 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid8 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid8 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.SOUND.getValue()) == Boolean.TRUE);
-
-    }
-
+    /*
     @Test
     public void testOnlineResourceValid9() throws IOException, CardException {
 

@@ -30,6 +30,7 @@ public class RolesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"roles\":[" +
                     "{" +
                         "\"value\": \"Project Leader\"," +
@@ -52,6 +53,7 @@ public class RolesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"roles\":[" +
                     "{" +
                         "\"value\": \"Project Leader\"," +
@@ -80,6 +82,7 @@ public class RolesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"roles\":[" +
                     "{" +
                         "\"value\": \"Project Leader\"," +

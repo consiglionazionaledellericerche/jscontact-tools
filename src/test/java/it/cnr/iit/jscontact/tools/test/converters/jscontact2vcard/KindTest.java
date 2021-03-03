@@ -30,9 +30,7 @@ public class KindTest extends JSContact2VCardTest {
 
         String jscard="{" +
                        "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                       "\"fullName\":{" +
-                          "\"value\": \"test\"" +
-                       "}," +
+                       "\"fullName\":{\"value\":\"test\"}," +
                        "\"kind\":\"individual\"" +
                        "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -44,14 +42,11 @@ public class KindTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"kind\":\"x-value\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testExtKind - 1",vcard.getKind().getValue().equals("x-value"));
     }
-
 
 }

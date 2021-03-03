@@ -31,9 +31,7 @@ public class ProdidTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"prodId\":\"-//ONLINE DIRECTORY//NONSGML Version 1//EN\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -45,9 +43,7 @@ public class ProdidTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"test\"" +
-                "}" +
+                "\"fullName\":{\"value\":\"test\"}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testAutoProdid1 - 1",vcard.getProductId() == null);

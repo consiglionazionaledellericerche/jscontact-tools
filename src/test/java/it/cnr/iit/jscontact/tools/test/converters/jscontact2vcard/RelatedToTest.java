@@ -33,9 +33,7 @@ public class RelatedToTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"relatedTo\": { " +
                    "\"urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\": {\"relation\":null}" +
                 "}" +
@@ -51,9 +49,7 @@ public class RelatedToTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"relatedTo\": { " +
                    "\"urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\": {\"relation\": { \"friend\": true } }" +
                 "}" +
@@ -72,13 +68,11 @@ public class RelatedToTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"relatedTo\": { " +
-                "\"urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\": {\"relation\": { \"friend\": true , \"colleague\": true } }," +
-                "\"http://example.com/directory/jdoe.vcf\": {\"relation\": { \"contact\": true} }, " +
-                "\"Please contact my assistant Jane Doe for any inquiries.\": {\"relation\": null } " +
+                    "\"urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\": {\"relation\": { \"friend\": true , \"colleague\": true } }," +
+                    "\"http://example.com/directory/jdoe.vcf\": {\"relation\": { \"contact\": true} }, " +
+                    "\"Please contact my assistant Jane Doe for any inquiries.\": {\"relation\": null } " +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -99,11 +93,9 @@ public class RelatedToTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"test\"" +
-                "}," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"relatedTo\": { " +
-                "\"freetext\": {\"relation\":null}" +
+                    "\"freetext\": {\"relation\":null}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -111,6 +103,5 @@ public class RelatedToTest extends JSContact2VCardTest {
         assertTrue("testRelatedToValid4 - 2",vcard.getRelations().get(0).getText().equals("freetext"));
         assertTrue("testRelatedToValid4 - 3",vcard.getRelations().get(0).getTypes().size() == 0);
     }
-
 
 }

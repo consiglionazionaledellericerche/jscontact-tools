@@ -30,6 +30,7 @@ public class CategoriesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
                 "\"categories\":{" +
                     "\"INTERNET\": true," +
                     "\"IETF\" : true, " +

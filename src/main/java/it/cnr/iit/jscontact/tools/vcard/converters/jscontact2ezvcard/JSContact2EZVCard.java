@@ -359,11 +359,8 @@ public class JSContact2EZVCard extends AbstractConverter {
             property.setParameter("PREF", "1");
         if (resource.getContext()!=null)
             property.setParameter("TYPE", ResourceContext.getVCardType(resource.getContext()));
-        if (resource.getIndex()!=null)
-            property.setParameter("INDEX", resource.getIndex().toString());
 
     }
-
 
     private static <T extends UriProperty> T getUriProperty(Class<T> classs, Resource resource) {
 
@@ -443,7 +440,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                     vcard.getOrgDirectories().add(getUriProperty(OrgDirectory.class,resource));
                     break;
                 case IMPP:
-
                     Impp impp = new Impp(resource.getValue());
                     fillVCardProperty(impp,resource);
                     vcard.getImpps().add(impp);
