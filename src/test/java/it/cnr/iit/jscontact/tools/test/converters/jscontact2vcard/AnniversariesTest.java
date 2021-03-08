@@ -253,7 +253,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid8 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
-        assertTrue("testAnniversariesValid8 - 2",vcard.getBirthplace().getText().equals("Los Angeles\nCA\nU.S.A."));
+        assertTrue("testAnniversariesValid8 - 2",vcard.getBirthplace().getText().equals("Los Angeles CA U.S.A."));
         assertTrue("testAnniversariesValid8 - 3",vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")) == 0 );
         assertTrue("testAnniversariesValid8 - 4",vcard.getDeathplace().getText().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 U.S.A."));
         assertTrue("testAnniversariesValid8 - 5",vcard.getAnniversary().getDate().compareTo(VCardDateFormat.parse("1986-02-01T19:00:00Z")) == 0 );

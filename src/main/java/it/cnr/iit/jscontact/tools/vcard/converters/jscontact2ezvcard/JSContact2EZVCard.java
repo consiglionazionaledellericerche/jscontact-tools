@@ -118,7 +118,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             vcard.setNickname(nicknames.toArray(new String[nicknames.size()]));
     }
 
-    private static boolean isComposedAddress(Address address) {
+    private static boolean isStructuredAddress(Address address) {
 
         return (address.getCountry() !=null ||
                 address.getCountryCode() !=null ||
@@ -130,9 +130,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 address.getExtension() != null);
     }
 
-    private static String getFullAddress(Address addr) {
+    private static String getFullAddressFromStructuredAddress(Address addr) {
 
-        StringJoiner joiner = new StringJoiner(AUTO_FULL_ADDRESS_DELIMITER);
+        StringJoiner joiner = new StringJoiner(AUTO_PLAIN_FULL_ADDRESS_DELIMITER);
         if (StringUtils.isNotEmpty(addr.getPostOfficeBox())) joiner.add(addr.getPostOfficeBox());
         if (StringUtils.isNotEmpty(addr.getExtension())) joiner.add(addr.getExtension());
         if (StringUtils.isNotEmpty(addr.getStreet())) joiner.add(addr.getStreet());
@@ -140,8 +140,65 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (StringUtils.isNotEmpty(addr.getRegion())) joiner.add(addr.getRegion());
         if (StringUtils.isNotEmpty(addr.getPostcode())) joiner.add(addr.getPostcode());
         if (StringUtils.isNotEmpty(addr.getCountry())) joiner.add(addr.getCountry());
-        if (StringUtils.isNotEmpty(addr.getCountryCode())) joiner.add(addr.getCountryCode());
         return joiner.toString();
+    }
+
+
+    private static List<ezvcard.property.Address> getAddress(Address address, Integer altId) {
+
+        if (!isStructuredAddress(address) && address.getFullAddress() == null)
+            return null;
+
+        List<ezvcard.property.Address> addrs = new ArrayList<ezvcard.property.Address>();
+        ezvcard.property.Address addr = new ezvcard.property.Address();
+        if (isStructuredAddress(address)) {
+            addr.setLabel(getFullAddressFromStructuredAddress(address));
+            addr.setCountry(address.getCountry());
+            addr.setRegion(address.getRegion());
+            addr.setLocality(address.getLocality());
+            addr.setStreetAddress(address.getStreet());
+            addr.setExtendedAddress(address.getExtension());
+            addr.setPoBox(address.getPostOfficeBox());
+            addr.setPostalCode(address.getPostcode());
+            if (address.getTimeZone()!=null)
+                addr.setTimezone(address.getTimeZone());
+            if (address.getCoordinates()!=null)
+                addr.setGeo(GeoUri.parse(address.getCoordinates()));
+            if (address.getCountryCode()!=null)
+                addr.setParameter("CC", address.getCountryCode());
+        }
+        if (address.getFullAddress()!=null) {
+            addr.setLabel(address.getFullAddress().getValue());
+            addr.setLanguage(address.getFullAddress().getLanguage());
+            addr.setAltId((altId != null) ? altId.toString() : null);
+        }
+        addrs.add(addr);
+        if (address.getFullAddress()!=null && address.getFullAddress().getLocalizations()!=null) {
+            for (String key : address.getFullAddress().getLocalizations().keySet()) {
+                ezvcard.property.Address localAddr = new ezvcard.property.Address();
+                localAddr.setLabel(address.getFullAddress().getLocalizations().get(key));
+                localAddr.setLanguage(key);
+                localAddr.setAltId((altId != null) ? altId.toString() : null);
+                addrs.add(localAddr);
+            }
+        }
+
+        return addrs;
+    }
+
+    private static void fillAddresses(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getAddresses() == null)
+            return;
+
+        Integer altId = Integer.parseInt("1");
+        for (Address address : jsContact.getAddresses()) {
+            boolean altIdToBeAdded = (jsContact.getAddresses().length > 1) &&
+                                     (
+                                             (address.getFullAddress()!=null && address.getFullAddress().getLocalizations()!=null)
+                                     );
+            vcard.getAddresses().addAll(getAddress(address, altIdToBeAdded ? altId : null));
+        }
     }
 
     private static <T extends PlaceProperty> T getPlaceProperty(Class<T> classs, Anniversary anniversary) {
@@ -156,9 +213,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 return constructor.newInstance(anniversary.getPlace().getFullAddress().getValue());
             }
 
-            if (isComposedAddress(anniversary.getPlace())) {
+            if (isStructuredAddress(anniversary.getPlace())) {
                 constructor = classs.getDeclaredConstructor(String.class);
-                return constructor.newInstance(getFullAddress(anniversary.getPlace()));
+                return constructor.newInstance(getFullAddressFromStructuredAddress(anniversary.getPlace()));
             }
 
             if (anniversary.getPlace().getCoordinates() != null) {
@@ -660,7 +717,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         vCard.setRevision(getRevision(jsContact.getUpdated()));
         fillFormattedNames(vCard, jsContact);
         fillNames(vCard, jsContact);
-//        fillAddresses(vCard, jsContact);
+        fillAddresses(vCard, jsContact);
         fillAnniversaries(vCard, jsContact);
         fillPersonalInfos(vCard, jsContact);
         fillContactLanguages(vCard, jsContact);
