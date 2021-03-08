@@ -15,13 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.LabelKey;
-import it.cnr.iit.jscontact.tools.dto.OnlineResourceType;
-import it.cnr.iit.jscontact.tools.dto.ResourceContext;
+import ezvcard.parameter.SoundType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -120,20 +116,18 @@ public class OnlineResourceTest extends JSContact2VCardTest {
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"online\":["+
                     "{" +
-                    "\"type\": \"uri\","+
-                    "\"labels\": { \"contact-uri\": true }," +
-                    "\"value\": \"mailto:contact@example.com\"" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"contact-uri\": true }," +
+                        "\"value\": \"mailto:contact@example.com\"" +
                     "}" +
                 "]" +
                 "}";
-
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineResourceValid5 - 1",vcard.getExtendedProperties().size() == 1);
         assertTrue("testOnlineResourceValid5 - 2",vcard.getExtendedProperties().get(0).getPropertyName().equals("CONTACT-URI"));
         assertTrue("testOnlineResourceValid5 - 2",vcard.getExtendedProperties().get(0).getValue().equals("mailto:contact@example.com"));
     }
 
-    /*
     @Test
     public void testOnlineResourceValid6() throws IOException, CardException {
 
@@ -142,131 +136,159 @@ public class OnlineResourceTest extends JSContact2VCardTest {
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"online\":["+
                     "{" +
-                    "\"type\": \"uri\","+
-                    "\"labels\": { \"sound\": true }," +
-                    "\"value\": \"CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com\"" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"sound\": true }," +
+                        "\"mediaType\": \"audio/mp3\"," +
+                        "\"value\": \"sound.mp3\"" +
                     "}" +
                 "]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineResourceValid6 - 1",vcard.getSounds().size() == 1);
-        assertTrue("testOnlineResourceValid6 - 2",vcard.getSounds().get(0).getUrl().equals("CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com"));
+        assertTrue("testOnlineResourceValid6 - 2",vcard.getSounds().get(0).getUrl().equals("sound.mp3"));
+        assertTrue("testOnlineResourceValid6 - 3",vcard.getSounds().get(0).getContentType() == SoundType.MP3);
     }
 
-    /*
+    @Test
+    public void testOnlineResourceValid7() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"sound\": true }," +
+                        "\"value\": \"sound.mp3\"" +
+                    "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid7 - 1",vcard.getSounds().size() == 1);
+        assertTrue("testOnlineResourceValid7 - 2",vcard.getSounds().get(0).getUrl().equals("sound.mp3"));
+        assertTrue("testOnlineResourceValid7 - 2",vcard.getSounds().get(0).getContentType() == null);
+    }
+
+    @Test
+    public void testOnlineResourceValid8() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"url\": true }," +
+                        "\"value\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
+                    "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid8 - 1",vcard.getUrls().size() == 1);
+        assertTrue("testOnlineResourceValid8 - 2",vcard.getUrls().get(0).getValue().equals("http://example.org/restaurant.french/~chezchic.htm"));
+    }
+
     @Test
     public void testOnlineResourceValid9() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "URL:http://example.org/restaurant.french/~chezchic.htm\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid9 - 1",jsCard.getOnline().length == 1);
-        assertTrue("testOnlineResourceValid9 - 2",jsCard.getOnline()[0].getValue().equals("http://example.org/restaurant.french/~chezchic.htm"));
-        assertTrue("testOnlineResourceValid9 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid9 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid9 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid9 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.URL.getValue()) == Boolean.TRUE);
-
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"key\": true }," +
+                        "\"value\": \"http://www.example.com/keys/jdoe.cer\"" +
+                    "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid9 - 1",vcard.getKeys().size() == 1);
+        assertTrue("testOnlineResourceValid9 - 2",vcard.getKeys().get(0).getUrl().equals("http://www.example.com/keys/jdoe.cer"));
     }
 
     @Test
     public void testOnlineResourceValid10() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "KEY:http://www.example.com/keys/jdoe.cer\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid10 - 1",jsCard.getOnline().length == 1);
-        assertTrue("testOnlineResourceValid10 - 2",jsCard.getOnline()[0].getValue().equals("http://www.example.com/keys/jdoe.cer"));
-        assertTrue("testOnlineResourceValid10 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid10 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid10 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid10 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.KEY.getValue()) == Boolean.TRUE);
-
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"fburl\": true }," +
+                        "\"isPreferred\": true ," +
+                        "\"value\": \"http://www.example.com/busy/janedoe\"" +
+                    "}," +
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"fburl\": true }," +
+                        "\"mediaType\": \"text/calendar\"," +
+                        "\"value\": \"ftp://example.com/busy/project-a.ifb\"" +
+                    "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid10 - 1",vcard.getFbUrls().size() == 2);
+        assertTrue("testOnlineResourceValid10 - 2",vcard.getFbUrls().get(0).getValue().equals("http://www.example.com/busy/janedoe"));
+        assertTrue("testOnlineResourceValid10 - 3",vcard.getFbUrls().get(0).getPref() == 1);
+        assertTrue("testOnlineResourceValid10 - 4",vcard.getFbUrls().get(1).getValue().equals("ftp://example.com/busy/project-a.ifb"));
+        assertTrue("testOnlineResourceValid10 - 5",vcard.getFbUrls().get(1).getMediaType().equals("text/calendar"));
     }
-
 
     @Test
     public void testOnlineResourceValid11() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "FBURL;PREF=1:http://www.example.com/busy/janedoe\n" +
-                "FBURL;MEDIATYPE=text/calendar:ftp://example.com/busy/project-a.ifb\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid11 - 1",jsCard.getOnline().length == 2);
-        assertTrue("testOnlineResourceValid11 - 2",jsCard.getOnline()[0].getValue().equals("http://www.example.com/busy/janedoe"));
-        assertTrue("testOnlineResourceValid11 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid11 - 4",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid11 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid11 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.FBURL.getValue()) == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid11 - 7",jsCard.getOnline()[1].getValue().equals("ftp://example.com/busy/project-a.ifb"));
-        assertTrue("testOnlineResourceValid11 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid11 - 9",jsCard.getOnline()[1].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid11 - 10",jsCard.getOnline()[1].getMediaType().equals("text/calendar"));
-        assertTrue("testOnlineResourceValid11 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.FBURL.getValue()) == Boolean.TRUE);
-
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"caladruri\": true }," +
+                        "\"isPreferred\": true ," +
+                        "\"value\": \"mailto:janedoe@example.com\"" +
+                    "}," +
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"caladruri\": true }," +
+                        "\"value\": \"http://example.com/calendar/jdoe\"" +
+                    "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid11 - 1",vcard.getCalendarRequestUris().size() == 2);
+        assertTrue("testOnlineResourceValid11 - 2",vcard.getCalendarRequestUris().get(0).getValue().equals("mailto:janedoe@example.com"));
+        assertTrue("testOnlineResourceValid11 - 3",vcard.getCalendarRequestUris().get(0).getPref() == 1);
+        assertTrue("testOnlineResourceValid11 - 4",vcard.getCalendarRequestUris().get(1).getValue().equals("http://example.com/calendar/jdoe"));
     }
-
 
     @Test
     public void testOnlineResourceValid12() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "CALADRURI;PREF=1:mailto:janedoe@example.com\n" +
-                "CALADRURI:http://example.com/calendar/jdoe\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid12 - 1",jsCard.getOnline().length == 2);
-        assertTrue("testOnlineResourceValid12 - 2",jsCard.getOnline()[0].getValue().equals("mailto:janedoe@example.com"));
-        assertTrue("testOnlineResourceValid12 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid12 - 4",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid12 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid12 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.CALADRURI.getValue()) == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid12 - 7",jsCard.getOnline()[1].getValue().equals("http://example.com/calendar/jdoe"));
-        assertTrue("testOnlineResourceValid12 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid12 - 9",jsCard.getOnline()[1].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid12 - 10",jsCard.getOnline()[1].getMediaType() == null);
-        assertTrue("testOnlineResourceValid12 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.CALADRURI.getValue()) == Boolean.TRUE);
-
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"online\":["+
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"caluri\": true }," +
+                        "\"isPreferred\": true ," +
+                        "\"value\": \"http://cal.example.com/calA\"" +
+                    "}," +
+                    "{" +
+                        "\"type\": \"uri\","+
+                        "\"labels\": { \"caluri\": true }," +
+                        "\"mediaType\": \"text/calendar\"," +
+                        "\"value\": \"ftp://ftp.example.com/calA.ics\"" +
+                    "}" +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineResourceValid12 - 1",vcard.getCalendarUris().size() == 2);
+        assertTrue("testOnlineResourceValid12 - 2",vcard.getCalendarUris().get(0).getValue().equals("http://cal.example.com/calA"));
+        assertTrue("testOnlineResourceValid12 - 3",vcard.getCalendarUris().get(0).getPref() == 1);
+        assertTrue("testOnlineResourceValid12 - 4",vcard.getCalendarUris().get(1).getValue().equals("ftp://ftp.example.com/calA.ics"));
+        assertTrue("testOnlineResourceValid12 - 5",vcard.getCalendarUris().get(1).getMediaType().equals("text/calendar"));
     }
-
-    @Test
-    public void testOnlineResourceValid13() throws IOException, CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "CALURI;PREF=1:http://cal.example.com/calA\n" +
-                "CALURI;MEDIATYPE=text/calendar:ftp://ftp.example.com/calA.ics\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testOnlineResourceValid13 - 1",jsCard.getOnline().length == 2);
-        assertTrue("testOnlineResourceValid13 - 2",jsCard.getOnline()[0].getValue().equals("http://cal.example.com/calA"));
-        assertTrue("testOnlineResourceValid13 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid13 - 4",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid13 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid13 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.CALURI.getValue()) == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid13 - 7",jsCard.getOnline()[1].getValue().equals("ftp://ftp.example.com/calA.ics"));
-        assertTrue("testOnlineResourceValid13 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid13 - 9",jsCard.getOnline()[1].getIsPreferred() == null);
-        assertTrue("testOnlineResourceValid13 - 10",jsCard.getOnline()[1].getMediaType().equals("text/calendar"));
-        assertTrue("testOnlineResourceValid13 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.CALURI.getValue()) == Boolean.TRUE);
-
-    }
-*/
 }

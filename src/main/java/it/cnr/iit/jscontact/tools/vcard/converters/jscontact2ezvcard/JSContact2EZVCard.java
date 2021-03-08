@@ -334,12 +334,40 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static ImageType getImageType(String mediaType) {
 
+        if (mediaType == null)
+            return null;
+
         for (ImageType it : ImageType.all()) {
             if (it.getMediaType().equals(mediaType))
                 return it;
         }
         return null;
     }
+
+    private static SoundType getSoundType(String mediaType) {
+
+        if (mediaType == null)
+            return null;
+
+        for (SoundType it : SoundType.all()) {
+            if (it.getMediaType().equals(mediaType))
+                return it;
+        }
+        return null;
+    }
+
+    private static KeyType getKeyType(String mediaType) {
+
+        if (mediaType == null)
+            return null;
+
+        for (KeyType it : KeyType.all()) {
+            if (it.getMediaType().equals(mediaType))
+                return it;
+        }
+        return null;
+    }
+
 
     private static Photo getPhoto(File file) {
 
@@ -413,13 +441,13 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Resource resource : jsContact.getOnline()) {
             switch(LabelKey.getLabelKey(new ArrayList<String>(resource.getLabels().keySet()))) {
                 case SOUND:
-                    vcard.getSounds().add(getBinaryProperty(Sound.class,resource));
+                    vcard.getSounds().add(new Sound(resource.getValue(), getSoundType(resource.getMediaType())));
                     break;
                 case SOURCE:
                     vcard.getSources().add(getUriProperty(Source.class,resource));
                     break;
                 case KEY:
-                    vcard.getKeys().add(getBinaryProperty(Key.class,resource));
+                    vcard.getKeys().add(new Key(resource.getValue(), getKeyType(resource.getMediaType())));
                     break;
                 case LOGO:
                     vcard.getLogos().add(getBinaryProperty(Logo.class,resource));
