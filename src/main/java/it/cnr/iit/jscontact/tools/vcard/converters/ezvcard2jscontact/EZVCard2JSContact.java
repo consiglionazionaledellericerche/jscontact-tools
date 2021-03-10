@@ -953,6 +953,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                 jsContact.addExtension(getUnmatchedParamName(propertyName,param),
                                     property.getParameter(param));
         }
+
     }
 
     private static void fillUnmatchedElments(VCard vcard, JSContact jsContact) {

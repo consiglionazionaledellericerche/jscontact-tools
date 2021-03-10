@@ -54,20 +54,39 @@ public class UnmatchedTest extends JSContact2VCardTest {
         assertTrue("testUnmatchedProperty - 1",vcard.getGender().getGender().equals("M"));
     }
 
-    /*
     @Test
     public void testUnmatchedParameter() throws IOException, CardException {
 
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:John Q. Public, Esq.\n" +
-                "N;SORT-AS=\"Public,John\":Public;John;Quinlan;Mr.;Esq.\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testUnmatchedParameter - 1",jsCard.getExtensions().size() == 1);
-        assertTrue("testUnmatchedParameter - 2",jsCard.getExtensions().get("ietf.org/rfc6350/n/sort-as").equals("Public,John"));
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{" +
+                    "\"value\": \"Mr. John Q. Public, Esq.\"" +
+                "}," +
+                "\"name\":[ " +
+                    "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                    "{ \"value\":\"John\", \"type\": \"personal\" }," +
+                    "{ \"value\":\"Public\", \"type\": \"surname\" }," +
+                    "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }," +
+                    "{ \"value\":\"Johnny\", \"type\": \"nickname\" }" +
+                "]," +
+                "\"ietf.org/rfc6350/N/SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testUnmatchedParameter - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));
+        assertTrue("testUnmatchedParameter - 2",vcard.getStructuredName() != null);
+        assertTrue("testUnmatchedParameter - 3",vcard.getStructuredName().getFamily().equals("Public"));
+        assertTrue("testUnmatchedParameter - 4",vcard.getStructuredName().getGiven().equals("John"));
+        assertTrue("testUnmatchedParameter - 5",vcard.getStructuredName().getAdditionalNames().size() == 1);
+        assertTrue("testUnmatchedParameter - 6",vcard.getStructuredName().getAdditionalNames().get(0).equals("Quinlan"));
+        assertTrue("testUnmatchedParameter - 7",vcard.getStructuredName().getPrefixes().size() == 1);
+        assertTrue("testUnmatchedParameter - 8",vcard.getStructuredName().getPrefixes().get(0).equals("Mr."));
+        assertTrue("testUnmatchedParameter - 9",vcard.getStructuredName().getSuffixes().size() == 1);
+        assertTrue("testUnmatchedParameter - 10",vcard.getStructuredName().getSuffixes().get(0).equals("Esq."));
+        assertTrue("testUnmatchedParameter - 11",vcard.getNickname().getValues().size() == 1);
+        assertTrue("testUnmatchedParameter - 12",vcard.getNickname().getValues().get(0).equals("Johnny"));
+        assertTrue("testUnmatchedParameter - 13",vcard.getStructuredName().getSortAs().size()==1);
+        assertTrue("testUnmatchedParameter - 13",vcard.getStructuredName().getSortAs().get(0).equals("Public,John:Public;John;Quinlan;Mr.;Esq."));
 
     }
-*/
 }

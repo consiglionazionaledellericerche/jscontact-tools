@@ -709,10 +709,17 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.setAgent(new Agent(jsContact.getExtensions().get(key)));
             else if (key.equals(getUnmatchedPropertyName(VCARD_CLASSIFICATION_TAG)))
                 vcard.setClassification(jsContact.getExtensions().get(key));
+            else if (key.equals(getUnmatchedParamName("N", "SORT-AS")))
+                vcard.getStructuredName().setParameter("SORT-AS", jsContact.getExtensions().get(key));
+            else if (key.equals(getUnmatchedParamName("ANNIVERSARY", "CALSCALE")))
+                vcard.getAnniversary().setParameter("CALSCALE", jsContact.getExtensions().get(key));
+            else if (key.equals(getUnmatchedParamName("BDAY", "CALSCALE")))
+                vcard.getBirthday().setParameter("CALSCALE", jsContact.getExtensions().get(key));
+            else if (key.equals(getUnmatchedParamName("DEATHDATE", "CALSCALE")))
+                vcard.getDeathdate().setParameter("CALSCALE", jsContact.getExtensions().get(key));
             else
                 vcard.getExtendedProperties().add(new RawProperty(key.replace(config.getExtensionsPrefix(), ""), jsContact.getExtensions().get(key)));
         }
-
     }
 
     private static void fillUnmatchedElments(VCard vCard, JSContact jsContact) {
