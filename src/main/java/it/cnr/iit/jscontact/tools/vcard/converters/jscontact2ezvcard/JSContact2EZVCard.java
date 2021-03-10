@@ -684,14 +684,42 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
+    private static ClientPidMap getCliendPidMap(String key, String value) {
+
+        Integer pid = Integer.parseInt(key.replace(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)+"/",""));
+        return new ClientPidMap(pid, value);
+    }
+
+
     private void fillExtensions(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getExtensions() == null)
             return;
 
-        for (String key : jsContact.getExtensions().keySet())
-            vcard.getExtendedProperties().add(new RawProperty(key.replace(config.getExtensionsPrefix(),""),jsContact.getExtensions().get(key)));
+        for (String key : jsContact.getExtensions().keySet()) {
+            if (key.equals(getUnmatchedPropertyName(VCARD_GENDER_TAG)))
+                vcard.setGender(new Gender(jsContact.getExtensions().get(key)));
+            else if (key.startsWith(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)))
+                vcard.addClientPidMap(getCliendPidMap(key, jsContact.getExtensions().get(key)));
+            else if ((key.startsWith(getUnmatchedPropertyName(VCARD_XML_TAG))))
+                try {
+                    vcard.getXmls().add(new Xml(jsContact.getExtensions().get(key)));
+                } catch (Exception e) {}
+            else if (key.equals(getUnmatchedPropertyName(VCARD_AGENT_TAG)))
+                vcard.setAgent(new Agent(jsContact.getExtensions().get(key)));
+            else if (key.equals(getUnmatchedPropertyName(VCARD_CLASSIFICATION_TAG)))
+                vcard.setClassification(jsContact.getExtensions().get(key));
+            else
+                vcard.getExtendedProperties().add(new RawProperty(key.replace(config.getExtensionsPrefix(), ""), jsContact.getExtensions().get(key)));
+        }
 
+    }
+
+    private static void fillUnmatchedElments(VCard vCard, JSContact jsContact) {
+
+        if (jsContact.getPreferredContactMethod() != null) {
+            vCard.addExtendedProperty("X-PREFERREDCONTACTMETHOD", jsContact.getPreferredContactMethod().getValue());
+        }
     }
 
     /**
@@ -732,6 +760,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillNotes(vCard, jsContact);
         fillRelations(vCard, jsContact);
         fillExtensions(vCard, jsContact);
+        fillUnmatchedElments(vCard, jsContact);
 
         return vCard;
     }

@@ -50,7 +50,6 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     private static final Pattern TIMEZONE_AS_UTC_OFFSET_PATTERN = Pattern.compile("[+-](\\d{2}):?(\\d{2})");
     private static final String DEFAULT_CALSCALE = "gregorian";
-    protected static final String UNMATCHED_PROPERTY_PREFIX = "ietf.org/rfc6350/";
 
     private static final List<String> fakeExtensions = Collections.singletonList("contact-uri");
 
@@ -478,7 +477,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                         .type(NameComponentType.SUFFIX)
                         .build()
                 );
-            addUnmatchedParams(sn, "n", null, new String[]{"SORT-AS"}, jsContact);
+            addUnmatchedParams(sn, "N", null, new String[]{"SORT-AS"}, jsContact);
         }
 
         List<Nickname> nicknames = vcard.getNicknames();
@@ -584,7 +583,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                   .place(getValue(vcard.getBirthplace()))
                   .build());
           if (vcard.getBirthday().getCalscale()!= null && !vcard.getBirthday().getCalscale().getValue().equals(DEFAULT_CALSCALE))
-              addUnmatchedParams(vcard.getBirthday(), "bday", null, new String[]{"CALSCALE"}, jsContact);
+              addUnmatchedParams(vcard.getBirthday(), "BDAY", null, new String[]{"CALSCALE"}, jsContact);
       }
 
       if (vcard.getDeathdate() != null) {
@@ -594,7 +593,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                   .place(getValue(vcard.getDeathplace()))
                   .build());
           if (vcard.getDeathdate().getCalscale()!= null && !vcard.getDeathdate().getCalscale().getValue().equals(DEFAULT_CALSCALE))
-              addUnmatchedParams(vcard.getDeathdate(), "deathdate", null, new String[]{"CALSCALE"}, jsContact);
+              addUnmatchedParams(vcard.getDeathdate(), "DEATHDATE", null, new String[]{"CALSCALE"}, jsContact);
       }
 
       if (vcard.getAnniversary() != null) {
@@ -605,7 +604,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                   .build()
           );
           if (vcard.getAnniversary().getCalscale()!= null && !vcard.getAnniversary().getCalscale().getValue().equals(DEFAULT_CALSCALE))
-              addUnmatchedParams(vcard.getAnniversary(), "anniversary", null, new String[]{"CALSCALE"}, jsContact);
+              addUnmatchedParams(vcard.getAnniversary(), "ANNIVERSARY", null, new String[]{"CALSCALE"}, jsContact);
       }
     }
 
@@ -928,26 +927,6 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static String getUnmatchedPropertyName(String propertyName, Integer index) {
-
-        return UNMATCHED_PROPERTY_PREFIX + propertyName + ((index != null) ? "/" + index : "");
-    }
-
-    private static String getUnmatchedPropertyName(String propertyName) {
-
-        return getUnmatchedPropertyName(propertyName, null);
-    }
-
-    private static String getUnmatchedParamName(String propertyName, Integer index, String paramName) {
-
-        return getUnmatchedPropertyName(propertyName) + "/" + ((index != null) ? "/" + index : "") + paramName;
-    }
-
-    private static String getUnmatchedParamName(String propertyName, String paramName) {
-
-        return getUnmatchedParamName(propertyName, null, paramName);
-    }
-
     private static void addUnmatchedParams(VCardProperty property, String propertyName, Integer index, String[] unmatchedParams, JSContact jsContact) {
 
         if (unmatchedParams == null)
@@ -957,7 +936,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             return;
 
         if (property.getGroup() != null) {
-            jsContact.addExtension(getUnmatchedParamName(propertyName,"group"),
+            jsContact.addExtension(getUnmatchedParamName(propertyName,"GROUP"),
                     property.getGroup());
         }
 
@@ -965,13 +944,13 @@ public class EZVCard2JSContact extends AbstractConverter {
             StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
             for (Pid pid : property.getParameters().getPids())
                 joiner.add(pid.getLocalId().toString());
-            jsContact.addExtension(getUnmatchedParamName(propertyName,"pid"),
+            jsContact.addExtension(getUnmatchedParamName(propertyName,"PID"),
                     joiner.toString());
         }
 
         for (String param : unmatchedParams) {
             if (property.getParameter(param) != null)
-                jsContact.addExtension(getUnmatchedParamName(propertyName,param.toLowerCase()),
+                jsContact.addExtension(getUnmatchedParamName(propertyName,param),
                                     property.getParameter(param));
         }
     }
@@ -980,19 +959,19 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         if (vcard.getGender()!=null) {
             if (vcard.getGender().getGender() != null)
-                jsContact.addExtension(getUnmatchedPropertyName("GENDER"), vcard.getGender().getGender());
+                jsContact.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vcard.getGender().getGender());
             else
-                jsContact.addExtension(getUnmatchedPropertyName("GENDER"), vcard.getGender().getText());
+                jsContact.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vcard.getGender().getText());
         }
 
         if (vcard.getClientPidMaps()!=null) {
             for (ClientPidMap pidmap : vcard.getClientPidMaps())
-                jsContact.addExtension(getUnmatchedPropertyName("CLIENTPIDMAP", pidmap.getPid()), pidmap.getUri());
+                jsContact.addExtension(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG, pidmap.getPid()), pidmap.getUri());
         }
 
         if (vcard.getXmls()!=null) {
             if (vcard.getXmls().size() == 1)
-                jsContact.addExtension(getUnmatchedPropertyName("XML"), vcard.getXmls().get(0).getValue().getTextContent());
+                jsContact.addExtension(getUnmatchedPropertyName(VCARD_XML_TAG), vcard.getXmls().get(0).getValue().getTextContent());
             else {
                 int i = 0;
                 for (Xml xml : vcard.getXmls())
@@ -1001,10 +980,10 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
 
         if (vcard.getAgent()!=null)
-            jsContact.addExtension(getUnmatchedPropertyName("AGENT"), vcard.getAgent().getUrl());
+            jsContact.addExtension(getUnmatchedPropertyName(VCARD_AGENT_TAG), vcard.getAgent().getUrl());
 
         if (vcard.getClassification()!=null)
-            jsContact.addExtension(getUnmatchedPropertyName("CLASSIFICATION"), vcard.getClassification().getValue());
+            jsContact.addExtension(getUnmatchedPropertyName(VCARD_CLASSIFICATION_TAG), vcard.getClassification().getValue());
 
     }
 
