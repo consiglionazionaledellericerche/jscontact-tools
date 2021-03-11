@@ -49,7 +49,6 @@ import java.util.regex.Pattern;
 public class EZVCard2JSContact extends AbstractConverter {
 
     private static final Pattern TIMEZONE_AS_UTC_OFFSET_PATTERN = Pattern.compile("[+-](\\d{2}):?(\\d{2})");
-    private static final String DEFAULT_CALSCALE = "gregorian";
 
     private static final List<String> fakeExtensions = Collections.singletonList("contact-uri");
 

@@ -25,13 +25,28 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.Constructor;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 
 @NoArgsConstructor
 public class JSContact2EZVCard extends AbstractConverter {
+
+
+    private static Map<String,String> ezclassesPerPropertiesMap = new HashMap<String,String>() {{
+        put("Address", "ADR");
+        put("Birthday","BDAY");
+        put("CalendarUri","CALURI");
+        put("CalendarRequestUri","CALADRURI");
+        put("FormattedName", "FN");
+        put("FreeBusyUrl","FBURL");
+        put("Language","LANG");
+        put("Organization","ORG");
+        put("OrgDirectories","ORG-DIRECTORY");
+        put("ProductId","PRODID");
+        put("Revision","REV");
+        put("StructuredName", "N");
+        put("Telephone","TEL");
+        put("Timezone","TZ");
+    }};
 
     protected JSContact2VCardConfig config;
 
@@ -252,15 +267,19 @@ public class JSContact2EZVCard extends AbstractConverter {
             switch(anniversary.getType()) {
                 case BIRTH:
                     vcard.setBirthday(getDateOrTimeProperty(Birthday.class, anniversary));
+                    vcard.getBirthday().setCalscale(Calscale.GREGORIAN);
                     vcard.setBirthplace(getPlaceProperty(Birthplace.class, anniversary));
                     break;
                 case DEATH:
                     vcard.setDeathdate(getDateOrTimeProperty(Deathdate.class, anniversary));
+                    vcard.getDeathdate().setCalscale(Calscale.GREGORIAN);
                     vcard.setDeathplace(getPlaceProperty(Deathplace.class, anniversary));
                     break;
                 case OTHER:
-                    if (anniversary.getLabel().equals(ANNIVERSAY_MARRIAGE_LABEL))
-                        vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class,anniversary));
+                    if (anniversary.getLabel().equals(ANNIVERSAY_MARRIAGE_LABEL)) {
+                        vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
+                        vcard.getAnniversary().setCalscale(Calscale.GREGORIAN);
+                    }
                     break;
             }
         }
@@ -691,6 +710,48 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
+    private static String getPropertyNameFromClassName(String className) {
+
+        for (String key : ezclassesPerPropertiesMap.keySet()) {
+
+            if (key.equals(className))
+                return ezclassesPerPropertiesMap.get(key);
+        }
+
+        return className.toUpperCase();
+    }
+
+    private static String[] getPropertyNamePlusIndex(String extension, String parameterName) {
+        String propertyPlusIndex = extension
+                                   .replace(UNMATCHED_PROPERTY_PREFIX,"")
+                                   .replace("/" + parameterName,"");
+        return propertyPlusIndex.split("/");
+    }
+
+    private static String getPropertyNameFromExtension(String extension, String parameterName) {
+        return getPropertyNamePlusIndex(extension, parameterName)[0];
+    }
+
+    private static Integer getPropertyIndexFromExtension(String extension, String parameterName) {
+        String[] items = getPropertyNamePlusIndex(extension, parameterName);
+        return (items.length == 2) ? Integer.parseInt(items[1]) : null;
+    }
+
+    private void fillVCardUnmatchedParameter(VCard vcard, String extension, String parameterName, String value) {
+
+        String selectedPropertyName = getPropertyNameFromExtension(extension, parameterName);
+        Integer index = getPropertyIndexFromExtension(extension, parameterName);
+        for (VCardProperty property : vcard.getProperties()) {
+            String propertyName = getPropertyNameFromClassName(property.getClass().getSimpleName());
+            if (selectedPropertyName.equals(propertyName)) {
+                if (parameterName.equals("GROUP"))
+                    vcard.getProperties(property.getClass()).get((index==null) ? 0 : index).setGroup(value);
+                else
+                    vcard.getProperties(property.getClass()).get((index==null) ? 0 : index).setParameter(parameterName, value);
+            }
+        }
+    }
+
     private void fillExtensions(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getExtensions() == null)
@@ -717,6 +778,8 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.getBirthday().setParameter("CALSCALE", jsContact.getExtensions().get(key));
             else if (key.equals(getUnmatchedParamName("DEATHDATE", "CALSCALE")))
                 vcard.getDeathdate().setParameter("CALSCALE", jsContact.getExtensions().get(key));
+            else if (key.startsWith(UNMATCHED_PROPERTY_PREFIX) && key.endsWith("/GROUP"))
+                fillVCardUnmatchedParameter(vcard,key,"GROUP", jsContact.getExtensions().get(key));
             else
                 vcard.getExtendedProperties().add(new RawProperty(key.replace(config.getExtensionsPrefix(), ""), jsContact.getExtensions().get(key)));
         }

@@ -55,7 +55,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
     }
 
     @Test
-    public void testUnmatchedParameter() throws IOException, CardException {
+    public void testUnmatchedParameter1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
@@ -73,20 +73,35 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"ietf.org/rfc6350/N/SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testUnmatchedParameter - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));
-        assertTrue("testUnmatchedParameter - 2",vcard.getStructuredName() != null);
-        assertTrue("testUnmatchedParameter - 3",vcard.getStructuredName().getFamily().equals("Public"));
-        assertTrue("testUnmatchedParameter - 4",vcard.getStructuredName().getGiven().equals("John"));
-        assertTrue("testUnmatchedParameter - 5",vcard.getStructuredName().getAdditionalNames().size() == 1);
-        assertTrue("testUnmatchedParameter - 6",vcard.getStructuredName().getAdditionalNames().get(0).equals("Quinlan"));
-        assertTrue("testUnmatchedParameter - 7",vcard.getStructuredName().getPrefixes().size() == 1);
-        assertTrue("testUnmatchedParameter - 8",vcard.getStructuredName().getPrefixes().get(0).equals("Mr."));
-        assertTrue("testUnmatchedParameter - 9",vcard.getStructuredName().getSuffixes().size() == 1);
-        assertTrue("testUnmatchedParameter - 10",vcard.getStructuredName().getSuffixes().get(0).equals("Esq."));
-        assertTrue("testUnmatchedParameter - 11",vcard.getNickname().getValues().size() == 1);
-        assertTrue("testUnmatchedParameter - 12",vcard.getNickname().getValues().get(0).equals("Johnny"));
-        assertTrue("testUnmatchedParameter - 13",vcard.getStructuredName().getSortAs().size()==1);
-        assertTrue("testUnmatchedParameter - 13",vcard.getStructuredName().getSortAs().get(0).equals("Public,John:Public;John;Quinlan;Mr.;Esq."));
+        assertTrue("testUnmatchedParameter1 - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));
+        assertTrue("testUnmatchedParameter1 - 2",vcard.getStructuredName() != null);
+        assertTrue("testUnmatchedParameter1 - 3",vcard.getStructuredName().getFamily().equals("Public"));
+        assertTrue("testUnmatchedParameter1 - 4",vcard.getStructuredName().getGiven().equals("John"));
+        assertTrue("testUnmatchedParameter1 - 5",vcard.getStructuredName().getAdditionalNames().size() == 1);
+        assertTrue("testUnmatchedParameter1 - 6",vcard.getStructuredName().getAdditionalNames().get(0).equals("Quinlan"));
+        assertTrue("testUnmatchedParameter1 - 7",vcard.getStructuredName().getPrefixes().size() == 1);
+        assertTrue("testUnmatchedParameter1 - 8",vcard.getStructuredName().getPrefixes().get(0).equals("Mr."));
+        assertTrue("testUnmatchedParameter1 - 9",vcard.getStructuredName().getSuffixes().size() == 1);
+        assertTrue("testUnmatchedParameter1 - 10",vcard.getStructuredName().getSuffixes().get(0).equals("Esq."));
+        assertTrue("testUnmatchedParameter1 - 11",vcard.getNickname().getValues().size() == 1);
+        assertTrue("testUnmatchedParameter1 - 12",vcard.getNickname().getValues().get(0).equals("Johnny"));
+        assertTrue("testUnmatchedParameter1 - 13",vcard.getStructuredName().getSortAs().size()==1);
+        assertTrue("testUnmatchedParameter1 - 13",vcard.getStructuredName().getSortAs().get(0).equals("Public,John:Public;John;Quinlan;Mr.;Esq."));
 
     }
+
+    @Test
+    public void testUnmatchedParameter2() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":{\"value\": \"test\"}," +
+                "\"ietf.org/rfc6350/FN/GROUP\":\"contact\"" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testUnmatchedParameter2 - 1",vcard.getFormattedName().getValue().equals("test"));
+        assertTrue("testUnmatchedParameter2 - 2",vcard.getFormattedName().getGroup().equals("contact"));
+
+    }
+
 }
