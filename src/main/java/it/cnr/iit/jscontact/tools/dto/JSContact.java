@@ -18,6 +18,8 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
 import it.cnr.iit.jscontact.tools.constraints.EmailsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.JSContactMapsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.OnlineConstraint;
@@ -49,9 +51,13 @@ public abstract class JSContact extends ValidableObject {
 
     String prodId;
 
-    String updated;
+    @JsonSerialize(using = CalendarSerializer.class)
+    @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
+    Calendar updated;
 
-    String created;
+    @JsonSerialize(using = CalendarSerializer.class)
+    @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
+    Calendar created;
 
     @JsonSerialize(using = KindSerializer.class)
     @JsonDeserialize(using = KindDeserializer.class)

@@ -990,12 +990,12 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static String getUpdated(Revision rev) {
+    private static Calendar getUpdated(Revision rev) {
 
         if (rev == null)
             return null;
 
-        return getValue(rev.getValue());
+        return rev.getCalendar();
     }
 
     private static KindType getKind(ezvcard.property.Kind kind) {

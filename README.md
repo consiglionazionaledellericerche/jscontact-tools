@@ -140,7 +140,7 @@ Deserialization of a card group and the related cards is performed through a cus
 
 At present, the following converting methods are available:
 
-*   it.cnr.iit.jscontact.tools.vcard.converters.jcard2jscontact.JCard2JSContact
+*   JCard2JSContact
     *   List<JSContact> convert(String json)
     *   List<JSContact> convert(JsonNode jsonNode) 
 *   VCard2JSContact
@@ -151,7 +151,7 @@ At present, the following converting methods are available:
 All the methods return a list of JSContact (JSCard or JSCardGroup) instances and can raise a `CardException`.
 `JsonNode` represents the root of `com.fasterxml.jackson.databind`.
 
-### Conversion Rules
+### Conversion Rules from vCard to JSContact
 
 The conversion is executed according to the following rules:
 
@@ -207,6 +207,30 @@ The conversion is executed according to the following rules:
 14. Categories appear in the "categories" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
 15. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
+
+16. JSContact UTCDateTime type is mapped onto Java Calendar.
+
+
+<a name="vcard-conversion"></a>
+## JSContact Conversion
+
+At present, the following converting methods are available:
+
+*   JSContact2JCard
+    *   String convertToJson(List<JSContact> jsContacts)
+    *   JsonNode convertToJsonNode(List<JSContact> jsContacts)
+*   JSContact2VCard
+    *   String convertToText(List<JSContact> jsContacts)
+*   JSContact2XCard
+    *   String convertToXml(List<JSContact> jsContacts)
+
+All the methods take in input a list of JSContact (JSCard or JSCardGroup) instances and can raise a `CardException`.
+`JsonNode` represents the root of `com.fasterxml.jackson.databind`.
+
+### Conversion Rules from JSContact to vCard 
+
+1.  An unmatched property is converted into a vCard element with prefix `X-JSCONTACT-`
+
 
 ### Conversion examples
 

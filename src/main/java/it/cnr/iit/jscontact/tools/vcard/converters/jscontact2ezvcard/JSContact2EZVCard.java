@@ -69,13 +69,12 @@ public class JSContact2EZVCard extends AbstractConverter {
         return new Uid(uid);
     }
 
-
-    private static Revision getRevision(String update) {
+    private static Revision getRevision(Calendar update) {
 
         if (update == null)
             return null;
 
-        return new Revision(VCardDateFormat.parseAsCalendar(update));
+        return new Revision(update);
     }
 
     private static void fillFormattedNames(VCard vcard, JSContact jsContact) {
@@ -799,9 +798,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static void fillUnmatchedElments(VCard vCard, JSContact jsContact) {
 
-        if (jsContact.getPreferredContactMethod() != null) {
-            vCard.addExtendedProperty("X-PREFERREDCONTACTMETHOD", jsContact.getPreferredContactMethod().getValue());
+        if (jsContact.getCreated() != null) {
+            vCard.addExtendedProperty("X-JSCONTACT-CREATED", VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsContact.getCreated().getTime()));
         }
+
+        if (jsContact.getPreferredContactMethod() != null) {
+            vCard.addExtendedProperty("X-JSCONTACT-PREFERREDCONTACTMETHOD", jsContact.getPreferredContactMethod().getValue());
+        }
+
     }
 
     /**
