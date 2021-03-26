@@ -40,8 +40,12 @@ public class NameTest extends JSContact2VCardTest {
                     "{ \"value\":\"John\", \"type\": \"personal\" }," +
                     "{ \"value\":\"Public\", \"type\": \"surname\" }," +
                     "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }," +
-                    "{ \"value\":\"Johnny\", \"type\": \"nickname\" }" +
+                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                "], " +
+                "\"nickNames\":[" +
+                    "{" +
+                        "\"value\": \"Johnny\"" +
+                    "}" +
                 "]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

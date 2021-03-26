@@ -479,19 +479,22 @@ public class EZVCard2JSContact extends AbstractConverter {
             addUnmatchedParams(sn, "N", null, new String[]{"SORT-AS"}, jsContact);
         }
 
+    }
+
+    private static void fillNickNames(VCard vcard, JSContact jsContact) {
+
         List<Nickname> nicknames = vcard.getNicknames();
-        List<NameComponent> nicks = new ArrayList<NameComponent>();
+        List<LocalizedString> nicks = new ArrayList<LocalizedString>();
         for (Nickname nickname : nicknames) {
             for (String value : nickname.getValues())
-                nicks.add(NameComponent.builder()
-                        .type(NameComponentType.NICKNAME)
+                nicks.add(LocalizedString.builder()
                         .value(value)
                         .preference(nickname.getPref())
                         .build());
         }
         Collections.sort(nicks);
-        for (NameComponent nick : nicks)
-            jsContact.addName(nick);
+        for (LocalizedString nick : nicks)
+            jsContact.addNickName(nick);
     }
 
     private static it.cnr.iit.jscontact.tools.dto.Address getAddressAltrenative(List<it.cnr.iit.jscontact.tools.dto.Address> addresses, String altid) {
@@ -1037,6 +1040,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             jsContact.setUid(vCard.getUid().getValue());
         fillFormattedNames(vCard, jsContact);
         fillNames(vCard, jsContact);
+        fillNickNames(vCard, jsContact);
         fillAddresses(vCard, jsContact);
         fillAnniversaries(vCard, jsContact);
         fillPersonalInfos(vCard, jsContact);

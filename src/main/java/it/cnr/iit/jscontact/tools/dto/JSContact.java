@@ -51,6 +51,8 @@ public abstract class JSContact extends ValidableObject {
 
     String updated;
 
+    String created;
+
     @JsonSerialize(using = KindSerializer.class)
     @JsonDeserialize(using = KindDeserializer.class)
     KindType kind;
@@ -62,6 +64,9 @@ public abstract class JSContact extends ValidableObject {
 
     @Valid
     NameComponent[] name;
+
+    @Valid
+    LocalizedString[] nickNames;
 
     @Valid
     LocalizedString[] organizations;
@@ -123,6 +128,10 @@ public abstract class JSContact extends ValidableObject {
 
     public void addName(NameComponent nc) {
         name = ArrayUtils.add(name, nc);
+    }
+
+    public void addNickName(LocalizedString nick) {
+        nickNames = ArrayUtils.add(nickNames, nick);
     }
 
     public void addPhone(Resource phone) {

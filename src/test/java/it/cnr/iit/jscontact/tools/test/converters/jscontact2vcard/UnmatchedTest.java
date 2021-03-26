@@ -67,8 +67,12 @@ public class UnmatchedTest extends JSContact2VCardTest {
                     "{ \"value\":\"John\", \"type\": \"personal\" }," +
                     "{ \"value\":\"Public\", \"type\": \"surname\" }," +
                     "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }," +
-                    "{ \"value\":\"Johnny\", \"type\": \"nickname\" }" +
+                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                "], " +
+                "\"nickNames\":[" +
+                    "{" +
+                    "\"value\": \"Johnny\"" +
+                    "}" +
                 "]," +
                 "\"ietf.org/rfc6350/N/SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
                 "}";

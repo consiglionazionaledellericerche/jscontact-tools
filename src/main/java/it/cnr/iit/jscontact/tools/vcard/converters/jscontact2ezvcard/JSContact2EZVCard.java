@@ -105,7 +105,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         StructuredName name = new StructuredName();
-        List<String> nicknames = new ArrayList<String>();
         for (NameComponent component : jsContact.getName()) {
             switch(component.getType()) {
                 case PREFIX:
@@ -123,14 +122,27 @@ public class JSContact2EZVCard extends AbstractConverter {
                 case SUFFIX:
                     name.getSuffixes().add(component.getValue());
                     break;
-                case NICKNAME:
-                    nicknames.add(component.getValue());
-                    break;
             }
         }
         vcard.setStructuredName(name);
-        if (nicknames.size() > 0)
-            vcard.setNickname(nicknames.toArray(new String[nicknames.size()]));
+    }
+
+    private static void fillNickNames(VCard vcard, JSContact jsContact) {
+
+        if (jsContact.getNickNames() == null)
+            return;
+
+        Integer altId = Integer.parseInt("1");
+        for (LocalizedString localized : jsContact.getNickNames()) {
+            if (localized.getLocalizations() == null)
+                vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, localized.getValue(), localized.getLanguage()));
+            else {
+                vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, localized.getValue(), localized.getLanguage(), altId));
+                for (String key : localized.getLocalizations().keySet())
+                    vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, localized.getLocalizations().get(key), key, altId));
+                altId ++;
+            }
+        }
     }
 
     private static boolean isStructuredAddress(Address address) {
@@ -815,6 +827,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         vCard.setRevision(getRevision(jsContact.getUpdated()));
         fillFormattedNames(vCard, jsContact);
         fillNames(vCard, jsContact);
+        fillNickNames(vCard, jsContact);
         fillAddresses(vCard, jsContact);
         fillAnniversaries(vCard, jsContact);
         fillPersonalInfos(vCard, jsContact);

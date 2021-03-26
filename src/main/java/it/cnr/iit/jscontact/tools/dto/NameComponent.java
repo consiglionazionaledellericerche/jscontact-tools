@@ -28,7 +28,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NameComponent extends GroupableObject implements HasPreference, Comparable<NameComponent> {
+public class NameComponent extends GroupableObject {
 
     @NotNull(message = "value is missing in NameComponent")
     @NonNull
@@ -37,15 +37,5 @@ public class NameComponent extends GroupableObject implements HasPreference, Com
     @NotNull(message = "type is missing in NameComponent")
     @NonNull
     NameComponentType type;
-
-    @JsonIgnore
-    Integer preference;
-
-    //to compare VCard NICKNAME instances based on preference
-    @Override
-    public int compareTo(NameComponent o) {
-
-        return HasPreferenceUtils.compareTo(this, o);
-    }
 
 }

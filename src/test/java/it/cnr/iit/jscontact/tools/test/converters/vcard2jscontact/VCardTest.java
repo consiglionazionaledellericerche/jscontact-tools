@@ -358,7 +358,7 @@ public class VCardTest extends VCard2JSContactTest {
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-ezvcard-fullcontact.vcf"), Charset.forName("UTF-8"));
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard6 - 1", jsCard.getFullName().getValue().equals("Prefix FirstName MiddleName LastName Suffix"));
-        assertTrue("testCompleteVCard6 - 2", jsCard.getName().length == 6);
+        assertTrue("testCompleteVCard6 - 2", jsCard.getName().length == 5);
         assertTrue("testCompleteVCard6 - 3", jsCard.getName()[0].getType() == NameComponentType.SURNAME);
         assertTrue("testCompleteVCard6 - 4", jsCard.getName()[0].getValue().equals("LastName"));
         assertTrue("testCompleteVCard6 - 5", jsCard.getName()[1].getType() == NameComponentType.PERSONAL);
@@ -369,8 +369,8 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 10", jsCard.getName()[3].getValue().equals("Prefix"));
         assertTrue("testCompleteVCard6 - 11", jsCard.getName()[4].getType() == NameComponentType.SUFFIX);
         assertTrue("testCompleteVCard6 - 12", jsCard.getName()[4].getValue().equals("Suffix"));
-        assertTrue("testCompleteVCard6 - 13", jsCard.getName()[5].getType() == NameComponentType.NICKNAME);
-        assertTrue("testCompleteVCard6 - 14", jsCard.getName()[5].getValue().equals("NickName"));
+        assertTrue("testCompleteVCard6 - 13", jsCard.getNickNames().length == 1);
+        assertTrue("testCompleteVCard6 - 14", jsCard.getNickNames()[0].getValue().equals("NickName"));
         assertTrue("testCompleteVCard5 - 15", jsCard.getPhones().length == 9);
         assertTrue("testCompleteVCard5 - 16", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteVCard5 - 17", jsCard.getPhones()[0].getContext() == ResourceContext.PRIVATE);
