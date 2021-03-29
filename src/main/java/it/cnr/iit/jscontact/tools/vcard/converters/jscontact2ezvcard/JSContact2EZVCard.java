@@ -641,6 +641,31 @@ public class JSContact2EZVCard extends AbstractConverter {
         vcard.setCategories(jsContact.getCategories().keySet().toArray(new String[jsContact.getCategories().size()]));
     }
 
+    private static List<String> getOrganizationItems(LocalizedString organization, LocalizedString[] units, String language) {
+
+        List<String> organizationItems = new ArrayList<String>();
+        if (language == null) {
+            organizationItems.add(organization.getValue());
+            if (units != null) {
+                for (LocalizedString unit : units)
+                    organizationItems.add(unit.getValue());
+            }
+        }
+        else {
+            organizationItems.add(organization.getLocalizations().get(language));
+            if (units != null) {
+                for (LocalizedString unit : units)
+                    organizationItems.add(unit.getLocalizations().get(language));
+            }
+        }
+
+        return organizationItems;
+    }
+
+    private static List<String> getOrganizationItems(LocalizedString organization, LocalizedString[] units) {
+        return getOrganizationItems(organization, units, null);
+    }
+
     private static void fillOrganizations(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getOrganizations() == null)
@@ -648,13 +673,17 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Integer altId = Integer.parseInt("1");
         for (Map.Entry<String,Organization> organization : jsContact.getOrganizations().entrySet()) {
-            if (organization.getValue().getName().getLocalizations() == null)
-                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, organization.getValue().getName().getValue(), organization.getValue().getName().getLanguage()));
+            List<String> organizationItems = getOrganizationItems(organization.getValue().getName(), organization.getValue().getUnits());
+            if (organization.getValue().getName().getLocalizations() == null) {
+                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, String.join(SEMICOMMA_ARRAY_DELIMITER,organizationItems), organization.getValue().getName().getLanguage()));
+            }
             else {
-                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, organization.getValue().getName().getValue(), organization.getValue().getName().getLanguage(), altId));
-                for (Map.Entry<String,String> localization : organization.getValue().getName().getLocalizations().entrySet())
-                    vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, localization.getValue(), localization.getKey(), altId));
-                altId ++;
+                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, String.join(SEMICOMMA_ARRAY_DELIMITER,organizationItems), organization.getValue().getName().getLanguage(), altId));
+                for (String language : organization.getValue().getName().getLocalizations().keySet()) {
+                    organizationItems = getOrganizationItems(organization.getValue().getName(), organization.getValue().getUnits(), language);
+                    vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, String.join(SEMICOMMA_ARRAY_DELIMITER,organizationItems), language, altId));
+                }
+                altId++;
             }
         }
     }

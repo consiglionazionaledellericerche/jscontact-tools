@@ -6,8 +6,8 @@
 "fr": [{ "preference": 1 }],
 "en": [{ "preference": 2 }]
 },
-"organizations": { "organization-1": { "name": { "value": "Example" }} },
-"jobTitles": {"title-1": { "title": { "value": "Research Scientist" }} },
+"organizations": { "ORG-1": { "name": { "value": "Example" }} },
+"jobTitles": {"TITLE-1": { "title": { "value": "Research Scientist" }} },
 "roles": [ { "value": "Project Lead" } ],
 "addresses": [
 {

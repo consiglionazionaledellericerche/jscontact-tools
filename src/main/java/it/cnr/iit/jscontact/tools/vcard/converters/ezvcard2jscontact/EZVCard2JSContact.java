@@ -825,7 +825,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         Collections.sort(titles);
         int i = 1;
         for (LocalizedString title : titles)
-            jsContact.addTitle("title-" + (i++), title);
+            jsContact.addTitle("TITLE-" + (i++), title);
 
     }
 
@@ -866,29 +866,33 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (LocalizedString organization : organizations) {
             String[] nameItems = organization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
             LocalizedString name = LocalizedString.builder().value(nameItems[0]).language(organization.getLanguage()).build();
-            if (organization.getLocalizations() == null)
-                continue;
-            for (Map.Entry<String,String> nameLocalization : organization.getLocalizations().entrySet()) {
-                String[] nameLocalizationItems = nameLocalization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
-                name.getLocalizations().put(nameLocalization.getKey(),nameLocalizationItems[0]);
+            if (organization.getLocalizations() != null) {
+                Map<String, String> localizations = new HashMap<String, String>();
+                for (Map.Entry<String, String> nameLocalization : organization.getLocalizations().entrySet()) {
+                    String[] nameLocalizationItems = nameLocalization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
+                    localizations.put(nameLocalization.getKey(), nameLocalizationItems[0]);
+                }
+                name.setLocalizations(localizations);
             }
 
             List<LocalizedString> units = new ArrayList<LocalizedString>();
-            for (int j=1; j < nameItems.length; j++) {
-                Map<String,String> localizations = new HashMap<String,String>();
-                for (Map.Entry<String,String> unitLocalization : organization.getLocalizations().entrySet()) {
-                    String[] unitLocalizationItems = unitLocalization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
-                    localizations.put(unitLocalization.getKey(),unitLocalizationItems[j]);
+            for (int j = 1; j < nameItems.length; j++) {
+                Map<String, String> localizations = new HashMap<String, String>();
+                if (organization.getLocalizations() != null) {
+                    for (Map.Entry<String, String> unitLocalization : organization.getLocalizations().entrySet()) {
+                        String[] unitLocalizationItems = unitLocalization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
+                        localizations.put(unitLocalization.getKey(), unitLocalizationItems[j]);
+                    }
                 }
                 units.add(LocalizedString.builder().value(nameItems[j]).language(organization.getLanguage()).localizations((localizations.size() > 0) ? localizations : null).build());
             }
 
-            jsContactOrganizations.add(it.cnr.iit.jscontact.tools.dto.Organization.builder().name(name).units(units.toArray(new LocalizedString[units.size()])).build());
+            jsContactOrganizations.add(it.cnr.iit.jscontact.tools.dto.Organization.builder().name(name).units((units.size() != 0) ? units.toArray(new LocalizedString[units.size()]) : null).build());
         }
 
         i = 1;
         for (it.cnr.iit.jscontact.tools.dto.Organization jsContactOrganization : jsContactOrganizations)
-            jsContact.addOrganization("organization-" + (i++), jsContactOrganization);
+            jsContact.addOrganization("ORG-" + (i++), jsContactOrganization);
     }
 
     private static void fillNotes(VCard vcard, JSContact jsContact) {

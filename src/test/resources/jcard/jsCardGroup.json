@@ -30,14 +30,14 @@
       ]
     },
     "organizations": {
-      "organization-1" :{
+      "ORG-1" :{
         "name" : {
           "value": "Example"
         }
       }
     },
     "jobTitles": {
-      "title-1": {
+      "TITLE-1": {
         "title" : {"value": "Research Scientist"}
       }
     },
@@ -113,7 +113,7 @@
       }
     },
     "jobTitles": {
-      "title-1" : {
+      "TITLE-1" : {
         "title": {
           "value": "事務局長",
           "language": "ja",

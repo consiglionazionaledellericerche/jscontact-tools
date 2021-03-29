@@ -33,12 +33,14 @@ public class JobTitlesTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"jobTitles\":[" +
-                    "{" +
-                        "\"value\": \"Research Scientist\"," +
-                        "\"localizations\": { \"it\":\"Ricercatore\" }" +
+                "\"jobTitles\": {" +
+                    "\"TITLE-1\" : {" +
+                        "\"title\": {" +
+                            "\"value\": \"Research Scientist\"," +
+                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
+                        "}" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testTitles1 - 1",vcard.getTitles().size() == 2);
@@ -56,15 +58,19 @@ public class JobTitlesTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"jobTitles\":[" +
-                    "{" +
-                        "\"value\": \"Research Scientist\"," +
-                        "\"localizations\": { \"it\":\"Ricercatore\" }" +
+                "\"jobTitles\": {" +
+                    "\"TITLE-1\" : {" +
+                        "\"title\": {" +
+                            "\"value\": \"Research Scientist\"," +
+                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
+                        "}" +
                     "}," +
-                    "{" +
-                        "\"value\": \"IETF Area Director\"" +
+                    "\"TITLE-2\" : {" +
+                        "\"title\": {" +
+                            "\"value\": \"IETF Area Director\"" +
+                        "}" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testTitles2 - 1",vcard.getTitles().size() == 3);
@@ -85,16 +91,20 @@ public class JobTitlesTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"jobTitles\":[" +
-                    "{" +
-                        "\"value\": \"Research Scientist\"," +
-                        "\"localizations\": { \"it\":\"Ricercatore\" }" +
+                "\"jobTitles\": {" +
+                    "\"TITLE-1\" : {" +
+                        "\"title\": {" +
+                            "\"value\": \"Research Scientist\"," +
+                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
+                        "}" +
                     "}," +
-                    "{" +
-                        "\"value\": \"IETF Area Director\"," +
-                        "\"localizations\": { \"it\":\"Direttore Area IETF\" }" +
+                    "\"TITLE-2\" : {" +
+                        "\"title\": {" +
+                            "\"value\": \"IETF Area Director\"," +
+                            "\"localizations\": { \"it\":\"Direttore Area IETF\" }" +
+                        "}" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testTitles3 - 1",vcard.getTitles().size() == 4);

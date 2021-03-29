@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -31,17 +32,29 @@ public class OrganizationsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"organizations\":[" +
-                    "{" +
-                        "\"value\": \"ABC, Spa.;North American Division;Marketing\"," +
-                        "\"localizations\": { \"it\":\"ABC, Spa.;Divisione Nord America;Marketing\" }" +
+                "\"organizations\": {" +
+                    "\"ORG-1\": {" +
+                        "\"name\": {" +
+                            "\"value\": \"ABC, Inc.\"," +
+                            "\"localizations\": { \"it\":\"ABC, Spa.\" }" +
+                        "}," +
+                        "\"units\": [" +
+                            "{" +
+                                "\"value\": \"North American Division\"," +
+                                "\"localizations\": { \"it\":\"Divisione Nord America\" }" +
+                            "}," +
+                            "{" +
+                                "\"value\": \"Marketing\"," +
+                                "\"localizations\": { \"it\":\"Marketing\" }" +
+                            "}" +
+                        "]" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOrganizations1 - 1",vcard.getOrganizations().size() == 2);
         assertTrue("testOrganizations1 - 2",vcard.getOrganizations().get(0).getValues().size() == 3);
-        assertTrue("testOrganizations1 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Spa."));
+        assertTrue("testOrganizations1 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Inc."));
         assertTrue("testOrganizations1 - 4",vcard.getOrganizations().get(0).getValues().get(1).equals("North American Division"));
         assertTrue("testOrganizations1 - 5",vcard.getOrganizations().get(0).getValues().get(2).equals("Marketing"));
         assertTrue("testOrganizations1 - 6",vcard.getOrganizations().get(0).getLanguage() == null);
@@ -60,20 +73,34 @@ public class OrganizationsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"organizations\":[" +
-                    "{" +
-                        "\"value\": \"ABC, Spa.;North American Division;Marketing\"," +
-                        "\"localizations\": { \"it\":\"ABC, Spa.;Divisione Nord America;Marketing\" }" +
+                "\"organizations\":{ " +
+                    "\"ORG-1\": {" +
+                        "\"name\": {" +
+                            "\"value\": \"ABC, Inc.\"," +
+                            "\"localizations\": { \"it\":\"ABC, Spa.\" }" +
+                        "}," +
+                        "\"units\": [" +
+                            "{" +
+                                "\"value\": \"North American Division\"," +
+                                "\"localizations\": { \"it\":\"Divisione Nord America\" }" +
+                            "}," +
+                            "{" +
+                                "\"value\": \"Marketing\"," +
+                                "\"localizations\": { \"it\":\"Marketing\" }" +
+                            "}" +
+                        "]" +
                     "}," +
-                    "{" +
-                        "\"value\": \"University of North America\"" +
+                    "\"ORG-2\": {" +
+                        "\"name\": {" +
+                            "\"value\": \"University of North America\"" +
+                        "}" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOrganizations2 - 1",vcard.getOrganizations().size() == 3);
         assertTrue("testOrganizations2 - 2",vcard.getOrganizations().get(0).getValues().size() == 3);
-        assertTrue("testOrganizations2 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Spa."));
+        assertTrue("testOrganizations2 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Inc."));
         assertTrue("testOrganizations2 - 4",vcard.getOrganizations().get(0).getValues().get(1).equals("North American Division"));
         assertTrue("testOrganizations2 - 5",vcard.getOrganizations().get(0).getValues().get(2).equals("Marketing"));
         assertTrue("testOrganizations2 - 6",vcard.getOrganizations().get(0).getLanguage() == null);
@@ -96,21 +123,35 @@ public class OrganizationsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"organizations\":[" +
-                    "{" +
-                        "\"value\": \"ABC, Spa.;North American Division;Marketing\"," +
-                        "\"localizations\": { \"it\":\"ABC, Spa.;Divisione Nord America;Marketing\" }" +
+                "\"organizations\": {" +
+                    "\"ORG-1\": {" +
+                        "\"name\": {" +
+                            "\"value\": \"ABC, Inc.\"," +
+                            "\"localizations\": { \"it\":\"ABC, Spa.\" }" +
+                        "}," +
+                        "\"units\": [" +
+                            "{" +
+                                "\"value\": \"North American Division\"," +
+                                "\"localizations\": { \"it\":\"Divisione Nord America\" }" +
+                            "}," +
+                            "{" +
+                                "\"value\": \"Marketing\"," +
+                                "\"localizations\": { \"it\":\"Marketing\" }" +
+                            "}" +
+                        "]" +
                     "}," +
-                    "{" +
-                        "\"value\": \"University of North America\"," +
-                        "\"localizations\": { \"it\":\"Università del Nord America\" }" +
+                    "\"ORG-2\": {" +
+                        "\"name\": {" +
+                            "\"value\": \"University of North America\"," +
+                            "\"localizations\": { \"it\":\"Università del Nord America\" }" +
+                        "}" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOrganizations3 - 1",vcard.getOrganizations().size() == 4);
         assertTrue("testOrganizations3 - 2",vcard.getOrganizations().get(0).getValues().size() == 3);
-        assertTrue("testOrganizations3 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Spa."));
+        assertTrue("testOrganizations3 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Inc."));
         assertTrue("testOrganizations3 - 4",vcard.getOrganizations().get(0).getValues().get(1).equals("North American Division"));
         assertTrue("testOrganizations3 - 5",vcard.getOrganizations().get(0).getValues().get(2).equals("Marketing"));
         assertTrue("testOrganizations3 - 6",vcard.getOrganizations().get(0).getLanguage() == null);
