@@ -55,7 +55,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 18", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteXCard1 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPreference() == 1);
         assertTrue("testCompleteXCard1 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPreference() == 2);
-        assertTrue("testCompleteXCard1 - 21", jsCard.getOrganizations()[0].getValue().equals("Viagenie"));
+        assertTrue("testCompleteXCard1 - 21", jsCard.getOrganizations().get("organization-1").getName().getValue().equals("Viagenie"));
         assertTrue("testCompleteXCard1 - 22", jsCard.getAddresses().length == 1);
         assertTrue("testCompleteXCard1 - 23", jsCard.getAddresses()[0].getFullAddress().getValue().equals("Simon Perreault\n                    2875 boul. Laurier, suite D2-630\n                    Quebec, QC, Canada\n                    G1V 2M2"));
         assertTrue("testCompleteXCard1 - 25", jsCard.getAddresses()[0].getStreet().equals("2875 boul. Laurier, suite D2-630"));
@@ -109,8 +109,8 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard2 - 7", jsCard.getName()[1].getValue().equals("Forrest"));
         assertTrue("testCompleteXCard2 - 8", jsCard.getName()[2].getType() == NameComponentType.PREFIX);
         assertTrue("testCompleteXCard2 - 9", jsCard.getName()[2].getValue().equals("Mr."));
-        assertTrue("testCompleteXCard2 - 10", jsCard.getOrganizations()[0].getValue().equals("Bubba Gump Shrimp Co."));
-        assertTrue("testCompleteXCard2 - 11", jsCard.getJobTitles()[0].getValue().equals("Shrimp Man"));
+        assertTrue("testCompleteXCard2 - 10", jsCard.getOrganizations().get("organization-1").getName().getValue().equals("Bubba Gump Shrimp Co."));
+        assertTrue("testCompleteXCard2 - 11", jsCard.getJobTitles().get("title-1").getTitle().getValue().equals("Shrimp Man"));
         File[] photos = jsCard.getPhotos();
         assertTrue("testCompleteXCard2 - 15", photos[0].getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
         assertTrue("testCompleteXCard2 - 16", photos[0].getMediaType().equals("image/gif"));

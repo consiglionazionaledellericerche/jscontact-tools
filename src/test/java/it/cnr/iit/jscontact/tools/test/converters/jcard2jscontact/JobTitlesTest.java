@@ -35,12 +35,12 @@ public class JobTitlesTest extends JCard2JSContactTest {
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testJobTitleWithAltid1 - 1",jsCard.getJobTitles()!=null);
-        assertTrue("testJobTitleWithAltid1 - 2",jsCard.getJobTitles().length == 1);
-        assertTrue("testJobTitleWithAltid1 - 3",jsCard.getJobTitles()[0].getValue().equals("Research Scientist"));
-        assertTrue("testJobTitleWithAltid1 - 4",jsCard.getJobTitles()[0].getLanguage() == null);
-        assertTrue("testJobTitleWithAltid1 - 5",jsCard.getJobTitles()[0].getLocalizations() != null);
-        assertTrue("testJobTitleWithAltid1 - 6",jsCard.getJobTitles()[0].getLocalizations().size() == 1);
-        assertTrue("testJobTitleWithAltid1 - 7",jsCard.getJobTitles()[0].getLocalizations().get("it").equals("Ricercatore"));
+        assertTrue("testJobTitleWithAltid1 - 2",jsCard.getJobTitles().size() == 1);
+        assertTrue("testJobTitleWithAltid1 - 3",jsCard.getJobTitles().get("title-1").getTitle().getValue().equals("Research Scientist"));
+        assertTrue("testJobTitleWithAltid1 - 4",jsCard.getJobTitles().get("title-1").getTitle().getLanguage() == null);
+        assertTrue("testJobTitleWithAltid1 - 5",jsCard.getJobTitles().get("title-1").getTitle().getLocalizations() != null);
+        assertTrue("testJobTitleWithAltid1 - 6",jsCard.getJobTitles().get("title-1").getTitle().getLocalizations().size() == 1);
+        assertTrue("testJobTitleWithAltid1 - 7",jsCard.getJobTitles().get("title-1").getTitle().getLocalizations().get("it").equals("Ricercatore"));
     }
 
     @Test
@@ -53,13 +53,13 @@ public class JobTitlesTest extends JCard2JSContactTest {
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testJobTitleWithoutAltid - 1",jsCard.getJobTitles()!=null);
-        assertTrue("testJobTitleWithoutAltid - 2",jsCard.getJobTitles().length == 2);
-        assertTrue("testJobTitleWithoutAltid - 3",jsCard.getJobTitles()[0].getValue().equals("Research Scientist"));
-        assertTrue("testJobTitleWithoutAltid - 4",jsCard.getJobTitles()[0].getLanguage() == null);
-        assertTrue("testJobTitleWithoutAltid - 5",jsCard.getJobTitles()[0].getLocalizations() == null);
-        assertTrue("testJobTitleWithoutAltid - 6",jsCard.getJobTitles()[1].getValue().equals("Ricercatore"));
-        assertTrue("testJobTitleWithoutAltid - 7",jsCard.getJobTitles()[1].getLanguage().equals("it"));
-        assertTrue("testJobTitleWithoutAltid - 8",jsCard.getJobTitles()[1].getLocalizations() == null);
+        assertTrue("testJobTitleWithoutAltid - 2",jsCard.getJobTitles().size() == 2);
+        assertTrue("testJobTitleWithoutAltid - 3",jsCard.getJobTitles().get("title-1").getTitle().getValue().equals("Research Scientist"));
+        assertTrue("testJobTitleWithoutAltid - 4",jsCard.getJobTitles().get("title-1").getTitle().getLanguage() == null);
+        assertTrue("testJobTitleWithoutAltid - 5",jsCard.getJobTitles().get("title-1").getTitle().getLocalizations() == null);
+        assertTrue("testJobTitleWithoutAltid - 6",jsCard.getJobTitles().get("title-2").getTitle().getValue().equals("Ricercatore"));
+        assertTrue("testJobTitleWithoutAltid - 7",jsCard.getJobTitles().get("title-2").getTitle().getLanguage().equals("it"));
+        assertTrue("testJobTitleWithoutAltid - 8",jsCard.getJobTitles().get("title-2").getTitle().getLocalizations() == null);
     }
 
     @Test
@@ -73,13 +73,13 @@ public class JobTitlesTest extends JCard2JSContactTest {
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testJobTitleWithAltid2 - 1",jsCard.getJobTitles()!=null);
-        assertTrue("testJobTitleWithAltid2 - 2",jsCard.getJobTitles().length == 2);
-        assertTrue("testJobTitleWithAltid2 - 3",jsCard.getJobTitles()[1].getValue().equals("Research Scientist"));
-        assertTrue("testJobTitleWithAltid2 - 4",jsCard.getJobTitles()[1].getLanguage() == null);
-        assertTrue("testJobTitleWithAltid2 - 5",jsCard.getJobTitles()[1].getLocalizations() != null);
-        assertTrue("testJobTitleWithAltid2 - 6",jsCard.getJobTitles()[1].getLocalizations().size() == 1);
-        assertTrue("testJobTitleWithAltid2 - 7",jsCard.getJobTitles()[1].getLocalizations().get("it").equals("Ricercatore"));
-        assertTrue("testJobTitleWithAltid2 - 8",jsCard.getJobTitles()[0].getValue().equals("IETF Area Director"));
+        assertTrue("testJobTitleWithAltid2 - 2",jsCard.getJobTitles().size() == 2);
+        assertTrue("testJobTitleWithAltid2 - 3",jsCard.getJobTitles().get("title-2").getTitle().getValue().equals("Research Scientist"));
+        assertTrue("testJobTitleWithAltid2 - 4",jsCard.getJobTitles().get("title-2").getTitle().getLanguage() == null);
+        assertTrue("testJobTitleWithAltid2 - 5",jsCard.getJobTitles().get("title-2").getTitle().getLocalizations() != null);
+        assertTrue("testJobTitleWithAltid2 - 6",jsCard.getJobTitles().get("title-2").getTitle().getLocalizations().size() == 1);
+        assertTrue("testJobTitleWithAltid2 - 7",jsCard.getJobTitles().get("title-2").getTitle().getLocalizations().get("it").equals("Ricercatore"));
+        assertTrue("testJobTitleWithAltid2 - 8",jsCard.getJobTitles().get("title-1").getTitle().getValue().equals("IETF Area Director"));
     }
 
 }

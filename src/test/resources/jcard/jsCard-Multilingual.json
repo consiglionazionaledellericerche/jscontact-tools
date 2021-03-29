@@ -1,21 +1,23 @@
 {
 "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
 "fullName": {
-"value": "大久保 正仁",
-"language": "ja",
-"localizations": {
-"en": "Okubo Masahito"
-}
+  "value": "大久保 正仁",
+  "language": "ja",
+  "localizations": {
+    "en": "Okubo Masahito"
+  }
 },
-"jobTitles": [
-{
-"value": "事務局長",
-"language": "ja",
-"localizations": {
-"en": "Secretary General"
-}
-}
-],
+"jobTitles": {
+  "title-1": {
+    "title": {
+      "value": "事務局長",
+      "language": "ja",
+      "localizations": {
+        "en": "Secretary General"
+      }
+    }
+  }
+},
 "kind": "individual",
 "preferredContactLanguages": {
 "ja": [{ "preference": 1 }],

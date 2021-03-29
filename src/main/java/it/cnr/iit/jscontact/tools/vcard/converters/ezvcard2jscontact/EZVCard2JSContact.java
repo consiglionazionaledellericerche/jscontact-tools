@@ -22,6 +22,8 @@ import ezvcard.parameter.Pid;
 import ezvcard.parameter.RelatedType;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.*;
+import ezvcard.property.Organization;
+import ezvcard.property.Title;
 import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
@@ -821,8 +823,9 @@ public class EZVCard2JSContact extends AbstractConverter {
                     .build()
             );
         Collections.sort(titles);
+        int i = 1;
         for (LocalizedString title : titles)
-            jsContact.addTitle(title);
+            jsContact.addTitle("title-" + (i++), title);
 
     }
 
@@ -857,8 +860,35 @@ public class EZVCard2JSContact extends AbstractConverter {
             );
         }
         Collections.sort(organizations);
-        for (LocalizedString organization : organizations)
-            jsContact.addOrganization(organization);
+        List<it.cnr.iit.jscontact.tools.dto.Organization> jsContactOrganizations = new ArrayList<it.cnr.iit.jscontact.tools.dto.Organization>();
+
+        int i = 1;
+        for (LocalizedString organization : organizations) {
+            String[] nameItems = organization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
+            LocalizedString name = LocalizedString.builder().value(nameItems[0]).language(organization.getLanguage()).build();
+            if (organization.getLocalizations() == null)
+                continue;
+            for (Map.Entry<String,String> nameLocalization : organization.getLocalizations().entrySet()) {
+                String[] nameLocalizationItems = nameLocalization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
+                name.getLocalizations().put(nameLocalization.getKey(),nameLocalizationItems[0]);
+            }
+
+            List<LocalizedString> units = new ArrayList<LocalizedString>();
+            for (int j=1; j < nameItems.length; j++) {
+                Map<String,String> localizations = new HashMap<String,String>();
+                for (Map.Entry<String,String> unitLocalization : organization.getLocalizations().entrySet()) {
+                    String[] unitLocalizationItems = unitLocalization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
+                    localizations.put(unitLocalization.getKey(),unitLocalizationItems[j]);
+                }
+                units.add(LocalizedString.builder().value(nameItems[j]).language(organization.getLanguage()).localizations((localizations.size() > 0) ? localizations : null).build());
+            }
+
+            jsContactOrganizations.add(it.cnr.iit.jscontact.tools.dto.Organization.builder().name(name).units(units.toArray(new LocalizedString[units.size()])).build());
+        }
+
+        i = 1;
+        for (it.cnr.iit.jscontact.tools.dto.Organization jsContactOrganization : jsContactOrganizations)
+            jsContact.addOrganization("organization-" + (i++), jsContactOrganization);
     }
 
     private static void fillNotes(VCard vcard, JSContact jsContact) {

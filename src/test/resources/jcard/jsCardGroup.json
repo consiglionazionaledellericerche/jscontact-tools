@@ -29,16 +29,18 @@
         }
       ]
     },
-    "organizations": [
-      {
-        "value": "Example"
+    "organizations": {
+      "organization-1" :{
+        "name" : {
+          "value": "Example"
+        }
       }
-    ],
-    "jobTitles": [
-      {
-        "value": "Research Scientist"
+    },
+    "jobTitles": {
+      "title-1": {
+        "title" : {"value": "Research Scientist"}
       }
-    ],
+    },
     "roles": [
       {
         "value": "Project Lead"
@@ -110,15 +112,17 @@
         "en": "Okubo Masahito"
       }
     },
-    "jobTitles": [
-      {
-        "value": "事務局長",
-        "language": "ja",
-        "localizations": {
-          "en": "Secretary General"
+    "jobTitles": {
+      "title-1" : {
+        "title": {
+          "value": "事務局長",
+          "language": "ja",
+          "localizations": {
+            "en": "Secretary General"
+          }
         }
       }
-    ],
+    },
     "kind": "individual",
     "preferredContactLanguages": {
       "ja": [

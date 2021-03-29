@@ -45,7 +45,7 @@ import java.util.*;
 @SuperBuilder
 public abstract class JSContact extends ValidableObject {
 
-    @NotNull(message = "uid is missing in JSCard")
+    @NotNull(message = "uid is missing in JSContact")
     @NonNull
     String uid;
 
@@ -75,24 +75,24 @@ public abstract class JSContact extends ValidableObject {
     LocalizedString[] nickNames;
 
     @Valid
-    LocalizedString[] organizations;
+    Map<String,Organization> organizations;
 
     @Valid
-    LocalizedString[] jobTitles;
+    Map<String,Title> jobTitles;
 
     @Valid
     LocalizedString[] roles;
 
     @Valid
-    @EmailsConstraint(message = "invalid email Resource in JSCard")
+    @EmailsConstraint(message = "invalid email Resource in JSContact")
     Resource[] emails;
 
     @Valid
-    @PhonesConstraint(message = "invalid phone Resource in JSCard")
+    @PhonesConstraint(message = "invalid phone Resource in JSContact")
     Resource[] phones;
 
     @Valid
-    @OnlineConstraint(message = "invalid online Resource in JSCard")
+    @OnlineConstraint(message = "invalid online Resource in JSContact")
     Resource[] online;
 
     @Valid
@@ -156,12 +156,37 @@ public abstract class JSContact extends ValidableObject {
         photos = ArrayUtils.add(photos, f);
     }
 
-    public void addOrganization(LocalizedString org) {
-        organizations = ArrayUtils.add(organizations, org);
+    public void addOrganization(String id, LocalizedString name, LocalizedString[] units) {
+
+        if(organizations == null)
+            organizations = new HashMap<String,Organization>();
+
+        if (!organizations.containsKey(id))
+            organizations.put(id,Organization.builder().name(name).units(units).build());
     }
 
-    public void addTitle(LocalizedString title) {
-        jobTitles = ArrayUtils.add(jobTitles, title);
+    public void addOrganization(String id, Organization organization) {
+        if(organizations == null)
+            organizations = new HashMap<String,Organization>();
+
+        organizations.put(id,organization);
+    }
+
+    public void addOrganization(String id, LocalizedString name) {
+        addOrganization(id, name, null);
+    }
+
+    public void addTitle(String id, LocalizedString title, String organization) {
+
+        if(jobTitles == null)
+            jobTitles = new HashMap<String,Title>();
+
+        if (!jobTitles.containsKey(id))
+            jobTitles.put(id,Title.builder().title(title).organization(organization).build());
+    }
+
+    public void addTitle(String id, LocalizedString title) {
+        addTitle(id, title, null);
     }
 
     public void addRole(LocalizedString rl) {
