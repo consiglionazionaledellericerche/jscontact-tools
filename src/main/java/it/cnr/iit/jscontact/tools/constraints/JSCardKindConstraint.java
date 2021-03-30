@@ -27,7 +27,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface JSCardKindConstraint {
 
-    String message() default "";
+    String message() default "invalid kind in JSCard";
 
     Class<?>[] groups() default { };
 
