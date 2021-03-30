@@ -571,8 +571,9 @@ public class EZVCard2JSContact extends AbstractConverter {
             addresses.set(addresses.indexOf(address), address);
         }
 
+        int i = 1;
         for (it.cnr.iit.jscontact.tools.dto.Address address : addresses)
-            jsContact.addAddress(address);
+            jsContact.addAddress("ADR-" + (i++), address);
 
     }
 

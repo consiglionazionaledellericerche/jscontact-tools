@@ -9,25 +9,25 @@
 "organizations": { "ORG-1": { "name": { "value": "Example" }} },
 "jobTitles": {"TITLE-1": { "title": { "value": "Research Scientist" }} },
 "roles": [ { "value": "Project Lead" } ],
-"addresses": [
-{
-"context": "work",
-"extension": "Suite 1234",
-"street": "4321 Rue Somewhere",
-"locality": "Quebec",
-"region": "QC",
-"postcode": "G1V 2M2",
-"country": "Canada",
-"coordinates": "geo:46.772673,-71.282945",
-"timeZone": "Etc/GMT+5"
+"addresses": {
+  "ADR-1" : {
+    "context": "work",
+    "extension": "Suite 1234",
+    "street": "4321 Rue Somewhere",
+    "locality": "Quebec",
+    "region": "QC",
+    "postcode": "G1V 2M2",
+    "country": "Canada",
+    "coordinates": "geo:46.772673,-71.282945",
+    "timeZone": "Etc/GMT+5"
+  },
+  "ADR-2" : {
+  "context": "private",
+  "fullAddress": {
+  "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+  }
+  }
 },
-{
-"context": "private",
-"fullAddress": {
-"value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
-}
-}
-],
 "phones": [
 {
 "context": "work",

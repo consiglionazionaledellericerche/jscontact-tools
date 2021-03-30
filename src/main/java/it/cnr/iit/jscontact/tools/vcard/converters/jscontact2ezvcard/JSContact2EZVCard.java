@@ -220,12 +220,12 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         Integer altId = Integer.parseInt("1");
-        for (Address address : jsContact.getAddresses()) {
-            boolean altIdToBeAdded = (jsContact.getAddresses().length > 1) &&
+        for (Map.Entry<String,Address> entry : jsContact.getAddresses().entrySet()) {
+            boolean altIdToBeAdded = (jsContact.getAddresses().size() > 1) &&
                                      (
-                                             (address.getFullAddress()!=null && address.getFullAddress().getLocalizations()!=null)
+                                             (entry.getValue().getFullAddress()!=null && entry.getValue().getFullAddress().getLocalizations()!=null)
                                      );
-            vcard.getAddresses().addAll(getAddress(address, altIdToBeAdded ? altId : null));
+            vcard.getAddresses().addAll(getAddress(entry.getValue(), altIdToBeAdded ? altId : null));
         }
     }
 

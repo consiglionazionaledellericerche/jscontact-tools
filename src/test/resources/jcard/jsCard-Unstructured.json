@@ -8,13 +8,13 @@
 }
 },
 "kind": "org",
-"addresses": [
-{
-"fullAddress": {
-"value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
-}
-}
-],
+"addresses": {
+  "ADR-1" : {
+    "fullAddress": {
+      "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
+    }
+  }
+},
 "phones": [
 {
 "type": "voice",

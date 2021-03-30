@@ -102,7 +102,7 @@ public abstract class JSContact extends ValidableObject {
     Map<String, ContactLanguage[]> preferredContactLanguages;
 
     @Valid
-    Address[] addresses;
+    Map<String,Address> addresses;
 
     @Valid
     Anniversary[] anniversaries;
@@ -204,8 +204,13 @@ public abstract class JSContact extends ValidableObject {
         anniversaries = ArrayUtils.add(anniversaries, anniversary);
     }
 
-    public void addAddress(Address address) {
-        addresses = ArrayUtils.add(addresses, address);
+    public void addAddress(String id, Address address) {
+
+        if(addresses == null)
+            addresses = new HashMap<String,Address>();
+
+        if (!addresses.containsKey(id))
+            addresses.put(id,address);
     }
 
     private void addCategory(String category) {
