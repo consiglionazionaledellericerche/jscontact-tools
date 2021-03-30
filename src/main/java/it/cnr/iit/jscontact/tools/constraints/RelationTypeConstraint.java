@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.RelationValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.RelationTypeValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -26,11 +26,11 @@ import java.lang.annotation.Target;
 
 @Target({java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {RelationValidator.class})
+@Constraint(validatedBy = {RelationTypeValidator.class})
 @Documented
-public @interface RelationConstraint {
+public @interface RelationTypeConstraint {
 
-    String message() default "";
+    String message() default "invalid relation type in Relation";
 
     Class<?>[] groups() default { };
 

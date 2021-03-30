@@ -16,15 +16,15 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.dto.RelationType;
-import it.cnr.iit.jscontact.tools.constraints.RelationConstraint;
+import it.cnr.iit.jscontact.tools.constraints.RelationTypeConstraint;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Map;
 
-public class RelationValidator implements ConstraintValidator<RelationConstraint, Map<String,Boolean>> {
+public class RelationTypeValidator implements ConstraintValidator<RelationTypeConstraint, Map<String,Boolean>> {
 
-    public void initialize(RelationConstraint constraintAnnotation) {
+    public void initialize(RelationTypeConstraint constraintAnnotation) {
     }
 
     public boolean isValid(Map<String,Boolean> relations, ConstraintValidatorContext context) {

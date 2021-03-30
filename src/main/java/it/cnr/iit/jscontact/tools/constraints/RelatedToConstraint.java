@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.JSContactMapsValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.RelatedToValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -26,11 +26,11 @@ import java.lang.annotation.Target;
 
 @Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {JSContactMapsValidator.class})
+@Constraint(validatedBy = {RelatedToValidator.class})
 @Documented
-public @interface JSContactMapsConstraint {
+public @interface RelatedToConstraint {
 
-    String message() default "";
+    String message() default "invalid relatedTo in JSContact";
 
     Class<?>[] groups() default { };
 

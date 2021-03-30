@@ -19,7 +19,7 @@ public class File {
 
     String mediaType;
 
-    @Min(value=0, message = "invalid size in File")
+    @Min(value=0, message = "invalid size in File - min value must be 0")
     int size;
 
     Boolean isPreferred;

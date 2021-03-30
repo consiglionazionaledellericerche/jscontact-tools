@@ -21,7 +21,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
 import it.cnr.iit.jscontact.tools.constraints.EmailsConstraint;
-import it.cnr.iit.jscontact.tools.constraints.JSContactMapsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstraint;
+import it.cnr.iit.jscontact.tools.constraints.RelatedToConstraint;
 import it.cnr.iit.jscontact.tools.constraints.OnlineConstraint;
 import it.cnr.iit.jscontact.tools.constraints.PhonesConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindDeserializer;
@@ -35,7 +36,6 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 
-@JSContactMapsConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @Getter
@@ -63,6 +63,7 @@ public abstract class JSContact extends ValidableObject {
     @JsonDeserialize(using = KindDeserializer.class)
     KindType kind;
 
+    @RelatedToConstraint
     Map<String,Relation> relatedTo;
 
     @Valid
@@ -100,6 +101,7 @@ public abstract class JSContact extends ValidableObject {
 
     PreferredContactMethodType preferredContactMethod;
 
+    @PreferredContactLanguagesConstraint
     Map<String, ContactLanguage[]> preferredContactLanguages;
 
     @Valid

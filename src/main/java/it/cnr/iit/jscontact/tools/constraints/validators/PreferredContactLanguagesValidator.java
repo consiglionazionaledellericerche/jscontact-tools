@@ -15,58 +15,40 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.JSContactMapsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstraint;
 import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
-import it.cnr.iit.jscontact.tools.dto.Relation;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolation;
+import java.util.Map;
 import java.util.Set;
 
-public class JSContactMapsValidator implements ConstraintValidator<JSContactMapsConstraint, JSContact> {
+public class PreferredContactLanguagesValidator implements ConstraintValidator<PreferredContactLanguagesConstraint, Map<String, ContactLanguage[]>> {
 
-    public void initialize(JSContactMapsConstraint constraintAnnotation) {
+    public void initialize(PreferredContactLanguagesConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(JSContact jsContact, ConstraintValidatorContext context) {
+    public boolean isValid(Map<String, ContactLanguage[]> clMap, ConstraintValidatorContext context) {
 
-        if (jsContact == null)
+        if (clMap == null)
             return true;
 
-        if (jsContact.getPreferredContactLanguages() != null) {
+        for(ContactLanguage[] cls : clMap.values()) {
 
-            for(ContactLanguage[] cls : jsContact.getPreferredContactLanguages().values()) {
+            if (cls == null)
+                return false;
 
-                if (cls == null)
+            for (ContactLanguage cl : cls) {
+
+                if (cl == null)
                     return false;
 
-                for (ContactLanguage cl : cls) {
-
-                    if (cl == null)
-                        return false;
-
-                    Set<ConstraintViolation<ContactLanguage>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
-                    if (constraintViolations.size() > 0)
-                        return false;
-                }
-            }
-        }
-
-        if (jsContact.getRelatedTo() != null) {
-
-            for(Relation rel : jsContact.getRelatedTo().values()) {
-
-                if (rel == null)
-                    return false;
-
-                Set<ConstraintViolation<Relation>> constraintViolations = ValidatorBuilder.getValidator().validate(rel);
+                Set<ConstraintViolation<ContactLanguage>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
                 if (constraintViolations.size() > 0)
                     return false;
-
             }
         }
 

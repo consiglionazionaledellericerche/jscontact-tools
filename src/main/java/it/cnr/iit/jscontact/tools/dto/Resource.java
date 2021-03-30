@@ -36,7 +36,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
 
     String type;
 
-    @BooleanMapConstraint(message = "invalid labels map in Resource")
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> in Resource - Boolean.FALSE is not allowed")
     Map<String,Boolean> labels;
 
     @NotNull(message = "value is missing in Resource")

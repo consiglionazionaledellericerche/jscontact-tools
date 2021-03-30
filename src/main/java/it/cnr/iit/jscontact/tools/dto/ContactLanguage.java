@@ -35,8 +35,8 @@ public class ContactLanguage extends GroupableObject {
 
     String type;
 
-    @Min(value=1, message = "invalid preference in ContactLanguage")
-    @Max(value=100, message = "invalid preference in ContactLanguage")
+    @Min(value=1, message = "invalid preference in ContactLanguage - min value must be 1")
+    @Max(value=100, message = "invalid preference in ContactLanguage - max value must be 100")
     Integer preference;
 
 }

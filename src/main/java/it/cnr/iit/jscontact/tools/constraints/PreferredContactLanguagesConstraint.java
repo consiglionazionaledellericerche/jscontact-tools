@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.BooleanMapValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.PreferredContactLanguagesValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -24,13 +24,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
+@Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {BooleanMapValidator.class})
+@Constraint(validatedBy = {PreferredContactLanguagesValidator.class})
 @Documented
-public @interface BooleanMapConstraint {
+public @interface PreferredContactLanguagesConstraint {
 
-    String message() default "invalid Map<String,Boolean> in JSContact - Boolean.FALSE is not allowed";
+    String message() default "invalid preferredContactLanguages in JSContact";
 
     Class<?>[] groups() default { };
 
