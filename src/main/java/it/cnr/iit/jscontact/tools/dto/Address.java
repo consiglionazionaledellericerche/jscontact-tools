@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
 import javax.validation.constraints.Pattern;
@@ -28,7 +29,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"fullAddress"})
-public class Address extends GroupableObject implements HasAltid {
+public class Address extends GroupableObject implements HasAltid, IdMapValue {
 
     AddressContext context;
 

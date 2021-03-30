@@ -1,6 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class File {
+public class File implements IdMapValue {
 
     @NotNull(message = "href is missing in File")
     @NonNull

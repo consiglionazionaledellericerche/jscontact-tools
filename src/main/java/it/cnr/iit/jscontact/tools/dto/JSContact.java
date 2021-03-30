@@ -73,26 +73,32 @@ public abstract class JSContact extends ValidableObject {
     LocalizedString[] nickNames;
 
     @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
     Map<String,Organization> organizations;
 
     @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
     Map<String,Title> jobTitles;
 
     @Valid
     LocalizedString[] roles;
 
+    //    @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     @Valid
     @EmailsConstraint(message = "invalid email Resource in JSContact")
     Resource[] emails;
 
+    //    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
     @Valid
     @PhonesConstraint(message = "invalid phone Resource in JSContact")
     Resource[] phones;
 
+    //    @IdMapConstraint(message = "invalid Id in Map<Id,Resource>")
     @Valid
     @OnlineConstraint(message = "invalid online Resource in JSContact")
     Resource[] online;
 
+    //    @IdMapConstraint(message = "invalid Id in Map<Id,File>")
     @Valid
     File[] photos;
 
@@ -102,6 +108,7 @@ public abstract class JSContact extends ValidableObject {
     Map<String, ContactLanguage[]> preferredContactLanguages;
 
     @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
     Map<String,Address> addresses;
 
     @Valid

@@ -15,30 +15,32 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.constraints.IdMapConstraint;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class BooleanMapValidator implements ConstraintValidator<BooleanMapConstraint, Map<String,Boolean>> {
+public class IdMapValidator implements ConstraintValidator<IdMapConstraint, Map<String,? extends IdMapValue>> {
 
-    public void initialize(BooleanMapConstraint constraintAnnotation) {
+    private static Pattern ID_PATTERN = Pattern.compile("[A-Za-z0-9_\\-]+");
+
+    public void initialize(IdMapConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(Map<String,Boolean> map, ConstraintValidatorContext context) {
+    public boolean isValid(Map<String,? extends IdMapValue> map, ConstraintValidatorContext context) {
 
         if (map == null)
             return true;
 
-        for (Boolean value : map.values()){
+        for (String id : map.keySet()){
 
-            if (value == null)
+            Matcher matcher = ID_PATTERN.matcher(id);
+            if (!matcher.matches())
                 return false;
-
-            if (value == Boolean.FALSE)
-                return false;
-
         }
 
         return true;

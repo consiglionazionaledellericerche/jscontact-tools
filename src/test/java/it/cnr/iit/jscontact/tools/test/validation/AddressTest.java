@@ -89,4 +89,18 @@ public class AddressTest extends AbstractTest {
 
     }
 
+    @Test
+    public void testInvalidAddressId() {
+
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("$$$$$", Address.builder()
+                .coordinates("geo:46.772673,-71.282945")
+                .build());
+        }};
+        JSCard jsCard = JSCard.builder()
+                .uid(getUUID())
+                .addresses(addresses)
+                .build();
+        assertTrue("testInvalidAddressId", !jsCard.isValid());
+    }
+
 }

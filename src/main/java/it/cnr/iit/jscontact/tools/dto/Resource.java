@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
 
@@ -30,7 +31,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements HasIndex, Comparable<Resource> {
+public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue {
 
     ResourceContext context;
 

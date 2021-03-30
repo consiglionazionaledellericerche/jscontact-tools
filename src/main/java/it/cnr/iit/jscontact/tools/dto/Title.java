@@ -1,7 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.cnr.iit.jscontact.tools.dto.LocalizedString;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
 import javax.validation.Valid;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Title {
+public class Title implements IdMapValue {
 
     @NotNull(message = "title is missing in Title")
     @NonNull
