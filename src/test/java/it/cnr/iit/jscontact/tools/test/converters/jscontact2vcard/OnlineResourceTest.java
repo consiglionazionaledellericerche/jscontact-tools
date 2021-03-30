@@ -76,12 +76,12 @@ public class OnlineResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"photos\":["+
-                    "{" +
+                "\"photos\": {"+
+                    "\"PHOTO-1\": {" +
                         "\"mediaType\": \"image/gif\","+
                         "\"href\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testPhotoValid - 1",vcard.getPhotos().size() == 1);

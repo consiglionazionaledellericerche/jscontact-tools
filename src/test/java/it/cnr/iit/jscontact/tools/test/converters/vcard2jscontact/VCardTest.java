@@ -314,9 +314,8 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard5 - 9", jsCard.getName()[2].getValue().equals("Mr."));
         assertTrue("testCompleteVCard5 - 10", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Bubba Gump Shrimp Co."));
         assertTrue("testCompleteVCard5 - 11", jsCard.getJobTitles().get("TITLE-1").getTitle().getValue().equals("Shrimp Man"));
-        File[] photos = jsCard.getPhotos();
-        assertTrue("testCompleteVCard5 - 15", photos[0].getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
-        assertTrue("testCompleteVCard5 - 16", photos[0].getMediaType().equals("image/gif"));
+        assertTrue("testCompleteVCard5 - 15", jsCard.getPhotos().get("PHOTO-1").getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
+        assertTrue("testCompleteVCard5 - 16", jsCard.getPhotos().get("PHOTO-1").getMediaType().equals("image/gif"));
         assertTrue("testCompleteVCard5 - 17", jsCard.getPhones().length == 2);
         assertTrue("testCompleteVCard5 - 18", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteVCard5 - 19", jsCard.getPhones()[0].getContext() == ResourceContext.WORK);
@@ -445,10 +444,10 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard5 - 82", jsCard.getAnniversaries().length == 1);
         assertTrue("testCompleteVCard5 - 83", jsCard.getAnniversaries()[0].getDate().equals("2016-08-01"));
 
-        assertTrue("testCompleteVCard5 - 84", jsCard.getPhotos().length == 3);
-        assertTrue("testCompleteVCard5 - 85", jsCard.getPhotos()[0].getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
-        assertTrue("testCompleteVCard5 - 86", jsCard.getPhotos()[1].getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
-        assertTrue("testCompleteVCard5 - 87", jsCard.getPhotos()[2].getHref().equals("https://d2ojpxxtu63wzl.cloudfront.net/static/aa915d1f29f19baf560e5491decdd30a_67c95da9133249fde8b0da7ceebc298bf680117e6f52054f7f5f7a95e8377238"));
+        assertTrue("testCompleteVCard5 - 84", jsCard.getPhotos().size() == 3);
+        assertTrue("testCompleteVCard5 - 85", jsCard.getPhotos().get("PHOTO-1").getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
+        assertTrue("testCompleteVCard5 - 86", jsCard.getPhotos().get("PHOTO-2").getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
+        assertTrue("testCompleteVCard5 - 87", jsCard.getPhotos().get("PHOTO-3").getHref().equals("https://d2ojpxxtu63wzl.cloudfront.net/static/aa915d1f29f19baf560e5491decdd30a_67c95da9133249fde8b0da7ceebc298bf680117e6f52054f7f5f7a95e8377238"));
 
         assertTrue("testCompleteVCard5 - 88", jsCard.getOnline().length == 11);
 

@@ -98,9 +98,9 @@ public abstract class JSContact extends ValidableObject {
     @OnlineConstraint(message = "invalid online Resource in JSContact")
     Resource[] online;
 
-    //    @IdMapConstraint(message = "invalid Id in Map<Id,File>")
     @Valid
-    File[] photos;
+    @IdMapConstraint(message = "invalid Id in Map<Id,File>")
+    Map<String,File> photos;
 
     PreferredContactMethodType preferredContactMethod;
 
@@ -158,8 +158,12 @@ public abstract class JSContact extends ValidableObject {
         online = ArrayUtils.add(online, ol);
     }
 
-    public void addPhoto(File f) {
-        photos = ArrayUtils.add(photos, f);
+    public void addPhoto(String id, File f) {
+
+        if (photos == null)
+            photos = new HashMap<String,File>();
+
+        photos.put(id, f);
     }
 
     public void addOrganization(String id, LocalizedString name, LocalizedString[] units) {

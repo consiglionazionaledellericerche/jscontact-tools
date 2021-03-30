@@ -34,14 +34,14 @@ public class TitleOrganizationValidator implements ConstraintValidator<TitleOrga
         if (jsContact.getJobTitles() == null)
             return true;
 
-        for (Map.Entry<String,Title> entry : jsContact.getJobTitles().entrySet()) {
+        for (Title title : jsContact.getJobTitles().values()) {
 
-            if (entry.getValue().getOrganization() != null) {
+            if (title.getOrganization() != null) {
 
                 if (jsContact.getOrganizations() == null)
                     return false;
 
-                if (jsContact.getOrganizations().get(entry.getValue().getOrganization()) == null)
+                if (jsContact.getOrganizations().get(title.getOrganization()) == null)
                     return false;
 
             }

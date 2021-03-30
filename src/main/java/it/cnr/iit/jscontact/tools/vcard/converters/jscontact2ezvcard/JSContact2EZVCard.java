@@ -220,12 +220,12 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         Integer altId = Integer.parseInt("1");
-        for (Map.Entry<String,Address> entry : jsContact.getAddresses().entrySet()) {
+        for (Address address : jsContact.getAddresses().values()) {
             boolean altIdToBeAdded = (jsContact.getAddresses().size() > 1) &&
                                      (
-                                             (entry.getValue().getFullAddress()!=null && entry.getValue().getFullAddress().getLocalizations()!=null)
+                                             (address.getFullAddress()!=null && address.getFullAddress().getLocalizations()!=null)
                                      );
-            vcard.getAddresses().addAll(getAddress(entry.getValue(), altIdToBeAdded ? altId : null));
+            vcard.getAddresses().addAll(getAddress(address, altIdToBeAdded ? altId : null));
         }
     }
 
@@ -514,7 +514,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsContact.getPhotos() == null)
             return;
 
-        for(File file : jsContact.getPhotos()) {
+        for(File file : jsContact.getPhotos().values()) {
             Photo photo = getPhoto(file);
             if (photo == null) continue;
             vcard.getPhotos().add(photo);
@@ -601,12 +601,12 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         Integer altId = Integer.parseInt("1");
-        for (Map.Entry<String,Title> pair : jsContact.getJobTitles().entrySet()) {
-            if (pair.getValue().getTitle().getLocalizations() == null)
-                vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(pair.getValue().getTitle().getValue()), pair.getValue().getTitle().getLanguage()));
+        for (Title title : jsContact.getJobTitles().values()) {
+            if (title.getTitle().getLocalizations() == null)
+                vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(title.getTitle().getValue()), title.getTitle().getLanguage()));
             else {
-                vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(pair.getValue().getTitle().getValue()), pair.getValue().getTitle().getLanguage(), altId));
-                for (Map.Entry<String,String> localization : pair.getValue().getTitle().getLocalizations().entrySet())
+                vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(title.getTitle().getValue()), title.getTitle().getLanguage(), altId));
+                for (Map.Entry<String,String> localization : title.getTitle().getLocalizations().entrySet())
                     vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(localization.getValue()), localization.getKey(), altId));
                 altId ++;
             }
@@ -672,15 +672,15 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         Integer altId = Integer.parseInt("1");
-        for (Map.Entry<String,Organization> organization : jsContact.getOrganizations().entrySet()) {
-            List<String> organizationItems = getOrganizationItems(organization.getValue().getName(), organization.getValue().getUnits());
-            if (organization.getValue().getName().getLocalizations() == null) {
-                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, String.join(SEMICOMMA_ARRAY_DELIMITER,organizationItems), organization.getValue().getName().getLanguage()));
+        for (Organization organization : jsContact.getOrganizations().values()) {
+            List<String> organizationItems = getOrganizationItems(organization.getName(), organization.getUnits());
+            if (organization.getName().getLocalizations() == null) {
+                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, String.join(SEMICOMMA_ARRAY_DELIMITER,organizationItems), organization.getName().getLanguage()));
             }
             else {
-                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, String.join(SEMICOMMA_ARRAY_DELIMITER,organizationItems), organization.getValue().getName().getLanguage(), altId));
-                for (String language : organization.getValue().getName().getLocalizations().keySet()) {
-                    organizationItems = getOrganizationItems(organization.getValue().getName(), organization.getValue().getUnits(), language);
+                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, String.join(SEMICOMMA_ARRAY_DELIMITER,organizationItems), organization.getName().getLanguage(), altId));
+                for (String language : organization.getName().getLocalizations().keySet()) {
+                    organizationItems = getOrganizationItems(organization.getName(), organization.getUnits(), language);
                     vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), SEMICOMMA_ARRAY_DELIMITER, String.join(SEMICOMMA_ARRAY_DELIMITER,organizationItems), language, altId));
                 }
                 altId++;

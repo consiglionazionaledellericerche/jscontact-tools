@@ -111,9 +111,8 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard2 - 9", jsCard.getName()[2].getValue().equals("Mr."));
         assertTrue("testCompleteXCard2 - 10", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Bubba Gump Shrimp Co."));
         assertTrue("testCompleteXCard2 - 11", jsCard.getJobTitles().get("TITLE-1").getTitle().getValue().equals("Shrimp Man"));
-        File[] photos = jsCard.getPhotos();
-        assertTrue("testCompleteXCard2 - 15", photos[0].getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
-        assertTrue("testCompleteXCard2 - 16", photos[0].getMediaType().equals("image/gif"));
+        assertTrue("testCompleteXCard2 - 15", jsCard.getPhotos().get("PHOTO-1").getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
+        assertTrue("testCompleteXCard2 - 16", jsCard.getPhotos().get("PHOTO-1").getMediaType().equals("image/gif"));
         assertTrue("testCompleteXCard2 - 17", jsCard.getPhones().length == 2);
         assertTrue("testCompleteXCard2 - 18", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteXCard2 - 19", jsCard.getPhones()[0].getContext() == ResourceContext.WORK);

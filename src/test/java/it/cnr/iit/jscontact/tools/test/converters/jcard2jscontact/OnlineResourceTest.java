@@ -71,10 +71,10 @@ public class OnlineResourceTest extends JCard2JSContactTest {
                 "[\"photo\", {}, \"uri\", \"http://www.example.com/pub/photos/jqpublic.gif\"]" +
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testPhotoValid - 1",jsCard.getPhotos().length == 1);
-        assertTrue("testPhotoValid - 2",jsCard.getPhotos()[0].getHref().equals("http://www.example.com/pub/photos/jqpublic.gif"));
-        assertTrue("testPhotoValid - 3",jsCard.getPhotos()[0].getIsPreferred() == null);
-        assertTrue("testPhotoValid - 4",jsCard.getPhotos()[0].getMediaType() == null);
+        assertTrue("testPhotoValid - 1",jsCard.getPhotos().size() == 1);
+        assertTrue("testPhotoValid - 2",jsCard.getPhotos().get("PHOTO-1").getHref().equals("http://www.example.com/pub/photos/jqpublic.gif"));
+        assertTrue("testPhotoValid - 3",jsCard.getPhotos().get("PHOTO-1").getIsPreferred() == null);
+        assertTrue("testPhotoValid - 4",jsCard.getPhotos().get("PHOTO-1").getMediaType() == null);
 
     }
 

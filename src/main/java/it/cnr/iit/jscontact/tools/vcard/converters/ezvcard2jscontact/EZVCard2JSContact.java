@@ -229,7 +229,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static void addFile(VCardProperty property, JSContact jsContact) {
+    private static void addFile(String id, VCardProperty property, JSContact jsContact) {
 
         String value;
         if (property instanceof UriProperty)
@@ -237,7 +237,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         else
             value = getValue((BinaryProperty) property);
 
-        jsContact.addPhoto(File.builder()
+        jsContact.addPhoto(id, File.builder()
                                 .href(value)
                                 .mediaType(getJcardParam(property.getParameters(), "MEDIATYPE"))
                                 .isPreferred(getPreference(getJcardParam(property.getParameters(), "PREF")))
@@ -746,11 +746,13 @@ public class EZVCard2JSContact extends AbstractConverter {
         ResourceContext rcontext;
         List<Resource> orgDirectories = new ArrayList<Resource>();
 
+        int i = 1;
         for (Source source : vcard.getSources())
             addOnline(source, jsContact, LabelKey.SOURCE);
 
+        i = 1;
         for (Photo photo : vcard.getPhotos())
-            addFile(photo, jsContact);
+            addFile("PHOTO-" + (i++), photo, jsContact);
 
         for (Impp impp : vcard.getImpps()) {
             jcardType = getJcardParam(impp.getParameters(), "TYPE");
