@@ -20,11 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
-import it.cnr.iit.jscontact.tools.constraints.EmailsConstraint;
-import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstraint;
-import it.cnr.iit.jscontact.tools.constraints.RelatedToConstraint;
-import it.cnr.iit.jscontact.tools.constraints.OnlineConstraint;
-import it.cnr.iit.jscontact.tools.constraints.PhonesConstraint;
+import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindSerializer;
 import lombok.*;
@@ -36,6 +32,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 
+@TitleOrganizationConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @Getter
