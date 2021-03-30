@@ -15,17 +15,17 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.JSCardGroupValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.JSCardKindValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Target({ElementType.TYPE, java.lang.annotation.ElementType.ANNOTATION_TYPE})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {JSCardGroupValidator.class})
+@Constraint(validatedBy = {JSCardKindValidator.class})
 @Documented
-public @interface JSCardGroupConstraint {
+public @interface JSCardKindConstraint {
 
     String message() default "";
 

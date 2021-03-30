@@ -13,24 +13,29 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.constraints;
+package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.JSCardValidator;
+import it.cnr.iit.jscontact.tools.constraints.JSCardKindConstraint;
+import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Kind;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.*;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {JSCardValidator.class})
-@Documented
-public @interface JSCardConstraint {
+public class JSCardKindValidator implements ConstraintValidator<JSCardKindConstraint, JSCard> {
 
-    String message() default "";
+    public void initialize(JSCardKindConstraint constraintAnnotation) {
+    }
 
-    Class<?>[] groups() default { };
+    public boolean isValid(JSCard card, ConstraintValidatorContext context) {
 
-    Class<? extends Payload>[] payload() default { };
+        if (card.getKind() == null)
+            return true;
+
+        if (card.getKind().getRfcValue()!= null && card.getKind().getRfcValue() == Kind.GROUP)
+            return false;
+
+        return true;
+    }
+
 }
-
