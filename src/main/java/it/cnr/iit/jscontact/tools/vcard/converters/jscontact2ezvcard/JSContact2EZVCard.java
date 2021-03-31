@@ -18,6 +18,7 @@ import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
+import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
@@ -693,16 +694,20 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsContact.getNotes() == null)
             return;
 
-        Integer altId = Integer.parseInt("1");
-        for (LocalizedString localized : jsContact.getNotes()) {
-            if (localized.getLocalizations() == null)
-                vcard.getNotes().add(getTextProperty(new Note(localized.getValue()), localized.getLanguage()));
-            else {
-                vcard.getNotes().add(getTextProperty(new Note(localized.getValue()), localized.getLanguage(), altId));
-                for (Map.Entry<String,String> localization : localized.getLocalizations().entrySet())
-                    vcard.getNotes().add(getTextProperty(new Note(localization.getValue()), localization.getKey(), altId));
-                altId ++;
-            }
+        LocalizedString localized = jsContact.getNotes();
+
+        if (localized.getLocalizations() == null) {
+            for (String note : localized.getValue().split(NoteUtils.NOTE_DELIMITER))
+                vcard.getNotes().add(getTextProperty(new Note(note), localized.getLanguage()));
+        }
+        else {
+            Integer altId = Integer.parseInt("1");
+            for (String note : localized.getValue().split(NoteUtils.NOTE_DELIMITER))
+                vcard.getNotes().add(getTextProperty(new Note(note), localized.getLanguage(), altId++));
+            altId = Integer.parseInt("1");
+            for (Map.Entry<String,String> localization : localized.getLocalizations().entrySet())
+                for (String note : localization.getValue().split(NoteUtils.NOTE_DELIMITER))
+                    vcard.getNotes().add(getTextProperty(new Note(note), localization.getKey(), altId++));
         }
     }
 

@@ -936,9 +936,14 @@ public class EZVCard2JSContact extends AbstractConverter {
                                                      .build()
                               );
         }
-        Collections.sort(notes);
-        for (LocalizedString note : notes)
-            jsContact.addNote(note);
+
+        for (LocalizedString note : notes) {
+            jsContact.addNote(note.getValue(), note.getLanguage());
+            if (note.getLocalizations()!=null) {
+                for (Map.Entry<String,String> localization : note.getLocalizations().entrySet())
+                    jsContact.addNote(localization.getValue(), localization.getKey());
+            }
+        }
     }
 
     private static void fillCategories(VCard vcard, JSContact jsContact) {

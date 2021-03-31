@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindSerializer;
+import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -118,7 +119,7 @@ public abstract class JSContact extends ValidableObject {
     PersonalInformation[] personalInfo;
 
     @Valid
-    LocalizedString[] notes;
+    LocalizedString notes;
 
     Map<String,Boolean> categories;
 
@@ -203,8 +204,31 @@ public abstract class JSContact extends ValidableObject {
         roles = ArrayUtils.add(roles, rl);
     }
 
-    public void addNote(LocalizedString note) {
-        notes = ArrayUtils.add(notes, note);
+    public void addNote(String note) { addNote(note, null); }
+
+    public void addNote(String note, String language) {
+
+        if (notes == null) {
+            notes = LocalizedString.builder().value(note).language(language).build();
+            return;
+        }
+
+        if (language == notes.getLanguage()) {
+            notes.setValue(String.format("%s%s%s", notes.getValue(), NoteUtils.NOTE_DELIMITER, note));
+            return;
+        }
+
+        if (notes.getLanguage() != null && language == null) {
+            notes.addLocalization(notes.getLanguage(), notes.getValue());
+            notes.setValue(note);
+            notes.setLanguage(null);
+        } else {
+            if (notes.getLocalizations()!= null && notes.getLocalizations().containsKey(language))
+                notes.getLocalizations().replace(language,String.format("%s%s%s", notes.getLocalizations().get(language), NoteUtils.NOTE_DELIMITER, note));
+            else
+                notes.addLocalization(language, note);
+        }
+
     }
 
     public void addPersonalInfo(PersonalInformation pi) {

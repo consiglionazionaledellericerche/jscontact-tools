@@ -438,7 +438,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard5 - 76", jsCard.getJobTitles().get("TITLE-2").getTitle().getValue().equals("Title2"));
         assertTrue("testCompleteVCard5 - 77", jsCard.getCategories().size() == 1);
         assertTrue("testCompleteVCard5 - 78", jsCard.getCategories().containsKey("Tag"));
-        assertTrue("testCompleteVCard5 - 79", jsCard.getNotes().length == 1);
+        assertTrue("testCompleteVCard5 - 79", jsCard.getNotes()!= null);
 //        assertTrue("testCompleteVCard5 - 80", jsCard.getNotes()[0].equals("Notes line 1\nNotes line 2"));
         assertTrue("testCompleteVCard5 - 81", jsCard.getProdId().equals("ez-vcard 0.9.14-fc"));
         assertTrue("testCompleteVCard5 - 82", jsCard.getAnniversaries().length == 1);
