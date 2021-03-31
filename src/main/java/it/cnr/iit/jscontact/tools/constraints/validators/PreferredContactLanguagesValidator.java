@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstrain
 import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
+import it.cnr.iit.jscontact.tools.dto.utils.ConstraintViolationUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -47,8 +48,10 @@ public class PreferredContactLanguagesValidator implements ConstraintValidator<P
                     return false;
 
                 Set<ConstraintViolation<ContactLanguage>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
-                if (constraintViolations.size() > 0)
+                if (constraintViolations.size() > 0) {
+                    context.buildConstraintViolationWithTemplate(ConstraintViolationUtils.getMessage(constraintViolations)).addConstraintViolation();
                     return false;
+                }
             }
         }
 

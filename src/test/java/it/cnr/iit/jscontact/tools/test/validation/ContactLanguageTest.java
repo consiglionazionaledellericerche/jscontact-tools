@@ -76,7 +76,8 @@ public class ContactLanguageTest extends AbstractTest {
                 .preferredContactLanguages(map)
                 .build();
 
-        assertTrue("testInvalidContactLanguage1", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage1-1", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage1-2", jsCard.getValidationMessage().equals("invalid preferredContactLanguages in JSContact"));
     }
 
     @Test
@@ -89,7 +90,8 @@ public class ContactLanguageTest extends AbstractTest {
                 .preferredContactLanguages(map)
                 .build();
 
-        assertTrue("testInvalidContactLanguage2", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage2-1", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage2-2", jsCard.getValidationMessage().equals("invalid preferredContactLanguages in JSContact"));
     }
 
     @Test
@@ -102,7 +104,9 @@ public class ContactLanguageTest extends AbstractTest {
                 .preferredContactLanguages(map)
                 .build();
 
-        assertTrue("testInvalidContactLanguage3", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage3-1", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage3-2", jsCard.getValidationMessage().split("\n")[0].equals("at least one not null member is missing in ContactLanguage"));
+        assertTrue("testInvalidContactLanguage3-3", jsCard.getValidationMessage().split("\n")[1].equals("invalid preferredContactLanguages in JSContact"));
     }
 
     @Test
@@ -115,7 +119,9 @@ public class ContactLanguageTest extends AbstractTest {
                 .preferredContactLanguages(map)
                 .build();
 
-        assertTrue("testInvalidContactLanguage4", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage4-1", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage4-2", jsCard.getValidationMessage().split("\n")[0].equals("invalid pref in ContactLanguage - min value must be 1"));
+        assertTrue("testInvalidContactLanguage4-3", jsCard.getValidationMessage().split("\n")[1].equals("invalid preferredContactLanguages in JSContact"));
     }
 
     @Test
@@ -128,7 +134,9 @@ public class ContactLanguageTest extends AbstractTest {
                 .preferredContactLanguages(map)
                 .build();
 
-        assertTrue("testInvalidContactLanguage5", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage5-1", !jsCard.isValid());
+        assertTrue("testInvalidContactLanguage5-2", jsCard.getValidationMessage().split("\n")[0].equals("invalid pref in ContactLanguage - max value must be 100"));
+        assertTrue("testInvalidContactLanguage5-3", jsCard.getValidationMessage().split("\n")[1].equals("invalid preferredContactLanguages in JSContact"));
     }
 
 }

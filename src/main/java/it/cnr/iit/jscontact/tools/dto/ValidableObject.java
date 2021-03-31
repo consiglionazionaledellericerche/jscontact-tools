@@ -60,4 +60,4 @@ public abstract class ValidableObject {
         return String.join("\n", validationMessages);
     }
 
-    }
+}

@@ -38,7 +38,8 @@ public class AddressTest extends AbstractTest {
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
-        assertTrue("testInvalidCountryCode", !jsCard.isValid());
+        assertTrue("testInvalidCountryCode-1", !jsCard.isValid());
+        assertTrue("testInvalidCountryCode-2", jsCard.getValidationMessage().equals("invalid countryCode in Address"));
     }
 
     @Test
@@ -69,8 +70,8 @@ public class AddressTest extends AbstractTest {
                 .addresses(addresses)
                 .build();
 
-        assertTrue("testInvalidCoordinates", !jsCard.isValid());
-
+        assertTrue("testInvalidCoordinates-1", !jsCard.isValid());
+        assertTrue("testInvalidCoordinates-2", jsCard.getValidationMessage().equals("invalid coordinates in Address"));
     }
 
     @Test
@@ -100,7 +101,8 @@ public class AddressTest extends AbstractTest {
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
-        assertTrue("testInvalidAddressId", !jsCard.isValid());
+        assertTrue("testInvalidAddressId-1", !jsCard.isValid());
+        assertTrue("testInvalidAddressId-2", jsCard.getValidationMessage().equals("invalid Id in Map<Id,Address>"));
     }
 
 }

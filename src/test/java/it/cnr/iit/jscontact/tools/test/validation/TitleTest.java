@@ -40,7 +40,8 @@ public class TitleTest extends AbstractTest {
                 .jobTitles(jobTiles)
                 .build();
 
-        assertTrue("testInvalidTitleOrganization1", !jsCard.isValid());
+        assertTrue("testInvalidTitleOrganization1-1", !jsCard.isValid());
+        assertTrue("testInvalidTitleOrganization1-2", jsCard.getValidationMessage().equals("title organization id is missing in organizations"));
     }
 
     @Test
@@ -57,7 +58,8 @@ public class TitleTest extends AbstractTest {
                 .organizations(organizations)
                 .build();
 
-        assertTrue("testInvalidTitleOrganization2", !jsCard.isValid());
+        assertTrue("testInvalidTitleOrganization2-1", !jsCard.isValid());
+        assertTrue("testInvalidTitleOrganization2-2", jsCard.getValidationMessage().equals("title organization id is missing in organizations"));
     }
 
 

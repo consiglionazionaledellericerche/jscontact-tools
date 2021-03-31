@@ -42,8 +42,10 @@ public class RelatedToValidator implements ConstraintValidator<RelatedToConstrai
                 return false;
 
             Set<ConstraintViolation<Relation>> constraintViolations = ValidatorBuilder.getValidator().validate(rel);
-            if (constraintViolations.size() > 0)
+            if (constraintViolations.size() > 0) {
+                context.buildConstraintViolationWithTemplate("").addConstraintViolation();
                 return false;
+            }
 
         }
 

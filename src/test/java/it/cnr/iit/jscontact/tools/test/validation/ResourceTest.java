@@ -72,7 +72,8 @@ public class ResourceTest extends AbstractTest {
                 .emails(new Resource[]{email})
                 .build();
 
-        assertTrue("testInvalidEmailResourceType", !jsCard.isValid());
+        assertTrue("testInvalidEmailResourceType-1", !jsCard.isValid());
+        assertTrue("testInvalidEmailResourceType-2", jsCard.getValidationMessage().equals("invalid email Resource in JSContact"));
     }
 
     @Test
@@ -104,7 +105,8 @@ public class ResourceTest extends AbstractTest {
                 .phones(new Resource[]{phone})
                 .build();
 
-        assertTrue("testInvalidPhoneResourceType", !jsCard.isValid());
+        assertTrue("testInvalidPhoneResourceType-1", !jsCard.isValid());
+        assertTrue("testInvalidPhoneResourceType-2", jsCard.getValidationMessage().equals("invalid phone Resource in JSContact"));
     }
 
 
@@ -140,7 +142,8 @@ public class ResourceTest extends AbstractTest {
                 .online(new Resource[]{online})
                 .build();
 
-        assertTrue("testInvalidOnlineResourceType", !jsCard.isValid());
+        assertTrue("testInvalidOnlineResourceType-1", !jsCard.isValid());
+        assertTrue("testInvalidOnlineResourceType-2", jsCard.getValidationMessage().equals("invalid online Resource in JSContact"));
     }
 
 
@@ -160,7 +163,8 @@ public class ResourceTest extends AbstractTest {
                 .online(new Resource[]{online})
                 .build();
 
-        assertTrue("testInvalidResourceLabels1", !jsCard.isValid());
+        assertTrue("testInvalidResourceLabels1-1", !jsCard.isValid());
+        assertTrue("testInvalidResourceLabels1-2", jsCard.getValidationMessage().equals("invalid Map<String,Boolean> in Resource - Only Boolean.TRUE allowed"));
     }
 
     @Test
@@ -179,7 +183,8 @@ public class ResourceTest extends AbstractTest {
                 .online(new Resource[]{online})
                 .build();
 
-        assertTrue("testInvalidResourceLabels2", !jsCard.isValid());
+        assertTrue("testInvalidResourceLabels2-1", !jsCard.isValid());
+        assertTrue("testInvalidResourceLabels2-2", jsCard.getValidationMessage().equals("invalid Map<String,Boolean> in Resource - Only Boolean.TRUE allowed"));
     }
 
     @Test

@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface BooleanMapConstraint {
 
-    String message() default "invalid Map<String,Boolean> in JSContact - Boolean.FALSE is not allowed";
+    String message() default "invalid Map<String,Boolean> in JSContact - Only Boolean.TRUE allowed";
 
     Class<?>[] groups() default { };
 
