@@ -21,8 +21,7 @@ import it.cnr.iit.jscontact.tools.dto.KindType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertTrue;
 
@@ -105,8 +104,9 @@ public class ContactLanguageTest extends AbstractTest {
                 .build();
 
         assertTrue("testInvalidContactLanguage3-1", !jsCard.isValid());
-        assertTrue("testInvalidContactLanguage3-2", jsCard.getValidationMessage().split("\n")[0].equals("at least one not null member is missing in ContactLanguage"));
-        assertTrue("testInvalidContactLanguage3-3", jsCard.getValidationMessage().split("\n")[1].equals("invalid preferredContactLanguages in JSContact"));
+        List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
+        assertTrue("testInvalidContactLanguage3-2", messages.contains("at least one not null member is missing in ContactLanguage"));
+        assertTrue("testInvalidContactLanguage3-3", messages.contains("invalid preferredContactLanguages in JSContact"));
     }
 
     @Test
@@ -120,8 +120,9 @@ public class ContactLanguageTest extends AbstractTest {
                 .build();
 
         assertTrue("testInvalidContactLanguage4-1", !jsCard.isValid());
-        assertTrue("testInvalidContactLanguage4-2", jsCard.getValidationMessage().split("\n")[0].equals("invalid pref in ContactLanguage - min value must be 1"));
-        assertTrue("testInvalidContactLanguage4-3", jsCard.getValidationMessage().split("\n")[1].equals("invalid preferredContactLanguages in JSContact"));
+        List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
+        assertTrue("testInvalidContactLanguage4-2", messages.contains("invalid pref in ContactLanguage - min value must be 1"));
+        assertTrue("testInvalidContactLanguage4-3", messages.contains("invalid preferredContactLanguages in JSContact"));
     }
 
     @Test
@@ -135,8 +136,9 @@ public class ContactLanguageTest extends AbstractTest {
                 .build();
 
         assertTrue("testInvalidContactLanguage5-1", !jsCard.isValid());
-        assertTrue("testInvalidContactLanguage5-2", jsCard.getValidationMessage().split("\n")[0].equals("invalid pref in ContactLanguage - max value must be 100"));
-        assertTrue("testInvalidContactLanguage5-3", jsCard.getValidationMessage().split("\n")[1].equals("invalid preferredContactLanguages in JSContact"));
+        List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
+        assertTrue("testInvalidContactLanguage5-2", messages.contains("invalid pref in ContactLanguage - max value must be 100"));
+        assertTrue("testInvalidContactLanguage5-3", messages.contains("invalid preferredContactLanguages in JSContact"));
     }
 
 }
