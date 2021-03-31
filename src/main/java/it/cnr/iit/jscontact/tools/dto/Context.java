@@ -75,14 +75,7 @@ public enum Context implements JCardTypeDerivedEnum {
     @JsonIgnore
     public static String getVCardType(Context context) {
 
-        if (context == null)
-            return null;
-
-        for (String key : aliases.keySet())
-            if (aliases.get(key).equals(context))
-                return key;
-
-        return context.getValue();
+        return EnumUtils.getVCardType(context);
     }
 
 }

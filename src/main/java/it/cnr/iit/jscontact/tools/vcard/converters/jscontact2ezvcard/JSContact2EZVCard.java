@@ -195,6 +195,17 @@ public class JSContact2EZVCard extends AbstractConverter {
                 addr.setGeo(GeoUri.parse(address.getCoordinates()));
             if (address.getCountryCode()!=null)
                 addr.setParameter("CC", address.getCountryCode());
+            if (address.getContexts()!=null) {
+                StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+                for (AddressContext context : address.getContexts().keySet()) {
+                    String typeItem = AddressContext.getVCardType(context);
+                    if (typeItem != null)
+                        joiner.add(typeItem);
+                }
+                if (StringUtils.isNotEmpty(joiner.toString()))
+                    addr.setParameter("TYPE", joiner.toString());
+            }
+
         }
         if (address.getFullAddress()!=null) {
             addr.setLabel(address.getFullAddress().getValue());
@@ -402,9 +413,12 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (emailAddress.getContexts()!=null) {
             StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
             for (Context context : emailAddress.getContexts().keySet()) {
-                joiner.add(Context.getVCardType(context));
+                String typeItem = Context.getVCardType(context);
+                if (typeItem != null)
+                    joiner.add(typeItem);
             }
-            email.setParameter("TYPE", joiner.toString());
+            if (StringUtils.isNotEmpty(joiner.toString()))
+                email.setParameter("TYPE", joiner.toString());
         }
         return email;
     }

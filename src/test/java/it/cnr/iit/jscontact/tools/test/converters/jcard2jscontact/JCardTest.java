@@ -373,7 +373,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 25", jsCard.getPhones()[1].getLabels() == null);
 
         assertTrue("testCompleteJCard5 - 26", jsCard.getAddresses().size() == 2);
-        assertTrue("testCompleteJCard5 - 27", jsCard.getAddresses().get("ADR-1").getContext() == AddressContext.WORK);
+        assertTrue("testCompleteJCard5 - 27", jsCard.getAddresses().get("ADR-1").getContexts().containsKey(AddressContext.WORK));
         assertTrue("testCompleteJCard5 - 28", jsCard.getAddresses().get("ADR-1").getPref() == 1);
         assertTrue("testCompleteJCard5 - 29", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("100 Waters Edge\nBaytown, LA 30314\nUnited States of America"));
         assertTrue("testCompleteJCard5 - 30", jsCard.getAddresses().get("ADR-1").getStreet().equals("100 Waters Edge"));
@@ -381,7 +381,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 32", jsCard.getAddresses().get("ADR-1").getRegion().equals("LA"));
         assertTrue("testCompleteJCard5 - 33", jsCard.getAddresses().get("ADR-1").getCountry().equals("United States of America"));
         assertTrue("testCompleteJCard5 - 34", jsCard.getAddresses().get("ADR-1").getPostcode().equals("30314"));
-        assertTrue("testCompleteJCard5 - 35", jsCard.getAddresses().get("ADR-2").getContext() == AddressContext.PRIVATE);
+        assertTrue("testCompleteJCard5 - 35", jsCard.getAddresses().get("ADR-2").getContexts().containsKey(AddressContext.PRIVATE));
         assertTrue("testCompleteJCard5 - 36", jsCard.getAddresses().get("ADR-2").getFullAddress().getValue().equals("42 Plantation St.\nBaytown, LA 30314\nUnited States of America"));
         assertTrue("testCompleteJCard5 - 37", jsCard.getAddresses().get("ADR-2").getStreet().equals("42 Plantation St."));
         assertTrue("testCompleteJCard5 - 38", jsCard.getAddresses().get("ADR-2").getLocality().equals("Baytown"));

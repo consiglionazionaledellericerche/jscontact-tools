@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
@@ -24,6 +25,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
@@ -33,7 +35,8 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(of={"fullAddress"})
 public class Address extends GroupableObject implements HasAltid, IdMapValue {
 
-    AddressContext context;
+    @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> in Address - Only Boolean.TRUE allowed")
+    Map<AddressContext,Boolean> contexts;
 
     String label;
 

@@ -11,7 +11,7 @@
 "roles": [ { "value": "Project Lead" } ],
 "addresses": {
   "ADR-1" : {
-    "context": "work",
+    "contexts": {"work": true},
     "extension": "Suite 1234",
     "street": "4321 Rue Somewhere",
     "locality": "Quebec",
@@ -22,7 +22,7 @@
     "timeZone": "Etc/GMT+5"
   },
   "ADR-2" : {
-  "context": "private",
+  "contexts": {"private": true},
   "fullAddress": {
   "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
   }

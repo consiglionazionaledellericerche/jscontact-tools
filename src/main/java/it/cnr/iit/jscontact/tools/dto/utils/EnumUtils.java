@@ -36,4 +36,16 @@ public class EnumUtils {
         throw new IllegalArgumentException();
     }
 
+    public static <E extends Enum <E>> String getVCardType(E context) {
+
+        if (context == null)
+            return null;
+
+        if (context.toString().equals("work"))
+            return "work";
+        else if (context.toString().equals("private"))
+            return "home";
+        else
+            return null;
+    }
 }

@@ -103,13 +103,14 @@ public class EZVCard2JSContact extends AbstractConverter {
          return getEnumFromJCardType(Context.class, jcardTypeParam, null, Context.getAliases());
     }
 
+
     private static Map<Context,Boolean> getContexts(String jcardTypeParam) {
 
         if (jcardTypeParam == null)
             return null;
 
-        String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
         Map<Context,Boolean> contexts = new HashMap<Context,Boolean>();
+        String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
         for (String typeItem : typeItems) {
             Context context = getEnumFromJCardType(Context.class, typeItem, null, Context.getAliases());
             if (context != null)
@@ -120,9 +121,20 @@ public class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private static AddressContext getAddressContext(String jcardTypeParam) {
+    private static Map<AddressContext,Boolean> getAddressContexts(String jcardTypeParam) {
 
-        return getEnumFromJCardType(AddressContext.class, jcardTypeParam, null, AddressContext.getAliases());
+        if (jcardTypeParam == null)
+            return null;
+
+        Map<AddressContext,Boolean> contexts = new HashMap<AddressContext,Boolean>();
+        String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
+        for (String typeItem : typeItems) {
+            AddressContext context = getEnumFromJCardType(AddressContext.class, typeItem, null, AddressContext.getAliases());
+            if (context != null)
+                contexts.put(context, Boolean.TRUE);
+        }
+
+        return (contexts.size() > 0) ? contexts : null;
     }
 
     private static PhoneResourceType getPhoneResourceType(String jcardTypeParam) {
@@ -550,7 +562,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             String cc = addr.getParameter("CC");
 
             addresses.add(it.cnr.iit.jscontact.tools.dto.Address.builder()
-                                                                 .context(getAddressContext(jcardType))
+                                                                 .contexts(getAddressContexts(jcardType))
                                                                  .fullAddress(getFulllAddress(addr))
                                                                  .pref(addr.getPref())
                                                                  .coordinates(geo)
