@@ -42,7 +42,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid1 - 2",jsCard.getOnline()[0].getValue().equals("xmpp:alice@example.com"));
         assertTrue("testOnlineResourceValid1 - 3",jsCard.getOnline()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
         assertTrue("testOnlineResourceValid1 - 4",jsCard.getOnline()[0].getType().equals(OnlineResourceType.USERNAME.getValue()));
-        assertTrue("testOnlineResourceValid1 - 5",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testOnlineResourceValid1 - 5",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid1 - 6",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid1 - 7",jsCard.getOnline()[0].getLabels().get(LabelKey.IMPP.getValue()) == Boolean.TRUE);
 
@@ -61,7 +61,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid2 - 1",jsCard.getOnline().length == 1);
         assertTrue("testOnlineResourceValid2 - 2",jsCard.getOnline()[0].getValue().equals("http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf"));
         assertTrue("testOnlineResourceValid2 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid2 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid2 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid2 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid2 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.SOURCE.getValue()) == Boolean.TRUE);
 
@@ -79,7 +79,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPhotoValid - 1",jsCard.getPhotos().size() == 1);
         assertTrue("testPhotoValid - 2",jsCard.getPhotos().get("PHOTO-1").getHref().equals("http://www.example.com/pub/photos/jqpublic.gif"));
-        assertTrue("testPhotoValid - 3",jsCard.getPhotos().get("PHOTO-1").getIsPreferred() == null);
+        assertTrue("testPhotoValid - 3",jsCard.getPhotos().get("PHOTO-1").getPref() == null);
         assertTrue("testPhotoValid - 4",jsCard.getPhotos().get("PHOTO-1").getMediaType() == null);
 
     }
@@ -97,7 +97,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid4 - 1",jsCard.getOnline().length == 1);
         assertTrue("testOnlineResourceValid4 - 2",jsCard.getOnline()[0].getValue().equals("http://www.example.com/pub/logos/abccorp.jpg"));
         assertTrue("testOnlineResourceValid4 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid4 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid4 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid4 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid4 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.LOGO.getValue()) == Boolean.TRUE);
 
@@ -117,7 +117,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid5 - 1",jsCard.getOnline().length == 1);
         assertTrue("testOnlineResourceValid5 - 2",jsCard.getOnline()[0].getValue().equals("mailto:contact@example.com"));
         assertTrue("testOnlineResourceValid5 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid5 - 4",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testOnlineResourceValid5 - 4",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid5 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid5 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.CONTACT_URI.getValue()) == Boolean.TRUE);
 
@@ -138,11 +138,11 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid6 - 2",jsCard.getOnline()[0].getValue().equals("http://directory.mycompany.example.com"));
         assertTrue("testOnlineResourceValid6 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
         assertTrue("testOnlineResourceValid6 - 4",jsCard.getOnline()[0].getLabels().get(LabelKey.ORG_DIRECTORY.getValue()) == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid6 - 5",jsCard.getOnline()[0].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid6 - 5",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid6 - 6",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid6 - 7",jsCard.getOnline()[1].getValue().equals("ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering"));
         assertTrue("testOnlineResourceValid6 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid6 - 9",jsCard.getOnline()[1].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testOnlineResourceValid6 - 9",jsCard.getOnline()[1].getPref() == 1);
         assertTrue("testOnlineResourceValid6 - 10",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid6 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.ORG_DIRECTORY.getValue()) == Boolean.TRUE);
 
@@ -164,11 +164,11 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid7 - 2",jsCard.getOnline()[0].getValue().equals("http://directory.mycompany.example.com"));
         assertTrue("testOnlineResourceValid7 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
         assertTrue("testOnlineResourceValid7 - 4",jsCard.getOnline()[0].getLabels().get(LabelKey.ORG_DIRECTORY.getValue()) == Boolean.TRUE);
-        assertTrue("testOnlineResourceValid7 - 5",jsCard.getOnline()[0].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid7 - 5",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid7 - 6",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid7 - 7",jsCard.getOnline()[1].getValue().equals("ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering"));
         assertTrue("testOnlineResourceValid7 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid7 - 9",jsCard.getOnline()[1].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testOnlineResourceValid7 - 9",jsCard.getOnline()[1].getPref() == 1);
         assertTrue("testOnlineResourceValid7 - 10",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid7 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.ORG_DIRECTORY.getValue()) == Boolean.TRUE);
 
@@ -188,7 +188,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid8 - 1",jsCard.getOnline().length == 1);
         assertTrue("testOnlineResourceValid8 - 2",jsCard.getOnline()[0].getValue().equals("CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com"));
         assertTrue("testOnlineResourceValid8 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid8 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid8 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid8 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid8 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.SOUND.getValue()) == Boolean.TRUE);
 
@@ -207,7 +207,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid9 - 1",jsCard.getOnline().length == 1);
         assertTrue("testOnlineResourceValid9 - 2",jsCard.getOnline()[0].getValue().equals("http://example.org/restaurant.french/~chezchic.htm"));
         assertTrue("testOnlineResourceValid9 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid9 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid9 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid9 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid9 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.URL.getValue()) == Boolean.TRUE);
 
@@ -226,7 +226,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid10 - 1",jsCard.getOnline().length == 1);
         assertTrue("testOnlineResourceValid10 - 2",jsCard.getOnline()[0].getValue().equals("http://www.example.com/keys/jdoe.cer"));
         assertTrue("testOnlineResourceValid10 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid10 - 4",jsCard.getOnline()[0].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid10 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid10 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid10 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.KEY.getValue()) == Boolean.TRUE);
 
@@ -247,12 +247,12 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid11 - 1",jsCard.getOnline().length == 2);
         assertTrue("testOnlineResourceValid11 - 2",jsCard.getOnline()[0].getValue().equals("http://www.example.com/busy/janedoe"));
         assertTrue("testOnlineResourceValid11 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid11 - 4",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testOnlineResourceValid11 - 4",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid11 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid11 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.FBURL.getValue()) == Boolean.TRUE);
         assertTrue("testOnlineResourceValid11 - 7",jsCard.getOnline()[1].getValue().equals("ftp://example.com/busy/project-a.ifb"));
         assertTrue("testOnlineResourceValid11 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid11 - 9",jsCard.getOnline()[1].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid11 - 9",jsCard.getOnline()[1].getPref() == null);
         assertTrue("testOnlineResourceValid11 - 10",jsCard.getOnline()[1].getMediaType().equals("text/calendar"));
         assertTrue("testOnlineResourceValid11 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.FBURL.getValue()) == Boolean.TRUE);
 
@@ -273,12 +273,12 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid12 - 1",jsCard.getOnline().length == 2);
         assertTrue("testOnlineResourceValid12 - 2",jsCard.getOnline()[0].getValue().equals("mailto:janedoe@example.com"));
         assertTrue("testOnlineResourceValid12 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid12 - 4",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testOnlineResourceValid12 - 4",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid12 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid12 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.CALADRURI.getValue()) == Boolean.TRUE);
         assertTrue("testOnlineResourceValid12 - 7",jsCard.getOnline()[1].getValue().equals("http://example.com/calendar/jdoe"));
         assertTrue("testOnlineResourceValid12 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid12 - 9",jsCard.getOnline()[1].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid12 - 9",jsCard.getOnline()[1].getPref() == null);
         assertTrue("testOnlineResourceValid12 - 10",jsCard.getOnline()[1].getMediaType() == null);
         assertTrue("testOnlineResourceValid12 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.CALADRURI.getValue()) == Boolean.TRUE);
 
@@ -298,12 +298,12 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid13 - 1",jsCard.getOnline().length == 2);
         assertTrue("testOnlineResourceValid13 - 2",jsCard.getOnline()[0].getValue().equals("http://cal.example.com/calA"));
         assertTrue("testOnlineResourceValid13 - 3",jsCard.getOnline()[0].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid13 - 4",jsCard.getOnline()[0].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testOnlineResourceValid13 - 4",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid13 - 5",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid13 - 6",jsCard.getOnline()[0].getLabels().get(LabelKey.CALURI.getValue()) == Boolean.TRUE);
         assertTrue("testOnlineResourceValid13 - 7",jsCard.getOnline()[1].getValue().equals("ftp://ftp.example.com/calA.ics"));
         assertTrue("testOnlineResourceValid13 - 8",jsCard.getOnline()[1].getType().equals(OnlineResourceType.URI.getValue()));
-        assertTrue("testOnlineResourceValid13 - 9",jsCard.getOnline()[1].getIsPreferred() == null);
+        assertTrue("testOnlineResourceValid13 - 9",jsCard.getOnline()[1].getPref() == null);
         assertTrue("testOnlineResourceValid13 - 10",jsCard.getOnline()[1].getMediaType().equals("text/calendar"));
         assertTrue("testOnlineResourceValid13 - 11",jsCard.getOnline()[1].getLabels().get(LabelKey.CALURI.getValue()) == Boolean.TRUE);
 

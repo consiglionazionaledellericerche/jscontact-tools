@@ -48,7 +48,7 @@ public class PhoneResourceTest extends JSContact2VCardTest {
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"phones\":[ " +
                       "{\"context\":\"private\",\"type\":\"voice\",\"value\":\"tel:+33-01-23-45-6\"}," +
-                      "{\"context\":\"private\",\"type\":\"voice\",\"isPreferred\":true,\"value\":\"tel:+1-555-555-5555;ext=555\"}" +
+                      "{\"context\":\"private\",\"type\":\"voice\",\"pref\":1,\"value\":\"tel:+1-555-555-5555;ext=555\"}" +
                  "]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

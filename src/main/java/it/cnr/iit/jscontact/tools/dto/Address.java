@@ -21,6 +21,8 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -59,7 +61,9 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue {
 
     String timeZone;
 
-    Boolean isPreferred;
+    @Min(value=1, message = "invalid preference in Address - min value must be 1")
+    @Max(value=100, message = "invalid preference in Address - max value must be 100")
+    Integer pref;
 
     @JsonIgnore
     String altid;

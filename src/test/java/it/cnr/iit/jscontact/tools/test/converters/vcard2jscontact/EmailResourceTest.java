@@ -61,7 +61,7 @@ public class EmailResourceTest extends VCard2JSContactTest {
         assertTrue("testEmailResourceValid2 - 5",jsCard.getEmails()[1].getType() == null);
         assertTrue("testEmailResourceValid2 - 6",jsCard.getEmails()[1].getValue().equals("jane_doe@example.com"));
         assertTrue("testEmailResourceValid2 - 7",jsCard.getEmails()[1].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
-        assertTrue("testEmailResourceValid2 - 8",jsCard.getEmails()[1].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testEmailResourceValid2 - 8",jsCard.getEmails()[1].getPref() == 1);
     }
 
 }

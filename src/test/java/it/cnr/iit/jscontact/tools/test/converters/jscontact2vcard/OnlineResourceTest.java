@@ -38,7 +38,7 @@ public class OnlineResourceTest extends JSContact2VCardTest {
                         "\"type\": \"username\","+
                         "\"context\":\"private\"," +
                         "\"labels\": { \"XMPP\": true }," +
-                        "\"isPreferred\": true, " +
+                        "\"pref\": 1, " +
                         "\"value\": \"xmpp:alice@example.com\"" +
                     "}" +
                  "]" +
@@ -217,7 +217,7 @@ public class OnlineResourceTest extends JSContact2VCardTest {
                     "{" +
                         "\"type\": \"uri\","+
                         "\"labels\": { \"fburl\": true }," +
-                        "\"isPreferred\": true ," +
+                        "\"pref\": 1," +
                         "\"value\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
                     "{" +
@@ -246,7 +246,7 @@ public class OnlineResourceTest extends JSContact2VCardTest {
                     "{" +
                         "\"type\": \"uri\","+
                         "\"labels\": { \"caladruri\": true }," +
-                        "\"isPreferred\": true ," +
+                        "\"pref\": 1," +
                         "\"value\": \"mailto:janedoe@example.com\"" +
                     "}," +
                     "{" +
@@ -273,7 +273,7 @@ public class OnlineResourceTest extends JSContact2VCardTest {
                     "{" +
                         "\"type\": \"uri\","+
                         "\"labels\": { \"caluri\": true }," +
-                        "\"isPreferred\": true ," +
+                        "\"pref\": 1," +
                         "\"value\": \"http://cal.example.com/calA\"" +
                     "}," +
                     "{" +

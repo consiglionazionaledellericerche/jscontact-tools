@@ -60,7 +60,7 @@ public class PhoneResourceTest extends VCard2JSContactTest {
         assertTrue("testPhoneResourceValid2 - 5",jsCard.getPhones()[0].getLabels() == null);
         assertTrue("testPhoneResourceValid2 - 6",jsCard.getPhones()[1].getValue().equals("tel:+1-555-555-5555;ext=555"));
         assertTrue("testPhoneResourceValid2 - 7",jsCard.getPhones()[1].getType().equals(PhoneResourceType.VOICE.getValue()));
-        assertTrue("testPhoneResourceValid2 - 8",jsCard.getPhones()[1].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testPhoneResourceValid2 - 8",jsCard.getPhones()[1].getPref() == 1);
         assertTrue("testPhoneResourceValid2 - 9",jsCard.getPhones()[1].getLabels() == null);
     }
 

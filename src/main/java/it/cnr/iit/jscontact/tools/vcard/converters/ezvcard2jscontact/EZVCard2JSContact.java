@@ -167,12 +167,8 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static Boolean getPreference(String jcardPref) {
-        return (jcardPref != null && jcardPref.equals("1")) ? Boolean.TRUE : null;
-    }
-
-    private static Boolean getPreference(Integer jcardPref) {
-        return (jcardPref != null && jcardPref == 1) ? Boolean.TRUE : null;
+    private static Integer getPreference(String jcardPref) {
+        return (jcardPref != null) ? Integer.parseInt(jcardPref) : null;
     }
 
     private static String getJcardParam(VCardParameters parameters, String param) {
@@ -223,7 +219,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                     .labels(labels)
                                     .context(rcontext)
                                     .mediaType(getJcardParam(property.getParameters(), "MEDIATYPE"))
-                                    .isPreferred(getPreference(getJcardParam(property.getParameters(), "PREF")))
+                                    .pref(getPreference(getJcardParam(property.getParameters(), "PREF")))
                                     .build()
                            );
 
@@ -240,7 +236,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         jsContact.addPhoto(id, File.builder()
                                 .href(value)
                                 .mediaType(getJcardParam(property.getParameters(), "MEDIATYPE"))
-                                .isPreferred(getPreference(getJcardParam(property.getParameters(), "PREF")))
+                                .pref(getPreference(getJcardParam(property.getParameters(), "PREF")))
                                 .build()
                           );
 
@@ -539,7 +535,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             addresses.add(it.cnr.iit.jscontact.tools.dto.Address.builder()
                                                                  .context(getAddressContext(jcardType))
                                                                  .fullAddress(getFulllAddress(addr))
-                                                                 .isPreferred(getPreference(addr.getPref()))
+                                                                 .pref(addr.getPref())
                                                                  .coordinates(geo)
                                                                  .timeZone(tz)
                                                                  .countryCode(cc)
@@ -719,7 +715,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                        .type((telType == PhoneResourceType.OTHER && !labelsIncludesTelTypes(labels)) ? PhoneResourceType.VOICE.getValue() : telType.getValue())
                                        .context(rcontext)
                                        .labels(labels)
-                                       .isPreferred(getPreference(tel.getPref()))
+                                       .pref(tel.getPref())
                                        .build()
                               );
         }
@@ -734,7 +730,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                        .value(getValue(email))
                                        .context(rcontext)
                                        .labels(getLabels(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, null))
-                                       .isPreferred(getPreference(email.getPref()))
+                                       .pref(email.getPref())
                                        .build()
                               );
         }
@@ -762,7 +758,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                         .type(OnlineResourceType.USERNAME.getValue())
                                         .context(rcontext)
                                         .labels(getLabels(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{LabelKey.IMPP.getValue()}))
-                                        .isPreferred(getPreference(impp.getPref()))
+                                        .pref(impp.getPref())
                                         .mediaType(impp.getMediaType())
                                         .build()
                                );
@@ -797,7 +793,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                        .type(OnlineResourceType.URI.getValue())
                                        .labels(getLabels(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{LabelKey.ORG_DIRECTORY.getValue()}))
                                        .context(rcontext)
-                                       .isPreferred(getPreference(od.getPref()))
+                                       .pref(od.getPref())
                                        .index(od.getIndex())
                                        .build()
                               );

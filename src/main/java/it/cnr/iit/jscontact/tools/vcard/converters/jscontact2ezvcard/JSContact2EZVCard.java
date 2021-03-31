@@ -369,7 +369,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         } catch(Exception e) {
             tel = new Telephone(resource.getValue());
         }
-        tel.setPref((resource.getIsPreferred() == Boolean.TRUE) ? 1 : null);
+        tel.setPref((resource.getPref()));
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
         String context = ResourceContext.getVCardType(resource.getContext());
         if (context!=null)
@@ -398,7 +398,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static Email getEmail(Resource resource) {
 
         Email email = new Email(resource.getValue());
-        email.setPref((resource.getIsPreferred() == Boolean.TRUE) ? 1 : null);
+        email.setPref(resource.getPref());
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
 
         String context = ResourceContext.getVCardType(resource.getContext());
@@ -464,7 +464,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         ImageType it = getImageType(file.getMediaType());
         if (it == null) return null;
         Photo photo = new Photo(file.getHref(), it);
-        photo.setPref((file.getIsPreferred() == Boolean.TRUE) ? 1 : null);
+        photo.setPref(file.getPref());
         photo.setContentType(it);
         return photo;
     }
@@ -473,8 +473,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         if (resource.getMediaType()!=null)
             property.setParameter("MEDIATYPE",resource.getMediaType());
-        if (resource.getIsPreferred() == Boolean.TRUE)
-            property.setParameter("PREF", "1");
+        if (resource.getPref() != null)
+            property.setParameter("PREF", resource.getPref().toString());
         if (resource.getContext()!=null)
             property.setParameter("TYPE", ResourceContext.getVCardType(resource.getContext()));
 

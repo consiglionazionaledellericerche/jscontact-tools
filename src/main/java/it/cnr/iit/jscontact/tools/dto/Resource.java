@@ -23,6 +23,8 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 
@@ -46,7 +48,9 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
 
     String mediaType;
 
-    Boolean isPreferred;
+    @Min(value=1, message = "invalid preference in Resource - min value must be 1")
+    @Max(value=100, message = "invalid preference in Resource - max value must be 100")
+    Integer pref;
 
     @JsonIgnore
     Integer index;

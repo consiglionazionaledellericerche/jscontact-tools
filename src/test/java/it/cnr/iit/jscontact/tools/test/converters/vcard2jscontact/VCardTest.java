@@ -158,12 +158,12 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard1 - 32", jsCard.getPhones().length == 2);
         assertTrue("testCompleteVCard1 - 33", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteVCard1 - 34", jsCard.getPhones()[0].getValue().equals("tel:+1-555-555-1234;ext=102"));
-        assertTrue("testCompleteVCard1 - 35", jsCard.getPhones()[0].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testCompleteVCard1 - 35", jsCard.getPhones()[0].getPref() == 1);
         assertTrue("testCompleteVCard1 - 36", jsCard.getPhones()[0].getContext() == ResourceContext.WORK);
         assertTrue("testCompleteVCard1 - 37", jsCard.getPhones()[0].getLabels() == null);
         assertTrue("testCompleteVCard1 - 38", jsCard.getPhones()[1].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteVCard1 - 39", jsCard.getPhones()[1].getValue().equals("tel:+1-555-555-4321"));
-        assertTrue("testCompleteVCard1 - 40", jsCard.getPhones()[1].getIsPreferred() == null);
+        assertTrue("testCompleteVCard1 - 40", jsCard.getPhones()[1].getPref() == null);
         assertTrue("testCompleteVCard1 - 41", jsCard.getPhones()[1].getContext() == ResourceContext.WORK);
         assertTrue("testCompleteVCard1 - 42", jsCard.getPhones()[1].getLabels().size() == 3);
         assertTrue("testCompleteVCard1 - 43", jsCard.getPhones()[1].getLabels().get("video") == Boolean.TRUE);
@@ -173,14 +173,14 @@ public class VCardTest extends VCard2JSContactTest {
         Resource[] keys = jsCard.getOnlineKey();
         assertTrue("testCompleteVCard1 - 47", keys[0].getType().equals(OnlineResourceType.URI.getValue()));
         assertTrue("testCompleteVCard1 - 48", keys[0].getValue().equals("http://www.example.com/joe.user/joe.asc"));
-        assertTrue("testCompleteVCard1 - 49", keys[0].getIsPreferred() == null);
+        assertTrue("testCompleteVCard1 - 49", keys[0].getPref() == null);
         assertTrue("testCompleteVCard1 - 50", keys[0].getContext() == ResourceContext.WORK);
         assertTrue("testCompleteVCard1 - 51", keys[0].getLabels().size() == 1);
         assertTrue("testCompleteVCard1 - 52", keys[0].getLabels().get(LabelKey.KEY.getValue()) == Boolean.TRUE);
         Resource[] urls = jsCard.getOnlineUrl();
         assertTrue("testCompleteVCard1 - 53", urls[0].getType().equals(OnlineResourceType.URI.getValue()));
         assertTrue("testCompleteVCard1 - 54", urls[0].getValue().equals("http://example.org"));
-        assertTrue("testCompleteVCard1 - 55", urls[0].getIsPreferred() == null);
+        assertTrue("testCompleteVCard1 - 55", urls[0].getPref() == null);
         assertTrue("testCompleteVCard1 - 56", urls[0].getContext() == ResourceContext.PRIVATE);
         assertTrue("testCompleteVCard1 - 57", urls[0].getLabels().size() == 1);
         assertTrue("testCompleteVCard1 - 58", urls[0].getLabels().get(LabelKey.URL.getValue()) == Boolean.TRUE);
@@ -273,7 +273,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard4 - 33", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteVCard4 - 34", jsCard.getPhones()[0].getContext() == ResourceContext.WORK);
         assertTrue("testCompleteVCard4 - 35", jsCard.getPhones()[0].getValue().equals("tel:+1-418-656-9254;ext=102"));
-        assertTrue("testCompleteVCard4 - 36", jsCard.getPhones()[0].getIsPreferred() == Boolean.TRUE);
+        assertTrue("testCompleteVCard4 - 36", jsCard.getPhones()[0].getPref() == 1);
         assertTrue("testCompleteVCard4 - 37", jsCard.getPhones()[1].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteVCard4 - 38", jsCard.getPhones()[1].getContext() == ResourceContext.WORK);
         assertTrue("testCompleteVCard4 - 39", jsCard.getPhones()[1].getValue().equals("tel:+1-418-262-6501"));
@@ -328,7 +328,7 @@ public class VCardTest extends VCard2JSContactTest {
 
         assertTrue("testCompleteVCard5 - 26", jsCard.getAddresses().size() == 2);
         assertTrue("testCompleteVCard5 - 27", jsCard.getAddresses().get("ADR-1").getContext() == AddressContext.WORK);
-        assertTrue("testCompleteVCard5 - 28", jsCard.getAddresses().get("ADR-1").getIsPreferred() == Boolean.TRUE);
+        assertTrue("testCompleteVCard5 - 28", jsCard.getAddresses().get("ADR-1").getPref() == 1);
 //        assertTrue("testCompleteVCard5 - 29", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("100 Waters Edge\\nBaytown\\, LA 30314\\nUnited States of America"));
         assertTrue("testCompleteVCard5 - 30", jsCard.getAddresses().get("ADR-1").getStreet().equals("100 Waters Edge"));
         assertTrue("testCompleteVCard5 - 31", jsCard.getAddresses().get("ADR-1").getLocality().equals("Baytown"));

@@ -51,7 +51,7 @@ public class EmailResourceTest extends JSContact2VCardTest {
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"emails\":[ " +
                      "{\"context\":\"work\",\"value\":\"jqpublic@xyz.example.com\"}," +
-                     "{\"context\":\"private\",\"isPreferred\":true,\"value\":\"jane_doe@example.com\"}" +
+                     "{\"context\":\"private\",\"pref\":1,\"value\":\"jane_doe@example.com\"}" +
                 "]" +
                 "}";
 

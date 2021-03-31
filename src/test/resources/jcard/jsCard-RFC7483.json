@@ -33,7 +33,7 @@
 "context": "work",
 "type": "voice",
 "labels": { "cell" : true, "video" : true, "text" : true},
-"isPreferred": true,
+"pref": 1,
 "value": "tel:+1-555-555-1234;ext=102"
 }
 ],

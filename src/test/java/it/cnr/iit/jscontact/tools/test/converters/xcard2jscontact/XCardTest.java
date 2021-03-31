@@ -69,7 +69,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 33", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteXCard1 - 34", jsCard.getPhones()[0].getContext() == ResourceContext.WORK);
         assertTrue("testCompleteXCard1 - 35", jsCard.getPhones()[0].getValue().equals("tel:+1-418-656-9254;ext=102"));
-        assertTrue("testCompleteXCard1 - 36", jsCard.getPhones()[0].getIsPreferred() == null);
+        assertTrue("testCompleteXCard1 - 36", jsCard.getPhones()[0].getPref() == null);
         assertTrue("testCompleteXCard1 - 37", jsCard.getPhones()[1].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteXCard1 - 38", jsCard.getPhones()[1].getContext() == ResourceContext.WORK);
         assertTrue("testCompleteXCard1 - 39", jsCard.getPhones()[1].getValue().equals("tel:+1-418-262-6501"));
@@ -125,7 +125,7 @@ public class XCardTest extends XCard2JSContactTest {
 
         assertTrue("testCompleteXCard2 - 26", jsCard.getAddresses().size() == 2);
         assertTrue("testCompleteXCard2 - 27", jsCard.getAddresses().get("ADR-1").getContext() == AddressContext.WORK);
-        assertTrue("testCompleteXCard2 - 28", jsCard.getAddresses().get("ADR-1").getIsPreferred() == Boolean.TRUE);
+        assertTrue("testCompleteXCard2 - 28", jsCard.getAddresses().get("ADR-1").getPref() == 1);
 //        assertTrue("testCompleteXCard2 - 29", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("100 Waters Edge\\nBaytown\\, LA 30314\\nUnited States of America"));
         assertTrue("testCompleteXCard2 - 30", jsCard.getAddresses().get("ADR-1").getStreet().equals("100 Waters Edge"));
         assertTrue("testCompleteXCard2 - 31", jsCard.getAddresses().get("ADR-1").getLocality().equals("Baytown"));
