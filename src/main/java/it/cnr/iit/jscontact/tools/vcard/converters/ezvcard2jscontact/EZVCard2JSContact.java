@@ -98,9 +98,9 @@ public class EZVCard2JSContact extends AbstractConverter {
         return rawProperties.get(0);
     }
 
-    private static ResourceContext getResourceContext(String jcardTypeParam) {
+    private static Context getContext(String jcardTypeParam) {
 
-         return getEnumFromJCardType(ResourceContext.class, jcardTypeParam, null, ResourceContext.getAliases());
+         return getEnumFromJCardType(Context.class, jcardTypeParam, null, Context.getAliases());
     }
 
     private static AddressContext getAddressContext(String jcardTypeParam) {
@@ -207,11 +207,11 @@ public class EZVCard2JSContact extends AbstractConverter {
             value = getValue((BinaryProperty) property);
 
         String jcardType;
-        ResourceContext rcontext;
+        Context rcontext;
         Map<String, Boolean> labels = new HashMap<String, Boolean>();
 
         jcardType = getJcardParam(property.getParameters(), "TYPE");
-        rcontext = getResourceContext(jcardType);
+        rcontext = getContext(jcardType);
         labels = getLabels(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{labelKey.getValue()});
         jsContact.addOnline(Resource.builder()
                                     .value(value)
@@ -704,7 +704,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         for (Telephone tel : vcard.getTelephoneNumbers()) {
             String jcardType = getJcardParam(tel.getParameters(), "TYPE");
-            ResourceContext rcontext = getResourceContext(jcardType);
+            Context rcontext = getContext(jcardType);
             PhoneResourceType telType = getPhoneResourceType(jcardType);
             String[] exclude = null;
             if (rcontext != null) exclude = ArrayUtils.add(exclude, rcontext.getValue());
@@ -725,7 +725,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         for (Email email : vcard.getEmails()) {
             String jcardType = getJcardParam(email.getParameters(), "TYPE");
-            ResourceContext rcontext = getResourceContext(jcardType);
+            Context rcontext = getContext(jcardType);
             jsContact.addEmail(Resource.builder()
                                        .value(getValue(email))
                                        .context(rcontext)
@@ -739,7 +739,7 @@ public class EZVCard2JSContact extends AbstractConverter {
     private static void fillOnlines(VCard vcard, JSContact jsContact) {
 
         String jcardType;
-        ResourceContext rcontext;
+        Context rcontext;
         List<Resource> orgDirectories = new ArrayList<Resource>();
 
         int i = 1;
@@ -752,7 +752,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         for (Impp impp : vcard.getImpps()) {
             jcardType = getJcardParam(impp.getParameters(), "TYPE");
-            rcontext = getResourceContext(jcardType);
+            rcontext = getContext(jcardType);
             jsContact.addOnline(Resource.builder()
                                         .value(getValue(impp))
                                         .type(OnlineResourceType.USERNAME.getValue())
@@ -787,7 +787,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         for (OrgDirectory od : vcard.getOrgDirectories()) {
             jcardType = od.getType();
-            rcontext = getResourceContext(jcardType);
+            rcontext = getContext(jcardType);
             orgDirectories.add(Resource.builder()
                                        .value(getValue(od))
                                        .type(OnlineResourceType.URI.getValue())

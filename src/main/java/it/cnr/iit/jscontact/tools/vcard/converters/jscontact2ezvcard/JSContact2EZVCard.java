@@ -371,7 +371,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
         tel.setPref((resource.getPref()));
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
-        String context = ResourceContext.getVCardType(resource.getContext());
+        String context = Context.getVCardType(resource.getContext());
         if (context!=null)
             joiner.add(context);
         PhoneResourceType telType = (resource.getType()!=null) ? PhoneResourceType.getEnum(resource.getType()): null;
@@ -379,7 +379,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             joiner.add(telType.getValue());
         if (resource.getLabels()!=null) {
             for (String key : resource.getLabels().keySet())
-                joiner.add(ResourceContext.getVCardType(key));
+                joiner.add(Context.getVCardType(key));
         }
         tel.setParameter("TYPE", joiner.toString());
 
@@ -401,12 +401,12 @@ public class JSContact2EZVCard extends AbstractConverter {
         email.setPref(resource.getPref());
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
 
-        String context = ResourceContext.getVCardType(resource.getContext());
+        String context = Context.getVCardType(resource.getContext());
         if (context!=null)
             joiner.add(context);
         if (resource.getLabels()!=null) {
             for (String key : resource.getLabels().keySet())
-                joiner.add(ResourceContext.getVCardType(key));
+                joiner.add(Context.getVCardType(key));
         }
         email.setParameter("TYPE", joiner.toString());
         return email;
@@ -476,7 +476,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (resource.getPref() != null)
             property.setParameter("PREF", resource.getPref().toString());
         if (resource.getContext()!=null)
-            property.setParameter("TYPE", ResourceContext.getVCardType(resource.getContext()));
+            property.setParameter("TYPE", Context.getVCardType(resource.getContext()));
 
     }
 

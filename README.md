@@ -37,7 +37,7 @@ Here in the following a successful creation of an email `Resource` instance is s
  
 ```
         Resource email = Resource.builder()
-                         .context(ResourceContext.WORK)
+                         .context(Context.WORK)
                          .type(EmailResourceType.EMAIL.getValue())
                          .value("mario.loffredo@iit.cnr.it")
                          .build();
@@ -49,7 +49,7 @@ Here in the following an unsuccessful creation of an email `Resource` instance i
 ```
         // value is missing, java.lang.NullPointerException is thrown
         Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(EmailResourceType.EMAIL.getValue())
                 .build();
 ```

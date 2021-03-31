@@ -16,7 +16,6 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.*;
-import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -33,7 +32,7 @@ public class ResourceTest extends AbstractTest {
     public void testValidEmailResourceType1() {
 
         Resource email = Resource.builder()
-                         .context(ResourceContext.WORK)
+                         .context(Context.WORK)
                          .type(EmailResourceType.EMAIL.getValue())
                          .value("mario.loffredo@iit.cnr.it")
                          .build();
@@ -49,7 +48,7 @@ public class ResourceTest extends AbstractTest {
     public void testValidEmailResourceType2() {
 
         Resource email = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .value("mario.loffredo@iit.cnr.it")
                 .build();
         JSCard jsCard = JSCard.builder()
@@ -64,7 +63,7 @@ public class ResourceTest extends AbstractTest {
     public void testInvalidEmailResourceType() {
 
         Resource email = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(PhoneResourceType.VOICE.getValue())
                 .value("mario.loffredo@iit.cnr.it")
                 .build();
@@ -80,7 +79,7 @@ public class ResourceTest extends AbstractTest {
     public void testValidPhoneResourceType() {
 
         Resource phone = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(PhoneResourceType.VOICE.getValue())
                 .value("+39.050000001")
                 .build();
@@ -96,7 +95,7 @@ public class ResourceTest extends AbstractTest {
     public void testInvalidPhoneResourceType() {
 
         Resource phone = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(EmailResourceType.EMAIL.getValue())
                 .value("+39.050000001")
                 .build();
@@ -115,7 +114,7 @@ public class ResourceTest extends AbstractTest {
         Map<String,Boolean> labelsMap = new HashMap<String,Boolean>();
         labelsMap.put("GitHub", Boolean.TRUE);
         Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(OnlineResourceType.USERNAME.getValue())
                 .value("mario-loffredo")
                 .labels(labelsMap)
@@ -132,7 +131,7 @@ public class ResourceTest extends AbstractTest {
     public void testInvalidOnlineResourceType() {
 
         Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(EmailResourceType.EMAIL.getValue())
                 .value("mario-loffredo")
                 .build();
@@ -151,7 +150,7 @@ public class ResourceTest extends AbstractTest {
         Map<String,Boolean> labels = new HashMap<String,Boolean>();
         labels.put("label", null);
         Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(OnlineResourceType.USERNAME.getValue())
                 .value("mario-loffredo")
                 .labels(labels)
@@ -170,7 +169,7 @@ public class ResourceTest extends AbstractTest {
         Map<String,Boolean> labels = new HashMap<String,Boolean>();
         labels.put("label", Boolean.FALSE);
         Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(OnlineResourceType.USERNAME.getValue())
                 .value("mario-loffredo")
                 .labels(labels)
@@ -189,7 +188,7 @@ public class ResourceTest extends AbstractTest {
         Map<String,Boolean> labels = new HashMap<String,Boolean>();
         labels.put("label", Boolean.TRUE);
         Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(OnlineResourceType.USERNAME.getValue())
                 .value("mario-loffredo")
                 .labels(labels)
@@ -207,7 +206,7 @@ public class ResourceTest extends AbstractTest {
 
         // value missing
         Resource.builder()
-                .context(ResourceContext.WORK)
+                .context(Context.WORK)
                 .type(EmailResourceType.EMAIL.getValue())
                 .build();
     }

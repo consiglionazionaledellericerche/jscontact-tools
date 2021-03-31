@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @AllArgsConstructor
-public enum ResourceContext implements JCardTypeDerivedEnum {
+public enum Context implements JCardTypeDerivedEnum {
 
     PRIVATE("private"),
     WORK("work"),
@@ -37,7 +37,7 @@ public enum ResourceContext implements JCardTypeDerivedEnum {
 
     @Getter
     @JsonIgnore
-    private static final Map<String, ResourceContext> aliases = new HashMap<String, ResourceContext>()
+    private static final Map<String, Context> aliases = new HashMap<String, Context>()
     {{
         put("home", PRIVATE);
     }};
@@ -49,8 +49,8 @@ public enum ResourceContext implements JCardTypeDerivedEnum {
     }
 
     @JsonCreator
-    public static ResourceContext getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(ResourceContext.class, value, aliases);
+    public static Context getEnum(String value) throws IllegalArgumentException {
+        return EnumUtils.getEnum(Context.class, value, aliases);
     }
 
     @Override
@@ -63,7 +63,7 @@ public enum ResourceContext implements JCardTypeDerivedEnum {
     public static String getVCardType(String context) {
 
         try {
-            ResourceContext rc = ResourceContext.getEnum(context);
+            Context rc = Context.getEnum(context);
             return getVCardType(rc);
         }
         catch(Exception e) {
@@ -73,7 +73,7 @@ public enum ResourceContext implements JCardTypeDerivedEnum {
     }
 
     @JsonIgnore
-    public static String getVCardType(ResourceContext context) {
+    public static String getVCardType(Context context) {
 
         if (context == null)
             return null;

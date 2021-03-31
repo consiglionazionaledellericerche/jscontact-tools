@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.ResourceContext;
+import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class EmailResourceTest extends VCard2JSContactTest {
         assertTrue("testEmailResourceValid1 - 1",jsCard.getEmails().length == 1);
         assertTrue("testEmailResourceValid1 - 2",jsCard.getEmails()[0].getType() == null);
         assertTrue("testEmailResourceValid1 - 3",jsCard.getEmails()[0].getValue().equals("jqpublic@xyz.example.com"));
-        assertTrue("testEmailResourceValid1 - 4",jsCard.getEmails()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
+        assertTrue("testEmailResourceValid1 - 4",jsCard.getEmails()[0].getContext().getValue().equals(Context.WORK.getValue()));
 
     }
 
@@ -57,10 +57,10 @@ public class EmailResourceTest extends VCard2JSContactTest {
         assertTrue("testEmailResourceValid2 - 1",jsCard.getEmails().length == 2);
         assertTrue("testEmailResourceValid2 - 2",jsCard.getEmails()[0].getType() == null);
         assertTrue("testEmailResourceValid2 - 3",jsCard.getEmails()[0].getValue().equals("jqpublic@xyz.example.com"));
-        assertTrue("testEmailResourceValid2 - 4",jsCard.getEmails()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
+        assertTrue("testEmailResourceValid2 - 4",jsCard.getEmails()[0].getContext().getValue().equals(Context.WORK.getValue()));
         assertTrue("testEmailResourceValid2 - 5",jsCard.getEmails()[1].getType() == null);
         assertTrue("testEmailResourceValid2 - 6",jsCard.getEmails()[1].getValue().equals("jane_doe@example.com"));
-        assertTrue("testEmailResourceValid2 - 7",jsCard.getEmails()[1].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
+        assertTrue("testEmailResourceValid2 - 7",jsCard.getEmails()[1].getContext().getValue().equals(Context.PRIVATE.getValue()));
         assertTrue("testEmailResourceValid2 - 8",jsCard.getEmails()[1].getPref() == 1);
     }
 

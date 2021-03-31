@@ -35,7 +35,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue {
 
-    ResourceContext context;
+    Context context;
 
     String type;
 

@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.ResourceContext;
+import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.dto.PhoneResourceType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -37,7 +37,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid1 - 1",jsCard.getPhones().length == 1);
         assertTrue("testPhoneResourceValid1 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid1 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
+        assertTrue("testPhoneResourceValid1 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.PRIVATE.getValue()));
 
     }
 
@@ -52,7 +52,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid2 - 1",jsCard.getPhones().length == 2);
         assertTrue("testPhoneResourceValid2 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid3 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
+        assertTrue("testPhoneResourceValid3 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.PRIVATE.getValue()));
         assertTrue("testPhoneResourceValid2 - 4",jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testPhoneResourceValid2 - 5",jsCard.getPhones()[0].getLabels() == null);
         assertTrue("testPhoneResourceValid2 - 6",jsCard.getPhones()[1].getValue().equals("tel:+1-555-555-5555;ext=555"));
@@ -71,7 +71,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid3 - 1",jsCard.getPhones().length == 1);
         assertTrue("testPhoneResourceValid3 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid3 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
+        assertTrue("testPhoneResourceValid3 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.WORK.getValue()));
         assertTrue("testPhoneResourceValid3 - 4",jsCard.getPhones()[0].getType().equals(PhoneResourceType.FAX.getValue()));
         assertTrue("testPhoneResourceValid3 - 5",jsCard.getPhones()[0].getLabels() == null);
 
@@ -87,7 +87,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid4 - 1",jsCard.getPhones().length == 1);
         assertTrue("testPhoneResourceValid4 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid4 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
+        assertTrue("testPhoneResourceValid4 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.WORK.getValue()));
         assertTrue("testPhoneResourceValid4 - 4",jsCard.getPhones()[0].getType().equals(PhoneResourceType.OTHER.getValue()));
         assertTrue("testPhoneResourceValid4 - 5",jsCard.getPhones()[0].getLabels().size() == 1);
         assertTrue("testPhoneResourceValid4 - 6",jsCard.getPhones()[0].getLabels().get("textphone") == Boolean.TRUE);
@@ -105,7 +105,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid5 - 1",jsCard.getPhones().length == 1);
         assertTrue("testPhoneResourceValid5 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid5 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
+        assertTrue("testPhoneResourceValid5 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.PRIVATE.getValue()));
         assertTrue("testPhoneResourceValid5 - 4",jsCard.getPhones()[0].getLabels().size() == 1);
         assertTrue("testPhoneResourceValid5 - 5",jsCard.getPhones()[0].getLabels().get("work") == Boolean.TRUE);
         assertTrue("testPhoneResourceValid5 - 6",jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
@@ -122,7 +122,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid6 - 1",jsCard.getPhones().length == 1);
         assertTrue("testPhoneResourceValid6 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid6 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
+        assertTrue("testPhoneResourceValid6 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.WORK.getValue()));
         assertTrue("testPhoneResourceValid6 - 4",jsCard.getPhones()[0].getLabels().size() == 1);
         assertTrue("testPhoneResourceValid6 - 5",jsCard.getPhones()[0].getLabels().get("private") == Boolean.TRUE);
         assertTrue("testPhoneResourceValid6 - 6",jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
@@ -140,7 +140,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid7 - 1",jsCard.getPhones().length == 1);
         assertTrue("testPhoneResourceValid7 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid7 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
+        assertTrue("testPhoneResourceValid7 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.WORK.getValue()));
         assertTrue("testPhoneResourceValid7 - 4",jsCard.getPhones()[0].getLabels().size() == 2);
         assertTrue("testPhoneResourceValid7 - 5",jsCard.getPhones()[0].getLabels().get("private") == Boolean.TRUE);
         assertTrue("testPhoneResourceValid7 - 6",jsCard.getPhones()[0].getLabels().get("textphone") == Boolean.TRUE);
@@ -158,7 +158,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid8 - 1",jsCard.getPhones().length == 1);
         assertTrue("testPhoneResourceValid8 - 2",jsCard.getPhones()[0].getValue().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneResourceValid8 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.WORK.getValue()));
+        assertTrue("testPhoneResourceValid8 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.WORK.getValue()));
         assertTrue("testPhoneResourceValid8 - 4",jsCard.getPhones()[0].getLabels().size() == 2);
         assertTrue("testPhoneResourceValid8 - 5",jsCard.getPhones()[0].getLabels().get("private") == Boolean.TRUE);
         assertTrue("testPhoneResourceValid8 - 6",jsCard.getPhones()[0].getLabels().get("textphone") == Boolean.TRUE);
@@ -176,7 +176,7 @@ public class PhoneResourceTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneResourceValid9 - 1",jsCard.getPhones().length == 1);
         assertTrue("testPhoneResourceValid9 - 2",jsCard.getPhones()[0].getValue().equals("+33 01 23 45 6"));
-        assertTrue("testPhoneResourceValid9 - 3",jsCard.getPhones()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
+        assertTrue("testPhoneResourceValid9 - 3",jsCard.getPhones()[0].getContext().getValue().equals(Context.PRIVATE.getValue()));
 
     }
 

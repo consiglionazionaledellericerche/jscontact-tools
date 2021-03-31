@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.ResourceContext;
+import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.dto.LabelKey;
 import it.cnr.iit.jscontact.tools.dto.OnlineResourceType;
@@ -40,7 +40,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineResourceValid1 - 1",jsCard.getOnline().length == 1);
         assertTrue("testOnlineResourceValid1 - 2",jsCard.getOnline()[0].getValue().equals("xmpp:alice@example.com"));
-        assertTrue("testOnlineResourceValid1 - 3",jsCard.getOnline()[0].getContext().getValue().equals(ResourceContext.PRIVATE.getValue()));
+        assertTrue("testOnlineResourceValid1 - 3",jsCard.getOnline()[0].getContext().getValue().equals(Context.PRIVATE.getValue()));
         assertTrue("testOnlineResourceValid1 - 4",jsCard.getOnline()[0].getType().equals(OnlineResourceType.USERNAME.getValue()));
         assertTrue("testOnlineResourceValid1 - 5",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid1 - 6",jsCard.getOnline()[0].getMediaType() == null);
