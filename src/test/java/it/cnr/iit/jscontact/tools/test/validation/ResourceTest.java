@@ -48,7 +48,7 @@ public class ResourceTest extends AbstractTest {
 
         Resource phone = Resource.builder()
                 .context(Context.WORK)
-                .type(EmailResourceType.EMAIL.getValue())
+                .type(OnlineResourceType.URI.getValue())
                 .value("+39.050000001")
                 .build();
         JSCard jsCard = JSCard.builder()
@@ -85,7 +85,7 @@ public class ResourceTest extends AbstractTest {
 
         Resource online = Resource.builder()
                 .context(Context.WORK)
-                .type(EmailResourceType.EMAIL.getValue())
+                .type(PhoneResourceType.VOICE.getValue())
                 .value("mario-loffredo")
                 .build();
         JSCard jsCard = JSCard.builder()
@@ -163,7 +163,7 @@ public class ResourceTest extends AbstractTest {
         // value missing
         Resource.builder()
                 .context(Context.WORK)
-                .type(EmailResourceType.EMAIL.getValue())
+                .type(OnlineResourceType.URI.getValue())
                 .build();
     }
 
