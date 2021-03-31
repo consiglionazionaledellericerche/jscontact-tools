@@ -137,10 +137,10 @@ public class EZVCard2JSContact extends AbstractConverter {
         return (contexts.size() > 0) ? contexts : null;
     }
 
-    private static PhoneResourceType getPhoneResourceType(String jcardTypeParam) {
+    private static PhoneType getPhoneResourceType(String jcardTypeParam) {
 
-        PhoneResourceType phoneType = getEnumFromJCardType(PhoneResourceType.class, jcardTypeParam, new ArrayList<>(Arrays.asList("home", "work")), null);
-        return (phoneType != null) ? phoneType : PhoneResourceType.OTHER;
+        PhoneType phoneType = getEnumFromJCardType(PhoneType.class, jcardTypeParam, new ArrayList<>(Arrays.asList("home", "work")), null);
+        return (phoneType != null) ? phoneType : PhoneType.OTHER;
     }
 
     private static Map<String, Boolean> getLabels(String jcardTypeParam, String[] exclude, String[] include) {
@@ -734,14 +734,14 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (Telephone tel : vcard.getTelephoneNumbers()) {
             String jcardType = getJcardParam(tel.getParameters(), "TYPE");
             Context rcontext = getContext(jcardType);
-            PhoneResourceType telType = getPhoneResourceType(jcardType);
+            PhoneType telType = getPhoneResourceType(jcardType);
             String[] exclude = null;
             if (rcontext != null) exclude = ArrayUtils.add(exclude, rcontext.getValue());
-            if (telType != PhoneResourceType.OTHER) exclude = ArrayUtils.add(exclude, telType.getValue());
+            if (telType != PhoneType.OTHER) exclude = ArrayUtils.add(exclude, telType.getValue());
             Map<String, Boolean> labels = getLabels(jcardType, exclude, null);
             jsContact.addPhone(Resource.builder()
                                        .value(getValue(tel))
-                                       .type((telType == PhoneResourceType.OTHER && !labelsIncludesTelTypes(labels)) ? PhoneResourceType.VOICE.getValue() : telType.getValue())
+                                       .type((telType == PhoneType.OTHER && !labelsIncludesTelTypes(labels)) ? PhoneType.VOICE.getValue() : telType.getValue())
                                        .context(rcontext)
                                        .labels(labels)
                                        .pref(tel.getPref())

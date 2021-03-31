@@ -23,7 +23,7 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum PhoneResourceType implements JCardTypeDerivedEnum {
+public enum PhoneType implements JCardTypeDerivedEnum {
 
     VOICE("voice"),
     FAX("fax"),
@@ -38,8 +38,8 @@ public enum PhoneResourceType implements JCardTypeDerivedEnum {
     }
 
     @JsonCreator
-    public static PhoneResourceType getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(PhoneResourceType.class, value);
+    public static PhoneType getEnum(String value) throws IllegalArgumentException {
+        return EnumUtils.getEnum(PhoneType.class, value);
     }
 
     @Override
@@ -48,7 +48,7 @@ public enum PhoneResourceType implements JCardTypeDerivedEnum {
     }
 
     @JsonIgnore
-    public static String getVCardType(PhoneResourceType type) {
+    public static String getVCardType(PhoneType type) {
 
         if (type == OTHER)
             return null;

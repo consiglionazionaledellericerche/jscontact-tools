@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.PhonesConstraint;
-import it.cnr.iit.jscontact.tools.dto.PhoneResourceType;
+import it.cnr.iit.jscontact.tools.dto.PhoneType;
 import it.cnr.iit.jscontact.tools.dto.Resource;
 
 import javax.validation.ConstraintValidator;
@@ -35,7 +35,7 @@ public class PhonesValidator implements ConstraintValidator<PhonesConstraint, Re
         try {
 
             for (Resource phone : phones){
-                PhoneResourceType type = PhoneResourceType.getEnum(phone.getType());
+                PhoneType type = PhoneType.getEnum(phone.getType());
             }
 
             return true;

@@ -385,8 +385,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         String context = Context.getVCardType(resource.getContext());
         if (context!=null)
             joiner.add(context);
-        PhoneResourceType telType = (resource.getType()!=null) ? PhoneResourceType.getEnum(resource.getType()): null;
-        if (telType!=null && telType!=PhoneResourceType.OTHER)
+        PhoneType telType = (resource.getType()!=null) ? PhoneType.getEnum(resource.getType()): null;
+        if (telType!=null && telType!= PhoneType.OTHER)
             joiner.add(telType.getValue());
         if (resource.getLabels()!=null) {
             for (String key : resource.getLabels().keySet())
