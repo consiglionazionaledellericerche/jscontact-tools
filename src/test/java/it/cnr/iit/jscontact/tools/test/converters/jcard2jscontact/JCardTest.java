@@ -199,9 +199,9 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 26", jsCard.getAddresses().get("ADR-1").getCoordinates().equals("geo:46.772673,-71.282945"));
         assertTrue("testCompleteJCard1 - 27", jsCard.getAddresses().get("ADR-1").getTimeZone().equals("Etc/GMT+5"));
         assertTrue("testCompleteJCard1 - 28", jsCard.getAddresses().get("ADR-2").getFullAddress().getValue().equals("123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"));
-        assertTrue("testCompleteJCard1 - 29", jsCard.getEmails().length == 1);
-        assertTrue("testCompleteJCard1 - 30", jsCard.getEmails()[0].getContext() == Context.WORK);
-        assertTrue("testCompleteJCard1 - 31", jsCard.getEmails()[0].getValue().equals("joe.user@example.com"));
+        assertTrue("testCompleteJCard1 - 29", jsCard.getEmails().size() == 1);
+        assertTrue("testCompleteJCard1 - 30", jsCard.getEmails().get("EMAIL-1").getContexts().containsKey(Context.WORK));
+        assertTrue("testCompleteJCard1 - 31", jsCard.getEmails().get("EMAIL-1").getEmail().equals("joe.user@example.com"));
         assertTrue("testCompleteJCard1 - 32", jsCard.getPhones().length == 2);
         assertTrue("testCompleteJCard1 - 33", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteJCard1 - 34", jsCard.getPhones()[0].getValue().equals("tel:+1-555-555-1234;ext=102"));
@@ -266,9 +266,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard3 - 4", jsCard.getKind().isOrg());
         assertTrue("testCompleteJCard3 - 5", jsCard.getAddresses().size() == 1);
         assertTrue("testCompleteJCard3 - 6", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("8F., No.172-1, Sec.2, Ji-Lung Rd,"));
-        assertTrue("testCompleteJCard3 - 7", jsCard.getEmails().length == 1);
-        assertTrue("testCompleteJCard3 - 8", jsCard.getEmails()[0].getContext() == null);
-        assertTrue("testCompleteJCard3 - 9", jsCard.getEmails()[0].getValue().isEmpty());
+        assertTrue("testCompleteJCard3 - 8", jsCard.getEmails() == null);
         assertTrue("testCompleteJCard3 - 10", jsCard.getPhones().length == 2);
         assertTrue("testCompleteJCard3 - 11", jsCard.getPhones()[0].getType().equals(PhoneResourceType.VOICE.getValue()));
         assertTrue("testCompleteJCard3 - 12", jsCard.getPhones()[0].getContext() == null);
@@ -328,9 +326,9 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 41", jsCard.getPhones()[1].getLabels().get("cell") == Boolean.TRUE);
         assertTrue("testCompleteJCard4 - 42", jsCard.getPhones()[1].getLabels().get("video") == Boolean.TRUE);
         assertTrue("testCompleteJCard4 - 43", jsCard.getPhones()[1].getLabels().get("text") == Boolean.TRUE);
-        assertTrue("testCompleteJCard4 - 44", jsCard.getEmails().length == 1);
-        assertTrue("testCompleteJCard4 - 45", jsCard.getEmails()[0].getContext() == Context.WORK);
-        assertTrue("testCompleteJCard4 - 46", jsCard.getEmails()[0].getValue().equals("simon.perreault@viagenie.ca"));
+        assertTrue("testCompleteJCard4 - 44", jsCard.getEmails().size() == 1);
+        assertTrue("testCompleteJCard4 - 45", jsCard.getEmails().get("EMAIL-1").getContexts().containsKey(Context.WORK));
+        assertTrue("testCompleteJCard4 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
         assertTrue("testCompleteJCard4 - 47", jsCard.getOnline().length == 2);
         Resource[] keys = jsCard.getOnlineKey();
         assertTrue("testCompleteJCard4 - 48", keys[0].getContext() == Context.WORK);
@@ -391,8 +389,8 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 40", jsCard.getAddresses().get("ADR-2").getCountry().equals("United States of America"));
         assertTrue("testCompleteJCard5 - 41", jsCard.getAddresses().get("ADR-2").getPostcode().equals("30314"));
 
-        assertTrue("testCompleteJCard5 - 42", jsCard.getEmails().length == 1);
-        assertTrue("testCompleteJCard5 - 43", jsCard.getEmails()[0].getValue().equals("forrestgump@example.com"));
+        assertTrue("testCompleteJCard5 - 42", jsCard.getEmails().size() == 1);
+        assertTrue("testCompleteJCard5 - 43", jsCard.getEmails().get("EMAIL-1").getEmail().equals("forrestgump@example.com"));
         assertTrue("testCompleteJCard5 - 44", jsCard.getUpdated().compareTo(VCardDateFormat.parseAsCalendar("2008-04-24T19:52:43Z"))==0);
         assertTrue("testCompleteJCard5 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
     }

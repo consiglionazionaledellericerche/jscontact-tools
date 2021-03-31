@@ -76,9 +76,9 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 41", jsCard.getPhones()[1].getLabels().get("cell") == Boolean.TRUE);
         assertTrue("testCompleteXCard1 - 42", jsCard.getPhones()[1].getLabels().get("video") == Boolean.TRUE);
         assertTrue("testCompleteXCard1 - 43", jsCard.getPhones()[1].getLabels().get("text") == Boolean.TRUE);
-        assertTrue("testCompleteXCard1 - 44", jsCard.getEmails().length == 1);
-        assertTrue("testCompleteXCard1 - 45", jsCard.getEmails()[0].getContext() == Context.WORK);
-        assertTrue("testCompleteXCard1 - 46", jsCard.getEmails()[0].getValue().equals("simon.perreault@viagenie.ca"));
+        assertTrue("testCompleteXCard1 - 44", jsCard.getEmails().size() == 1);
+        assertTrue("testCompleteXCard1 - 45", jsCard.getEmails().get("EMAIL-1").getContexts().containsKey(Context.WORK));
+        assertTrue("testCompleteXCard1 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
         assertTrue("testCompleteXCard1 - 47", jsCard.getOnline().length == 2);
         Resource[] keys = jsCard.getOnlineKey();
         assertTrue("testCompleteXCard1 - 48", keys[0].getContext() == Context.WORK);
@@ -139,8 +139,8 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard2 - 40", jsCard.getAddresses().get("ADR-2").getCountry().equals("United States of America"));
         assertTrue("testCompleteXCard2 - 41", jsCard.getAddresses().get("ADR-2").getPostcode().equals("30314"));
 
-        assertTrue("testCompleteXCard2 - 42", jsCard.getEmails().length == 1);
-        assertTrue("testCompleteXCard2 - 43", jsCard.getEmails()[0].getValue().equals("forrestgump@example.com"));
+        assertTrue("testCompleteXCard2 - 42", jsCard.getEmails().size() == 1);
+        assertTrue("testCompleteXCard2 - 43", jsCard.getEmails().get("EMAIL-1").getEmail().equals("forrestgump@example.com"));
         assertTrue("testCompleteXCard2 - 44", jsCard.getUpdated().compareTo(VCardDateFormat.parseAsCalendar("2008-04-24T19:52:43Z"))==0);
         assertTrue("testCompleteXCard2 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
     }

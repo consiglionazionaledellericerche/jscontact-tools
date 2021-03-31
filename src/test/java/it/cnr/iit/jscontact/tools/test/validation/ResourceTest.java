@@ -27,55 +27,6 @@ import static org.junit.Assert.assertTrue;
 
 public class ResourceTest extends AbstractTest {
 
-
-    @Test
-    public void testValidEmailResourceType1() {
-
-        Resource email = Resource.builder()
-                         .context(Context.WORK)
-                         .type(EmailResourceType.EMAIL.getValue())
-                         .value("mario.loffredo@iit.cnr.it")
-                         .build();
-        JSCard jsCard = JSCard.builder()
-                         .uid(getUUID())
-                         .emails(new Resource[]{email})
-                         .build();
-
-        assertTrue("testValidEmailResourceType1", jsCard.isValid());
-    }
-
-    @Test
-    public void testValidEmailResourceType2() {
-
-        Resource email = Resource.builder()
-                .context(Context.WORK)
-                .value("mario.loffredo@iit.cnr.it")
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .emails(new Resource[]{email})
-                .build();
-
-        assertTrue("testValidEmailResourceType2", jsCard.isValid());
-    }
-
-    @Test
-    public void testInvalidEmailResourceType() {
-
-        Resource email = Resource.builder()
-                .context(Context.WORK)
-                .type(PhoneResourceType.VOICE.getValue())
-                .value("mario.loffredo@iit.cnr.it")
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .emails(new Resource[]{email})
-                .build();
-
-        assertTrue("testInvalidEmailResourceType-1", !jsCard.isValid());
-        assertTrue("testInvalidEmailResourceType-2", jsCard.getValidationMessage().equals("invalid email Resource in JSContact"));
-    }
-
     @Test
     public void testValidPhoneResourceType() {
 

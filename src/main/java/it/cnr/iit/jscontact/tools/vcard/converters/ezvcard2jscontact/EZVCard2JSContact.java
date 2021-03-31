@@ -103,6 +103,23 @@ public class EZVCard2JSContact extends AbstractConverter {
          return getEnumFromJCardType(Context.class, jcardTypeParam, null, Context.getAliases());
     }
 
+    private static Map<Context,Boolean> getContexts(String jcardTypeParam) {
+
+        if (jcardTypeParam == null)
+            return null;
+
+        String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
+        Map<Context,Boolean> contexts = new HashMap<Context,Boolean>();
+        for (String typeItem : typeItems) {
+            Context context = getEnumFromJCardType(Context.class, typeItem, null, Context.getAliases());
+            if (context != null)
+                contexts.put(context, Boolean.TRUE);
+        }
+
+        return (contexts.size() > 0) ? contexts : null;
+    }
+
+
     private static AddressContext getAddressContext(String jcardTypeParam) {
 
         return getEnumFromJCardType(AddressContext.class, jcardTypeParam, null, AddressContext.getAliases());
@@ -723,16 +740,18 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     private static void fillEmails(VCard vcard, JSContact jsContact) {
 
+        int i = 1;
         for (Email email : vcard.getEmails()) {
-            String jcardType = getJcardParam(email.getParameters(), "TYPE");
-            Context rcontext = getContext(jcardType);
-            jsContact.addEmail(Resource.builder()
-                                       .value(getValue(email))
-                                       .context(rcontext)
-                                       .labels(getLabels(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, null))
-                                       .pref(email.getPref())
-                                       .build()
-                              );
+            String emailAddress = getValue(email);
+            if (StringUtils.isNotEmpty(emailAddress)) {
+                String jcardType = getJcardParam(email.getParameters(), "TYPE");
+                jsContact.addEmail("EMAIL-" + (i++), EmailAddress.builder()
+                        .email(emailAddress)
+                        .contexts(getContexts(jcardType))
+                        .pref(email.getPref())
+                        .build()
+                );
+            }
         }
     }
 

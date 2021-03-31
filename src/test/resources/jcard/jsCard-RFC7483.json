@@ -37,12 +37,12 @@
 "value": "tel:+1-555-555-1234;ext=102"
 }
 ],
-"emails": [
-{
-"context": "work",
-"value": "joe.user@example.com"
-}
-],
+"emails": {
+  "EMAIL-1" :{
+  "contexts": {"work": true},
+  "email": "joe.user@example.com"
+  }
+},
 "online": [
 {
 "context": "work",

@@ -84,10 +84,9 @@ public abstract class JSContact extends ValidableObject {
     @Valid
     LocalizedString[] roles;
 
-    //    @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
+    @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     @Valid
-    @EmailsConstraint(message = "invalid email Resource in JSContact")
-    Resource[] emails;
+    Map<String,EmailAddress> emails;
 
     //    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
     @Valid
@@ -151,8 +150,12 @@ public abstract class JSContact extends ValidableObject {
         phones = ArrayUtils.add(phones, phone);
     }
 
-    public void addEmail(Resource email) {
-        emails = ArrayUtils.add(emails, email);
+    public void addEmail(String id, EmailAddress email) {
+
+        if (emails == null)
+            emails = new HashMap<String,EmailAddress>();
+
+        emails.put(id, email);
     }
 
     public void addOnline(Resource ol) {

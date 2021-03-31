@@ -395,30 +395,26 @@ public class JSContact2EZVCard extends AbstractConverter {
             vcard.getTelephoneNumbers().add(getTelephone(resource));
     }
 
-    private static Email getEmail(Resource resource) {
+    private static Email getEmail(EmailAddress emailAddress) {
 
-        Email email = new Email(resource.getValue());
-        email.setPref(resource.getPref());
-        StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
-
-        String context = Context.getVCardType(resource.getContext());
-        if (context!=null)
-            joiner.add(context);
-        if (resource.getLabels()!=null) {
-            for (String key : resource.getLabels().keySet())
-                joiner.add(Context.getVCardType(key));
+        Email email = new Email(emailAddress.getEmail());
+        email.setPref(emailAddress.getPref());
+        if (emailAddress.getContexts()!=null) {
+            StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+            for (Context context : emailAddress.getContexts().keySet()) {
+                joiner.add(Context.getVCardType(context));
+            }
+            email.setParameter("TYPE", joiner.toString());
         }
-        email.setParameter("TYPE", joiner.toString());
         return email;
     }
-
 
     private static void fillEmails(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getEmails() == null)
             return;
 
-        for (Resource email : jsContact.getEmails())
+        for (EmailAddress email : jsContact.getEmails().values())
             vcard.getEmails().add(getEmail(email));
     }
 
