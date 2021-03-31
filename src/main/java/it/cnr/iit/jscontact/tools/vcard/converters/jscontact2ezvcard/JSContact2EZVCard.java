@@ -346,7 +346,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Language language = new Language(lang);
         language.setType(cl.getType());
-        language.setPref(cl.getPreference());
+        language.setPref(cl.getPref());
         return language;
     }
 

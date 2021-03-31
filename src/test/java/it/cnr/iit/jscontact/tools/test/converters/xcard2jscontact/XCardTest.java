@@ -52,8 +52,8 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 16", jsCard.getAnniversaries()[1].getLabel().equals("marriage date"));
         assertTrue("testCompleteXCard1 - 17", jsCard.getAnniversaries()[1].getDate().equals("2009-08-08T14:30-05:00"));
         assertTrue("testCompleteXCard1 - 18", jsCard.getPreferredContactLanguages().size()==2);
-        assertTrue("testCompleteXCard1 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPreference() == 1);
-        assertTrue("testCompleteXCard1 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPreference() == 2);
+        assertTrue("testCompleteXCard1 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
+        assertTrue("testCompleteXCard1 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
         assertTrue("testCompleteXCard1 - 21", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Viagenie"));
         assertTrue("testCompleteXCard1 - 22", jsCard.getAddresses().size() == 1);
         assertTrue("testCompleteXCard1 - 23", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("Simon Perreault\n                    2875 boul. Laurier, suite D2-630\n                    Quebec, QC, Canada\n                    G1V 2M2"));

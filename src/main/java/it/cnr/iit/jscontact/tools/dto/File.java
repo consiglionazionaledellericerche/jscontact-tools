@@ -24,8 +24,8 @@ public class File implements IdMapValue {
     @Min(value=0, message = "invalid size in File - min value must be 0")
     int size;
 
-    @Min(value=1, message = "invalid preference in File - min value must be 1")
-    @Max(value=100, message = "invalid preference in File - max value must be 100")
+    @Min(value=1, message = "invalid pref in File - min value must be 1")
+    @Max(value=100, message = "invalid pref in File - max value must be 100")
     Integer pref;
 
 }

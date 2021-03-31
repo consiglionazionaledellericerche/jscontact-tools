@@ -61,8 +61,8 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue {
 
     String timeZone;
 
-    @Min(value=1, message = "invalid preference in Address - min value must be 1")
-    @Max(value=100, message = "invalid preference in Address - max value must be 100")
+    @Min(value=1, message = "invalid pref in Address - min value must be 1")
+    @Max(value=100, message = "invalid pref in Address - max value must be 100")
     Integer pref;
 
     @JsonIgnore

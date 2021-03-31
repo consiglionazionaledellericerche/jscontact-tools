@@ -20,12 +20,12 @@
     "preferredContactLanguages": {
       "fr": [
         {
-          "preference": 1
+          "pref": 1
         }
       ],
       "en": [
         {
-          "preference": 2
+          "pref": 2
         }
       ]
     },
@@ -127,12 +127,12 @@
     "preferredContactLanguages": {
       "ja": [
         {
-          "preference": 1
+          "pref": 1
         }
       ],
       "en": [
         {
-          "preference": 2
+          "pref": 2
         }
       ]
     }

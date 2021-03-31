@@ -38,8 +38,8 @@ public class PreferredContactLanguagesTest extends VCard2JSContactTest {
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPreferredContactLanguagesValid1 - 1",jsCard.getPreferredContactLanguages()!=null);
         assertTrue("testPreferredContactLanguagesValid1 - 2",jsCard.getPreferredContactLanguages().size() == 2);
-        assertTrue("testPreferredContactLanguagesValid1 - 3",jsCard.getPreferredContactLanguages().get("ja")[0].getPreference() == 1);
-        assertTrue("testPreferredContactLanguagesValid1 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getPreference() == 2);
+        assertTrue("testPreferredContactLanguagesValid1 - 3",jsCard.getPreferredContactLanguages().get("ja")[0].getPref() == 1);
+        assertTrue("testPreferredContactLanguagesValid1 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
     }
 
 
@@ -57,9 +57,9 @@ public class PreferredContactLanguagesTest extends VCard2JSContactTest {
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPreferredContactLanguagesValid2 - 1",jsCard.getPreferredContactLanguages()!=null);
         assertTrue("testPreferredContactLanguagesValid2 - 2",jsCard.getPreferredContactLanguages().size() == 2);
-        assertTrue("testPreferredContactLanguagesValid2 - 3",jsCard.getPreferredContactLanguages().get("en")[0].getPreference() == 1);
+        assertTrue("testPreferredContactLanguagesValid2 - 3",jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 1);
         assertTrue("testPreferredContactLanguagesValid2 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getType().equals("work"));
-        assertTrue("testPreferredContactLanguagesValid2 - 5",jsCard.getPreferredContactLanguages().get("fr")[0].getPreference() == 2);
+        assertTrue("testPreferredContactLanguagesValid2 - 5",jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 2);
         assertTrue("testPreferredContactLanguagesValid2 - 6",jsCard.getPreferredContactLanguages().get("fr")[0].getType().equals("work"));
         assertTrue("testPreferredContactLanguagesValid2 - 7",jsCard.getPreferredContactLanguages().get("fr")[1].getType().equals("home"));
     }

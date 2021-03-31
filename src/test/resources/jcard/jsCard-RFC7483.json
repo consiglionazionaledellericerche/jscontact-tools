@@ -3,8 +3,8 @@
 "fullName": { "value": "Joe User" },
 "kind": "individual",
 "preferredContactLanguages": {
-"fr": [{ "preference": 1 }],
-"en": [{ "preference": 2 }]
+"fr": [{ "pref": 1 }],
+"en": [{ "pref": 2 }]
 },
 "organizations": { "ORG-1": { "name": { "value": "Example" }} },
 "jobTitles": {"TITLE-1": { "title": { "value": "Research Scientist" }} },

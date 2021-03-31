@@ -680,7 +680,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             jsContact.addContactLanguage(getValue(lang),
                                         ContactLanguage.builder()
                                                        .type(lang.getType())
-                                                       .preference(lang.getPref())
+                                                       .pref(lang.getPref())
                                                        .build()
                                         );
         }

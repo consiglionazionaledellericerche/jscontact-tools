@@ -26,7 +26,7 @@ import javax.validation.constraints.Max;
 import lombok.NoArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NotNullAnyConstraint(fieldNames={"type","preference"}, message = "at least one not null member is missing in ContactLanguage")
+@NotNullAnyConstraint(fieldNames={"type","pref"}, message = "at least one not null member is missing in ContactLanguage")
 @Builder
 @Data
 @AllArgsConstructor
@@ -35,8 +35,8 @@ public class ContactLanguage extends GroupableObject {
 
     String type;
 
-    @Min(value=1, message = "invalid preference in ContactLanguage - min value must be 1")
-    @Max(value=100, message = "invalid preference in ContactLanguage - max value must be 100")
-    Integer preference;
+    @Min(value=1, message = "invalid pref in ContactLanguage - min value must be 1")
+    @Max(value=100, message = "invalid pref in ContactLanguage - max value must be 100")
+    Integer pref;
 
 }

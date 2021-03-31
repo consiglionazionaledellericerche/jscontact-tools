@@ -45,12 +45,11 @@ public class ContactLanguageTest extends AbstractTest {
     public void testValidContactLanguage2() {
 
         Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>();
-        map.put("it", new ContactLanguage[] { ContactLanguage.builder().preference(1).build()});
+        map.put("it", new ContactLanguage[] { ContactLanguage.builder().pref(1).build()});
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
                 .build();
-
         assertTrue("testValidContactLanguage2", jsCard.isValid());
     }
 
@@ -58,7 +57,7 @@ public class ContactLanguageTest extends AbstractTest {
     public void testValidContactLanguage3() {
 
         Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>();
-        map.put("it", new ContactLanguage[] { ContactLanguage.builder().type("work").preference(1).build()});
+        map.put("it", new ContactLanguage[] { ContactLanguage.builder().type("work").pref(1).build()});
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
@@ -110,7 +109,7 @@ public class ContactLanguageTest extends AbstractTest {
     public void testInvalidContactLanguage4() {
 
         Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>();
-        map.put("it", new ContactLanguage[] { ContactLanguage.builder().type("work").preference(0).build()});
+        map.put("it", new ContactLanguage[] { ContactLanguage.builder().type("work").pref(0).build()});
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
@@ -123,7 +122,7 @@ public class ContactLanguageTest extends AbstractTest {
     public void testInvalidContactLanguage5() {
 
         Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>();
-        map.put("it", new ContactLanguage[] { ContactLanguage.builder().type("work").preference(101).build()});
+        map.put("it", new ContactLanguage[] { ContactLanguage.builder().type("work").pref(101).build()});
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
