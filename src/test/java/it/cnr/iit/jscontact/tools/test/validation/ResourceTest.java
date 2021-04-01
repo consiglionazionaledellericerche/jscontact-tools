@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 public class ResourceTest extends AbstractTest {
 
     @Test
-    public void testValidOnlineResourceType() {
+    public void testValidOnlineType() {
 
         Resource online = Resource.builder()
                 .context(Context.WORK)
@@ -38,11 +38,11 @@ public class ResourceTest extends AbstractTest {
                 .online(new Resource[]{online})
                 .build();
 
-        assertTrue("testValidOnlineResourceType", jsCard.isValid());
+        assertTrue("testValidOnlineType", jsCard.isValid());
     }
 
     @Test
-    public void testInvalidOnlineResourceType() {
+    public void testInvalidOnlineType() {
 
         Resource online = Resource.builder()
                 .context(Context.WORK)
@@ -54,8 +54,8 @@ public class ResourceTest extends AbstractTest {
                 .online(new Resource[]{online})
                 .build();
 
-        assertTrue("testInvalidOnlineResourceType-1", !jsCard.isValid());
-        assertTrue("testInvalidOnlineResourceType-2", jsCard.getValidationMessage().equals("invalid online Resource in JSContact"));
+        assertTrue("testInvalidOnlineType-1", !jsCard.isValid());
+        assertTrue("testInvalidOnlineType-2", jsCard.getValidationMessage().equals("invalid online Resource in JSContact"));
     }
 
     @Test(expected = java.lang.NullPointerException.class)
