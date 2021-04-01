@@ -80,7 +80,7 @@ public class XCardTest extends XCard2JSContactTest {
         Resource[] keys = jsCard.getOnlineKey();
         assertTrue("testCompleteXCard1 - 48", keys[0].getContext() == Context.WORK);
         assertTrue("testCompleteXCard1 - 49", keys[0].getType().equals(OnlineType.URI.getValue()));
-        assertTrue("testCompleteXCard1 - 50", keys[0].getLabel().equals(LabelKey.KEY.getValue()));
+        assertTrue("testCompleteXCard1 - 50", keys[0].getLabel().equals(OnlineLabelKey.KEY.getValue()));
         assertTrue("testCompleteXCard1 - 51", keys[0].getValue().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
         Resource[] urls = jsCard.getOnlineUrl();
         assertTrue("testCompleteXCard1 - 52", urls[0].getContext() == Context.PRIVATE);

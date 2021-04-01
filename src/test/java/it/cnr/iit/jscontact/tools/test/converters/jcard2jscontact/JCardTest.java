@@ -219,13 +219,13 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 48", keys[0].getValue().equals("http://www.example.com/joe.user/joe.asc"));
         assertTrue("testCompleteJCard1 - 49", keys[0].getPref() == null);
         assertTrue("testCompleteJCard1 - 50", keys[0].getContext() == Context.WORK);
-        assertTrue("testCompleteJCard1 - 52", keys[0].getLabel().equals(LabelKey.KEY.getValue()));
+        assertTrue("testCompleteJCard1 - 52", keys[0].getLabel().equals(OnlineLabelKey.KEY.getValue()));
         Resource[] urls = jsCard.getOnlineUrl();
         assertTrue("testCompleteJCard1 - 53", urls[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testCompleteJCard1 - 54", urls[0].getValue().equals("http://example.org"));
         assertTrue("testCompleteJCard1 - 55", urls[0].getPref() == null);
         assertTrue("testCompleteJCard1 - 56", urls[0].getContext() == Context.PRIVATE);
-        assertTrue("testCompleteJCard1 - 58", urls[0].getLabel().equals(LabelKey.URL.getValue()));
+        assertTrue("testCompleteJCard1 - 58", urls[0].getLabel().equals(OnlineLabelKey.URL.getValue()));
         assertTrue("testCompleteJCard1 - 59", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
@@ -325,7 +325,7 @@ public class JCardTest extends JCard2JSContactTest {
         Resource[] keys = jsCard.getOnlineKey();
         assertTrue("testCompleteJCard4 - 48", keys[0].getContext() == Context.WORK);
         assertTrue("testCompleteJCard4 - 49", keys[0].getType().equals(OnlineType.URI.getValue()));
-        assertTrue("testCompleteJCard4 - 50", keys[0].getLabel().equals(LabelKey.KEY.getValue()));
+        assertTrue("testCompleteJCard4 - 50", keys[0].getLabel().equals(OnlineLabelKey.KEY.getValue()));
         assertTrue("testCompleteJCard4 - 51", keys[0].getValue().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
         Resource[] urls = jsCard.getOnlineUrl();
         assertTrue("testCompleteJCard4 - 52", urls[0].getContext() == Context.PRIVATE);

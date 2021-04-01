@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor
-public enum LabelKey {
+public enum OnlineLabelKey {
 
     KEY("key"),
     LOGO("logo"),
@@ -41,10 +41,10 @@ public enum LabelKey {
         return value;
     }
 
-    public static LabelKey getLabelKey(String label) {
+    public static OnlineLabelKey getLabelKey(String label) {
 
         List<String> labelItems = Arrays.asList(label.split(","));
-        for (LabelKey key : LabelKey.values())
+        for (OnlineLabelKey key : OnlineLabelKey.values())
             if (labelItems.contains(key.getValue()))
                 return key;
 

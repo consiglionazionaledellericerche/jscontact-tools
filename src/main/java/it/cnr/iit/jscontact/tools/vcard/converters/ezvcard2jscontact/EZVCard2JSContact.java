@@ -264,7 +264,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         return StringUtils.isNotEmpty(fullAddress) ? LocalizedString.builder().value(fullAddress).language(addr.getLanguage()).build() : null;
     }
 
-    private static void addOnline(VCardProperty property, JSContact jsContact, LabelKey labelKey) {
+    private static void addOnline(VCardProperty property, JSContact jsContact, OnlineLabelKey labelKey) {
 
         String value;
         if (property instanceof UriProperty)
@@ -813,7 +813,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (Source source : vcard.getSources())
-            addOnline(source, jsContact, LabelKey.SOURCE);
+            addOnline(source, jsContact, OnlineLabelKey.SOURCE);
 
         i = 1;
         for (Photo photo : vcard.getPhotos())
@@ -826,7 +826,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                         .value(getValue(impp))
                                         .type(OnlineType.USERNAME.getValue())
                                         .context(rcontext)
-                                        .label(getLabel(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{LabelKey.IMPP.getValue()}))
+                                        .label(getLabel(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{OnlineLabelKey.IMPP.getValue()}))
                                         .pref(impp.getPref())
                                         .mediaType(impp.getMediaType())
                                         .build()
@@ -834,25 +834,25 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
 
         for (Logo logo : vcard.getLogos())
-            addOnline(logo, jsContact, LabelKey.LOGO);
+            addOnline(logo, jsContact, OnlineLabelKey.LOGO);
 
         for (Sound sound : vcard.getSounds())
-            addOnline(sound, jsContact, LabelKey.SOUND);
+            addOnline(sound, jsContact, OnlineLabelKey.SOUND);
 
         for (Url url : vcard.getUrls())
-            addOnline(url, jsContact, LabelKey.URL);
+            addOnline(url, jsContact, OnlineLabelKey.URL);
 
         for (Key key : vcard.getKeys())
-            addOnline(key, jsContact, LabelKey.KEY);
+            addOnline(key, jsContact, OnlineLabelKey.KEY);
 
         for (FreeBusyUrl fburl : vcard.getFbUrls())
-            addOnline(fburl, jsContact, LabelKey.FBURL);
+            addOnline(fburl, jsContact, OnlineLabelKey.FBURL);
 
         for (CalendarRequestUri calendarRequestUri : vcard.getCalendarRequestUris())
-            addOnline(calendarRequestUri, jsContact, LabelKey.CALADRURI);
+            addOnline(calendarRequestUri, jsContact, OnlineLabelKey.CALADRURI);
 
         for (CalendarUri calendarUri : vcard.getCalendarUris())
-            addOnline(calendarUri, jsContact, LabelKey.CALURI);
+            addOnline(calendarUri, jsContact, OnlineLabelKey.CALURI);
 
         for (OrgDirectory od : vcard.getOrgDirectories()) {
             jcardType = od.getType();
@@ -860,7 +860,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             orgDirectories.add(Resource.builder()
                                        .value(getValue(od))
                                        .type(OnlineType.URI.getValue())
-                                       .label(getLabel(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{LabelKey.ORG_DIRECTORY.getValue()}))
+                                       .label(getLabel(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{OnlineLabelKey.ORG_DIRECTORY.getValue()}))
                                        .context(rcontext)
                                        .pref(od.getPref())
                                        .index(od.getIndex())
@@ -874,11 +874,11 @@ public class EZVCard2JSContact extends AbstractConverter {
                 jsContact.addOnline(ol);
         }
 
-        List<RawProperty> contactUris = getRawProperties(vcard, LabelKey.CONTACT_URI.getValue());
+        List<RawProperty> contactUris = getRawProperties(vcard, OnlineLabelKey.CONTACT_URI.getValue());
         for (RawProperty contactUri : contactUris) {
             UriProperty uriProperty = new UriProperty(getValue(contactUri));
             uriProperty.setParameters(contactUri.getParameters());
-            addOnline(uriProperty, jsContact, LabelKey.CONTACT_URI);
+            addOnline(uriProperty, jsContact, OnlineLabelKey.CONTACT_URI);
         }
     }
 

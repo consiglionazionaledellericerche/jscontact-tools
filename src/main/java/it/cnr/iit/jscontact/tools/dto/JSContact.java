@@ -342,63 +342,63 @@ public abstract class JSContact extends ValidableObject {
     }
 
     @JsonIgnore
-    public Resource[] getOnline(LabelKey labelKey) {
+    public Resource[] getOnline(OnlineLabelKey labelKey) {
         return getOnline(labelKey.getValue());
     }
 
     @JsonIgnore
     public Resource[] getOnlineKey() {
-        return getOnline(LabelKey.KEY);
+        return getOnline(OnlineLabelKey.KEY);
     }
 
     @JsonIgnore
     public Resource[] getOnlineUrl() {
-        return getOnline(LabelKey.URL);
+        return getOnline(OnlineLabelKey.URL);
     }
 
     @JsonIgnore
     public Resource[] getOnlineSource() {
-        return getOnline(LabelKey.SOURCE);
+        return getOnline(OnlineLabelKey.SOURCE);
     }
 
     @JsonIgnore
     public Resource[] getOnlineLogo() {
-        return getOnline(LabelKey.LOGO);
+        return getOnline(OnlineLabelKey.LOGO);
     }
 
     @JsonIgnore
     public Resource[] getOnlineSound() {
-        return getOnline(LabelKey.SOUND);
+        return getOnline(OnlineLabelKey.SOUND);
     }
 
     @JsonIgnore
     public Resource[] getOnlineFburl() {
-        return getOnline(LabelKey.FBURL);
+        return getOnline(OnlineLabelKey.FBURL);
     }
 
     @JsonIgnore
     public Resource[] getOnlineCaluri() {
-        return getOnline(LabelKey.CALURI);
+        return getOnline(OnlineLabelKey.CALURI);
     }
 
     @JsonIgnore
     public Resource[] getOnlineCaladruri() {
-        return getOnline(LabelKey.CALADRURI);
+        return getOnline(OnlineLabelKey.CALADRURI);
     }
 
     @JsonIgnore
     public Resource[] getOnlineOrgDirectory() {
-        return getOnline(LabelKey.ORG_DIRECTORY);
+        return getOnline(OnlineLabelKey.ORG_DIRECTORY);
     }
 
     @JsonIgnore
     public Resource[] getOnlineImpp() {
-        return getOnline(LabelKey.IMPP);
+        return getOnline(OnlineLabelKey.IMPP);
     }
 
     @JsonIgnore
     public Resource[] getOnlineContactUri() {
-        return getOnline(LabelKey.CONTACT_URI);
+        return getOnline(OnlineLabelKey.CONTACT_URI);
     }
 
 

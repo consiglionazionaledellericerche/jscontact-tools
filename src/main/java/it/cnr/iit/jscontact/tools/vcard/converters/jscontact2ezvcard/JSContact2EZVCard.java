@@ -549,7 +549,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         for (Resource resource : jsContact.getOnline()) {
-            switch(LabelKey.getLabelKey(resource.getLabel())) {
+            switch(OnlineLabelKey.getLabelKey(resource.getLabel())) {
                 case SOUND:
                     vcard.getSounds().add(new Sound(resource.getValue(), getSoundType(resource.getMediaType())));
                     break;

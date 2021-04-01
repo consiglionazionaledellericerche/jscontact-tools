@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.LabelKey;
+import it.cnr.iit.jscontact.tools.dto.OnlineLabelKey;
 import it.cnr.iit.jscontact.tools.dto.OnlineType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid1 - 4",jsCard.getOnline()[0].getType().equals(OnlineType.USERNAME.getValue()));
         assertTrue("testOnlineResourceValid1 - 5",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid1 - 6",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid1 - 7",jsCard.getOnline()[0].getLabel().equals(LabelKey.IMPP.getValue()));
+        assertTrue("testOnlineResourceValid1 - 7",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.IMPP.getValue()));
 
     }
 
@@ -63,7 +63,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid2 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid2 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid2 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid2 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.SOURCE.getValue()));
+        assertTrue("testOnlineResourceValid2 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.SOURCE.getValue()));
 
     }
 
@@ -99,7 +99,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid4 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid4 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid4 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid4 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.LOGO.getValue()));
+        assertTrue("testOnlineResourceValid4 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.LOGO.getValue()));
 
     }
 
@@ -119,7 +119,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid5 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid5 - 4",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid5 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid5 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.CONTACT_URI.getValue()));
+        assertTrue("testOnlineResourceValid5 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.CONTACT_URI.getValue()));
 
     }
 
@@ -137,14 +137,14 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid6 - 1",jsCard.getOnline().length == 2);
         assertTrue("testOnlineResourceValid6 - 2",jsCard.getOnline()[0].getValue().equals("http://directory.mycompany.example.com"));
         assertTrue("testOnlineResourceValid6 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
-        assertTrue("testOnlineResourceValid6 - 4",jsCard.getOnline()[0].getLabel().equals(LabelKey.ORG_DIRECTORY.getValue()));
+        assertTrue("testOnlineResourceValid6 - 4",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.ORG_DIRECTORY.getValue()));
         assertTrue("testOnlineResourceValid6 - 5",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid6 - 6",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid6 - 7",jsCard.getOnline()[1].getValue().equals("ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering"));
         assertTrue("testOnlineResourceValid6 - 8",jsCard.getOnline()[1].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid6 - 9",jsCard.getOnline()[1].getPref() == 1);
         assertTrue("testOnlineResourceValid6 - 10",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid6 - 11",jsCard.getOnline()[1].getLabel().equals(LabelKey.ORG_DIRECTORY.getValue()));
+        assertTrue("testOnlineResourceValid6 - 11",jsCard.getOnline()[1].getLabel().equals(OnlineLabelKey.ORG_DIRECTORY.getValue()));
 
 
     }
@@ -163,14 +163,14 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid7 - 1",jsCard.getOnline().length == 2);
         assertTrue("testOnlineResourceValid7 - 2",jsCard.getOnline()[0].getValue().equals("http://directory.mycompany.example.com"));
         assertTrue("testOnlineResourceValid7 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
-        assertTrue("testOnlineResourceValid7 - 4",jsCard.getOnline()[0].getLabel().equals(LabelKey.ORG_DIRECTORY.getValue()));
+        assertTrue("testOnlineResourceValid7 - 4",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.ORG_DIRECTORY.getValue()));
         assertTrue("testOnlineResourceValid7 - 5",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid7 - 6",jsCard.getOnline()[0].getMediaType() == null);
         assertTrue("testOnlineResourceValid7 - 7",jsCard.getOnline()[1].getValue().equals("ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering"));
         assertTrue("testOnlineResourceValid7 - 8",jsCard.getOnline()[1].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid7 - 9",jsCard.getOnline()[1].getPref() == 1);
         assertTrue("testOnlineResourceValid7 - 10",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid7 - 11",jsCard.getOnline()[1].getLabel().equals(LabelKey.ORG_DIRECTORY.getValue()));
+        assertTrue("testOnlineResourceValid7 - 11",jsCard.getOnline()[1].getLabel().equals(OnlineLabelKey.ORG_DIRECTORY.getValue()));
 
     }
 
@@ -190,7 +190,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid8 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid8 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid8 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid8 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.SOUND.getValue()));
+        assertTrue("testOnlineResourceValid8 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.SOUND.getValue()));
 
     }
 
@@ -209,7 +209,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid9 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid9 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid9 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid9 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.URL.getValue()));
+        assertTrue("testOnlineResourceValid9 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.URL.getValue()));
 
     }
 
@@ -228,7 +228,7 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid10 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid10 - 4",jsCard.getOnline()[0].getPref() == null);
         assertTrue("testOnlineResourceValid10 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid10 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.KEY.getValue()));
+        assertTrue("testOnlineResourceValid10 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.KEY.getValue()));
 
     }
 
@@ -249,12 +249,12 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid11 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid11 - 4",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid11 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid11 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.FBURL.getValue()));
+        assertTrue("testOnlineResourceValid11 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.FBURL.getValue()));
         assertTrue("testOnlineResourceValid11 - 7",jsCard.getOnline()[1].getValue().equals("ftp://example.com/busy/project-a.ifb"));
         assertTrue("testOnlineResourceValid11 - 8",jsCard.getOnline()[1].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid11 - 9",jsCard.getOnline()[1].getPref() == null);
         assertTrue("testOnlineResourceValid11 - 10",jsCard.getOnline()[1].getMediaType().equals("text/calendar"));
-        assertTrue("testOnlineResourceValid11 - 11",jsCard.getOnline()[1].getLabel().equals(LabelKey.FBURL.getValue()));
+        assertTrue("testOnlineResourceValid11 - 11",jsCard.getOnline()[1].getLabel().equals(OnlineLabelKey.FBURL.getValue()));
 
     }
 
@@ -275,12 +275,12 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid12 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid12 - 4",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid12 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid12 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.CALADRURI.getValue()));
+        assertTrue("testOnlineResourceValid12 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.CALADRURI.getValue()));
         assertTrue("testOnlineResourceValid12 - 7",jsCard.getOnline()[1].getValue().equals("http://example.com/calendar/jdoe"));
         assertTrue("testOnlineResourceValid12 - 8",jsCard.getOnline()[1].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid12 - 9",jsCard.getOnline()[1].getPref() == null);
         assertTrue("testOnlineResourceValid12 - 10",jsCard.getOnline()[1].getMediaType() == null);
-        assertTrue("testOnlineResourceValid12 - 11",jsCard.getOnline()[1].getLabel().equals(LabelKey.CALADRURI.getValue()));
+        assertTrue("testOnlineResourceValid12 - 11",jsCard.getOnline()[1].getLabel().equals(OnlineLabelKey.CALADRURI.getValue()));
 
     }
 
@@ -300,12 +300,12 @@ public class OnlineResourceTest extends VCard2JSContactTest {
         assertTrue("testOnlineResourceValid13 - 3",jsCard.getOnline()[0].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid13 - 4",jsCard.getOnline()[0].getPref() == 1);
         assertTrue("testOnlineResourceValid13 - 5",jsCard.getOnline()[0].getMediaType() == null);
-        assertTrue("testOnlineResourceValid13 - 6",jsCard.getOnline()[0].getLabel().equals(LabelKey.CALURI.getValue()));
+        assertTrue("testOnlineResourceValid13 - 6",jsCard.getOnline()[0].getLabel().equals(OnlineLabelKey.CALURI.getValue()));
         assertTrue("testOnlineResourceValid13 - 7",jsCard.getOnline()[1].getValue().equals("ftp://ftp.example.com/calA.ics"));
         assertTrue("testOnlineResourceValid13 - 8",jsCard.getOnline()[1].getType().equals(OnlineType.URI.getValue()));
         assertTrue("testOnlineResourceValid13 - 9",jsCard.getOnline()[1].getPref() == null);
         assertTrue("testOnlineResourceValid13 - 10",jsCard.getOnline()[1].getMediaType().equals("text/calendar"));
-        assertTrue("testOnlineResourceValid13 - 11",jsCard.getOnline()[1].getLabel().equals(LabelKey.CALURI.getValue()));
+        assertTrue("testOnlineResourceValid13 - 11",jsCard.getOnline()[1].getLabel().equals(OnlineLabelKey.CALURI.getValue()));
 
     }
 
