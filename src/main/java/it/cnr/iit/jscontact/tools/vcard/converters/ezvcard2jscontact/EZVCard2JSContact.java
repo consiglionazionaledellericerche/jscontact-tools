@@ -281,7 +281,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         label = getLabel(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{labelKey.getValue()});
         jsContact.addOnline(Resource.builder()
                                     .value(value)
-                                    .type(OnlineType.URI.getValue())
+                                    .type(ResourceType.URI.getValue())
                                     .label(label)
                                     .context(rcontext)
                                     .mediaType(getJcardParam(property.getParameters(), "MEDIATYPE"))
@@ -824,7 +824,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             rcontext = getContext(jcardType);
             jsContact.addOnline(Resource.builder()
                                         .value(getValue(impp))
-                                        .type(OnlineType.USERNAME.getValue())
+                                        .type(ResourceType.USERNAME.getValue())
                                         .context(rcontext)
                                         .label(getLabel(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{OnlineLabelKey.IMPP.getValue()}))
                                         .pref(impp.getPref())
@@ -859,7 +859,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             rcontext = getContext(jcardType);
             orgDirectories.add(Resource.builder()
                                        .value(getValue(od))
-                                       .type(OnlineType.URI.getValue())
+                                       .type(ResourceType.URI.getValue())
                                        .label(getLabel(jcardType, (rcontext != null) ? new String[]{rcontext.getValue()} : null, new String[]{OnlineLabelKey.ORG_DIRECTORY.getValue()}))
                                        .context(rcontext)
                                        .pref(od.getPref())

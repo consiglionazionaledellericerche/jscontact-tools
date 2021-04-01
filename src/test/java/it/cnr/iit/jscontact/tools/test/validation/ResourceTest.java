@@ -29,7 +29,7 @@ public class ResourceTest extends AbstractTest {
 
         Resource online = Resource.builder()
                 .context(Context.WORK)
-                .type(OnlineType.USERNAME.getValue())
+                .type(ResourceType.USERNAME.getValue())
                 .value("mario-loffredo")
                 .label("GitHub")
                 .build();
@@ -64,7 +64,7 @@ public class ResourceTest extends AbstractTest {
         // value missing
         Resource.builder()
                 .context(Context.WORK)
-                .type(OnlineType.URI.getValue())
+                .type(ResourceType.URI.getValue())
                 .build();
     }
 

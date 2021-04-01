@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.dto.OnlineType;
+import it.cnr.iit.jscontact.tools.dto.ResourceType;
 import it.cnr.iit.jscontact.tools.dto.Resource;
 import it.cnr.iit.jscontact.tools.constraints.OnlineConstraint;
 
@@ -35,7 +35,7 @@ public class OnlineValidator implements ConstraintValidator<OnlineConstraint, Re
         try {
 
             for (Resource ol : online){
-                OnlineType type = OnlineType.getEnum(ol.getType());
+                ResourceType type = ResourceType.getEnum(ol.getType());
             }
 
             return true;

@@ -79,12 +79,12 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 47", jsCard.getOnline().length == 2);
         Resource[] keys = jsCard.getOnlineKey();
         assertTrue("testCompleteXCard1 - 48", keys[0].getContext() == Context.WORK);
-        assertTrue("testCompleteXCard1 - 49", keys[0].getType().equals(OnlineType.URI.getValue()));
+        assertTrue("testCompleteXCard1 - 49", keys[0].getType().equals(ResourceType.URI.getValue()));
         assertTrue("testCompleteXCard1 - 50", keys[0].getLabel().equals(OnlineLabelKey.KEY.getValue()));
         assertTrue("testCompleteXCard1 - 51", keys[0].getValue().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
         Resource[] urls = jsCard.getOnlineUrl();
         assertTrue("testCompleteXCard1 - 52", urls[0].getContext() == Context.PRIVATE);
-        assertTrue("testCompleteXCard1 - 53", urls[0].getType().equals(OnlineType.URI.getValue()));
+        assertTrue("testCompleteXCard1 - 53", urls[0].getType().equals(ResourceType.URI.getValue()));
         assertTrue("testCompleteXCard1 - 54", urls[0].getLabel().equals("url"));
         assertTrue("testCompleteXCard1 - 55", urls[0].getValue().equals("http://nomis80.org"));
         assertTrue("testCompleteXCard1 - 56", StringUtils.isNotEmpty(jsCard.getUid()));
