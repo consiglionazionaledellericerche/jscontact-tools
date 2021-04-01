@@ -372,27 +372,37 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static Telephone getTelephone(Resource resource) {
+    private static Telephone getTelephone(Phone phone) {
 
         Telephone tel;
         try {
-            tel = new Telephone(TelUri.parse(resource.getValue()));
+            tel = new Telephone(TelUri.parse(phone.getPhone()));
         } catch(Exception e) {
-            tel = new Telephone(resource.getValue());
+            tel = new Telephone(phone.getPhone());
         }
-        tel.setPref((resource.getPref()));
+        tel.setPref(phone.getPref());
+
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
-        String context = Context.getVCardType(resource.getContext());
-        if (context!=null)
-            joiner.add(context);
-        PhoneType telType = (resource.getType()!=null) ? PhoneType.getEnum(resource.getType()): null;
-        if (telType!=null && telType!= PhoneType.OTHER)
-            joiner.add(telType.getValue());
-        if (resource.getLabels()!=null) {
-            for (String key : resource.getLabels().keySet())
-                joiner.add(Context.getVCardType(key));
+        for (Context context : phone.getContexts().keySet()) {
+            String typeItem = Context.getVCardType(context);
+            if (typeItem != null)
+                joiner.add(typeItem);
         }
-        tel.setParameter("TYPE", joiner.toString());
+        for (PhoneType phoneType : phone.getFeatures().keySet()) {
+            String typeItem = PhoneType.getVCardType(phoneType);
+            if (typeItem != null)
+                joiner.add(typeItem);
+        }
+        if (phone.getLabel()!=null) {
+            for (String labelItem : phone.getLabel().split(COMMA_ARRAY_DELIMITER)) {
+                String typeItem = PhoneType.getVCardType(labelItem);
+                if (typeItem != null)
+                    joiner.add(typeItem);
+            }
+        }
+
+        if (StringUtils.isNotEmpty(joiner.toString()))
+            tel.setParameter("TYPE", joiner.toString());
 
         return tel;
     }
@@ -402,8 +412,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsContact.getPhones() == null)
             return;
 
-        for (Resource resource : jsContact.getPhones())
-            vcard.getTelephoneNumbers().add(getTelephone(resource));
+        for (Phone phone : jsContact.getPhones().values())
+            vcard.getTelephoneNumbers().add(getTelephone(phone));
     }
 
     private static Email getEmail(EmailAddress emailAddress) {
@@ -539,7 +549,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         for (Resource resource : jsContact.getOnline()) {
-            switch(LabelKey.getLabelKey(new ArrayList<String>(resource.getLabels().keySet()))) {
+            switch(LabelKey.getLabelKey(resource.getLabel())) {
                 case SOUND:
                     vcard.getSounds().add(new Sound(resource.getValue(), getSoundType(resource.getMediaType())));
                     break;

@@ -15,6 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.dto.utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class EnumUtils {
@@ -48,4 +51,20 @@ public class EnumUtils {
         else
             return null;
     }
+
+    public static <E extends Enum <E>> String[] getArrayOfStrings(Collection<E> items) {
+
+        if (items == null)
+            return null;
+
+        String[] array = new String[items.size()];
+        int i = 0;
+        for (E item : items)
+            array[i++] = item.toString();
+
+        return array;
+    }
+
+
+
 }

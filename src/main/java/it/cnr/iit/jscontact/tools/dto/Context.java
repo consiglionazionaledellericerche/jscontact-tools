@@ -58,18 +58,16 @@ public enum Context implements JCardTypeDerivedEnum {
         return value;
     }
 
-
     @JsonIgnore
-    public static String getVCardType(String context) {
+    public static String getVCardType(String label) {
 
         try {
-            Context rc = Context.getEnum(context);
+            Context rc = getEnum(label);
             return getVCardType(rc);
         }
         catch(Exception e) {
-            return context;
+            return null;
         }
-
     }
 
     @JsonIgnore

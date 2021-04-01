@@ -1,29 +1,29 @@
 {
-"uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
-"fullName": {
-"value": "Taiwan Fixed Network CO.,LTD.",
-"language": "en",
-"localizations": {
-"zh-Hant-TW": "台灣固網股份有限公司"
-}
-},
-"kind": "org",
-"addresses": {
-  "ADR-1" : {
-    "fullAddress": {
-      "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
+  "uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
+  "fullName": {
+    "value": "Taiwan Fixed Network CO.,LTD.",
+    "language": "en",
+    "localizations": {
+      "zh-Hant-TW": "台灣固網股份有限公司"
     }
-  }
-},
-"phones": [
-{
-"type": "voice",
-"value": ""
-},
-{
-"type": "fax",
-"value": ""
-}
-],
-"emails": {}
+  },
+  "kind": "org",
+  "addresses": {
+    "ADR-1" : {
+      "fullAddress": {
+        "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
+      }
+    }
+  },
+  "phones": {
+    "PHONE-1": {
+      "features": {"voice": true},
+      "phone": ""
+    },
+    "PHONE-2": {
+      "features": {"fax": true},
+      "phone": ""
+    }
+  },
+  "emails": {}
 }

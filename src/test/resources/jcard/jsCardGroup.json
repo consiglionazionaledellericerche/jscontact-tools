@@ -65,19 +65,19 @@
         }
       }
     },
-    "phones": [
-      {
-        "context": "work",
-        "type": "voice",
-        "labels": {
-          "cell": true,
-          "video": true,
-          "text": true
+    "phones": {
+      "PHONE-1": {
+        "contexts": {
+          "work": true
         },
+        "features": {
+          "voice": true
+        },
+        "label": "cell,video,text",
         "pref": 1,
-        "value": "tel:+1-555-555-1234;ext=102"
+        "phone": "tel:+1-555-555-1234;ext=102"
       }
-    ],
+    },
     "emails": {
       "EMAIL-1": {
         "contexts": {"work": true},
@@ -88,17 +88,13 @@
       {
         "context": "work",
         "type": "uri",
-        "labels": {
-          "key": true
-        },
+        "label": "key",
         "value": "http://www.example.com/joe.user/joe.asc"
       },
       {
         "context": "private",
         "type": "uri",
-        "labels": {
-          "url": true
-        },
+        "label": "url",
         "value": "http://example.org"
       }
     ]
@@ -148,22 +144,22 @@
     },
     "kind": "org",
     "addresses": {
-      "ADR-1" : {
+      "ADR-1": {
         "fullAddress": {
           "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
         }
       }
     },
-    "phones": [
-      {
-        "type": "voice",
-        "value": ""
+    "phones": {
+      "PHONE-1": {
+        "features": {"voice": true},
+        "phone": ""
       },
-      {
-        "type": "fax",
-        "value": ""
+      "PHONE-2": {
+        "features": {"fax": true},
+        "phone": ""
       }
-    ],
+    },
     "emails": {}
   }
 ]
