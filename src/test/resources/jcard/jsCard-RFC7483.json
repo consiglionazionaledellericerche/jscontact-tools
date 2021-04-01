@@ -1,64 +1,68 @@
 {
-"uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
-"fullName": { "value": "Joe User" },
-"kind": "individual",
-"preferredContactLanguages": {
-"fr": [{ "pref": 1 }],
-"en": [{ "pref": 2 }]
-},
-"organizations": { "ORG-1": { "name": { "value": "Example" }} },
-"jobTitles": {"TITLE-1": { "title": { "value": "Research Scientist" }} },
-"roles": [ { "value": "Project Lead" } ],
-"addresses": {
-  "ADR-1" : {
-    "contexts": {"work": true},
-    "extension": "Suite 1234",
-    "street": "4321 Rue Somewhere",
-    "locality": "Quebec",
-    "region": "QC",
-    "postcode": "G1V 2M2",
-    "country": "Canada",
-    "coordinates": "geo:46.772673,-71.282945",
-    "timeZone": "Etc/GMT+5"
+  "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
+  "fullName": { "value": "Joe User" },
+  "kind": "individual",
+  "preferredContactLanguages": {
+  "fr": [{ "pref": 1 }],
+  "en": [{ "pref": 2 }]
   },
-  "ADR-2" : {
-  "contexts": {"private": true},
-  "fullAddress": {
-  "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
-  }
-  }
-},
-"phones": {
-  "PHONE-1": {
-    "contexts": {
-      "work": true
+  "organizations": { "ORG-1": { "name": { "value": "Example" }} },
+  "jobTitles": {"TITLE-1": { "title": { "value": "Research Scientist" }} },
+  "roles": [ { "value": "Project Lead" } ],
+  "addresses": {
+    "ADR-1" : {
+      "contexts": {"work": true},
+      "extension": "Suite 1234",
+      "street": "4321 Rue Somewhere",
+      "locality": "Quebec",
+      "region": "QC",
+      "postcode": "G1V 2M2",
+      "country": "Canada",
+      "coordinates": "geo:46.772673,-71.282945",
+      "timeZone": "Etc/GMT+5"
     },
-    "features": {
-      "voice": true
+    "ADR-2" : {
+      "contexts": {"private": true},
+      "fullAddress": {
+        "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+      }
+    }
+  },
+  "phones": {
+    "PHONE-1": {
+      "contexts": {
+        "work": true
+      },
+      "features": {
+        "voice": true
+      },
+      "label": "cell,video,text",
+      "pref": 1,
+      "phone": "tel:+1-555-555-1234;ext=102"
+    }
+  },
+  "emails": {
+    "EMAIL-1": {
+      "contexts": {
+        "work": true
+      },
+      "email": "joe.user@example.com"
+    }
+  },
+  "online": {
+    "KEY-1": {
+      "contexts": {
+        "work": true
+      },
+      "type": "uri",
+      "label": "key",
+      "resource": "http://www.example.com/joe.user/joe.asc"
     },
-    "label": "cell,video,text",
-    "pref": 1,
-    "phone": "tel:+1-555-555-1234;ext=102"
+    "URL-1": {
+      "contexts": {"private": true},
+      "type": "uri",
+      "label": "url",
+      "resource": "http://example.org"
+    }
   }
-},
-"emails": {
-  "EMAIL-1" :{
-  "contexts": {"work": true},
-  "email": "joe.user@example.com"
-  }
-},
-"online": [
-{
-"context": "work",
-"type": "uri",
-"label": "key",
-"value": "http://www.example.com/joe.user/joe.asc"
-},
-{
-"context": "private",
-"type": "uri",
-"label": "url" ,
-"value": "http://example.org"
-}
-]
 }

@@ -35,15 +35,17 @@ import java.util.Map;
 @NoArgsConstructor
 public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue {
 
-    Context context;
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> in Resource - Only Boolean.TRUE allowed")
+    Map<Context,Boolean> contexts;
 
-    String type;
+    @Builder.Default
+    ResourceType type = ResourceType.OTHER;
 
     String label;
 
-    @NotNull(message = "value is missing in Resource")
+    @NotNull(message = "resource is missing in Resource")
     @NonNull
-    String value;
+    String resource;
 
     String mediaType;
 

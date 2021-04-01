@@ -33,15 +33,15 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"XMPP-1\": {" +
                         "\"type\": \"username\","+
-                        "\"context\":\"private\"," +
+                        "\"contexts\": {\"private\": true}," +
                         "\"label\": \"XMPP\"," +
                         "\"pref\": 1, " +
-                        "\"value\": \"xmpp:alice@example.com\"" +
+                        "\"resource\": \"xmpp:alice@example.com\"" +
                     "}" +
-                 "]" +
+                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid1 - 1",vcard.getImpps().size() == 1);
@@ -57,13 +57,13 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"SOURCE-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"source\"," +
-                        "\"value\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
+                        "\"resource\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
-                 "]" +
+                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid2 - 1",vcard.getSources().size() == 1);
@@ -95,13 +95,13 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                "{" +
-                    "\"type\": \"uri\","+
-                    "\"label\": \"logo\"," +
-                    "\"value\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
+                "\"online\": {"+
+                    "\"LOGO-1\": {" +
+                        "\"type\": \"uri\","+
+                        "\"label\": \"logo\"," +
+                        "\"resource\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
+                    "}" +
                 "}" +
-                "]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid4 - 1",vcard.getLogos().size() == 1);
@@ -114,13 +114,13 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"CONTACT-URI-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"contact-uri\"," +
-                        "\"value\": \"mailto:contact@example.com\"" +
+                        "\"resource\": \"mailto:contact@example.com\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid5 - 1",vcard.getExtendedProperties().size() == 1);
@@ -134,14 +134,14 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"SOUND-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"sound\"," +
                         "\"mediaType\": \"audio/mp3\"," +
-                        "\"value\": \"sound.mp3\"" +
+                        "\"resource\": \"sound.mp3\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid6 - 1",vcard.getSounds().size() == 1);
@@ -155,13 +155,13 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\":{"+
+                    "\"SOUND-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"sound\"," +
-                        "\"value\": \"sound.mp3\"" +
+                        "\"resource\": \"sound.mp3\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid7 - 1",vcard.getSounds().size() == 1);
@@ -175,13 +175,13 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"URL-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"url\"," +
-                        "\"value\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
+                        "\"resource\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid8 - 1",vcard.getUrls().size() == 1);
@@ -194,13 +194,13 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"KEY-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"key\"," +
-                        "\"value\": \"http://www.example.com/keys/jdoe.cer\"" +
+                        "\"resource\": \"http://www.example.com/keys/jdoe.cer\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid9 - 1",vcard.getKeys().size() == 1);
@@ -213,20 +213,20 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"FBURL-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"fburl\"," +
                         "\"pref\": 1," +
-                        "\"value\": \"http://www.example.com/busy/janedoe\"" +
+                        "\"resource\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
-                    "{" +
+                    "\"FBURL-2\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"fburl\"," +
                         "\"mediaType\": \"text/calendar\"," +
-                        "\"value\": \"ftp://example.com/busy/project-a.ifb\"" +
+                        "\"resource\": \"ftp://example.com/busy/project-a.ifb\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid10 - 1",vcard.getFbUrls().size() == 2);
@@ -242,19 +242,19 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"CALADRURI-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"caladruri\"," +
                         "\"pref\": 1," +
-                        "\"value\": \"mailto:janedoe@example.com\"" +
+                        "\"resource\": \"mailto:janedoe@example.com\"" +
                     "}," +
-                    "{" +
+                    "\"CALADRURI-2\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"caladruri\"," +
-                        "\"value\": \"http://example.com/calendar/jdoe\"" +
+                        "\"resource\": \"http://example.com/calendar/jdoe\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid11 - 1",vcard.getCalendarRequestUris().size() == 2);
@@ -269,20 +269,20 @@ public class OnlineTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"online\":["+
-                    "{" +
+                "\"online\": {"+
+                    "\"CALURI-1\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"caluri\"," +
                         "\"pref\": 1," +
-                        "\"value\": \"http://cal.example.com/calA\"" +
+                        "\"resource\": \"http://cal.example.com/calA\"" +
                     "}," +
-                    "{" +
+                    "\"CALURI-2\": {" +
                         "\"type\": \"uri\","+
                         "\"label\": \"caluri\"," +
                         "\"mediaType\": \"text/calendar\"," +
-                        "\"value\": \"ftp://ftp.example.com/calA.ics\"" +
+                        "\"resource\": \"ftp://ftp.example.com/calA.ics\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testOnlineValid12 - 1",vcard.getCalendarUris().size() == 2);

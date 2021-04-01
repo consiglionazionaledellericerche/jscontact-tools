@@ -213,19 +213,17 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 40", jsCard.getPhones().get("PHONE-2").getPref() == null);
         assertTrue("testCompleteJCard1 - 41", jsCard.getPhones().get("PHONE-2").getContexts().containsKey(Context.WORK));
         assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").getLabel().equals("cell,video,text"));
-        assertTrue("testCompleteJCard1 - 46", jsCard.getOnline().length == 2);
-        Resource[] keys = jsCard.getOnlineKey();
-        assertTrue("testCompleteJCard1 - 47", keys[0].getType().equals(ResourceType.URI.getValue()));
-        assertTrue("testCompleteJCard1 - 48", keys[0].getValue().equals("http://www.example.com/joe.user/joe.asc"));
-        assertTrue("testCompleteJCard1 - 49", keys[0].getPref() == null);
-        assertTrue("testCompleteJCard1 - 50", keys[0].getContext() == Context.WORK);
-        assertTrue("testCompleteJCard1 - 52", keys[0].getLabel().equals(OnlineLabelKey.KEY.getValue()));
-        Resource[] urls = jsCard.getOnlineUrl();
-        assertTrue("testCompleteJCard1 - 53", urls[0].getType().equals(ResourceType.URI.getValue()));
-        assertTrue("testCompleteJCard1 - 54", urls[0].getValue().equals("http://example.org"));
-        assertTrue("testCompleteJCard1 - 55", urls[0].getPref() == null);
-        assertTrue("testCompleteJCard1 - 56", urls[0].getContext() == Context.PRIVATE);
-        assertTrue("testCompleteJCard1 - 58", urls[0].getLabel().equals(OnlineLabelKey.URL.getValue()));
+        assertTrue("testCompleteJCard1 - 46", jsCard.getOnline().size() == 2);
+        assertTrue("testCompleteJCard1 - 47", jsCard.getOnline().get("KEY-1").getType() == ResourceType.URI);
+        assertTrue("testCompleteJCard1 - 48", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.example.com/joe.user/joe.asc"));
+        assertTrue("testCompleteJCard1 - 49", jsCard.getOnline().get("KEY-1").getPref() == null);
+        assertTrue("testCompleteJCard1 - 50", jsCard.getOnline().get("KEY-1").getContexts().containsKey(Context.WORK));
+        assertTrue("testCompleteJCard1 - 52", jsCard.getOnline().get("KEY-1").getLabel().equals(OnlineLabelKey.KEY.getValue()));
+        assertTrue("testCompleteJCard1 - 53", jsCard.getOnline().get("URL-1").getType() == ResourceType.URI);
+        assertTrue("testCompleteJCard1 - 54", jsCard.getOnline().get("URL-1").getResource().equals("http://example.org"));
+        assertTrue("testCompleteJCard1 - 55", jsCard.getOnline().get("URL-1").getPref() == null);
+        assertTrue("testCompleteJCard1 - 56", jsCard.getOnline().get("URL-1").getContexts().containsKey(Context.PRIVATE));
+        assertTrue("testCompleteJCard1 - 58", jsCard.getOnline().get("URL-1").getLabel().equals(OnlineLabelKey.URL.getValue()));
         assertTrue("testCompleteJCard1 - 59", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
@@ -321,17 +319,15 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 44", jsCard.getEmails().size() == 1);
         assertTrue("testCompleteJCard4 - 45", jsCard.getEmails().get("EMAIL-1").getContexts().containsKey(Context.WORK));
         assertTrue("testCompleteJCard4 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
-        assertTrue("testCompleteJCard4 - 47", jsCard.getOnline().length == 2);
-        Resource[] keys = jsCard.getOnlineKey();
-        assertTrue("testCompleteJCard4 - 48", keys[0].getContext() == Context.WORK);
-        assertTrue("testCompleteJCard4 - 49", keys[0].getType().equals(ResourceType.URI.getValue()));
-        assertTrue("testCompleteJCard4 - 50", keys[0].getLabel().equals(OnlineLabelKey.KEY.getValue()));
-        assertTrue("testCompleteJCard4 - 51", keys[0].getValue().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
-        Resource[] urls = jsCard.getOnlineUrl();
-        assertTrue("testCompleteJCard4 - 52", urls[0].getContext() == Context.PRIVATE);
-        assertTrue("testCompleteJCard4 - 53", urls[0].getType().equals(ResourceType.URI.getValue()));
-        assertTrue("testCompleteJCard4 - 54", urls[0].getLabel().equals("url"));
-        assertTrue("testCompleteJCard4 - 55", urls[0].getValue().equals("http://nomis80.org"));
+        assertTrue("testCompleteJCard4 - 47", jsCard.getOnline().size() == 2);
+        assertTrue("testCompleteJCard4 - 48", jsCard.getOnline().get("KEY-1").getContexts().containsKey(Context.WORK));
+        assertTrue("testCompleteJCard4 - 49", jsCard.getOnline().get("KEY-1").getType() == ResourceType.URI);
+        assertTrue("testCompleteJCard4 - 50", jsCard.getOnline().get("KEY-1").getLabel().equals(OnlineLabelKey.KEY.getValue()));
+        assertTrue("testCompleteJCard4 - 51", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
+        assertTrue("testCompleteJCard4 - 52", jsCard.getOnline().get("URL-1").getContexts().containsKey(Context.PRIVATE));
+        assertTrue("testCompleteJCard4 - 53", jsCard.getOnline().get("URL-1").getType() == ResourceType.URI);
+        assertTrue("testCompleteJCard4 - 54", jsCard.getOnline().get("URL-1").getLabel().equals("url"));
+        assertTrue("testCompleteJCard4 - 55", jsCard.getOnline().get("URL-1").getResource().equals("http://nomis80.org"));
         assertTrue("testCompleteJCard4 - 56", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 

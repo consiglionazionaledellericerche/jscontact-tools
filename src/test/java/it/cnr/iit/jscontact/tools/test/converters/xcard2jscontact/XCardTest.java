@@ -76,17 +76,15 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 44", jsCard.getEmails().size() == 1);
         assertTrue("testCompleteXCard1 - 45", jsCard.getEmails().get("EMAIL-1").getContexts().containsKey(Context.WORK));
         assertTrue("testCompleteXCard1 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
-        assertTrue("testCompleteXCard1 - 47", jsCard.getOnline().length == 2);
-        Resource[] keys = jsCard.getOnlineKey();
-        assertTrue("testCompleteXCard1 - 48", keys[0].getContext() == Context.WORK);
-        assertTrue("testCompleteXCard1 - 49", keys[0].getType().equals(ResourceType.URI.getValue()));
-        assertTrue("testCompleteXCard1 - 50", keys[0].getLabel().equals(OnlineLabelKey.KEY.getValue()));
-        assertTrue("testCompleteXCard1 - 51", keys[0].getValue().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
-        Resource[] urls = jsCard.getOnlineUrl();
-        assertTrue("testCompleteXCard1 - 52", urls[0].getContext() == Context.PRIVATE);
-        assertTrue("testCompleteXCard1 - 53", urls[0].getType().equals(ResourceType.URI.getValue()));
-        assertTrue("testCompleteXCard1 - 54", urls[0].getLabel().equals("url"));
-        assertTrue("testCompleteXCard1 - 55", urls[0].getValue().equals("http://nomis80.org"));
+        assertTrue("testCompleteXCard1 - 47", jsCard.getOnline().size() == 2);
+        assertTrue("testCompleteXCard1 - 48", jsCard.getOnline().get("KEY-1").getContexts().containsKey(Context.WORK));
+        assertTrue("testCompleteXCard1 - 49", jsCard.getOnline().get("KEY-1").getType() == ResourceType.URI);
+        assertTrue("testCompleteXCard1 - 50", jsCard.getOnline().get("KEY-1").getLabel().equals(OnlineLabelKey.KEY.getValue()));
+        assertTrue("testCompleteXCard1 - 51", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
+        assertTrue("testCompleteXCard1 - 52", jsCard.getOnline().get("URL-1").getContexts().containsKey(Context.PRIVATE));
+        assertTrue("testCompleteXCard1 - 53", jsCard.getOnline().get("URL-1").getType() == ResourceType.URI);
+        assertTrue("testCompleteXCard1 - 54", jsCard.getOnline().get("URL-1").getLabel().equals("url"));
+        assertTrue("testCompleteXCard1 - 55", jsCard.getOnline().get("URL-1").getResource().equals("http://nomis80.org"));
         assertTrue("testCompleteXCard1 - 56", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }

@@ -19,6 +19,9 @@ import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
+import java.util.HashMap;
+
+import static javax.swing.UIManager.put;
 import static org.junit.Assert.assertTrue;
 
 
@@ -28,43 +31,27 @@ public class ResourceTest extends AbstractTest {
     public void testValidOnlineType() {
 
         Resource online = Resource.builder()
-                .context(Context.WORK)
-                .type(ResourceType.USERNAME.getValue())
-                .value("mario-loffredo")
+                .contexts(new HashMap<Context,Boolean>(){{put(Context.WORK, Boolean.TRUE);}})
+                .type(ResourceType.USERNAME)
+                .resource("mario-loffredo")
                 .label("GitHub")
                 .build();
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .online(new Resource[]{online})
+                .online(new HashMap<String,Resource>(){{ put("XMPP-1", online);}})
                 .build();
 
         assertTrue("testValidOnlineType", jsCard.isValid());
     }
 
-    @Test
-    public void testInvalidOnlineType() {
-
-        Resource online = Resource.builder()
-                .context(Context.WORK)
-                .type(PhoneType.VOICE.getValue())
-                .value("mario-loffredo")
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .online(new Resource[]{online})
-                .build();
-
-        assertTrue("testInvalidOnlineType-1", !jsCard.isValid());
-        assertTrue("testInvalidOnlineType-2", jsCard.getValidationMessage().equals("invalid online Resource in JSContact"));
-    }
 
     @Test(expected = java.lang.NullPointerException.class)
     public void testInvalidResourceBuild() {
 
         // value missing
         Resource.builder()
-                .context(Context.WORK)
-                .type(ResourceType.URI.getValue())
+                .contexts(new HashMap<Context,Boolean>(){{put(Context.WORK, Boolean.TRUE);}})
+                .type(ResourceType.URI)
                 .build();
     }
 

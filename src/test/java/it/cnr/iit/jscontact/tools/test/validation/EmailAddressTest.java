@@ -42,9 +42,8 @@ public class EmailAddressTest extends AbstractTest {
     @Test(expected = NullPointerException.class)
     public void testInvalidEmailBuild2() {
 
-        Map<Context,Boolean> map = new HashMap<Context,Boolean>() {{ put(Context.WORK,Boolean.TRUE);}};
         // email missing
-        EmailAddress.builder().contexts(map).build();
+        EmailAddress.builder().contexts(new HashMap<Context,Boolean>() {{ put(Context.WORK,Boolean.TRUE);}}).build();
     }
 
 
@@ -73,15 +72,13 @@ public class EmailAddressTest extends AbstractTest {
     @Test
     public void testValidEmail2() {
 
-        Map<Context,Boolean> contextMap = new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE); }};
         EmailAddress email = EmailAddress.builder()
-                .contexts(contextMap)
+                .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE);}})
                 .email("mario.loffredo@iit.cnr.it")
                 .build();
-        Map<String,EmailAddress> emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .emails(emailsMap)
+                .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
         assertTrue("testValidEmail2", jsCard.isValid());
@@ -90,16 +87,14 @@ public class EmailAddressTest extends AbstractTest {
     @Test
     public void testValidEmail3() {
 
-        Map<Context,Boolean> contextMap = new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE); }};
         EmailAddress email = EmailAddress.builder()
-                .contexts(contextMap)
+                .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE); }})
                 .email("mario.loffredo@iit.cnr.it")
                 .pref(1)
                 .build();
-        Map<String,EmailAddress> emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .emails(emailsMap)
+                .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
         assertTrue("testValidEmail3", jsCard.isValid());
@@ -112,10 +107,9 @@ public class EmailAddressTest extends AbstractTest {
         EmailAddress email = EmailAddress.builder()
                 .email("mario.loffredo")
                 .build();
-        Map<String,EmailAddress> emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .emails(emailsMap)
+                .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
         assertTrue("testInvalidEmail1-1", !jsCard.isValid());
@@ -127,15 +121,13 @@ public class EmailAddressTest extends AbstractTest {
     public void testInvalidEmail2() {
 
         //invalid contexts
-        Map<Context,Boolean> contextMap = new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.FALSE); }};
         EmailAddress email = EmailAddress.builder()
-                .contexts(contextMap)
+                .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.FALSE); }})
                 .email("mario.loffredo@iit.cnr.it")
                 .build();
-        Map<String,EmailAddress> emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .emails(emailsMap)
+                .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
         assertTrue("testInvalidEmail2-1", !jsCard.isValid());
@@ -147,16 +139,14 @@ public class EmailAddressTest extends AbstractTest {
     public void testInvalidEmail3() {
 
         //invalid pref
-        Map<Context,Boolean> contextMap = new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE); }};
         EmailAddress email = EmailAddress.builder()
-                .contexts(contextMap)
+                .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE); }})
                 .email("mario.loffredo@iit.cnr.it")
                 .pref(0)
                 .build();
-        Map<String,EmailAddress> emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .emails(emailsMap)
+                .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
         assertTrue("testInvalidEmail3-1", !jsCard.isValid());

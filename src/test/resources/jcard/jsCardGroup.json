@@ -84,20 +84,20 @@
         "email": "joe.user@example.com"
       }
     },
-    "online": [
-      {
-        "context": "work",
+    "online": {
+      "KEY-1": {
+        "contexts": {"work": true},
         "type": "uri",
         "label": "key",
-        "value": "http://www.example.com/joe.user/joe.asc"
+        "resource": "http://www.example.com/joe.user/joe.asc"
       },
-      {
-        "context": "private",
+      "URL-1": {
+        "contexts": {"private": true},
         "type": "uri",
         "label": "url",
-        "value": "http://example.org"
+        "resource": "http://example.org"
       }
-    ]
+    }
   },
   {
     "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",

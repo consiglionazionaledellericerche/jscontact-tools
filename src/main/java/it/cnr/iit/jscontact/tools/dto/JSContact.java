@@ -92,10 +92,9 @@ public abstract class JSContact extends ValidableObject {
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
     Map<String,Phone> phones;
 
-    //    @IdMapConstraint(message = "invalid Id in Map<Id,Resource>")
     @Valid
-    @OnlineConstraint(message = "invalid online Resource in JSContact")
-    Resource[] online;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Resource>")
+    Map<String,Resource> online;
 
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,File>")
@@ -161,8 +160,12 @@ public abstract class JSContact extends ValidableObject {
         emails.put(id, email);
     }
 
-    public void addOnline(Resource ol) {
-        online = ArrayUtils.add(online, ol);
+    public void addOnline(String id, Resource ol) {
+
+        if (online == null)
+            online = new HashMap<String,Resource>();
+
+        online.put(id, ol);
     }
 
     public void addPhoto(String id, File f) {
@@ -327,79 +330,78 @@ public abstract class JSContact extends ValidableObject {
     }
 
     @JsonIgnore
-    public Resource[] getOnline(String label) {
+    public Map<String,Resource> getOnline(String label) {
 
-        List<Resource> ols = new ArrayList<Resource>();
-        for (Resource ol : online) {
-            List<String> labelItems = Arrays.asList(ol.getLabel().split(","));
+        Map<String,Resource> ols = new HashMap<String,Resource>();
+        for (Map.Entry<String,Resource> ol : online.entrySet()) {
+            List<String> labelItems = Arrays.asList(ol.getValue().getLabel().split(","));
             if (labelItems.contains(label))
-                ols.add(ol);
+                ols.put(ol.getKey(),ol.getValue());
         }
         if (ols.size()==0)
             return null;
 
-        return ols.toArray(new Resource[ols.size()]);
+        return ols;
     }
 
     @JsonIgnore
-    public Resource[] getOnline(OnlineLabelKey labelKey) {
+    public Map<String,Resource> getOnline(OnlineLabelKey labelKey) {
         return getOnline(labelKey.getValue());
     }
 
     @JsonIgnore
-    public Resource[] getOnlineKey() {
+    public Map<String,Resource> getOnlineKey() {
         return getOnline(OnlineLabelKey.KEY);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineUrl() {
+    public Map<String,Resource> getOnlineUrl() {
         return getOnline(OnlineLabelKey.URL);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineSource() {
+    public Map<String,Resource> getOnlineSource() {
         return getOnline(OnlineLabelKey.SOURCE);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineLogo() {
+    public Map<String,Resource> getOnlineLogo() {
         return getOnline(OnlineLabelKey.LOGO);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineSound() {
+    public Map<String,Resource> getOnlineSound() {
         return getOnline(OnlineLabelKey.SOUND);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineFburl() {
+    public Map<String,Resource> getOnlineFburl() {
         return getOnline(OnlineLabelKey.FBURL);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineCaluri() {
+    public Map<String,Resource> getOnlineCaluri() {
         return getOnline(OnlineLabelKey.CALURI);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineCaladruri() {
+    public Map<String,Resource> getOnlineCaladruri() {
         return getOnline(OnlineLabelKey.CALADRURI);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineOrgDirectory() {
+    public Map<String,Resource> getOnlineOrgDirectory() {
         return getOnline(OnlineLabelKey.ORG_DIRECTORY);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineImpp() {
+    public Map<String,Resource> getOnlineImpp() {
         return getOnline(OnlineLabelKey.IMPP);
     }
 
     @JsonIgnore
-    public Resource[] getOnlineContactUri() {
+    public Map<String,Resource> getOnlineContactUri() {
         return getOnline(OnlineLabelKey.CONTACT_URI);
     }
-
 
 }

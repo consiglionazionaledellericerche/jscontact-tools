@@ -495,16 +495,23 @@ public class JSContact2EZVCard extends AbstractConverter {
             property.setParameter("MEDIATYPE",resource.getMediaType());
         if (resource.getPref() != null)
             property.setParameter("PREF", resource.getPref().toString());
-        if (resource.getContext()!=null)
-            property.setParameter("TYPE", Context.getVCardType(resource.getContext()));
-
+        if (resource.getContexts()!=null) {
+            StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+            for (Context context : resource.getContexts().keySet()) {
+                String typeItem = Context.getVCardType(context);
+                if (typeItem != null)
+                    joiner.add(typeItem);
+            }
+            if (StringUtils.isNotEmpty(joiner.toString()))
+                property.setParameter("TYPE", joiner.toString());
+        }
     }
 
     private static <T extends UriProperty> T getUriProperty(Class<T> classs, Resource resource) {
 
         try {
             Constructor<T> constructor = classs.getDeclaredConstructor(String.class);
-            T object = constructor.newInstance(resource.getValue());
+            T object = constructor.newInstance(resource.getResource());
             fillVCardProperty(object,resource);
             return object;
         } catch (Exception e) {
@@ -519,7 +526,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         try {
             ImageType it = getImageType(resource.getMediaType());
             Constructor<T> constructor = classs.getDeclaredConstructor(String.class, ImageType.class);
-            T object = constructor.newInstance(resource.getValue(), it);
+            T object = constructor.newInstance(resource.getResource(), it);
             fillVCardProperty(object,resource);
             return object;
         } catch (Exception e) {
@@ -548,16 +555,16 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsContact.getOnline() == null)
             return;
 
-        for (Resource resource : jsContact.getOnline()) {
+        for (Resource resource : jsContact.getOnline().values()) {
             switch(OnlineLabelKey.getLabelKey(resource.getLabel())) {
                 case SOUND:
-                    vcard.getSounds().add(new Sound(resource.getValue(), getSoundType(resource.getMediaType())));
+                    vcard.getSounds().add(new Sound(resource.getResource(), getSoundType(resource.getMediaType())));
                     break;
                 case SOURCE:
                     vcard.getSources().add(getUriProperty(Source.class,resource));
                     break;
                 case KEY:
-                    vcard.getKeys().add(new Key(resource.getValue(), getKeyType(resource.getMediaType())));
+                    vcard.getKeys().add(new Key(resource.getResource(), getKeyType(resource.getMediaType())));
                     break;
                 case LOGO:
                     vcard.getLogos().add(getBinaryProperty(Logo.class,resource));
@@ -578,12 +585,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                     vcard.getOrgDirectories().add(getUriProperty(OrgDirectory.class,resource));
                     break;
                 case IMPP:
-                    Impp impp = new Impp(resource.getValue());
+                    Impp impp = new Impp(resource.getResource());
                     fillVCardProperty(impp,resource);
                     vcard.getImpps().add(impp);
                     break;
                 case CONTACT_URI:
-                    RawProperty rp = new RawProperty("CONTACT-URI",resource.getValue());
+                    RawProperty rp = new RawProperty("CONTACT-URI",resource.getResource());
                     fillVCardProperty(rp,resource);
                     vcard.getExtendedProperties().add(rp);
                     break;

@@ -52,7 +52,7 @@ public class EnumUtils {
             return null;
     }
 
-    public static <E extends Enum <E>> String[] getArrayOfStrings(Collection<E> items) {
+    public static <E extends Enum <E>> String[] toArrayOfStrings(Collection<E> items) {
 
         if (items == null)
             return null;
