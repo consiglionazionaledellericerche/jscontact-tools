@@ -19,9 +19,6 @@ import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.Assert.assertTrue;
 
 
@@ -32,7 +29,7 @@ public class ResourceTest extends AbstractTest {
 
         Resource online = Resource.builder()
                 .context(Context.WORK)
-                .type(OnlineResourceType.USERNAME.getValue())
+                .type(OnlineType.USERNAME.getValue())
                 .value("mario-loffredo")
                 .label("GitHub")
                 .build();
@@ -67,7 +64,7 @@ public class ResourceTest extends AbstractTest {
         // value missing
         Resource.builder()
                 .context(Context.WORK)
-                .type(OnlineResourceType.URI.getValue())
+                .type(OnlineType.URI.getValue())
                 .build();
     }
 

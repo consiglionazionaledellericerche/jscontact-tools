@@ -21,7 +21,7 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum OnlineResourceType {
+public enum OnlineType {
 
     URI("uri"),
     USERNAME("username"),
@@ -35,8 +35,8 @@ public enum OnlineResourceType {
     }
 
     @JsonCreator
-    public static OnlineResourceType getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(OnlineResourceType.class, value);
+    public static OnlineType getEnum(String value) throws IllegalArgumentException {
+        return EnumUtils.getEnum(OnlineType.class, value);
     }
 
     @Override
