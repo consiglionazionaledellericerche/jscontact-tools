@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
+import java.net.URI;
 import java.util.HashMap;
 
 import static javax.swing.UIManager.put;
@@ -28,7 +29,7 @@ import static org.junit.Assert.assertTrue;
 public class ResourceTest extends AbstractTest {
 
     @Test
-    public void testValidOnlineType() {
+    public void testValidResource() {
 
         Resource online = Resource.builder()
                 .contexts(new HashMap<Context,Boolean>(){{put(Context.WORK, Boolean.TRUE);}})
@@ -41,7 +42,7 @@ public class ResourceTest extends AbstractTest {
                 .online(new HashMap<String,Resource>(){{ put("XMPP-1", online);}})
                 .build();
 
-        assertTrue("testValidOnlineType", jsCard.isValid());
+        assertTrue("testValidResource", jsCard.isValid());
     }
 
 
@@ -54,5 +55,24 @@ public class ResourceTest extends AbstractTest {
                 .type(ResourceType.URI)
                 .build();
     }
+
+    @Test
+    public void testInvalidResourceUri() {
+
+        Resource online = Resource.builder()
+                .contexts(new HashMap<Context,Boolean>(){{put(Context.WORK, Boolean.TRUE);}})
+                .type(ResourceType.URI)
+                .resource(" ")
+                .label("url")
+                .build();
+        JSCard jsCard = JSCard.builder()
+                .uid(getUUID())
+                .online(new HashMap<String,Resource>(){{ put("URL-1", online);}})
+                .build();
+
+        assertTrue("testInvalidResourceUri-1", !jsCard.isValid());
+        assertTrue("testInvalidResourceUri-2", jsCard.getValidationMessage().equals("invalid uri in Resource"));
+    }
+
 
 }
