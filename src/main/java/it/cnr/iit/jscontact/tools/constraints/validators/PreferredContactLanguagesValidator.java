@@ -20,10 +20,13 @@ import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.utils.ConstraintViolationUtils;
+import sun.util.locale.LanguageTag;
+import sun.util.locale.ParseStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolation;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,15 +40,21 @@ public class PreferredContactLanguagesValidator implements ConstraintValidator<P
         if (clMap == null)
             return true;
 
-        for(ContactLanguage[] cls : clMap.values()) {
+        for(Map.Entry<String, ContactLanguage[]> entry : clMap.entrySet()) {
 
-            if (cls == null)
+            ParseStatus parseStatus = new ParseStatus();
+            LanguageTag.parse(entry.getKey(), parseStatus);
+            if (parseStatus.getErrorMessage() != null) {
+                context.buildConstraintViolationWithTemplate("invalid language tag in PreferredContactedLanguages").addConstraintViolation();
                 return false;
+            }
 
-            for (ContactLanguage cl : cls) {
+            if (entry.getValue() == null) {
+                context.buildConstraintViolationWithTemplate("null ContactLanguage in PreferredContactedLanguages").addConstraintViolation();
+                return false;
+            }
 
-                if (cl == null)
-                    return false;
+            for (ContactLanguage cl : entry.getValue()) {
 
                 Set<ConstraintViolation<ContactLanguage>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
                 if (constraintViolations.size() > 0) {
