@@ -466,34 +466,30 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         List<StructuredName> sns = vcard.getStructuredNames();
         for (StructuredName sn : sns) {
+            for (String px : sn.getPrefixes())
+                jsContact.addName(NameComponent.builder()
+                        .value(px)
+                        .type(NameComponentType.PREFIX)
+                        .build()
+                );
+            if (sn.getGiven() != null)
+                jsContact.addName(NameComponent.builder()
+                        .value(sn.getGiven())
+                        .type(NameComponentType.PERSONAL)
+                        .build()
+                );
             if (sn.getFamily() != null)
                 jsContact.addName(NameComponent.builder()
                                                .value(sn.getFamily())
                                                .type(NameComponentType.SURNAME)
                                                .build()
                                  );
-
-            if (sn.getGiven() != null)
-                jsContact.addName(NameComponent.builder()
-                                               .value(sn.getGiven())
-                                               .type(NameComponentType.PERSONAL)
-                                               .build()
-                                 );
-
             for (String an : sn.getAdditionalNames())
                 jsContact.addName(NameComponent.builder()
                                                .value(an)
                                                .type(NameComponentType.ADDITIONAL)
                                                .build()
                                  );
-
-            for (String px : sn.getPrefixes())
-                jsContact.addName(NameComponent.builder()
-                                               .value(px)
-                                               .type(NameComponentType.PREFIX)
-                                               .build()
-                                 );
-
             for (String sx : sn.getSuffixes())
                 jsContact.addName(NameComponent.builder()
                                                .value(sx)
