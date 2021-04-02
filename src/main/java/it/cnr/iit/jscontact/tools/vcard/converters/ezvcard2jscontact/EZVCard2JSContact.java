@@ -78,26 +78,6 @@ public class EZVCard2JSContact extends AbstractConverter {
         return null;
     }
 
-
-    private static <E extends Enum<E> & JCardTypeDerivedEnum> Map<E,Boolean> getEnumMap(Class<E> enumType, String jcardTypeParam, Map<String, E> aliases) {
-
-        if (jcardTypeParam == null)
-            return null;
-
-        Map<E,Boolean> enumMap = new HashMap<E,Boolean>();
-        String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
-        for (String typeItem : typeItems) {
-            try {
-                E enumInstance = getEnumFromJCardType(enumType, typeItem, null, aliases);
-                if (enumInstance != null)
-                    enumMap.put(enumInstance, Boolean.TRUE);
-            }catch (Exception e) {}
-        }
-
-        return (enumMap.size() > 0) ? enumMap : null;
-    }
-
-
     private static List<RawProperty> getRawProperties(VCard vcard, String propertyName) {
 
         List<RawProperty> rawProperties = new ArrayList<RawProperty>();
@@ -118,50 +98,37 @@ public class EZVCard2JSContact extends AbstractConverter {
         return rawProperties.get(0);
     }
 
-    private static Map<Context,Boolean> getContexts(String jcardTypeParam) {
+    private static <E extends Enum<E> & JCardTypeDerivedEnum> Map<E,Boolean> getEnumMap(Class<E> enumType, String jcardTypeParam, List<String> exclude, Map<String, E> aliases) {
 
         if (jcardTypeParam == null)
             return null;
 
-        Map<Context,Boolean> contexts = new HashMap<Context,Boolean>();
+        Map<E,Boolean> enumMap = new HashMap<E,Boolean>();
         String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
         for (String typeItem : typeItems) {
-            Context context = getEnumFromJCardType(Context.class, typeItem, null, Context.getAliases());
-            if (context != null)
-                contexts.put(context, Boolean.TRUE);
+            try {
+                E enumInstance = getEnumFromJCardType(enumType, typeItem, exclude, aliases);
+                if (enumInstance != null)
+                    enumMap.put(enumInstance, Boolean.TRUE);
+            }catch (Exception e) {}
         }
 
-        return (contexts.size() > 0) ? contexts : null;
+        return (enumMap.size() > 0) ? enumMap : null;
+    }
+
+    private static Map<Context,Boolean> getContexts(String jcardTypeParam) {
+        return getEnumMap(Context.class,jcardTypeParam, null, Context.getAliases());
     }
 
     private static Map<AddressContext,Boolean> getAddressContexts(String jcardTypeParam) {
-
-        if (jcardTypeParam == null)
-            return null;
-
-        Map<AddressContext,Boolean> contexts = new HashMap<AddressContext,Boolean>();
-        String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
-        for (String typeItem : typeItems) {
-            AddressContext context = getEnumFromJCardType(AddressContext.class, typeItem, null, AddressContext.getAliases());
-            if (context != null)
-                contexts.put(context, Boolean.TRUE);
-        }
-
-        return (contexts.size() > 0) ? contexts : null;
+        return getEnumMap(AddressContext.class,jcardTypeParam, null, AddressContext.getAliases());
     }
 
     private static Map<PhoneType,Boolean> getPhoneFeatures(String jcardTypeParam) {
+        Map<PhoneType,Boolean> phoneTypes = getEnumMap(PhoneType.class,jcardTypeParam, Arrays.asList(new String[]{"home", "work"}), null);
 
-        if (jcardTypeParam == null)
-            return null;
-
-        Map<PhoneType,Boolean> phoneTypes = new HashMap<PhoneType,Boolean>();
-        String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
-        for (String typeItem : typeItems) {
-            PhoneType phoneType = getEnumFromJCardType(PhoneType.class, jcardTypeParam, new ArrayList<>(Arrays.asList("home", "work")), null);
-            if (phoneType != null)
-                phoneTypes.put(phoneType, Boolean.TRUE);
-        }
+        if (phoneTypes == null)
+            phoneTypes = new HashMap<PhoneType,Boolean>();
 
         if (phoneTypes.size() == 0)
             phoneTypes.put(PhoneType.OTHER, Boolean.TRUE);
