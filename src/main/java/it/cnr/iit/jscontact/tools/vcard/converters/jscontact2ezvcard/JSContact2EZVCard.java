@@ -12,8 +12,8 @@ import ezvcard.property.Kind;
 import ezvcard.util.GeoUri;
 import ezvcard.util.TelUri;
 import ezvcard.util.VCardDateFormat;
-import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
+import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.Title;
@@ -202,7 +202,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (!isStructuredAddress(address) && address.getFullAddress() == null)
             return null;
 
-        List<ezvcard.property.Address> addrs = new ArrayList<ezvcard.property.Address>();
+        List<ezvcard.property.Address> addrs = new ArrayList<>();
         ezvcard.property.Address addr = new ezvcard.property.Address();
         if (isStructuredAddress(address)) {
             addr.setLabel(getFullAddressFromStructuredAddress(address));
@@ -288,11 +288,15 @@ public class JSContact2EZVCard extends AbstractConverter {
         return null;
     }
 
+
     private static <T extends DateOrTimeProperty> T getDateOrTimeProperty(Class<T> classs, Anniversary anniversary) {
 
         try {
             Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class);
-            return constructor.newInstance(VCardDateFormat.parseAsCalendar(anniversary.getDate()));
+            if (anniversary.getDate().getDate()!=null)
+                return constructor.newInstance(anniversary.getDate().getDate());
+            if (anniversary.getDate().getPartialDate()!=null)
+                return constructor.newInstance(anniversary.getDate().getPartialDate());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -665,7 +669,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static List<String> getOrganizationItems(LocalizedString organization, LocalizedString[] units, String language) {
 
-        List<String> organizationItems = new ArrayList<String>();
+        List<String> organizationItems = new ArrayList<>();
         if (language == null) {
             organizationItems.add(organization.getValue());
             if (units != null) {
@@ -766,7 +770,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (jsContact.getRelatedTo().get(key).getRelation() == null)
                 vcard.addRelated(getRelated(key));
             else
-                vcard.addRelated(getRelated(key, new ArrayList<String>(jsContact.getRelatedTo().get(key).getRelation().keySet())));
+                vcard.addRelated(getRelated(key, new ArrayList<>(jsContact.getRelatedTo().get(key).getRelation().keySet())));
         }
     }
 
@@ -921,7 +925,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      */
     public List<VCard> convert(List<JSContact> jsContacts) throws CardException {
 
-        List<VCard> vCards = new ArrayList<VCard>();
+        List<VCard> vCards = new ArrayList<>();
 
         for (JSContact jsContact : jsContacts) {
             if (config.isCardToValidate()) {
@@ -953,7 +957,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
         objectMapper.registerModule(module);
         JsonNode jsonNode = objectMapper.readTree(json);
-        List<VCard> vCards = new ArrayList<VCard>();
+        List<VCard> vCards = new ArrayList<>();
 
         if (jsonNode.isArray()) {
             JSContact[] jsContacts = objectMapper.treeToValue(jsonNode, JSContact[].class);

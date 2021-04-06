@@ -15,7 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
+import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
+import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryType;
 import org.junit.Test;
 
@@ -26,7 +28,7 @@ public class AnniversaryTest {
 
         // type missing
         Anniversary.builder()
-                       .date("20202-01-01")
+                       .date(AnniversaryDate.builder().date(VCardDateFormat.parseAsCalendar("2020-01-01")).build())
                        .build();
     }
 

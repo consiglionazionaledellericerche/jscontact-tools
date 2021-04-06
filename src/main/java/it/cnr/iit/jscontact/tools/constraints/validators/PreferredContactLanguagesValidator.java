@@ -16,9 +16,8 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstraint;
-import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
+import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
 import it.cnr.iit.jscontact.tools.dto.utils.ConstraintViolationUtils;
 import sun.util.locale.LanguageTag;
 import sun.util.locale.ParseStatus;
@@ -26,9 +25,9 @@ import sun.util.locale.ParseStatus;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolation;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
 
 public class PreferredContactLanguagesValidator implements ConstraintValidator<PreferredContactLanguagesConstraint, Map<String, ContactLanguage[]>> {
 

@@ -47,10 +47,10 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 11", jsCard.getName()[3].getValue().equals("M.Sc."));
         assertTrue("testCompleteXCard1 - 12", jsCard.getAnniversaries().length==2);
         assertTrue("testCompleteXCard1 - 13", jsCard.getAnniversaries()[0].getType() == AnniversaryType.BIRTH);
-        assertTrue("testCompleteXCard1 - 14", jsCard.getAnniversaries()[0].getDate().equals("--02-03"));
+        assertTrue("testCompleteXCard1 - 14", jsCard.getAnniversaries()[0].getDate().isEqual("0000-02-03"));
         assertTrue("testCompleteXCard1 - 15", jsCard.getAnniversaries()[1].getType() == AnniversaryType.OTHER);
         assertTrue("testCompleteXCard1 - 16", jsCard.getAnniversaries()[1].getLabel().equals("marriage date"));
-        assertTrue("testCompleteXCard1 - 17", jsCard.getAnniversaries()[1].getDate().equals("2009-08-08T14:30-05:00"));
+        assertTrue("testCompleteXCard1 - 17", jsCard.getAnniversaries()[1].getDate().isEqual("2009-08-08T14:30:00-05:00"));
         assertTrue("testCompleteXCard1 - 18", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteXCard1 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
         assertTrue("testCompleteXCard1 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);

@@ -16,6 +16,10 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
 import lombok.*;
 
 import javax.validation.Valid;
@@ -36,7 +40,9 @@ public class Anniversary extends GroupableObject {
 
     @NotNull(message = "date is missing in Anniversary")
     @NonNull
-    String date;
+    @JsonSerialize(using = AnniversaryDateSerializer.class)
+    @JsonDeserialize(using = AnniversaryDateDeserializer.class)
+    AnniversaryDate date;
 
     @Valid
     Address place;
