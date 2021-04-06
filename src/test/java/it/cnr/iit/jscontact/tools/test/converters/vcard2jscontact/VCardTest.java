@@ -31,20 +31,9 @@ import static org.junit.Assert.assertTrue;
 
 public class VCardTest extends VCard2JSContactTest {
 
-        //vCard does not include version
-//        @Test(expected = JCardException.class)
-        public void testVCardInvalid5() throws IOException, CardException {
-
-            String vcard = "BEGIN:VCARD\n" +
-                    "FN:test\n" +
-                    "END:VCARD";
-
-            vCard2JSContact.convert(vcard);
-        }
-
     //vCard does not include fn
     @Test(expected = CardException.class)
-    public void testVCardInvalid6() throws IOException, CardException {
+    public void testVCardInvalid1() throws IOException, CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:test\n" +
@@ -53,21 +42,9 @@ public class VCardTest extends VCard2JSContactTest {
         vCard2JSContact.convert(vcard).get(0);
     }
 
-    //version is not 1st property
-//    @Test(expected = JCardException.class)
-    public void testVCardInvalid7() throws IOException, CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "FN:test\n" +
-                "VERSION:test\n" +
-                "END:VCARD";
-
-        vCard2JSContact.convert(vcard);
-    }
-
     //PREF must be between 1 and 100
     @Test(expected = CardException.class)
-    public void testVCardInvalid8() throws IOException, CardException {
+    public void testVCardInvalid2() throws IOException, CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:test\n" +

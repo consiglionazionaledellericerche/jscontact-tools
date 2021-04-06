@@ -17,7 +17,6 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
-import it.cnr.iit.jscontact.tools.constraints.RelationTypeConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +31,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class Relation extends GroupableObject {
 
-    @RelationTypeConstraint
-    @BooleanMapConstraint(message = "invalid Map<String,Boolean> in Relation - Only Boolean.TRUE allowed")
-    Map<String,Boolean> relation;
+    @BooleanMapConstraint(message = "invalid Map<RelationType,Boolean> in Relation - Only Boolean.TRUE allowed")
+    Map<RelationType,Boolean> relation;
 }

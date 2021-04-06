@@ -35,7 +35,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                                   "[\"fn\", {}, \"text\", \"test\"], " +
                                   "[\"hobby\", {\"level\": \"very high\"}, \"text\", \"reading\"]" +
                                  "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
 
     }
 
@@ -46,7 +46,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"expertise\", {\"level\": \"very high\"}, \"text\", \"chemistry\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
 
     }
 

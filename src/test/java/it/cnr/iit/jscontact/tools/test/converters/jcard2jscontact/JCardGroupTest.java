@@ -43,7 +43,7 @@ public class JCardGroupTest extends JCard2JSContactTest {
                 "[\"member\", {}, \"uri\", \"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"] " +
                 "]]" +
                 "]";
-        JSCardGroup jsCardGroup = (JSCardGroup) jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
     @Test

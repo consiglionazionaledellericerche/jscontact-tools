@@ -204,6 +204,9 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static List<ezvcard.property.Address> getAddress(Address address, Integer altId) {
 
+        if (address == null)
+            return null;
+
         if (!isStructuredAddress(address) && address.getFullAddress() == null)
             return null;
 
@@ -744,11 +747,11 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static Related getRelated(String uriOrText, List<String> types) {
+    private static Related getRelated(String uriOrText, List<RelationType> types) {
 
         Related related = getRelated(uriOrText);
-        for(String type : types)
-            related.getTypes().add(RelatedType.get(type));
+        for(RelationType type : types)
+            related.getTypes().add(RelatedType.get(type.getValue()));
 
         return related;
     }

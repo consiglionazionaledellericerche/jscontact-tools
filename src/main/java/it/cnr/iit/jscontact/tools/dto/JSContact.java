@@ -15,12 +15,18 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
-import it.cnr.iit.jscontact.tools.constraints.*;
+import it.cnr.iit.jscontact.tools.constraints.IdMapConstraint;
+import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstraint;
+import it.cnr.iit.jscontact.tools.constraints.RelatedToConstraint;
+import it.cnr.iit.jscontact.tools.constraints.TitleOrganizationConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
@@ -285,14 +291,14 @@ public abstract class JSContact extends ValidableObject {
                 relatedTo.put(key, Relation.builder().build());
             else
                 relatedTo.put(key, Relation.builder()
-                        .relation(new HashMap<String, Boolean>() {{
-                            put(relType.getValue(), Boolean.TRUE);
+                        .relation(new HashMap<RelationType, Boolean>() {{
+                            put(relType, Boolean.TRUE);
                         }})
                         .build());
         }
         else {
-            Map<String, Boolean> map = relationPerKey.getRelation();
-            map.put(relType.getValue(), Boolean.TRUE);
+            Map<RelationType, Boolean> map = relationPerKey.getRelation();
+            map.put(relType, Boolean.TRUE);
             relatedTo.replace(key, Relation.builder()
                     .relation(map)
                     .build());
