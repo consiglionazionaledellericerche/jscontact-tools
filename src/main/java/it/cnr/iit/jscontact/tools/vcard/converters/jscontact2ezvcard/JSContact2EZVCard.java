@@ -82,6 +82,16 @@ public class JSContact2EZVCard extends AbstractConverter {
         return new Revision(update);
     }
 
+    private static void fillMembers(VCard vcard, JSCardGroup jsCardGroup) {
+
+        if (jsCardGroup.getMembers() == null)
+            return;
+
+        for (String key : jsCardGroup.getMembers().keySet())
+            vcard.addMember(new Member(key));
+
+    }
+
     private static void fillFormattedNames(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getFullName() == null)
@@ -904,6 +914,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         vCard.setKind(getKind(jsContact.getKind()));
         vCard.setProductId(jsContact.getProdId());
         vCard.setRevision(getRevision(jsContact.getUpdated()));
+        if (jsContact instanceof JSCardGroup)
+            fillMembers(vCard, (JSCardGroup) jsContact);
         fillFormattedNames(vCard, jsContact);
         fillNames(vCard, jsContact);
         fillNickNames(vCard, jsContact);

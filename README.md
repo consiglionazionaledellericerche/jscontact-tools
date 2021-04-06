@@ -272,28 +272,32 @@ All the methods take in input a list of JSContact (JSCard or JSCardGroup) instan
     
 ### Conversion examples
 
-Here in the following two examples of conversion between jCard and JSContact top most objects.
+Here in the following two examples of conversion between vCard and JSContact top most objects.
 
 ```
-    @Test
-    public void testAddressesValid5() throws IOException, CardException {
 
-        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
-                "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"tz\", {}, \"utc-offset\", \"-05:00\"]" +
-                "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testAddressesValid5 - 1",jsCard.getAddresses()!=null);
-        assertTrue("testAddressesValid5 - 2",jsCard.getAddresses().length == 1);
-        assertTrue("testAddressesValid5 - 3",jsCard.getAddresses()[0].getCountryCode().equals("US"));
-        assertTrue("testAddressesValid5 - 4",jsCard.getAddresses()[0].getCountry().equals("USA"));
-        assertTrue("testAddressesValid5 - 5",jsCard.getAddresses()[0].getPostcode().equals("20190"));
-        assertTrue("testAddressesValid5 - 6",jsCard.getAddresses()[0].getLocality().equals("Reston"));
-        assertTrue("testAddressesValid5 - 7",jsCard.getAddresses()[0].getRegion().equals("VA"));
-        assertTrue("testAddressesValid5 - 8",jsCard.getAddresses()[0].getStreet().equals("54321 Oak St"));
-        assertTrue("testAddressesValid5 - 9",jsCard.getAddresses()[0].getFullAddress().getValue().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid5 - 10",jsCard.getAddresses()[0].getTimeZone().equals("Etc/GMT+5"));
+    @Test
+    public void testAddressesValid4() throws IOException, CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "GEO:geo:46.772673,-71.282945\n" +
+                "END:VCARD";
+
+        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        assertTrue("testAddressesValid4 - 1",jsCard.getAddresses()!=null);
+        assertTrue("testAddressesValid4 - 2",jsCard.getAddresses().size() == 1);
+        assertTrue("testAddressesValid4 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
+        assertTrue("testAddressesValid4 - 4",jsCard.getAddresses().get("ADR-1").getCountry().equals("USA"));
+        assertTrue("testAddressesValid4 - 5",jsCard.getAddresses().get("ADR-1").getPostcode().equals("20190"));
+        assertTrue("testAddressesValid4 - 6",jsCard.getAddresses().get("ADR-1").getLocality().equals("Reston"));
+        assertTrue("testAddressesValid4 - 7",jsCard.getAddresses().get("ADR-1").getRegion().equals("VA"));
+        assertTrue("testAddressesValid4 - 8",jsCard.getAddresses().get("ADR-1").getStreet().equals("54321 Oak St"));
+        assertTrue("testAddressesValid4 - 9",jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
+        assertTrue("testAddressesValid4 - 10",jsCard.getAddresses().get("ADR-1").getCoordinates().equals("geo:46.772673,-71.282945"));
+
     }
 
 ```
@@ -322,27 +326,111 @@ Here in the following two examples of conversion between jCard and JSContact top
                 "[\"uid\", {}, \"uri\", \"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"] " +
                 "]]" +
                 "]";
-                
-        List<JSContact> jsCards = jCard2JSContact.convert(jcard);
-        assertTrue("testJCardGroupValid1 - 1",jsCards.size() == 3);
-        assertTrue("testJCardGroupValid1 - 2",jsCards.get(0) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsCards.get(0);
+
+        List<JSContact> jsContacts = jCard2JSContact.convert(jcard);
+        assertTrue("testJCardGroupValid1 - 1",jsContacts.size() == 3);
+        assertTrue("testJCardGroupValid1 - 2",jsContacts.get(0) instanceof JSCardGroup);
+        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(0);
         assertTrue("testJCardGroupValid1 - 3", jsCardGroup.getKind().isGroup());
         assertTrue("testJCardGroupValid1 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
         assertTrue("testJCardGroupValid1 - 5",jsCardGroup.getFullName().getValue().equals("The Doe family"));
         assertTrue("testJCardGroupValid1 - 6",jsCardGroup.getMembers().size() == 2);
         assertTrue("testJCardGroupValid1 - 7",jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
-        assertTrue("testJCardGroupValid1 - 8",jsCardGroup.getMembers().get("rn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
-        JSCard jsCard = (JSCard) jsCards.get(1);
+        assertTrue("testJCardGroupValid1 - 8",jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
+        JSCard jsCard = (JSCard) jsContacts.get(1);
         assertTrue("testJCardGroupValid1 - 9",jsCard.getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
         assertTrue("testJCardGroupValid1 - 10",jsCard.getFullName().getValue().equals("John Doe"));
-        jsCard = (JSCard) jsCards.get(2);
+        jsCard = (JSCard) jsContacts.get(2);
         assertTrue("testJCardGroupValid1 - 11",jsCard.getUid().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
         assertTrue("testJCardGroupValid1 - 12",jsCard.getFullName().getValue().equals("Jane Doe"));
 
     }
 
 ```
+
+Here in the following two examples of conversion between JSContact top most objects and a vCard.
+
+```
+
+    @Test
+    public void testAddressesValid4() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"addresses\":{" +
+                    "\"ADR-1\": {" +
+                        "\"street\":\"54321 Oak St\"," +
+                        "\"locality\":\"Reston\"," +
+                        "\"region\":\"VA\"," +
+                        "\"country\":\"USA\"," +
+                        "\"postcode\":\"20190\"," +
+                        "\"countryCode\":\"US\"," +
+                        "\"coordinates\":\"geo:46.772673,-71.282945\"" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testAddressesValid4 - 1",vcard.getAddresses().size() == 1);
+        assertTrue("testAddressesValid4 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
+        assertTrue("testAddressesValid4 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
+        assertTrue("testAddressesValid4 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
+        assertTrue("testAddressesValid4 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
+        assertTrue("testAddressesValid4 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
+        assertTrue("testAddressesValid4 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
+        assertTrue("testAddressesValid4 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St Reston VA 20190 USA"));
+        assertTrue("testAddressesValid4 - 8", vcard.getAddresses().get(0).getGeo().equals(GeoUri.parse("geo:46.772673,-71.282945")));
+    }
+
+```
+
+```
+
+    @Test
+    public void testJCardGroupValid1() throws IOException, CardException {
+
+        String jsCards = "[" +
+                         "{" +
+                             "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
+                             "\"kind\":\"group\"," +
+                             "\"fullName\": {" +
+                                "\"value\":\"The Doe family\"" +
+                             "}," +
+                             "\"members\": {" +
+                                "\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\":true," +
+                                "\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\":true" +
+                             "}" +
+                        "}," +
+                        "{" +
+                            "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
+                            "\"fullName\": {" +
+                                "\"value\":\"John Doe\"" +
+                            "}" +
+                        "}," +
+                        "{" +
+                            "\"uid\":\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"," +
+                            "\"fullName\": {" +
+                                "\"value\":\"Jane Doe\"" +
+                            "}" +
+                        "}" +
+                        "]";
+
+        List<VCard> vcards = jsContact2VCard.convert(jsCards);
+        assertTrue("testJCardGroupValid1 - 1",vcards.size() == 3);
+        assertTrue("testJCardGroupValid1 - 3", vcards.get(0).getKind().isGroup());
+        assertTrue("testJCardGroupValid1 - 4",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
+        assertTrue("testJCardGroupValid1 - 5",vcards.get(0).getFormattedName().getValue().equals("The Doe family"));
+        assertTrue("testJCardGroupValid1 - 6",vcards.get(0).getMembers().size() == 2);
+        assertTrue("testJCardGroupValid1 - 7",vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
+        assertTrue("testJCardGroupValid1 - 8",vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
+        assertTrue("testJCardGroupValid1 - 9",vcards.get(1).getUid().getValue().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
+        assertTrue("testJCardGroupValid1 - 10",vcards.get(1).getFormattedName().getValue().equals("John Doe"));
+        assertTrue("testJCardGroupValid1 - 11",vcards.get(2).getUid().getValue().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
+        assertTrue("testJCardGroupValid1 - 12",vcards.get(2).getFormattedName().getValue().equals("Jane Doe"));
+    }
+
+```
+
 
 <a name="testing"></a>
 ## Testing
