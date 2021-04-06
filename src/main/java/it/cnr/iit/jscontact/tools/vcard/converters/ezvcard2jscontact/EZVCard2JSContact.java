@@ -109,7 +109,9 @@ public class EZVCard2JSContact extends AbstractConverter {
                 E enumInstance = getEnumFromJCardType(enumType, typeItem, exclude, aliases);
                 if (enumInstance != null)
                     enumMap.put(enumInstance, Boolean.TRUE);
-            }catch (Exception e) {}
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         return (enumMap.size() > 0) ? enumMap : null;

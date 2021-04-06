@@ -180,7 +180,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 String typeItem = (String) enumType.getDeclaredMethod("getVCardType", enumType).invoke(null, value);
                 if (typeItem != null)
                     joiner.add(typeItem);
-            } catch (Exception e) { }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
         return joiner;
     }
@@ -192,7 +194,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 String typeItem = (String) enumType.getDeclaredMethod("getVCardType", String.class).invoke(null, value);
                 if (typeItem != null)
                     joiner.add(typeItem);
-            } catch (Exception e) { }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
         return joiner;
     }
@@ -836,7 +840,9 @@ public class JSContact2EZVCard extends AbstractConverter {
             else if ((extension.getKey().startsWith(getUnmatchedPropertyName(VCARD_XML_TAG))))
                 try {
                     vcard.getXmls().add(new Xml(extension.getValue()));
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             else if (extension.getKey().equals(getUnmatchedPropertyName(VCARD_AGENT_TAG)))
                 vcard.setAgent(new Agent(extension.getValue()));
             else if (extension.getKey().equals(getUnmatchedPropertyName(VCARD_CLASSIFICATION_TAG)))
