@@ -29,7 +29,13 @@ import java.util.List;
 @Builder
 public class JCardValidator extends EZVCardValidator {
 
-    private void validate(String jCard) throws CardException {
+    /**
+     * Validates a complete vCard v4.0 in JSON format, namely jCard [RFC7095]
+     * @param jCard a jCard as a JSON string
+     * @throws CardException if the jCard is not v4.0 compliant
+     * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
+     */
+    public void validate(String jCard) throws CardException {
 
         List<VCard> vcards = Ezvcard.parseJson(jCard).all();
         validate(vcards);

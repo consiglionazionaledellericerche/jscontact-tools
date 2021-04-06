@@ -10,8 +10,6 @@ public abstract class AbstractConverter {
     protected static final String VCARD_GENDER_TAG = "GENDER";
     protected static final String VCARD_CLIENTPIDMAP_TAG = "CLIENTPIDMAP";
     protected static final String VCARD_XML_TAG = "XML";
-    protected static final String VCARD_AGENT_TAG = "AGENT";
-    protected static final String VCARD_CLASSIFICATION_TAG = "CLASSIFICATION";
     protected static final String DEFAULT_CALSCALE = "gregorian";
     protected static final String UNMATCHED_PROPERTY_PREFIX = "ietf.org/rfc6350/";
 

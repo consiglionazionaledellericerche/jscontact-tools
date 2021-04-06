@@ -718,6 +718,14 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+    private static void fillPhotos(VCard vcard, JSContact jsContact) {
+
+        int i = 1;
+        for (Photo photo : vcard.getPhotos())
+            addFile("PHOTO-" + (i++), photo, jsContact);
+
+    }
+
     private static void fillOnlines(VCard vcard, JSContact jsContact) {
 
         String jcardType;
@@ -727,10 +735,6 @@ public class EZVCard2JSContact extends AbstractConverter {
         int i = 1;
         for (Source source : vcard.getSources())
             addOnline(source, jsContact, OnlineLabelKey.SOURCE, i++);
-
-        i = 1;
-        for (Photo photo : vcard.getPhotos())
-            addFile("PHOTO-" + (i++), photo, jsContact);
 
         i = 1;
         for (Impp impp : vcard.getImpps()) {
@@ -1044,12 +1048,6 @@ public class EZVCard2JSContact extends AbstractConverter {
             }
         }
 
-        if (vcard.getAgent()!=null)
-            jsContact.addExtension(getUnmatchedPropertyName(VCARD_AGENT_TAG), vcard.getAgent().getUrl());
-
-        if (vcard.getClassification()!=null)
-            jsContact.addExtension(getUnmatchedPropertyName(VCARD_CLASSIFICATION_TAG), vcard.getClassification().getValue());
-
     }
 
     private static Calendar getUpdated(Revision rev) {
@@ -1096,6 +1094,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         fillContactLanguages(vCard, jsContact);
         fillPhones(vCard, jsContact);
         fillEmails(vCard, jsContact);
+        fillPhotos(vCard, jsContact);
         fillOnlines(vCard, jsContact);
         fillTitles(vCard, jsContact);
         fillRoles(vCard, jsContact);

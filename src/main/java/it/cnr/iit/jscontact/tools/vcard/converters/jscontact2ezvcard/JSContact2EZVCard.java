@@ -854,10 +854,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-            else if (extension.getKey().equals(getUnmatchedPropertyName(VCARD_AGENT_TAG)))
-                vcard.setAgent(new Agent(extension.getValue()));
-            else if (extension.getKey().equals(getUnmatchedPropertyName(VCARD_CLASSIFICATION_TAG)))
-                vcard.setClassification(extension.getValue());
             else if (extension.getKey().equals(getUnmatchedParamName("N", "SORT-AS")))
                 vcard.getStructuredName().setParameter("SORT-AS", extension.getValue());
             else if (extension.getKey().equals(getUnmatchedParamName("ANNIVERSARY", "CALSCALE")))
@@ -868,6 +864,8 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.getDeathdate().setParameter("CALSCALE", extension.getValue());
             else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith("/GROUP"))
                 fillVCardUnmatchedParameter(vcard,extension.getKey(),"GROUP", extension.getValue());
+            else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith("/PID"))
+                fillVCardUnmatchedParameter(vcard,extension.getKey(),"PID", extension.getValue());
             else
                 vcard.getExtendedProperties().add(new RawProperty(extension.getKey().replace(config.getExtensionsPrefix(), ""), extension.getValue()));
         }
@@ -891,6 +889,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
      * @param jsContact a JSContact object (JSCard or JSCardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
+     * @throws CardException if the JSContact object is not valid
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
