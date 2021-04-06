@@ -42,7 +42,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
                 "MEMBER:urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\n" +
                 "END:VCARD";
 
-        JSCardGroup jsCardGroup = (JSCardGroup) vCard2JSContact.convert(vcard).get(0);
+        vCard2JSContact.convert(vcard);
 
     }
 

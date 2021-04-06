@@ -32,8 +32,7 @@ public class UidTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"fullName\":{\"value\":\"test\"}" +
                 "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-
+        jsContact2VCard.convert(jscard).get(0);
     }
 
     @Test

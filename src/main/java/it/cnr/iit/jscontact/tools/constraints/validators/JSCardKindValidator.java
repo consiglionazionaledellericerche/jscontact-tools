@@ -29,10 +29,8 @@ public class JSCardKindValidator implements ConstraintValidator<JSCardKindConstr
 
     public boolean isValid(JSCard card, ConstraintValidatorContext context) {
 
-        if (card.getKind() == null)
-            return true;
+        return card.getKind() == null || card.getKind().getRfcValue() == null || card.getKind().getRfcValue() != Kind.GROUP;
 
-        return card.getKind().getRfcValue() == null || card.getKind().getRfcValue() != Kind.GROUP;
     }
 
 }

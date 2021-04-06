@@ -39,7 +39,7 @@ public class VCardTest extends VCard2JSContactTest {
                     "FN:test\n" +
                     "END:VCARD";
 
-            vCard2JSContact.convert(vcard).get(0);
+            vCard2JSContact.convert(vcard);
         }
 
     //vCard does not include fn
@@ -62,7 +62,7 @@ public class VCardTest extends VCard2JSContactTest {
                 "VERSION:test\n" +
                 "END:VCARD";
 
-        vCard2JSContact.convert(vcard).get(0);
+        vCard2JSContact.convert(vcard);
     }
 
     //PREF must be between 1 and 100

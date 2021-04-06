@@ -10,6 +10,7 @@ import ezvcard.parameter.*;
 import ezvcard.property.*;
 import ezvcard.property.Kind;
 import ezvcard.util.GeoUri;
+import ezvcard.util.PartialDate;
 import ezvcard.util.TelUri;
 import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.Address;
@@ -296,11 +297,14 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static <T extends DateOrTimeProperty> T getDateOrTimeProperty(Class<T> classs, Anniversary anniversary) {
 
         try {
-            Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class);
-            if (anniversary.getDate().getDate()!=null)
+            if (anniversary.getDate().getDate()!=null) {
+                Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class);
                 return constructor.newInstance(anniversary.getDate().getDate());
-            if (anniversary.getDate().getPartialDate()!=null)
+            }
+            if (anniversary.getDate().getPartialDate()!=null) {
+                Constructor<T> constructor = classs.getDeclaredConstructor(PartialDate.class);
                 return constructor.newInstance(anniversary.getDate().getPartialDate());
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -358,7 +362,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return i;
     }
 
-    private static void fillPersonalInfos(VCard vcard, JSContact jsContact) throws CardException {
+    private static void fillPersonalInfos(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getPersonalInfo() == null)
             return;
@@ -963,28 +967,13 @@ public class JSContact2EZVCard extends AbstractConverter {
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
         objectMapper.registerModule(module);
         JsonNode jsonNode = objectMapper.readTree(json);
-        List<VCard> vCards = new ArrayList<>();
+        JSContact[] jsContacts;
+        if (jsonNode.isArray())
+            jsContacts = objectMapper.treeToValue(jsonNode, JSContact[].class);
+        else
+            jsContacts = new JSContact[] { objectMapper.treeToValue(jsonNode, JSContact.class)};
 
-        if (jsonNode.isArray()) {
-            JSContact[] jsContacts = objectMapper.treeToValue(jsonNode, JSContact[].class);
-            for (JSContact jsContact : jsContacts) {
-                if (config.isCardToValidate()) {
-                    if (!jsContact.isValid())
-                        throw new CardException(jsContact.getValidationMessage());
-                }
-                vCards.add(convert(jsContact));
-            }
-        }
-        else {
-            JSContact jsContact = objectMapper.treeToValue(jsonNode, JSContact.class);
-            if (!jsContact.isValid())
-                throw new CardException(jsContact.getValidationMessage());
-            vCards.add(convert(jsContact));
-        }
-
-        return vCards;
+        return convert(Arrays.asList(jsContacts));
     }
-
-
 
 }

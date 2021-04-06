@@ -37,7 +37,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=very high:reading\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        vCard2JSContact.convert(vcard);
 
     }
 
@@ -50,7 +50,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "EXPERTISE;LEVEL=very high:chemistry\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        vCard2JSContact.convert(vcard);
 
     }
 

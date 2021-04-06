@@ -15,9 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
+import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.dto.RelationType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class RelatedToTest extends JCard2JSContactTest {
                                   "[\"fn\", {}, \"text\", \"test\"], " +
                                   "[\"related\", {\"type\":\"teammate\"}, \"uri\", \"urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\"]" +
                                  "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
 
     }
 
