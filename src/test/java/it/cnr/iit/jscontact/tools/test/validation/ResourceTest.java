@@ -15,14 +15,15 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.Context;
+import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Resource;
+import it.cnr.iit.jscontact.tools.dto.ResourceType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
-import java.net.URI;
 import java.util.HashMap;
 
-import static javax.swing.UIManager.put;
 import static org.junit.Assert.assertTrue;
 
 

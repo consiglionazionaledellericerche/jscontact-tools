@@ -18,7 +18,6 @@ package it.cnr.iit.jscontact.tools.test.deserialization;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import org.apache.commons.io.IOUtils;
@@ -26,7 +25,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertTrue;
 

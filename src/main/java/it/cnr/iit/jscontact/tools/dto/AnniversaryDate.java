@@ -19,19 +19,6 @@ public class AnniversaryDate {
     Calendar date;
     PartialDate partialDate;
 
-    private static boolean isEqual(PartialDate pd1, PartialDate pd2) {
-
-        if ((pd1 == null && pd2 != null) || (pd1 != null && pd2 == null))
-            return false;
-
-        if (pd1 == null && pd2 == null)
-            return true;
-
-        return (pd1.getYear() == pd2.getYear()) &&
-                (pd1.getMonth() == pd2.getMonth()) &&
-                (pd1.getDate() == pd2.getDate());
-    }
-
     public boolean isEqual(String text) {
 
         if (date != null)

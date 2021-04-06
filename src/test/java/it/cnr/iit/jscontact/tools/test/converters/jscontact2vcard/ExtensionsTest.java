@@ -16,13 +16,9 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
-import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
-import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2vcard.JSContact2VCard;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -17,7 +17,6 @@ package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.RelatedToConstraint;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.dto.Relation;
 
 import javax.validation.ConstraintValidator;

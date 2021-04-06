@@ -17,12 +17,10 @@ package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.TitleOrganizationConstraint;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
-import it.cnr.iit.jscontact.tools.dto.Kind;
 import it.cnr.iit.jscontact.tools.dto.Title;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Map;
 
 public class TitleOrganizationValidator implements ConstraintValidator<TitleOrganizationConstraint, JSContact> {
 

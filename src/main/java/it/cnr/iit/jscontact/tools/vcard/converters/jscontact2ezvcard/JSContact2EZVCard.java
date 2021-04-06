@@ -35,7 +35,7 @@ import java.util.*;
 public class JSContact2EZVCard extends AbstractConverter {
 
 
-    private static Map<String,String> ezclassesPerPropertiesMap = new HashMap<String,String>() {{
+    private static final Map<String,String> ezclassesPerPropertiesMap = new HashMap<String,String>() {{
         put("Address", "ADR");
         put("Birthday","BDAY");
         put("CalendarUri","CALURI");

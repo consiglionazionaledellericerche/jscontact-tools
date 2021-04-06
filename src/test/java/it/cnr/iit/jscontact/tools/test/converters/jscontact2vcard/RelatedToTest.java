@@ -17,8 +17,6 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
 import ezvcard.parameter.RelatedType;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.RelationType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 

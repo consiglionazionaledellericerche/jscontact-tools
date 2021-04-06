@@ -1087,8 +1087,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             fillMembers(vCard, jsCardGroup);
             jsContact = jsCardGroup;
         } else {
-            JSCard jsCard = JSCard.builder().uid(UUID.randomUUID().toString()).build();
-            jsContact = jsCard;
+            jsContact = JSCard.builder().uid(UUID.randomUUID().toString()).build();
         }
         jsContact.setKind(getKind(vCard.getKind()));
         jsContact.setProdId(getValue(vCard.getProductId()));

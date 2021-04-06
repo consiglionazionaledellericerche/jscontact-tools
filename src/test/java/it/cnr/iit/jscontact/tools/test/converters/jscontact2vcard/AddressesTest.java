@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.util.GeoUri;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;

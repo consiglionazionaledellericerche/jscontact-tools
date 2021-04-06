@@ -16,7 +16,6 @@
 package it.cnr.iit.jscontact.tools.constraints;
 
 import it.cnr.iit.jscontact.tools.constraints.validators.TitleOrganizationValidator;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

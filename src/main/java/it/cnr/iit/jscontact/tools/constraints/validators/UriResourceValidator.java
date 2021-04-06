@@ -37,7 +37,7 @@ public class UriResourceValidator implements ConstraintValidator<UriResourceCons
             return true;
 
         try {
-            URI uri = URI.create(resource.getResource());
+            URI.create(resource.getResource());
             return true;
         } catch(Exception e) {
             return false;

@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class IdMapValidator implements ConstraintValidator<IdMapConstraint, Map<String,? extends IdMapValue>> {
 
-    private static Pattern ID_PATTERN = Pattern.compile("[A-Za-z0-9_\\-]+");
+    private static final Pattern ID_PATTERN = Pattern.compile("[A-Za-z0-9_\\-]+");
 
     public void initialize(IdMapConstraint constraintAnnotation) {
     }

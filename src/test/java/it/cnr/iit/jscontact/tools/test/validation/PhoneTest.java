@@ -15,12 +15,14 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.Context;
+import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Phone;
+import it.cnr.iit.jscontact.tools.dto.PhoneType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 

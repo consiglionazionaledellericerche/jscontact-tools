@@ -32,10 +32,7 @@ public class JSCardGroupKindValidator implements ConstraintValidator<JSCardGroup
         if (group.getKind() == null)
             return true;
 
-        if (group.getKind().getRfcValue() != null && group.getKind().getRfcValue() != Kind.GROUP)
-            return false;
-
-        return true;
+        return group.getKind().getRfcValue() == null || group.getKind().getRfcValue() == Kind.GROUP;
     }
 
 }

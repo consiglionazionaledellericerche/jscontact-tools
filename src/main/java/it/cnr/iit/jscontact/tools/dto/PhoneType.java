@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +36,7 @@ public enum PhoneType implements JCardTypeDerivedEnum {
     private String value;
 
     @JsonIgnore
-    private static final List<String> otherVCardTypes = Arrays.asList(new String[]{"textphone", "video", "cell"});
+    private static final List<String> otherVCardTypes = Arrays.asList("textphone", "video", "cell");
 
     @JsonValue
     public String getValue() {

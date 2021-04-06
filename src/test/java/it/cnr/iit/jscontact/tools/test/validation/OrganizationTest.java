@@ -4,9 +4,6 @@ import it.cnr.iit.jscontact.tools.dto.LocalizedString;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class OrganizationTest {
 
 
