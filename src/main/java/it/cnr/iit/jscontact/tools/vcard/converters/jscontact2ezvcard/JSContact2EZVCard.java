@@ -565,6 +565,10 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         for (Resource resource : jsContact.getOnline().values()) {
+
+            if (resource.getLabel() == null)
+                continue;
+
             switch(OnlineLabelKey.getLabelKey(resource.getLabel())) {
                 case SOUND:
                     vcard.getSounds().add(new Sound(resource.getResource(), getSoundType(resource.getMediaType())));
@@ -887,12 +891,11 @@ public class JSContact2EZVCard extends AbstractConverter {
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
      * @param jsContact a JSContact object (JSCard or JSCardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
-     * @throws CardException if the JSContact object is not valid
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public VCard convert(JSContact jsContact) throws CardException {
+    protected VCard convert(JSContact jsContact) {
 
         if (jsContact == null)
             return null;
@@ -936,7 +939,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public List<VCard> convert(List<JSContact> jsContacts) throws CardException {
+    protected List<VCard> convert(List<JSContact> jsContacts) throws CardException {
 
         List<VCard> vCards = new ArrayList<>();
 

@@ -687,7 +687,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             Map<Context,Boolean> contexts = getContexts(jcardType);
             Map<PhoneType,Boolean> phoneFeatures = getPhoneFeatures(jcardType);
             String[] exclude = null;
-            if (contexts != null) exclude = ArrayUtils.addAll(exclude, EnumUtils.toArrayOfStrings(contexts.keySet()));
+            if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toArrayOfStrings(contexts.keySet()));
             if (!phoneFeatures.containsKey(PhoneType.OTHER)) exclude = ArrayUtils.addAll(exclude, EnumUtils.toArrayOfStrings(phoneFeatures.keySet()));
             String label = getLabel(jcardType, exclude, null);
             jsContact.addPhone("PHONE-" + (i++), Phone.builder()
@@ -879,6 +879,8 @@ public class EZVCard2JSContact extends AbstractConverter {
             if (nameItems.length > 0) {
                 List<LocalizedString> units = new ArrayList<>();
                 for (int j = 1; j < nameItems.length; j++) {
+                    if (nameItems[j].isEmpty())
+                        continue;
                     if (organization.getLocalizations() != null)
                         units.add(LocalizedString.builder()
                                                  .value(nameItems[j])
@@ -1070,18 +1072,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    /**
-     * Converts a basic vCard v4.0 [RFC6350] into a JSContact object.
-     * JSContact objects are defined in draft-ietf-jmap-jscontact.
-     * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
-     * @param vCard a vCard as an instance of the ez-vcard library VCard class
-     * @return a JSContact object (JSCard or JSCardGroup)
-     * @throws CardException if the vCard is not v4.0 compliant
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
-     */
-    public JSContact convert(VCard vCard) throws CardException {
+    private JSContact convert(VCard vCard) throws CardException {
 
         JSContact jsContact;
         if (vCard.getMembers() != null && vCard.getMembers().size() != 0) {

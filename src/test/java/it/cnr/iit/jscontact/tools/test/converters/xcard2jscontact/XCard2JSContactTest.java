@@ -15,11 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.xcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.vcard.converters.xcard2jscontact.XCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
+import it.cnr.iit.jscontact.tools.vcard.converters.xcard2jscontact.XCard2JSContact;
 
 public class XCard2JSContactTest {
 
-    protected final XCard2JSContact xCard2JSContact = XCard2JSContact.builder().config(VCard2JSContactConfig.builder().build()).build();
+    final XCard2JSContact xCard2JSContact = XCard2JSContact.builder().config(VCard2JSContactConfig.builder().build()).build();
 
 }

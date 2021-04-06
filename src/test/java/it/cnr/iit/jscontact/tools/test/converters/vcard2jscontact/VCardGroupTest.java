@@ -182,7 +182,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
         assertTrue("testVCardGroupValid4 - 9",jsCardGroup.getMembers().get("sip:subscriber3@example.com") == Boolean.TRUE);
         assertTrue("testVCardGroupValid4 - 10",jsCardGroup.getMembers().get("tel:+1-418-555-5555") == Boolean.TRUE);
 
-        List<String> keys = new ArrayList<String>(jsCardGroup.getMembers().keySet());
+        List<String> keys = new ArrayList<>(jsCardGroup.getMembers().keySet());
         assertTrue("testVCardGroupValid4 - 11",keys.get(0).equals("tel:+1-418-555-5555"));
         assertTrue("testVCardGroupValid4 - 12",keys.get(1).equals("xmpp:subscriber2@example.com"));
 

@@ -36,7 +36,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardInvalid1() throws IOException, CardException {
 
         String jcard="{}";
-        jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
     //jCard is an empty array
@@ -44,7 +44,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardInvalid2() throws IOException, CardException {
 
         String jcard="[]";
-        jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
     //jCard array includes only one item
@@ -52,7 +52,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardInvalid3() throws IOException, CardException {
 
         String jcard="[\"vcard\"]";
-        jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
         //jCard array 2nd item is empty
@@ -60,7 +60,7 @@ public class JCardTest extends JCard2JSContactTest {
         public void testJCardInvalid4() throws IOException, CardException {
 
             String jcard="[\"vcard\",[]]";
-            jCard2JSContact.convert(jcard).get(0);
+            jCard2JSContact.convert(jcard);
         }
 
     //jCard does not include fn
@@ -68,7 +68,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardInvalid5() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"test\"]]]";
-        jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
 
@@ -77,7 +77,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardInvalid6() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", null, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
-        jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
 
@@ -86,7 +86,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardInvalid7() throws IOException, CardException {
 
         String jcard="[\"jcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
     //a jCard property includes the value parameter
@@ -94,7 +94,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardInvalid8() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", { \"value\": \"a value\" }, \"text\", \"test\"]]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
     //pref must be between 1 and 100
@@ -102,7 +102,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardInvalid9() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {\"pref\":\"0\"}, \"text\", \"test\"]]]";
-        jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
     @Test

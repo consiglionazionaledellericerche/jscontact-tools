@@ -39,7 +39,7 @@ public abstract class ValidableObject {
     @JsonIgnore
     public boolean isValid() {
 
-        validationMessages = new ArrayList<String>();
+        validationMessages = new ArrayList<>();
 
         Set<ConstraintViolation<ValidableObject>> constraintViolations = ValidatorBuilder.getValidator().validate(this);
         if (constraintViolations.size() > 0) {

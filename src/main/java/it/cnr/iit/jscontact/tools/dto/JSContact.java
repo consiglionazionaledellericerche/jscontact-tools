@@ -137,7 +137,7 @@ public abstract class JSContact extends ValidableObject {
     public void setExtension(String name, String value) {
 
         if (extensions == null)
-            extensions = new HashMap<String,String>();
+            extensions = new HashMap<>();
 
         extensions.put(name, value);
     }
@@ -153,7 +153,7 @@ public abstract class JSContact extends ValidableObject {
     public void addPhone(String id, Phone phone) {
 
         if (phones == null)
-            phones = new HashMap<String,Phone>();
+            phones = new HashMap<>();
 
         phones.put(id, phone);
     }
@@ -161,7 +161,7 @@ public abstract class JSContact extends ValidableObject {
     public void addEmail(String id, EmailAddress email) {
 
         if (emails == null)
-            emails = new HashMap<String,EmailAddress>();
+            emails = new HashMap<>();
 
         emails.put(id, email);
     }
@@ -169,7 +169,7 @@ public abstract class JSContact extends ValidableObject {
     public void addOnline(String id, Resource ol) {
 
         if (online == null)
-            online = new HashMap<String,Resource>();
+            online = new HashMap<>();
 
         online.put(id, ol);
     }
@@ -177,15 +177,15 @@ public abstract class JSContact extends ValidableObject {
     public void addPhoto(String id, File f) {
 
         if (photos == null)
-            photos = new HashMap<String,File>();
+            photos = new HashMap<>();
 
         photos.put(id, f);
     }
 
-    public void addOrganization(String id, LocalizedString name, LocalizedString[] units) {
+    private void addOrganization(String id, LocalizedString name, LocalizedString[] units) {
 
         if(organizations == null)
-            organizations = new HashMap<String,Organization>();
+            organizations = new HashMap<>();
 
         if (!organizations.containsKey(id))
             organizations.put(id,Organization.builder().name(name).units(units).build());
@@ -193,7 +193,7 @@ public abstract class JSContact extends ValidableObject {
 
     public void addOrganization(String id, Organization organization) {
         if(organizations == null)
-            organizations = new HashMap<String,Organization>();
+            organizations = new HashMap<>();
 
         organizations.put(id,organization);
     }
@@ -202,10 +202,10 @@ public abstract class JSContact extends ValidableObject {
         addOrganization(id, name, null);
     }
 
-    public void addTitle(String id, LocalizedString title, String organization) {
+    private void addTitle(String id, LocalizedString title, String organization) {
 
         if(jobTitles == null)
-            jobTitles = new HashMap<String,Title>();
+            jobTitles = new HashMap<>();
 
         if (!jobTitles.containsKey(id))
             jobTitles.put(id,Title.builder().title(title).organization(organization).build());
@@ -228,7 +228,8 @@ public abstract class JSContact extends ValidableObject {
             return;
         }
 
-        if (language == notes.getLanguage()) {
+        if ((language == null && notes.getLanguage() == null) ||
+            (language != null && notes.getLanguage() != null && language.equals(notes.getLanguage()))) {
             notes.setValue(String.format("%s%s%s", notes.getValue(), NoteUtils.NOTE_DELIMITER, note));
             return;
         }
@@ -257,7 +258,7 @@ public abstract class JSContact extends ValidableObject {
     public void addAddress(String id, Address address) {
 
         if(addresses == null)
-            addresses = new HashMap<String,Address>();
+            addresses = new HashMap<>();
 
         if (!addresses.containsKey(id))
             addresses.put(id,address);
@@ -266,7 +267,7 @@ public abstract class JSContact extends ValidableObject {
     private void addCategory(String category) {
 
         if(categories == null)
-            categories = new LinkedHashMap<String,Boolean>();
+            categories = new LinkedHashMap<>();
 
         if (!categories.containsKey(category))
             categories.put(category,Boolean.TRUE);
@@ -283,7 +284,7 @@ public abstract class JSContact extends ValidableObject {
     public void addRelation(String key, RelationType relType) {
 
         if (relatedTo == null)
-            relatedTo = new HashMap<String, Relation>();
+            relatedTo = new HashMap<>();
 
         Relation relationPerKey = relatedTo.get(key);
         if (relationPerKey == null) {
@@ -308,7 +309,7 @@ public abstract class JSContact extends ValidableObject {
     public void addContactLanguage(String key, ContactLanguage contactLanguage) {
 
         if (preferredContactLanguages == null)
-            preferredContactLanguages = new HashMap<String, ContactLanguage[]>();
+            preferredContactLanguages = new HashMap<>();
 
         ContactLanguage[] languagesPerKey = preferredContactLanguages.get(key);
         if (languagesPerKey == null)
@@ -329,16 +330,16 @@ public abstract class JSContact extends ValidableObject {
 
     public void addExtension(String key, String value) {
         if(extensions == null)
-            extensions = new HashMap<String,String>();
+            extensions = new HashMap<>();
 
         if (!extensions.containsKey(key))
             extensions.put(key,value);
     }
 
     @JsonIgnore
-    public Map<String,Resource> getOnline(String label) {
+    private Map<String,Resource> getOnline(String label) {
 
-        Map<String,Resource> ols = new HashMap<String,Resource>();
+        Map<String,Resource> ols = new HashMap<>();
         for (Map.Entry<String,Resource> ol : online.entrySet()) {
             List<String> labelItems = Arrays.asList(ol.getValue().getLabel().split(","));
             if (labelItems.contains(label))
@@ -351,7 +352,7 @@ public abstract class JSContact extends ValidableObject {
     }
 
     @JsonIgnore
-    public Map<String,Resource> getOnline(OnlineLabelKey labelKey) {
+    private Map<String,Resource> getOnline(OnlineLabelKey labelKey) {
         return getOnline(labelKey.getValue());
     }
 

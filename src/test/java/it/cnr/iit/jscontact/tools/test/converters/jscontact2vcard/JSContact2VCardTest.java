@@ -20,6 +20,6 @@ import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2vcard.JSContact2VCa
 
 public class JSContact2VCardTest {
 
-    protected final JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder().build()).build();
+    final JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder().build()).build();
 
 }

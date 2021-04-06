@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.vcard.validators.ezvcard.EZVCardValidator;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.validators.ezvcard.EZVCardValidator;
 import lombok.Builder;
 
 import java.util.List;
@@ -29,13 +29,7 @@ import java.util.List;
 @Builder
 public class JCardValidator extends EZVCardValidator {
 
-    /**
-     * Validates a complete vCard v4.0 in JSON format, namely jCard [RFC7095]
-     * @param jCard a jCard as a JSON string
-     * @throws CardException if the jCard is not v4.0 compliant
-     * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
-     */
-    public void validate(String jCard) throws CardException {
+    private void validate(String jCard) throws CardException {
 
         List<VCard> vcards = Ezvcard.parseJson(jCard).all();
         validate(vcards);

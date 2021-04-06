@@ -47,24 +47,13 @@ public class JSContact2JCard extends JSContact2EZVCard {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public String convertToJson(List<JSContact> jsContacts) throws CardException {
+    private String convertToJson(List<JSContact> jsContacts) throws CardException {
 
         List<VCard> vcards = convert(jsContacts);
         return Ezvcard.writeJson(vcards).go();
     }
 
-    /**
-     * Converts a JSContact object into a complete vCard v4.0 in JSON format, namely jCard [RFC7095]
-     * JSContact is defined in draft-ietf-jmap-jscontact.
-     * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
-     * @param jsContact a JSContact object
-     * @return a jCard as a JSON string
-     * @throws CardException if the JSContact object is not valid
-     * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
-     */
-    public String convertToJson(JSContact jsContact) throws CardException {
+    private String convertToJson(JSContact jsContact) throws CardException {
 
         VCard vcard = convert(jsContact);
         return Ezvcard.writeJson(vcard).go();

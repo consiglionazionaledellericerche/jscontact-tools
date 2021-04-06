@@ -25,7 +25,7 @@ public abstract class AbstractConverter {
         return getUnmatchedPropertyName(propertyName, null);
     }
 
-    protected static String getUnmatchedParamName(String propertyName, Integer index, String paramName) {
+    private static String getUnmatchedParamName(String propertyName, Integer index, String paramName) {
 
         return getUnmatchedPropertyName(propertyName) + "/" + ((index != null) ? "/" + index : "") + paramName;
     }

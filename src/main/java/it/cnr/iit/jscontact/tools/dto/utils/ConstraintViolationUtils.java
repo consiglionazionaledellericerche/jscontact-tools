@@ -9,7 +9,7 @@ public class ConstraintViolationUtils {
 
     public static <T> String getMessage(Set<ConstraintViolation<T>> constraintViolations) {
 
-        List<String> messages = new ArrayList<String>();
+        List<String> messages = new ArrayList<>();
         for(ConstraintViolation<T> constraintViolation : constraintViolations)
             messages.add(constraintViolation.getMessage());
 
