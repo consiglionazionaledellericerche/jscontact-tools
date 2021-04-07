@@ -899,7 +899,6 @@ public class JSContact2EZVCard extends AbstractConverter {
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
      * @param jsContact a JSContact object (JSCard or JSCardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
-     * @throws CardException if the JSContact object is not valid
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
