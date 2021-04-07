@@ -29,10 +29,10 @@ public class TitleOrganizationValidator implements ConstraintValidator<TitleOrga
 
     public boolean isValid(JSContact jsContact, ConstraintValidatorContext context) {
 
-        if (jsContact.getJobTitles() == null)
+        if (jsContact.getTitles() == null)
             return true;
 
-        for (Title title : jsContact.getJobTitles().values()) {
+        for (Title title : jsContact.getTitles().values()) {
 
             if (title.getOrganization() != null) {
 

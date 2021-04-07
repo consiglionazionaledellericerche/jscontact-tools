@@ -85,7 +85,7 @@ public abstract class JSContact extends ValidableObject {
 
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
-    Map<String,Title> jobTitles;
+    Map<String,Title> titles;
 
     @Valid
     LocalizedString[] roles;
@@ -204,11 +204,11 @@ public abstract class JSContact extends ValidableObject {
 
     private void addTitle(String id, LocalizedString title, String organization) {
 
-        if(jobTitles == null)
-            jobTitles = new HashMap<>();
+        if(titles == null)
+            titles = new HashMap<>();
 
-        if (!jobTitles.containsKey(id))
-            jobTitles.put(id,Title.builder().title(title).organization(organization).build());
+        if (!titles.containsKey(id))
+            titles.put(id,Title.builder().title(title).organization(organization).build());
     }
 
     public void addTitle(String id, LocalizedString title) {

@@ -37,7 +37,7 @@ public class TitleTest extends AbstractTest {
 
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .jobTitles(jobTiles)
+                .titles(jobTiles)
                 .build();
 
         assertTrue("testInvalidTitleOrganization1-1", !jsCard.isValid());
@@ -54,7 +54,7 @@ public class TitleTest extends AbstractTest {
         organizations.put("organization-1", Organization.builder().name(LocalizedString.builder().value("an organization").build()).build());
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .jobTitles(jobTiles)
+                .titles(jobTiles)
                 .organizations(organizations)
                 .build();
 

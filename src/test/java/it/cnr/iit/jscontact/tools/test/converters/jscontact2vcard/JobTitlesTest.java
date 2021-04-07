@@ -31,7 +31,7 @@ public class JobTitlesTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"jobTitles\": {" +
+                "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"title\": {" +
                             "\"value\": \"Research Scientist\"," +
@@ -56,7 +56,7 @@ public class JobTitlesTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"jobTitles\": {" +
+                "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"title\": {" +
                             "\"value\": \"Research Scientist\"," +
@@ -89,7 +89,7 @@ public class JobTitlesTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"jobTitles\": {" +
+                "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"title\": {" +
                             "\"value\": \"Research Scientist\"," +

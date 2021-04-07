@@ -648,11 +648,11 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static void fillTitles(VCard vcard, JSContact jsContact) {
 
-        if (jsContact.getJobTitles() == null)
+        if (jsContact.getTitles() == null)
             return;
 
         Integer altId = Integer.parseInt("1");
-        for (Title title : jsContact.getJobTitles().values()) {
+        for (Title title : jsContact.getTitles().values()) {
             if (title.getTitle().getLocalizations() == null)
                 vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(title.getTitle().getValue()), title.getTitle().getLanguage()));
             else {
