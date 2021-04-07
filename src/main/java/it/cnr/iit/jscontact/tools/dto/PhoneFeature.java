@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor
-public enum PhoneType implements JCardTypeDerivedEnum {
+public enum PhoneFeature implements JCardTypeDerivedEnum {
 
     VOICE("voice"),
     FAX("fax"),
@@ -44,8 +44,8 @@ public enum PhoneType implements JCardTypeDerivedEnum {
     }
 
     @JsonCreator
-    public static PhoneType getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(PhoneType.class, value);
+    public static PhoneFeature getEnum(String value) throws IllegalArgumentException {
+        return EnumUtils.getEnum(PhoneFeature.class, value);
     }
 
     @Override
@@ -54,7 +54,7 @@ public enum PhoneType implements JCardTypeDerivedEnum {
     }
 
     @JsonIgnore
-    public static String getVCardType(PhoneType type) {
+    public static String getVCardType(PhoneFeature type) {
 
         if (type == OTHER)
             return null;
@@ -66,7 +66,7 @@ public enum PhoneType implements JCardTypeDerivedEnum {
     public static String getVCardType(String label) {
 
         try {
-            PhoneType rc = getEnum(label);
+            PhoneFeature rc = getEnum(label);
             return getVCardType(rc);
         }
         catch(Exception e) {

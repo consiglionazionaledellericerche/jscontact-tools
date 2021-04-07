@@ -426,9 +426,9 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
         joiner = joiner.merge(getVCardTypeStringJoiner(Context.class, phone.getContexts().keySet()));
-        joiner = joiner.merge(getVCardTypeStringJoiner(PhoneType.class, phone.getFeatures().keySet()));
+        joiner = joiner.merge(getVCardTypeStringJoiner(PhoneFeature.class, phone.getFeatures().keySet()));
         if (phone.getLabel()!=null)
-            joiner = joiner.merge(getVCardTypeStringJoiner(PhoneType.class, phone.getLabel().split(COMMA_ARRAY_DELIMITER)));
+            joiner = joiner.merge(getVCardTypeStringJoiner(PhoneFeature.class, phone.getLabel().split(COMMA_ARRAY_DELIMITER)));
 
         if (StringUtils.isNotEmpty(joiner.toString()))
             tel.setParameter("TYPE", joiner.toString());

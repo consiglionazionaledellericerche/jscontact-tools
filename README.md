@@ -26,8 +26,9 @@ Validation and conversion leverage the features provided by [ez-vcard](https://g
 2. [Validation](#validation)
 3. [Serialization/Deserialization](#serialization-deserialization)
 4. [vCard Conversion](#vcard-conversion)
-5. [Testing](#testing)
-6. [References](#references)
+5. [JSContact Conversion](#jscontact-conversion)
+6. [Testing](#testing)
+7. [References](#references)
 
 <a name="creation"></a>
 ## Creation
@@ -221,11 +222,13 @@ The conversion is executed according to the following rules:
 
 16. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-17. JSContact UTCDateTime type is mapped onto Java Calendar.
+17. If no vCard tel-type value is specified, the "features" map of the "Phone" object includes PhoneFeature.VOICE by default. 
 
-18. Where a collection of objects is mapped onto a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
+18. JSContact UTCDateTime type is mapped onto Java Calendar.
 
-<a name="vcard-conversion"></a>
+19. Where a collection of objects is mapped onto a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
+
+<a name="jscontact-conversion"></a>
 ## JSContact Conversion
 
 At present, the following converting methods are available:

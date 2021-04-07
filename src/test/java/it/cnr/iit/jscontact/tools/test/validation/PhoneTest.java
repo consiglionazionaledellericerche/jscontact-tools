@@ -18,7 +18,7 @@ package it.cnr.iit.jscontact.tools.test.validation;
 import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.dto.Phone;
-import it.cnr.iit.jscontact.tools.dto.PhoneType;
+import it.cnr.iit.jscontact.tools.dto.PhoneFeature;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class PhoneTest extends AbstractTest {
 
         Phone phone = Phone.builder()
                 .contexts(new HashMap<Context,Boolean>(){{ put(Context.WORK, Boolean.TRUE);}})
-                .features(new HashMap<PhoneType,Boolean>(){{ put(PhoneType.VOICE, Boolean.TRUE);}})
+                .features(new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.VOICE, Boolean.TRUE);}})
                 .phone("+39.050000001")
                 .build();
         JSCard jsCard = JSCard.builder()

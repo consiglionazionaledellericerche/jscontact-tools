@@ -65,11 +65,11 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 30", jsCard.getAddresses().get("ADR-1").getCoordinates().equals("geo:46.766336,-71.28955"));
         assertTrue("testCompleteXCard1 - 31", jsCard.getAddresses().get("ADR-1").getTimeZone().equals("America/Montreal"));
         assertTrue("testCompleteXCard1 - 32", jsCard.getPhones().size() == 2);
-        assertTrue("testCompleteXCard1 - 33", jsCard.getPhones().get("PHONE-1").getFeatures().containsKey(PhoneType.VOICE));
+        assertTrue("testCompleteXCard1 - 33", jsCard.getPhones().get("PHONE-1").getFeatures().containsKey(PhoneFeature.VOICE));
         assertTrue("testCompleteXCard1 - 34", jsCard.getPhones().get("PHONE-1").getContexts().containsKey(Context.WORK));
         assertTrue("testCompleteXCard1 - 35", jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+1-418-656-9254;ext=102"));
         assertTrue("testCompleteXCard1 - 36", jsCard.getPhones().get("PHONE-1").getPref() == null);
-        assertTrue("testCompleteXCard1 - 37", jsCard.getPhones().get("PHONE-2").getFeatures().containsKey(PhoneType.VOICE));
+        assertTrue("testCompleteXCard1 - 37", jsCard.getPhones().get("PHONE-2").getFeatures().containsKey(PhoneFeature.VOICE));
         assertTrue("testCompleteXCard1 - 38", jsCard.getPhones().get("PHONE-2").getContexts().containsKey(Context.WORK));
         assertTrue("testCompleteXCard1 - 39", jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-418-262-6501"));
         assertTrue("testCompleteXCard1 - 40", jsCard.getPhones().get("PHONE-2").getLabel().equals("text,cell,video"));
@@ -108,11 +108,11 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard2 - 15", jsCard.getPhotos().get("PHOTO-1").getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
         assertTrue("testCompleteXCard2 - 16", jsCard.getPhotos().get("PHOTO-1").getMediaType().equals("image/gif"));
         assertTrue("testCompleteXCard2 - 17", jsCard.getPhones().size() == 2);
-        assertTrue("testCompleteXCard2 - 18", jsCard.getPhones().get("PHONE-1").getFeatures().containsKey(PhoneType.VOICE));
+        assertTrue("testCompleteXCard2 - 18", jsCard.getPhones().get("PHONE-1").getFeatures().containsKey(PhoneFeature.VOICE));
         assertTrue("testCompleteXCard2 - 19", jsCard.getPhones().get("PHONE-1").getContexts().containsKey(Context.WORK));
         assertTrue("testCompleteXCard2 - 20", jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+1-111-555-1212"));
         assertTrue("testCompleteXCard2 - 21", jsCard.getPhones().get("PHONE-1").getLabel() == null);
-        assertTrue("testCompleteXCard2 - 22", jsCard.getPhones().get("PHONE-2").getFeatures().containsKey(PhoneType.VOICE));
+        assertTrue("testCompleteXCard2 - 22", jsCard.getPhones().get("PHONE-2").getFeatures().containsKey(PhoneFeature.VOICE));
         assertTrue("testCompleteXCard2 - 23", jsCard.getPhones().get("PHONE-2").getContexts().containsKey(Context.PRIVATE));
         assertTrue("testCompleteXCard2 - 24", jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-404-555-1212"));
         assertTrue("testCompleteXCard2 - 25", jsCard.getPhones().get("PHONE-2").getLabel() == null);

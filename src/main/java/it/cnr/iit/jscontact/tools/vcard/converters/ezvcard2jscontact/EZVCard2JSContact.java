@@ -125,21 +125,21 @@ public class EZVCard2JSContact extends AbstractConverter {
         return getEnumMap(AddressContext.class,jcardTypeParam, null, AddressContext.getAliases());
     }
 
-    private static Map<PhoneType,Boolean> getPhoneFeatures(String jcardTypeParam) {
-        Map<PhoneType,Boolean> phoneTypes = getEnumMap(PhoneType.class,jcardTypeParam, Arrays.asList("home", "work"), null);
+    private static Map<PhoneFeature,Boolean> getPhoneFeatures(String jcardTypeParam) {
+        Map<PhoneFeature,Boolean> phoneTypes = getEnumMap(PhoneFeature.class,jcardTypeParam, Arrays.asList("home", "work"), null);
 
         if (phoneTypes == null)
             phoneTypes = new HashMap<>();
 
         if (phoneTypes.size() == 0)
-            phoneTypes.put(PhoneType.OTHER, Boolean.TRUE);
+            phoneTypes.put(PhoneFeature.OTHER, Boolean.TRUE);
 
         return phoneTypes;
     }
 
-    private static Map<PhoneType,Boolean> getDefaultPhoneFeatures() {
+    private static Map<PhoneFeature,Boolean> getDefaultPhoneFeatures() {
 
-        return new HashMap<PhoneType,Boolean>(){{ put(PhoneType.VOICE, Boolean.TRUE);}};
+        return new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.VOICE, Boolean.TRUE);}};
     }
 
     private static String getLabel(String jcardTypeParam, String[] exclude, String[] include) {
@@ -685,14 +685,14 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (Telephone tel : vcard.getTelephoneNumbers()) {
             String jcardType = getJcardParam(tel.getParameters(), "TYPE");
             Map<Context,Boolean> contexts = getContexts(jcardType);
-            Map<PhoneType,Boolean> phoneFeatures = getPhoneFeatures(jcardType);
+            Map<PhoneFeature,Boolean> phoneFeatures = getPhoneFeatures(jcardType);
             String[] exclude = null;
             if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toArrayOfStrings(contexts.keySet()));
-            if (!phoneFeatures.containsKey(PhoneType.OTHER)) exclude = ArrayUtils.addAll(exclude, EnumUtils.toArrayOfStrings(phoneFeatures.keySet()));
+            if (!phoneFeatures.containsKey(PhoneFeature.OTHER)) exclude = ArrayUtils.addAll(exclude, EnumUtils.toArrayOfStrings(phoneFeatures.keySet()));
             String label = getLabel(jcardType, exclude, null);
             jsContact.addPhone("PHONE-" + (i++), Phone.builder()
                                        .phone(getValue(tel))
-                                       .features((phoneFeatures.containsKey(PhoneType.OTHER) && !labelIncludesTelTypes(label)) ? getDefaultPhoneFeatures() : phoneFeatures)
+                                       .features((phoneFeatures.containsKey(PhoneFeature.OTHER) && !labelIncludesTelTypes(label)) ? getDefaultPhoneFeatures() : phoneFeatures)
                                        .contexts(contexts)
                                        .label(label)
                                        .pref(tel.getPref())
