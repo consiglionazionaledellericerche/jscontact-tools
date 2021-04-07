@@ -37,7 +37,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue {
 
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> in Resource - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Resource - Only Boolean.TRUE allowed")
     Map<Context,Boolean> contexts;
 
     @Builder.Default

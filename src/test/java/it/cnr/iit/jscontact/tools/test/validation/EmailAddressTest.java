@@ -127,7 +127,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
 
         assertTrue("testInvalidEmail2-1", !jsCard.isValid());
-        assertTrue("testInvalidEmail2-2", jsCard.getValidationMessage().equals("invalid Map<Context,Boolean> in EmailAddress - Only Boolean.TRUE allowed"));
+        assertTrue("testInvalidEmail2-2", jsCard.getValidationMessage().equals("invalid Map<Context,Boolean> contexts in EmailAddress - Only Boolean.TRUE allowed"));
     }
 
 

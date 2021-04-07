@@ -23,10 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
-import it.cnr.iit.jscontact.tools.constraints.IdMapConstraint;
-import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstraint;
-import it.cnr.iit.jscontact.tools.constraints.RelatedToConstraint;
-import it.cnr.iit.jscontact.tools.constraints.TitleOrganizationConstraint;
+import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
@@ -124,6 +121,7 @@ public abstract class JSContact extends ValidableObject {
     @Valid
     LocalizedString notes;
 
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> categories in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> categories;
 
     Map<String,String> extensions;

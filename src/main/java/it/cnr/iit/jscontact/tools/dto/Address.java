@@ -35,7 +35,7 @@ import java.util.Map;
 @EqualsAndHashCode(of={"fullAddress"})
 public class Address extends GroupableObject implements HasAltid, IdMapValue {
 
-    @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> in Address - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
     Map<AddressContext,Boolean> contexts;
 
     String label;

@@ -23,7 +23,7 @@ public class EmailAddress implements IdMapValue {
     @Email(message = "invalid email in Email")
     String email;
 
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> in EmailAddress - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in EmailAddress - Only Boolean.TRUE allowed")
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Email - min value must be 1")

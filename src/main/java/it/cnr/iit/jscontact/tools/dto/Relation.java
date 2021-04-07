@@ -31,6 +31,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class Relation extends GroupableObject {
 
-    @BooleanMapConstraint(message = "invalid Map<RelationType,Boolean> in Relation - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<RelationType,Boolean> relation in Relation - Only Boolean.TRUE allowed")
     Map<RelationType,Boolean> relation;
 }
