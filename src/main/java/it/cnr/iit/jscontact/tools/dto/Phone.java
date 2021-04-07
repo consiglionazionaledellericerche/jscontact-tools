@@ -25,7 +25,7 @@ public class Phone implements IdMapValue {
     Map<Context,Boolean> contexts;
 
     @BooleanMapConstraint(message = "invalid Map<PhoneType,Boolean> in Phone - Only Boolean.TRUE allowed")
-    Map<PhoneType,Boolean> features;
+    Map<PhoneFeature,Boolean> features;
 
     String label;
 
