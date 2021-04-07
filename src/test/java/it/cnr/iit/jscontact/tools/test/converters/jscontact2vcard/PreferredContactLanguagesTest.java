@@ -52,8 +52,8 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
                 "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"preferredContactLanguages\":{" +
-                    "\"en\":[{\"type\":\"work\",\"pref\":1}]," +
-                    "\"fr\":[{\"type\":\"work\",\"pref\":2},{\"type\":\"home\"}]" +
+                    "\"en\":[{\"context\":\"work\",\"pref\":1}]," +
+                    "\"fr\":[{\"context\":\"work\",\"pref\":2},{\"context\":\"private\"}]" +
                 "}" +
                 "}";
 

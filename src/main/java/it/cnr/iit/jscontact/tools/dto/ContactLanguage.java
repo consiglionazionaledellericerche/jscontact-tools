@@ -20,20 +20,20 @@ import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Max;
-
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NotNullAnyConstraint(fieldNames={"type","pref"}, message = "at least one not null member is missing in ContactLanguage")
+@NotNullAnyConstraint(fieldNames={"context","pref"}, message = "at least one not null member is missing in ContactLanguage")
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactLanguage extends GroupableObject {
 
-    String type;
+    Context context;
 
     @Min(value=1, message = "invalid pref in ContactLanguage - min value must be 1")
     @Max(value=100, message = "invalid pref in ContactLanguage - max value must be 100")

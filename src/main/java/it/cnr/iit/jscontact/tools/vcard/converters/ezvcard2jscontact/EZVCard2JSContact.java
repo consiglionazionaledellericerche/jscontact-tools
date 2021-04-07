@@ -658,7 +658,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (Language lang : vcard.getLanguages()) {
             jsContact.addContactLanguage(getValue(lang),
                                         ContactLanguage.builder()
-                                                       .type(lang.getType())
+                                                       .context((lang.getType() != null) ? Context.getEnum(lang.getType()) : null)
                                                        .pref(lang.getPref())
                                                        .build()
                                         );

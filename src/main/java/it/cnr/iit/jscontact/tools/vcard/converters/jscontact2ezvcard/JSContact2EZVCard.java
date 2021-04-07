@@ -398,7 +398,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static Language getLanguage(String lang, ContactLanguage cl) {
 
         Language language = new Language(lang);
-        language.setType(cl.getType());
+        language.setType(Context.getVCardType(cl.getContext()));
         language.setPref(cl.getPref());
         return language;
     }
