@@ -85,9 +85,6 @@ public abstract class JSContact extends ValidableObject {
     Map<String,Title> titles;
 
     @Valid
-    LocalizedString[] roles;
-
-    @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     Map<String,EmailAddress> emails;
 
@@ -213,11 +210,7 @@ public abstract class JSContact extends ValidableObject {
         addTitle(id, title, null);
     }
 
-    public void addRole(LocalizedString rl) {
-        roles = ArrayUtils.add(roles, rl);
-    }
-
-    public void addNote(String note) { addNote(note, null); }
+//    public void addNote(String note) { addNote(note, null); }
 
     public void addNote(String note, String language) {
 

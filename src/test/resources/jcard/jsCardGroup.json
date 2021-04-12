@@ -39,13 +39,11 @@
     "titles": {
       "TITLE-1": {
         "title" : {"value": "Research Scientist"}
+      },
+      "TITLE-2": {
+        "title" : {"value": "Project Lead"}
       }
     },
-    "roles": [
-      {
-        "value": "Project Lead"
-      }
-    ],
     "addresses": {
       "ADR-1": {
         "contexts": {"work": true},

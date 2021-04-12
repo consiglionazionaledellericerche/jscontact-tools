@@ -7,8 +7,7 @@
   "en": [{ "pref": 2 }]
   },
   "organizations": { "ORG-1": { "name": { "value": "Example" }} },
-  "titles": {"TITLE-1": { "title": { "value": "Research Scientist" }} },
-  "roles": [ { "value": "Project Lead" } ],
+  "titles": {"TITLE-1": { "title": { "value": "Research Scientist" }},  "TITLE-2": { "title": { "value": "Project Lead" }}},
   "addresses": {
     "ADR-1" : {
       "contexts": {"work": true},

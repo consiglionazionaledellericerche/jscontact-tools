@@ -115,7 +115,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard1 - 14", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
         assertTrue("testCompleteVCard1 - 15", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Example"));
         assertTrue("testCompleteVCard1 - 16", jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Research Scientist"));
-        assertTrue("testCompleteVCard1 - 17", jsCard.getRoles()[0].getValue().equals("Project Lead"));
+        assertTrue("testCompleteVCard1 - 17", jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Project Lead"));
         assertTrue("testCompleteVCard1 - 18", jsCard.getAddresses().size() == 2);
         assertTrue("testCompleteVCard1 - 19", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada"));
         assertTrue("testCompleteVCard1 - 20", jsCard.getAddresses().get("ADR-1").getExtension().equals("Suite 1234"));

@@ -156,7 +156,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 14", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
         assertTrue("testCompleteJCard1 - 15", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Example"));
         assertTrue("testCompleteJCard1 - 16", jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Research Scientist"));
-        assertTrue("testCompleteJCard1 - 17", jsCard.getRoles()[0].getValue().equals("Project Lead"));
+        assertTrue("testCompleteJCard1 - 17", jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Project Lead"));
         assertTrue("testCompleteJCard1 - 18", jsCard.getAddresses().size() == 2);
         assertTrue("testCompleteJCard1 - 19", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada"));
         assertTrue("testCompleteJCard1 - 20", jsCard.getAddresses().get("ADR-1").getExtension().equals("Suite 1234"));

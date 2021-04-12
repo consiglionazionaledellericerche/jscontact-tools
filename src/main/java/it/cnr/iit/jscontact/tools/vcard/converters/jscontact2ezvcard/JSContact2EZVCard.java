@@ -665,25 +665,6 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static void fillRoles(VCard vcard, JSContact jsContact) {
-
-        if (jsContact.getRoles() == null)
-            return;
-
-        Integer altId = Integer.parseInt("1");
-        for (LocalizedString localized : jsContact.getRoles()) {
-            if (localized.getLocalizations() == null)
-                vcard.getRoles().add(getTextProperty(new Role(localized.getValue()), localized.getLanguage()));
-            else {
-                vcard.getRoles().add(getTextProperty(new Role(localized.getValue()), localized.getLanguage(), altId));
-                for (Map.Entry<String,String> localization : localized.getLocalizations().entrySet())
-                    vcard.getRoles().add(getTextProperty(new Role(localization.getValue()), localization.getKey(), altId));
-                altId ++;
-            }
-        }
-    }
-
-
     private static void fillCategories(VCard vcard, JSContact jsContact) {
 
         if (jsContact.getCategories() == null)
@@ -927,7 +908,6 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillPhotos(vCard, jsContact);
         fillOnlines(vCard, jsContact);
         fillTitles(vCard, jsContact);
-        fillRoles(vCard, jsContact);
         fillOrganizations(vCard, jsContact);
         fillCategories(vCard, jsContact);
         fillNotes(vCard, jsContact);

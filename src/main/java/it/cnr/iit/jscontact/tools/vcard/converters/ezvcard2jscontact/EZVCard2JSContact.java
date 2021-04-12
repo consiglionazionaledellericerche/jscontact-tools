@@ -841,8 +841,9 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
         Collections.sort(roles);
 
+        int i = (jsContact.getTitles() != null) ? jsContact.getTitles().size() + 1 : 1;
         for (LocalizedString role : roles)
-            jsContact.addRole(role);
+            jsContact.addTitle("TITLE-" + (i++), role);
     }
 
     private static Map<String,String> getOrganizationItemLocalizations(LocalizedString organization, int organizationItemIndex) {
