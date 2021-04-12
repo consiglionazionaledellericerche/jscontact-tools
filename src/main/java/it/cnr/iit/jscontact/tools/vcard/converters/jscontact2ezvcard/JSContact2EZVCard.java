@@ -92,10 +92,34 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
+
+    private static void addNameComponent(StringJoiner joiner, NameComponent[] name, NameComponentType type) {
+
+        for (NameComponent component : name)
+            if (component.getType() == type)
+                joiner.add(component.getValue());
+    }
+
+    private static FormattedName getFormattedName(NameComponent[] name) {
+
+        StringJoiner joiner = new StringJoiner(SPACE_ARRAY_DELIMITER);
+        addNameComponent(joiner, name,NameComponentType.PREFIX);
+        addNameComponent(joiner, name,NameComponentType.PERSONAL);
+        addNameComponent(joiner, name,NameComponentType.SURNAME);
+        addNameComponent(joiner, name,NameComponentType.ADDITIONAL);
+        addNameComponent(joiner, name,NameComponentType.SUFFIX);
+        return new FormattedName(joiner.toString());
+    }
+
     private static void fillFormattedNames(VCard vcard, JSContact jsContact) {
 
-        if (jsContact.getFullName() == null)
+        if (jsContact.getFullName() == null || jsContact.getFullName().getValue().isEmpty()) {
+            if (jsContact.getName() != null)
+                vcard.setFormattedName(getFormattedName(jsContact.getName()));
+            else
+                vcard.setFormattedName(jsContact.getUid());
             return;
+        }
 
         FormattedName fn = new FormattedName(jsContact.getFullName().getValue());
         fn.setLanguage(jsContact.getFullName().getLanguage());

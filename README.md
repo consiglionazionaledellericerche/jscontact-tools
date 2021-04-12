@@ -280,6 +280,10 @@ All the methods take in input a list of JSContact (JSCard or JSCardGroup) instan
 
 7.  The JSCard/JSCardGroup "titles" property is mapped onto the vCard TITLE property.
     
+8.  The "timeZone" property is always mapped onto a TZ parameter preserving the time zone name.     
+
+9.  It the "fullName" property is missing, the FN value is generated starting from the "name" property. If the "name" property is missing as well, the FN value is set to the "uid" property.
+
 ### Conversion examples
 
 Here in the following two examples of conversion between vCard and JSContact top most objects.

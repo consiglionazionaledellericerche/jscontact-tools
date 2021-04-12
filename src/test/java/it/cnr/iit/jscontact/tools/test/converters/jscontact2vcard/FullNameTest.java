@@ -25,8 +25,20 @@ import static org.junit.Assert.assertTrue;
 
 public class FullNameTest extends JSContact2VCardTest {
 
+
     @Test
-    public void testEmptyFullNameValid() throws IOException, CardException {
+    public void testMissingFullName() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testMissingFullName - 1",vcard.getFormattedName().getValue().equals(vcard.getUid().getValue()));
+
+    }
+
+    @Test
+    public void testEmptyFullName() throws IOException, CardException {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
@@ -35,9 +47,27 @@ public class FullNameTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testEmptyFullNameValid - 1",vcard.getFormattedName().getValue().isEmpty());
+        assertTrue("testEmptyFullName - 1",vcard.getFormattedName().getValue().equals(vcard.getUid().getValue()));
 
     }
+
+    @Test
+    public void testEmptyFullNameWithValidName() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\":[ " +
+                "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                "{ \"value\":\"John\", \"type\": \"personal\" }," +
+                "{ \"value\":\"Public\", \"type\": \"surname\" }," +
+                "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                "] " +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testEmptyFullNameWithValidName - 1",vcard.getFormattedName().getValue().equals("Mr. John Public Quinlan Esq."));
+    }
+
 
     @Test
     public void testFullNameValid1() throws IOException, CardException {
