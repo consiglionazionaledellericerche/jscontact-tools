@@ -177,24 +177,11 @@ public abstract class JSContact extends ValidableObject {
         photos.put(id, f);
     }
 
-    private void addOrganization(String id, LocalizedString name, LocalizedString[] units) {
-
-        if(organizations == null)
-            organizations = new HashMap<>();
-
-        if (!organizations.containsKey(id))
-            organizations.put(id,Organization.builder().name(name).units(units).build());
-    }
-
     public void addOrganization(String id, Organization organization) {
         if(organizations == null)
             organizations = new HashMap<>();
 
         organizations.put(id,organization);
-    }
-
-    public void addOrganization(String id, LocalizedString name) {
-        addOrganization(id, name, null);
     }
 
     private void addTitle(String id, LocalizedString title, String organization) {
@@ -209,8 +196,6 @@ public abstract class JSContact extends ValidableObject {
     public void addTitle(String id, LocalizedString title) {
         addTitle(id, title, null);
     }
-
-//    public void addNote(String note) { addNote(note, null); }
 
     public void addNote(String note, String language) {
 
