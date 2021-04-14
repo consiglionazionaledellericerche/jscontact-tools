@@ -43,7 +43,7 @@ public class JCardGroupTest extends JCard2JSContactTest {
                 "[\"member\", {}, \"uri\", \"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"] " +
                 "]]" +
                 "]";
-        JSCardGroup jsCardGroup = (JSCardGroup) jCard2JSContact.convert(jcard).get(0);
+        jCard2JSContact.convert(jcard);
     }
 
     @Test
@@ -186,7 +186,7 @@ public class JCardGroupTest extends JCard2JSContactTest {
         assertTrue("testJCardGroupValid4 - 9",jsCardGroup.getMembers().get("sip:subscriber3@example.com") == Boolean.TRUE);
         assertTrue("testJCardGroupValid4 - 10",jsCardGroup.getMembers().get("tel:+1-418-555-5555") == Boolean.TRUE);
 
-        List<String> keys = new ArrayList<String>(jsCardGroup.getMembers().keySet());
+        List<String> keys = new ArrayList<>(jsCardGroup.getMembers().keySet());
         assertTrue("testJCardGroupValid4 - 11",keys.get(0).equals("tel:+1-418-555-5555"));
         assertTrue("testJCardGroupValid4 - 12",keys.get(1).equals("xmpp:subscriber2@example.com"));
 

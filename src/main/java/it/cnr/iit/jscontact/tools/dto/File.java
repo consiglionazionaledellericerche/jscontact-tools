@@ -1,8 +1,10 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -11,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class File {
+public class File implements IdMapValue {
 
     @NotNull(message = "href is missing in File")
     @NonNull
@@ -19,9 +21,11 @@ public class File {
 
     String mediaType;
 
-    @Min(value=0, message = "invalid size in File")
+    @Min(value=0, message = "invalid size in File - min value must be 0")
     int size;
 
-    Boolean isPreferred;
+    @Min(value=1, message = "invalid pref in File - min value must be 1")
+    @Max(value=100, message = "invalid pref in File - max value must be 100")
+    Integer pref;
 
 }

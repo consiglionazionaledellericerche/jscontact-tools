@@ -37,12 +37,11 @@ public class NotesTest extends VCard2JSContactTest {
 
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testNotesWithAltid1 - 1",jsCard.getNotes()!=null);
-        assertTrue("testNotesWithAltid1 - 2",jsCard.getNotes().length == 1);
-        assertTrue("testNotesWithAltid1 - 3",jsCard.getNotes()[0].getValue().equals("This fax number is operational 0800 to 1715 EST, Mon-Fri"));
-        assertTrue("testNotesWithAltid1 - 4",jsCard.getNotes()[0].getLanguage() == null);
-        assertTrue("testNotesWithAltid1 - 5",jsCard.getNotes()[0].getLocalizations() != null);
-        assertTrue("testNotesWithAltid1 - 6",jsCard.getNotes()[0].getLocalizations().size() == 1);
-        assertTrue("testNotesWithAltid1 - 7",jsCard.getNotes()[0].getLocalizations().get("it").equals("Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven"));
+        assertTrue("testNotesWithAltid1 - 2",jsCard.getNotes().getValue().equals("This fax number is operational 0800 to 1715 EST, Mon-Fri"));
+        assertTrue("testNotesWithAltid1 - 3",jsCard.getNotes().getLanguage() == null);
+        assertTrue("testNotesWithAltid1 - 4",jsCard.getNotes().getLocalizations() != null);
+        assertTrue("testNotesWithAltid1 - 5",jsCard.getNotes().getLocalizations().size() == 1);
+        assertTrue("testNotesWithAltid1 - 6",jsCard.getNotes().getLocalizations().get("it").equals("Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven"));
     }
 
     @Test
@@ -58,35 +57,9 @@ public class NotesTest extends VCard2JSContactTest {
 
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testNotesWithAltid2 - 1",jsCard.getNotes()!=null);
-        assertTrue("testNotesWithAltid2 - 2",jsCard.getNotes().length == 2);
-        assertTrue("testNotesWithAltid2 - 3",jsCard.getNotes()[0].getValue().equals("This fax number is operational 0800 to 1715 EST, Mon-Fri"));
-        assertTrue("testNotesWithAltid2 - 4",jsCard.getNotes()[0].getLanguage() == null);
-        assertTrue("testNotesWithAltid2 - 5",jsCard.getNotes()[0].getLocalizations().get("it").equals("Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven"));
-        assertTrue("testNotesWithAltid2 - 6",jsCard.getNotes()[1].getValue().equals("This is another note"));
-        assertTrue("testNotesWithAltid2 - 7",jsCard.getNotes()[1].getLanguage() == null);
-        assertTrue("testNotesWithAltid2 - 8",jsCard.getNotes()[1].getLocalizations() == null);
-    }
-
-    @Test
-    public void testNotesWithAltid3() throws IOException, CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "NOTE;ALTID=1:This fax number is operational 0800 to 1715 EST, Mon-Fri\n" +
-                "NOTE;ALTID=1;LANGUAGE=it:Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven\n" +
-                "NOTE;PREF=1:This is another note\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testNotesWithAltid3 - 1",jsCard.getNotes()!=null);
-        assertTrue("testNotesWithAltid3 - 2",jsCard.getNotes().length == 2);
-        assertTrue("testNotesWithAltid3 - 3",jsCard.getNotes()[1].getValue().equals("This fax number is operational 0800 to 1715 EST, Mon-Fri"));
-        assertTrue("testNotesWithAltid3 - 4",jsCard.getNotes()[1].getLanguage() == null);
-        assertTrue("testNotesWithAltid3 - 5",jsCard.getNotes()[1].getLocalizations().get("it").equals("Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven"));
-        assertTrue("testNotesWithAltid3 - 6",jsCard.getNotes()[0].getValue().equals("This is another note"));
-        assertTrue("testNotesWithAltid3 - 7",jsCard.getNotes()[0].getLanguage() == null);
-        assertTrue("testNotesWithAltid3 - 8",jsCard.getNotes()[0].getLocalizations() == null);
+        assertTrue("testNotesWithAltid2 - 2",jsCard.getNotes().getValue().equals("This fax number is operational 0800 to 1715 EST, Mon-Fri\nThis is another note"));
+        assertTrue("testNotesWithAltid2 - 3",jsCard.getNotes().getLanguage() == null);
+        assertTrue("testNotesWithAltid2 - 4",jsCard.getNotes().getLocalizations().get("it").equals("Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven"));
     }
 
 }

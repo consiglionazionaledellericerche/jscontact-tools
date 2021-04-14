@@ -54,11 +54,16 @@ public enum AddressContext implements JCardTypeDerivedEnum {
         return EnumUtils.getEnum(AddressContext.class, value, aliases);
     }
 
-
     @Override
     public String toString() {
         return value;
     }
+
+    @JsonIgnore
+    public static String getVCardType(AddressContext context) {
+        return EnumUtils.getVCardType(context);
+    }
+
 
 }
 

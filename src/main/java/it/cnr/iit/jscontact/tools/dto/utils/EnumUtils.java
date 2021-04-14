@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto.utils;
 
+import java.util.Collection;
 import java.util.Map;
 
 public class EnumUtils {
@@ -35,5 +36,33 @@ public class EnumUtils {
         }
         throw new IllegalArgumentException();
     }
+
+    public static <E extends Enum <E>> String getVCardType(E context) {
+
+        if (context == null)
+            return null;
+
+        if (context.toString().equals("work"))
+            return "work";
+        else if (context.toString().equals("private"))
+            return "home";
+        else
+            return null;
+    }
+
+    public static <E extends Enum <E>> String[] toArrayOfStrings(Collection<E> items) {
+
+        if (items == null)
+            return null;
+
+        String[] array = new String[items.size()];
+        int i = 0;
+        for (E item : items)
+            array[i++] = item.toString();
+
+        return array;
+    }
+
+
 
 }

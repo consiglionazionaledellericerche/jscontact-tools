@@ -51,7 +51,7 @@ public class LocalizedString extends GroupableObject implements HasAltid, HasPre
     public void addLocalization(String language, String value) {
 
         if (localizations == null)
-            localizations = new HashMap<String, String>();
+            localizations = new HashMap<>();
 
         localizations.put((language == null) ? "en" : language, value);
     }

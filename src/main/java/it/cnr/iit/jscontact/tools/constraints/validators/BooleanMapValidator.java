@@ -21,33 +21,27 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Map;
 
-public class BooleanMapValidator implements ConstraintValidator<BooleanMapConstraint, Map<String,Boolean>> {
+public class BooleanMapValidator implements ConstraintValidator<BooleanMapConstraint, Map<?,Boolean>> {
 
     public void initialize(BooleanMapConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(Map<String,Boolean> map, ConstraintValidatorContext context) {
+    public boolean isValid(Map<?,Boolean> map, ConstraintValidatorContext context) {
 
         if (map == null)
             return true;
 
-        try {
+        for (Boolean value : map.values()){
 
-            for (Boolean value : map.values()){
+            if (value == null)
+                return false;
 
-                if (value == null)
-                    return false;
+            if (value == Boolean.FALSE)
+                return false;
 
-                if (value == Boolean.FALSE)
-                    return false;
-
-            }
-
-            return true;
-
-        } catch (Exception e) {
-            return false;
         }
+
+        return true;
     }
 
 }

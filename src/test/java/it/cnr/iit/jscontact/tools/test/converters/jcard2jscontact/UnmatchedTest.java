@@ -49,7 +49,7 @@ public class UnmatchedTest extends JCard2JSContactTest {
 
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testUnmatchedParameter - 1",jsCard.getExtensions().size() == 1);
-        assertTrue("testUnmatchedParameter - 2",jsCard.getExtensions().get("ietf.org/rfc6350/n/sort-as").equals("Public,John"));
+        assertTrue("testUnmatchedParameter - 2",jsCard.getExtensions().get("ietf.org/rfc6350/N/SORT-AS").equals("Public,John"));
 
     }
 

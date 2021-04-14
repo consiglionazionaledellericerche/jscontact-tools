@@ -36,14 +36,14 @@ public class NameTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testNameValid1 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
         assertTrue("testNameValid1 - 2",jsCard.getName().length == 5);
-        assertTrue("testNameValid1 - 3",jsCard.getName()[0].getType() == NameComponentType.SURNAME);
-        assertTrue("testNameValid1 - 4",jsCard.getName()[0].getValue().equals("Public"));
+        assertTrue("testNameValid1 - 3",jsCard.getName()[0].getType() == NameComponentType.PREFIX);
+        assertTrue("testNameValid1 - 4",jsCard.getName()[0].getValue().equals("Mr."));
         assertTrue("testNameValid1 - 5",jsCard.getName()[1].getType() == NameComponentType.PERSONAL);
         assertTrue("testNameValid1 - 6",jsCard.getName()[1].getValue().equals("John"));
-        assertTrue("testNameValid1 - 7",jsCard.getName()[2].getType() == NameComponentType.ADDITIONAL);
-        assertTrue("testNameValid1 - 8",jsCard.getName()[2].getValue().equals("Quinlan"));
-        assertTrue("testNameValid1 - 9",jsCard.getName()[3].getType() == NameComponentType.PREFIX);
-        assertTrue("testNameValid1 - 10",jsCard.getName()[3].getValue().equals("Mr."));
+        assertTrue("testNameValid1 - 7",jsCard.getName()[2].getType() == NameComponentType.SURNAME);
+        assertTrue("testNameValid1 - 8",jsCard.getName()[2].getValue().equals("Public"));
+        assertTrue("testNameValid1 - 9",jsCard.getName()[3].getType() == NameComponentType.ADDITIONAL);
+        assertTrue("testNameValid1 - 10",jsCard.getName()[3].getValue().equals("Quinlan"));
         assertTrue("testNameValid1 - 11",jsCard.getName()[4].getType() == NameComponentType.SUFFIX);
         assertTrue("testNameValid1 - 12",jsCard.getName()[4].getValue().equals("Esq."));
 
@@ -59,19 +59,19 @@ public class NameTest extends JCard2JSContactTest {
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testNameValid2 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
-        assertTrue("testNameValid2 - 2",jsCard.getName().length == 6);
-        assertTrue("testNameValid2 - 3",jsCard.getName()[0].getType() == NameComponentType.SURNAME);
-        assertTrue("testNameValid2 - 4",jsCard.getName()[0].getValue().equals("Public"));
+        assertTrue("testNameValid2 - 2",jsCard.getName().length == 5);
+        assertTrue("testNameValid2 - 3",jsCard.getName()[0].getType() == NameComponentType.PREFIX);
+        assertTrue("testNameValid2 - 4",jsCard.getName()[0].getValue().equals("Mr."));
         assertTrue("testNameValid2 - 5",jsCard.getName()[1].getType() == NameComponentType.PERSONAL);
         assertTrue("testNameValid2 - 6",jsCard.getName()[1].getValue().equals("John"));
-        assertTrue("testNameValid2 - 7",jsCard.getName()[2].getType() == NameComponentType.ADDITIONAL);
-        assertTrue("testNameValid2 - 8",jsCard.getName()[2].getValue().equals("Quinlan"));
-        assertTrue("testNameValid2 - 9",jsCard.getName()[3].getType() == NameComponentType.PREFIX);
-        assertTrue("testNameValid2 - 10",jsCard.getName()[3].getValue().equals("Mr."));
+        assertTrue("testNameValid2 - 7",jsCard.getName()[2].getType() == NameComponentType.SURNAME);
+        assertTrue("testNameValid2 - 8",jsCard.getName()[2].getValue().equals("Public"));
+        assertTrue("testNameValid2 - 9",jsCard.getName()[3].getType() == NameComponentType.ADDITIONAL);
+        assertTrue("testNameValid2 - 10",jsCard.getName()[3].getValue().equals("Quinlan"));
         assertTrue("testNameValid2 - 11",jsCard.getName()[4].getType() == NameComponentType.SUFFIX);
         assertTrue("testNameValid2 - 12",jsCard.getName()[4].getValue().equals("Esq."));
-        assertTrue("testNameValid2 - 12",jsCard.getName()[5].getType() == NameComponentType.NICKNAME);
-        assertTrue("testNameValid2 - 13",jsCard.getName()[5].getValue().equals("Johnny"));
+        assertTrue("testNameValid2 - 12",jsCard.getNickNames().length == 1);
+        assertTrue("testNameValid2 - 13",jsCard.getNickNames()[0].getValue().equals("Johnny"));
 
     }
 
@@ -86,21 +86,20 @@ public class NameTest extends JCard2JSContactTest {
                 "]]";
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testNameValid3 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
-        assertTrue("testNameValid3 - 2",jsCard.getName().length == 7);
-        assertTrue("testNameValid3 - 3",jsCard.getName()[0].getType() == NameComponentType.SURNAME);
-        assertTrue("testNameValid3 - 4",jsCard.getName()[0].getValue().equals("Public"));
+        assertTrue("testNameValid3 - 2",jsCard.getName().length == 5);
+        assertTrue("testNameValid3 - 3",jsCard.getName()[0].getType() == NameComponentType.PREFIX);
+        assertTrue("testNameValid3 - 4",jsCard.getName()[0].getValue().equals("Mr."));
         assertTrue("testNameValid3 - 5",jsCard.getName()[1].getType() == NameComponentType.PERSONAL);
         assertTrue("testNameValid3 - 6",jsCard.getName()[1].getValue().equals("John"));
-        assertTrue("testNameValid3 - 7",jsCard.getName()[2].getType() == NameComponentType.ADDITIONAL);
-        assertTrue("testNameValid3 - 8",jsCard.getName()[2].getValue().equals("Quinlan"));
-        assertTrue("testNameValid3 - 9",jsCard.getName()[3].getType() == NameComponentType.PREFIX);
-        assertTrue("testNameValid3 - 10",jsCard.getName()[3].getValue().equals("Mr."));
+        assertTrue("testNameValid3 - 7",jsCard.getName()[2].getType() == NameComponentType.SURNAME);
+        assertTrue("testNameValid3 - 8",jsCard.getName()[2].getValue().equals("Public"));
+        assertTrue("testNameValid3 - 9",jsCard.getName()[3].getType() == NameComponentType.ADDITIONAL);
+        assertTrue("testNameValid3 - 10",jsCard.getName()[3].getValue().equals("Quinlan"));
         assertTrue("testNameValid3 - 11",jsCard.getName()[4].getType() == NameComponentType.SUFFIX);
         assertTrue("testNameValid3 - 12",jsCard.getName()[4].getValue().equals("Esq."));
-        assertTrue("testNameValid3 - 12",jsCard.getName()[5].getType() == NameComponentType.NICKNAME);
-        assertTrue("testNameValid3 - 13",jsCard.getName()[5].getValue().equals("Kid"));
-        assertTrue("testNameValid3 - 14",jsCard.getName()[6].getType() == NameComponentType.NICKNAME);
-        assertTrue("testNameValid3 - 15",jsCard.getName()[6].getValue().equals("Johnny"));
+        assertTrue("testNameValid3 - 12",jsCard.getNickNames().length == 2);
+        assertTrue("testNameValid3 - 13",jsCard.getNickNames()[0].getValue().equals("Kid"));
+        assertTrue("testNameValid3 - 14",jsCard.getNickNames()[1].getValue().equals("Johnny"));
 
     }
 

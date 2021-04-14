@@ -23,13 +23,11 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
-import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -82,12 +80,8 @@ public class SerializationTest {
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
         objectMapper.registerModule(module);
         JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
-        for (int i=0; i<jsContacts.length; i++ ) {
-            if (jsContacts[i] instanceof JSCardGroup)
-                assertTrue("testSerialization4", ((JSCardGroup) jsContacts[i]).isValid());
-            else
-                assertTrue("testSerialization4", ((JSCard) jsContacts[i]).isValid());
-        }
+        for (JSContact jsContact : jsContacts)
+            assertTrue("testSerialization4", jsContact.isValid());
         String serialized = objectMapper.writeValueAsString(jsContacts);
         assertEquals(objectMapper.readTree(json), objectMapper.readTree(serialized));
 

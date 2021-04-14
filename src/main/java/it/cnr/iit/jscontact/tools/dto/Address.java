@@ -17,10 +17,15 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
@@ -28,11 +33,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"fullAddress"})
-public class Address extends GroupableObject implements HasAltid {
-
-    AddressContext context;
-
-    String label;
+public class Address extends GroupableObject implements HasAltid, IdMapValue {
 
     LocalizedString fullAddress;
 
@@ -58,7 +59,14 @@ public class Address extends GroupableObject implements HasAltid {
 
     String timeZone;
 
-    Boolean isPreferred;
+    @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
+    Map<AddressContext,Boolean> contexts;
+
+    String label;
+
+    @Min(value=1, message = "invalid pref in Address - min value must be 1")
+    @Max(value=100, message = "invalid pref in Address - max value must be 100")
+    Integer pref;
 
     @JsonIgnore
     String altid;

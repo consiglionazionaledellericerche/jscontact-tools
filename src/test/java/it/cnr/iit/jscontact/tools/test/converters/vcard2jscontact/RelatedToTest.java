@@ -15,8 +15,8 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.RelationType;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.RelationType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "RELATED;TYPE=teammate:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        vCard2JSContact.convert(vcard);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class RelatedToTest extends VCard2JSContactTest {
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testRelatedToValid2 - 1",jsCard.getRelatedTo().size() == 1);
         assertTrue("testRelatedToValid2 - 2",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size()== 1);
-        assertTrue("testRelatedToValid2 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().get(RelationType.FRIEND.getValue()) == Boolean.TRUE);
+        assertTrue("testRelatedToValid2 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().get(RelationType.FRIEND) == Boolean.TRUE);
 
     }
 
@@ -84,9 +84,9 @@ public class RelatedToTest extends VCard2JSContactTest {
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testRelatedToValid3 - 1",jsCard.getRelatedTo().size() == 3);
         assertTrue("testRelatedToValid3 - 2",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size()== 1);
-        assertTrue("testRelatedToValid3 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().get(RelationType.FRIEND.getValue()) == Boolean.TRUE);
+        assertTrue("testRelatedToValid3 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().get(RelationType.FRIEND) == Boolean.TRUE);
         assertTrue("testRelatedToValid3 - 4",jsCard.getRelatedTo().get("http://example.com/directory/jdoe.vcf").getRelation().size()== 1);
-        assertTrue("testRelatedToValid3 - 5",jsCard.getRelatedTo().get("http://example.com/directory/jdoe.vcf").getRelation().get(RelationType.CONTACT.getValue()) == Boolean.TRUE);
+        assertTrue("testRelatedToValid3 - 5",jsCard.getRelatedTo().get("http://example.com/directory/jdoe.vcf").getRelation().get(RelationType.CONTACT) == Boolean.TRUE);
         assertTrue("testRelatedToValid3 - 6",jsCard.getRelatedTo().get("Please contact my assistant Jane Doe for any inquiries.").getRelation() == null);
 
     }

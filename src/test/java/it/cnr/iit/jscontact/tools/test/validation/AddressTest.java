@@ -20,6 +20,9 @@ import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertTrue;
 
 public class AddressTest extends AbstractTest {
@@ -27,26 +30,28 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testInvalidCountryCode() {
 
-        Address address = Address.builder()
-                                 .countryCode("ita")
-                                 .build();
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                                                                                .countryCode("ita")
+                                                                                .build());
+                                                                        }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .addresses(new Address[]{address})
+                .addresses(addresses)
                 .build();
-        assertTrue("testInvalidCountryCode", !jsCard.isValid());
-
+        assertTrue("testInvalidCountryCode-1", !jsCard.isValid());
+        assertTrue("testInvalidCountryCode-2", jsCard.getValidationMessage().equals("invalid countryCode in Address"));
     }
 
     @Test
     public void testValidCountryCode() {
 
-        Address address = Address.builder()
-                .countryCode("it")
-                .build();
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                                                                                .countryCode("it")
+                                                                                .build());
+                                                                       }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .addresses(new Address[]{address})
+                .addresses(addresses)
                 .build();
 
         assertTrue("testValidCountryCode", jsCard.isValid());
@@ -56,31 +61,48 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testInvalidCoordinates() {
 
-        Address address = Address.builder()
-                .coordinates("46.772673,-71.282945")
-                .build();
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                                                                            .coordinates("46.772673,-71.282945")
+                                                                            .build());
+                                                                    }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .addresses(new Address[]{address})
+                .addresses(addresses)
                 .build();
 
-        assertTrue("testInvalidCoordinates", !jsCard.isValid());
-
+        assertTrue("testInvalidCoordinates-1", !jsCard.isValid());
+        assertTrue("testInvalidCoordinates-2", jsCard.getValidationMessage().equals("invalid coordinates in Address"));
     }
 
     @Test
     public void testValidCoordinates() {
 
-        Address address = Address.builder()
-                .coordinates("geo:46.772673,-71.282945")
-                .build();
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                                                                        .coordinates("geo:46.772673,-71.282945")
+                                                                        .build());
+                                                                       }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .addresses(new Address[]{address})
+                .addresses(addresses)
                 .build();
 
         assertTrue("testValidCoordinates", jsCard.isValid());
 
+    }
+
+    @Test
+    public void testInvalidAddressId() {
+
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("$$$$$", Address.builder()
+                .coordinates("geo:46.772673,-71.282945")
+                .build());
+        }};
+        JSCard jsCard = JSCard.builder()
+                .uid(getUUID())
+                .addresses(addresses)
+                .build();
+        assertTrue("testInvalidAddressId-1", !jsCard.isValid());
+        assertTrue("testInvalidAddressId-2", jsCard.getValidationMessage().equals("invalid Id in Map<Id,Address>"));
     }
 
 }

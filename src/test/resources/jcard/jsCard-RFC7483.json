@@ -1,60 +1,67 @@
 {
-"uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
-"fullName": { "value": "Joe User" },
-"kind": "individual",
-"preferredContactLanguages": {
-"fr": [{ "preference": 1 }],
-"en": [{ "preference": 2 }]
-},
-"organizations": [ { "value": "Example" } ],
-"jobTitles": [ { "value": "Research Scientist" } ],
-"roles": [ { "value": "Project Lead" } ],
-"addresses": [
-{
-"context": "work",
-"extension": "Suite 1234",
-"street": "4321 Rue Somewhere",
-"locality": "Quebec",
-"region": "QC",
-"postcode": "G1V 2M2",
-"country": "Canada",
-"coordinates": "geo:46.772673,-71.282945",
-"timeZone": "Etc/GMT+5"
-},
-{
-"context": "private",
-"fullAddress": {
-"value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
-}
-}
-],
-"phones": [
-{
-"context": "work",
-"type": "voice",
-"labels": { "cell" : true, "video" : true, "text" : true},
-"isPreferred": true,
-"value": "tel:+1-555-555-1234;ext=102"
-}
-],
-"emails": [
-{
-"context": "work",
-"value": "joe.user@example.com"
-}
-],
-"online": [
-{
-"context": "work",
-"type": "uri",
-"labels": { "key" : true },
-"value": "http://www.example.com/joe.user/joe.asc"
-},
-{
-"context": "private",
-"type": "uri",
-"labels": { "url" : true },
-"value": "http://example.org"
-}
-]
+  "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
+  "fullName": { "value": "Joe User" },
+  "kind": "individual",
+  "preferredContactLanguages": {
+  "fr": [{ "pref": 1 }],
+  "en": [{ "pref": 2 }]
+  },
+  "organizations": { "ORG-1": { "name": { "value": "Example" }} },
+  "titles": {"TITLE-1": { "title": { "value": "Research Scientist" }},  "TITLE-2": { "title": { "value": "Project Lead" }}},
+  "addresses": {
+    "ADR-1" : {
+      "contexts": {"work": true},
+      "extension": "Suite 1234",
+      "street": "4321 Rue Somewhere",
+      "locality": "Quebec",
+      "region": "QC",
+      "postcode": "G1V 2M2",
+      "country": "Canada",
+      "coordinates": "geo:46.772673,-71.282945",
+      "timeZone": "Etc/GMT+5"
+    },
+    "ADR-2" : {
+      "contexts": {"private": true},
+      "fullAddress": {
+        "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+      }
+    }
+  },
+  "phones": {
+    "PHONE-1": {
+      "contexts": {
+        "work": true
+      },
+      "features": {
+        "voice": true
+      },
+      "label": "cell,video,text",
+      "pref": 1,
+      "phone": "tel:+1-555-555-1234;ext=102"
+    }
+  },
+  "emails": {
+    "EMAIL-1": {
+      "contexts": {
+        "work": true
+      },
+      "email": "joe.user@example.com"
+    }
+  },
+  "online": {
+    "KEY-1": {
+      "contexts": {
+        "work": true
+      },
+      "type": "uri",
+      "label": "key",
+      "resource": "http://www.example.com/joe.user/joe.asc"
+    },
+    "URL-1": {
+      "contexts": {"private": true},
+      "type": "uri",
+      "label": "url",
+      "resource": "http://example.org"
+    }
+  }
 }

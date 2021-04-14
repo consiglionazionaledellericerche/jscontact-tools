@@ -18,34 +18,42 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.constraints.UriResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 
+@UriResourceConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements HasIndex, Comparable<Resource> {
+public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue {
 
-    ResourceContext context;
-
-    String type;
-
-    @BooleanMapConstraint(message = "invalid labels map in Resource")
-    Map<String,Boolean> labels;
-
-    @NotNull(message = "value is missing in Resource")
+    @NotNull(message = "resource is missing in Resource")
     @NonNull
-    String value;
+    String resource;
+
+    @Builder.Default
+    ResourceType type = ResourceType.OTHER;
 
     String mediaType;
 
-    Boolean isPreferred;
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Resource - Only Boolean.TRUE allowed")
+    Map<Context,Boolean> contexts;
+
+    String label;
+
+    @Min(value=1, message = "invalid pref in Resource - min value must be 1")
+    @Max(value=100, message = "invalid pref in Resource - max value must be 100")
+    Integer pref;
 
     @JsonIgnore
     Integer index;

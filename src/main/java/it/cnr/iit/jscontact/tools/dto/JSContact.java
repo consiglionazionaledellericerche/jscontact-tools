@@ -15,15 +15,18 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import it.cnr.iit.jscontact.tools.constraints.EmailsConstraint;
-import it.cnr.iit.jscontact.tools.constraints.JSContactMapsConstraint;
-import it.cnr.iit.jscontact.tools.constraints.OnlineConstraint;
-import it.cnr.iit.jscontact.tools.constraints.PhonesConstraint;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
+import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindSerializer;
+import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -33,7 +36,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 
-@JSContactMapsConstraint
+@TitleOrganizationConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @Getter
@@ -43,57 +46,74 @@ import java.util.*;
 @SuperBuilder
 public abstract class JSContact extends ValidableObject {
 
-    @NotNull(message = "uid is missing in JSCard")
+    //Metadata properties
+    @NotNull(message = "uid is missing in JSContact")
     @NonNull
     String uid;
 
     String prodId;
 
-    String updated;
+    @JsonSerialize(using = CalendarSerializer.class)
+    @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
+    Calendar created;
+
+    @JsonSerialize(using = CalendarSerializer.class)
+    @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
+    Calendar updated;
 
     @JsonSerialize(using = KindSerializer.class)
     @JsonDeserialize(using = KindDeserializer.class)
     KindType kind;
 
+    @RelatedToConstraint
     Map<String,Relation> relatedTo;
+
+    //Name and Organization properties
+    @Valid
+    NameComponent[] name;
 
     @Valid
     LocalizedString fullName;
 
     @Valid
-    NameComponent[] name;
+    LocalizedString[] nickNames;
 
     @Valid
-    LocalizedString[] organizations;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
+    Map<String,Organization> organizations;
 
     @Valid
-    LocalizedString[] jobTitles;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
+    Map<String,Title> titles;
+
+    //Contact and Resource properties
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
+    Map<String,EmailAddress> emails;
 
     @Valid
-    LocalizedString[] roles;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
+    Map<String,Phone> phones;
 
     @Valid
-    @EmailsConstraint(message = "invalid email Resource in JSCard")
-    Resource[] emails;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Resource>")
+    Map<String,Resource> online;
 
     @Valid
-    @PhonesConstraint(message = "invalid phone Resource in JSCard")
-    Resource[] phones;
-
-    @Valid
-    @OnlineConstraint(message = "invalid online Resource in JSCard")
-    Resource[] online;
-
-    @Valid
-    File[] photos;
+    @IdMapConstraint(message = "invalid Id in Map<Id,File>")
+    Map<String,File> photos;
 
     PreferredContactMethodType preferredContactMethod;
 
+    @PreferredContactLanguagesConstraint
     Map<String, ContactLanguage[]> preferredContactLanguages;
 
+    //Address and Location properties
     @Valid
-    Address[] addresses;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
+    Map<String,Address> addresses;
 
+    //Additional properties
     @Valid
     Anniversary[] anniversaries;
 
@@ -101,69 +121,243 @@ public abstract class JSContact extends ValidableObject {
     PersonalInformation[] personalInfo;
 
     @Valid
-    LocalizedString[] notes;
+    LocalizedString notes;
 
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> categories in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> categories;
 
     Map<String,String> extensions;
 
-    @JsonAnyGetter
-    public Map<String, String> getExtensions() {
-        return extensions;
+
+    public void addRelation(String key, RelationType relType) {
+
+        if (relatedTo == null)
+            relatedTo = new HashMap<>();
+
+        Relation relationPerKey = relatedTo.get(key);
+        if (relationPerKey == null) {
+            if (relType == null)
+                relatedTo.put(key, Relation.builder().build());
+            else
+                relatedTo.put(key, Relation.builder()
+                        .relation(new HashMap<RelationType, Boolean>() {{
+                            put(relType, Boolean.TRUE);
+                        }})
+                        .build());
+        }
+        else {
+            Map<RelationType, Boolean> map = relationPerKey.getRelation();
+            map.put(relType, Boolean.TRUE);
+            relatedTo.replace(key, Relation.builder()
+                    .relation(map)
+                    .build());
+        }
     }
 
     public void addName(NameComponent nc) {
         name = ArrayUtils.add(name, nc);
     }
 
-    public void addPhone(Resource phone) {
-        phones = ArrayUtils.add(phones, phone);
+    public void addFullName(String fn, String language) {
+        if (fullName == null)
+            fullName = LocalizedString.builder()
+                    .value(fn)
+                    .language(language)
+                    .build();
+        else
+            fullName.addLocalization(language, fn);
     }
 
-    public void addEmail(Resource email) {
-        emails = ArrayUtils.add(emails, email);
+    public void addNickName(LocalizedString nick) {
+        nickNames = ArrayUtils.add(nickNames, nick);
     }
 
-    public void addOnline(Resource ol) {
-        online = ArrayUtils.add(online, ol);
+    public void addOrganization(String id, Organization organization) {
+        if(organizations == null)
+            organizations = new HashMap<>();
+
+        organizations.put(id,organization);
     }
 
-    public void addPhoto(File f) {
-        photos = ArrayUtils.add(photos, f);
+    private void addTitle(String id, LocalizedString title, String organization) {
+
+        if(titles == null)
+            titles = new HashMap<>();
+
+        if (!titles.containsKey(id))
+            titles.put(id,Title.builder().title(title).organization(organization).build());
     }
 
-    public void addOrganization(LocalizedString org) {
-        organizations = ArrayUtils.add(organizations, org);
+    public void addTitle(String id, LocalizedString title) {
+        addTitle(id, title, null);
     }
 
-    public void addTitle(LocalizedString title) {
-        jobTitles = ArrayUtils.add(jobTitles, title);
+    public void addEmail(String id, EmailAddress email) {
+
+        if (emails == null)
+            emails = new HashMap<>();
+
+        emails.put(id, email);
     }
 
-    public void addRole(LocalizedString rl) {
-        roles = ArrayUtils.add(roles, rl);
+    public void addPhone(String id, Phone phone) {
+
+        if (phones == null)
+            phones = new HashMap<>();
+
+        phones.put(id, phone);
     }
 
-    public void addNote(LocalizedString note) {
-        notes = ArrayUtils.add(notes, note);
+    public void addOnline(String id, Resource ol) {
+
+        if (online == null)
+            online = new HashMap<>();
+
+        online.put(id, ol);
     }
 
-    public void addPersonalInfo(PersonalInformation pi) {
-        personalInfo = ArrayUtils.add(personalInfo, pi);
+    @JsonIgnore
+    private Map<String,Resource> getOnline(String label) {
+
+        Map<String,Resource> ols = new HashMap<>();
+        for (Map.Entry<String,Resource> ol : online.entrySet()) {
+            List<String> labelItems = Arrays.asList(ol.getValue().getLabel().split(","));
+            if (labelItems.contains(label))
+                ols.put(ol.getKey(),ol.getValue());
+        }
+        if (ols.size()==0)
+            return null;
+
+        return ols;
+    }
+
+    @JsonIgnore
+    private Map<String,Resource> getOnline(OnlineLabelKey labelKey) {
+        return getOnline(labelKey.getValue());
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineKey() {
+        return getOnline(OnlineLabelKey.KEY);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineUrl() {
+        return getOnline(OnlineLabelKey.URL);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineSource() {
+        return getOnline(OnlineLabelKey.SOURCE);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineLogo() {
+        return getOnline(OnlineLabelKey.LOGO);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineSound() {
+        return getOnline(OnlineLabelKey.SOUND);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineFburl() {
+        return getOnline(OnlineLabelKey.FBURL);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineCaluri() {
+        return getOnline(OnlineLabelKey.CALURI);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineCaladruri() {
+        return getOnline(OnlineLabelKey.CALADRURI);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineOrgDirectory() {
+        return getOnline(OnlineLabelKey.ORG_DIRECTORY);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineImpp() {
+        return getOnline(OnlineLabelKey.IMPP);
+    }
+
+    @JsonIgnore
+    public Map<String,Resource> getOnlineContactUri() {
+        return getOnline(OnlineLabelKey.CONTACT_URI);
+    }
+
+    public void addPhoto(String id, File f) {
+
+        if (photos == null)
+            photos = new HashMap<>();
+
+        photos.put(id, f);
+    }
+
+    public void addContactLanguage(String key, ContactLanguage contactLanguage) {
+
+        if (preferredContactLanguages == null)
+            preferredContactLanguages = new HashMap<>();
+
+        ContactLanguage[] languagesPerKey = preferredContactLanguages.get(key);
+        if (languagesPerKey == null)
+            preferredContactLanguages.put(key, new ContactLanguage[] {contactLanguage});
+        else
+            preferredContactLanguages.put(key, ArrayUtils.add(languagesPerKey, contactLanguage));
+    }
+
+    public void addAddress(String id, Address address) {
+
+        if(addresses == null)
+            addresses = new HashMap<>();
+
+        if (!addresses.containsKey(id))
+            addresses.put(id,address);
     }
 
     public void addAnniversary(Anniversary anniversary) {
         anniversaries = ArrayUtils.add(anniversaries, anniversary);
     }
 
-    public void addAddress(Address address) {
-        addresses = ArrayUtils.add(addresses, address);
+    public void addPersonalInfo(PersonalInformation pi) {
+        personalInfo = ArrayUtils.add(personalInfo, pi);
+    }
+
+    public void addNote(String note, String language) {
+
+        if (notes == null) {
+            notes = LocalizedString.builder().value(note).language(language).build();
+            return;
+        }
+
+        if ((language == null && notes.getLanguage() == null) ||
+                (language != null && notes.getLanguage() != null && language.equals(notes.getLanguage()))) {
+            notes.setValue(String.format("%s%s%s", notes.getValue(), NoteUtils.NOTE_DELIMITER, note));
+            return;
+        }
+
+        if (notes.getLanguage() != null && language == null) {
+            notes.addLocalization(notes.getLanguage(), notes.getValue());
+            notes.setValue(note);
+            notes.setLanguage(null);
+        } else {
+            if (notes.getLocalizations()!= null && notes.getLocalizations().containsKey(language))
+                notes.getLocalizations().replace(language,String.format("%s%s%s", notes.getLocalizations().get(language), NoteUtils.NOTE_DELIMITER, note));
+            else
+                notes.addLocalization(language, note);
+        }
+
     }
 
     private void addCategory(String category) {
 
         if(categories == null)
-            categories = new LinkedHashMap<String,Boolean>();
+            categories = new LinkedHashMap<>();
 
         if (!categories.containsKey(category))
             categories.put(category,Boolean.TRUE);
@@ -177,134 +371,26 @@ public abstract class JSContact extends ValidableObject {
             addCategory(category);
     }
 
-    public void addRelation(String key, RelationType relType) {
-
-        if (relatedTo == null)
-            relatedTo = new HashMap<String, Relation>();
-
-        Relation relationPerKey = relatedTo.get(key);
-        if (relationPerKey == null) {
-            if (relType == null)
-                relatedTo.put(key, Relation.builder().build());
-            else
-                relatedTo.put(key, Relation.builder()
-                        .relation(new HashMap<String, Boolean>() {{
-                            put(relType.getValue(), Boolean.TRUE);
-                        }})
-                        .build());
-        }
-        else {
-            Map<String, Boolean> map = relationPerKey.getRelation();
-            map.put(relType.getValue(), Boolean.TRUE);
-            relatedTo.replace(key, Relation.builder()
-                    .relation(map)
-                    .build());
-        }
+    @JsonAnyGetter
+    public Map<String, String> getExtensions() {
+        return extensions;
     }
 
-    public void addContactLanguage(String key, ContactLanguage contactLanguage) {
+    @JsonAnySetter
+    public void setExtension(String name, String value) {
 
-        if (preferredContactLanguages == null)
-            preferredContactLanguages = new HashMap<String, ContactLanguage[]>();
+        if (extensions == null)
+            extensions = new HashMap<>();
 
-        ContactLanguage[] languagesPerKey = preferredContactLanguages.get(key);
-        if (languagesPerKey == null)
-            preferredContactLanguages.put(key, new ContactLanguage[] {contactLanguage});
-        else
-            preferredContactLanguages.put(key, ArrayUtils.add(languagesPerKey, contactLanguage));
-    }
-
-    public void addFullName(String fn, String language) {
-        if (fullName == null)
-            fullName = LocalizedString.builder()
-                    .value(fn)
-                    .language(language)
-                    .build();
-        else
-            fullName.addLocalization(language, fn);
+        extensions.put(name, value);
     }
 
     public void addExtension(String key, String value) {
         if(extensions == null)
-            extensions = new HashMap<String,String>();
+            extensions = new HashMap<>();
 
         if (!extensions.containsKey(key))
             extensions.put(key,value);
     }
-
-    @JsonIgnore
-    public Resource[] getOnline(String label) {
-
-        List<Resource> ols = new ArrayList<Resource>();
-        for (Resource ol : online) {
-            if (ol.getLabels().keySet().contains(label))
-                ols.add(ol);
-        }
-        if (ols.size()==0)
-            return null;
-
-        return ols.toArray(new Resource[ols.size()]);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnline(LabelKey labelKey) {
-        return getOnline(labelKey.getValue());
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineKey() {
-        return getOnline(LabelKey.KEY);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineUrl() {
-        return getOnline(LabelKey.URL);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineSource() {
-        return getOnline(LabelKey.SOURCE);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineLogo() {
-        return getOnline(LabelKey.LOGO);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineSound() {
-        return getOnline(LabelKey.SOUND);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineFburl() {
-        return getOnline(LabelKey.FBURL);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineCaluri() {
-        return getOnline(LabelKey.CALURI);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineCaladruri() {
-        return getOnline(LabelKey.CALADRURI);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineOrgDirectory() {
-        return getOnline(LabelKey.ORG_DIRECTORY);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineImpp() {
-        return getOnline(LabelKey.IMPP);
-    }
-
-    @JsonIgnore
-    public Resource[] getOnlineContactUri() {
-        return getOnline(LabelKey.CONTACT_URI);
-    }
-
 
 }

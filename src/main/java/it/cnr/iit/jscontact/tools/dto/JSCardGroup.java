@@ -17,8 +17,11 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.cnr.iit.jscontact.tools.constraints.JSCardGroupConstraint;
-import lombok.*;
+import it.cnr.iit.jscontact.tools.constraints.JSCardGroupKindConstraint;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
@@ -26,7 +29,7 @@ import javax.validation.constraints.Size;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@JSCardGroupConstraint
+@JSCardGroupKindConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @ToString(callSuper = true)
@@ -43,7 +46,7 @@ public class JSCardGroup extends JSContact {
     public void addMember(String member) {
 
         if(members == null)
-            members = new LinkedHashMap<String,Boolean>();
+            members = new LinkedHashMap<>();
 
         if (!members.containsKey(member))
             members.put(member,Boolean.TRUE);

@@ -18,24 +18,13 @@ package it.cnr.iit.jscontact.tools.vcard.validators.ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.ValidationWarnings;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EZVCardValidator {
 
-    /**
-     * Validates a complete vCard v4.0 [RFC6350]
-     * @param vCards a vCard as a list of instances of the ez-vcard library VCard class
-     * @throws CardException if the vCard is not v4.0 compliant
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
-     */
-    public void validate(List<VCard> vCards) throws CardException {
-
-        List<JSCard> jsCards = new ArrayList<JSCard>();
+    protected void validate(List<VCard> vCards) throws CardException {
 
         for (VCard vCard : vCards) {
             ValidationWarnings warnings = vCard.validate(VCardVersion.V4_0);

@@ -46,6 +46,16 @@ public enum PersonalInformationLevel {
         return value;
     }
 
+    @JsonIgnore
+    public static String getVCardExpertiseLevel(PersonalInformationLevel level) {
+
+        for (String key : aliases.keySet())
+            if (aliases.get(key).equals(level))
+                return key;
+
+        return null;
+    }
+
     @JsonCreator
     public static PersonalInformationLevel getEnum(String value) throws IllegalArgumentException {
         return EnumUtils.getEnum(PersonalInformationLevel.class, value, aliases);

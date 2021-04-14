@@ -15,11 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import it.cnr.iit.jscontact.tools.constraints.JSCardConstraint;
+import it.cnr.iit.jscontact.tools.constraints.JSCardKindConstraint;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@JSCardConstraint
+@JSCardKindConstraint
 @NoArgsConstructor
 @ToString(callSuper = true)
 @SuperBuilder

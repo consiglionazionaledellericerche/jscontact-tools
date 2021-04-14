@@ -15,201 +15,65 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.*;
-import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.Context;
+import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Resource;
+import it.cnr.iit.jscontact.tools.dto.ResourceType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 
 
 public class ResourceTest extends AbstractTest {
 
-
     @Test
-    public void testValidEmailResourceType1() {
-
-        Resource email = Resource.builder()
-                         .context(ResourceContext.WORK)
-                         .type(EmailResourceType.EMAIL.getValue())
-                         .value("mario.loffredo@iit.cnr.it")
-                         .build();
-        JSCard jsCard = JSCard.builder()
-                         .uid(getUUID())
-                         .emails(new Resource[]{email})
-                         .build();
-
-        assertTrue("testValidEmailResourceType1", jsCard.isValid());
-    }
-
-    @Test
-    public void testValidEmailResourceType2() {
-
-        Resource email = Resource.builder()
-                .context(ResourceContext.WORK)
-                .value("mario.loffredo@iit.cnr.it")
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .emails(new Resource[]{email})
-                .build();
-
-        assertTrue("testValidEmailResourceType2", jsCard.isValid());
-    }
-
-    @Test
-    public void testInvalidEmailResourceType() {
-
-        Resource email = Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(PhoneResourceType.VOICE.getValue())
-                .value("mario.loffredo@iit.cnr.it")
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .emails(new Resource[]{email})
-                .build();
-
-        assertTrue("testInvalidEmailResourceType", !jsCard.isValid());
-    }
-
-    @Test
-    public void testValidPhoneResourceType() {
-
-        Resource phone = Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(PhoneResourceType.VOICE.getValue())
-                .value("+39.050000001")
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .phones(new Resource[]{phone})
-                .build();
-
-        assertTrue("testValidPhoneResourceType", jsCard.isValid());
-    }
-
-    @Test
-    public void testInvalidPhoneResourceType() {
-
-        Resource phone = Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(EmailResourceType.EMAIL.getValue())
-                .value("+39.050000001")
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .phones(new Resource[]{phone})
-                .build();
-
-        assertTrue("testInvalidPhoneResourceType", !jsCard.isValid());
-    }
-
-
-    @Test
-    public void testValidOnlineResourceType() {
-
-        Map<String,Boolean> labelsMap = new HashMap<String,Boolean>();
-        labelsMap.put("GitHub", Boolean.TRUE);
-        Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(OnlineResourceType.USERNAME.getValue())
-                .value("mario-loffredo")
-                .labels(labelsMap)
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .online(new Resource[]{online})
-                .build();
-
-        assertTrue("testValidOnlineResourceType", jsCard.isValid());
-    }
-
-    @Test
-    public void testInvalidOnlineResourceType() {
+    public void testValidResource() {
 
         Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(EmailResourceType.EMAIL.getValue())
-                .value("mario-loffredo")
+                .contexts(new HashMap<Context,Boolean>(){{put(Context.WORK, Boolean.TRUE);}})
+                .type(ResourceType.USERNAME)
+                .resource("mario-loffredo")
+                .label("GitHub")
                 .build();
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .online(new Resource[]{online})
+                .online(new HashMap<String,Resource>(){{ put("XMPP-1", online);}})
                 .build();
 
-        assertTrue("testInvalidOnlineResourceType", !jsCard.isValid());
+        assertTrue("testValidResource", jsCard.isValid());
     }
 
-
-    @Test
-    public void testInvalidResourceLabels1() {
-
-        Map<String,Boolean> labels = new HashMap<String,Boolean>();
-        labels.put("label", null);
-        Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(OnlineResourceType.USERNAME.getValue())
-                .value("mario-loffredo")
-                .labels(labels)
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .online(new Resource[]{online})
-                .build();
-
-        assertTrue("testInvalidResourceLabels1", !jsCard.isValid());
-    }
-
-    @Test
-    public void testInvalidResourceLabels2() {
-
-        Map<String,Boolean> labels = new HashMap<String,Boolean>();
-        labels.put("label", Boolean.FALSE);
-        Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(OnlineResourceType.USERNAME.getValue())
-                .value("mario-loffredo")
-                .labels(labels)
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .online(new Resource[]{online})
-                .build();
-
-        assertTrue("testInvalidResourceLabels2", !jsCard.isValid());
-    }
-
-    @Test
-    public void testValidResourceLabels() {
-
-        Map<String,Boolean> labels = new HashMap<String,Boolean>();
-        labels.put("label", Boolean.TRUE);
-        Resource online = Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(OnlineResourceType.USERNAME.getValue())
-                .value("mario-loffredo")
-                .labels(labels)
-                .build();
-        JSCard jsCard = JSCard.builder()
-                .uid(getUUID())
-                .online(new Resource[]{online})
-                .build();
-
-        assertTrue("testValidResourceLabels", jsCard.isValid());
-    }
 
     @Test(expected = java.lang.NullPointerException.class)
     public void testInvalidResourceBuild() {
 
         // value missing
         Resource.builder()
-                .context(ResourceContext.WORK)
-                .type(EmailResourceType.EMAIL.getValue())
+                .contexts(new HashMap<Context,Boolean>(){{put(Context.WORK, Boolean.TRUE);}})
+                .type(ResourceType.URI)
                 .build();
     }
+
+    @Test
+    public void testInvalidResourceUri() {
+
+        Resource online = Resource.builder()
+                .contexts(new HashMap<Context,Boolean>(){{put(Context.WORK, Boolean.TRUE);}})
+                .type(ResourceType.URI)
+                .resource(" ")
+                .label("url")
+                .build();
+        JSCard jsCard = JSCard.builder()
+                .uid(getUUID())
+                .online(new HashMap<String,Resource>(){{ put("URL-1", online);}})
+                .build();
+
+        assertTrue("testInvalidResourceUri-1", !jsCard.isValid());
+        assertTrue("testInvalidResourceUri-2", jsCard.getValidationMessage().equals("invalid uri in Resource"));
+    }
+
 
 }

@@ -15,10 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPreference;
-import it.cnr.iit.jscontact.tools.dto.utils.HasPreferenceUtils;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -28,7 +25,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NameComponent extends GroupableObject implements HasPreference, Comparable<NameComponent> {
+public class NameComponent extends GroupableObject {
 
     @NotNull(message = "value is missing in NameComponent")
     @NonNull
@@ -37,15 +34,5 @@ public class NameComponent extends GroupableObject implements HasPreference, Com
     @NotNull(message = "type is missing in NameComponent")
     @NonNull
     NameComponentType type;
-
-    @JsonIgnore
-    Integer preference;
-
-    //to compare VCard NICKNAME instances based on preference
-    @Override
-    public int compareTo(NameComponent o) {
-
-        return HasPreferenceUtils.compareTo(this, o);
-    }
 
 }
