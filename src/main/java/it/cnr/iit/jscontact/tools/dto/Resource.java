@@ -37,19 +37,19 @@ import java.util.Map;
 @NoArgsConstructor
 public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue {
 
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Resource - Only Boolean.TRUE allowed")
-    Map<Context,Boolean> contexts;
-
-    @Builder.Default
-    ResourceType type = ResourceType.OTHER;
-
-    String label;
-
     @NotNull(message = "resource is missing in Resource")
     @NonNull
     String resource;
 
+    @Builder.Default
+    ResourceType type = ResourceType.OTHER;
+
     String mediaType;
+
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Resource - Only Boolean.TRUE allowed")
+    Map<Context,Boolean> contexts;
+
+    String label;
 
     @Min(value=1, message = "invalid pref in Resource - min value must be 1")
     @Max(value=100, message = "invalid pref in Resource - max value must be 100")

@@ -35,11 +35,6 @@ import java.util.Map;
 @EqualsAndHashCode(of={"fullAddress"})
 public class Address extends GroupableObject implements HasAltid, IdMapValue {
 
-    @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
-    Map<AddressContext,Boolean> contexts;
-
-    String label;
-
     LocalizedString fullAddress;
 
     String street;
@@ -63,6 +58,11 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue {
     String coordinates;
 
     String timeZone;
+
+    @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
+    Map<AddressContext,Boolean> contexts;
+
+    String label;
 
     @Min(value=1, message = "invalid pref in Address - min value must be 1")
     @Max(value=100, message = "invalid pref in Address - max value must be 100")

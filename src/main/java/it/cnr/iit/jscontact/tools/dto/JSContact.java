@@ -46,6 +46,7 @@ import java.util.*;
 @SuperBuilder
 public abstract class JSContact extends ValidableObject {
 
+    //Metadata properties
     @NotNull(message = "uid is missing in JSContact")
     @NonNull
     String uid;
@@ -54,11 +55,11 @@ public abstract class JSContact extends ValidableObject {
 
     @JsonSerialize(using = CalendarSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
-    Calendar updated;
+    Calendar created;
 
     @JsonSerialize(using = CalendarSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
-    Calendar created;
+    Calendar updated;
 
     @JsonSerialize(using = KindSerializer.class)
     @JsonDeserialize(using = KindDeserializer.class)
@@ -67,11 +68,12 @@ public abstract class JSContact extends ValidableObject {
     @RelatedToConstraint
     Map<String,Relation> relatedTo;
 
-    @Valid
-    LocalizedString fullName;
-
+    //Name and Organization properties
     @Valid
     NameComponent[] name;
+
+    @Valid
+    LocalizedString fullName;
 
     @Valid
     LocalizedString[] nickNames;
@@ -84,6 +86,7 @@ public abstract class JSContact extends ValidableObject {
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
     Map<String,Title> titles;
 
+    //Contact and Resource properties
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     Map<String,EmailAddress> emails;
@@ -105,10 +108,12 @@ public abstract class JSContact extends ValidableObject {
     @PreferredContactLanguagesConstraint
     Map<String, ContactLanguage[]> preferredContactLanguages;
 
+    //Address and Location properties
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
     Map<String,Address> addresses;
 
+    //Additional properties
     @Valid
     Anniversary[] anniversaries;
 
@@ -123,139 +128,6 @@ public abstract class JSContact extends ValidableObject {
 
     Map<String,String> extensions;
 
-    @JsonAnyGetter
-    public Map<String, String> getExtensions() {
-        return extensions;
-    }
-
-    @JsonAnySetter
-    public void setExtension(String name, String value) {
-
-        if (extensions == null)
-            extensions = new HashMap<>();
-
-        extensions.put(name, value);
-    }
-
-    public void addName(NameComponent nc) {
-        name = ArrayUtils.add(name, nc);
-    }
-
-    public void addNickName(LocalizedString nick) {
-        nickNames = ArrayUtils.add(nickNames, nick);
-    }
-
-    public void addPhone(String id, Phone phone) {
-
-        if (phones == null)
-            phones = new HashMap<>();
-
-        phones.put(id, phone);
-    }
-
-    public void addEmail(String id, EmailAddress email) {
-
-        if (emails == null)
-            emails = new HashMap<>();
-
-        emails.put(id, email);
-    }
-
-    public void addOnline(String id, Resource ol) {
-
-        if (online == null)
-            online = new HashMap<>();
-
-        online.put(id, ol);
-    }
-
-    public void addPhoto(String id, File f) {
-
-        if (photos == null)
-            photos = new HashMap<>();
-
-        photos.put(id, f);
-    }
-
-    public void addOrganization(String id, Organization organization) {
-        if(organizations == null)
-            organizations = new HashMap<>();
-
-        organizations.put(id,organization);
-    }
-
-    private void addTitle(String id, LocalizedString title, String organization) {
-
-        if(titles == null)
-            titles = new HashMap<>();
-
-        if (!titles.containsKey(id))
-            titles.put(id,Title.builder().title(title).organization(organization).build());
-    }
-
-    public void addTitle(String id, LocalizedString title) {
-        addTitle(id, title, null);
-    }
-
-    public void addNote(String note, String language) {
-
-        if (notes == null) {
-            notes = LocalizedString.builder().value(note).language(language).build();
-            return;
-        }
-
-        if ((language == null && notes.getLanguage() == null) ||
-            (language != null && notes.getLanguage() != null && language.equals(notes.getLanguage()))) {
-            notes.setValue(String.format("%s%s%s", notes.getValue(), NoteUtils.NOTE_DELIMITER, note));
-            return;
-        }
-
-        if (notes.getLanguage() != null && language == null) {
-            notes.addLocalization(notes.getLanguage(), notes.getValue());
-            notes.setValue(note);
-            notes.setLanguage(null);
-        } else {
-            if (notes.getLocalizations()!= null && notes.getLocalizations().containsKey(language))
-                notes.getLocalizations().replace(language,String.format("%s%s%s", notes.getLocalizations().get(language), NoteUtils.NOTE_DELIMITER, note));
-            else
-                notes.addLocalization(language, note);
-        }
-
-    }
-
-    public void addPersonalInfo(PersonalInformation pi) {
-        personalInfo = ArrayUtils.add(personalInfo, pi);
-    }
-
-    public void addAnniversary(Anniversary anniversary) {
-        anniversaries = ArrayUtils.add(anniversaries, anniversary);
-    }
-
-    public void addAddress(String id, Address address) {
-
-        if(addresses == null)
-            addresses = new HashMap<>();
-
-        if (!addresses.containsKey(id))
-            addresses.put(id,address);
-    }
-
-    private void addCategory(String category) {
-
-        if(categories == null)
-            categories = new LinkedHashMap<>();
-
-        if (!categories.containsKey(category))
-            categories.put(category,Boolean.TRUE);
-    }
-
-    public void addCategories(String[] categories) {
-        if (categories==null)
-            return;
-
-        for (String category: categories)
-            addCategory(category);
-    }
 
     public void addRelation(String key, RelationType relType) {
 
@@ -282,16 +154,8 @@ public abstract class JSContact extends ValidableObject {
         }
     }
 
-    public void addContactLanguage(String key, ContactLanguage contactLanguage) {
-
-        if (preferredContactLanguages == null)
-            preferredContactLanguages = new HashMap<>();
-
-        ContactLanguage[] languagesPerKey = preferredContactLanguages.get(key);
-        if (languagesPerKey == null)
-            preferredContactLanguages.put(key, new ContactLanguage[] {contactLanguage});
-        else
-            preferredContactLanguages.put(key, ArrayUtils.add(languagesPerKey, contactLanguage));
+    public void addName(NameComponent nc) {
+        name = ArrayUtils.add(name, nc);
     }
 
     public void addFullName(String fn, String language) {
@@ -304,12 +168,52 @@ public abstract class JSContact extends ValidableObject {
             fullName.addLocalization(language, fn);
     }
 
-    public void addExtension(String key, String value) {
-        if(extensions == null)
-            extensions = new HashMap<>();
+    public void addNickName(LocalizedString nick) {
+        nickNames = ArrayUtils.add(nickNames, nick);
+    }
 
-        if (!extensions.containsKey(key))
-            extensions.put(key,value);
+    public void addOrganization(String id, Organization organization) {
+        if(organizations == null)
+            organizations = new HashMap<>();
+
+        organizations.put(id,organization);
+    }
+
+    private void addTitle(String id, LocalizedString title, String organization) {
+
+        if(titles == null)
+            titles = new HashMap<>();
+
+        if (!titles.containsKey(id))
+            titles.put(id,Title.builder().title(title).organization(organization).build());
+    }
+
+    public void addTitle(String id, LocalizedString title) {
+        addTitle(id, title, null);
+    }
+
+    public void addEmail(String id, EmailAddress email) {
+
+        if (emails == null)
+            emails = new HashMap<>();
+
+        emails.put(id, email);
+    }
+
+    public void addPhone(String id, Phone phone) {
+
+        if (phones == null)
+            phones = new HashMap<>();
+
+        phones.put(id, phone);
+    }
+
+    public void addOnline(String id, Resource ol) {
+
+        if (online == null)
+            online = new HashMap<>();
+
+        online.put(id, ol);
     }
 
     @JsonIgnore
@@ -385,6 +289,108 @@ public abstract class JSContact extends ValidableObject {
     @JsonIgnore
     public Map<String,Resource> getOnlineContactUri() {
         return getOnline(OnlineLabelKey.CONTACT_URI);
+    }
+
+    public void addPhoto(String id, File f) {
+
+        if (photos == null)
+            photos = new HashMap<>();
+
+        photos.put(id, f);
+    }
+
+    public void addContactLanguage(String key, ContactLanguage contactLanguage) {
+
+        if (preferredContactLanguages == null)
+            preferredContactLanguages = new HashMap<>();
+
+        ContactLanguage[] languagesPerKey = preferredContactLanguages.get(key);
+        if (languagesPerKey == null)
+            preferredContactLanguages.put(key, new ContactLanguage[] {contactLanguage});
+        else
+            preferredContactLanguages.put(key, ArrayUtils.add(languagesPerKey, contactLanguage));
+    }
+
+    public void addAddress(String id, Address address) {
+
+        if(addresses == null)
+            addresses = new HashMap<>();
+
+        if (!addresses.containsKey(id))
+            addresses.put(id,address);
+    }
+
+    public void addAnniversary(Anniversary anniversary) {
+        anniversaries = ArrayUtils.add(anniversaries, anniversary);
+    }
+
+    public void addPersonalInfo(PersonalInformation pi) {
+        personalInfo = ArrayUtils.add(personalInfo, pi);
+    }
+
+    public void addNote(String note, String language) {
+
+        if (notes == null) {
+            notes = LocalizedString.builder().value(note).language(language).build();
+            return;
+        }
+
+        if ((language == null && notes.getLanguage() == null) ||
+                (language != null && notes.getLanguage() != null && language.equals(notes.getLanguage()))) {
+            notes.setValue(String.format("%s%s%s", notes.getValue(), NoteUtils.NOTE_DELIMITER, note));
+            return;
+        }
+
+        if (notes.getLanguage() != null && language == null) {
+            notes.addLocalization(notes.getLanguage(), notes.getValue());
+            notes.setValue(note);
+            notes.setLanguage(null);
+        } else {
+            if (notes.getLocalizations()!= null && notes.getLocalizations().containsKey(language))
+                notes.getLocalizations().replace(language,String.format("%s%s%s", notes.getLocalizations().get(language), NoteUtils.NOTE_DELIMITER, note));
+            else
+                notes.addLocalization(language, note);
+        }
+
+    }
+
+    private void addCategory(String category) {
+
+        if(categories == null)
+            categories = new LinkedHashMap<>();
+
+        if (!categories.containsKey(category))
+            categories.put(category,Boolean.TRUE);
+    }
+
+    public void addCategories(String[] categories) {
+        if (categories==null)
+            return;
+
+        for (String category: categories)
+            addCategory(category);
+    }
+
+    @JsonAnyGetter
+    public Map<String, String> getExtensions() {
+        return extensions;
+    }
+
+    @JsonAnySetter
+    public void setExtension(String name, String value) {
+
+        if (extensions == null)
+            extensions = new HashMap<>();
+
+        extensions.put(name, value);
+    }
+
+    public void addExtension(String key, String value) {
+        if(extensions == null)
+            extensions = new HashMap<>();
+
+        if (!extensions.containsKey(key))
+            extensions.put(key,value);
     }
 
 }

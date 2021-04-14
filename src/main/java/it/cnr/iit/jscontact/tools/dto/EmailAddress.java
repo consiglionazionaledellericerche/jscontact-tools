@@ -30,6 +30,4 @@ public class EmailAddress implements IdMapValue {
     @Max(value=100, message = "invalid pref in Email - max value must be 100")
     Integer pref;
 
-
-
 }
