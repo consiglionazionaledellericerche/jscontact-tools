@@ -254,4 +254,28 @@ public class AddressesTest extends VCard2JSContactTest {
 
     }
 
+    @Test
+    public void testAddressesValid10() throws IOException, CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "GEO:geo:46.772673,-71.282945\n" +
+                "TZ:-0530\n" +
+                "END:VCARD";
+
+        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        assertTrue("testAddressesValid10 - 1",jsCard.getAddresses()!=null);
+        assertTrue("testAddressesValid10 - 2",jsCard.getAddresses().size() == 1);
+        assertTrue("testAddressesValid10 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
+        assertTrue("testAddressesValid10 - 4",jsCard.getAddresses().get("ADR-1").getCountry().equals("USA"));
+        assertTrue("testAddressesValid10 - 5",jsCard.getAddresses().get("ADR-1").getPostcode().equals("20190"));
+        assertTrue("testAddressesValid10 - 6",jsCard.getAddresses().get("ADR-1").getLocality().equals("Reston"));
+        assertTrue("testAddressesValid10 - 7",jsCard.getAddresses().get("ADR-1").getRegion().equals("VA"));
+        assertTrue("testAddressesValid10 - 8",jsCard.getAddresses().get("ADR-1").getStreet().equals("54321 Oak St"));
+        assertTrue("testAddressesValid10 - 9",jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
+        assertTrue("testAddressesValid10 - 10",jsCard.getAddresses().get("ADR-1").getTimeZone().equals("Etc/GMT+5:30"));
+    }
+
 }
