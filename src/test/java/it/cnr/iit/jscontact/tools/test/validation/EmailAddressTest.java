@@ -39,7 +39,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testInvalidEmailBuild2() {
 
         // email missing
-        EmailAddress.builder().contexts(new HashMap<Context,Boolean>() {{ put(Context.WORK,Boolean.TRUE);}}).build();
+        EmailAddress.builder().context(Context.WORK,Boolean.TRUE).build();
     }
 
 
@@ -69,7 +69,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testValidEmail2() {
 
         EmailAddress email = EmailAddress.builder()
-                .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE);}})
+                .context(Context.WORK, Boolean.TRUE)
                 .email("mario.loffredo@iit.cnr.it")
                 .build();
         JSCard jsCard = JSCard.builder()
@@ -84,7 +84,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testValidEmail3() {
 
         EmailAddress email = EmailAddress.builder()
-                .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE); }})
+                .context(Context.WORK, Boolean.TRUE)
                 .email("mario.loffredo@iit.cnr.it")
                 .pref(1)
                 .build();
@@ -118,7 +118,7 @@ public class EmailAddressTest extends AbstractTest {
 
         //invalid contexts
         EmailAddress email = EmailAddress.builder()
-                .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.FALSE); }})
+                .context(Context.WORK, Boolean.FALSE)
                 .email("mario.loffredo@iit.cnr.it")
                 .build();
         JSCard jsCard = JSCard.builder()
@@ -136,7 +136,7 @@ public class EmailAddressTest extends AbstractTest {
 
         //invalid pref
         EmailAddress email = EmailAddress.builder()
-                .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE); }})
+                .context(Context.WORK, Boolean.TRUE)
                 .email("mario.loffredo@iit.cnr.it")
                 .pref(0)
                 .build();

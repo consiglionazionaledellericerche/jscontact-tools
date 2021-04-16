@@ -47,6 +47,8 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     String mediaType;
 
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Resource - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
     String label;

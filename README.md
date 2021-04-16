@@ -11,14 +11,14 @@ Validation and conversion leverage the features provided by [ez-vcard](https://g
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.3.0</version>
+		  <version>0.3.1</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.3.0'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.3.1'
 ```
 
 # Features
@@ -34,11 +34,13 @@ Validation and conversion leverage the features provided by [ez-vcard](https://g
 ## Creation
 
 Object creation is achieved through builders.
+Collections can be loaded by adding items singularly.
 Here in the following a successful creation of an email `Resource` instance is shown.
  
 ```
         EmailAddress email = EmailAddress.builder()
-                                        .contexts(new HashMap<Context, Boolean>() {{ put(Context.WORK, Boolean.TRUE);}})
+                                        .context(Context.WORK, Boolean.TRUE)
+                                        .context(Context.PRIVATE, Boolean.TRUE)
                                         .email("mario.loffredo@iit.cnr.it")
                                         .build();
 ```
@@ -48,7 +50,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 
 ```
         // email is missing
-        EmailAddress.builder().contexts(new HashMap<Context,Boolean>() {{ put(Context.WORK,Boolean.TRUE);}}).build();
+        EmailAddress.builder().context(Context.WORK,Boolean.TRUE).build();
 ```
 
 <a name="validation"></a>
@@ -107,6 +109,13 @@ JSContact serialization/deserializaion is performed through Jackson library that
 ```
         JSCard jsCard = JSCard.builder.build();
         String serialized = objectMapper.writeValueAsString(jsCard);
+```
+
+To pretty print serialized JSON, use the following: 
+
+```
+        JSCard jsCard = JSCard.builder.build();
+        String serialized = PrettyPrintSerializer.print(jsCard);
 ```
 
 ## Deserialization

@@ -22,9 +22,13 @@ public class Phone implements IdMapValue {
     String phone;
 
     @BooleanMapConstraint(message = "invalid Map<PhoneType,Boolean> features in Phone - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Singular(ignoreNullCollections = true)
     Map<PhoneFeature,Boolean> features;
 
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Phone - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
     String label;

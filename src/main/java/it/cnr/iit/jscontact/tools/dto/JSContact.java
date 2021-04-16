@@ -128,6 +128,7 @@ public abstract class JSContact extends ValidableObject {
 
     Map<String,String> extensions;
 
+//Methods for adding items to a mutable collection
 
     public void addRelation(String key, RelationType relType) {
 

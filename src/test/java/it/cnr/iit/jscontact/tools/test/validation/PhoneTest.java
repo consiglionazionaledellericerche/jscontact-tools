@@ -33,8 +33,9 @@ public class PhoneTest extends AbstractTest {
     public void testValidPhone() {
 
         Phone phone = Phone.builder()
-                .contexts(new HashMap<Context,Boolean>(){{ put(Context.WORK, Boolean.TRUE);}})
-                .features(new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.VOICE, Boolean.TRUE);}})
+                .context(Context.WORK, Boolean.TRUE)
+                .context(Context.PRIVATE, Boolean.TRUE)
+                .feature(PhoneFeature.VOICE, Boolean.TRUE)
                 .phone("+39.050000001")
                 .build();
         JSCard jsCard = JSCard.builder()

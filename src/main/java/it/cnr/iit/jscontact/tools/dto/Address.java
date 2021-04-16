@@ -60,6 +60,8 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue {
     String timeZone;
 
     @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Singular(ignoreNullCollections = true)
     Map<AddressContext,Boolean> contexts;
 
     String label;

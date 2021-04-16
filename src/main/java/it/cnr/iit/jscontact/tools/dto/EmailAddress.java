@@ -24,6 +24,8 @@ public class EmailAddress implements IdMapValue {
     String email;
 
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in EmailAddress - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Email - min value must be 1")
