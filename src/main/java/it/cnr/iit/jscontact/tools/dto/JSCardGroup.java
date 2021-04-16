@@ -48,8 +48,7 @@ public class JSCardGroup extends JSContact {
         if(members == null)
             members = new LinkedHashMap<>();
 
-        if (!members.containsKey(member))
-            members.put(member,Boolean.TRUE);
+        members.putIfAbsent(member,Boolean.TRUE);
     }
 
 

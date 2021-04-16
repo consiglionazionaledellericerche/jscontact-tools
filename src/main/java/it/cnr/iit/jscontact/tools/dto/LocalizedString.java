@@ -21,6 +21,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasPreference;
 import it.cnr.iit.jscontact.tools.dto.utils.HasPreferenceUtils;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class LocalizedString extends GroupableObject implements HasAltid, HasPre
         if (localizations == null)
             localizations = new HashMap<>();
 
-        localizations.put((language == null) ? "en" : language, value);
+        localizations.put(StringUtils.defaultIfEmpty(language, "en" ), value);
     }
 
     //to compare VCard TITLE, ROLE, NOTES instances based on preference

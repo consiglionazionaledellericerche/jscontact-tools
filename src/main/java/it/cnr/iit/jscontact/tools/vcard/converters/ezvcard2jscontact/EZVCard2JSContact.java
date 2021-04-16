@@ -730,7 +730,6 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         String jcardType;
         Map<Context,Boolean> contexts;
-        List<Resource> orgDirectories = new ArrayList<>();
 
         int i = 1;
         for (Source source : vcard.getSources())
@@ -779,6 +778,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (CalendarUri calendarUri : vcard.getCalendarUris())
             addOnline(calendarUri, jsContact, OnlineLabelKey.CALURI, i++);
 
+        List<Resource> orgDirectories = new ArrayList<>();
         for (OrgDirectory od : vcard.getOrgDirectories()) {
             jcardType = od.getType();
             contexts = getContexts(jcardType);
