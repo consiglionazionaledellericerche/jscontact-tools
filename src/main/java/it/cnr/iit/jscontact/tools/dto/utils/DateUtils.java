@@ -1,6 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
 import ezvcard.util.PartialDate;
+import ezvcard.util.VCardDateFormat;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -90,4 +91,7 @@ public class DateUtils {
     }
 
 
+    public static Calendar toCalendar(String date) {
+        return VCardDateFormat.parseAsCalendar(date);
     }
+}

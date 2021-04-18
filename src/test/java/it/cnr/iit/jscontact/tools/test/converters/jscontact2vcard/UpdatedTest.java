@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
-import ezvcard.util.VCardDateFormat;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class UpdatedTest extends JSContact2VCardTest {
                     "\"updated\":\"1995-10-31T22:27:10Z\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testUpdatedValid - 1",vcard.getRevision().getCalendar().compareTo(VCardDateFormat.parseAsCalendar("1995-10-31T22:27:10Z"))==0);
+        assertTrue("testUpdatedValid - 1",vcard.getRevision().getCalendar().compareTo(DateUtils.toCalendar("1995-10-31T22:27:10Z"))==0);
 
     }
 

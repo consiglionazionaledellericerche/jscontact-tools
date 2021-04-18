@@ -15,8 +15,8 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.xcard2jscontact;
 
-import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -136,7 +136,7 @@ public class XCardTest extends XCard2JSContactTest {
 
         assertTrue("testCompleteXCard2 - 42", jsCard.getEmails().size() == 1);
         assertTrue("testCompleteXCard2 - 43", jsCard.getEmails().get("EMAIL-1").getEmail().equals("forrestgump@example.com"));
-        assertTrue("testCompleteXCard2 - 44", jsCard.getUpdated().compareTo(VCardDateFormat.parseAsCalendar("2008-04-24T19:52:43Z"))==0);
+        assertTrue("testCompleteXCard2 - 44", jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z"))==0);
         assertTrue("testCompleteXCard2 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 

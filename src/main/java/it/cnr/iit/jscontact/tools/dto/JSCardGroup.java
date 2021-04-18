@@ -23,9 +23,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.SerializationUtils;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -36,7 +38,7 @@ import java.util.Map;
 @Getter
 @Setter
 @SuperBuilder
-public class JSCardGroup extends JSContact {
+public class JSCardGroup extends JSContact implements Serializable {
 
     @NotNull
     @Size(min=1)
@@ -51,5 +53,8 @@ public class JSCardGroup extends JSContact {
         members.putIfAbsent(member,Boolean.TRUE);
     }
 
+    public JSCardGroup clone() {
+        return (JSCardGroup) SerializationUtils.clone(this);
+    }
 
 }

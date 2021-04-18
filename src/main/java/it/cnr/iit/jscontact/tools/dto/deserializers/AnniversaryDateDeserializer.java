@@ -37,7 +37,7 @@ public class AnniversaryDateDeserializer extends JsonDeserializer<AnniversaryDat
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         try {
-            Calendar date = VCardDateFormat.parseAsCalendar(node.asText());
+            Calendar date = DateUtils.toCalendar(node.asText());
             return AnniversaryDate.builder().date(date).build();
         } catch (Exception e) {
             try {

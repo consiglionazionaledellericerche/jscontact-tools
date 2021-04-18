@@ -18,11 +18,18 @@ package it.cnr.iit.jscontact.tools.dto;
 import it.cnr.iit.jscontact.tools.constraints.JSCardKindConstraint;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.SerializationUtils;
+
+import java.io.Serializable;
 
 @JSCardKindConstraint
 @NoArgsConstructor
 @ToString(callSuper = true)
 @SuperBuilder
-public class JSCard extends JSContact {
+public class JSCard extends JSContact implements Serializable {
+
+    public JSCard clone() {
+        return (JSCard) SerializationUtils.clone(this);
+    }
 
 }

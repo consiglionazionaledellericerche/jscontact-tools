@@ -7,13 +7,14 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class File implements IdMapValue {
+public class File implements IdMapValue, Serializable {
 
     @NotNull(message = "href is missing in File")
     @NonNull

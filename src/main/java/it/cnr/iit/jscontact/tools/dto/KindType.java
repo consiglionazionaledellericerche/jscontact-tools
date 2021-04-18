@@ -20,11 +20,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KindType {
+public class KindType implements Serializable {
 
     Kind rfcValue;
     String extValue;

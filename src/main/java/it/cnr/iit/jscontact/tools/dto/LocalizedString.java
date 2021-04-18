@@ -24,6 +24,7 @@ import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"value"})
-public class LocalizedString extends GroupableObject implements HasAltid, HasPreference, Comparable<LocalizedString> {
+public class LocalizedString extends GroupableObject implements HasAltid, HasPreference, Comparable<LocalizedString>, Serializable {
 
     @NotNull(message = "value is missing in LocalizedString")
     @NonNull

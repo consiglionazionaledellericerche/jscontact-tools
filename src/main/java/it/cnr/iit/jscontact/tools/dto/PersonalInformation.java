@@ -20,15 +20,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import lombok.*;
+import org.apache.commons.lang3.SerializationUtils;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonalInformation extends GroupableObject implements HasIndex, Comparable<PersonalInformation> {
+public class PersonalInformation extends GroupableObject implements HasIndex, Comparable<PersonalInformation>, Serializable {
 
     @NotNull(message = "type is missing in PersonalInformation")
     @NonNull
@@ -49,4 +51,9 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Co
 
         return HasIndexUtils.compareTo(this, o);
     }
+
+    public PersonalInformation clone() {
+        return (PersonalInformation) SerializationUtils.clone(this);
+    }
+
 }

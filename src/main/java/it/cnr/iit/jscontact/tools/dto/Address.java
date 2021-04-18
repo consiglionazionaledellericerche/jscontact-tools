@@ -21,10 +21,12 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
+import org.apache.commons.lang3.SerializationUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -33,7 +35,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"fullAddress"})
-public class Address extends GroupableObject implements HasAltid, IdMapValue {
+public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable {
 
     LocalizedString fullAddress;
 
@@ -72,5 +74,9 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue {
 
     @JsonIgnore
     String altid;
+
+    public Address clone() {
+        return (Address) SerializationUtils.clone(this);
+    }
 
 }

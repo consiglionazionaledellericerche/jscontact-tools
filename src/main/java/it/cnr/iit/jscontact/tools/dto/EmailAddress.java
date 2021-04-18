@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -16,7 +17,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailAddress implements IdMapValue {
+public class EmailAddress implements IdMapValue, Serializable {
 
     @NotNull(message = "email is missing in EmailAddress")
     @NonNull

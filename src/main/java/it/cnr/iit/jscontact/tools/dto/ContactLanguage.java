@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NotNullAnyConstraint(fieldNames={"context","pref"}, message = "at least one not null member is missing in ContactLanguage")
@@ -31,7 +32,7 @@ import javax.validation.constraints.Min;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactLanguage extends GroupableObject {
+public class ContactLanguage extends GroupableObject implements Serializable {
 
     Context context;
 

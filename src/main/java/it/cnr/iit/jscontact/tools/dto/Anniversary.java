@@ -24,13 +24,14 @@ import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Anniversary extends GroupableObject {
+public class Anniversary extends GroupableObject implements Serializable {
 
     @NotNull(message = "type is missing in Anniversary")
     @NonNull
@@ -46,4 +47,5 @@ public class Anniversary extends GroupableObject {
 
     @Valid
     Address place;
+
 }
