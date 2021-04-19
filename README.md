@@ -33,9 +33,11 @@ Validation and conversion leverage the features provided by [ez-vcard](https://g
 <a name="creation"></a>
 ## Creation
 
+###Builders
+
 Object creation is achieved through builders.
-Collections can be loaded by adding items singularly.
-Here in the following a successful creation of an email `Resource` instance is shown.
+Simplest maps can be loaded by putting items singularly.
+Here in the following a successful creation of an EmailAddress instance is shown.
  
 ```
         EmailAddress email = EmailAddress.builder()
@@ -51,6 +53,27 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 ```
         // email is missing
         EmailAddress.builder().context(Context.WORK,Boolean.TRUE).build();
+```
+
+###Cloning
+
+Creation can be achieved through cloning as well.
+Cloning can be only applied to topmost JSContact objects, namely JSCard and JSCardGroup.
+
+Here in the following a test assessing a successful creation of a cloned JSCard instane.
+ 
+```
+
+    @Test
+    public void testClone1() throws IOException {
+
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), Charset.forName("UTF-8"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        JSCard jsCard = objectMapper.readValue(json, JSCard.class);
+        assertTrue("testClone1", Objects.deepEquals(jsCard, jsCard.clone()));
+
+    }
+
 ```
 
 <a name="validation"></a>
