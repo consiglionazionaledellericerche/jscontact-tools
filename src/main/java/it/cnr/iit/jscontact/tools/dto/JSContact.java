@@ -33,6 +33,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -44,7 +45,7 @@ import java.util.*;
 @ToString
 @EqualsAndHashCode(of={"uid"})
 @SuperBuilder
-public abstract class JSContact extends ValidableObject {
+public abstract class JSContact extends ValidableObject implements Serializable {
 
     //Metadata properties
     @NotNull(message = "uid is missing in JSContact")
