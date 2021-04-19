@@ -104,7 +104,7 @@ public class ContactLanguageTest extends AbstractTest {
 
         assertTrue("testInvalidContactLanguage3-1", !jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidContactLanguage3-2", messages.contains("invalid pref in ContactLanguage - min value must be 1"));
+        assertTrue("testInvalidContactLanguage3-2", messages.contains("invalid pref in ContactLanguage - value must be greater or equal than 1"));
         assertTrue("testInvalidContactLanguage3-3", messages.contains("invalid preferredContactLanguages in JSContact"));
     }
 
@@ -119,7 +119,7 @@ public class ContactLanguageTest extends AbstractTest {
 
         assertTrue("testInvalidContactLanguage4-1", !jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidContactLanguage4-2", messages.contains("invalid pref in ContactLanguage - max value must be 100"));
+        assertTrue("testInvalidContactLanguage4-2", messages.contains("invalid pref in ContactLanguage - value must be less or equal than 100"));
         assertTrue("testInvalidContactLanguage4-3", messages.contains("invalid preferredContactLanguages in JSContact"));
     }
 

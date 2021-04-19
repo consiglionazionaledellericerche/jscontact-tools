@@ -27,6 +27,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Map;
 
 @UriResourceConstraint
@@ -35,7 +36,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue {
+public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable {
 
     @NotNull(message = "resource is missing in Resource")
     @NonNull
@@ -47,12 +48,14 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     String mediaType;
 
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Resource - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
     String label;
 
-    @Min(value=1, message = "invalid pref in Resource - min value must be 1")
-    @Max(value=100, message = "invalid pref in Resource - max value must be 100")
+    @Min(value=1, message = "invalid pref in Resource - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in Resource - value must be less or equal than 100")
     Integer pref;
 
     @JsonIgnore
@@ -64,6 +67,5 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
 
         return HasIndexUtils.compareTo(this, o);
     }
-
 
 }

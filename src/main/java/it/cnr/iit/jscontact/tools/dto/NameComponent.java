@@ -19,13 +19,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NameComponent extends GroupableObject {
+public class NameComponent extends GroupableObject implements Serializable {
 
     @NotNull(message = "value is missing in NameComponent")
     @NonNull

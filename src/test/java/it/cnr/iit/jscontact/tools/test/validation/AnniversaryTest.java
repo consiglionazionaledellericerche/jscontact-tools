@@ -15,10 +15,10 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryType;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import org.junit.Test;
 
 public class AnniversaryTest {
@@ -28,7 +28,7 @@ public class AnniversaryTest {
 
         // type missing
         Anniversary.builder()
-                       .date(AnniversaryDate.builder().date(VCardDateFormat.parseAsCalendar("2020-01-01")).build())
+                       .date(AnniversaryDate.builder().date(DateUtils.toCalendar("2020-01-01")).build())
                        .build();
     }
 

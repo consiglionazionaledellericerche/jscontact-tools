@@ -39,5 +39,13 @@ public class NameComponentTest {
                 .build();
     }
 
+    public void testValidNameComponentBuild() {
+
+        // value missing
+        NameComponent.builder()
+                .type(NameComponentType.PERSONAL)
+                .value("Mario")
+                .build();
+    }
 
 }

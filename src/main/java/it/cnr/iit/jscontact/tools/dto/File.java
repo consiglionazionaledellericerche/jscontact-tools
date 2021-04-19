@@ -7,13 +7,14 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class File implements IdMapValue {
+public class File implements IdMapValue, Serializable {
 
     @NotNull(message = "href is missing in File")
     @NonNull
@@ -21,11 +22,11 @@ public class File implements IdMapValue {
 
     String mediaType;
 
-    @Min(value=0, message = "invalid size in File - min value must be 0")
+    @Min(value=0, message = "invalid size in File - value must be greater or equal than 0")
     int size;
 
-    @Min(value=1, message = "invalid pref in File - min value must be 1")
-    @Max(value=100, message = "invalid pref in File - max value must be 100")
+    @Min(value=1, message = "invalid pref in File - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in File - value must be less or equal than 100")
     Integer pref;
 
 }

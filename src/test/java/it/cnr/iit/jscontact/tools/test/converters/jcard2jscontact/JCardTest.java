@@ -15,8 +15,8 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
@@ -231,10 +231,10 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard3 - 8", jsCard.getEmails() == null);
         assertTrue("testCompleteJCard3 - 10", jsCard.getPhones().size() == 2);
         assertTrue("testCompleteJCard3 - 11", jsCard.getPhones().get("PHONE-1").getFeatures().containsKey(PhoneFeature.VOICE));
-        assertTrue("testCompleteJCard3 - 12", jsCard.getPhones().get("PHONE-1").getContexts() == null);
+        assertTrue("testCompleteJCard3 - 12", jsCard.getPhones().get("PHONE-1").getContexts().size() == 0);
         assertTrue("testCompleteJCard3 - 13", jsCard.getPhones().get("PHONE-1").getPhone().isEmpty());
         assertTrue("testCompleteJCard3 - 14", jsCard.getPhones().get("PHONE-2").getFeatures().containsKey(PhoneFeature.FAX));
-        assertTrue("testCompleteJCard3 - 15", jsCard.getPhones().get("PHONE-2").getContexts() == null);
+        assertTrue("testCompleteJCard3 - 15", jsCard.getPhones().get("PHONE-2").getContexts().size() == 0);
         assertTrue("testCompleteJCard3 - 16", jsCard.getPhones().get("PHONE-2").getPhone().isEmpty());
         assertTrue("testCompleteJCard3 - 17", StringUtils.isNotEmpty(jsCard.getUid()));
     }
@@ -348,7 +348,7 @@ public class JCardTest extends JCard2JSContactTest {
 
         assertTrue("testCompleteJCard5 - 42", jsCard.getEmails().size() == 1);
         assertTrue("testCompleteJCard5 - 43", jsCard.getEmails().get("EMAIL-1").getEmail().equals("forrestgump@example.com"));
-        assertTrue("testCompleteJCard5 - 44", jsCard.getUpdated().compareTo(VCardDateFormat.parseAsCalendar("2008-04-24T19:52:43Z"))==0);
+        assertTrue("testCompleteJCard5 - 44", jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z"))==0);
         assertTrue("testCompleteJCard5 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 

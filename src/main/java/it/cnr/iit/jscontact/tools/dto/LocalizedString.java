@@ -21,8 +21,10 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasPreference;
 import it.cnr.iit.jscontact.tools.dto.utils.HasPreferenceUtils;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"value"})
-public class LocalizedString extends GroupableObject implements HasAltid, HasPreference, Comparable<LocalizedString> {
+public class LocalizedString extends GroupableObject implements HasAltid, HasPreference, Comparable<LocalizedString>, Serializable {
 
     @NotNull(message = "value is missing in LocalizedString")
     @NonNull
@@ -53,7 +55,7 @@ public class LocalizedString extends GroupableObject implements HasAltid, HasPre
         if (localizations == null)
             localizations = new HashMap<>();
 
-        localizations.put((language == null) ? "en" : language, value);
+        localizations.put(StringUtils.defaultIfEmpty(language, "en" ), value);
     }
 
     //to compare VCard TITLE, ROLE, NOTES instances based on preference

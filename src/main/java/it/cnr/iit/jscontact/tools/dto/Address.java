@@ -25,6 +25,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -33,7 +34,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"fullAddress"})
-public class Address extends GroupableObject implements HasAltid, IdMapValue {
+public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable {
 
     LocalizedString fullAddress;
 
@@ -60,12 +61,14 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue {
     String timeZone;
 
     @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Singular(ignoreNullCollections = true)
     Map<AddressContext,Boolean> contexts;
 
     String label;
 
-    @Min(value=1, message = "invalid pref in Address - min value must be 1")
-    @Max(value=100, message = "invalid pref in Address - max value must be 100")
+    @Min(value=1, message = "invalid pref in Address - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in Address - value must be less or equal than 100")
     Integer pref;
 
     @JsonIgnore
