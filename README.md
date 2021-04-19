@@ -33,7 +33,7 @@ Validation and conversion leverage the features provided by [ez-vcard](https://g
 <a name="creation"></a>
 ## Creation
 
-###Builders
+### Builders
 
 Object creation is achieved through builders.
 Simplest maps can be loaded by putting items singularly.
@@ -55,7 +55,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
         EmailAddress.builder().context(Context.WORK,Boolean.TRUE).build();
 ```
 
-###Cloning
+### Cloning
 
 Creation can be achieved through cloning as well.
 Cloning can be only applied to topmost JSContact objects, namely JSCard and JSCardGroup.
