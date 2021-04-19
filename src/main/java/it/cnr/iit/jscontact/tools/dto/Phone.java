@@ -34,8 +34,8 @@ public class Phone implements IdMapValue, Serializable {
 
     String label;
 
-    @Min(value=1, message = "invalid pref in Phone - min value must be 1")
-    @Max(value=100, message = "invalid pref in Phone - max value must be 100")
+    @Min(value=1, message = "invalid pref in Phone - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in Phone - value must be less or equal than 100")
     Integer pref;
 
 }

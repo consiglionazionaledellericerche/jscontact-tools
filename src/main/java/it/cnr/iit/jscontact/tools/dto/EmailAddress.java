@@ -29,8 +29,8 @@ public class EmailAddress implements IdMapValue, Serializable {
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in Email - min value must be 1")
-    @Max(value=100, message = "invalid pref in Email - max value must be 100")
+    @Min(value=1, message = "invalid pref in Email - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in Email - value must be less or equal than 100")
     Integer pref;
 
 }

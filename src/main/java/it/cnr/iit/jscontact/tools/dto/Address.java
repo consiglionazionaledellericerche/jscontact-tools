@@ -21,7 +21,6 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
-import org.apache.commons.lang3.SerializationUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -68,15 +67,11 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     String label;
 
-    @Min(value=1, message = "invalid pref in Address - min value must be 1")
-    @Max(value=100, message = "invalid pref in Address - max value must be 100")
+    @Min(value=1, message = "invalid pref in Address - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in Address - value must be less or equal than 100")
     Integer pref;
 
     @JsonIgnore
     String altid;
-
-    public Address clone() {
-        return (Address) SerializationUtils.clone(this);
-    }
 
 }

@@ -146,7 +146,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
 
         assertTrue("testInvalidEmail3-1", !jsCard.isValid());
-        assertTrue("testInvalidEmail3-2", jsCard.getValidationMessage().equals("invalid pref in Email - min value must be 1"));
+        assertTrue("testInvalidEmail3-2", jsCard.getValidationMessage().equals("invalid pref in Email - value must be greater or equal than 1"));
     }
 
 }

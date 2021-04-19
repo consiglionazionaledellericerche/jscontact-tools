@@ -67,22 +67,6 @@ public class OnlineTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testPhotoValid() throws IOException, CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "PHOTO:http://www.example.com/pub/photos/jqpublic.gif\n" +
-                "END:VCARD";
-
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhotoValid - 1",jsCard.getPhotos().size() == 1);
-        assertTrue("testPhotoValid - 2",jsCard.getPhotos().get("PHOTO-1").getHref().equals("http://www.example.com/pub/photos/jqpublic.gif"));
-        assertTrue("testPhotoValid - 3",jsCard.getPhotos().get("PHOTO-1").getPref() == null);
-        assertTrue("testPhotoValid - 4",jsCard.getPhotos().get("PHOTO-1").getMediaType() == null);
-    }
-
-    @Test
     public void testOnlineValid4() throws IOException, CardException {
 
         String vcard = "BEGIN:VCARD\n" +
