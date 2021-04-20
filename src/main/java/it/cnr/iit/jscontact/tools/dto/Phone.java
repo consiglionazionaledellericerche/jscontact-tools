@@ -39,9 +39,9 @@ public class Phone implements IdMapValue, Serializable, hasContext {
     @Max(value=100, message = "invalid pref in Phone - value must be less or equal than 100")
     Integer pref;
 
-    public boolean hasVoice() { return features != null && features.containsKey(PhoneFeature.VOICE); }
-    public boolean hasFax() { return features != null && features.containsKey(PhoneFeature.FAX); }
-    public boolean hasPager() { return features != null && features.containsKey(PhoneFeature.PAGER); }
-    public boolean hasOtherFeature() { return features != null && features.containsKey(PhoneFeature.OTHER); }
+    public boolean asVoice() { return features != null && features.containsKey(PhoneFeature.VOICE); }
+    public boolean asFax() { return features != null && features.containsKey(PhoneFeature.FAX); }
+    public boolean asPager() { return features != null && features.containsKey(PhoneFeature.PAGER); }
+    public boolean asOtherFeature() { return features != null && features.containsKey(PhoneFeature.OTHER); }
 
 }

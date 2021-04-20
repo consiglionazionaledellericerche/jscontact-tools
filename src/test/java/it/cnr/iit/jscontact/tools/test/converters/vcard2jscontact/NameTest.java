@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.NameComponentType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import org.junit.Test;

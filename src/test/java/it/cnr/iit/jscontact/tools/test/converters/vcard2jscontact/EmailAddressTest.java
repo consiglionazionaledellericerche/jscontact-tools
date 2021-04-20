@@ -37,7 +37,7 @@ public class EmailAddressTest extends VCard2JSContactTest {
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testEmailAddressValid1 - 1",jsCard.getEmails().size() == 1);
         assertTrue("testEmailAddressValid1 - 2",jsCard.getEmails().get("EMAIL-1").getContexts().size() == 1);
-        assertTrue("testEmailAddressValid1 - 3",jsCard.getEmails().get("EMAIL-1").hasWork());
+        assertTrue("testEmailAddressValid1 - 3",jsCard.getEmails().get("EMAIL-1").asWork());
         assertTrue("testEmailAddressValid1 - 4",jsCard.getEmails().get("EMAIL-1").getEmail().equals("jqpublic@xyz.example.com"));
     }
 
@@ -54,10 +54,10 @@ public class EmailAddressTest extends VCard2JSContactTest {
         JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testEmailAddressValid2 - 1",jsCard.getEmails().size() == 2);
         assertTrue("testEmailAddressValid2 - 2",jsCard.getEmails().get("EMAIL-1").getContexts().size() == 1);
-        assertTrue("testEmailAddressValid2 - 3",jsCard.getEmails().get("EMAIL-1").hasWork());
+        assertTrue("testEmailAddressValid2 - 3",jsCard.getEmails().get("EMAIL-1").asWork());
         assertTrue("testEmailAddressValid2 - 4",jsCard.getEmails().get("EMAIL-1").getEmail().equals("jqpublic@xyz.example.com"));
         assertTrue("testEmailAddressValid2 - 5",jsCard.getEmails().get("EMAIL-2").getContexts().size() == 1);
-        assertTrue("testEmailAddressValid2 - 6",jsCard.getEmails().get("EMAIL-2").hasPrivate());
+        assertTrue("testEmailAddressValid2 - 6",jsCard.getEmails().get("EMAIL-2").asPrivate());
         assertTrue("testEmailAddressValid2 - 7",jsCard.getEmails().get("EMAIL-2").getPref() == 1);
     }
 

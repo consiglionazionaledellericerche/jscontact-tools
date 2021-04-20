@@ -15,9 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.PhoneFeature;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -37,7 +35,7 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid1 - 1",jsCard.getPhones().size() == 1);
         assertTrue("testPhoneValid1 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneValid1 - 3",jsCard.getPhones().get("PHONE-1").hasPrivate());
+        assertTrue("testPhoneValid1 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
 
     }
 
@@ -52,11 +50,11 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid2 - 1",jsCard.getPhones().size() == 2);
         assertTrue("testPhoneValid2 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneValid3 - 3",jsCard.getPhones().get("PHONE-1").hasPrivate());
-        assertTrue("testPhoneValid2 - 4",jsCard.getPhones().get("PHONE-1").hasVoice());
+        assertTrue("testPhoneValid3 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
+        assertTrue("testPhoneValid2 - 4",jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testPhoneValid2 - 5",jsCard.getPhones().get("PHONE-1").getLabel() == null);
         assertTrue("testPhoneValid2 - 6",jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-555-555-5555;ext=555"));
-        assertTrue("testPhoneValid2 - 7",jsCard.getPhones().get("PHONE-2").hasVoice());
+        assertTrue("testPhoneValid2 - 7",jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testPhoneValid2 - 8",jsCard.getPhones().get("PHONE-2").getPref() == 1);
         assertTrue("testPhoneValid2 - 9",jsCard.getPhones().get("PHONE-2").getLabel() == null);
     }
@@ -71,8 +69,8 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid3 - 1",jsCard.getPhones().size() == 1);
         assertTrue("testPhoneValid3 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneValid3 - 3",jsCard.getPhones().get("PHONE-1").hasWork());
-        assertTrue("testPhoneValid3 - 4",jsCard.getPhones().get("PHONE-1").hasFax());
+        assertTrue("testPhoneValid3 - 3",jsCard.getPhones().get("PHONE-1").asWork());
+        assertTrue("testPhoneValid3 - 4",jsCard.getPhones().get("PHONE-1").asFax());
         assertTrue("testPhoneValid3 - 5",jsCard.getPhones().get("PHONE-1").getLabel() == null);
 
     }
@@ -87,8 +85,8 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid4 - 1",jsCard.getPhones().size() == 1);
         assertTrue("testPhoneValid4 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneValid4 - 3",jsCard.getPhones().get("PHONE-1").hasWork());
-        assertTrue("testPhoneValid4 - 4",jsCard.getPhones().get("PHONE-1").hasOtherFeature());
+        assertTrue("testPhoneValid4 - 3",jsCard.getPhones().get("PHONE-1").asWork());
+        assertTrue("testPhoneValid4 - 4",jsCard.getPhones().get("PHONE-1").asOtherFeature());
         assertTrue("testPhoneValid4 - 5",jsCard.getPhones().get("PHONE-1").getLabel().equals("textphone"));
 
     }
@@ -104,9 +102,9 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid5 - 1",jsCard.getPhones().size() == 1);
         assertTrue("testPhoneValid5 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneValid5 - 3",jsCard.getPhones().get("PHONE-1").hasPrivate());
-        assertTrue("testPhoneValid5 - 4",jsCard.getPhones().get("PHONE-1").hasWork());
-        assertTrue("testPhoneValid5 - 5",jsCard.getPhones().get("PHONE-1").hasVoice());
+        assertTrue("testPhoneValid5 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
+        assertTrue("testPhoneValid5 - 4",jsCard.getPhones().get("PHONE-1").asWork());
+        assertTrue("testPhoneValid5 - 5",jsCard.getPhones().get("PHONE-1").asVoice());
 
     }
 
@@ -120,9 +118,9 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid6 - 1",jsCard.getPhones().size() == 1);
         assertTrue("testPhoneValid6 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneValid6 - 3",jsCard.getPhones().get("PHONE-1").hasWork());
-        assertTrue("testPhoneValid6 - 4",jsCard.getPhones().get("PHONE-1").hasPrivate());
-        assertTrue("testPhoneValid6 - 5",jsCard.getPhones().get("PHONE-1").hasVoice());
+        assertTrue("testPhoneValid6 - 3",jsCard.getPhones().get("PHONE-1").asWork());
+        assertTrue("testPhoneValid6 - 4",jsCard.getPhones().get("PHONE-1").asPrivate());
+        assertTrue("testPhoneValid6 - 5",jsCard.getPhones().get("PHONE-1").asVoice());
 
     }
 
@@ -137,10 +135,10 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid7 - 1",jsCard.getPhones().size() == 1);
         assertTrue("testPhoneValid7 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneValid7 - 3",jsCard.getPhones().get("PHONE-1").hasWork());
-        assertTrue("testPhoneValid7 - 4",jsCard.getPhones().get("PHONE-1").hasPrivate());
+        assertTrue("testPhoneValid7 - 3",jsCard.getPhones().get("PHONE-1").asWork());
+        assertTrue("testPhoneValid7 - 4",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhoneValid7 - 5",jsCard.getPhones().get("PHONE-1").getLabel().equals("textphone"));
-        assertTrue("testPhoneValid7 - 6",jsCard.getPhones().get("PHONE-1").hasOtherFeature());
+        assertTrue("testPhoneValid7 - 6",jsCard.getPhones().get("PHONE-1").asOtherFeature());
 
     }
 
@@ -154,10 +152,10 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid8 - 1",jsCard.getPhones().size() == 1);
         assertTrue("testPhoneValid8 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
-        assertTrue("testPhoneValid8 - 3",jsCard.getPhones().get("PHONE-1").hasWork());
-        assertTrue("testPhoneValid8 - 4",jsCard.getPhones().get("PHONE-1").hasPrivate());
+        assertTrue("testPhoneValid8 - 3",jsCard.getPhones().get("PHONE-1").asWork());
+        assertTrue("testPhoneValid8 - 4",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhoneValid8 - 5",jsCard.getPhones().get("PHONE-1").getLabel().equals("textphone"));
-        assertTrue("testPhoneValid8 - 6",jsCard.getPhones().get("PHONE-1").hasVoice());
+        assertTrue("testPhoneValid8 - 6",jsCard.getPhones().get("PHONE-1").asVoice());
 
     }
 
@@ -171,7 +169,7 @@ public class PhoneTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPhoneValid9 - 1",jsCard.getPhones().size() == 1);
         assertTrue("testPhoneValid9 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("+33 01 23 45 6"));
-        assertTrue("testPhoneValid9 - 3",jsCard.getPhones().get("PHONE-1").hasPrivate());
+        assertTrue("testPhoneValid9 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
 
     }
 

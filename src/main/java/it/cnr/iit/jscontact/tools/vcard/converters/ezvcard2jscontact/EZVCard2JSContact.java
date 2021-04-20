@@ -671,8 +671,8 @@ public class EZVCard2JSContact extends AbstractConverter {
         if (label == null)
             return false;
 
-        for (String labelItems : label.split(COMMA_ARRAY_DELIMITER)) {
-            if (!label.equals("private") && !label.equals("work"))
+        for (String labelItem : label.split(COMMA_ARRAY_DELIMITER)) {
+            if (!labelItem.equals("private") && !labelItem.equals("work"))
                 return true;
         }
 

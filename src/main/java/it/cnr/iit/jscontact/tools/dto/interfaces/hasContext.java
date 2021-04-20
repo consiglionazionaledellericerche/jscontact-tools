@@ -6,11 +6,11 @@ import java.util.Map;
 
 public interface hasContext {
 
-    default boolean hasWork() { return getContexts() != null && getContexts().containsKey(Context.WORK); }
+    default boolean asWork() { return getContexts() != null && getContexts().containsKey(Context.WORK); }
 
-    default boolean hasPrivate() { return getContexts() != null && getContexts().containsKey(Context.PRIVATE); }
+    default boolean asPrivate() { return getContexts() != null && getContexts().containsKey(Context.PRIVATE); }
 
-    default boolean hasOtherContext() { return getContexts() != null && getContexts().containsKey(Context.OTHER); }
+    default boolean asOtherContext() { return getContexts() != null && getContexts().containsKey(Context.OTHER); }
 
     Map<Context,Boolean> getContexts();
 }

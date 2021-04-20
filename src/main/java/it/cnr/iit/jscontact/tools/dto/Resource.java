@@ -23,6 +23,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.hasContext;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import lombok.*;
 
 import javax.validation.constraints.Max;
@@ -75,5 +76,17 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     public boolean isUsername() { return type == ResourceType.USERNAME; }
     @JsonIgnore
     public boolean isOtherResource() { return type == ResourceType.OTHER; }
+
+    public boolean asCaladruri() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.CALADRURI.getValue()); }
+    public boolean asCaluri() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.CALURI.getValue()); }
+    public boolean asContactUri() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.CONTACT_URI.getValue()); }
+    public boolean asFburl() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.FBURL.getValue()); }
+    public boolean asKey() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.KEY.getValue()); }
+    public boolean asImpp() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.IMPP.getValue()); }
+    public boolean asLogo() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.LOGO.getValue()); }
+    public boolean asOrgDirectory() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.ORG_DIRECTORY.getValue()); }
+    public boolean asSound() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.SOUND.getValue()); }
+    public boolean asSource() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.SOURCE.getValue()); }
+    public boolean asUrl() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.URL.getValue()); }
 
 }

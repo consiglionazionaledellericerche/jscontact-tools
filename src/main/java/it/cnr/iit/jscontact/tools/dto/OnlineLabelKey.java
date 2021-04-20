@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public enum OnlineLabelKey {
 
     public static OnlineLabelKey getLabelKey(String label) {
 
-        List<String> labelItems = Arrays.asList(label.split(","));
+        List<String> labelItems = Arrays.asList(label.split(LabelUtils.LABEL_DELIMITER));
         for (OnlineLabelKey key : OnlineLabelKey.values())
             if (labelItems.contains(key.getValue()))
                 return key;

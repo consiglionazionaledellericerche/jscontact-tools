@@ -1,3 +1,4 @@
+
 /*
  *    Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *     This program is free software: you can redistribute it and/or modify
@@ -26,6 +27,7 @@ import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindSerializer;
+import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -223,8 +225,7 @@ public abstract class JSContact extends ValidableObject implements Serializable 
 
         Map<String,Resource> ols = new HashMap<>();
         for (Map.Entry<String,Resource> ol : online.entrySet()) {
-            List<String> labelItems = Arrays.asList(ol.getValue().getLabel().split(","));
-            if (labelItems.contains(label))
+            if (LabelUtils.labelIncludesItem(ol.getValue().getLabel(), label))
                 ols.put(ol.getKey(),ol.getValue());
         }
         if (ols.size()==0)
