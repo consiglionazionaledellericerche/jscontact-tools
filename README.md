@@ -11,14 +11,14 @@ Validation and conversion leverage the features provided by [ez-vcard](https://g
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.3.1</version>
+		  <version>0.3.2</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.3.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.3.2'
 ```
 
 # Features
