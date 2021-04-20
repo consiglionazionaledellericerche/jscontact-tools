@@ -43,7 +43,7 @@ public class JSCardGroupCloneTest {
         JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
         for (JSContact jsContact : jsContacts) {
             if (jsContact instanceof JSCardGroup)
-                assertTrue("testClone1", Objects.deepEquals((JSCardGroup) jsContact, ((JSCardGroup) jsContact).clone()));
+                assertTrue("testClone1", Objects.deepEquals(jsContact, ((JSCardGroup) jsContact).clone()));
         }
     }
 

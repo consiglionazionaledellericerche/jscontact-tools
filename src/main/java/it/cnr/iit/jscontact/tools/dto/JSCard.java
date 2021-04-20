@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.iit.jscontact.tools.constraints.JSCardKindConstraint;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,7 +30,20 @@ import java.io.Serializable;
 public class JSCard extends JSContact implements Serializable {
 
     public JSCard clone() {
-        return (JSCard) SerializationUtils.clone(this);
+        return SerializationUtils.clone(this);
     }
+
+    @JsonIgnore
+    public boolean isIndividual() { return kind != null && kind.getRfcValue() != null && kind.getRfcValue() == Kind.INDIVIDUAL; }
+    @JsonIgnore
+    public boolean isOrg() { return kind != null && kind.getRfcValue() != null && kind.getRfcValue() == Kind.ORG; }
+    @JsonIgnore
+    public boolean isDevice() { return kind != null && kind.getRfcValue() != null && kind.getRfcValue() == Kind.DEVICE; }
+    @JsonIgnore
+    public boolean isApplication() { return kind != null && kind.getRfcValue() != null && kind.getRfcValue() == Kind.APPLICATION; }
+    @JsonIgnore
+    public boolean isLocation() { return kind != null && kind.getRfcValue() != null && kind.getRfcValue() == Kind.LOCATION; }
+    @JsonIgnore
+    public boolean isCustomType() { return kind != null && kind.getExtValue() != null; }
 
 }

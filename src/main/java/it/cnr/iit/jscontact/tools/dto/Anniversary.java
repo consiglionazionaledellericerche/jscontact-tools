@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -48,4 +49,10 @@ public class Anniversary extends GroupableObject implements Serializable {
     @Valid
     Address place;
 
+    @JsonIgnore
+    public boolean isBirth() { return type == AnniversaryType.BIRTH; }
+    @JsonIgnore
+    public boolean isDeath() { return type == AnniversaryType.DEATH; }
+    @JsonIgnore
+    public boolean isOtherAnniversary() { return type == AnniversaryType.OTHER; }
 }

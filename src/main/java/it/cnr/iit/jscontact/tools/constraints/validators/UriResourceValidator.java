@@ -33,7 +33,7 @@ public class UriResourceValidator implements ConstraintValidator<UriResourceCons
         if (resource == null)
             return true;
 
-        if (resource.getType() != ResourceType.URI)
+        if (!resource.isUri())
             return true;
 
         try {

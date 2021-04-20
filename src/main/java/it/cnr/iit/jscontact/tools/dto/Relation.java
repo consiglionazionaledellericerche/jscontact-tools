@@ -33,4 +33,26 @@ public class Relation extends GroupableObject implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(value="relationType", ignoreNullCollections = true)
     Map<RelationType,Boolean> relation;
+
+    public boolean hasContact() {return relation!= null && relation.containsKey(RelationType.CONTACT); }
+    public boolean hasAcquaintance() {return relation!= null && relation.containsKey(RelationType.ACQUAINTANCE); }
+    public boolean hasFriend() {return relation!= null && relation.containsKey(RelationType.FRIEND); }
+    public boolean hasMet() {return relation!= null && relation.containsKey(RelationType.MET); }
+    public boolean hasCoWorker() {return relation!= null && relation.containsKey(RelationType.CO_WORKER); }
+    public boolean hasColleague() {return relation!= null && relation.containsKey(RelationType.COLLEAGUE); }
+    public boolean hasCoResident() {return relation!= null && relation.containsKey(RelationType.CO_RESIDENT); }
+    public boolean hasNeighbor() {return relation!= null && relation.containsKey(RelationType.NEIGHBOR); }
+    public boolean hasChild() {return relation!= null && relation.containsKey(RelationType.CHILD); }
+    public boolean hasParent() {return relation!= null && relation.containsKey(RelationType.PARENT); }
+    public boolean hasSibling() {return relation!= null && relation.containsKey(RelationType.SIBLING); }
+    public boolean hasSpouse() {return relation!= null && relation.containsKey(RelationType.SPOUSE); }
+    public boolean hasKin() {return relation!= null && relation.containsKey(RelationType.KIN); }
+    public boolean hasMuse() {return relation!= null && relation.containsKey(RelationType.MUSE); }
+    public boolean hasCrush() {return relation!= null && relation.containsKey(RelationType.CRUSH); }
+    public boolean hasDate() {return relation!= null && relation.containsKey(RelationType.DATE); }
+    public boolean hasSweetheart() {return relation!= null && relation.containsKey(RelationType.SWEETHEART); }
+    public boolean hasMe() {return relation!= null && relation.containsKey(RelationType.ME); }
+    public boolean hasAgent() {return relation!= null && relation.containsKey(RelationType.AGENT); }
+    public boolean hasEmergency() {return relation!= null && relation.containsKey(RelationType.EMERGENCY); }
+
 }

@@ -21,6 +21,7 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.UriResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.hasContext;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
 
@@ -36,7 +37,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable {
+public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable, hasContext {
 
     @NotNull(message = "resource is missing in Resource")
     @NonNull
@@ -67,5 +68,12 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
 
         return HasIndexUtils.compareTo(this, o);
     }
+
+    @JsonIgnore
+    public boolean isUri() { return type == ResourceType.URI; }
+    @JsonIgnore
+    public boolean isUsername() { return type == ResourceType.USERNAME; }
+    @JsonIgnore
+    public boolean isOtherResource() { return type == ResourceType.OTHER; }
 
 }

@@ -3,6 +3,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.hasContext;
 import lombok.*;
 
 import javax.validation.constraints.Max;
@@ -16,7 +17,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Phone implements IdMapValue, Serializable {
+public class Phone implements IdMapValue, Serializable, hasContext {
 
     @NotNull(message = "phone is missing in Phone")
     @NonNull
@@ -37,5 +38,10 @@ public class Phone implements IdMapValue, Serializable {
     @Min(value=1, message = "invalid pref in Phone - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Phone - value must be less or equal than 100")
     Integer pref;
+
+    public boolean hasVoice() { return features != null && features.containsKey(PhoneFeature.VOICE); }
+    public boolean hasFax() { return features != null && features.containsKey(PhoneFeature.FAX); }
+    public boolean hasPager() { return features != null && features.containsKey(PhoneFeature.PAGER); }
+    public boolean hasOtherFeature() { return features != null && features.containsKey(PhoneFeature.OTHER); }
 
 }

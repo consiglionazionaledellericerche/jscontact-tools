@@ -52,8 +52,14 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Co
         return HasIndexUtils.compareTo(this, o);
     }
 
-    public PersonalInformation clone() {
-        return (PersonalInformation) SerializationUtils.clone(this);
-    }
+    @JsonIgnore
+    public boolean isHobby() { return type == PersonalInformationType.HOBBY; }
+
+    @JsonIgnore
+    public boolean isInterest() { return type == PersonalInformationType.INTEREST; }
+    @JsonIgnore
+    public boolean isExpertise() { return type == PersonalInformationType.EXPERTISE; }
+    @JsonIgnore
+    public boolean isOtherPersonalInfo() { return type == PersonalInformationType.OTHER; }
 
 }
