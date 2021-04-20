@@ -76,6 +76,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     public boolean asWork() { return contexts != null && contexts.containsKey(AddressContext.WORK); }
     public boolean asPrivate() { return contexts != null && contexts.containsKey(AddressContext.PRIVATE); }
+    public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
     public boolean asBilling() { return contexts != null && contexts.containsKey(AddressContext.BILLING); }
     public boolean asPostal() { return contexts != null && contexts.containsKey(AddressContext.POSTAL); }
     public boolean asOtherContext() { return contexts != null && contexts.containsKey(AddressContext.OTHER); }

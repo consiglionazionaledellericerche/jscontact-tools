@@ -231,10 +231,10 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard3 - 8", jsCard.getEmails() == null);
         assertTrue("testCompleteJCard3 - 10", jsCard.getPhones().size() == 2);
         assertTrue("testCompleteJCard3 - 11", jsCard.getPhones().get("PHONE-1").asVoice());
-        assertTrue("testCompleteJCard3 - 12", jsCard.getPhones().get("PHONE-1").getContexts().size() == 0);
+        assertTrue("testCompleteJCard3 - 12", jsCard.getPhones().get("PHONE-1").hasNoContext());
         assertTrue("testCompleteJCard3 - 13", jsCard.getPhones().get("PHONE-1").getPhone().isEmpty());
         assertTrue("testCompleteJCard3 - 14", jsCard.getPhones().get("PHONE-2").asFax());
-        assertTrue("testCompleteJCard3 - 15", jsCard.getPhones().get("PHONE-2").getContexts().size() == 0);
+        assertTrue("testCompleteJCard3 - 15", jsCard.getPhones().get("PHONE-2").hasNoContext());
         assertTrue("testCompleteJCard3 - 16", jsCard.getPhones().get("PHONE-2").getPhone().isEmpty());
         assertTrue("testCompleteJCard3 - 17", StringUtils.isNotEmpty(jsCard.getUid()));
     }

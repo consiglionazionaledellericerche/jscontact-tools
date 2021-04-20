@@ -12,5 +12,7 @@ public interface hasContext {
 
     default boolean asOtherContext() { return getContexts() != null && getContexts().containsKey(Context.OTHER); }
 
+    default boolean hasNoContext() { return getContexts() == null || getContexts().size() == 0; }
+
     Map<Context,Boolean> getContexts();
 }
