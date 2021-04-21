@@ -21,7 +21,7 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.UriResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.hasContext;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import lombok.*;
@@ -38,7 +38,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable, hasContext {
+public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable, HasContext {
 
     @NotNull(message = "resource is missing in Resource")
     @NonNull
@@ -77,16 +77,17 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @JsonIgnore
     public boolean isOtherResource() { return type == ResourceType.OTHER; }
 
-    public boolean asCaladruri() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.CALADRURI.getValue()); }
-    public boolean asCaluri() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.CALURI.getValue()); }
-    public boolean asContactUri() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.CONTACT_URI.getValue()); }
-    public boolean asFburl() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.FBURL.getValue()); }
-    public boolean asKey() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.KEY.getValue()); }
-    public boolean asImpp() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.IMPP.getValue()); }
-    public boolean asLogo() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.LOGO.getValue()); }
-    public boolean asOrgDirectory() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.ORG_DIRECTORY.getValue()); }
-    public boolean asSound() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.SOUND.getValue()); }
-    public boolean asSource() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.SOURCE.getValue()); }
-    public boolean asUrl() { return LabelUtils.labelIncludesItem(label,OnlineLabelKey.URL.getValue()); }
+    private boolean asResource(OnlineLabelKey labelKey) { return LabelUtils.labelIncludesItem(label,labelKey.getValue()); }
+    public boolean asCaladruri() { return asResource(OnlineLabelKey.CALADRURI); }
+    public boolean asCaluri() { return asResource(OnlineLabelKey.CALURI); }
+    public boolean asContactUri() { return asResource(OnlineLabelKey.CONTACT_URI); }
+    public boolean asFburl() { return asResource(OnlineLabelKey.FBURL); }
+    public boolean asKey() { return asResource(OnlineLabelKey.KEY); }
+    public boolean asImpp() { return asResource(OnlineLabelKey.IMPP); }
+    public boolean asLogo() { return asResource(OnlineLabelKey.LOGO); }
+    public boolean asOrgDirectory() { return asResource(OnlineLabelKey.ORG_DIRECTORY); }
+    public boolean asSound() { return asResource(OnlineLabelKey.SOUND); }
+    public boolean asSource() { return asResource(OnlineLabelKey.SOURCE); }
+    public boolean asUrl() { return asResource(OnlineLabelKey.URL); }
 
 }
