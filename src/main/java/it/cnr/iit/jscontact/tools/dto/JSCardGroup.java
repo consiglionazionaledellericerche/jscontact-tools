@@ -54,7 +54,7 @@ public class JSCardGroup extends JSContact implements Serializable {
     }
 
     public JSCardGroup clone() {
-        return (JSCardGroup) SerializationUtils.clone(this);
+        return SerializationUtils.clone(this);
     }
 
 }

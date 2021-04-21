@@ -3,6 +3,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailAddress implements IdMapValue, Serializable {
+public class EmailAddress implements IdMapValue, Serializable, HasContext {
 
     @NotNull(message = "email is missing in EmailAddress")
     @NonNull

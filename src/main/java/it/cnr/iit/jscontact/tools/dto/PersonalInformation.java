@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import lombok.*;
-import org.apache.commons.lang3.SerializationUtils;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -52,8 +51,12 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Co
         return HasIndexUtils.compareTo(this, o);
     }
 
-    public PersonalInformation clone() {
-        return (PersonalInformation) SerializationUtils.clone(this);
-    }
+    public boolean asHobby() { return type == PersonalInformationType.HOBBY; }
+    public boolean asInterest() { return type == PersonalInformationType.INTEREST; }
+    public boolean asExpertise() { return type == PersonalInformationType.EXPERTISE; }
+    public boolean asOtherPersonalInfo() { return type == PersonalInformationType.OTHER; }
+    public boolean ofHighInterest() { return level == PersonalInformationLevel.HIGH; }
+    public boolean ofMediumInterest() { return level == PersonalInformationLevel.MEDIUM; }
+    public boolean ofLowInterest() { return level == PersonalInformationLevel.LOW; }
 
 }

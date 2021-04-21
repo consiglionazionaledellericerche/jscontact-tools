@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,16 +32,14 @@ public class KindType implements Serializable {
     Kind rfcValue;
     String extValue;
 
-    public boolean isGroup() {
-        return (rfcValue!=null && rfcValue == Kind.GROUP);
-    }
-
-    public boolean isIndividual() {
-        return (rfcValue!=null && rfcValue == Kind.INDIVIDUAL);
-    }
-
+    private boolean isRfc(Kind rfcKind) { return (rfcValue !=null && rfcValue == rfcKind);};
+    @JsonIgnore
+    public boolean isGroup() { return isRfc(Kind.GROUP); }
+    @JsonIgnore
+    public boolean isIndividual() { return isRfc(Kind.INDIVIDUAL); }
+    @JsonIgnore
     public boolean isOrg() {
-        return (rfcValue!=null && rfcValue == Kind.ORG);
+        return isRfc(Kind.ORG);
     }
 
 }

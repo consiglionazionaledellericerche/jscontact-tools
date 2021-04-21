@@ -20,7 +20,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import ezvcard.util.PartialDate;
-import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import lombok.NoArgsConstructor;

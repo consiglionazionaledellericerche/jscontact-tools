@@ -21,7 +21,9 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.UriResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import lombok.*;
 
 import javax.validation.constraints.Max;
@@ -36,7 +38,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable {
+public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable, HasContext {
 
     @NotNull(message = "resource is missing in Resource")
     @NonNull
@@ -67,5 +69,25 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
 
         return HasIndexUtils.compareTo(this, o);
     }
+
+    @JsonIgnore
+    public boolean isUri() { return type == ResourceType.URI; }
+    @JsonIgnore
+    public boolean isUsername() { return type == ResourceType.USERNAME; }
+    @JsonIgnore
+    public boolean isOtherResource() { return type == ResourceType.OTHER; }
+
+    private boolean asResource(OnlineLabelKey labelKey) { return LabelUtils.labelIncludesItem(label,labelKey.getValue()); }
+    public boolean asCaladruri() { return asResource(OnlineLabelKey.CALADRURI); }
+    public boolean asCaluri() { return asResource(OnlineLabelKey.CALURI); }
+    public boolean asContactUri() { return asResource(OnlineLabelKey.CONTACT_URI); }
+    public boolean asFburl() { return asResource(OnlineLabelKey.FBURL); }
+    public boolean asKey() { return asResource(OnlineLabelKey.KEY); }
+    public boolean asImpp() { return asResource(OnlineLabelKey.IMPP); }
+    public boolean asLogo() { return asResource(OnlineLabelKey.LOGO); }
+    public boolean asOrgDirectory() { return asResource(OnlineLabelKey.ORG_DIRECTORY); }
+    public boolean asSound() { return asResource(OnlineLabelKey.SOUND); }
+    public boolean asSource() { return asResource(OnlineLabelKey.SOURCE); }
+    public boolean asUrl() { return asResource(OnlineLabelKey.URL); }
 
 }

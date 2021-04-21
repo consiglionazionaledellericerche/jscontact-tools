@@ -17,7 +17,6 @@ package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.UriResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.Resource;
-import it.cnr.iit.jscontact.tools.dto.ResourceType;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -33,7 +32,7 @@ public class UriResourceValidator implements ConstraintValidator<UriResourceCons
         if (resource == null)
             return true;
 
-        if (resource.getType() != ResourceType.URI)
+        if (!resource.isUri())
             return true;
 
         try {

@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -35,5 +36,16 @@ public class NameComponent extends GroupableObject implements Serializable {
     @NotNull(message = "type is missing in NameComponent")
     @NonNull
     NameComponentType type;
+
+    @JsonIgnore
+    public boolean isPrefix() { return type == NameComponentType.PREFIX; }
+    @JsonIgnore
+    public boolean isPersonal() { return type == NameComponentType.PERSONAL; }
+    @JsonIgnore
+    public boolean isSurname() { return type == NameComponentType.SURNAME; }
+    @JsonIgnore
+    public boolean isAdditional() { return type == NameComponentType.ADDITIONAL; }
+    @JsonIgnore
+    public boolean isSuffix() { return type == NameComponentType.SUFFIX; }
 
 }

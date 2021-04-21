@@ -32,6 +32,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import it.cnr.iit.jscontact.tools.dto.wrappers.CategoryWrapper;
 import it.cnr.iit.jscontact.tools.dto.wrappers.MemberWrapper;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -668,15 +669,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     private static boolean labelIncludesTelTypes(String label) {
 
-        if (label == null)
-            return false;
-
-        for (String labelItems : label.split(COMMA_ARRAY_DELIMITER)) {
-            if (!label.equals("private") && !label.equals("work"))
-                return true;
-        }
-
-        return false;
+        return LabelUtils.labelIncludesAnyItem(label, Arrays.asList(new String[] {"voice", "textphone", "fax", "pager", "cell", "text", "video"}));
     }
 
     private static void fillPhones(VCard vcard, JSContact jsContact) {

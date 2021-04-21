@@ -33,4 +33,27 @@ public class Relation extends GroupableObject implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(value="relationType", ignoreNullCollections = true)
     Map<RelationType,Boolean> relation;
+
+    private boolean asRelation(RelationType type) { return relation!= null && relation.containsKey(type); }
+    public boolean asContact() {return asRelation(RelationType.CONTACT); }
+    public boolean asAcquaintance() {return asRelation(RelationType.ACQUAINTANCE); }
+    public boolean asFriend() {return asRelation(RelationType.FRIEND); }
+    public boolean asMet() {return asRelation(RelationType.MET); }
+    public boolean asCoWorker() {return asRelation(RelationType.CO_WORKER); }
+    public boolean asColleague() {return asRelation(RelationType.COLLEAGUE); }
+    public boolean asCoResident() {return asRelation(RelationType.CO_RESIDENT); }
+    public boolean asNeighbor() {return asRelation(RelationType.NEIGHBOR); }
+    public boolean asChild() {return asRelation(RelationType.CHILD); }
+    public boolean asParent() {return asRelation(RelationType.PARENT); }
+    public boolean asSibling() {return asRelation(RelationType.SIBLING); }
+    public boolean asSpouse() {return asRelation(RelationType.SPOUSE); }
+    public boolean asKin() {return asRelation(RelationType.KIN); }
+    public boolean asMuse() {return asRelation(RelationType.MUSE); }
+    public boolean asCrush() {return asRelation(RelationType.CRUSH); }
+    public boolean asDate() {return asRelation(RelationType.DATE); }
+    public boolean asSweetheart() {return asRelation(RelationType.SWEETHEART); }
+    public boolean asMe() {return asRelation(RelationType.ME); }
+    public boolean asAgent() {return asRelation(RelationType.AGENT); }
+    public boolean asEmergency() {return asRelation(RelationType.EMERGENCY); }
+
 }
