@@ -11,14 +11,14 @@ Validation and conversion leverage the features provided by [ez-vcard](https://g
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.3.2</version>
+		  <version>0.4.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.3.2'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.4.0'
 ```
 
 # Features
@@ -340,7 +340,7 @@ Here in the following two examples of conversion between vCard and JSContact top
         assertTrue("testAddressesValid4 - 5",jsCard.getAddresses().get("ADR-1").getPostcode().equals("20190"));
         assertTrue("testAddressesValid4 - 6",jsCard.getAddresses().get("ADR-1").getLocality().equals("Reston"));
         assertTrue("testAddressesValid4 - 7",jsCard.getAddresses().get("ADR-1").getRegion().equals("VA"));
-        assertTrue("testAddressesValid4 - 8",jsCard.getAddresses().get("ADR-1").getStreet().equals("54321 Oak St"));
+        assertTrue("testAddressesValid4 - 8",jsCard.getAddresses().get("ADR-1").getStreetDetails().equals("54321 Oak St"));
         assertTrue("testAddressesValid4 - 9",jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
         assertTrue("testAddressesValid4 - 10",jsCard.getAddresses().get("ADR-1").getCoordinates().equals("geo:46.772673,-71.282945"));
 
@@ -406,7 +406,7 @@ Here in the following two examples of conversion between JSContact top most obje
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"street\":\"54321 Oak St\"," +
+                        "\"street\":[{\"type\":\"name\",\"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +

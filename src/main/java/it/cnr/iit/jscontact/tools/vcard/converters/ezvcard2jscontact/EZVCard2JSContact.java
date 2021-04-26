@@ -487,6 +487,14 @@ public class EZVCard2JSContact extends AbstractConverter {
             geo = getGeoUri(addr.getGeo());
             String cc = addr.getParameter("CC");
 
+            List<StreetDetailPair> streetDetailPairs = new ArrayList<>();
+            if (StringUtils.isNotEmpty(addr.getPoBox()))
+                streetDetailPairs.add(StreetDetailPair.builder().type(StreetDetailType.builder().rfcValue(StreetDetail.POST_OFFICE_BOX).build()).value(addr.getPoBox()).build());
+            if (StringUtils.isNotEmpty(addr.getExtendedAddressFull()))
+                streetDetailPairs.add(StreetDetailPair.builder().type(StreetDetailType.builder().rfcValue(StreetDetail.EXTENSION).build()).value(addr.getExtendedAddressFull()).build());
+            if (StringUtils.isNotEmpty(addr.getStreetAddressFull()))
+                streetDetailPairs.add(StreetDetailPair.builder().type(StreetDetailType.builder().rfcValue(StreetDetail.NAME).build()).value(addr.getStreetAddressFull()).build());
+
             addresses.add(it.cnr.iit.jscontact.tools.dto.Address.builder()
                                                                  .contexts(getAddressContexts(jcardType))
                                                                  .fullAddress(getFulllAddress(addr))
@@ -494,9 +502,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                                                  .coordinates(geo)
                                                                  .timeZone(tz)
                                                                  .countryCode(cc)
-                                                                 .postOfficeBox(StringUtils.defaultIfEmpty(addr.getPoBox(), null))
-                                                                 .extension(StringUtils.defaultIfEmpty(addr.getExtendedAddressFull(), null))
-                                                                 .street(StringUtils.defaultIfEmpty(addr.getStreetAddressFull(), null))
+                                                                 .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetDetailPair[streetDetailPairs.size()]) : null)
                                                                  .locality(StringUtils.defaultIfEmpty(addr.getLocality(), null))
                                                                  .region(StringUtils.defaultIfEmpty(addr.getRegion(), null))
                                                                  .postcode(StringUtils.defaultIfEmpty(addr.getPostalCode(), null))

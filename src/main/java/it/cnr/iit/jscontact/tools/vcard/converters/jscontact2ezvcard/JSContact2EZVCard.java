@@ -189,18 +189,18 @@ public class JSContact2EZVCard extends AbstractConverter {
                 address.getCountryCode() !=null ||
                 address.getRegion() != null ||
                 address.getLocality() != null ||
-                address.getStreet() != null ||
+                address.getStreetDetails() != null ||
                 address.getPostOfficeBox() != null ||
                 address.getPostcode() != null ||
-                address.getExtension() != null);
+                address.getStreetExtensions() != null);
     }
 
     private static String getFullAddressFromStructuredAddress(Address addr) {
 
         StringJoiner joiner = new StringJoiner(AUTO_PLAIN_FULL_ADDRESS_DELIMITER);
         if (StringUtils.isNotEmpty(addr.getPostOfficeBox())) joiner.add(addr.getPostOfficeBox());
-        if (StringUtils.isNotEmpty(addr.getExtension())) joiner.add(addr.getExtension());
-        if (StringUtils.isNotEmpty(addr.getStreet())) joiner.add(addr.getStreet());
+        if (StringUtils.isNotEmpty(addr.getStreetExtensions())) joiner.add(addr.getStreetExtensions());
+        if (StringUtils.isNotEmpty(addr.getStreetDetails())) joiner.add(addr.getStreetDetails());
         if (StringUtils.isNotEmpty(addr.getLocality())) joiner.add(addr.getLocality());
         if (StringUtils.isNotEmpty(addr.getRegion())) joiner.add(addr.getRegion());
         if (StringUtils.isNotEmpty(addr.getPostcode())) joiner.add(addr.getPostcode());
@@ -251,8 +251,8 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setCountry(address.getCountry());
             addr.setRegion(address.getRegion());
             addr.setLocality(address.getLocality());
-            addr.setStreetAddress(address.getStreet());
-            addr.setExtendedAddress(address.getExtension());
+            addr.setStreetAddress(address.getStreetDetails());
+            addr.setExtendedAddress(address.getStreetExtensions());
             addr.setPoBox(address.getPostOfficeBox());
             addr.setPostalCode(address.getPostcode());
             if (address.getTimeZone()!=null)

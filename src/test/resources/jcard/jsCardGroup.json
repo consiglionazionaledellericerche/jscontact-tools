@@ -47,8 +47,7 @@
     "addresses": {
       "ADR-1": {
         "contexts": {"work": true},
-        "extension": "Suite 1234",
-        "street": "4321 Rue Somewhere",
+        "street": [{"type": "name","value": "4321 Rue Somewhere"},{"type": "extension","value": "Suite 1234"}],
         "locality": "Quebec",
         "region": "QC",
         "postcode": "G1V 2M2",
