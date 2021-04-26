@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 
 @NoArgsConstructor
-public class KindDeserializer extends JsonDeserializer<KindType> {
+public class KindTypeDeserializer extends JsonDeserializer<KindType> {
 
     @Override
     public KindType deserialize(JsonParser jp, DeserializationContext ctxt)

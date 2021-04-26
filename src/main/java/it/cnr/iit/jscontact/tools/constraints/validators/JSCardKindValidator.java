@@ -17,7 +17,6 @@ package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.JSCardKindConstraint;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.Kind;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -29,7 +28,7 @@ public class JSCardKindValidator implements ConstraintValidator<JSCardKindConstr
 
     public boolean isValid(JSCard card, ConstraintValidatorContext context) {
 
-        return card.getKind() == null || card.getKind().getRfcValue() == null || card.getKind().getRfcValue() != Kind.GROUP;
+        return card.getKind() == null || !card.getKind().isGroup();
 
     }
 

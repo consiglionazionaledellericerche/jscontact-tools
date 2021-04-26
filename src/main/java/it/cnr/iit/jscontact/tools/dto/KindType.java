@@ -32,14 +32,20 @@ public class KindType implements Serializable {
     Kind rfcValue;
     String extValue;
 
-    private boolean isRfc(Kind rfcKind) { return (rfcValue !=null && rfcValue == rfcKind);};
+    private boolean isRfcKind(Kind value) { return rfcValue != null && rfcValue == value; }
     @JsonIgnore
-    public boolean isGroup() { return isRfc(Kind.GROUP); }
+    public boolean isIndividual() { return isRfcKind(Kind.INDIVIDUAL); }
     @JsonIgnore
-    public boolean isIndividual() { return isRfc(Kind.INDIVIDUAL); }
+    public boolean isGroup() { return isRfcKind(Kind.GROUP); }
     @JsonIgnore
-    public boolean isOrg() {
-        return isRfc(Kind.ORG);
-    }
+    public boolean isOrg() { return isRfcKind(Kind.ORG); }
+    @JsonIgnore
+    public boolean isDevice() { return isRfcKind(Kind.DEVICE); }
+    @JsonIgnore
+    public boolean isApplication() { return isRfcKind(Kind.APPLICATION); }
+    @JsonIgnore
+    public boolean isLocation() { return isRfcKind(Kind.LOCATION); }
+    @JsonIgnore
+    public boolean isExtKind() { return extValue != null; }
 
 }

@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 
 @NoArgsConstructor
-public class KindSerializer extends JsonSerializer<KindType> {
+public class KindTypeSerializer extends JsonSerializer<KindType> {
 
     @Override
     public void serialize(

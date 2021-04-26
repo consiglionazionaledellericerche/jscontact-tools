@@ -25,8 +25,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
 import it.cnr.iit.jscontact.tools.constraints.*;
-import it.cnr.iit.jscontact.tools.dto.deserializers.KindDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.KindSerializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import lombok.*;
@@ -64,8 +64,8 @@ public abstract class JSContact extends ValidableObject implements Serializable 
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar updated;
 
-    @JsonSerialize(using = KindSerializer.class)
-    @JsonDeserialize(using = KindDeserializer.class)
+    @JsonSerialize(using = KindTypeSerializer.class)
+    @JsonDeserialize(using = KindTypeDeserializer.class)
     KindType kind;
 
     @RelatedToConstraint
