@@ -35,7 +35,7 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"addresses\":{" +
                             "\"ADR-1\": {" +
                                 "\"fullAddress\":{\"value\":\"54321 Oak St Reston VA 20190 USA\"}," +
-                                "\"street\":\"54321 Oak St\"," +
+                                "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                                 "\"locality\":\"Reston\"," +
                                 "\"region\":\"VA\"," +
                                 "\"country\":\"USA\"," +
@@ -63,7 +63,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"street\":\"54321 Oak St\"," +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -91,7 +91,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"street\":\"54321 Oak St\"," +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -99,7 +99,7 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"countryCode\":\"US\"" +
                     "}," +
                     "\"ADR-2\": {" +
-                        "\"street\":\"12345 Elm St\"," +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"12345 Elm St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -134,7 +134,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"street\":\"54321 Oak St\"," +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -164,7 +164,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"fullName\":{\"value\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"street\":\"54321 Oak St\"," +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -197,7 +197,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"fullAddress\":{\"value\":\"54321 Oak St Reston VA 20190 USA\", \"language\":\"en\",\"localizations\":{\"it\":\"Via Moruzzi,1 Pisa Italia\"}}," +
-                        "\"street\":\"54321 Oak St\"," +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +

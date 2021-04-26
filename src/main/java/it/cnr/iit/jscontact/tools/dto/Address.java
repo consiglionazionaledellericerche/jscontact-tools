@@ -21,12 +21,14 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.StringJoiner;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
@@ -38,17 +40,13 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     LocalizedString fullAddress;
 
-    String street;
-
-    String extension;
+    StreetDetailPair[] street;
 
     String locality;
 
     String region;
 
     String country;
-
-    String postOfficeBox;
 
     String postcode;
 
@@ -81,5 +79,46 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     public boolean asPostal() { return asContext(AddressContext.POSTAL); }
     public boolean asOtherContext() { return asContext(AddressContext.OTHER); }
     public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
+
+    private String getStreetDetail(StreetDetail detail) {
+
+        if (street == null)
+            return null;
+
+        for (StreetDetailPair pair : street) {
+            if (pair.isExtStreetDetail())
+                continue;
+            else if (pair.getType().getRfcValue() == detail)
+                return pair.getValue();
+        }
+
+        return null;
+    }
+
+    @JsonIgnore
+    public String getPostOfficeBox() {
+        return getStreetDetail(StreetDetail.POST_OFFICE_BOX);
+    }
+    @JsonIgnore
+    public String getStreetDetails() {
+        StringJoiner joiner = new StringJoiner(" ");
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.NAME))) joiner.add(getStreetDetail(StreetDetail.NAME));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.NUMBER))) joiner.add(getStreetDetail(StreetDetail.NUMBER));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.DIRECTION))) joiner.add(getStreetDetail(StreetDetail.DIRECTION));
+        String streetDetails = joiner.toString();
+        return StringUtils.defaultIfEmpty(streetDetails, null);
+    }
+    @JsonIgnore
+    public String getStreetExtensions() {
+        StringJoiner joiner = new StringJoiner(" ");
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.BUILDING))) joiner.add(getStreetDetail(StreetDetail.BUILDING));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.FLOOR))) joiner.add(getStreetDetail(StreetDetail.FLOOR));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.APARTMENT))) joiner.add(getStreetDetail(StreetDetail.APARTMENT));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.ROOM))) joiner.add(getStreetDetail(StreetDetail.ROOM));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.LANDMARK))) joiner.add(getStreetDetail(StreetDetail.LANDMARK));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.EXTENSION))) joiner.add(getStreetDetail(StreetDetail.EXTENSION));
+        String streetExtensions = joiner.toString();
+        return StringUtils.defaultIfEmpty(streetExtensions, null);
+    }
 
 }
