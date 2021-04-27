@@ -220,6 +220,33 @@ public class AddressesTest extends JSContact2VCardTest {
         assertTrue("testAddressesValid6 - 11", vcard.getAddresses().get(1).getLanguage().equals("it"));
     }
 
+    @Test
+    public void testAddressesValid7() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"addresses\":{" +
+                    "\"ADR-1\": {" +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"Oak St\"}, {\"type\":\"number\", \"value\":\"54321\"}]," +
+                        "\"locality\":\"Reston\"," +
+                        "\"region\":\"VA\"," +
+                        "\"country\":\"USA\"," +
+                        "\"postcode\":\"20190\"," +
+                        "\"countryCode\":\"US\"" +
+                        "}" +
+                    "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testAddressesValid7 - 1",vcard.getAddresses().size() == 1);
+        assertTrue("testAddressesValid7 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
+        assertTrue("testAddressesValid7 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
+        assertTrue("testAddressesValid7 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
+        assertTrue("testAddressesValid7 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
+        assertTrue("testAddressesValid7 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
+        assertTrue("testAddressesValid7 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("Oak St 54321"));
+        assertTrue("testAddressesValid7 - 8", vcard.getAddresses().get(0).getLabel().equals("Oak St 54321 Reston VA 20190 USA"));
+    }
 
 
 }
