@@ -38,6 +38,8 @@ import java.util.StringJoiner;
 @EqualsAndHashCode(of={"fullAddress"})
 public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable {
 
+    private static final String STREET_DETAILS_DELIMITER = " ";
+
     LocalizedString fullAddress;
 
     StreetDetailPair[] street;
@@ -101,7 +103,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     }
     @JsonIgnore
     public String getStreetDetails() {
-        StringJoiner joiner = new StringJoiner(" ");
+        StringJoiner joiner = new StringJoiner(STREET_DETAILS_DELIMITER);
         if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.NAME))) joiner.add(getStreetDetail(StreetDetail.NAME));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.NUMBER))) joiner.add(getStreetDetail(StreetDetail.NUMBER));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.DIRECTION))) joiner.add(getStreetDetail(StreetDetail.DIRECTION));
@@ -110,7 +112,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     }
     @JsonIgnore
     public String getStreetExtensions() {
-        StringJoiner joiner = new StringJoiner(" ");
+        StringJoiner joiner = new StringJoiner(STREET_DETAILS_DELIMITER);
         if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.BUILDING))) joiner.add(getStreetDetail(StreetDetail.BUILDING));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.FLOOR))) joiner.add(getStreetDetail(StreetDetail.FLOOR));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.APARTMENT))) joiner.add(getStreetDetail(StreetDetail.APARTMENT));
