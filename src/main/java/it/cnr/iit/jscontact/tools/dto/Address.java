@@ -113,11 +113,11 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     @JsonIgnore
     public String getStreetExtensions() {
         StringJoiner joiner = new StringJoiner(STREET_DETAILS_DELIMITER);
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.BUILDING))) joiner.add(getStreetDetail(StreetDetail.BUILDING));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.FLOOR))) joiner.add(getStreetDetail(StreetDetail.FLOOR));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.APARTMENT))) joiner.add(getStreetDetail(StreetDetail.APARTMENT));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.ROOM))) joiner.add(getStreetDetail(StreetDetail.ROOM));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.LANDMARK))) joiner.add(getStreetDetail(StreetDetail.LANDMARK));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.BUILDING))) joiner.add("Building: " + getStreetDetail(StreetDetail.BUILDING));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.FLOOR))) joiner.add("Floor: " + getStreetDetail(StreetDetail.FLOOR));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.APARTMENT))) joiner.add("Apartment: " + getStreetDetail(StreetDetail.APARTMENT));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.ROOM))) joiner.add("Room: " + getStreetDetail(StreetDetail.ROOM));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.LANDMARK))) joiner.add("Landmark: " + getStreetDetail(StreetDetail.LANDMARK));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.EXTENSION))) joiner.add(getStreetDetail(StreetDetail.EXTENSION));
         String streetExtensions = joiner.toString();
         return StringUtils.defaultIfEmpty(streetExtensions, null);

@@ -197,7 +197,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static String getFullAddressFromStructuredAddress(Address addr) {
 
-        StringJoiner joiner = new StringJoiner(AUTO_PLAIN_FULL_ADDRESS_DELIMITER);
+        StringJoiner joiner = new StringJoiner(AUTO_FULL_ADDRESS_DELIMITER);
         if (StringUtils.isNotEmpty(addr.getPostOfficeBox())) joiner.add(addr.getPostOfficeBox());
         if (StringUtils.isNotEmpty(addr.getStreetExtensions())) joiner.add(addr.getStreetExtensions());
         if (StringUtils.isNotEmpty(addr.getStreetDetails())) joiner.add(addr.getStreetDetails());
