@@ -19,24 +19,24 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.KindEnum;
-import it.cnr.iit.jscontact.tools.dto.KindType;
+import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
+import it.cnr.iit.jscontact.tools.dto.NameComponentType;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 @NoArgsConstructor
-public class KindTypeDeserializer extends JsonDeserializer<KindType> {
+public class NameComponentTypeDeserializer extends JsonDeserializer<NameComponentType> {
 
     @Override
-    public KindType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public NameComponentType deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return KindType.builder().rfcValue(KindEnum.getEnum(value)).build();
+            return NameComponentType.builder().rfcValue(NameComponentEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return KindType.builder().extValue(value).build();
+            return NameComponentType.builder().extValue(value).build();
         }
     }
 }

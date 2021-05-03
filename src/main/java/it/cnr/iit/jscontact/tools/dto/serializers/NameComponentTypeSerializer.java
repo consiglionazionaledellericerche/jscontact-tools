@@ -13,30 +13,25 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto.deserializers;
+package it.cnr.iit.jscontact.tools.dto.serializers;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.StreetDetail;
-import it.cnr.iit.jscontact.tools.dto.StreetDetailType;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import it.cnr.iit.jscontact.tools.dto.NameComponentType;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 @NoArgsConstructor
-public class StreetDetailTypeDeserializer extends JsonDeserializer<StreetDetailType> {
+public class NameComponentTypeSerializer extends JsonSerializer<NameComponentType> {
 
     @Override
-    public StreetDetailType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public void serialize(
+            NameComponentType type, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
-        JsonNode node = jp.getCodec().readTree(jp);
-        String value = node.asText();
-        try {
-            return StreetDetailType.builder().rfcValue(StreetDetail.getEnum(value)).build();
-        } catch (IllegalArgumentException e) {
-            return StreetDetailType.builder().extValue(value).build();
-        }
+
+        jgen.writeString((type.getRfcValue()!=null) ? type.getRfcValue().getValue() : type.getExtValue());
+
     }
 }

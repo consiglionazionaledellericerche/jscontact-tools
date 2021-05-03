@@ -17,6 +17,10 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.NameComponentTypeSerializer;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -29,23 +33,28 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class NameComponent extends GroupableObject implements Serializable {
 
+    @NotNull(message = "type is missing in NameComponent")
+    @NonNull
+    @JsonSerialize(using = NameComponentTypeSerializer.class)
+    @JsonDeserialize(using = NameComponentTypeDeserializer.class)
+    NameComponentType type;
+
     @NotNull(message = "value is missing in NameComponent")
     @NonNull
     String value;
 
-    @NotNull(message = "type is missing in NameComponent")
-    @NonNull
-    NameComponentType type;
-
+    private boolean isRfcNameComponent(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);};
     @JsonIgnore
-    public boolean isPrefix() { return type == NameComponentType.PREFIX; }
+    public boolean isPrefix() { return isRfcNameComponent(NameComponentEnum.PREFIX); }
     @JsonIgnore
-    public boolean isPersonal() { return type == NameComponentType.PERSONAL; }
+    public boolean isPersonal() { return isRfcNameComponent(NameComponentEnum.PERSONAL); }
     @JsonIgnore
-    public boolean isSurname() { return type == NameComponentType.SURNAME; }
+    public boolean isSurname() { return isRfcNameComponent(NameComponentEnum.SURNAME); }
     @JsonIgnore
-    public boolean isAdditional() { return type == NameComponentType.ADDITIONAL; }
+    public boolean isAdditional() { return isRfcNameComponent(NameComponentEnum.ADDITIONAL); }
     @JsonIgnore
-    public boolean isSuffix() { return type == NameComponentType.SUFFIX; }
+    public boolean isSuffix() { return isRfcNameComponent(NameComponentEnum.SUFFIX); }
+    @JsonIgnore
+    public boolean isExtNameComponent() { return type.getExtValue() != null; }
 
 }

@@ -13,39 +13,25 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto;
+package it.cnr.iit.jscontact.tools.dto.serializers;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import it.cnr.iit.jscontact.tools.dto.StreetComponentType;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-public enum Kind {
+import java.io.IOException;
 
-    INDIVIDUAL("individual"),
-    ORG("org"),
-    LOCATION("location"),
-    DEVICE("device"),
-    APPLICATION("application"),
-    GROUP("group");
-
-    private String value;
-
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
-
-    @JsonCreator
-    public static Kind getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(Kind.class, value);
-    }
+@NoArgsConstructor
+public class StreetComponentTypeSerializer extends JsonSerializer<StreetComponentType> {
 
     @Override
-    public String toString() {
-        return value;
+    public void serialize(
+            StreetComponentType type, JsonGenerator jgen, SerializerProvider provider)
+            throws IOException {
+
+        jgen.writeString((type.getRfcValue()!=null) ? type.getRfcValue().getValue() : type.getExtValue());
+
     }
-
 }
-

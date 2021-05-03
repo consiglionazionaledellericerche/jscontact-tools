@@ -21,18 +21,14 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum StreetDetail {
+public enum KindEnum {
 
-    NAME("name"),
-    DIRECTION("direction"),
-    NUMBER("number"),
-    BUILDING("building"),
-    FLOOR("floor"),
-    APARTMENT("apartment"),
-    ROOM("room"),
-    EXTENSION("extension"),
-    POST_OFFICE_BOX("postOfficeBox"),
-    LANDMARK("landmark");
+    INDIVIDUAL("individual"),
+    ORG("org"),
+    LOCATION("location"),
+    DEVICE("device"),
+    APPLICATION("application"),
+    GROUP("group");
 
     private String value;
 
@@ -42,8 +38,8 @@ public enum StreetDetail {
     }
 
     @JsonCreator
-    public static StreetDetail getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(StreetDetail.class, value);
+    public static KindEnum getEnum(String value) throws IllegalArgumentException {
+        return EnumUtils.getEnum(KindEnum.class, value);
     }
 
     @Override

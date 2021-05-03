@@ -8,7 +8,6 @@ import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
 import ezvcard.property.*;
-import ezvcard.property.Kind;
 import ezvcard.util.GeoUri;
 import ezvcard.util.PartialDate;
 import ezvcard.util.TelUri;
@@ -93,21 +92,21 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static void addNameComponent(StringJoiner joiner, NameComponent[] name, NameComponentType type) {
+    private static void addNameComponent(StringJoiner joiner, NameComponent[] name, NameComponentEnum type) {
 
         for (NameComponent component : name)
-            if (component.getType() == type)
+            if (component.getType().getRfcValue()!=null &&  component.getType().getRfcValue() == type)
                 joiner.add(component.getValue());
     }
 
     private static FormattedName getFormattedName(NameComponent[] name) {
 
         StringJoiner joiner = new StringJoiner(SPACE_ARRAY_DELIMITER);
-        addNameComponent(joiner, name,NameComponentType.PREFIX);
-        addNameComponent(joiner, name,NameComponentType.PERSONAL);
-        addNameComponent(joiner, name,NameComponentType.SURNAME);
-        addNameComponent(joiner, name,NameComponentType.ADDITIONAL);
-        addNameComponent(joiner, name,NameComponentType.SUFFIX);
+        addNameComponent(joiner, name, NameComponentEnum.PREFIX);
+        addNameComponent(joiner, name, NameComponentEnum.PERSONAL);
+        addNameComponent(joiner, name, NameComponentEnum.SURNAME);
+        addNameComponent(joiner, name, NameComponentEnum.ADDITIONAL);
+        addNameComponent(joiner, name, NameComponentEnum.SUFFIX);
         return new FormattedName(joiner.toString());
     }
 
@@ -144,7 +143,9 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         StructuredName name = new StructuredName();
         for (NameComponent component : jsContact.getName()) {
-            switch(component.getType()) {
+            if (component.getType().getRfcValue() == null)
+                continue;
+            switch(component.getType().getRfcValue()) {
                 case PREFIX:
                     name.getPrefixes().add(component.getValue());
                     break;

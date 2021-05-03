@@ -26,9 +26,9 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NameComponentType implements Serializable {
+public class StreetComponentType implements Serializable {
 
-    NameComponentEnum rfcValue;
+    StreetComponentEnum rfcValue;
     String extValue;
 
 }

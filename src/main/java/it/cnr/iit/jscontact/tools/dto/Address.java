@@ -42,7 +42,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     LocalizedString fullAddress;
 
-    StreetDetailPair[] street;
+    StreetComponent[] street;
 
     String locality;
 
@@ -82,13 +82,13 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     public boolean asOtherContext() { return asContext(AddressContext.OTHER); }
     public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
 
-    private String getStreetDetail(StreetDetail detail) {
+    private String getStreetDetail(StreetComponentEnum detail) {
 
         if (street == null)
             return null;
 
-        for (StreetDetailPair pair : street) {
-            if (pair.isExtStreetDetail())
+        for (StreetComponent pair : street) {
+            if (pair.isExtStreetComponent())
                 continue;
             else if (pair.getType().getRfcValue() == detail)
                 return pair.getValue();
@@ -99,26 +99,29 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     @JsonIgnore
     public String getPostOfficeBox() {
-        return getStreetDetail(StreetDetail.POST_OFFICE_BOX);
+        return getStreetDetail(StreetComponentEnum.POST_OFFICE_BOX);
     }
     @JsonIgnore
     public String getStreetDetails() {
-        StringJoiner joiner = new StringJoiner(STREET_DETAILS_DELIMITER);
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.NAME))) joiner.add(getStreetDetail(StreetDetail.NAME));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.NUMBER))) joiner.add(getStreetDetail(StreetDetail.NUMBER));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.DIRECTION))) joiner.add(getStreetDetail(StreetDetail.DIRECTION));
+        String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
+        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : STREET_DETAILS_DELIMITER);
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.NAME))) joiner.add(getStreetDetail(StreetComponentEnum.NAME));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.NUMBER))) joiner.add(getStreetDetail(StreetComponentEnum.NUMBER));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.DIRECTION))) joiner.add(getStreetDetail(StreetComponentEnum.DIRECTION));
         String streetDetails = joiner.toString();
         return StringUtils.defaultIfEmpty(streetDetails, null);
     }
     @JsonIgnore
     public String getStreetExtensions() {
-        StringJoiner joiner = new StringJoiner(STREET_DETAILS_DELIMITER);
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.BUILDING))) joiner.add("Building: " + getStreetDetail(StreetDetail.BUILDING));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.FLOOR))) joiner.add("Floor: " + getStreetDetail(StreetDetail.FLOOR));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.APARTMENT))) joiner.add("Apartment: " + getStreetDetail(StreetDetail.APARTMENT));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.ROOM))) joiner.add("Room: " + getStreetDetail(StreetDetail.ROOM));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.LANDMARK))) joiner.add("Landmark: " + getStreetDetail(StreetDetail.LANDMARK));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetDetail.EXTENSION))) joiner.add(getStreetDetail(StreetDetail.EXTENSION));
+        String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
+        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : STREET_DETAILS_DELIMITER);
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.BUILDING))) joiner.add("Building: " + getStreetDetail(StreetComponentEnum.BUILDING));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.FLOOR))) joiner.add("Floor: " + getStreetDetail(StreetComponentEnum.FLOOR));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.APARTMENT))) joiner.add("Apartment: " + getStreetDetail(StreetComponentEnum.APARTMENT));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.ROOM))) joiner.add("Room: " + getStreetDetail(StreetComponentEnum.ROOM));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.LANDMARK))) joiner.add("Landmark: " + getStreetDetail(StreetComponentEnum.LANDMARK));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.EXTENSION))) joiner.add(getStreetDetail(StreetComponentEnum.EXTENSION));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.UNKNOWN))) joiner.add(getStreetDetail(StreetComponentEnum.EXTENSION));
         String streetExtensions = joiner.toString();
         return StringUtils.defaultIfEmpty(streetExtensions, null);
     }

@@ -29,22 +29,22 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class KindType implements Serializable {
 
-    Kind rfcValue;
+    KindEnum rfcValue;
     String extValue;
 
-    private boolean isRfcKind(Kind value) { return rfcValue != null && rfcValue == value; }
+    private boolean isRfcKind(KindEnum value) { return rfcValue != null && rfcValue == value; }
     @JsonIgnore
-    public boolean isIndividual() { return isRfcKind(Kind.INDIVIDUAL); }
+    public boolean isIndividual() { return isRfcKind(KindEnum.INDIVIDUAL); }
     @JsonIgnore
-    public boolean isGroup() { return isRfcKind(Kind.GROUP); }
+    public boolean isGroup() { return isRfcKind(KindEnum.GROUP); }
     @JsonIgnore
-    public boolean isOrg() { return isRfcKind(Kind.ORG); }
+    public boolean isOrg() { return isRfcKind(KindEnum.ORG); }
     @JsonIgnore
-    public boolean isDevice() { return isRfcKind(Kind.DEVICE); }
+    public boolean isDevice() { return isRfcKind(KindEnum.DEVICE); }
     @JsonIgnore
-    public boolean isApplication() { return isRfcKind(Kind.APPLICATION); }
+    public boolean isApplication() { return isRfcKind(KindEnum.APPLICATION); }
     @JsonIgnore
-    public boolean isLocation() { return isRfcKind(Kind.LOCATION); }
+    public boolean isLocation() { return isRfcKind(KindEnum.LOCATION); }
     @JsonIgnore
     public boolean isExtKind() { return extValue != null; }
 

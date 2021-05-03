@@ -15,20 +15,43 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
-@Builder
-@Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class NameComponentType implements Serializable {
+public enum StreetComponentEnum {
 
-    NameComponentEnum rfcValue;
-    String extValue;
+    NAME("name"),
+    DIRECTION("direction"),
+    NUMBER("number"),
+    BUILDING("building"),
+    FLOOR("floor"),
+    APARTMENT("apartment"),
+    ROOM("room"),
+    EXTENSION("extension"),
+    POST_OFFICE_BOX("postOfficeBox"),
+    LANDMARK("landmark"),
+    SEPARATOR("separator"),
+    UNKNOWN("unknown");
+
+    private String value;
+
+    @JsonValue
+    public String getValue() {
+        return value;
+    }
+
+    @JsonCreator
+    public static StreetComponentEnum getEnum(String value) throws IllegalArgumentException {
+        return EnumUtils.getEnum(StreetComponentEnum.class, value);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 
 }
+

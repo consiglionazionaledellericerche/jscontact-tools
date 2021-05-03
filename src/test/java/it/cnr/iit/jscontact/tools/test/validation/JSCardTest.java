@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.Kind;
+import it.cnr.iit.jscontact.tools.dto.KindEnum;
 import it.cnr.iit.jscontact.tools.dto.JSCard;
 import it.cnr.iit.jscontact.tools.dto.KindType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
@@ -28,7 +28,7 @@ public class JSCardTest extends AbstractTest {
 
         //uid missing
         JSCard.builder()
-               .kind(KindType.builder().rfcValue(Kind.INDIVIDUAL).build())
+               .kind(KindType.builder().rfcValue(KindEnum.INDIVIDUAL).build())
                .build();
     }
 
