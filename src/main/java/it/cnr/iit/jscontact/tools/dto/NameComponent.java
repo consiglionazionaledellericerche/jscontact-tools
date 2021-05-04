@@ -55,6 +55,8 @@ public class NameComponent extends GroupableObject implements Serializable {
     @JsonIgnore
     public boolean isSuffix() { return isRfcNameComponent(NameComponentEnum.SUFFIX); }
     @JsonIgnore
+    public boolean isSeparator() { return isRfcNameComponent(NameComponentEnum.SEPARATOR); }
+    @JsonIgnore
     public boolean isExtNameComponent() { return type.getExtValue() != null; }
 
 }

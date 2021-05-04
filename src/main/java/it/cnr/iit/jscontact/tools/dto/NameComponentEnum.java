@@ -27,7 +27,8 @@ public enum NameComponentEnum {
     PERSONAL("personal"),
     ADDITIONAL("additional"),
     PREFIX("prefix"),
-    SUFFIX("suffix");
+    SUFFIX("suffix"),
+    SEPARATOR("separator");
 
     private String value;
 

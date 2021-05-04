@@ -314,13 +314,13 @@ All the methods take in input a list of JSContact (JSCard or JSCardGroup) instan
     
 8.  The "timeZone" property is always mapped onto a TZ parameter preserving the time zone name.     
 
-9.  It the "fullName" property is missing, the FN value is generated starting from the "name" property. If the "name" property is missing as well, the FN value is set to the "uid" property.
+9.  It the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
-10. The "street" component of ADR property results from the space-delimited concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object.
+10. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-11. The "extension" component of ADR property results from the space-delimited concatenation of "building", "floor", "apartment", "room", "landmark" and "extention" non-empty values presented in the "street" member of the "Address" object.
+11. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room", "landmark" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-12. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, the value of the LABEL parameter results from the newline-delimited concatenation of the non-empty "Address" members 
+12. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, the value of the LABEL parameter results from the newline-delimited concatenation of the non-empty "Address" members.
 
 ### Conversion examples
 

@@ -92,6 +92,15 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
+    private static String getNameComponent(NameComponent[] name, NameComponentEnum type) {
+
+        for (NameComponent component : name)
+            if (component.getType().getRfcValue()!=null &&  component.getType().getRfcValue() == type)
+                return component.getValue();
+
+        return null;
+    }
+
     private static void addNameComponent(StringJoiner joiner, NameComponent[] name, NameComponentEnum type) {
 
         for (NameComponent component : name)
@@ -101,7 +110,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static FormattedName getFormattedName(NameComponent[] name) {
 
-        StringJoiner joiner = new StringJoiner(SPACE_ARRAY_DELIMITER);
+        String separator = getNameComponent(name, NameComponentEnum.SEPARATOR);
+        StringJoiner joiner = new StringJoiner((separator!=null) ? separator : SPACE_ARRAY_DELIMITER);
         addNameComponent(joiner, name, NameComponentEnum.PREFIX);
         addNameComponent(joiner, name, NameComponentEnum.PERSONAL);
         addNameComponent(joiner, name, NameComponentEnum.SURNAME);
