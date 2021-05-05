@@ -16,16 +16,16 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
-import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
+import it.cnr.iit.jscontact.tools.dto.JSGroupCard;
 import org.junit.Test;
 
-public class JSCardGroupTest extends AbstractTest {
+public class JSGroupCardTest extends AbstractTest {
 
     @Test(expected = NullPointerException.class)
-    public void testInvalidJSCardGroupBuild() {
+    public void testInvalidJSGroupCardBuild() {
 
         //uid missing
-        JSCardGroup.builder().build();
+        JSGroupCard.builder().build();
     }
 
 }

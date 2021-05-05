@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
+import it.cnr.iit.jscontact.tools.dto.JSGroupCard;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.apache.commons.lang3.StringUtils;
@@ -70,8 +70,8 @@ public class VCardGroupTest extends VCard2JSContactTest {
 
         List<JSContact> jsContacts = vCard2JSContact.convert(vcard);
         assertTrue("testVCardGroupValid1 - 1",jsContacts.size() == 3);
-        assertTrue("testVCardGroupValid1 - 2",jsContacts.get(0) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(0);
+        assertTrue("testVCardGroupValid1 - 2",jsContacts.get(0) instanceof JSGroupCard);
+        JSGroupCard jsCardGroup = (JSGroupCard) jsContacts.get(0);
         assertTrue("testVCardGroupValid1 - 3", jsCardGroup.getKind().isGroup());
         assertTrue("testVCardGroupValid1 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
         assertTrue("testVCardGroupValid1 - 5",jsCardGroup.getFullName().getValue().equals("The Doe family"));
@@ -103,8 +103,8 @@ public class VCardGroupTest extends VCard2JSContactTest {
 
         List<JSContact> jsContacts = vCard2JSContact.convert(vcard);
         assertTrue("testVCardGroupValid2 - 1",jsContacts.size() == 1);
-        assertTrue("testVCardGroupValid2 - 2",jsContacts.get(0) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(0);
+        assertTrue("testVCardGroupValid2 - 2",jsContacts.get(0) instanceof JSGroupCard);
+        JSGroupCard jsCardGroup = (JSGroupCard) jsContacts.get(0);
         assertTrue("testVCardGroupValid2 - 3", jsCardGroup.getKind().isGroup());
         assertTrue("testVCardGroupValid2 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
         assertTrue("testVCardGroupValid2 - 5",jsCardGroup.getFullName().getValue().equals("Funky distribution list"));
@@ -139,8 +139,8 @@ public class VCardGroupTest extends VCard2JSContactTest {
 
         List<JSContact> jsContacts = vCard2JSContact.convert(vcard);
         assertTrue("testVCardGroupValid3 - 1",jsContacts.size() == 3);
-        assertTrue("testVCardGroupValid3 - 2",jsContacts.get(2) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(2);
+        assertTrue("testVCardGroupValid3 - 2",jsContacts.get(2) instanceof JSGroupCard);
+        JSGroupCard jsCardGroup = (JSGroupCard) jsContacts.get(2);
         assertTrue("testVCardGroupValid3 - 3", jsCardGroup.getKind().isGroup());
         assertTrue("testVCardGroupValid3 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
         assertTrue("testVCardGroupValid3 - 5",jsCardGroup.getFullName().getValue().equals("The Doe family"));
@@ -171,8 +171,8 @@ public class VCardGroupTest extends VCard2JSContactTest {
 
         List<JSContact> jsContacts = vCard2JSContact.convert(vcard);
         assertTrue("testVCardGroupValid4 - 1",jsContacts.size() == 1);
-        assertTrue("testVCardGroupValid4 - 2",jsContacts.get(0) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(0);
+        assertTrue("testVCardGroupValid4 - 2",jsContacts.get(0) instanceof JSGroupCard);
+        JSGroupCard jsCardGroup = (JSGroupCard) jsContacts.get(0);
         assertTrue("testVCardGroupValid4 - 3", jsCardGroup.getKind().isGroup());
         assertTrue("testVCardGroupValid4 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
         assertTrue("testVCardGroupValid4 - 5",jsCardGroup.getFullName().getValue().equals("Funky distribution list"));

@@ -38,12 +38,16 @@ import java.util.Map;
 @Getter
 @Setter
 @SuperBuilder
-public class JSCardGroup extends JSContact implements Serializable {
+public class JSGroupCard extends JSContact implements Serializable {
 
     @NotNull
     @Size(min=1)
     @JsonProperty(required = true)
     Map<String,Boolean> members;
+
+    String name;
+
+    JSCard card;
 
     public void addMember(String member) {
 
@@ -53,7 +57,7 @@ public class JSCardGroup extends JSContact implements Serializable {
         members.putIfAbsent(member,Boolean.TRUE);
     }
 
-    public JSCardGroup clone() {
+    public JSGroupCard clone() {
         return SerializationUtils.clone(this);
     }
 
