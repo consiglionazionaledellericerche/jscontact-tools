@@ -1,10 +1,12 @@
 [
   {
     "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
-    "fullName": {
-      "value": "a group"
+    "card": {
+      "fullName": {
+        "value": "a group"
+      },
+      "kind": "group"
     },
-    "kind": "group",
     "members": {
       "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8": true,
       "8626d863-8c3f-405c-a2cb-bbbb3e3b359f": true,

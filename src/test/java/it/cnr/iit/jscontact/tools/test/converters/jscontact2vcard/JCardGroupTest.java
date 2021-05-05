@@ -33,9 +33,11 @@ public class JCardGroupTest extends JSContact2VCardTest {
         String jsCards = "[" +
                          "{" +
                              "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
-                             "\"kind\":\"group\"," +
-                             "\"fullName\": {" +
-                                "\"value\":\"The Doe family\"" +
+                             "\"card\": {" +
+                                 "\"kind\":\"group\"," +
+                                 "\"fullName\": {" +
+                                    "\"value\":\"The Doe family\"" +
+                                 "}" +
                              "}," +
                              "\"members\": {" +
                                 "\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\":true," +

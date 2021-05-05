@@ -225,7 +225,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         return StringUtils.isNotEmpty(fullAddress) ? LocalizedString.builder().value(fullAddress).language(addr.getLanguage()).build() : null;
     }
 
-    private static void addOnline(VCardProperty property, JSContact jsContact, OnlineLabelKey labelKey, int index) {
+    private static void addOnline(VCardProperty property, JSCard jsCard, OnlineLabelKey labelKey, int index) {
 
         String value;
         if (property instanceof UriProperty)
@@ -240,7 +240,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         jcardType = getJcardParam(property.getParameters(), "TYPE");
         Map<Context,Boolean> contexts = getContexts(jcardType);
         label = getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(contexts.keySet()) : null, new String[]{labelKey.getValue()});
-        jsContact.addOnline(String.format("%s-%s",labelKey.getValue().toUpperCase(),index), Resource.builder()
+        jsCard.addOnline(String.format("%s-%s",labelKey.getValue().toUpperCase(),index), Resource.builder()
                                     .resource(value)
                                     .type(ResourceType.URI)
                                     .label(label)
@@ -252,7 +252,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static void addFile(String id, VCardProperty property, JSContact jsContact) {
+    private static void addFile(String id, VCardProperty property, JSCard jsCard) {
 
         String value;
         if (property instanceof UriProperty)
@@ -260,7 +260,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         else
             value = getValue((BinaryProperty) property);
 
-        jsContact.addPhoto(id, File.builder()
+        jsCard.addPhoto(id, File.builder()
                                 .href(value)
                                 .mediaType(getJcardParam(property.getParameters(), "MEDIATYPE"))
                                 .pref(getPreference(getJcardParam(property.getParameters(), "PREF")))
@@ -361,7 +361,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         return property.getUri().toString();
     }
 
-    private static void fillFormattedNames(VCard vcard, JSContact jsContact) {
+    private static void fillFormattedNames(VCard vcard, JSCard jsCard) {
 
         List<FormattedName> fns = vcard.getFormattedNames();
         List<LocalizedString> fullNames = new ArrayList<>();
@@ -375,7 +375,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
         Collections.sort(fullNames);
         for (LocalizedString ls : fullNames)
-            jsContact.addFullName(ls.getValue(), ls.getLanguage());
+            jsCard.addFullName(ls.getValue(), ls.getLanguage());
     }
 
     private static void fillMembers(VCard vcard, JSGroupCard jsCardGroup) {
@@ -394,46 +394,46 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static void fillNames(VCard vcard, JSContact jsContact) {
+    private static void fillNames(VCard vcard, JSCard jsCard) {
 
         List<StructuredName> sns = vcard.getStructuredNames();
         for (StructuredName sn : sns) {
             for (String px : sn.getPrefixes())
-                jsContact.addName(NameComponent.builder()
+                jsCard.addName(NameComponent.builder()
                                                .value(px)
                                                .type(NameComponentType.builder().rfcValue(NameComponentEnum.PREFIX).build())
                                                .build()
                 );
             if (sn.getGiven() != null)
-                jsContact.addName(NameComponent.builder()
+                jsCard.addName(NameComponent.builder()
                                                .value(sn.getGiven())
                                                .type(NameComponentType.builder().rfcValue(NameComponentEnum.PERSONAL).build())
                                                .build()
                 );
             if (sn.getFamily() != null)
-                jsContact.addName(NameComponent.builder()
+                jsCard.addName(NameComponent.builder()
                                                .value(sn.getFamily())
                                                .type(NameComponentType.builder().rfcValue(NameComponentEnum.SURNAME).build())
                                                .build()
                                  );
             for (String an : sn.getAdditionalNames())
-                jsContact.addName(NameComponent.builder()
+                jsCard.addName(NameComponent.builder()
                                                .value(an)
                                                .type(NameComponentType.builder().rfcValue(NameComponentEnum.ADDITIONAL).build())
                                                .build()
                                  );
             for (String sx : sn.getSuffixes())
-                jsContact.addName(NameComponent.builder()
+                jsCard.addName(NameComponent.builder()
                                                .value(sx)
                                                .type(NameComponentType.builder().rfcValue(NameComponentEnum.SUFFIX).build())
                                                .build()
                                  );
-            addUnmatchedParams(sn, "N", null, new String[]{"SORT-AS"}, jsContact);
+            addUnmatchedParams(sn, "N", null, new String[]{"SORT-AS"}, jsCard);
         }
 
     }
 
-    private static void fillNickNames(VCard vcard, JSContact jsContact) {
+    private static void fillNickNames(VCard vcard, JSCard jsCard) {
 
         List<Nickname> nicknames = vcard.getNicknames();
         List<LocalizedString> nicks = new ArrayList<>();
@@ -447,7 +447,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
         Collections.sort(nicks);
         for (LocalizedString nick : nicks)
-            jsContact.addNickName(nick);
+            jsCard.addNickName(nick);
     }
 
     private static it.cnr.iit.jscontact.tools.dto.Address getAddressAltrenative(List<it.cnr.iit.jscontact.tools.dto.Address> addresses, String altid) {
@@ -474,7 +474,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         return  (jcardGeoParam != null) ? jcardGeoParam.toUri().toString() : null;
     }
 
-    private static void fillAddresses(VCard vcard, JSContact jsContact) {
+    private static void fillAddresses(VCard vcard, JSCard jsCard) {
 
         List<it.cnr.iit.jscontact.tools.dto.Address> addresses = new ArrayList<>();
 
@@ -530,7 +530,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (it.cnr.iit.jscontact.tools.dto.Address address : addresses)
-            jsContact.addAddress("ADR-" + (i++), address);
+            jsCard.addAddress("ADR-" + (i++), address);
 
     }
 
@@ -560,39 +560,39 @@ public class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private static void fillAnniversaries(VCard vcard, JSContact jsContact) {
+    private static void fillAnniversaries(VCard vcard, JSCard jsCard) {
 
       if (vcard.getBirthday() != null) {
-          jsContact.addAnniversary(it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
+          jsCard.addAnniversary(it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                              .type(AnniversaryType.BIRTH)
                                                                              .date(getAnniversaryDate(vcard.getBirthday()))
                                                                              .place(getValue(vcard.getBirthplace()))
                                                                              .build()
                                   );
           if (vcard.getBirthday().getCalscale()!= null && !vcard.getBirthday().getCalscale().getValue().equals(DEFAULT_CALSCALE))
-              addUnmatchedParams(vcard.getBirthday(), "BDAY", null, new String[]{"CALSCALE"}, jsContact);
+              addUnmatchedParams(vcard.getBirthday(), "BDAY", null, new String[]{"CALSCALE"}, jsCard);
       }
 
       if (vcard.getDeathdate() != null) {
-          jsContact.addAnniversary(it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
+          jsCard.addAnniversary(it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                              .type(AnniversaryType.DEATH)
                                                                              .date(getAnniversaryDate(vcard.getDeathdate()))
                                                                              .place(getValue(vcard.getDeathplace()))
                                                                              .build()
                                   );
           if (vcard.getDeathdate().getCalscale()!= null && !vcard.getDeathdate().getCalscale().getValue().equals(DEFAULT_CALSCALE))
-              addUnmatchedParams(vcard.getDeathdate(), "DEATHDATE", null, new String[]{"CALSCALE"}, jsContact);
+              addUnmatchedParams(vcard.getDeathdate(), "DEATHDATE", null, new String[]{"CALSCALE"}, jsCard);
       }
 
       if (vcard.getAnniversary() != null) {
-          jsContact.addAnniversary(it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
+          jsCard.addAnniversary(it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                               .type(AnniversaryType.OTHER)
                                                                               .date(getAnniversaryDate(vcard.getAnniversary()))
                                                                               .label(ANNIVERSAY_MARRIAGE_LABEL)
                                                                               .build()
                                    );
           if (vcard.getAnniversary().getCalscale()!= null && !vcard.getAnniversary().getCalscale().getValue().equals(DEFAULT_CALSCALE))
-              addUnmatchedParams(vcard.getAnniversary(), "ANNIVERSARY", null, new String[]{"CALSCALE"}, jsContact);
+              addUnmatchedParams(vcard.getAnniversary(), "ANNIVERSARY", null, new String[]{"CALSCALE"}, jsCard);
       }
     }
 
@@ -604,7 +604,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillPersonalInfos(VCard vcard, JSContact jsContact) throws CardException {
+    private static void fillPersonalInfos(VCard vcard, JSCard jsCard) throws CardException {
 
         List<PersonalInformation> hobbies = new ArrayList<>();
         List<PersonalInformation> interests = new ArrayList<>();
@@ -623,7 +623,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         if (hobbies.size() > 0) {
             Collections.sort(hobbies);
             for (PersonalInformation pi : hobbies)
-                jsContact.addPersonalInfo(pi);
+                jsCard.addPersonalInfo(pi);
         }
 
         for (Interest interest : vcard.getInterests()) {
@@ -639,7 +639,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         if (interests.size() > 0) {
             Collections.sort(interests);
             for (PersonalInformation pi : interests)
-                jsContact.addPersonalInfo(pi);
+                jsCard.addPersonalInfo(pi);
         }
 
         for (Expertise expertise : vcard.getExpertise()) {
@@ -655,15 +655,15 @@ public class EZVCard2JSContact extends AbstractConverter {
         if (expertizes.size() > 0) {
             Collections.sort(expertizes);
             for (PersonalInformation pi : expertizes)
-                jsContact.addPersonalInfo(pi);
+                jsCard.addPersonalInfo(pi);
         }
 
     }
 
-    private static void fillContactLanguages(VCard vcard, JSContact jsContact) {
+    private static void fillContactLanguages(VCard vcard, JSCard jsCard) {
 
         for (Language lang : vcard.getLanguages()) {
-            jsContact.addContactLanguage(getValue(lang),
+            jsCard.addContactLanguage(getValue(lang),
                                         ContactLanguage.builder()
                                                        .context((lang.getType() != null) ? Context.getEnum(lang.getType()) : null)
                                                        .pref(lang.getPref())
@@ -678,7 +678,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         return LabelUtils.labelIncludesAnyItem(label, Arrays.asList(new String[] {"voice", "textphone", "fax", "pager", "cell", "text", "video"}));
     }
 
-    private static void fillPhones(VCard vcard, JSContact jsContact) {
+    private static void fillPhones(VCard vcard, JSCard jsCard) {
 
         int i = 1;
         for (Telephone tel : vcard.getTelephoneNumbers()) {
@@ -689,7 +689,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toArrayOfStrings(contexts.keySet()));
             if (!phoneFeatures.containsKey(PhoneFeature.OTHER)) exclude = ArrayUtils.addAll(exclude, EnumUtils.toArrayOfStrings(phoneFeatures.keySet()));
             String label = getLabel(jcardType, exclude, null);
-            jsContact.addPhone("PHONE-" + (i++), Phone.builder()
+            jsCard.addPhone("PHONE-" + (i++), Phone.builder()
                                        .phone(getValue(tel))
                                        .features((phoneFeatures.containsKey(PhoneFeature.OTHER) && !labelIncludesTelTypes(label)) ? getDefaultPhoneFeatures() : phoneFeatures)
                                        .contexts(contexts)
@@ -700,14 +700,14 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillEmails(VCard vcard, JSContact jsContact) {
+    private static void fillEmails(VCard vcard, JSCard jsCard) {
 
         int i = 1;
         for (Email email : vcard.getEmails()) {
             String emailAddress = getValue(email);
             if (StringUtils.isNotEmpty(emailAddress)) {
                 String jcardType = getJcardParam(email.getParameters(), "TYPE");
-                jsContact.addEmail("EMAIL-" + (i++), EmailAddress.builder()
+                jsCard.addEmail("EMAIL-" + (i++), EmailAddress.builder()
                         .email(emailAddress)
                         .contexts(getContexts(jcardType))
                         .pref(email.getPref())
@@ -717,28 +717,28 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillPhotos(VCard vcard, JSContact jsContact) {
+    private static void fillPhotos(VCard vcard, JSCard jsCard) {
 
         int i = 1;
         for (Photo photo : vcard.getPhotos())
-            addFile("PHOTO-" + (i++), photo, jsContact);
+            addFile("PHOTO-" + (i++), photo, jsCard);
 
     }
 
-    private static void fillOnlines(VCard vcard, JSContact jsContact) {
+    private static void fillOnlines(VCard vcard, JSCard jsCard) {
 
         String jcardType;
         Map<Context,Boolean> contexts;
 
         int i = 1;
         for (Source source : vcard.getSources())
-            addOnline(source, jsContact, OnlineLabelKey.SOURCE, i++);
+            addOnline(source, jsCard, OnlineLabelKey.SOURCE, i++);
 
         i = 1;
         for (Impp impp : vcard.getImpps()) {
             jcardType = getJcardParam(impp.getParameters(), "TYPE");
             contexts = getContexts(jcardType);
-            jsContact.addOnline("XMPP-" + (i++), Resource.builder()
+            jsCard.addOnline("XMPP-" + (i++), Resource.builder()
                                         .resource(getValue(impp))
                                         .type(ResourceType.USERNAME)
                                         .contexts(contexts)
@@ -751,31 +751,31 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         i = 1;
         for (Logo logo : vcard.getLogos())
-            addOnline(logo, jsContact, OnlineLabelKey.LOGO, i++);
+            addOnline(logo, jsCard, OnlineLabelKey.LOGO, i++);
 
         i = 1;
         for (Sound sound : vcard.getSounds())
-            addOnline(sound, jsContact, OnlineLabelKey.SOUND, i++);
+            addOnline(sound, jsCard, OnlineLabelKey.SOUND, i++);
 
         i = 1;
         for (Url url : vcard.getUrls())
-            addOnline(url, jsContact, OnlineLabelKey.URL, i++);
+            addOnline(url, jsCard, OnlineLabelKey.URL, i++);
 
         i = 1;
         for (Key key : vcard.getKeys())
-            addOnline(key, jsContact, OnlineLabelKey.KEY, i++);
+            addOnline(key, jsCard, OnlineLabelKey.KEY, i++);
 
         i = 1;
         for (FreeBusyUrl fburl : vcard.getFbUrls())
-            addOnline(fburl, jsContact, OnlineLabelKey.FBURL, i++);
+            addOnline(fburl, jsCard, OnlineLabelKey.FBURL, i++);
 
         i = 1;
         for (CalendarRequestUri calendarRequestUri : vcard.getCalendarRequestUris())
-            addOnline(calendarRequestUri, jsContact, OnlineLabelKey.CALADRURI, i++);
+            addOnline(calendarRequestUri, jsCard, OnlineLabelKey.CALADRURI, i++);
 
         i = 1;
         for (CalendarUri calendarUri : vcard.getCalendarUris())
-            addOnline(calendarUri, jsContact, OnlineLabelKey.CALURI, i++);
+            addOnline(calendarUri, jsCard, OnlineLabelKey.CALURI, i++);
 
         List<Resource> orgDirectories = new ArrayList<>();
         for (OrgDirectory od : vcard.getOrgDirectories()) {
@@ -796,7 +796,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             Collections.sort(orgDirectories);
             i = 1;
             for (Resource ol : orgDirectories)
-                jsContact.addOnline("ORG-DIRECTORY-" + (i++), ol);
+                jsCard.addOnline("ORG-DIRECTORY-" + (i++), ol);
         }
 
         List<RawProperty> contactUris = getRawProperties(vcard, OnlineLabelKey.CONTACT_URI.getValue());
@@ -804,11 +804,11 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (RawProperty contactUri : contactUris) {
             UriProperty uriProperty = new UriProperty(getValue(contactUri));
             uriProperty.setParameters(contactUri.getParameters());
-            addOnline(uriProperty, jsContact, OnlineLabelKey.CONTACT_URI, i++);
+            addOnline(uriProperty, jsCard, OnlineLabelKey.CONTACT_URI, i++);
         }
     }
 
-    private static void fillTitles(VCard vcard, JSContact jsContact) {
+    private static void fillTitles(VCard vcard, JSCard jsCard) {
 
         List<LocalizedString> titles = new ArrayList<>();
         for (Title title : vcard.getTitles())
@@ -823,10 +823,10 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (LocalizedString title : titles)
-            jsContact.addTitle("TITLE-" + (i++), title);
+            jsCard.addTitle("TITLE-" + (i++), title);
     }
 
-    private static void fillRoles(VCard vcard, JSContact jsContact) {
+    private static void fillRoles(VCard vcard, JSCard jsCard) {
 
         List<LocalizedString> roles = new ArrayList<>();
         for (Role role : vcard.getRoles()) {
@@ -840,9 +840,9 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
         Collections.sort(roles);
 
-        int i = (jsContact.getTitles() != null) ? jsContact.getTitles().size() + 1 : 1;
+        int i = (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1;
         for (LocalizedString role : roles)
-            jsContact.addTitle("TITLE-" + (i++), role);
+            jsCard.addTitle("TITLE-" + (i++), role);
     }
 
     private static Map<String,String> getOrganizationItemLocalizations(LocalizedString organization, int organizationItemIndex) {
@@ -855,7 +855,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         return localizations;
     }
 
-    private static void fillOrganizations(VCard vcard, JSContact jsContact) {
+    private static void fillOrganizations(VCard vcard, JSCard jsCard) {
 
         List<LocalizedString> organizations = new ArrayList<>();
         for (Organization org : vcard.getOrganizations()) {
@@ -914,10 +914,10 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (it.cnr.iit.jscontact.tools.dto.Organization jsContactOrganization : jsContactOrganizations)
-            jsContact.addOrganization("ORG-" + (i++), jsContactOrganization);
+            jsCard.addOrganization("ORG-" + (i++), jsContactOrganization);
     }
 
-    private static void fillNotes(VCard vcard, JSContact jsContact) {
+    private static void fillNotes(VCard vcard, JSCard jsCard) {
 
         List<LocalizedString> notes = new ArrayList<>();
         for (Note note : vcard.getNotes()) {
@@ -931,15 +931,15 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
 
         for (LocalizedString note : notes) {
-            jsContact.addNote(note.getValue(), note.getLanguage());
+            jsCard.addNote(note.getValue(), note.getLanguage());
             if (note.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : note.getLocalizations().entrySet())
-                    jsContact.addNote(localization.getValue(), localization.getKey());
+                    jsCard.addNote(localization.getValue(), localization.getKey());
             }
         }
     }
 
-    private static void fillCategories(VCard vcard, JSContact jsContact) {
+    private static void fillCategories(VCard vcard, JSCard jsCard) {
 
         List<CategoryWrapper> wrappers = new ArrayList<>();
         for (Categories categories : vcard.getCategoriesList()) {
@@ -951,7 +951,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
         Collections.sort(wrappers);
         for (CategoryWrapper wrapper : wrappers)
-            jsContact.addCategories(wrapper.getValues().toArray(new String[wrapper.getValues().size()]));
+            jsCard.addCategories(wrapper.getValues().toArray(new String[wrapper.getValues().size()]));
     }
 
     private static String getValue(List<RelatedType> list) {
@@ -961,14 +961,14 @@ public class EZVCard2JSContact extends AbstractConverter {
         return joiner.toString();
     }
 
-    private static void fillRelations(VCard vcard, JSContact jsContact) {
+    private static void fillRelations(VCard vcard, JSCard jsCard) {
 
         for (Related related : vcard.getRelations()) {
             if (getJcardParam(related.getParameters(), "TYPE") == null)
-                jsContact.addRelation(getValue(related), null);
+                jsCard.addRelation(getValue(related), null);
             else {
                 for (RelatedType type : related.getTypes())
-                    jsContact.addRelation(getValue(related), RelationType.getEnum(type.getValue()));
+                    jsCard.addRelation(getValue(related), RelationType.getEnum(type.getValue()));
             }
         }
     }
@@ -983,17 +983,17 @@ public class EZVCard2JSContact extends AbstractConverter {
         return getExtPropertyName(propertyName) + "/" + paramName;
     }
 
-    private void fillExtensions(VCard vcard, JSContact jsContact) {
+    private void fillExtensions(VCard vcard, JSCard jsCard) {
 
         for (RawProperty extension : vcard.getExtendedProperties()) {
             if (!fakeExtensions.contains(extension.getPropertyName()) &&
                     !fakeExtensions.contains(extension.getPropertyName().toUpperCase())) {
-                jsContact.addExtension(getExtPropertyName(extension.getPropertyName()), getValue(extension));
+                jsCard.addExtension(getExtPropertyName(extension.getPropertyName()), getValue(extension));
             }
         }
     }
 
-    private static void addUnmatchedParams(VCardProperty property, String propertyName, Integer index, String[] unmatchedParams, JSContact jsContact) {
+    private static void addUnmatchedParams(VCardProperty property, String propertyName, Integer index, String[] unmatchedParams, JSCard jsCard) {
 
         if (unmatchedParams == null)
             return;
@@ -1002,7 +1002,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             return;
 
         if (property.getGroup() != null) {
-            jsContact.addExtension(getUnmatchedParamName(propertyName,"GROUP"),
+            jsCard.addExtension(getUnmatchedParamName(propertyName,"GROUP"),
                                    property.getGroup()
                                   );
         }
@@ -1011,40 +1011,40 @@ public class EZVCard2JSContact extends AbstractConverter {
             StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
             for (Pid pid : property.getParameters().getPids())
                 joiner.add(pid.getLocalId().toString());
-            jsContact.addExtension(getUnmatchedParamName(propertyName,"PID"),
+            jsCard.addExtension(getUnmatchedParamName(propertyName,"PID"),
                                    joiner.toString()
                                   );
         }
 
         for (String param : unmatchedParams) {
             if (property.getParameter(param) != null)
-                jsContact.addExtension(getUnmatchedParamName(propertyName,param),
+                jsCard.addExtension(getUnmatchedParamName(propertyName,param),
                                        property.getParameter(param)
                                       );
         }
     }
 
-    private static void fillUnmatchedElments(VCard vcard, JSContact jsContact) {
+    private static void fillUnmatchedElments(VCard vcard, JSCard jsCard) {
 
         if (vcard.getGender()!=null) {
             if (vcard.getGender().getGender() != null)
-                jsContact.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vcard.getGender().getGender());
+                jsCard.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vcard.getGender().getGender());
             else
-                jsContact.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vcard.getGender().getText());
+                jsCard.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vcard.getGender().getText());
         }
 
         if (vcard.getClientPidMaps()!=null) {
             for (ClientPidMap pidmap : vcard.getClientPidMaps())
-                jsContact.addExtension(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG, pidmap.getPid()), pidmap.getUri());
+                jsCard.addExtension(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG, pidmap.getPid()), pidmap.getUri());
         }
 
         if (vcard.getXmls()!=null) {
             if (vcard.getXmls().size() == 1)
-                jsContact.addExtension(getUnmatchedPropertyName(VCARD_XML_TAG), vcard.getXmls().get(0).getValue().getTextContent());
+                jsCard.addExtension(getUnmatchedPropertyName(VCARD_XML_TAG), vcard.getXmls().get(0).getValue().getTextContent());
             else {
                 int i = 0;
                 for (Xml xml : vcard.getXmls())
-                    jsContact.addExtension(getUnmatchedPropertyName(String.format("XML/%d", i++)), xml.getValue().getTextContent());
+                    jsCard.addExtension(getUnmatchedPropertyName(String.format("XML/%d", i++)), xml.getValue().getTextContent());
             }
         }
 
@@ -1070,42 +1070,72 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+    private static boolean containsJSCardProperties(VCard vCard) {
+
+        for (VCardProperty property : vCard.getProperties()) {
+            if (
+                !property.getClass().getName().equals(Kind.class.getName()) &&
+                !property.getClass().getName().equals(Uid.class.getName()) &&
+                !property.getClass().getName().equals(Member.class.getName())
+               )
+                return true;
+        }
+
+        return false;
+    }
+
     private JSContact convert(VCard vCard) throws CardException {
 
-        JSContact jsContact;
-        if (vCard.getMembers() != null && vCard.getMembers().size() != 0) {
-            JSGroupCard jsCardGroup = JSGroupCard.builder().uid(UUID.randomUUID().toString()).build();
-            fillMembers(vCard, jsCardGroup);
-            jsContact = jsCardGroup;
-        } else {
-            jsContact = JSCard.builder().uid(UUID.randomUUID().toString()).build();
-        }
-        jsContact.setKind(getKind(vCard.getKind()));
-        jsContact.setProdId(getValue(vCard.getProductId()));
-        jsContact.setUpdated(getUpdated(vCard.getRevision()));
+        JSCard jsCard = null;
+        JSGroupCard jsGroupCard = null;
+        String uid = null;
         if (vCard.getUid()!=null)
-            jsContact.setUid(vCard.getUid().getValue());
-        fillFormattedNames(vCard, jsContact);
-        fillNames(vCard, jsContact);
-        fillNickNames(vCard, jsContact);
-        fillAddresses(vCard, jsContact);
-        fillAnniversaries(vCard, jsContact);
-        fillPersonalInfos(vCard, jsContact);
-        fillContactLanguages(vCard, jsContact);
-        fillPhones(vCard, jsContact);
-        fillEmails(vCard, jsContact);
-        fillPhotos(vCard, jsContact);
-        fillOnlines(vCard, jsContact);
-        fillTitles(vCard, jsContact);
-        fillRoles(vCard, jsContact);
-        fillOrganizations(vCard, jsContact);
-        fillCategories(vCard, jsContact);
-        fillNotes(vCard, jsContact);
-        fillRelations(vCard, jsContact);
-        fillExtensions(vCard, jsContact);
-        fillUnmatchedElments(vCard, jsContact);
+            uid = vCard.getUid().getValue();
+        else
+            uid = UUID.randomUUID().toString();
 
-        return jsContact;
+        if (vCard.getMembers() != null && vCard.getMembers().size() != 0) {
+            jsGroupCard = JSGroupCard.builder().uid(uid).build();
+            fillMembers(vCard, jsGroupCard);
+            jsGroupCard.setUid(uid);
+            if (containsJSCardProperties(vCard)) {
+                jsGroupCard.setCard(JSCard.builder().uid(uid).build());
+                jsCard = jsGroupCard.getCard();
+            }
+            else
+                return jsGroupCard;
+        } else {
+            jsCard = JSCard.builder().uid(uid).build();
+        }
+
+        jsCard.setUid(uid);
+        jsCard.setKind(getKind(vCard.getKind()));
+        jsCard.setProdId(getValue(vCard.getProductId()));
+        jsCard.setUpdated(getUpdated(vCard.getRevision()));
+        fillFormattedNames(vCard, jsCard);
+        fillNames(vCard, jsCard);
+        fillNickNames(vCard, jsCard);
+        fillAddresses(vCard, jsCard);
+        fillAnniversaries(vCard, jsCard);
+        fillPersonalInfos(vCard, jsCard);
+        fillContactLanguages(vCard, jsCard);
+        fillPhones(vCard, jsCard);
+        fillEmails(vCard, jsCard);
+        fillPhotos(vCard, jsCard);
+        fillOnlines(vCard, jsCard);
+        fillTitles(vCard, jsCard);
+        fillRoles(vCard, jsCard);
+        fillOrganizations(vCard, jsCard);
+        fillCategories(vCard, jsCard);
+        fillNotes(vCard, jsCard);
+        fillRelations(vCard, jsCard);
+        fillExtensions(vCard, jsCard);
+        fillUnmatchedElments(vCard, jsCard);
+
+        if (jsGroupCard != null)
+            return jsGroupCard;
+        else
+            return jsCard;
     }
 
     /**
