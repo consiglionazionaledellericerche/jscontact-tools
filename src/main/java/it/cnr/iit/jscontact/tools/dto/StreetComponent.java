@@ -69,24 +69,24 @@ public class StreetComponent implements Serializable {
     @JsonIgnore
     public boolean isExtStreetComponent() { return type.getExtValue() != null; }
 
-    private static StreetComponent streetComponent(StreetComponentEnum rfcEnum, String value) {
+    private static StreetComponent rfcStreetComponent(StreetComponentEnum rfcEnum, String value) {
         return StreetComponent.builder()
                 .value(value)
                 .type(StreetComponentType.builder().rfcValue(rfcEnum).build())
                 .build();
     }
-    public static StreetComponent name(String value) { return streetComponent(StreetComponentEnum.NAME, value);}
-    public static StreetComponent number(String value) { return streetComponent(StreetComponentEnum.NUMBER, value);}
-    public static StreetComponent direction(String value) { return streetComponent(StreetComponentEnum.DIRECTION, value);}
-    public static StreetComponent building(String value) { return streetComponent(StreetComponentEnum.BUILDING, value);}
-    public static StreetComponent floor(String value) { return streetComponent(StreetComponentEnum.FLOOR, value);}
-    public static StreetComponent apartment(String value) { return streetComponent(StreetComponentEnum.APARTMENT, value);}
-    public static StreetComponent room(String value) { return streetComponent(StreetComponentEnum.ROOM, value);}
-    public static StreetComponent extension(String value) { return streetComponent(StreetComponentEnum.EXTENSION, value);}
-    public static StreetComponent postOfficeBox(String value) { return streetComponent(StreetComponentEnum.POST_OFFICE_BOX, value);}
-    public static StreetComponent landmark(String value) { return streetComponent(StreetComponentEnum.LANDMARK, value);}
-    public static StreetComponent separator(String value) { return streetComponent(StreetComponentEnum.SEPARATOR, value);}
-    public static StreetComponent unknown(String value) { return streetComponent(StreetComponentEnum.UNKNOWN, value);}
+    public static StreetComponent name(String value) { return rfcStreetComponent(StreetComponentEnum.NAME, value);}
+    public static StreetComponent number(String value) { return rfcStreetComponent(StreetComponentEnum.NUMBER, value);}
+    public static StreetComponent direction(String value) { return rfcStreetComponent(StreetComponentEnum.DIRECTION, value);}
+    public static StreetComponent building(String value) { return rfcStreetComponent(StreetComponentEnum.BUILDING, value);}
+    public static StreetComponent floor(String value) { return rfcStreetComponent(StreetComponentEnum.FLOOR, value);}
+    public static StreetComponent apartment(String value) { return rfcStreetComponent(StreetComponentEnum.APARTMENT, value);}
+    public static StreetComponent room(String value) { return rfcStreetComponent(StreetComponentEnum.ROOM, value);}
+    public static StreetComponent extension(String value) { return rfcStreetComponent(StreetComponentEnum.EXTENSION, value);}
+    public static StreetComponent postOfficeBox(String value) { return rfcStreetComponent(StreetComponentEnum.POST_OFFICE_BOX, value);}
+    public static StreetComponent landmark(String value) { return rfcStreetComponent(StreetComponentEnum.LANDMARK, value);}
+    public static StreetComponent separator(String value) { return rfcStreetComponent(StreetComponentEnum.SEPARATOR, value);}
+    public static StreetComponent unknown(String value) { return rfcStreetComponent(StreetComponentEnum.UNKNOWN, value);}
     public static StreetComponent extStreetComponent(String extEnum, String value) {
         return StreetComponent.builder()
                 .value(value)

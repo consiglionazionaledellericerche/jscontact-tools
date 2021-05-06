@@ -59,18 +59,18 @@ public class NameComponent extends GroupableObject implements Serializable {
     @JsonIgnore
     public boolean isExtNameComponent() { return type.getExtValue() != null; }
 
-    private static NameComponent nameComponent(NameComponentEnum rfcEnum, String value) {
+    private static NameComponent rfcNameComponent(NameComponentEnum rfcEnum, String value) {
         return NameComponent.builder()
                 .value(value)
                 .type(NameComponentType.builder().rfcValue(rfcEnum).build())
                 .build();
     }
-    public static NameComponent prefix(String value) {return nameComponent(NameComponentEnum.PREFIX, value);}
-    public static NameComponent personal(String value) {return nameComponent(NameComponentEnum.PERSONAL, value);}
-    public static NameComponent surname(String value) {return nameComponent(NameComponentEnum.SURNAME, value);}
-    public static NameComponent additional(String value) {return nameComponent(NameComponentEnum.ADDITIONAL, value);}
-    public static NameComponent suffix(String value) {return nameComponent(NameComponentEnum.SUFFIX, value);}
-    public static NameComponent separator(String value) {return nameComponent(NameComponentEnum.SEPARATOR, value);}
+    public static NameComponent prefix(String value) {return rfcNameComponent(NameComponentEnum.PREFIX, value);}
+    public static NameComponent personal(String value) {return rfcNameComponent(NameComponentEnum.PERSONAL, value);}
+    public static NameComponent surname(String value) {return rfcNameComponent(NameComponentEnum.SURNAME, value);}
+    public static NameComponent additional(String value) {return rfcNameComponent(NameComponentEnum.ADDITIONAL, value);}
+    public static NameComponent suffix(String value) {return rfcNameComponent(NameComponentEnum.SUFFIX, value);}
+    public static NameComponent separator(String value) {return rfcNameComponent(NameComponentEnum.SEPARATOR, value);}
     public static NameComponent extNameComponent(String extEnum, String value) {
         return NameComponent.builder()
                 .value(value)
