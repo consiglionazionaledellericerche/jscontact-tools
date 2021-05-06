@@ -69,10 +69,10 @@ public class StreetComponent implements Serializable {
     @JsonIgnore
     public boolean isExtStreetComponent() { return type.getExtValue() != null; }
 
-    private static StreetComponent rfcStreetComponent(StreetComponentEnum rfcEnum, String value) {
+    private static StreetComponent rfcStreetComponent(StreetComponentEnum rfcValue, String value) {
         return StreetComponent.builder()
                 .value(value)
-                .type(StreetComponentType.builder().rfcValue(rfcEnum).build())
+                .type(StreetComponentType.builder().rfcValue(rfcValue).build())
                 .build();
     }
     public static StreetComponent name(String value) { return rfcStreetComponent(StreetComponentEnum.NAME, value);}
@@ -87,10 +87,10 @@ public class StreetComponent implements Serializable {
     public static StreetComponent landmark(String value) { return rfcStreetComponent(StreetComponentEnum.LANDMARK, value);}
     public static StreetComponent separator(String value) { return rfcStreetComponent(StreetComponentEnum.SEPARATOR, value);}
     public static StreetComponent unknown(String value) { return rfcStreetComponent(StreetComponentEnum.UNKNOWN, value);}
-    public static StreetComponent extStreetComponent(String extEnum, String value) {
+    public static StreetComponent extStreetComponent(String extValue, String value) {
         return StreetComponent.builder()
                 .value(value)
-                .type(StreetComponentType.builder().extValue(extEnum).build())
+                .type(StreetComponentType.builder().extValue(extValue).build())
                 .build();
     }
 
