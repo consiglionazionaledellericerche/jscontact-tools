@@ -24,8 +24,8 @@ import lombok.AllArgsConstructor;
 public enum StreetComponentEnum {
 
     NAME("name"),
-    DIRECTION("direction"),
     NUMBER("number"),
+    DIRECTION("direction"),
     BUILDING("building"),
     FLOOR("floor"),
     APARTMENT("apartment"),

@@ -399,35 +399,15 @@ public class EZVCard2JSContact extends AbstractConverter {
         List<StructuredName> sns = vcard.getStructuredNames();
         for (StructuredName sn : sns) {
             for (String px : sn.getPrefixes())
-                jsCard.addName(NameComponent.builder()
-                                               .value(px)
-                                               .type(NameComponentType.builder().rfcValue(NameComponentEnum.PREFIX).build())
-                                               .build()
-                );
+                jsCard.addName(NameComponent.prefix(px));
             if (sn.getGiven() != null)
-                jsCard.addName(NameComponent.builder()
-                                               .value(sn.getGiven())
-                                               .type(NameComponentType.builder().rfcValue(NameComponentEnum.PERSONAL).build())
-                                               .build()
-                );
+                jsCard.addName(NameComponent.personal(sn.getGiven()));
             if (sn.getFamily() != null)
-                jsCard.addName(NameComponent.builder()
-                                               .value(sn.getFamily())
-                                               .type(NameComponentType.builder().rfcValue(NameComponentEnum.SURNAME).build())
-                                               .build()
-                                 );
+                jsCard.addName(NameComponent.surname(sn.getFamily()));
             for (String an : sn.getAdditionalNames())
-                jsCard.addName(NameComponent.builder()
-                                               .value(an)
-                                               .type(NameComponentType.builder().rfcValue(NameComponentEnum.ADDITIONAL).build())
-                                               .build()
-                                 );
+                jsCard.addName(NameComponent.additional(an));
             for (String sx : sn.getSuffixes())
-                jsCard.addName(NameComponent.builder()
-                                               .value(sx)
-                                               .type(NameComponentType.builder().rfcValue(NameComponentEnum.SUFFIX).build())
-                                               .build()
-                                 );
+                jsCard.addName(NameComponent.suffix(sx));
             addUnmatchedParams(sn, "N", null, new String[]{"SORT-AS"}, jsCard);
         }
 
@@ -489,11 +469,11 @@ public class EZVCard2JSContact extends AbstractConverter {
 
             List<StreetComponent> streetDetailPairs = new ArrayList<>();
             if (StringUtils.isNotEmpty(addr.getPoBox()))
-                streetDetailPairs.add(StreetComponent.builder().type(StreetComponentType.builder().rfcValue(StreetComponentEnum.POST_OFFICE_BOX).build()).value(addr.getPoBox()).build());
+                streetDetailPairs.add(StreetComponent.postOfficeBox(addr.getPoBox()));
             if (StringUtils.isNotEmpty(addr.getExtendedAddressFull()))
-                streetDetailPairs.add(StreetComponent.builder().type(StreetComponentType.builder().rfcValue(StreetComponentEnum.EXTENSION).build()).value(addr.getExtendedAddressFull()).build());
+                streetDetailPairs.add(StreetComponent.extension(addr.getExtendedAddressFull()));
             if (StringUtils.isNotEmpty(addr.getStreetAddressFull()))
-                streetDetailPairs.add(StreetComponent.builder().type(StreetComponentType.builder().rfcValue(StreetComponentEnum.NAME).build()).value(addr.getStreetAddressFull()).build());
+                streetDetailPairs.add(StreetComponent.name(addr.getStreetAddressFull()));
 
             addresses.add(it.cnr.iit.jscontact.tools.dto.Address.builder()
                                                                  .contexts(getAddressContexts(jcardType))
