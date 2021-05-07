@@ -33,7 +33,7 @@ public class ResourceTest extends AbstractTest {
     public void testValidResource() {
 
         Resource online = Resource.builder()
-                .context(Context.WORK, Boolean.TRUE)
+                .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.USERNAME)
                 .resource("mario-loffredo")
                 .label("GitHub")
@@ -52,7 +52,7 @@ public class ResourceTest extends AbstractTest {
 
         // value missing
         Resource.builder()
-                .context(Context.WORK, Boolean.TRUE)
+                .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.URI)
                 .build();
     }
@@ -61,7 +61,7 @@ public class ResourceTest extends AbstractTest {
     public void testInvalidResourceUri() {
 
         Resource online = Resource.builder()
-                .context(Context.WORK, Boolean.TRUE)
+                .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.URI)
                 .resource(" ")
                 .label("url")

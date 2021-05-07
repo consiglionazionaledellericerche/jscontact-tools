@@ -17,9 +17,13 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -60,6 +64,8 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     String timeZone;
 
+    @JsonSerialize(using = AddressContextsSerializer.class)
+    @JsonDeserialize(using = AddressContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
@@ -75,11 +81,11 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     String altid;
 
     private boolean asContext(AddressContext context) { return contexts != null && contexts.containsKey(context); }
-    public boolean asWork() { return asContext(AddressContext.WORK); }
-    public boolean asPrivate() { return asContext(AddressContext.PRIVATE); }
-    public boolean asBilling() { return asContext(AddressContext.BILLING); }
-    public boolean asPostal() { return asContext(AddressContext.POSTAL); }
-    public boolean asOtherContext() { return asContext(AddressContext.OTHER); }
+    public boolean asWork() { return asContext(AddressContext.work()); }
+    public boolean asPrivate() { return asContext(AddressContext.private_()); }
+    public boolean asBilling() { return asContext(AddressContext.billing()); }
+    public boolean asPostal() { return asContext(AddressContext.postal()); }
+    public boolean asOtherContext() { return asContext(AddressContext.other()); }
     public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
 
     private String getStreetDetail(StreetComponentEnum detail) {
@@ -88,7 +94,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
             return null;
 
         for (StreetComponent pair : street) {
-            if (pair.isExtStreetComponent())
+            if (pair.isExt())
                 continue;
             else if (pair.getType().getRfcValue() == detail)
                 return pair.getValue();

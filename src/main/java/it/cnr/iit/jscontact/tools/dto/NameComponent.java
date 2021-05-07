@@ -43,35 +43,35 @@ public class NameComponent extends GroupableObject implements Serializable {
     @NonNull
     String value;
 
-    private boolean isRfcNameComponent(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);};
+    private boolean isRfc(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);};
     @JsonIgnore
-    public boolean isPrefix() { return isRfcNameComponent(NameComponentEnum.PREFIX); }
+    public boolean isPrefix() { return isRfc(NameComponentEnum.PREFIX); }
     @JsonIgnore
-    public boolean isPersonal() { return isRfcNameComponent(NameComponentEnum.PERSONAL); }
+    public boolean isPersonal() { return isRfc(NameComponentEnum.PERSONAL); }
     @JsonIgnore
-    public boolean isSurname() { return isRfcNameComponent(NameComponentEnum.SURNAME); }
+    public boolean isSurname() { return isRfc(NameComponentEnum.SURNAME); }
     @JsonIgnore
-    public boolean isAdditional() { return isRfcNameComponent(NameComponentEnum.ADDITIONAL); }
+    public boolean isAdditional() { return isRfc(NameComponentEnum.ADDITIONAL); }
     @JsonIgnore
-    public boolean isSuffix() { return isRfcNameComponent(NameComponentEnum.SUFFIX); }
+    public boolean isSuffix() { return isRfc(NameComponentEnum.SUFFIX); }
     @JsonIgnore
-    public boolean isSeparator() { return isRfcNameComponent(NameComponentEnum.SEPARATOR); }
+    public boolean isSeparator() { return isRfc(NameComponentEnum.SEPARATOR); }
     @JsonIgnore
-    public boolean isExtNameComponent() { return type.getExtValue() != null; }
+    public boolean isExt() { return type.isExtValue(); }
 
-    private static NameComponent rfcNameComponent(NameComponentEnum rfcValue, String value) {
+    private static NameComponent rfc(NameComponentEnum rfcValue, String value) {
         return NameComponent.builder()
                 .value(value)
                 .type(NameComponentType.builder().rfcValue(rfcValue).build())
                 .build();
     }
-    public static NameComponent prefix(String value) {return rfcNameComponent(NameComponentEnum.PREFIX, value);}
-    public static NameComponent personal(String value) {return rfcNameComponent(NameComponentEnum.PERSONAL, value);}
-    public static NameComponent surname(String value) {return rfcNameComponent(NameComponentEnum.SURNAME, value);}
-    public static NameComponent additional(String value) {return rfcNameComponent(NameComponentEnum.ADDITIONAL, value);}
-    public static NameComponent suffix(String value) {return rfcNameComponent(NameComponentEnum.SUFFIX, value);}
-    public static NameComponent separator(String value) {return rfcNameComponent(NameComponentEnum.SEPARATOR, value);}
-    public static NameComponent extNameComponent(String extValue, String value) {
+    public static NameComponent prefix(String value) {return rfc(NameComponentEnum.PREFIX, value);}
+    public static NameComponent personal(String value) {return rfc(NameComponentEnum.PERSONAL, value);}
+    public static NameComponent surname(String value) {return rfc(NameComponentEnum.SURNAME, value);}
+    public static NameComponent additional(String value) {return rfc(NameComponentEnum.ADDITIONAL, value);}
+    public static NameComponent suffix(String value) {return rfc(NameComponentEnum.SUFFIX, value);}
+    public static NameComponent separator(String value) {return rfc(NameComponentEnum.SEPARATOR, value);}
+    public static NameComponent ext(String extValue, String value) {
         return NameComponent.builder()
                 .value(value)
                 .type(NameComponentType.builder().extValue(extValue).build())

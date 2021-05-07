@@ -36,7 +36,7 @@ public class EmailAddressTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testEmailAddressValid1 - 1",jsCard.getEmails().size() == 1);
         assertTrue("testEmailAddressValid1 - 2",jsCard.getEmails().get("EMAIL-1").getContexts().size() == 1);
-        assertTrue("testEmailAddressValid1 - 3",jsCard.getEmails().get("EMAIL-1").getContexts().get(Context.WORK) == Boolean.TRUE);
+        assertTrue("testEmailAddressValid1 - 3",jsCard.getEmails().get("EMAIL-1").getContexts().get(Context.work()) == Boolean.TRUE);
         assertTrue("testEmailAddressValid1 - 4",jsCard.getEmails().get("EMAIL-1").getEmail().equals("jqpublic@xyz.example.com"));
 
     }
@@ -52,10 +52,10 @@ public class EmailAddressTest extends JCard2JSContactTest {
         JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testEmailAddressValid2 - 1",jsCard.getEmails().size() == 2);
         assertTrue("testEmailAddressValid2 - 2",jsCard.getEmails().get("EMAIL-1").getContexts().size() == 1);
-        assertTrue("testEmailAddressValid2 - 3",jsCard.getEmails().get("EMAIL-1").getContexts().get(Context.WORK) == Boolean.TRUE);
+        assertTrue("testEmailAddressValid2 - 3",jsCard.getEmails().get("EMAIL-1").getContexts().get(Context.work()) == Boolean.TRUE);
         assertTrue("testEmailAddressValid2 - 4",jsCard.getEmails().get("EMAIL-1").getEmail().equals("jqpublic@xyz.example.com"));
         assertTrue("testEmailAddressValid2 - 5",jsCard.getEmails().get("EMAIL-2").getContexts().size() == 1);
-        assertTrue("testEmailAddressValid2 - 6",jsCard.getEmails().get("EMAIL-2").getContexts().get(Context.PRIVATE) == Boolean.TRUE);
+        assertTrue("testEmailAddressValid2 - 6",jsCard.getEmails().get("EMAIL-2").getContexts().get(Context.private_()) == Boolean.TRUE);
         assertTrue("testEmailAddressValid2 - 7",jsCard.getEmails().get("EMAIL-2").getPref() == 1);
     }
 

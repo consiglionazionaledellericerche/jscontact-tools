@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.util.TelUri;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -99,7 +100,7 @@ public class PhoneTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testPhoneValid5 - 1",vcard.getTelephoneNumbers().size() == 1);
         assertTrue("testPhoneValid5 - 2",vcard.getTelephoneNumbers().get(0).getUri().equals(TelUri.parse("tel:+33-01-23-45-6")));
-        assertTrue("testPhoneValid5 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("work,home,voice"));
+        assertTrue("testPhoneValid5 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("home,work,voice"));
     }
 
     @Test
@@ -113,7 +114,7 @@ public class PhoneTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testPhoneValid6 - 1",vcard.getTelephoneNumbers().size() == 1);
         assertTrue("testPhoneValid6 - 2",vcard.getTelephoneNumbers().get(0).getUri().equals(TelUri.parse("tel:+33-01-23-45-6")));
-        assertTrue("testPhoneValid6 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("work,home,textphone"));
+        assertTrue("testPhoneValid6 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("home,work,textphone"));
     }
 
     @Test
@@ -127,7 +128,7 @@ public class PhoneTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testPhoneValid7 - 1",vcard.getTelephoneNumbers().size() == 1);
         assertTrue("testPhoneValid7 - 2",vcard.getTelephoneNumbers().get(0).getUri().equals(TelUri.parse("tel:+33-01-23-45-6")));
-        assertTrue("testPhoneValid7 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("work,home,voice,textphone"));
+        assertTrue("testPhoneValid7 - 3",vcard.getTelephoneNumbers().get(0).getParameter("TYPE").equals("home,work,voice,textphone"));
     }
 
 }

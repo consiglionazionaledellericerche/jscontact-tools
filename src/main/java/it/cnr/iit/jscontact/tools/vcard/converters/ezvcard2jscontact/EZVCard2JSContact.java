@@ -98,39 +98,59 @@ public class EZVCard2JSContact extends AbstractConverter {
         return rawProperties.get(0);
     }
 
-    private static <E extends Enum<E> & JCardTypeDerivedEnum> Map<E,Boolean> getEnumMap(Class<E> enumType, String jcardTypeParam, List<String> exclude, Map<String, E> aliases) {
+    private static <E extends Enum<E> & JCardTypeDerivedEnum> List<E> getEnumValues(Class<E> enumType, String jcardTypeParam, List<String> exclude, Map<String, E> aliases) {
 
         if (jcardTypeParam == null)
             return null;
 
-        Map<E,Boolean> enumMap = new HashMap<>();
+        List<E> enumValues = new ArrayList<>();
         String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
         for (String typeItem : typeItems) {
             try {
                 E enumInstance = getEnumFromJCardType(enumType, typeItem, exclude, aliases);
                 if (enumInstance != null)
-                    enumMap.put(enumInstance, Boolean.TRUE);
+                    enumValues.add(enumInstance);
             }catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        return (enumMap.size() > 0) ? enumMap : null;
+        return (enumValues.size() > 0) ? enumValues : null;
     }
 
     private static Map<Context,Boolean> getContexts(String jcardTypeParam) {
-        return getEnumMap(Context.class,jcardTypeParam, null, Context.getAliases());
+        List<ContextEnum> enumValues = getEnumValues(ContextEnum.class,jcardTypeParam, null, ContextEnum.getAliases());
+        if (enumValues == null) return null;
+
+        Map<Context,Boolean> contexts = new HashMap<>();
+        for (ContextEnum enumValue : enumValues) {
+            contexts.put(Context.rfc(enumValue), Boolean.TRUE);
+        }
+
+        return contexts;
     }
 
     private static Map<AddressContext,Boolean> getAddressContexts(String jcardTypeParam) {
-        return getEnumMap(AddressContext.class,jcardTypeParam, null, AddressContext.getAliases());
+        List<AddressContextEnum> enumValues =  getEnumValues(AddressContextEnum.class,jcardTypeParam, null, AddressContextEnum.getAliases());
+        if (enumValues == null) return null;
+
+        Map<AddressContext,Boolean> contexts = new HashMap<>();
+        for (AddressContextEnum enumValue : enumValues) {
+            contexts.put(AddressContext.rfc(enumValue), Boolean.TRUE);
+        }
+
+        return contexts;
     }
 
     private static Map<PhoneFeature,Boolean> getPhoneFeatures(String jcardTypeParam) {
-        Map<PhoneFeature,Boolean> phoneTypes = getEnumMap(PhoneFeature.class,jcardTypeParam, Arrays.asList("home", "work"), null);
+        List<PhoneFeature> enumValues = getEnumValues(PhoneFeature.class,jcardTypeParam, Arrays.asList("home", "work"), null);
 
-        if (phoneTypes == null)
-            phoneTypes = new HashMap<>();
+        Map<PhoneFeature,Boolean> phoneTypes = new HashMap<>();
+        if (enumValues != null) {
+            for (PhoneFeature enumValue : enumValues) {
+                phoneTypes.put(enumValue, Boolean.TRUE);
+            }
+        }
 
         if (phoneTypes.size() == 0)
             phoneTypes.put(PhoneFeature.OTHER, Boolean.TRUE);
@@ -239,7 +259,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         jcardType = getJcardParam(property.getParameters(), "TYPE");
         Map<Context,Boolean> contexts = getContexts(jcardType);
-        label = getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(contexts.keySet()) : null, new String[]{labelKey.getValue()});
+        label = getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{labelKey.getValue()});
         jsCard.addOnline(String.format("%s-%s",labelKey.getValue().toUpperCase(),index), Resource.builder()
                                     .resource(value)
                                     .type(ResourceType.URI)
@@ -645,7 +665,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (Language lang : vcard.getLanguages()) {
             jsCard.addContactLanguage(getValue(lang),
                                         ContactLanguage.builder()
-                                                       .context((lang.getType() != null) ? Context.getEnum(lang.getType()) : null)
+                                                       .context((lang.getType() != null) ? ContextEnum.getEnum(lang.getType()) : null)
                                                        .pref(lang.getPref())
                                                        .build()
                                         );
@@ -666,7 +686,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             Map<Context,Boolean> contexts = getContexts(jcardType);
             Map<PhoneFeature,Boolean> phoneFeatures = getPhoneFeatures(jcardType);
             String[] exclude = null;
-            if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toArrayOfStrings(contexts.keySet()));
+            if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())));
             if (!phoneFeatures.containsKey(PhoneFeature.OTHER)) exclude = ArrayUtils.addAll(exclude, EnumUtils.toArrayOfStrings(phoneFeatures.keySet()));
             String label = getLabel(jcardType, exclude, null);
             jsCard.addPhone("PHONE-" + (i++), Phone.builder()
@@ -722,7 +742,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                         .resource(getValue(impp))
                                         .type(ResourceType.USERNAME)
                                         .contexts(contexts)
-                                        .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(contexts.keySet()) : null, new String[]{OnlineLabelKey.IMPP.getValue()}))
+                                        .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.IMPP.getValue()}))
                                         .pref(impp.getPref())
                                         .mediaType(impp.getMediaType())
                                         .build()
@@ -764,7 +784,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             orgDirectories.add(Resource.builder()
                                        .resource(getValue(od))
                                        .type(ResourceType.URI)
-                                       .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(contexts.keySet()) : null, new String[]{OnlineLabelKey.ORG_DIRECTORY.getValue()}))
+                                       .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.ORG_DIRECTORY.getValue()}))
                                        .contexts(contexts)
                                        .pref(od.getPref())
                                        .index(od.getIndex())

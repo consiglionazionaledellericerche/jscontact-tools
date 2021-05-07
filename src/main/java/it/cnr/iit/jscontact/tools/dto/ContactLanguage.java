@@ -34,7 +34,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ContactLanguage extends GroupableObject implements Serializable {
 
-    Context context;
+    ContextEnum context;
 
     @Min(value=1, message = "invalid pref in ContactLanguage - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in ContactLanguage - value must be less or equal than 100")

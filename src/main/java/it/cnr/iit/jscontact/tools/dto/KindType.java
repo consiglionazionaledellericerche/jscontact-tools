@@ -28,27 +28,26 @@ import java.io.Serializable;
 @SuperBuilder
 public class KindType extends ExtensibleType<KindEnum> implements Serializable {
 
-    private boolean isRfcKind(KindEnum value) { return rfcValue != null && rfcValue == value; }
+    private boolean isRfc(KindEnum value) { return isRfcValue() && rfcValue == value; }
     @JsonIgnore
-    public boolean isIndividual() { return isRfcKind(KindEnum.INDIVIDUAL); }
+    public boolean isIndividual() { return isRfc(KindEnum.INDIVIDUAL); }
     @JsonIgnore
-    public boolean isGroup() { return isRfcKind(KindEnum.GROUP); }
+    public boolean isGroup() { return isRfc(KindEnum.GROUP); }
     @JsonIgnore
-    public boolean isOrg() { return isRfcKind(KindEnum.ORG); }
+    public boolean isOrg() { return isRfc(KindEnum.ORG); }
     @JsonIgnore
-    public boolean isDevice() { return isRfcKind(KindEnum.DEVICE); }
+    public boolean isDevice() { return isRfc(KindEnum.DEVICE); }
     @JsonIgnore
-    public boolean isApplication() { return isRfcKind(KindEnum.APPLICATION); }
+    public boolean isApplication() { return isRfc(KindEnum.APPLICATION); }
     @JsonIgnore
-    public boolean isLocation() { return isRfcKind(KindEnum.LOCATION); }
-    @JsonIgnore
-    public boolean isExtKind() { return extValue != null; }
+    public boolean isLocation() { return isRfc(KindEnum.LOCATION); }
 
-    private static KindType rfcKindType(KindEnum rfcValue) { return KindType.builder().rfcValue(rfcValue).build(); }
-    public static KindType individual() { return rfcKindType(KindEnum.INDIVIDUAL);}
-    public static KindType group() { return rfcKindType(KindEnum.GROUP);}
-    public static KindType org() { return rfcKindType(KindEnum.ORG);}
-    public static KindType device() { return rfcKindType(KindEnum.DEVICE);}
-    public static KindType location() { return rfcKindType(KindEnum.LOCATION);}
-    public static KindType application() { return rfcKindType(KindEnum.APPLICATION);}
+    private static KindType rfc(KindEnum rfcValue) { return KindType.builder().rfcValue(rfcValue).build(); }
+    public static KindType individual() { return rfc(KindEnum.INDIVIDUAL);}
+    public static KindType group() { return rfc(KindEnum.GROUP);}
+    public static KindType org() { return rfc(KindEnum.ORG);}
+    public static KindType device() { return rfc(KindEnum.DEVICE);}
+    public static KindType location() { return rfc(KindEnum.LOCATION);}
+    public static KindType application() { return rfc(KindEnum.APPLICATION);}
+    private static KindType ext(String extValue) { return KindType.builder().extValue(extValue).build(); }
 }

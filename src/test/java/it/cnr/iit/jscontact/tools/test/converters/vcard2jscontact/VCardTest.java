@@ -376,7 +376,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 59", jsCard.getEmails().get("EMAIL-2").getEmail().equals("work@example.com"));
         assertTrue("testCompleteVCard6 - 60", jsCard.getEmails().get("EMAIL-3").hasNoContext());
         assertTrue("testCompleteVCard6 - 61", jsCard.getEmails().get("EMAIL-3").getEmail().equals("school@example.com"));
-        assertTrue("testCompleteVCard6 - 64", jsCard.getEmails().get("EMAIL-4").getContexts().containsKey(Context.OTHER));
+        assertTrue("testCompleteVCard6 - 64", jsCard.getEmails().get("EMAIL-4").getContexts().containsKey(Context.other()));
         assertTrue("testCompleteVCard6 - 65", jsCard.getEmails().get("EMAIL-4").getEmail().equals("other@example.com"));
         assertTrue("testCompleteVCard6 - 67", jsCard.getEmails().get("EMAIL-5").hasNoContext());
         assertTrue("testCompleteVCard6 - 68", jsCard.getEmails().get("EMAIL-5").getEmail().equals("custom@example.com"));
@@ -454,7 +454,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 155", jsCard.getAddresses().get("ADR-2").getRegion().equals("WorkState"));
         assertTrue("testCompleteVCard6 - 156", jsCard.getAddresses().get("ADR-2").getCountry().equals("WorkCountry"));
         assertTrue("testCompleteVCard6 - 157", jsCard.getAddresses().get("ADR-2").getPostcode().equals("WorkPostal"));
-        assertTrue("testCompleteVCard6 - 158", jsCard.getAddresses().get("ADR-3").getContexts().containsKey(AddressContext.OTHER));
+        assertTrue("testCompleteVCard6 - 158", jsCard.getAddresses().get("ADR-3").getContexts().containsKey(AddressContext.other()));
         assertTrue("testCompleteVCard6 - 159", jsCard.getAddresses().get("ADR-3").getFullAddress().getValue().equals("OtherExtended\nOtherStreet\nOtherCity\nOtherState\nOtherPostal\nOtherCountry"));
         assertTrue("testCompleteVCard6 - 160", jsCard.getAddresses().get("ADR-3").getStreetExtensions().equals("OtherExtended"));
         assertTrue("testCompleteVCard6 - 161", jsCard.getAddresses().get("ADR-3").getStreetDetails().equals("OtherStreet"));

@@ -28,11 +28,11 @@ import java.io.Serializable;
 public class NameComponentType extends ExtensibleType<NameComponentEnum> implements Serializable {
 
 
-    public static NameComponentType rfcNameComponentType(NameComponentEnum rfcValue) { return NameComponentType.builder().rfcValue(rfcValue).build();}
-    public static NameComponentType prefix() { return rfcNameComponentType(NameComponentEnum.PREFIX);}
-    public static NameComponentType personal() { return rfcNameComponentType(NameComponentEnum.PERSONAL);}
-    public static NameComponentType surname() { return rfcNameComponentType(NameComponentEnum.SURNAME);}
-    public static NameComponentType additional() { return rfcNameComponentType(NameComponentEnum.ADDITIONAL);}
-    public static NameComponentType separator() { return rfcNameComponentType(NameComponentEnum.SEPARATOR);}
-    public static NameComponentType suffix() { return rfcNameComponentType(NameComponentEnum.SUFFIX);}
+    public static NameComponentType rfc(NameComponentEnum rfcValue) { return NameComponentType.builder().rfcValue(rfcValue).build();}
+    public static NameComponentType prefix() { return rfc(NameComponentEnum.PREFIX);}
+    public static NameComponentType personal() { return rfc(NameComponentEnum.PERSONAL);}
+    public static NameComponentType surname() { return rfc(NameComponentEnum.SURNAME);}
+    public static NameComponentType additional() { return rfc(NameComponentEnum.ADDITIONAL);}
+    public static NameComponentType separator() { return rfc(NameComponentEnum.SEPARATOR);}
+    public static NameComponentType suffix() { return rfc(NameComponentEnum.SUFFIX);}
 }

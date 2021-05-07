@@ -1,9 +1,12 @@
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
@@ -11,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString
 @SuperBuilder
-public abstract class ExtensibleType<T extends IsExtensible> {
+public abstract class ExtensibleType<T extends IsExtensible> implements Serializable {
 
     T rfcValue;
     String extValue;
@@ -41,4 +44,8 @@ public abstract class ExtensibleType<T extends IsExtensible> {
         return extValue.hashCode();
     }
 
+    @JsonIgnore
+    public boolean isRfcValue() { return rfcValue != null; }
+    @JsonIgnore
+    public boolean isExtValue() { return extValue != null; }
 }

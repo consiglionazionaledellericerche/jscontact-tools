@@ -33,8 +33,8 @@ public class PhoneTest extends AbstractTest {
     public void testValidPhone() {
 
         Phone phone = Phone.builder()
-                .context(Context.WORK, Boolean.TRUE)
-                .context(Context.PRIVATE, Boolean.TRUE)
+                .context(Context.work(), Boolean.TRUE)
+                .context(Context.private_(), Boolean.TRUE)
                 .feature(PhoneFeature.VOICE, Boolean.TRUE)
                 .phone("+39.050000001")
                 .build();
