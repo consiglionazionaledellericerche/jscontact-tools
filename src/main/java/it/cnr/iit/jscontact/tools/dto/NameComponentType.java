@@ -15,20 +15,24 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
-@Builder
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 @NoArgsConstructor
-public class NameComponentType implements Serializable {
+@SuperBuilder
+public class NameComponentType extends ExtensibleType<NameComponentEnum> implements Serializable {
 
-    NameComponentEnum rfcValue;
-    String extValue;
 
+    public static NameComponentType rfcNameComponentType(NameComponentEnum rfcValue) { return NameComponentType.builder().rfcValue(rfcValue).build();}
+    public static NameComponentType prefix() { return rfcNameComponentType(NameComponentEnum.PREFIX);}
+    public static NameComponentType personal() { return rfcNameComponentType(NameComponentEnum.PERSONAL);}
+    public static NameComponentType surname() { return rfcNameComponentType(NameComponentEnum.SURNAME);}
+    public static NameComponentType additional() { return rfcNameComponentType(NameComponentEnum.ADDITIONAL);}
+    public static NameComponentType separator() { return rfcNameComponentType(NameComponentEnum.SEPARATOR);}
+    public static NameComponentType suffix() { return rfcNameComponentType(NameComponentEnum.SUFFIX);}
 }

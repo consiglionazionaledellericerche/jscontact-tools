@@ -17,11 +17,12 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum RelationEnum {
+public enum RelationEnum implements IsExtensible {
 
     CONTACT("contact"),
     ACQUAINTANCE("acquaintance"),

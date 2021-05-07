@@ -16,21 +16,17 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
-@Builder
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 @NoArgsConstructor
-public class KindType implements Serializable {
-
-    KindEnum rfcValue;
-    String extValue;
+@SuperBuilder
+public class KindType extends ExtensibleType<KindEnum> implements Serializable {
 
     private boolean isRfcKind(KindEnum value) { return rfcValue != null && rfcValue == value; }
     @JsonIgnore
@@ -48,4 +44,11 @@ public class KindType implements Serializable {
     @JsonIgnore
     public boolean isExtKind() { return extValue != null; }
 
+    private static KindType rfcKindType(KindEnum rfcValue) { return KindType.builder().rfcValue(rfcValue).build(); }
+    public static KindType individual() { return rfcKindType(KindEnum.INDIVIDUAL);}
+    public static KindType group() { return rfcKindType(KindEnum.GROUP);}
+    public static KindType org() { return rfcKindType(KindEnum.ORG);}
+    public static KindType device() { return rfcKindType(KindEnum.DEVICE);}
+    public static KindType location() { return rfcKindType(KindEnum.LOCATION);}
+    public static KindType application() { return rfcKindType(KindEnum.APPLICATION);}
 }

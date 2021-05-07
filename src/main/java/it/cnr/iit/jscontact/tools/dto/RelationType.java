@@ -17,19 +17,16 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
-@Builder
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
+@ToString(callSuper = true)
 @NoArgsConstructor
-public class RelationType implements Serializable {
-
-    RelationEnum rfcValue;
-    String extValue;
+@SuperBuilder
+public class RelationType extends ExtensibleType<RelationEnum> implements Serializable {
 
     private boolean isRfcRelation(RelationEnum value) { return rfcValue != null && rfcValue == value; }
     @JsonIgnore
@@ -96,31 +93,6 @@ public class RelationType implements Serializable {
     public static RelationType sibling() { return rfcRelation(RelationEnum.SIBLING);}
     public static RelationType spouse() { return rfcRelation(RelationEnum.SPOUSE);}
     public static RelationType sweetheart() { return rfcRelation(RelationEnum.SWEETHEART);}
-    public static RelationType extRelation(String extValue) { return RelationType.builder().extValue(extValue).build();}
+    public static RelationType extRelation(String extValue) { return RelationType.builder().extValue(extValue).build(); }
 
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RelationType relation = (RelationType) obj;
-        if (relation.getRfcValue() != null )
-            return relation.getRfcValue() == rfcValue;
-
-        return extValue != null && extValue.equals(relation.getExtValue());
-    }
-
-
-    @Override
-    public int hashCode() {
-
-        if (rfcValue != null)
-            return rfcValue.getValue().hashCode();
-
-        return extValue.hashCode();
-    }
 }

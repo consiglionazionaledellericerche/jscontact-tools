@@ -13,18 +13,8 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto;
+package it.cnr.iit.jscontact.tools.dto.interfaces;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-
-import java.io.Serializable;
-
-@Getter
-@Setter
-@ToString(callSuper = true)
-@NoArgsConstructor
-@SuperBuilder
-public class StreetComponentType extends ExtensibleType<StreetComponentEnum> implements Serializable {
-
+public interface IsExtensible {
+    String getValue();
 }

@@ -28,7 +28,7 @@ public class JSCardTest extends AbstractTest {
 
         //uid missing
         JSCard.builder()
-               .kind(KindType.builder().rfcValue(KindEnum.INDIVIDUAL).build())
+               .kind(KindType.individual())
                .build();
     }
 

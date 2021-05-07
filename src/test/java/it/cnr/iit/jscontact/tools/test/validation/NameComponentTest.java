@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
 import it.cnr.iit.jscontact.tools.dto.NameComponent;
 import it.cnr.iit.jscontact.tools.dto.NameComponentType;
 import org.junit.Test;
@@ -36,14 +35,14 @@ public class NameComponentTest {
 
         // value missing
         NameComponent.builder()
-                .type(NameComponentType.builder().rfcValue(NameComponentEnum.PERSONAL).build())
+                .type(NameComponentType.personal())
                 .build();
     }
 
     public void testValidNameComponentBuild() {
 
         NameComponent.builder()
-                .type(NameComponentType.builder().rfcValue(NameComponentEnum.PERSONAL).build())
+                .type(NameComponentType.personal())
                 .value("Mario")
                 .build();
     }
