@@ -948,7 +948,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                 jsCard.addRelation(getValue(related), null);
             else {
                 for (RelatedType type : related.getTypes())
-                    jsCard.addRelation(getValue(related), RelationType.getEnum(type.getValue()));
+                    jsCard.addRelation(getValue(related), RelationType.rfcRelation(RelationEnum.getEnum(type.getValue())));
             }
         }
     }

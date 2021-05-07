@@ -780,8 +780,10 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static Related getRelated(String uriOrText, List<RelationType> types) {
 
         Related related = getRelated(uriOrText);
-        for(RelationType type : types)
-            related.getTypes().add(RelatedType.get(type.getValue()));
+        for(RelationType type : types) {
+            if (type.getRfcValue() != null)
+                related.getTypes().add(RelatedType.get(type.getRfcValue().getValue()));
+        }
 
         return related;
     }
