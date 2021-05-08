@@ -13,28 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto.deserializers;
+package it.cnr.iit.jscontact.tools.dto.serializers;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import ezvcard.util.PartialDate;
-import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
-import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import it.cnr.iit.jscontact.tools.dto.Context;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 @NoArgsConstructor
-public class AnniversaryDateDeserializer extends JsonDeserializer<AnniversaryDate> {
-
+public class ContextSerializer extends JsonSerializer<Context> {
 
     @Override
-    public AnniversaryDate deserialize(JsonParser jp, DeserializationContext ctxt)
+    public void serialize(
+            Context context, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
-        JsonNode node = jp.getCodec().readTree(jp);
-        return AnniversaryDate.parse(node.asText());
+
+        jgen.writeString((context.getRfcValue()!=null) ? context.getRfcValue().getValue() : context.getExtValue());
     }
 }

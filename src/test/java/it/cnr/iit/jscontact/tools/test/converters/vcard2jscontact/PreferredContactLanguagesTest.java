@@ -59,10 +59,10 @@ public class PreferredContactLanguagesTest extends VCard2JSContactTest {
         assertTrue("testPreferredContactLanguagesValid2 - 1",jsCard.getPreferredContactLanguages()!=null);
         assertTrue("testPreferredContactLanguagesValid2 - 2",jsCard.getPreferredContactLanguages().size() == 2);
         assertTrue("testPreferredContactLanguagesValid2 - 3",jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 1);
-        assertTrue("testPreferredContactLanguagesValid2 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getContext() == ContextEnum.WORK);
+        assertTrue("testPreferredContactLanguagesValid2 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getContext().isWork());
         assertTrue("testPreferredContactLanguagesValid2 - 5",jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 2);
-        assertTrue("testPreferredContactLanguagesValid2 - 6",jsCard.getPreferredContactLanguages().get("fr")[0].getContext() == ContextEnum.WORK);
-        assertTrue("testPreferredContactLanguagesValid2 - 7",jsCard.getPreferredContactLanguages().get("fr")[1].getContext() == ContextEnum.PRIVATE);
+        assertTrue("testPreferredContactLanguagesValid2 - 6",jsCard.getPreferredContactLanguages().get("fr")[0].getContext().isWork());
+        assertTrue("testPreferredContactLanguagesValid2 - 7",jsCard.getPreferredContactLanguages().get("fr")[1].getContext().isPrivate());
     }
 
 

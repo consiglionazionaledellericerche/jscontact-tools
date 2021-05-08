@@ -19,22 +19,24 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import ezvcard.util.PartialDate;
-import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
-import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
+import it.cnr.iit.jscontact.tools.dto.Context;
+import it.cnr.iit.jscontact.tools.dto.ContextEnum;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 @NoArgsConstructor
-public class AnniversaryDateDeserializer extends JsonDeserializer<AnniversaryDate> {
-
+public class ContextDeserializer extends JsonDeserializer<Context> {
 
     @Override
-    public AnniversaryDate deserialize(JsonParser jp, DeserializationContext ctxt)
+    public Context deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        return AnniversaryDate.parse(node.asText());
+        String value = node.asText();
+        try {
+            return Context.builder().rfcValue(ContextEnum.getEnum(value)).build();
+        } catch (IllegalArgumentException e) {
+            return Context.builder().extValue(value).build();
+        }
     }
 }

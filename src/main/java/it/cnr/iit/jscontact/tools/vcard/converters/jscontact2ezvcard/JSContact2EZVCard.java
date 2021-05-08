@@ -379,7 +379,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     vcard.setDeathplace(getPlaceProperty(Deathplace.class, anniversary));
                     break;
                 case OTHER:
-                    if (anniversary.getLabel().equals(ANNIVERSAY_MARRIAGE_LABEL)) {
+                    if (anniversary.getLabel().equals(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)) {
                         vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
                         vcard.getAnniversary().setCalscale(Calscale.GREGORIAN);
                     }
@@ -433,7 +433,8 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static Language getLanguage(String lang, ContactLanguage cl) {
 
         Language language = new Language(lang);
-        language.setType(ContextEnum.getVCardType(cl.getContext()));
+        if (cl.getContext()!=null && cl.getContext().isRfcValue())
+            language.setType(ContextEnum.getVCardType(cl.getContext().getRfcValue()));
         language.setPref(cl.getPref());
         return language;
     }

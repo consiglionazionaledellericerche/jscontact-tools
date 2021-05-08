@@ -16,7 +16,11 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
+import it.cnr.iit.jscontact.tools.dto.deserializers.ContextDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.ContextSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,7 +38,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ContactLanguage extends GroupableObject implements Serializable {
 
-    ContextEnum context;
+    @JsonSerialize(using = ContextSerializer.class)
+    @JsonDeserialize(using = ContextDeserializer.class)
+    Context context;
 
     @Min(value=1, message = "invalid pref in ContactLanguage - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in ContactLanguage - value must be less or equal than 100")

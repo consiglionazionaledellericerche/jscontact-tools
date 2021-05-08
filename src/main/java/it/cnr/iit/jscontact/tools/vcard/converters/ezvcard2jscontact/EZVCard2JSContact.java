@@ -28,6 +28,7 @@ import ezvcard.util.GeoUri;
 import ezvcard.util.PartialDate;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
@@ -588,7 +589,7 @@ public class EZVCard2JSContact extends AbstractConverter {
           jsCard.addAnniversary(it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                               .type(AnniversaryType.OTHER)
                                                                               .date(getAnniversaryDate(vcard.getAnniversary()))
-                                                                              .label(ANNIVERSAY_MARRIAGE_LABEL)
+                                                                              .label(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)
                                                                               .build()
                                    );
           if (vcard.getAnniversary().getCalscale()!= null && !vcard.getAnniversary().getCalscale().getValue().equals(DEFAULT_CALSCALE))
@@ -665,7 +666,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (Language lang : vcard.getLanguages()) {
             jsCard.addContactLanguage(getValue(lang),
                                         ContactLanguage.builder()
-                                                       .context((lang.getType() != null) ? ContextEnum.getEnum(lang.getType()) : null)
+                                                       .context((lang.getType() != null) ? Context.rfc(ContextEnum.getEnum(lang.getType())) : null)
                                                        .pref(lang.getPref())
                                                        .build()
                                         );
