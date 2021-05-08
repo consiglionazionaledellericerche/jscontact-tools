@@ -96,4 +96,24 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     public boolean asSource() { return asResource(OnlineLabelKey.SOURCE); }
     public boolean asUrl() { return asResource(OnlineLabelKey.URL); }
 
+
+    private static Resource resource(OnlineLabelKey labelKey, String resource) {
+        return Resource.builder()
+                       .resource(resource)
+                       .type((labelKey == OnlineLabelKey.IMPP) ? ResourceType.USERNAME : ResourceType.URI)
+                       .label(labelKey.getValue())
+                       .build();
+    }
+    public static Resource caladruri(String resource) { return resource(OnlineLabelKey.CALADRURI, resource);}
+    public static Resource caluri(String resource) { return resource(OnlineLabelKey.CALURI, resource);}
+    public static Resource contactUri(String resource) { return resource(OnlineLabelKey.CONTACT_URI, resource);}
+    public static Resource fburl(String resource) { return resource(OnlineLabelKey.FBURL, resource);}
+    public static Resource impp(String resource) { return resource(OnlineLabelKey.IMPP, resource);}
+    public static Resource key(String resource) { return resource(OnlineLabelKey.KEY, resource);}
+    public static Resource logo(String resource) { return resource(OnlineLabelKey.LOGO, resource);}
+    public static Resource orgDirectory(String resource) { return resource(OnlineLabelKey.ORG_DIRECTORY, resource);}
+    public static Resource sound(String resource) { return resource(OnlineLabelKey.SOUND, resource);}
+    public static Resource source(String resource) { return resource(OnlineLabelKey.SOURCE, resource);}
+    public static Resource url(String resource) { return resource(OnlineLabelKey.URL, resource);}
+
 }
