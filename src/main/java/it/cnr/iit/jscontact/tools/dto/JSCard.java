@@ -126,10 +126,13 @@ public class JSCard extends JSContact implements Serializable {
     Map<String,String> extensions;
 
 
-    private boolean contactByMethodPreferred(PreferredContactMethodType method) {return preferredContactMethod != null && preferredContactMethod == method; }
-    public boolean contactByEmailsPreferred() {return contactByMethodPreferred(PreferredContactMethodType.EMAILS); }
-    public boolean contactByPhonesPreferred() {return contactByMethodPreferred(PreferredContactMethodType.PHONES); }
-    public boolean contactByOnlinePreferred() {return contactByMethodPreferred(PreferredContactMethodType.ONLINE); }
+    private boolean isContactByMethodPreferred(PreferredContactMethodType method) {return preferredContactMethod != null && preferredContactMethod == method; }
+    @JsonIgnore
+    public boolean isContactByEmailsPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.EMAILS); }
+    @JsonIgnore
+    public boolean isContactByPhonesPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.PHONES); }
+    @JsonIgnore
+    public boolean isContactByOnlinePreferred() {return isContactByMethodPreferred(PreferredContactMethodType.ONLINE); }
 
 //Methods for adding items to a mutable collection
 
