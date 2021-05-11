@@ -34,6 +34,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
 import it.cnr.iit.jscontact.tools.dto.wrappers.CategoryWrapper;
 import it.cnr.iit.jscontact.tools.dto.wrappers.MemberWrapper;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -266,7 +267,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                     .type(ResourceType.URI)
                                     .label(label)
                                     .contexts(contexts)
-                                    .mediaType(getJcardParam(property.getParameters(), "MEDIATYPE"))
+                                    .mediaType(getMediaType(getJcardParam(property.getParameters(), "MEDIATYPE"), value))
                                     .pref(getPreference(getJcardParam(property.getParameters(), "PREF")))
                                     .build()
                            );
@@ -283,7 +284,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         jsCard.addPhoto(id, File.builder()
                                 .href(value)
-                                .mediaType(getJcardParam(property.getParameters(), "MEDIATYPE"))
+                                .mediaType(getMediaType(getJcardParam(property.getParameters(), "MEDIATYPE"), value))
                                 .pref(getPreference(getJcardParam(property.getParameters(), "PREF")))
                                 .build()
                           );
@@ -679,6 +680,21 @@ public class EZVCard2JSContact extends AbstractConverter {
         return LabelUtils.labelIncludesAnyItem(label, Arrays.asList(new String[] {"voice", "textphone", "fax", "pager", "cell", "text", "video"}));
     }
 
+    private static String getResourceExt(String resource) {
+
+        int index = resource.lastIndexOf('.');
+        return (index > 0) ? resource.substring(index + 1) : null;
+    }
+
+    private static String getMediaType(String mediaTypeParamValue, String resource) {
+
+        if (mediaTypeParamValue != null)
+            return mediaTypeParamValue;
+
+        String ext = getResourceExt(resource);
+        return (ext != null) ? MimeTypeUtils.lookupMimeType(ext) : null;
+    }
+
     private static void fillPhones(VCard vcard, JSCard jsCard) {
 
         int i = 1;
@@ -739,13 +755,14 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (Impp impp : vcard.getImpps()) {
             jcardType = getJcardParam(impp.getParameters(), "TYPE");
             contexts = getContexts(jcardType);
+            String resource = getValue(impp);
             jsCard.addOnline("XMPP-" + (i++), Resource.builder()
-                                        .resource(getValue(impp))
+                                        .resource(resource)
                                         .type(ResourceType.USERNAME)
                                         .contexts(contexts)
                                         .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.IMPP.getValue()}))
                                         .pref(impp.getPref())
-                                        .mediaType(impp.getMediaType())
+                                        .mediaType(getMediaType(impp.getMediaType(), resource))
                                         .build()
                                );
         }

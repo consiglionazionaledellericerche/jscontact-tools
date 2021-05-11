@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -71,7 +72,7 @@ public class OnlineTest extends JCard2JSContactTest {
         assertTrue("testOnlineValid4 - 2",jsCard.getOnline().get("LOGO-1").getResource().equals("http://www.example.com/pub/logos/abccorp.jpg"));
         assertTrue("testOnlineValid4 - 3",jsCard.getOnline().get("LOGO-1").isUri());
         assertTrue("testOnlineValid4 - 4",jsCard.getOnline().get("LOGO-1").getPref() == null);
-        assertTrue("testOnlineValid4 - 5",jsCard.getOnline().get("LOGO-1").getMediaType() == null);
+        assertTrue("testOnlineValid4 - 5",jsCard.getOnline().get("LOGO-1").getMediaType().equals(MimeTypeUtils.MIME_IMAGE_JPEG));
         assertTrue("testOnlineValid4 - 6",jsCard.getOnline().get("LOGO-1").asLogo());
         assertTrue("testOnlineValid4 - 7",jsCard.getOnline().get("LOGO-1").hasNoContext());
     }
@@ -172,7 +173,7 @@ public class OnlineTest extends JCard2JSContactTest {
         assertTrue("testOnlineValid9 - 2",jsCard.getOnline().get("URL-1").getResource().equals("http://example.org/restaurant.french/~chezchic.htm"));
         assertTrue("testOnlineValid9 - 3",jsCard.getOnline().get("URL-1").isUri());
         assertTrue("testOnlineValid9 - 4",jsCard.getOnline().get("URL-1").getPref() == null);
-        assertTrue("testOnlineValid9 - 5",jsCard.getOnline().get("URL-1").getMediaType() == null);
+        assertTrue("testOnlineValid9 - 5",jsCard.getOnline().get("URL-1").getMediaType().equals(MimeTypeUtils.MIME_TEXT_HTML));
         assertTrue("testOnlineValid9 - 6",jsCard.getOnline().get("URL-1").hasNoContext());
         assertTrue("testOnlineValid9 - 7",jsCard.getOnline().get("URL-1").asUrl());
     }

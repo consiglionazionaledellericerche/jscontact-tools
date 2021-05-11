@@ -265,6 +265,8 @@ The conversion is executed according to the following rules:
 
 20. Where a collection of objects is mapped onto a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
 
+21. Media type information of `File` and `Resource` objects is automatically detected when the MEDIATYPE parameter is missing.
+
 <a name="jscontact-conversion"></a>
 ## JSContact Conversion
 
