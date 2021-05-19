@@ -22,13 +22,20 @@ Validation and conversion leverage the features provided by [ez-vcard](https://g
 ```
 
 # Features
-1. [Creation](#creation)
-2. [Validation](#validation)
-3. [Serialization/Deserialization](#serialization-deserialization)
-4. [vCard Conversion](#vcard-conversion)
-5. [JSContact Conversion](#jscontact-conversion)
-6. [Testing](#testing)
-7. [References](#references)
+1. [Conventions](#conventions)
+2. [Creation](#creation)
+3. [Validation](#validation)
+4. [Serialization/Deserialization](#serialization-deserialization)
+5. [vCard Conversion](#vcard-conversion)
+6. [JSContact Conversion](#jscontact-conversion)
+7. [Testing](#testing)
+8. [References](#references)
+
+
+<a name="conventions"></a>
+## Conventions
+
+To avoid confusion, the JSContact top most objects, namely Card and CardGroup, are represented through the classes JSCard and JSCardGroup, respectively. 
 
 <a name="creation"></a>
 ## Creation
@@ -58,7 +65,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 ### Cloning
 
 Creation can be achieved through cloning as well.
-Cloning can be only applied to topmost JSContact objects, namely JSCard and JSCardGroup.
+Cloning can be only applied to JSCard and JSCardGroup.
 
 Here in the following a test assessing a successful creation of a cloned JSCard instane.
  
