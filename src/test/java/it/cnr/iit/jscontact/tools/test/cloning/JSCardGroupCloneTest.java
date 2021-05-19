@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.cloning;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import it.cnr.iit.jscontact.tools.dto.JSGroupCard;
+import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import org.apache.commons.io.IOUtils;
@@ -29,7 +29,7 @@ import java.util.Objects;
 
 import static org.junit.Assert.assertTrue;
 
-public class JSGroupCardCloneTest {
+public class JSCardGroupCloneTest {
 
     @Test
     public void testClone1() throws IOException {
@@ -41,8 +41,8 @@ public class JSGroupCardCloneTest {
         objectMapper.registerModule(module);
         JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
         for (JSContact jsContact : jsContacts) {
-            if (jsContact instanceof JSGroupCard)
-                assertTrue("testClone1", Objects.deepEquals(jsContact, ((JSGroupCard) jsContact).clone()));
+            if (jsContact instanceof JSCardGroup)
+                assertTrue("testClone1", Objects.deepEquals(jsContact, ((JSCardGroup) jsContact).clone()));
         }
     }
 

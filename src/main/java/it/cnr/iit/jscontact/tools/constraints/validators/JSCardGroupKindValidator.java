@@ -13,19 +13,23 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.test.validation;
+package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.test.AbstractTest;
-import it.cnr.iit.jscontact.tools.dto.JSGroupCard;
-import org.junit.Test;
+import it.cnr.iit.jscontact.tools.constraints.JSCardGroupKindConstraint;
+import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
 
-public class JSGroupCardTest extends AbstractTest {
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidJSGroupCardBuild() {
+public class JSCardGroupKindValidator implements ConstraintValidator<JSCardGroupKindConstraint, JSCardGroup> {
 
-        //uid missing
-        JSGroupCard.builder().build();
+    public void initialize(JSCardGroupKindConstraint constraintAnnotation) {
+    }
+
+    public boolean isValid(JSCardGroup group, ConstraintValidatorContext context) {
+
+        return group.getCard() == null || group.getCard().getKind() == null || group.getCard().getKind().isGroup();
+
     }
 
 }

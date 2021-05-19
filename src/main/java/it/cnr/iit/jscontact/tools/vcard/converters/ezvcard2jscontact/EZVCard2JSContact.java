@@ -400,7 +400,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             jsCard.addFullName(ls.getValue(), ls.getLanguage());
     }
 
-    private static void fillMembers(VCard vcard, JSGroupCard jsCardGroup) {
+    private static void fillMembers(VCard vcard, JSCardGroup jsCardGroup) {
 
         List<MemberWrapper> wrappers = new ArrayList<>();
         for (Member member : vcard.getMembers()) {
@@ -1105,7 +1105,7 @@ public class EZVCard2JSContact extends AbstractConverter {
     private JSContact convert(VCard vCard) throws CardException {
 
         JSCard jsCard = null;
-        JSGroupCard jsGroupCard = null;
+        JSCardGroup jsCardGroup = null;
         String uid = null;
         if (vCard.getUid()!=null)
             uid = vCard.getUid().getValue();
@@ -1113,15 +1113,15 @@ public class EZVCard2JSContact extends AbstractConverter {
             uid = UUID.randomUUID().toString();
 
         if (vCard.getMembers() != null && vCard.getMembers().size() != 0) {
-            jsGroupCard = JSGroupCard.builder().uid(uid).build();
-            fillMembers(vCard, jsGroupCard);
-            jsGroupCard.setUid(uid);
+            jsCardGroup = JSCardGroup.builder().uid(uid).build();
+            fillMembers(vCard, jsCardGroup);
+            jsCardGroup.setUid(uid);
             if (containsJSCardProperties(vCard)) {
-                jsGroupCard.setCard(JSCard.builder().uid(uid).build());
-                jsCard = jsGroupCard.getCard();
+                jsCardGroup.setCard(JSCard.builder().uid(uid).build());
+                jsCard = jsCardGroup.getCard();
             }
             else
-                return jsGroupCard;
+                return jsCardGroup;
         } else {
             jsCard = JSCard.builder().uid(uid).build();
         }
@@ -1150,8 +1150,8 @@ public class EZVCard2JSContact extends AbstractConverter {
         fillExtensions(vCard, jsCard);
         fillUnmatchedElments(vCard, jsCard);
 
-        if (jsGroupCard != null)
-            return jsGroupCard;
+        if (jsCardGroup != null)
+            return jsCardGroup;
         else
             return jsCard;
     }
