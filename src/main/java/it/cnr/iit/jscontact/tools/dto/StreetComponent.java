@@ -61,8 +61,6 @@ public class StreetComponent implements Serializable {
     @JsonIgnore
     public boolean isPostOfficeBox() { return isRfc(StreetComponentEnum.POST_OFFICE_BOX); }
     @JsonIgnore
-    public boolean isLandmark() { return isRfc(StreetComponentEnum.LANDMARK); }
-    @JsonIgnore
     public boolean isSeparator() { return isRfc(StreetComponentEnum.SEPARATOR); }
     @JsonIgnore
     public boolean isUnknown() { return isRfc(StreetComponentEnum.UNKNOWN); }
@@ -84,7 +82,6 @@ public class StreetComponent implements Serializable {
     public static StreetComponent room(String value) { return rfc(StreetComponentEnum.ROOM, value);}
     public static StreetComponent extension(String value) { return rfc(StreetComponentEnum.EXTENSION, value);}
     public static StreetComponent postOfficeBox(String value) { return rfc(StreetComponentEnum.POST_OFFICE_BOX, value);}
-    public static StreetComponent landmark(String value) { return rfc(StreetComponentEnum.LANDMARK, value);}
     public static StreetComponent separator(String value) { return rfc(StreetComponentEnum.SEPARATOR, value);}
     public static StreetComponent unknown(String value) { return rfc(StreetComponentEnum.UNKNOWN, value);}
     public static StreetComponent ext(String extValue, String value) {

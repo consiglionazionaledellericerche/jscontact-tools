@@ -33,7 +33,6 @@ public enum StreetComponentEnum implements IsExtensible {
     ROOM("room"),
     EXTENSION("extension"),
     POST_OFFICE_BOX("postOfficeBox"),
-    LANDMARK("landmark"),
     SEPARATOR("separator"),
     UNKNOWN("unknown");
 
