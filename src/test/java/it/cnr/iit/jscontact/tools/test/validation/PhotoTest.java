@@ -49,10 +49,9 @@ public class PhotoTest extends AbstractTest {
                 .href("http://www.photos.com/aphoto.png")
                 .pref(1)
                 .build();
-        Map<String,File> photos = new HashMap<String, File>() {{ put("PHOTO-1", photo); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .photos(photos)
+                .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertTrue("testValidPhoto1", jsCard.isValid());
@@ -66,10 +65,9 @@ public class PhotoTest extends AbstractTest {
                          .href("http://www.photos.com/aphoto.png")
                          .pref(0)
                          .build();
-        Map<String,File> photos = new HashMap<String, File>() {{ put("PHOTO-1", photo); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .photos(photos)
+                .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertTrue("testInvalidPhoto1-1", !jsCard.isValid());
@@ -85,10 +83,9 @@ public class PhotoTest extends AbstractTest {
                 .href("http://www.photos.com/aphoto.png")
                 .pref(101)
                 .build();
-        Map<String,File> photos = new HashMap<String, File>() {{ put("PHOTO-1", photo); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .photos(photos)
+                .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertTrue("testInvalidPhoto2-1", !jsCard.isValid());
@@ -103,10 +100,9 @@ public class PhotoTest extends AbstractTest {
                 .href("http://www.photos.com/aphoto.png")
                 .size(-100)
                 .build();
-        Map<String,File> photos = new HashMap<String, File>() {{ put("PHOTO-1", photo); }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
-                .photos(photos)
+                .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertTrue("testInvalidPhoto3-1", !jsCard.isValid());

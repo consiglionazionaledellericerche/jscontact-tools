@@ -43,13 +43,13 @@ To avoid confusion, the JSContact top most objects, namely Card and CardGroup, a
 ### Builders
 
 Object creation is achieved through builders.
-Simplest maps can be loaded by putting items singularly.
+Simplest maps can be loaded by putting entries singularly.
 Here in the following a successful creation of an EmailAddress instance is shown.
  
 ```
         EmailAddress email = EmailAddress.builder()
-                                        .context(Context.WORK, Boolean.TRUE)
-                                        .context(Context.PRIVATE, Boolean.TRUE)
+                                        .context(Context.work(), Boolean.TRUE)
+                                        .context(Context.private(), Boolean.TRUE)
                                         .email("mario.loffredo@iit.cnr.it")
                                         .build();
 ```
@@ -59,7 +59,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 
 ```
         // email is missing
-        EmailAddress.builder().context(Context.WORK,Boolean.TRUE).build();
+        EmailAddress.builder().context(Context.work(),Boolean.TRUE).build();
 ```
 
 ### Cloning
@@ -91,7 +91,7 @@ Here in the following a test assessing a successful creation of a cloned JSCard 
 Even if topomost JSContact objects, namely **JSCard** and **JSCardGroup**, are correctly created by builders, they might need to be validated as they were obtained from an external producer through deserialization.
 Validation is performed on both JSCard and JSCardGroup instances by invoking the method `isValid`.
 This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-jmap-jscontact-05], `false` otherwise.
-If the validation process doesn't end successfully, the list of errors/messages can be obtained by calling the `getValidationMessages` method.  
+If the validation process doesn't end successfully, the list of error messages can be obtained by calling the `getValidationMessages` method.  
 Here in the following a method testing an unsuccessfully ended validation is shown.
 
 ```
@@ -99,10 +99,10 @@ Here in the following a method testing an unsuccessfully ended validation is sho
     @Test
     public void testInvalidCountryCode() {
 
-        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
-                                                                                .countryCode("ita")
-                                                                                .build());
-                                                                        }};
+        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                                                                             .countryCode("ita")
+                                                                             .build());
+                                                      }};
         JSCard jsCard = JSCard.builder()
                 .uid(getUUID())
                 .addresses(addresses)
@@ -127,7 +127,7 @@ At present, the following validation methods are available:
     *   void validate(String xml)
 
 All the methods can raise a `CardException`.
-`JsonNode` represents the root of `com.fasterxml.jackson.databind`.
+`JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
 <a name="serialization-deserialization"></a>
 ## Serialization/Deserialization
@@ -156,9 +156,9 @@ To pretty print serialized JSON, use the following:
         JSCard jsCard = objectMapper.readValue(json, JSCard.class);
 ```
 
-### Deserialization of a card group
+### Deserialization of a group of cards
 
-Deserialization of a card group and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. JSCard instances and JSCardGroup instances).
+Deserialization of a JSCardGroup object and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. JSCard instances and JSCardGroup instances).
 
 ```
     @Test
@@ -193,7 +193,7 @@ At present, the following converting methods are available:
 
 All the methods return a list of JSContact (JSCard or JSCardGroup) instances and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
-`JsonNode` represents the root of `com.fasterxml.jackson.databind`.
+`JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
 ### Conversion Rules from vCard to JSContact
 
@@ -296,7 +296,7 @@ At present, the following converting methods are available:
 
 All the methods take in input a list of JSContact (JSCard or JSCardGroup) instances and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
-`JsonNode` represents the root of `com.fasterxml.jackson.databind`.
+`JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
 ### Conversion Rules from JSContact to vCard 
 
@@ -448,14 +448,17 @@ Here in the following two examples of conversion between JSContact top most obje
 ```
 
     @Test
-    public void testJCardGroupValid1() throws IOException, CardException {
+    public void testJSCardGroupValid1() throws IOException, CardException {
 
         String jsCards = "[" +
                          "{" +
                              "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
-                             "\"kind\":\"group\"," +
-                             "\"fullName\": {" +
-                                "\"value\":\"The Doe family\"" +
+                             "\"card\": {" +
+                                 "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
+                                 "\"kind\":\"group\"," +
+                                 "\"fullName\": {" +
+                                    "\"value\":\"The Doe family\"" +
+                                 "}" +
                              "}," +
                              "\"members\": {" +
                                 "\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\":true," +
@@ -477,17 +480,17 @@ Here in the following two examples of conversion between JSContact top most obje
                         "]";
 
         List<VCard> vcards = jsContact2VCard.convert(jsCards);
-        assertTrue("testJCardGroupValid1 - 1",vcards.size() == 3);
-        assertTrue("testJCardGroupValid1 - 3", vcards.get(0).getKind().isGroup());
-        assertTrue("testJCardGroupValid1 - 4",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
-        assertTrue("testJCardGroupValid1 - 5",vcards.get(0).getFormattedName().getValue().equals("The Doe family"));
-        assertTrue("testJCardGroupValid1 - 6",vcards.get(0).getMembers().size() == 2);
-        assertTrue("testJCardGroupValid1 - 7",vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
-        assertTrue("testJCardGroupValid1 - 8",vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
-        assertTrue("testJCardGroupValid1 - 9",vcards.get(1).getUid().getValue().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
-        assertTrue("testJCardGroupValid1 - 10",vcards.get(1).getFormattedName().getValue().equals("John Doe"));
-        assertTrue("testJCardGroupValid1 - 11",vcards.get(2).getUid().getValue().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
-        assertTrue("testJCardGroupValid1 - 12",vcards.get(2).getFormattedName().getValue().equals("Jane Doe"));
+        assertTrue("testJSCardGroupValid1 - 1",vcards.size() == 3);
+        assertTrue("testJSCardGroupValid1 - 3", vcards.get(0).getKind().isGroup());
+        assertTrue("testJSCardGroupValid1 - 4",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
+        assertTrue("testJSCardGroupValid1 - 5",vcards.get(0).getFormattedName().getValue().equals("The Doe family"));
+        assertTrue("testJSCardGroupValid1 - 6",vcards.get(0).getMembers().size() == 2);
+        assertTrue("testJSCardGroupValid1 - 7",vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
+        assertTrue("testJSCardGroupValid1 - 8",vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
+        assertTrue("testJSCardGroupValid1 - 9",vcards.get(1).getUid().getValue().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
+        assertTrue("testJSCardGroupValid1 - 10",vcards.get(1).getFormattedName().getValue().equals("John Doe"));
+        assertTrue("testJSCardGroupValid1 - 11",vcards.get(2).getUid().getValue().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
+        assertTrue("testJSCardGroupValid1 - 12",vcards.get(2).getFormattedName().getValue().equals("Jane Doe"));
     }
 
 ```
