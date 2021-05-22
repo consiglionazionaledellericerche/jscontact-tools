@@ -86,6 +86,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     public boolean asBilling() { return asContext(AddressContext.billing()); }
     public boolean asPostal() { return asContext(AddressContext.postal()); }
     public boolean asOtherContext() { return asContext(AddressContext.other()); }
+    public boolean asExtContext(String extValue) { return asContext(AddressContext.ext(extValue)); }
     public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
 
     private String getStreetDetail(StreetComponentEnum detail) {

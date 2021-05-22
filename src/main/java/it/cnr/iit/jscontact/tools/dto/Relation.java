@@ -61,6 +61,6 @@ public class Relation extends GroupableObject implements Serializable {
     public boolean asSibling() {return asRelation(RelationType.sibling()); }
     public boolean asSpouse() {return asRelation(RelationType.spouse()); }
     public boolean asSweetheart() {return asRelation(RelationType.sweetheart()); }
-    public boolean asRelation(String value) { return relation!= null && relation.containsKey(RelationType.extRelation(value)); }
+    public boolean asExtRelation(String extValue) { return asRelation(RelationType.extRelation(extValue)); }
 
 }

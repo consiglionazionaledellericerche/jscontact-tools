@@ -11,6 +11,7 @@ public interface HasContext {
     default boolean asWork() { return asContext(Context.work()); }
     default boolean asPrivate() { return asContext(Context.private_()); }
     default boolean asOtherContext() { return asContext(Context.other()); }
+    default boolean asExtContext(String extValue) { return asContext(Context.ext(extValue)); }
     default boolean hasNoContext() { return getContexts() == null || getContexts().size() == 0; }
 
     Map<Context,Boolean> getContexts();
