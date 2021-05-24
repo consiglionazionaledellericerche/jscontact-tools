@@ -22,20 +22,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 ```
 
 # Features
-1. [Conventions](#conventions)
-2. [Creation](#creation)
-3. [Validation](#validation)
-4. [Serialization/Deserialization](#serialization-deserialization)
-5. [vCard Conversion](#vcard-conversion)
-6. [JSContact Conversion](#jscontact-conversion)
-7. [Testing](#testing)
-8. [References](#references)
+1. [Creation](#creation)
+2. [Validation](#validation)
+3. [Serialization/Deserialization](#serialization-deserialization)
+4. [vCard Conversion](#vcard-conversion)
+5. [JSContact Conversion](#jscontact-conversion)
+6. [Testing](#testing)
+7. [References](#references)
 
-
-<a name="conventions"></a>
-## Conventions
-
-To avoid confusion, the JSContact top most objects, namely Card and CardGroup, are represented through the classes Card and CardGroup, respectively. 
 
 <a name="creation"></a>
 ## Creation
