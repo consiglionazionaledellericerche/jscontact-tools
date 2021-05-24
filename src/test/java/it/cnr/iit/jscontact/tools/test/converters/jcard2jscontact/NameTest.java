@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"John Q. Public, Esq.\"], " +
                 "[\"n\", {}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testNameValid1 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
         assertTrue("testNameValid1 - 2",jsCard.getName().length == 5);
         assertTrue("testNameValid1 - 3",jsCard.getName()[0].isPrefix());
@@ -56,7 +56,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"n\", {}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]], " +
                 "[\"nickname\", {}, \"text\", \"Johnny\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testNameValid2 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
         assertTrue("testNameValid2 - 2",jsCard.getName().length == 5);
         assertTrue("testNameValid2 - 3",jsCard.getName()[0].isPrefix());
@@ -83,7 +83,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"nickname\", {}, \"text\", \"Johnny\"], " +
                 "[\"nickname\", {\"pref\":\"1\"}, \"text\", \"Kid\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testNameValid3 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
         assertTrue("testNameValid3 - 2",jsCard.getName().length == 5);
         assertTrue("testNameValid3 - 3",jsCard.getName()[0].isPrefix());

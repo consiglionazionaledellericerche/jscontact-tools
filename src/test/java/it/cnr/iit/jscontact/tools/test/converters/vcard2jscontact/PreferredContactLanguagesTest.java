@@ -15,8 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.ContextEnum;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -36,7 +35,7 @@ public class PreferredContactLanguagesTest extends VCard2JSContactTest {
                 "LANG;PREF=2:en\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPreferredContactLanguagesValid1 - 1",jsCard.getPreferredContactLanguages()!=null);
         assertTrue("testPreferredContactLanguagesValid1 - 2",jsCard.getPreferredContactLanguages().size() == 2);
         assertTrue("testPreferredContactLanguagesValid1 - 3",jsCard.getPreferredContactLanguages().get("ja")[0].getPref() == 1);
@@ -55,7 +54,7 @@ public class PreferredContactLanguagesTest extends VCard2JSContactTest {
                 "LANG;TYPE=home:fr\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPreferredContactLanguagesValid2 - 1",jsCard.getPreferredContactLanguages()!=null);
         assertTrue("testPreferredContactLanguagesValid2 - 2",jsCard.getPreferredContactLanguages().size() == 2);
         assertTrue("testPreferredContactLanguagesValid2 - 3",jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 1);

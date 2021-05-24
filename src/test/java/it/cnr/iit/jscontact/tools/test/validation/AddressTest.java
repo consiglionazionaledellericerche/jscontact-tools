@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class AddressTest extends AbstractTest {
                                                                                 .countryCode("ita")
                                                                                 .build());
                                                                         }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -49,7 +49,7 @@ public class AddressTest extends AbstractTest {
                                                                                 .countryCode("it")
                                                                                 .build());
                                                                        }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -65,7 +65,7 @@ public class AddressTest extends AbstractTest {
                                                                             .coordinates("46.772673,-71.282945")
                                                                             .build());
                                                                     }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -81,7 +81,7 @@ public class AddressTest extends AbstractTest {
                                                                         .coordinates("geo:46.772673,-71.282945")
                                                                         .build());
                                                                        }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -97,7 +97,7 @@ public class AddressTest extends AbstractTest {
                 .coordinates("geo:46.772673,-71.282945")
                 .build());
         }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();

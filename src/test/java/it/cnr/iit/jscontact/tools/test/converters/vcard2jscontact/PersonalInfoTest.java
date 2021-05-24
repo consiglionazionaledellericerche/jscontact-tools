@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -62,7 +62,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=high:reading\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPersonalInfoValid1 - 1", jsCard.getPersonalInfo()!=null);
         assertTrue("testPersonalInfoValid1 - 2", jsCard.getPersonalInfo().length == 1);
         assertTrue("testPersonalInfoValid1 - 3", jsCard.getPersonalInfo()[0].asHobby());
@@ -81,7 +81,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=medium:sewing\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPersonalInfoValid2 - 1", jsCard.getPersonalInfo()!=null);
         assertTrue("testPersonalInfoValid2 - 2", jsCard.getPersonalInfo().length == 2);
         assertTrue("testPersonalInfoValid2 - 3", jsCard.getPersonalInfo()[0].asHobby());
@@ -103,7 +103,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=medium;INDEX=2:sewing\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPersonalInfoValid3 - 1", jsCard.getPersonalInfo()!=null);
         assertTrue("testPersonalInfoValid3 - 2", jsCard.getPersonalInfo().length == 2);
         assertTrue("testPersonalInfoValid3 - 3", jsCard.getPersonalInfo()[0].asHobby());
@@ -125,7 +125,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=medium;INDEX=1:sewing\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPersonalInfoValid4 - 1", jsCard.getPersonalInfo()!=null);
         assertTrue("testPersonalInfoValid4 - 2", jsCard.getPersonalInfo().length == 2);
         assertTrue("testPersonalInfoValid4 - 3", jsCard.getPersonalInfo()[1].asHobby());
@@ -150,7 +150,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "INTEREST;LEVEL=high;INDEX=2:rock 'n' roll music\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPersonalInfoValid5 - 1", jsCard.getPersonalInfo()!=null);
         assertTrue("testPersonalInfoValid5 - 2", jsCard.getPersonalInfo().length == 4);
         assertTrue("testPersonalInfoValid5 - 3", jsCard.getPersonalInfo()[0].asHobby());
@@ -180,7 +180,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "INTEREST;LEVEL=high;INDEX=1:rock 'n' roll music\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPersonalInfoValid6 - 1", jsCard.getPersonalInfo()!=null);
         assertTrue("testPersonalInfoValid6 - 2", jsCard.getPersonalInfo().length == 4);
         assertTrue("testPersonalInfoValid6 - 3", jsCard.getPersonalInfo()[1].asHobby());
@@ -212,7 +212,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "EXPERTISE;LEVEL=expert;INDEX=1:chemistry\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testPersonalInfoValid7 - 1", jsCard.getPersonalInfo()!=null);
         assertTrue("testPersonalInfoValid7 - 2", jsCard.getPersonalInfo().length == 6);
         assertTrue("testPersonalInfoValid7 - 3", jsCard.getPersonalInfo()[0].asHobby());

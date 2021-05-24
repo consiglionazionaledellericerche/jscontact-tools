@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid1 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid1 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid1 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -56,7 +56,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "ADR;CC=US;LABEL=54321 Oak St Reston USA:;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid2 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid2 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid2 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -79,7 +79,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "ADR;CC=US:;;12345 Elm St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid3 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid3 - 2",jsCard.getAddresses().size() == 2);
         assertTrue("testAddressesValid3 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -110,7 +110,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "GEO:geo:46.772673,-71.282945\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid4 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid4 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid4 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -135,7 +135,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "TZ:-0500\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid5 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid5 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid5 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -159,7 +159,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "TZ:America/New_York\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid6 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid6 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid6 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -182,7 +182,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "ADR;CC=US;TZ=America/New_York;GEO=\"geo:46.772673,-71.282945\":;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid7 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid7 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid7 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -209,7 +209,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "TZ;ALTID=1:America/New_York\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid8 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid8 - 2",jsCard.getAddresses().size() == 2);
         assertTrue("testAddressesValid8 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -239,7 +239,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "ADR;CC=US;TZ=-0500;GEO=\"geo:46.772673,-71.282945\":;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid9 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid9 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid9 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -265,7 +265,7 @@ public class AddressesTest extends VCard2JSContactTest {
                 "TZ:-0530\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid10 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid10 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid10 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));

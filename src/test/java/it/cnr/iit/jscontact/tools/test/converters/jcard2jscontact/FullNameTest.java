@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class FullNameTest extends JCard2JSContactTest {
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testEmptyFullNameValid - 1",jsCard.getFullName().getValue().isEmpty());
 
     }
@@ -42,7 +42,7 @@ public class FullNameTest extends JCard2JSContactTest {
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"John Q. Public, Esq.\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testFullNameValid1 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
 
     }
@@ -54,7 +54,7 @@ public class FullNameTest extends JCard2JSContactTest {
                 "[\"fn\", {\"language\":\"ja\", \"altid\" : \"1\"}, \"text\", \"大久保 正仁\"], " +
                 "[\"fn\", {\"language\":\"en\", \"altid\" : \"1\"}, \"text\", \"Okubo Masahito\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testFullNameValid2 - 1",jsCard.getFullName().getValue().equals("大久保 正仁"));
         assertTrue("testFullNameValid2 - 2",jsCard.getFullName().getLanguage().equals("ja"));
         assertTrue("testFullNameValid2 - 3",jsCard.getFullName().getLocalizations().get("en").equals("Okubo Masahito"));

@@ -40,13 +40,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @TitleOrganizationConstraint
-@JSCardKindConstraint
+@CardKindConstraint
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString(callSuper = true)
 @SuperBuilder
-public class JSCard extends JSContact implements Serializable {
+public class Card extends JSContact implements Serializable {
 
     String prodId;
 
@@ -399,7 +399,7 @@ public class JSCard extends JSContact implements Serializable {
             extensions.put(key,value);
     }
 
-    public JSCard clone() {
+    public Card clone() {
         return SerializationUtils.clone(this);
     }
 

@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class CategoriesTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 String.format("[\"categories\", {}, \"text\", %s]", categories) +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testCategoriesValid1 - 1",jsCard.getCategories()!=null);
         assertTrue("testCategoriesValid1 - 2",jsCard.getCategories().size() == 4);
         assertTrue("testCategoriesValid1 - 3",jsCard.getCategories().containsKey("INTERNET"));
@@ -55,7 +55,7 @@ public class CategoriesTest extends JCard2JSContactTest {
                 String.format("[\"categories\", {}, \"text\", %s],", categories) +
                 "[\"categories\", {}, \"text\", \"TRAVEL AGENT\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testCategoriesValid2 - 1",jsCard.getCategories()!=null);
         assertTrue("testCategoriesValid2 - 2",jsCard.getCategories().size() == 5);
         assertTrue("testCategoriesValid2 - 3",jsCard.getCategories().containsKey("INTERNET"));
@@ -77,7 +77,7 @@ public class CategoriesTest extends JCard2JSContactTest {
                 String.format("[\"categories\", {}, \"text\", %s],", categories) +
                 "[\"categories\", {\"pref\" : \"1\"}, \"text\", \"TRAVEL AGENT\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testCategoriesValid3 - 1",jsCard.getCategories()!=null);
         assertTrue("testCategoriesValid3 - 2",jsCard.getCategories().size() == 5);
         assertTrue("testCategoriesValid3 - 3",jsCard.getCategories().containsKey("INTERNET"));

@@ -16,12 +16,11 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.File;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 
@@ -49,7 +48,7 @@ public class PhotoTest extends AbstractTest {
                 .href("http://www.photos.com/aphoto.png")
                 .pref(1)
                 .build();
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
@@ -65,7 +64,7 @@ public class PhotoTest extends AbstractTest {
                          .href("http://www.photos.com/aphoto.png")
                          .pref(0)
                          .build();
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
@@ -83,7 +82,7 @@ public class PhotoTest extends AbstractTest {
                 .href("http://www.photos.com/aphoto.png")
                 .pref(101)
                 .build();
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
@@ -100,7 +99,7 @@ public class PhotoTest extends AbstractTest {
                 .href("http://www.photos.com/aphoto.png")
                 .size(-100)
                 .build();
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();

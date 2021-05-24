@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"bday\", {}, \"date-and-or-time\", \"1953-10-15T23:10:00Z\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid1 - 1",jsCard.getAnniversaries()!=null);
         assertTrue("testAnniversariesValid1 - 2",jsCard.getAnniversaries().length == 1);
         assertTrue("testAnniversariesValid1 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
@@ -47,7 +47,7 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "[\"bday\", {}, \"date-and-or-time\", \"1953-10-15T23:10:00Z\"], " +
                 "[\"birthplace\", {}, \"text\", \"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid2 - 1",jsCard.getAnniversaries()!=null);
         assertTrue("testAnniversariesValid2 - 2",jsCard.getAnniversaries().length == 1);
         assertTrue("testAnniversariesValid2 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
@@ -62,7 +62,7 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"deathdate\", {}, \"date-and-or-time\", \"1953-10-15T23:10:00Z\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid3 - 1",jsCard.getAnniversaries()!=null);
         assertTrue("testAnniversariesValid3 - 2",jsCard.getAnniversaries().length == 1);
         assertTrue("testAnniversariesValid3 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
@@ -78,7 +78,7 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "[\"deathdate\", {}, \"date-and-or-time\", \"1993-10-15T23:10:00Z\"], " +
                 "[\"deathplace\", {}, \"text\", \"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid4 - 1",jsCard.getAnniversaries()!=null);
         assertTrue("testAnniversariesValid4 - 2",jsCard.getAnniversaries().length == 1);
         assertTrue("testAnniversariesValid4 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1993-10-15T23:10:00Z"));
@@ -97,7 +97,7 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "[\"deathdate\", {}, \"date-and-or-time\", \"1993-10-15T23:10:00Z\"], " +
                 "[\"deathplace\", {}, \"text\", \"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid5 - 1",jsCard.getAnniversaries()!=null);
         assertTrue("testAnniversariesValid5 - 2",jsCard.getAnniversaries().length == 2);
         assertTrue("testAnniversariesValid5 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
@@ -119,7 +119,7 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "[\"deathplace\", {}, \"text\", \"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"], " +
                 "[\"anniversary\", {}, \"date-and-or-time\", \"1986-02-01T19:00:00Z\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid6 - 1",jsCard.getAnniversaries()!=null);
         assertTrue("testAnniversariesValid6 - 2",jsCard.getAnniversaries().length == 3);
         assertTrue("testAnniversariesValid6 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
@@ -144,7 +144,7 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "[\"deathplace\", {}, \"text\", \"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"], " +
                 "[\"anniversary\", {}, \"date-and-or-time\", \"1986-02-01T19:00:00Z\"] " +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid7 - 1",jsCard.getAnniversaries()!=null);
         assertTrue("testAnniversariesValid7 - 2",jsCard.getAnniversaries().length == 3);
         assertTrue("testAnniversariesValid7 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));

@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class EmailAddressTest extends VCard2JSContactTest {
                 "EMAIL;TYPE=work:jqpublic@xyz.example.com\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testEmailAddressValid1 - 1",jsCard.getEmails().size() == 1);
         assertTrue("testEmailAddressValid1 - 2",jsCard.getEmails().get("EMAIL-1").getContexts().size() == 1);
         assertTrue("testEmailAddressValid1 - 3",jsCard.getEmails().get("EMAIL-1").asWork());
@@ -51,7 +51,7 @@ public class EmailAddressTest extends VCard2JSContactTest {
                 "EMAIL;TYPE=home;PREF=1:jane_doe@example.com\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testEmailAddressValid2 - 1",jsCard.getEmails().size() == 2);
         assertTrue("testEmailAddressValid2 - 2",jsCard.getEmails().get("EMAIL-1").getContexts().size() == 1);
         assertTrue("testEmailAddressValid2 - 3",jsCard.getEmails().get("EMAIL-1").asWork());

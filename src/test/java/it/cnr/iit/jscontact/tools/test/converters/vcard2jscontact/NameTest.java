@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class NameTest extends VCard2JSContactTest {
                 "N:Public;John;Quinlan;Mr.;Esq.\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testNameValid1 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
         assertTrue("testNameValid1 - 2",jsCard.getName().length == 5);
         assertTrue("testNameValid1 - 3",jsCard.getName()[0].isPrefix());
@@ -61,7 +61,7 @@ public class NameTest extends VCard2JSContactTest {
                 "NICKNAME:Johnny\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testNameValid2 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
         assertTrue("testNameValid2 - 2",jsCard.getName().length == 5);
         assertTrue("testNameValid2 - 3",jsCard.getName()[0].isPrefix());
@@ -90,7 +90,7 @@ public class NameTest extends VCard2JSContactTest {
                 "NICKNAME;PREF=1:Kid\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testNameValid3 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
         assertTrue("testNameValid3 - 2",jsCard.getName().length == 5);
         assertTrue("testNameValid3 - 3",jsCard.getName()[0].isPrefix());

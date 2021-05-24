@@ -16,18 +16,18 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.TitleOrganizationConstraint;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.Title;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class TitleOrganizationValidator implements ConstraintValidator<TitleOrganizationConstraint, JSCard> {
+public class TitleOrganizationValidator implements ConstraintValidator<TitleOrganizationConstraint, Card> {
 
     public void initialize(TitleOrganizationConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(JSCard jsCard, ConstraintValidatorContext context) {
+    public boolean isValid(Card jsCard, ConstraintValidatorContext context) {
 
         if (jsCard.getTitles() == null)
             return true;

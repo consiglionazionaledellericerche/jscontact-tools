@@ -1,6 +1,6 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.LocalizedString;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.Title;
@@ -35,7 +35,7 @@ public class TitleTest extends AbstractTest {
         Map jobTiles = new HashMap<String,Title>();
         jobTiles.put("title-1", Title.builder().title(LocalizedString.builder().value("Researcher").build()).organization("IIT CNR").build());
 
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .titles(jobTiles)
                 .build();
@@ -52,7 +52,7 @@ public class TitleTest extends AbstractTest {
         jobTiles.put("title-1", Title.builder().title(LocalizedString.builder().value("Researcher").build()).organization("IIT CNR").build());
         Map organizations = new HashMap<String,Organization>();
         organizations.put("organization-1", Organization.builder().name(LocalizedString.builder().value("an organization").build()).build());
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .titles(jobTiles)
                 .organizations(organizations)

@@ -35,7 +35,7 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 <a name="conventions"></a>
 ## Conventions
 
-To avoid confusion, the JSContact top most objects, namely Card and CardGroup, are represented through the classes JSCard and CardGroup, respectively. 
+To avoid confusion, the JSContact top most objects, namely Card and CardGroup, are represented through the classes Card and CardGroup, respectively. 
 
 <a name="creation"></a>
 ## Creation
@@ -65,9 +65,9 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 ### Cloning
 
 Creation can be achieved through cloning as well.
-Cloning can be only applied to JSCard and CardGroup.
+Cloning can be only applied to Card and CardGroup.
 
-Here in the following a test assessing a successful creation of a cloned JSCard instane.
+Here in the following a test assessing a successful creation of a cloned Card instane.
  
 ```
 
@@ -76,7 +76,7 @@ Here in the following a test assessing a successful creation of a cloned JSCard 
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), Charset.forName("UTF-8"));
         ObjectMapper objectMapper = new ObjectMapper();
-        JSCard jsCard = objectMapper.readValue(json, JSCard.class);
+        Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testClone1", Objects.deepEquals(jsCard, jsCard.clone()));
 
     }
@@ -88,8 +88,8 @@ Here in the following a test assessing a successful creation of a cloned JSCard 
 
 ### JSContact validation
 
-Even if topomost JSContact objects, namely **JSCard** and **CardGroup**, are correctly created by builders, they might need to be validated as they were obtained from an external producer through deserialization.
-Validation is performed on both JSCard and CardGroup instances by invoking the method `isValid`.
+Even if topomost JSContact objects, namely **Card** and **CardGroup**, are correctly created by builders, they might need to be validated as they were obtained from an external producer through deserialization.
+Validation is performed on both Card and CardGroup instances by invoking the method `isValid`.
 This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-jmap-jscontact-05], `false` otherwise.
 If the validation process doesn't end successfully, the list of error messages can be obtained by calling the `getValidationMessages` method.  
 Here in the following a method testing an unsuccessfully ended validation is shown.
@@ -103,7 +103,7 @@ Here in the following a method testing an unsuccessfully ended validation is sho
                                                                              .countryCode("ita")
                                                                              .build());
                                                       }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -137,14 +137,14 @@ JSContact serialization/deserializaion is performed through Jackson library that
 ## Serialization
 
 ```
-        JSCard jsCard = JSCard.builder.build();
+        Card jsCard = Card.builder.build();
         String serialized = objectMapper.writeValueAsString(jsCard);
 ```
 
 To pretty print serialized JSON, use the following: 
 
 ```
-        JSCard jsCard = JSCard.builder.build();
+        Card jsCard = Card.builder.build();
         String serialized = PrettyPrintSerializer.print(jsCard);
 ```
 
@@ -153,12 +153,12 @@ To pretty print serialized JSON, use the following:
 ```
         String json = "{"uid": \"c642b718-7c89-49f4-9497-d9fb279bb437\"}";
         ObjectMapper objectMapper = new ObjectMapper();
-        JSCard jsCard = objectMapper.readValue(json, JSCard.class);
+        Card jsCard = objectMapper.readValue(json, Card.class);
 ```
 
 ### Deserialization of a group of cards
 
-Deserialization of a CardGroup object and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. JSCard instances and CardGroup instances).
+Deserialization of a CardGroup object and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. Card instances and CardGroup instances).
 
 ```
     @Test
@@ -191,7 +191,7 @@ At present, the following converting methods are available:
 *   XCard2JSContact
     *   List<JSContact> convert(String xml)
 
-All the methods return a list of JSContact (JSCard or CardGroup) instances and can raise a `CardException`.
+All the methods return a list of JSContact (Card or CardGroup) instances and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
@@ -201,22 +201,22 @@ The conversion is executed according to the following rules:
 
 1.  The conversion is based on the content of the [JSContact I-Ds](#drafts).
 
-2.  A card (i.e. vCard, xCard, jCard) is converted into a CardGroup object if it includes a MEMBER property, otherwise into a JSCard object.
+2.  A card (i.e. vCard, xCard, jCard) is converted into a CardGroup object if it includes a MEMBER property, otherwise into a Card object.
 
 3.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) are matched.
 
-4.  An unmatched property is converted into a topmost JSCard/CardGroup member with prefix `ietf.org/rfc6350`. The following unmatched properties are considered:
+4.  An unmatched property is converted into a topmost Card/CardGroup member with prefix `ietf.org/rfc6350`. The following unmatched properties are considered:
     GENDER
     CLIENTPIDMAP
     XML
 
-5.  An unmatched parameter is converted into a topmost JSCard/CardGroup member with prefix `ietf.org/rfc6350/<vCard Property Name>`. The following unmatched parameters are considered:
+5.  An unmatched parameter is converted into a topmost Card/CardGroup member with prefix `ietf.org/rfc6350/<vCard Property Name>`. The following unmatched parameters are considered:
     GROUP
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-6.  An extension property is converted into a topmost JSCard/CardGroup member with prefix defined by the configuration property `extensionPrefix`.
+6.  An extension property is converted into a topmost Card/CardGroup member with prefix defined by the configuration property `extensionPrefix`.
   
 7.  Validation is performed before conversion if the configuration property `cardToValidate` is set to `true`.
 
@@ -294,7 +294,7 @@ At present, the following converting methods are available:
     *   String convertToXml(JSContact jsContact)
     *   String convertToXml(List<JSContact> jsContacts)
 
-All the methods take in input a list of JSContact (JSCard or CardGroup) instances and can raise a `CardException`.
+All the methods take in input a list of JSContact (Card or CardGroup) instances and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
@@ -306,20 +306,20 @@ All the methods take in input a list of JSContact (JSCard or CardGroup) instance
     `X-JSCONTACT-CREATED`
     `X-JSCONTACT-PREFERREDCONTACTMETHOD`
     
-3.  A topmost JSCard/CardGroup member with name `ietf.org/rfc6350/<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
+3.  A topmost Card/CardGroup member with name `ietf.org/rfc6350/<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
     GENDER
     CLIENTPIDMAP
     XML
 
-5.  A topmost JSCard/CardGroup member with name `ietf.org/rfc6350/<vCard Property Name>/<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
+5.  A topmost Card/CardGroup member with name `ietf.org/rfc6350/<vCard Property Name>/<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
     GROUP
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-6.  A topmost JSCard/CardGroup member with prefix defined by the configuration property `extensionPrefix` is converted into a vCard extension.
+6.  A topmost Card/CardGroup member with prefix defined by the configuration property `extensionPrefix` is converted into a vCard extension.
 
-7.  The JSCard/CardGroup "titles" property is mapped onto the vCard TITLE property.
+7.  The Card/CardGroup "titles" property is mapped onto the vCard TITLE property.
     
 8.  The "timeZone" property is always mapped onto a TZ parameter preserving the time zone name.     
 
@@ -347,7 +347,7 @@ Here in the following two examples of conversion between vCard and JSContact top
                 "GEO:geo:46.772673,-71.282945\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testAddressesValid4 - 1",jsCard.getAddresses()!=null);
         assertTrue("testAddressesValid4 - 2",jsCard.getAddresses().size() == 1);
         assertTrue("testAddressesValid4 - 3",jsCard.getAddresses().get("ADR-1").getCountryCode().equals("US"));
@@ -398,10 +398,10 @@ Here in the following two examples of conversion between vCard and JSContact top
         assertTrue("testJCardGroupValid1 - 6",jsCardGroup.getMembers().size() == 2);
         assertTrue("testJCardGroupValid1 - 7",jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
         assertTrue("testJCardGroupValid1 - 8",jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
-        JSCard jsCard = (JSCard) jsContacts.get(1);
+        Card jsCard = (Card) jsContacts.get(1);
         assertTrue("testJCardGroupValid1 - 9",jsCard.getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
         assertTrue("testJCardGroupValid1 - 10",jsCard.getFullName().getValue().equals("John Doe"));
-        jsCard = (JSCard) jsContacts.get(2);
+        jsCard = (Card) jsContacts.get(2);
         assertTrue("testJCardGroupValid1 - 11",jsCard.getUid().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
         assertTrue("testJCardGroupValid1 - 12",jsCard.getFullName().getValue().equals("Jane Doe"));
 

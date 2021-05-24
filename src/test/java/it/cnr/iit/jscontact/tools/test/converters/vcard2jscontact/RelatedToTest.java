@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -46,7 +46,7 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "RELATED:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testRelatedToValid1 - 1",jsCard.getRelatedTo().size() == 1);
         assertTrue("testRelatedToValid1 - 2",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size() == 0);
 
@@ -61,7 +61,7 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "RELATED;TYPE=friend:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testRelatedToValid2 - 1",jsCard.getRelatedTo().size() == 1);
         assertTrue("testRelatedToValid2 - 2",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size()== 1);
         assertTrue("testRelatedToValid2 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").asFriend());
@@ -80,7 +80,7 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "RELATED:Please contact my assistant Jane Doe for any inquiries.\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testRelatedToValid3 - 1",jsCard.getRelatedTo().size() == 3);
         assertTrue("testRelatedToValid3 - 2",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size()== 1);
         assertTrue("testRelatedToValid3 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").asFriend());

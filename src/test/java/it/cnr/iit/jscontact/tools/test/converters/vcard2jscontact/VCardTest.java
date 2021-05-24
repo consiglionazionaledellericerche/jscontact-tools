@@ -63,7 +63,7 @@ public class VCardTest extends VCard2JSContactTest {
                 "FN:test\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testVCardValid - 1",jsCard != null);
         assertTrue("testVCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertTrue("testVCardValid - 3",jsCard.getFullName().getValue().equals("test"));
@@ -85,7 +85,7 @@ public class VCardTest extends VCard2JSContactTest {
                         .build()
                 )
                 .build();
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testExtendedVCardValid - 1",jsCard != null);
         assertTrue("testExtendedVCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertTrue("testExtendedVCardValid - 3",jsCard.getFullName().getValue().equals("test"));
@@ -98,7 +98,7 @@ public class VCardTest extends VCard2JSContactTest {
     public void testCompleteVCard1() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7483.vcf"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard1 - 1", jsCard.getFullName().getValue().equals("Joe User"));
         assertTrue("testCompleteVCard1 - 2", jsCard.getKind().isIndividual());
         assertTrue("testCompleteVCard1 - 3", jsCard.getName().length == 4);
@@ -160,7 +160,7 @@ public class VCardTest extends VCard2JSContactTest {
     public void testCompleteVCard2() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Multilingual.vcf"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard2 - 1", jsCard.getFullName().getValue().equals("大久保 正仁"));
         assertTrue("testCompleteVCard2 - 2", jsCard.getFullName().getLanguage().equals("ja"));
         assertTrue("testCompleteVCard2 - 3", jsCard.getFullName().getLocalizations().get("en").equals("Okubo Masahito"));
@@ -180,7 +180,7 @@ public class VCardTest extends VCard2JSContactTest {
     public void testCompleteVCard3() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Unstructured.vcf"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard3 - 1", jsCard.getFullName().getValue().equals("台灣固網股份有限公司"));
         assertTrue("testCompleteVCard3 - 2", jsCard.getFullName().getLanguage().equals("zh-Hant-TW"));
         assertTrue("testCompleteVCard3 - 3", jsCard.getFullName().getLocalizations().get("en").equals("Taiwan Fixed Network CO.,LTD."));
@@ -203,7 +203,7 @@ public class VCardTest extends VCard2JSContactTest {
     public void testCompleteVCard4() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7095.vcf"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard4 - 1", jsCard.getFullName().getValue().equals("Simon Perreault"));
         assertTrue("testCompleteVCard4 - 2", jsCard.getKind() == null);
         assertTrue("testCompleteVCard4 - 3", jsCard.getName().length == 4);
@@ -263,7 +263,7 @@ public class VCardTest extends VCard2JSContactTest {
     public void testCompleteVCard5() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Wikipedia.vcf"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard5 - 1", jsCard.getFullName().getValue().equals("Forrest Gump"));
         assertTrue("testCompleteVCard5 - 2", jsCard.getKind() == null);
         assertTrue("testCompleteVCard5 - 3", jsCard.getName().length == 3);
@@ -317,7 +317,7 @@ public class VCardTest extends VCard2JSContactTest {
     public void testCompleteVCard6() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-ezvcard-fullcontact.vcf"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard6 - 1", jsCard.getFullName().getValue().equals("Prefix FirstName MiddleName LastName Suffix"));
         assertTrue("testCompleteVCard6 - 2", jsCard.getName().length == 5);
         assertTrue("testCompleteVCard6 - 3", jsCard.getName()[0].isPrefix());

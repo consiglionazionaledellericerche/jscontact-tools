@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.JSCardKindValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.CardKindValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -23,11 +23,11 @@ import java.lang.annotation.*;
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {JSCardKindValidator.class})
+@Constraint(validatedBy = {CardKindValidator.class})
 @Documented
-public @interface JSCardKindConstraint {
+public @interface CardKindConstraint {
 
-    String message() default "invalid kind in JSCard";
+    String message() default "invalid kind in Card";
 
     Class<?>[] groups() default { };
 

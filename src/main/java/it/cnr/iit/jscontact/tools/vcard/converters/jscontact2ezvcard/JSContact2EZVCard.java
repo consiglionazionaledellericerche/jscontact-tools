@@ -120,7 +120,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return new FormattedName(joiner.toString());
     }
 
-    private static void fillFormattedNames(VCard vcard, JSCard jsCard) {
+    private static void fillFormattedNames(VCard vcard, Card jsCard) {
 
         if (jsCard.getFullName() == null || jsCard.getFullName().getValue().isEmpty()) {
             if (jsCard.getName() != null)
@@ -146,7 +146,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
-    private static void fillNames(VCard vcard, JSCard jsCard) {
+    private static void fillNames(VCard vcard, Card jsCard) {
 
         if (jsCard.getName() == null)
             return;
@@ -176,7 +176,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         vcard.setStructuredName(name);
     }
 
-    private static void fillNickNames(VCard vcard, JSCard jsCard) {
+    private static void fillNickNames(VCard vcard, Card jsCard) {
 
         if (jsCard.getNickNames() == null)
             return;
@@ -297,7 +297,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return addrs;
     }
 
-    private static void fillAddresses(VCard vcard, JSCard jsCard) {
+    private static void fillAddresses(VCard vcard, Card jsCard) {
 
         if (jsCard.getAddresses() == null)
             return;
@@ -360,7 +360,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return null;
     }
 
-    private static void fillAnniversaries(VCard vcard, JSCard jsCard) {
+    private static void fillAnniversaries(VCard vcard, Card jsCard) {
 
         if (jsCard.getAnniversaries() == null)
             return;
@@ -410,7 +410,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return i;
     }
 
-    private static void fillPersonalInfos(VCard vcard, JSCard jsCard) {
+    private static void fillPersonalInfos(VCard vcard, Card jsCard) {
 
         if (jsCard.getPersonalInfo() == null)
             return;
@@ -439,7 +439,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return language;
     }
 
-    private static void fillContactLanguages(VCard vcard, JSCard jsCard) {
+    private static void fillContactLanguages(VCard vcard, Card jsCard) {
 
         if (jsCard.getPreferredContactLanguages() == null)
             return;
@@ -472,7 +472,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return tel;
     }
 
-    private static void fillPhones(VCard vcard, JSCard jsCard) {
+    private static void fillPhones(VCard vcard, Card jsCard) {
 
         if (jsCard.getPhones() == null)
             return;
@@ -493,7 +493,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return email;
     }
 
-    private static void fillEmails(VCard vcard, JSCard jsCard) {
+    private static void fillEmails(VCard vcard, Card jsCard) {
 
         if (jsCard.getEmails() == null)
             return;
@@ -592,7 +592,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static void fillPhotos(VCard vcard, JSCard jsCard) {
+    private static void fillPhotos(VCard vcard, Card jsCard) {
 
         if (jsCard.getPhotos() == null)
             return;
@@ -605,7 +605,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static void fillOnlines(VCard vcard, JSCard jsCard) {
+    private static void fillOnlines(VCard vcard, Card jsCard) {
 
         if (jsCard.getOnline() == null)
             return;
@@ -682,7 +682,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static void fillTitles(VCard vcard, JSCard jsCard) {
+    private static void fillTitles(VCard vcard, Card jsCard) {
 
         if (jsCard.getTitles() == null)
             return;
@@ -701,7 +701,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static void fillCategories(VCard vcard, JSCard jsCard) {
+    private static void fillCategories(VCard vcard, Card jsCard) {
 
         if (jsCard.getCategories() == null)
             return;
@@ -734,7 +734,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return getOrganizationItems(organization, units, null);
     }
 
-    private static void fillOrganizations(VCard vcard, JSCard jsCard) {
+    private static void fillOrganizations(VCard vcard, Card jsCard) {
 
         if (jsCard.getOrganizations() == null)
             return;
@@ -756,7 +756,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillNotes(VCard vcard, JSCard jsCard) {
+    private static void fillNotes(VCard vcard, Card jsCard) {
 
         if (jsCard.getNotes() == null)
             return;
@@ -805,7 +805,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return related;
     }
 
-    private static void fillRelations(VCard vcard, JSCard jsCard) {
+    private static void fillRelations(VCard vcard, Card jsCard) {
 
         if (jsCard.getRelatedTo() == null)
             return;
@@ -867,7 +867,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private void fillExtensions(VCard vcard, JSCard jsCard) {
+    private void fillExtensions(VCard vcard, Card jsCard) {
 
         if (jsCard.getExtensions() == null)
             return;
@@ -900,7 +900,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillUnmatchedElments(VCard vCard, JSCard jsCard) {
+    private static void fillUnmatchedElments(VCard vCard, Card jsCard) {
 
         if (jsCard.getCreated() != null) {
             vCard.addExtendedProperty("X-JSCONTACT-CREATED", VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsCard.getCreated().getTime()));
@@ -916,7 +916,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
      * JSContact objects are defined in draft-ietf-jmap-jscontact.
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
-     * @param jsContact a JSContact object (JSCard or CardGroup)
+     * @param jsContact a JSContact object (Card or CardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
@@ -929,14 +929,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         VCard vCard = new VCard(VCardVersion.V4_0);
         vCard.setUid(getUid(jsContact.getUid()));
-        JSCard jsCard = null;
+        Card jsCard = null;
         if (jsContact instanceof CardGroup) {
             CardGroup jsCardGroup = (CardGroup) jsContact;
             fillMembers(vCard, jsCardGroup);
             if (jsCardGroup.getCard()!=null)
                 jsCard = jsCardGroup.getCard();
         } else
-            jsCard = (JSCard) jsContact;
+            jsCard = (Card) jsContact;
 
         if (jsCard == null) return vCard;
 

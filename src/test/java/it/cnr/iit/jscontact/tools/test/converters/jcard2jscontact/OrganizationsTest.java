@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
                 "[\"org\", {\"altid\" : \"1\"}, \"text\", \"ABC, Inc.;North American Division;Marketing\"]," +
                 "[\"org\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"ABC, Spa.;Divisione Nord America;Marketing\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testOrganizationsWithAltid1 - 1",jsCard.getOrganizations()!=null);
         assertTrue("testOrganizationsWithAltid1 - 2",jsCard.getOrganizations().size() == 1);
         assertTrue("testOrganizationsWithAltid1 - 3",jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("ABC, Inc."));
@@ -63,7 +63,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
                 "[\"org\", {}, \"text\", \"ABC, Inc.;North American Division;Marketing\"]," +
                 "[\"org\", {\"language\" : \"it\"}, \"text\", \"ABC, Spa.;Divisione Nord America;Marketing\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testOrganizationsWithoutAltid - 1",jsCard.getOrganizations()!=null);
         assertTrue("testOrganizationsWithoutAltid - 2",jsCard.getOrganizations().size() == 2);
         assertTrue("testOrganizationsWithoutAltid - 3",jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("ABC, Inc."));
@@ -100,7 +100,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
                 "[\"org\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"ABC, Spa.;Divisione Nord America;Marketing\"], " +
                 "[\"org\", {\"pref\" : \"1\"}, \"text\", \"University of North America\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testOrganizationsWithAltid2 - 1",jsCard.getOrganizations()!=null);
         assertTrue("testOrganizationsWithAltid2 - 2",jsCard.getOrganizations().size() == 2);
         assertTrue("testOrganizationsWithAltid2 - 3",jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("University of North America"));

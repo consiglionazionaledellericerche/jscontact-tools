@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class KindTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"kind\", {}, \"text\", \"individual\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testKindValid - 1",jsCard.getKind().isIndividual());
 
     }
@@ -45,7 +45,7 @@ public class KindTest extends JCard2JSContactTest {
                 "[\"kind\", {}, \"text\", \"x-value\"]" +
                 "]]";
 
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testExtKind - 1",jsCard.getKind().getExtValue().equals("x-value"));
 
     }

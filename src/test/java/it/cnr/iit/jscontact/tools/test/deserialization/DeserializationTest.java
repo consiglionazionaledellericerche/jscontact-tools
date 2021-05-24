@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.deserialization;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import org.apache.commons.io.IOUtils;
@@ -36,7 +36,7 @@ public class DeserializationTest {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), Charset.forName("UTF-8"));
         ObjectMapper objectMapper = new ObjectMapper();
-        JSCard jsCard = objectMapper.readValue(json, JSCard.class);
+        Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testDeserialization1", jsCard.isValid());
 
     }
@@ -46,7 +46,7 @@ public class DeserializationTest {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json"), Charset.forName("UTF-8"));
         ObjectMapper objectMapper = new ObjectMapper();
-        JSCard jsCard = objectMapper.readValue(json, JSCard.class);
+        Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testDeserialization2", jsCard.isValid());
 
     }
@@ -56,7 +56,7 @@ public class DeserializationTest {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json"), Charset.forName("UTF-8"));
         ObjectMapper objectMapper = new ObjectMapper();
-        JSCard jsCard = objectMapper.readValue(json, JSCard.class);
+        Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testDeserialization3", jsCard.isValid());
 
     }

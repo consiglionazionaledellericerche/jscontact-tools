@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.CardGroup;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -79,10 +79,10 @@ public class JCardGroupTest extends JCard2JSContactTest {
         assertTrue("testJCardGroupValid1 - 6",jsCardGroup.getMembers().size() == 2);
         assertTrue("testJCardGroupValid1 - 7",jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
         assertTrue("testJCardGroupValid1 - 8",jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
-        JSCard jsCard = (JSCard) jsContacts.get(1);
+        Card jsCard = (Card) jsContacts.get(1);
         assertTrue("testJCardGroupValid1 - 9",jsCard.getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
         assertTrue("testJCardGroupValid1 - 10",jsCard.getFullName().getValue().equals("John Doe"));
-        jsCard = (JSCard) jsContacts.get(2);
+        jsCard = (Card) jsContacts.get(2);
         assertTrue("testJCardGroupValid1 - 11",jsCard.getUid().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
         assertTrue("testJCardGroupValid1 - 12",jsCard.getFullName().getValue().equals("Jane Doe"));
 
@@ -150,10 +150,10 @@ public class JCardGroupTest extends JCard2JSContactTest {
         assertTrue("testJCardGroupValid3 - 6",jsCardGroup.getMembers().size() == 2);
         assertTrue("testJCardGroupValid3 - 7",jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
         assertTrue("testJCardGroupValid3 - 8",jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
-        JSCard jsCard = (JSCard) jsContacts.get(0);
+        Card jsCard = (Card) jsContacts.get(0);
         assertTrue("testJCardGroupValid3 - 9",jsCard.getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
         assertTrue("testJCardGroupValid3 - 10",jsCard.getFullName().getValue().equals("John Doe"));
-        jsCard = (JSCard) jsContacts.get(1);
+        jsCard = (Card) jsContacts.get(1);
         assertTrue("testJCardGroupValid3 - 11",jsCard.getUid().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
         assertTrue("testJCardGroupValid3 - 12",jsCard.getFullName().getValue().equals("Jane Doe"));
 

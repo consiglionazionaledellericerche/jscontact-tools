@@ -47,7 +47,7 @@ public class CardGroup extends JSContact implements Serializable {
 
     String name;
 
-    JSCard card;
+    Card card;
 
     public void addMember(String member) {
 

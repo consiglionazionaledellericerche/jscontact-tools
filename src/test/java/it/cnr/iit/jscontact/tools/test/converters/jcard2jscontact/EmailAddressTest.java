@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Context;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class EmailAddressTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"email\", {\"type\": \"work\"}, \"text\", \"jqpublic@xyz.example.com\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testEmailAddressValid1 - 1",jsCard.getEmails().size() == 1);
         assertTrue("testEmailAddressValid1 - 2",jsCard.getEmails().get("EMAIL-1").getContexts().size() == 1);
         assertTrue("testEmailAddressValid1 - 3",jsCard.getEmails().get("EMAIL-1").getContexts().get(Context.work()) == Boolean.TRUE);
@@ -49,7 +49,7 @@ public class EmailAddressTest extends JCard2JSContactTest {
                 "[\"email\", {\"type\": \"work\"}, \"text\", \"jqpublic@xyz.example.com\"], " +
                 "[\"email\", {\"type\": \"home\", \"pref\": 1}, \"text\", \"jane_doe@example.com\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testEmailAddressValid2 - 1",jsCard.getEmails().size() == 2);
         assertTrue("testEmailAddressValid2 - 2",jsCard.getEmails().get("EMAIL-1").getContexts().size() == 1);
         assertTrue("testEmailAddressValid2 - 3",jsCard.getEmails().get("EMAIL-1").getContexts().get(Context.work()) == Boolean.TRUE);
