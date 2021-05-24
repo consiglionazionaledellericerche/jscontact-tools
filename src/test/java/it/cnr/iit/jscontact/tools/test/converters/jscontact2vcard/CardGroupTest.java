@@ -25,10 +25,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class JCardGroupTest extends JSContact2VCardTest {
+public class CardGroupTest extends JSContact2VCardTest {
 
     @Test
-    public void testJSCardGroupValid1() throws IOException, CardException {
+    public void testCardGroupValid1() throws IOException, CardException {
 
         String jsCards = "[" +
                          "{" +
@@ -60,16 +60,16 @@ public class JCardGroupTest extends JSContact2VCardTest {
                         "]";
 
         List<VCard> vcards = jsContact2VCard.convert(jsCards);
-        assertTrue("testJSCardGroupValid1 - 1",vcards.size() == 3);
-        assertTrue("testJSCardGroupValid1 - 3", vcards.get(0).getKind().isGroup());
-        assertTrue("testJSCardGroupValid1 - 4",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
-        assertTrue("testJSCardGroupValid1 - 5",vcards.get(0).getFormattedName().getValue().equals("The Doe family"));
-        assertTrue("testJSCardGroupValid1 - 6",vcards.get(0).getMembers().size() == 2);
-        assertTrue("testJSCardGroupValid1 - 7",vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
-        assertTrue("testJSCardGroupValid1 - 8",vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
-        assertTrue("testJSCardGroupValid1 - 9",vcards.get(1).getUid().getValue().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
-        assertTrue("testJSCardGroupValid1 - 10",vcards.get(1).getFormattedName().getValue().equals("John Doe"));
-        assertTrue("testJSCardGroupValid1 - 11",vcards.get(2).getUid().getValue().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
-        assertTrue("testJSCardGroupValid1 - 12",vcards.get(2).getFormattedName().getValue().equals("Jane Doe"));
+        assertTrue("testCardGroupValid1 - 1",vcards.size() == 3);
+        assertTrue("testCardGroupValid1 - 3", vcards.get(0).getKind().isGroup());
+        assertTrue("testCardGroupValid1 - 4",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
+        assertTrue("testCardGroupValid1 - 5",vcards.get(0).getFormattedName().getValue().equals("The Doe family"));
+        assertTrue("testCardGroupValid1 - 6",vcards.get(0).getMembers().size() == 2);
+        assertTrue("testCardGroupValid1 - 7",vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
+        assertTrue("testCardGroupValid1 - 8",vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
+        assertTrue("testCardGroupValid1 - 9",vcards.get(1).getUid().getValue().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
+        assertTrue("testCardGroupValid1 - 10",vcards.get(1).getFormattedName().getValue().equals("John Doe"));
+        assertTrue("testCardGroupValid1 - 11",vcards.get(2).getUid().getValue().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
+        assertTrue("testCardGroupValid1 - 12",vcards.get(2).getFormattedName().getValue().equals("Jane Doe"));
     }
 }

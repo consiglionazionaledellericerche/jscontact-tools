@@ -400,7 +400,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             jsCard.addFullName(ls.getValue(), ls.getLanguage());
     }
 
-    private static void fillMembers(VCard vcard, JSCardGroup jsCardGroup) {
+    private static void fillMembers(VCard vcard, CardGroup jsCardGroup) {
 
         List<MemberWrapper> wrappers = new ArrayList<>();
         for (Member member : vcard.getMembers()) {
@@ -1105,7 +1105,7 @@ public class EZVCard2JSContact extends AbstractConverter {
     private JSContact convert(VCard vCard) throws CardException {
 
         JSCard jsCard = null;
-        JSCardGroup jsCardGroup = null;
+        CardGroup jsCardGroup = null;
         String uid = null;
         if (vCard.getUid()!=null)
             uid = vCard.getUid().getValue();
@@ -1113,7 +1113,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             uid = UUID.randomUUID().toString();
 
         if (vCard.getMembers() != null && vCard.getMembers().size() != 0) {
-            jsCardGroup = JSCardGroup.builder().uid(uid).build();
+            jsCardGroup = CardGroup.builder().uid(uid).build();
             fillMembers(vCard, jsCardGroup);
             jsCardGroup.setUid(uid);
             if (containsJSCardProperties(vCard)) {

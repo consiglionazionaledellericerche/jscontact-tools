@@ -81,7 +81,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return new Revision(update);
     }
 
-    private static void fillMembers(VCard vcard, JSCardGroup jsCardGroup) {
+    private static void fillMembers(VCard vcard, CardGroup jsCardGroup) {
 
         if (jsCardGroup.getMembers() == null)
             return;
@@ -916,7 +916,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
      * JSContact objects are defined in draft-ietf-jmap-jscontact.
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
-     * @param jsContact a JSContact object (JSCard or JSCardGroup)
+     * @param jsContact a JSContact object (JSCard or CardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
@@ -930,8 +930,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         VCard vCard = new VCard(VCardVersion.V4_0);
         vCard.setUid(getUid(jsContact.getUid()));
         JSCard jsCard = null;
-        if (jsContact instanceof JSCardGroup) {
-            JSCardGroup jsCardGroup = (JSCardGroup) jsContact;
+        if (jsContact instanceof CardGroup) {
+            CardGroup jsCardGroup = (CardGroup) jsContact;
             fillMembers(vCard, jsCardGroup);
             if (jsCardGroup.getCard()!=null)
                 jsCard = jsCardGroup.getCard();

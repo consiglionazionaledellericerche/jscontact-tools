@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.cnr.iit.jscontact.tools.constraints.JSCardGroupKindConstraint;
+import it.cnr.iit.jscontact.tools.constraints.CardGroupKindConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,14 +31,14 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@JSCardGroupKindConstraint
+@CardGroupKindConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @ToString(callSuper = true)
 @Getter
 @Setter
 @SuperBuilder
-public class JSCardGroup extends JSContact implements Serializable {
+public class CardGroup extends JSContact implements Serializable {
 
     @NotNull
     @Size(min=1)
@@ -57,7 +57,7 @@ public class JSCardGroup extends JSContact implements Serializable {
         members.putIfAbsent(member,Boolean.TRUE);
     }
 
-    public JSCardGroup clone() {
+    public CardGroup clone() {
         return SerializationUtils.clone(this);
     }
 
