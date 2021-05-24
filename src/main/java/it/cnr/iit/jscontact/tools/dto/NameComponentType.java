@@ -25,7 +25,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class NameComponentType extends ExtensibleType<NameComponentEnum> implements Serializable {
+public class NameComponentType extends ExtensibleEnum<NameComponentEnum> implements Serializable {
 
 
     public static NameComponentType rfc(NameComponentEnum rfcValue) { return NameComponentType.builder().rfcValue(rfcValue).build();}

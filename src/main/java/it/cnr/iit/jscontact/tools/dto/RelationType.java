@@ -26,7 +26,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class RelationType extends ExtensibleType<RelationEnum> implements Serializable {
+public class RelationType extends ExtensibleEnum<RelationEnum> implements Serializable {
 
     private boolean isRfcRelation(RelationEnum value) { return rfcValue != null && rfcValue == value; }
     @JsonIgnore

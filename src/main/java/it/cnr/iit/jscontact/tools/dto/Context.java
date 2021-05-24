@@ -32,7 +32,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class Context extends ExtensibleType<ContextEnum> implements Serializable {
+public class Context extends ExtensibleEnum<ContextEnum> implements Serializable {
 
     private boolean isRfc(ContextEnum value) { return isRfcValue() && rfcValue == value; }
     @JsonIgnore

@@ -26,7 +26,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class KindType extends ExtensibleType<KindEnum> implements Serializable {
+public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
 
     private boolean isRfc(KindEnum value) { return isRfcValue() && rfcValue == value; }
     @JsonIgnore

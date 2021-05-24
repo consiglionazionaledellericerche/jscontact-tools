@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @SuperBuilder
-public abstract class ExtensibleType<T extends IsExtensible> implements Serializable {
+public abstract class ExtensibleEnum<T extends IsExtensible> implements Serializable {
 
     T rfcValue;
     String extValue;
@@ -27,7 +27,7 @@ public abstract class ExtensibleType<T extends IsExtensible> implements Serializ
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ExtensibleType type = (ExtensibleType) obj;
+        ExtensibleEnum type = (ExtensibleEnum) obj;
         if (type.rfcValue != null )
             return type.rfcValue == rfcValue;
 

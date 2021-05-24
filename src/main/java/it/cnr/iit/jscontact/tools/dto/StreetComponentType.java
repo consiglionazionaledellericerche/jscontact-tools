@@ -25,6 +25,6 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class StreetComponentType extends ExtensibleType<StreetComponentEnum> implements Serializable {
+public class StreetComponentType extends ExtensibleEnum<StreetComponentEnum> implements Serializable {
 
 }
