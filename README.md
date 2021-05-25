@@ -126,7 +126,7 @@ All the methods can raise a `CardException`.
 <a name="serialization-deserialization"></a>
 ## Serialization/Deserialization
 
-JSContact serialization/deserializaion is performed through Jackson library that relies on annotation.
+JSContact serialization/deserializaion is performed through Jackson library annotations.
 
 ## Serialization
 
@@ -135,7 +135,7 @@ JSContact serialization/deserializaion is performed through Jackson library that
         String serialized = objectMapper.writeValueAsString(jsCard);
 ```
 
-To pretty print serialized JSON, use the following: 
+To pretty print serialized JSContact objects, use the following: 
 
 ```
         Card jsCard = Card.builder.build();
