@@ -1,7 +1,6 @@
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
 import it.cnr.iit.jscontact.tools.dto.Context;
-import it.cnr.iit.jscontact.tools.dto.ContextEnum;
 
 import java.util.Map;
 

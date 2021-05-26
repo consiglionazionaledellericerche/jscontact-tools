@@ -677,7 +677,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     private static boolean labelIncludesTelTypes(String label) {
 
-        return LabelUtils.labelIncludesAnyItem(label, Arrays.asList(new String[] {"voice", "textphone", "fax", "pager", "cell", "text", "video"}));
+        return LabelUtils.labelIncludesAnyItem(label, Arrays.asList("voice", "textphone", "fax", "pager", "cell", "text", "video"));
     }
 
     private static String getResourceExt(String resource) {
@@ -1104,9 +1104,9 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     private JSContact convert(VCard vCard) throws CardException {
 
-        Card jsCard = null;
+        Card jsCard;
         CardGroup jsCardGroup = null;
-        String uid = null;
+        String uid;
         if (vCard.getUid()!=null)
             uid = vCard.getUid().getValue();
         else

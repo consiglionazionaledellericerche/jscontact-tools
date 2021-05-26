@@ -43,7 +43,8 @@ public class NameComponent extends GroupableObject implements Serializable {
     @NonNull
     String value;
 
-    private boolean isRfc(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);};
+    private boolean isRfc(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);}
+
     @JsonIgnore
     public boolean isPrefix() { return isRfc(NameComponentEnum.PREFIX); }
     @JsonIgnore

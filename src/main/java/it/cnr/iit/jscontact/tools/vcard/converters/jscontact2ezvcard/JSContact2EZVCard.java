@@ -999,6 +999,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      * @param json a JSON array of JSContact objects
      * @return a list of instances of the ez-vcard library VCard class
      * @throws CardException if one of JSContact objects is not valid
+     * @throws JsonProcessingException if json cannot be processed
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>

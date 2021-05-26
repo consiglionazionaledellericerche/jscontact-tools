@@ -41,7 +41,8 @@ public class StreetComponent implements Serializable {
     @NonNull
     String value;
 
-    private boolean isRfc(StreetComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);};
+    private boolean isRfc(StreetComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);}
+
     @JsonIgnore
     public boolean isName() { return isRfc(StreetComponentEnum.NAME); }
     @JsonIgnore

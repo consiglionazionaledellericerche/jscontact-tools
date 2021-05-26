@@ -16,27 +16,12 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
-import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
-import it.cnr.iit.jscontact.tools.constraints.*;
-import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
-import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.ArrayUtils;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.*;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
