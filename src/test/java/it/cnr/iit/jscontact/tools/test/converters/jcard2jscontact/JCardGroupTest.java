@@ -15,8 +15,8 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
+import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.CardGroup;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.apache.commons.lang3.StringUtils;
@@ -71,18 +71,18 @@ public class JCardGroupTest extends JCard2JSContactTest {
 
         List<JSContact> jsContacts = jCard2JSContact.convert(jcard);
         assertTrue("testJCardGroupValid1 - 1",jsContacts.size() == 3);
-        assertTrue("testJCardGroupValid1 - 2",jsContacts.get(0) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(0);
-        assertTrue("testJCardGroupValid1 - 3", jsCardGroup.getKind().isGroup());
+        assertTrue("testJCardGroupValid1 - 2",jsContacts.get(0) instanceof CardGroup);
+        CardGroup jsCardGroup = (CardGroup) jsContacts.get(0);
+        assertTrue("testJCardGroupValid1 - 3", jsCardGroup.getCard().getKind().isGroup());
         assertTrue("testJCardGroupValid1 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertTrue("testJCardGroupValid1 - 5",jsCardGroup.getFullName().getValue().equals("The Doe family"));
+        assertTrue("testJCardGroupValid1 - 5",jsCardGroup.getCard().getFullName().getValue().equals("The Doe family"));
         assertTrue("testJCardGroupValid1 - 6",jsCardGroup.getMembers().size() == 2);
         assertTrue("testJCardGroupValid1 - 7",jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
         assertTrue("testJCardGroupValid1 - 8",jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
-        JSCard jsCard = (JSCard) jsContacts.get(1);
+        Card jsCard = (Card) jsContacts.get(1);
         assertTrue("testJCardGroupValid1 - 9",jsCard.getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
         assertTrue("testJCardGroupValid1 - 10",jsCard.getFullName().getValue().equals("John Doe"));
-        jsCard = (JSCard) jsContacts.get(2);
+        jsCard = (Card) jsContacts.get(2);
         assertTrue("testJCardGroupValid1 - 11",jsCard.getUid().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
         assertTrue("testJCardGroupValid1 - 12",jsCard.getFullName().getValue().equals("Jane Doe"));
 
@@ -103,11 +103,11 @@ public class JCardGroupTest extends JCard2JSContactTest {
 
         List<JSContact> jsContacts = jCard2JSContact.convert(jcard);
         assertTrue("testjCardGroupValid2 - 1",jsContacts.size() == 1);
-        assertTrue("testJCardGroupValid2 - 2",jsContacts.get(0) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(0);
-        assertTrue("testJCardGroupValid2 - 3", jsCardGroup.getKind().isGroup());
+        assertTrue("testJCardGroupValid2 - 2",jsContacts.get(0) instanceof CardGroup);
+        CardGroup jsCardGroup = (CardGroup) jsContacts.get(0);
+        assertTrue("testJCardGroupValid2 - 3", jsCardGroup.getCard().getKind().isGroup());
         assertTrue("testJCardGroupValid2 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertTrue("testJCardGroupValid2 - 5",jsCardGroup.getFullName().getValue().equals("Funky distribution list"));
+        assertTrue("testJCardGroupValid2 - 5",jsCardGroup.getCard().getFullName().getValue().equals("Funky distribution list"));
         assertTrue("testJCardGroupValid2 - 6",jsCardGroup.getMembers().size() == 4);
         assertTrue("testJCardGroupValid2 - 7",jsCardGroup.getMembers().get("mailto:subscriber1@example.com") == Boolean.TRUE);
         assertTrue("testJCardGroupValid2 - 8",jsCardGroup.getMembers().get("xmpp:subscriber2@example.com") == Boolean.TRUE);
@@ -142,18 +142,18 @@ public class JCardGroupTest extends JCard2JSContactTest {
 
         List<JSContact> jsContacts = jCard2JSContact.convert(jcard);
         assertTrue("testJCardGroupValid3 - 1",jsContacts.size() == 3);
-        assertTrue("testJCardGroupValid3 - 2",jsContacts.get(2) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(2);
-        assertTrue("testJCardGroupValid3 - 3", jsCardGroup.getKind().isGroup());
+        assertTrue("testJCardGroupValid3 - 2",jsContacts.get(2) instanceof CardGroup);
+        CardGroup jsCardGroup = (CardGroup) jsContacts.get(2);
+        assertTrue("testJCardGroupValid3 - 3", jsCardGroup.getCard().getKind().isGroup());
         assertTrue("testJCardGroupValid3 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertTrue("testJCardGroupValid3 - 5",jsCardGroup.getFullName().getValue().equals("The Doe family"));
+        assertTrue("testJCardGroupValid3 - 5",jsCardGroup.getCard().getFullName().getValue().equals("The Doe family"));
         assertTrue("testJCardGroupValid3 - 6",jsCardGroup.getMembers().size() == 2);
         assertTrue("testJCardGroupValid3 - 7",jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af") == Boolean.TRUE);
         assertTrue("testJCardGroupValid3 - 8",jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519") == Boolean.TRUE);
-        JSCard jsCard = (JSCard) jsContacts.get(0);
+        Card jsCard = (Card) jsContacts.get(0);
         assertTrue("testJCardGroupValid3 - 9",jsCard.getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
         assertTrue("testJCardGroupValid3 - 10",jsCard.getFullName().getValue().equals("John Doe"));
-        jsCard = (JSCard) jsContacts.get(1);
+        jsCard = (Card) jsContacts.get(1);
         assertTrue("testJCardGroupValid3 - 11",jsCard.getUid().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"));
         assertTrue("testJCardGroupValid3 - 12",jsCard.getFullName().getValue().equals("Jane Doe"));
 
@@ -175,11 +175,11 @@ public class JCardGroupTest extends JCard2JSContactTest {
 
         List<JSContact> jsContacts = jCard2JSContact.convert(jcard);
         assertTrue("testJCardGroupValid4 - 1",jsContacts.size() == 1);
-        assertTrue("testJCardGroupValid4 - 2",jsContacts.get(0) instanceof JSCardGroup);
-        JSCardGroup jsCardGroup = (JSCardGroup) jsContacts.get(0);
-        assertTrue("testJCardGroupValid4 - 3", jsCardGroup.getKind().isGroup());
+        assertTrue("testJCardGroupValid4 - 2",jsContacts.get(0) instanceof CardGroup);
+        CardGroup jsCardGroup = (CardGroup) jsContacts.get(0);
+        assertTrue("testJCardGroupValid4 - 3", jsCardGroup.getCard().getKind().isGroup());
         assertTrue("testJCardGroupValid4 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertTrue("testJCardGroupValid4 - 5",jsCardGroup.getFullName().getValue().equals("Funky distribution list"));
+        assertTrue("testJCardGroupValid4 - 5",jsCardGroup.getCard().getFullName().getValue().equals("Funky distribution list"));
         assertTrue("testJCardGroupValid4 - 6",jsCardGroup.getMembers().size() == 4);
         assertTrue("testJCardGroupValid4 - 7",jsCardGroup.getMembers().get("mailto:subscriber1@example.com") == Boolean.TRUE);
         assertTrue("testJCardGroupValid4 - 8",jsCardGroup.getMembers().get("xmpp:subscriber2@example.com") == Boolean.TRUE);

@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.Context;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.Resource;
 import it.cnr.iit.jscontact.tools.dto.ResourceType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
@@ -33,12 +33,12 @@ public class ResourceTest extends AbstractTest {
     public void testValidResource() {
 
         Resource online = Resource.builder()
-                .context(Context.WORK, Boolean.TRUE)
+                .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.USERNAME)
                 .resource("mario-loffredo")
                 .label("GitHub")
                 .build();
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .online(new HashMap<String,Resource>(){{ put("XMPP-1", online);}})
                 .build();
@@ -52,7 +52,7 @@ public class ResourceTest extends AbstractTest {
 
         // value missing
         Resource.builder()
-                .context(Context.WORK, Boolean.TRUE)
+                .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.URI)
                 .build();
     }
@@ -61,12 +61,12 @@ public class ResourceTest extends AbstractTest {
     public void testInvalidResourceUri() {
 
         Resource online = Resource.builder()
-                .context(Context.WORK, Boolean.TRUE)
+                .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.URI)
                 .resource(" ")
                 .label("url")
                 .build();
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .online(new HashMap<String,Resource>(){{ put("URL-1", online);}})
                 .build();

@@ -15,66 +15,51 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-@AllArgsConstructor
-public enum Context implements JCardTypeDerivedEnum {
+@Getter
+@Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
+public class Context extends ExtensibleEnum<ContextEnum> implements Serializable {
 
-    PRIVATE("private"),
-    WORK("work"),
-    OTHER("other");
-
-    private String value;
-
-    @Getter
+    private boolean isRfc(ContextEnum value) { return isRfcValue() && rfcValue == value; }
     @JsonIgnore
-    private static final Map<String, Context> aliases = new HashMap<String, Context>()
-    {{
-        put("home", PRIVATE);
-    }};
-
-
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
-
-    @JsonCreator
-    public static Context getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(Context.class, value, aliases);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
+    public boolean isPrivate() { return isRfc(ContextEnum.PRIVATE); }
     @JsonIgnore
-    public static String getVCardType(String label) {
+    public boolean isWork() { return isRfc(ContextEnum.WORK); }
+    @JsonIgnore
+    public boolean isOther() { return isRfc(ContextEnum.OTHER); }
 
-        try {
-            Context rc = getEnum(label);
-            return getVCardType(rc);
-        }
-        catch(Exception e) {
+    public static Context rfc(ContextEnum rfcValue) { return Context.builder().rfcValue(rfcValue).build();}
+    public static Context private_() { return rfc(ContextEnum.PRIVATE);}
+    public static Context work() { return rfc(ContextEnum.WORK);}
+    public static Context other() { return rfc(ContextEnum.OTHER);}
+    public static Context ext(String extValue) { return Context.builder().extValue(extValue).build(); }
+
+    public static List<ContextEnum> getContextEnumValues(Collection<Context> contexts) {
+
+        if (contexts == null)
             return null;
+
+        List<ContextEnum> enumValues = new ArrayList<>();
+        for (Context context : contexts) {
+            if (context.rfcValue != null)
+                enumValues.add(context.getRfcValue());
         }
-    }
 
-    @JsonIgnore
-    public static String getVCardType(Context context) {
-
-        return EnumUtils.getVCardType(context);
+        return enumValues;
     }
 
 }
-

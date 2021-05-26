@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class CategoriesTest extends VCard2JSContactTest {
                 "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCategoriesValid1 - 1",jsCard.getCategories()!=null);
         assertTrue("testCategoriesValid1 - 2",jsCard.getCategories().size() == 4);
         assertTrue("testCategoriesValid1 - 3",jsCard.getCategories().containsKey("INTERNET"));
@@ -53,7 +53,7 @@ public class CategoriesTest extends VCard2JSContactTest {
                 "CATEGORIES:TRAVEL AGENT\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCategoriesValid2 - 1",jsCard.getCategories()!=null);
         assertTrue("testCategoriesValid2 - 2",jsCard.getCategories().size() == 5);
         assertTrue("testCategoriesValid2 - 3",jsCard.getCategories().containsKey("INTERNET"));

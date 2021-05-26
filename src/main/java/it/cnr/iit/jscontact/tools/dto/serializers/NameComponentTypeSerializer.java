@@ -13,23 +13,25 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.test.validation;
+package it.cnr.iit.jscontact.tools.dto.serializers;
 
-import it.cnr.iit.jscontact.tools.dto.Kind;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
-import it.cnr.iit.jscontact.tools.dto.KindType;
-import it.cnr.iit.jscontact.tools.test.AbstractTest;
-import org.junit.Test;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import it.cnr.iit.jscontact.tools.dto.NameComponentType;
+import lombok.NoArgsConstructor;
 
-public class JSCardTest extends AbstractTest {
+import java.io.IOException;
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidJSCardBuild() {
+@NoArgsConstructor
+public class NameComponentTypeSerializer extends JsonSerializer<NameComponentType> {
 
-        //uid missing
-        JSCard.builder()
-               .kind(KindType.builder().rfcValue(Kind.INDIVIDUAL).build())
-               .build();
+    @Override
+    public void serialize(
+            NameComponentType type, JsonGenerator jgen, SerializerProvider provider)
+            throws IOException {
+
+        jgen.writeString((type.getRfcValue()!=null) ? type.getRfcValue().getValue() : type.getExtValue());
+
     }
-
 }

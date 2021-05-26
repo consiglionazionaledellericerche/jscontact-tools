@@ -13,19 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.test.validation;
+package it.cnr.iit.jscontact.tools.dto.serializers;
 
-import it.cnr.iit.jscontact.tools.test.AbstractTest;
-import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
-import org.junit.Test;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import it.cnr.iit.jscontact.tools.dto.Context;
+import lombok.NoArgsConstructor;
 
-public class JSCardGroupTest extends AbstractTest {
+import java.io.IOException;
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidJSCardGroupBuild() {
+@NoArgsConstructor
+public class ContextSerializer extends JsonSerializer<Context> {
 
-        //uid missing
-        JSCardGroup.builder().build();
+    @Override
+    public void serialize(
+            Context context, JsonGenerator jgen, SerializerProvider provider)
+            throws IOException {
+
+        jgen.writeString((context.getRfcValue()!=null) ? context.getRfcValue().getValue() : context.getExtValue());
     }
-
 }

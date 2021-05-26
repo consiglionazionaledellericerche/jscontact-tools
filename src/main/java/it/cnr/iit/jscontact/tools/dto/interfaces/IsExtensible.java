@@ -13,24 +13,8 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.constraints;
+package it.cnr.iit.jscontact.tools.dto.interfaces;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.JSCardKindValidator;
-
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.*;
-
-@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {JSCardKindValidator.class})
-@Documented
-public @interface JSCardKindConstraint {
-
-    String message() default "invalid kind in JSCard";
-
-    Class<?>[] groups() default { };
-
-    Class<? extends Payload>[] payload() default { };
+public interface IsExtensible {
+    String getValue();
 }
-

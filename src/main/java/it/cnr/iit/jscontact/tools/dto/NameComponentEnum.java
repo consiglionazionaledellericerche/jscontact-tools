@@ -17,18 +17,19 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum Kind {
+public enum NameComponentEnum implements IsExtensible {
 
-    INDIVIDUAL("individual"),
-    ORG("org"),
-    LOCATION("location"),
-    DEVICE("device"),
-    APPLICATION("application"),
-    GROUP("group");
+    SURNAME("surname"),
+    PERSONAL("personal"),
+    ADDITIONAL("additional"),
+    PREFIX("prefix"),
+    SUFFIX("suffix"),
+    SEPARATOR("separator");
 
     private String value;
 
@@ -38,8 +39,8 @@ public enum Kind {
     }
 
     @JsonCreator
-    public static Kind getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(Kind.class, value);
+    public static NameComponentEnum getEnum(String value) throws IllegalArgumentException {
+        return EnumUtils.getEnum(NameComponentEnum.class, value);
     }
 
     @Override

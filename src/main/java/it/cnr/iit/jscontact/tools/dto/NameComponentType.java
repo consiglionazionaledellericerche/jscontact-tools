@@ -15,36 +15,24 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
-import lombok.AllArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@AllArgsConstructor
-public enum NameComponentType {
+import java.io.Serializable;
 
-    SURNAME("surname"),
-    PERSONAL("personal"),
-    ADDITIONAL("additional"),
-    PREFIX("prefix"),
-    SUFFIX("suffix");
+@Getter
+@Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
+public class NameComponentType extends ExtensibleEnum<NameComponentEnum> implements Serializable {
 
-    private String value;
 
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
-
-    @JsonCreator
-    public static NameComponentType getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(NameComponentType.class, value);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
+    public static NameComponentType rfc(NameComponentEnum rfcValue) { return NameComponentType.builder().rfcValue(rfcValue).build();}
+    public static NameComponentType prefix() { return rfc(NameComponentEnum.PREFIX);}
+    public static NameComponentType personal() { return rfc(NameComponentEnum.PERSONAL);}
+    public static NameComponentType surname() { return rfc(NameComponentEnum.SURNAME);}
+    public static NameComponentType additional() { return rfc(NameComponentEnum.ADDITIONAL);}
+    public static NameComponentType separator() { return rfc(NameComponentEnum.SEPARATOR);}
+    public static NameComponentType suffix() { return rfc(NameComponentEnum.SUFFIX);}
 }
-

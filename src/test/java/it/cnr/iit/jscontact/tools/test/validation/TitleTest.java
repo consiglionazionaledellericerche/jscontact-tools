@@ -1,6 +1,6 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.LocalizedString;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.Title;
@@ -32,10 +32,10 @@ public class TitleTest extends AbstractTest {
     public void testInvalidTitleOrganization1() {
 
         // missing title organization id due to missing organization
-        Map<String,Title> jobTiles = new HashMap<>();
+        Map jobTiles = new HashMap<String,Title>();
         jobTiles.put("title-1", Title.builder().title(LocalizedString.builder().value("Researcher").build()).organization("IIT CNR").build());
 
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .titles(jobTiles)
                 .build();
@@ -48,11 +48,11 @@ public class TitleTest extends AbstractTest {
     public void testInvalidTitleOrganization2() {
 
         // missing title organization id among organization ids
-        Map<String,Title> jobTiles = new HashMap<>();
+        Map jobTiles = new HashMap<String,Title>();
         jobTiles.put("title-1", Title.builder().title(LocalizedString.builder().value("Researcher").build()).organization("IIT CNR").build());
-        Map<String,Organization> organizations = new HashMap<>();
+        Map organizations = new HashMap<String,Organization>();
         organizations.put("organization-1", Organization.builder().name(LocalizedString.builder().value("an organization").build()).build());
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .titles(jobTiles)
                 .organizations(organizations)

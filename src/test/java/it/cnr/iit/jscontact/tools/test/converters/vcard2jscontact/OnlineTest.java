@@ -15,7 +15,8 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "IMPP;TYPE=home;PREF=1:xmpp:alice@example.com\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid1 - 1",jsCard.getOnline().size() == 1);
         assertTrue("testOnlineValid1 - 2",jsCard.getOnline().get("XMPP-1").getResource().equals("xmpp:alice@example.com"));
         assertTrue("testOnlineValid1 - 3",jsCard.getOnline().get("XMPP-1").asPrivate());
@@ -53,7 +54,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "SOURCE:http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid2 - 1",jsCard.getOnline().size() == 1);
         assertTrue("testOnlineValid2 - 2",jsCard.getOnline().get("SOURCE-1").getResource().equals("http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf"));
         assertTrue("testOnlineValid2 - 3",jsCard.getOnline().get("SOURCE-1").isUri());
@@ -72,12 +73,12 @@ public class OnlineTest extends VCard2JSContactTest {
                 "LOGO:http://www.example.com/pub/logos/abccorp.jpg\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid4 - 1",jsCard.getOnline().size() == 1);
         assertTrue("testOnlineValid4 - 2",jsCard.getOnline().get("LOGO-1").getResource().equals("http://www.example.com/pub/logos/abccorp.jpg"));
         assertTrue("testOnlineValid4 - 3",jsCard.getOnline().get("LOGO-1").isUri());
         assertTrue("testOnlineValid4 - 4",jsCard.getOnline().get("LOGO-1").getPref() == null);
-        assertTrue("testOnlineValid4 - 5",jsCard.getOnline().get("LOGO-1").getMediaType() == null);
+        assertTrue("testOnlineValid4 - 5",jsCard.getOnline().get("LOGO-1").getMediaType().equals(MimeTypeUtils.MIME_IMAGE_JPEG));
         assertTrue("testOnlineValid4 - 6",jsCard.getOnline().get("LOGO-1").asLogo());
         assertTrue("testOnlineValid4 - 7",jsCard.getOnline().get("LOGO-1").hasNoContext());
     }
@@ -91,7 +92,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "CONTACT-URI;PREF=1:mailto:contact@example.com\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid5 - 1",jsCard.getOnline().size() == 1);
         assertTrue("testOnlineValid5 - 2",jsCard.getOnline().get("CONTACT-URI-1").getResource().equals("mailto:contact@example.com"));
         assertTrue("testOnlineValid5 - 3",jsCard.getOnline().get("CONTACT-URI-1").isUri());
@@ -111,7 +112,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "ORG-DIRECTORY;INDEX=1:http://directory.mycompany.example.com\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid6 - 1",jsCard.getOnline().size() == 2);
         assertTrue("testOnlineValid6 - 2",jsCard.getOnline().get("ORG-DIRECTORY-1").getResource().equals("http://directory.mycompany.example.com"));
         assertTrue("testOnlineValid6 - 3",jsCard.getOnline().get("ORG-DIRECTORY-1").isUri());
@@ -137,7 +138,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "ORG-DIRECTORY;INDEX=1:http://directory.mycompany.example.com\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid7 - 1",jsCard.getOnline().size() == 2);
         assertTrue("testOnlineValid7 - 2",jsCard.getOnline().get("ORG-DIRECTORY-1").getResource().equals("http://directory.mycompany.example.com"));
         assertTrue("testOnlineValid7 - 3",jsCard.getOnline().get("ORG-DIRECTORY-1").isUri());
@@ -163,7 +164,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "SOUND:CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid8 - 1",jsCard.getOnline().size() == 1);
         assertTrue("testOnlineValid8 - 2",jsCard.getOnline().get("SOUND-1").getResource().equals("CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com"));
         assertTrue("testOnlineValid8 - 3",jsCard.getOnline().get("SOUND-1").isUri());
@@ -182,12 +183,12 @@ public class OnlineTest extends VCard2JSContactTest {
                 "URL:http://example.org/restaurant.french/~chezchic.htm\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid9 - 1",jsCard.getOnline().size() == 1);
         assertTrue("testOnlineValid9 - 2",jsCard.getOnline().get("URL-1").getResource().equals("http://example.org/restaurant.french/~chezchic.htm"));
         assertTrue("testOnlineValid9 - 3",jsCard.getOnline().get("URL-1").isUri());
         assertTrue("testOnlineValid9 - 4",jsCard.getOnline().get("URL-1").getPref() == null);
-        assertTrue("testOnlineValid9 - 5",jsCard.getOnline().get("URL-1").getMediaType() == null);
+        assertTrue("testOnlineValid9 - 5",jsCard.getOnline().get("URL-1").getMediaType().equals(MimeTypeUtils.MIME_TEXT_HTML));
         assertTrue("testOnlineValid9 - 6",jsCard.getOnline().get("URL-1").hasNoContext());
         assertTrue("testOnlineValid9 - 7",jsCard.getOnline().get("URL-1").asUrl());
     }
@@ -201,7 +202,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "KEY:http://www.example.com/keys/jdoe.cer\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid10 - 1",jsCard.getOnline().size() == 1);
         assertTrue("testOnlineValid10 - 2",jsCard.getOnline().get("KEY-1").getResource().equals("http://www.example.com/keys/jdoe.cer"));
         assertTrue("testOnlineValid10 - 3",jsCard.getOnline().get("KEY-1").isUri());
@@ -222,7 +223,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "FBURL;MEDIATYPE=text/calendar:ftp://example.com/busy/project-a.ifb\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid11 - 1",jsCard.getOnline().size() == 2);
         assertTrue("testOnlineValid11 - 2",jsCard.getOnline().get("FBURL-1").getResource().equals("http://www.example.com/busy/janedoe"));
         assertTrue("testOnlineValid11 - 3",jsCard.getOnline().get("FBURL-1").isUri());
@@ -248,7 +249,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "CALADRURI:http://example.com/calendar/jdoe\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid12 - 1",jsCard.getOnline().size() == 2);
         assertTrue("testOnlineValid12 - 2",jsCard.getOnline().get("CALADRURI-1").getResource().equals("mailto:janedoe@example.com"));
         assertTrue("testOnlineValid12 - 3",jsCard.getOnline().get("CALADRURI-1").isUri());
@@ -274,7 +275,7 @@ public class OnlineTest extends VCard2JSContactTest {
                 "CALURI;MEDIATYPE=text/calendar:ftp://ftp.example.com/calA.ics\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOnlineValid13 - 1",jsCard.getOnline().size() == 2);
         assertTrue("testOnlineValid13 - 2",jsCard.getOnline().get("CALURI-1").getResource().equals("http://cal.example.com/calA"));
         assertTrue("testOnlineValid13 - 3",jsCard.getOnline().get("CALURI-1").isUri());

@@ -1,10 +1,13 @@
 [
   {
     "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
-    "fullName": {
-      "value": "a group"
+    "card": {
+      "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
+      "fullName": {
+        "value": "a group"
+      },
+      "kind": "group"
     },
-    "kind": "group",
     "members": {
       "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8": true,
       "8626d863-8c3f-405c-a2cb-bbbb3e3b359f": true,
@@ -47,8 +50,7 @@
     "addresses": {
       "ADR-1": {
         "contexts": {"work": true},
-        "extension": "Suite 1234",
-        "street": "4321 Rue Somewhere",
+        "street": [{"type": "name","value": "4321 Rue Somewhere"},{"type": "extension","value": "Suite 1234"}],
         "locality": "Quebec",
         "region": "QC",
         "postcode": "G1V 2M2",

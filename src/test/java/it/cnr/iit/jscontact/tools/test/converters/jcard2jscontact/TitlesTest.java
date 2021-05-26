@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {\"altid\" : \"1\"}, \"text\", \"Research Scientist\"]," +
                 "[\"title\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Ricercatore\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testTitleWithAltid1 - 1",jsCard.getTitles()!=null);
         assertTrue("testTitleWithAltid1 - 2",jsCard.getTitles().size() == 1);
         assertTrue("testTitleWithAltid1 - 3",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Research Scientist"));
@@ -51,7 +51,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {}, \"text\", \"Research Scientist\"]," +
                 "[\"title\", {\"language\" : \"it\"}, \"text\", \"Ricercatore\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testTitleWithoutAltid - 1",jsCard.getTitles()!=null);
         assertTrue("testTitleWithoutAltid - 2",jsCard.getTitles().size() == 2);
         assertTrue("testTitleWithoutAltid - 3",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Research Scientist"));
@@ -71,7 +71,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Ricercatore\"]," +
                 "[\"title\", {\"pref\" : \"1\"}, \"text\", \"IETF Area Director\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testTitleWithAltid2 - 1",jsCard.getTitles()!=null);
         assertTrue("testTitleWithAltid2 - 2",jsCard.getTitles().size() == 2);
         assertTrue("testTitleWithAltid2 - 3",jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Research Scientist"));
@@ -90,7 +90,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {\"altid\" : \"1\"}, \"text\", \"Project Leader\"]," +
                 "[\"role\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Capo Progetto\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testRoleWithAltid1 - 1",jsCard.getTitles()!=null);
         assertTrue("testRoleWithAltid1 - 2",jsCard.getTitles().size() == 1);
         assertTrue("testRoleWithAltid1 - 3",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Project Leader"));
@@ -108,7 +108,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {}, \"text\", \"Project Leader\"]," +
                 "[\"role\", {\"language\" : \"it\"}, \"text\", \"Capo Progetto\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testRoleWithoutAltid - 1",jsCard.getTitles()!=null);
         assertTrue("testRoleWithoutAltid - 2",jsCard.getTitles().size() == 2);
         assertTrue("testRoleWithoutAltid - 3",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Project Leader"));
@@ -128,7 +128,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Capo Progetto\"], " +
                 "[\"role\", {\"pref\" : \"1\"}, \"text\", \"IETF Area Director\"]" +
                 "]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testRoleWithAltid2 - 1",jsCard.getTitles()!=null);
         assertTrue("testRoleWithAltid2 - 2",jsCard.getTitles().size() == 2);
         assertTrue("testRoleWithAltid2 - 3",jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Project Leader"));

@@ -34,6 +34,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Anniversary extends GroupableObject implements Serializable {
 
+    public static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
+
     @NotNull(message = "type is missing in Anniversary")
     @NonNull
     AnniversaryType type;
@@ -54,5 +56,16 @@ public class Anniversary extends GroupableObject implements Serializable {
     @JsonIgnore
     public boolean isDeath() { return type == AnniversaryType.DEATH; }
     @JsonIgnore
+    public boolean isMarriage() { return type == AnniversaryType.OTHER && label.equals(ANNIVERSAY_MARRIAGE_LABEL); }
+    @JsonIgnore
     public boolean isOtherAnniversary() { return type == AnniversaryType.OTHER; }
+
+    private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String label) {
+        return Anniversary.builder().type(type).date(date).label(label).build();
+    }
+    public static Anniversary birth(String date) { return anniversary(AnniversaryType.BIRTH, AnniversaryDate.parse(date), null);}
+    public static Anniversary death(String date) { return anniversary(AnniversaryType.DEATH, AnniversaryDate.parse(date), null);}
+    public static Anniversary marriage(String date) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}
+    public static Anniversary otherAnniversary(String date, String label) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), label);}
+
 }

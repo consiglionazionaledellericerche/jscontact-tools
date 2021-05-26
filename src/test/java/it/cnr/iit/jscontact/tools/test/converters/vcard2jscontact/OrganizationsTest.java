@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "ORG;ALTID=1;LANGUAGE=it:ABC, Spa.;Divisione Nord America;Marketing\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOrganizationsWithAltid1 - 1",jsCard.getOrganizations()!=null);
         assertTrue("testOrganizationsWithAltid1 - 2",jsCard.getOrganizations().size() == 1);
         assertTrue("testOrganizationsWithAltid1 - 3",jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("ABC, Inc."));
@@ -67,7 +67,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "ORG;LANGUAGE=it:ABC, Spa.;Divisione Nord America;Marketing\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOrganizationsWithoutAltid - 1",jsCard.getOrganizations()!=null);
         assertTrue("testOrganizationsWithoutAltid - 2",jsCard.getOrganizations().size() == 2);
         assertTrue("testOrganizationsWithoutAltid - 3",jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("ABC, Inc."));
@@ -105,7 +105,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "ORG;PREF=1:University of North America\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testOrganizationsWithAltid2 - 1",jsCard.getOrganizations()!=null);
         assertTrue("testOrganizationsWithAltid2 - 2",jsCard.getOrganizations().size() == 2);
         assertTrue("testOrganizationsWithAltid2 - 3",jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("University of North America"));

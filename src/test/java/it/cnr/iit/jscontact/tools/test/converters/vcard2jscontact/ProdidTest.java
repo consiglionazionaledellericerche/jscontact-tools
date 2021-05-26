@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class ProdidTest extends VCard2JSContactTest {
                 "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN\n" +
                 "END:VCARD";
 
-        JSCard jsCard = (JSCard) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testProdidValid - 1",jsCard.getProdId().equals("-//ONLINE DIRECTORY//NONSGML Version 1//EN"));
     }
 

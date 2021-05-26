@@ -26,4 +26,21 @@ public class AnniversaryDate implements Serializable {
         else
           return DateUtils.toJSContactPartialDateText(partialDate).equals(text);
     }
+
+
+    public static AnniversaryDate parse(String text) {
+
+        try {
+            Calendar date = DateUtils.toCalendar(text);
+            return AnniversaryDate.builder().date(date).build();
+        } catch (Exception e) {
+            try {
+                PartialDate partialDate = PartialDate.parse(DateUtils.toVCardPartialDateText(text));
+                return AnniversaryDate.builder().partialDate(partialDate).build();
+            } catch (Exception e1) {
+                return null;
+            }
+        }
+
+    }
 }

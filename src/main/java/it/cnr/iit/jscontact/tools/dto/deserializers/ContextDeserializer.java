@@ -13,24 +13,30 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto.serializers;
+package it.cnr.iit.jscontact.tools.dto.deserializers;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import it.cnr.iit.jscontact.tools.dto.KindType;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import it.cnr.iit.jscontact.tools.dto.Context;
+import it.cnr.iit.jscontact.tools.dto.ContextEnum;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 @NoArgsConstructor
-public class KindSerializer extends JsonSerializer<KindType> {
+public class ContextDeserializer extends JsonDeserializer<Context> {
 
     @Override
-    public void serialize(
-            KindType kind, JsonGenerator jgen, SerializerProvider provider)
+    public Context deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
-
-        jgen.writeString((kind.getRfcValue()!=null) ? kind.getRfcValue().getValue() : kind.getExtValue());
+        JsonNode node = jp.getCodec().readTree(jp);
+        String value = node.asText();
+        try {
+            return Context.builder().rfcValue(ContextEnum.getEnum(value)).build();
+        } catch (IllegalArgumentException e) {
+            return Context.builder().extValue(value).build();
+        }
     }
 }

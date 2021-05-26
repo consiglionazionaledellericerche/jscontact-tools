@@ -19,24 +19,36 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.Kind;
-import it.cnr.iit.jscontact.tools.dto.KindType;
+import it.cnr.iit.jscontact.tools.dto.RelationEnum;
+import it.cnr.iit.jscontact.tools.dto.RelationType;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 @NoArgsConstructor
-public class KindDeserializer extends JsonDeserializer<KindType> {
+public class RelationDeserializer extends JsonDeserializer<Map<RelationType,Boolean>> {
 
     @Override
-    public KindType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public Map<RelationType,Boolean> deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        String value = node.asText();
-        try {
-            return KindType.builder().rfcValue(Kind.getEnum(value)).build();
-        } catch (IllegalArgumentException e) {
-            return KindType.builder().extValue(value).build();
+        Map<RelationType,Boolean> relation = new HashMap<>();
+        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
+        while (iter.hasNext()) {
+            Map.Entry<String, JsonNode> entry = iter.next();
+            String type = entry.getKey();
+            Boolean value = entry.getValue().asBoolean();
+            RelationType relationType;
+            try {
+                relationType = RelationType.builder().rfcValue(RelationEnum.getEnum(type)).build();
+            } catch (IllegalArgumentException e) {
+                relationType = RelationType.builder().extValue(type).build();
+            }
+            relation.put(relationType,value);
         }
+        return relation;
     }
 }

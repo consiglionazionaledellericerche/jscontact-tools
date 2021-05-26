@@ -109,7 +109,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCardValid() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testJCardValid - 1",jsCard != null);
         assertTrue("testJCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertTrue("testJCardValid - 3",jsCard.getFullName().getValue().equals("test"));
@@ -126,7 +126,7 @@ public class JCardTest extends JCard2JSContactTest {
                         .build()
                 )
                 .build();
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testExtendedJCardValid - 1",jsCard != null);
         assertTrue("testExtendedJCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertTrue("testExtendedJCardValid - 3",jsCard.getFullName().getValue().equals("test"));
@@ -139,7 +139,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard1() throws IOException, CardException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(json).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
         assertTrue("testCompleteJCard1 - 1", jsCard.getFullName().getValue().equals("Joe User"));
         assertTrue("testCompleteJCard1 - 2", jsCard.getKind().isIndividual());
         assertTrue("testCompleteJCard1 - 3", jsCard.getName().length == 4);
@@ -159,8 +159,8 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 17", jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Project Lead"));
         assertTrue("testCompleteJCard1 - 18", jsCard.getAddresses().size() == 2);
         assertTrue("testCompleteJCard1 - 19", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada"));
-        assertTrue("testCompleteJCard1 - 20", jsCard.getAddresses().get("ADR-1").getExtension().equals("Suite 1234"));
-        assertTrue("testCompleteJCard1 - 21", jsCard.getAddresses().get("ADR-1").getStreet().equals("4321 Rue Somewhere"));
+        assertTrue("testCompleteJCard1 - 20", jsCard.getAddresses().get("ADR-1").getStreetExtensions().equals("Suite 1234"));
+        assertTrue("testCompleteJCard1 - 21", jsCard.getAddresses().get("ADR-1").getStreetDetails().equals("4321 Rue Somewhere"));
         assertTrue("testCompleteJCard1 - 22", jsCard.getAddresses().get("ADR-1").getLocality().equals("Quebec"));
         assertTrue("testCompleteJCard1 - 23", jsCard.getAddresses().get("ADR-1").getRegion().equals("QC"));
         assertTrue("testCompleteJCard1 - 24", jsCard.getAddresses().get("ADR-1").getCountry().equals("Canada"));
@@ -201,7 +201,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard2() throws IOException, CardException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Multilingual.json"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(json).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
         assertTrue("testCompleteJCard2 - 1", jsCard.getFullName().getValue().equals("大久保 正仁"));
         assertTrue("testCompleteJCard2 - 2", jsCard.getFullName().getLanguage().equals("ja"));
         assertTrue("testCompleteJCard2 - 3", jsCard.getFullName().getLocalizations().get("en").equals("Okubo Masahito"));
@@ -221,7 +221,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard3() throws IOException, CardException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Unstructured.json"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(json).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
         assertTrue("testCompleteJCard3 - 1", jsCard.getFullName().getValue().equals("台灣固網股份有限公司"));
         assertTrue("testCompleteJCard3 - 2", jsCard.getFullName().getLanguage().equals("zh-Hant-TW"));
         assertTrue("testCompleteJCard3 - 3", jsCard.getFullName().getLocalizations().get("en").equals("Taiwan Fixed Network CO.,LTD."));
@@ -244,7 +244,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard4() throws IOException, CardException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7095.json"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(json).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
         assertTrue("testCompleteJCard4 - 1", jsCard.getFullName().getValue().equals("Simon Perreault"));
         assertTrue("testCompleteJCard4 - 2", jsCard.getKind() == null);
         assertTrue("testCompleteJCard4 - 3", jsCard.getName().length == 4);
@@ -268,8 +268,8 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 21", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Viagenie"));
         assertTrue("testCompleteJCard4 - 22", jsCard.getAddresses().size() == 1);
         assertTrue("testCompleteJCard4 - 23", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("Suite D2-630\n2875 Laurier\nQuebec\nQC\nG1V 2M2\nCanada"));
-        assertTrue("testCompleteJCard4 - 24", jsCard.getAddresses().get("ADR-1").getExtension().equals("Suite D2-630"));
-        assertTrue("testCompleteJCard4 - 25", jsCard.getAddresses().get("ADR-1").getStreet().equals("2875 Laurier"));
+        assertTrue("testCompleteJCard4 - 24", jsCard.getAddresses().get("ADR-1").getStreetExtensions().equals("Suite D2-630"));
+        assertTrue("testCompleteJCard4 - 25", jsCard.getAddresses().get("ADR-1").getStreetDetails().equals("2875 Laurier"));
         assertTrue("testCompleteJCard4 - 26", jsCard.getAddresses().get("ADR-1").getLocality().equals("Quebec"));
         assertTrue("testCompleteJCard4 - 27", jsCard.getAddresses().get("ADR-1").getRegion().equals("QC"));
         assertTrue("testCompleteJCard4 - 28", jsCard.getAddresses().get("ADR-1").getCountry().equals("Canada"));
@@ -305,7 +305,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard5() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Wikipedia.json"), Charset.forName("UTF-8"));
-        JSCard jsCard = (JSCard) jCard2JSContact.convert(vcard).get(0);
+        Card jsCard = (Card) jCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteJCard5 - 1", jsCard.getFullName().getValue().equals("Forrest Gump"));
         assertTrue("testCompleteJCard5 - 2", jsCard.getKind() == null);
         assertTrue("testCompleteJCard5 - 3", jsCard.getName().length == 3);
@@ -333,14 +333,14 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 27", jsCard.getAddresses().get("ADR-1").asWork());
         assertTrue("testCompleteJCard5 - 28", jsCard.getAddresses().get("ADR-1").getPref() == 1);
         assertTrue("testCompleteJCard5 - 29", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("100 Waters Edge\nBaytown, LA 30314\nUnited States of America"));
-        assertTrue("testCompleteJCard5 - 30", jsCard.getAddresses().get("ADR-1").getStreet().equals("100 Waters Edge"));
+        assertTrue("testCompleteJCard5 - 30", jsCard.getAddresses().get("ADR-1").getStreetDetails().equals("100 Waters Edge"));
         assertTrue("testCompleteJCard5 - 31", jsCard.getAddresses().get("ADR-1").getLocality().equals("Baytown"));
         assertTrue("testCompleteJCard5 - 32", jsCard.getAddresses().get("ADR-1").getRegion().equals("LA"));
         assertTrue("testCompleteJCard5 - 33", jsCard.getAddresses().get("ADR-1").getCountry().equals("United States of America"));
         assertTrue("testCompleteJCard5 - 34", jsCard.getAddresses().get("ADR-1").getPostcode().equals("30314"));
         assertTrue("testCompleteJCard5 - 35", jsCard.getAddresses().get("ADR-2").asPrivate());
         assertTrue("testCompleteJCard5 - 36", jsCard.getAddresses().get("ADR-2").getFullAddress().getValue().equals("42 Plantation St.\nBaytown, LA 30314\nUnited States of America"));
-        assertTrue("testCompleteJCard5 - 37", jsCard.getAddresses().get("ADR-2").getStreet().equals("42 Plantation St."));
+        assertTrue("testCompleteJCard5 - 37", jsCard.getAddresses().get("ADR-2").getStreetDetails().equals("42 Plantation St."));
         assertTrue("testCompleteJCard5 - 38", jsCard.getAddresses().get("ADR-2").getLocality().equals("Baytown"));
         assertTrue("testCompleteJCard5 - 39", jsCard.getAddresses().get("ADR-2").getRegion().equals("LA"));
         assertTrue("testCompleteJCard5 - 40", jsCard.getAddresses().get("ADR-2").getCountry().equals("United States of America"));

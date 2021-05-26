@@ -17,6 +17,10 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.NameComponentTypeSerializer;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -29,23 +33,51 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class NameComponent extends GroupableObject implements Serializable {
 
+    @NotNull(message = "type is missing in NameComponent")
+    @NonNull
+    @JsonSerialize(using = NameComponentTypeSerializer.class)
+    @JsonDeserialize(using = NameComponentTypeDeserializer.class)
+    NameComponentType type;
+
     @NotNull(message = "value is missing in NameComponent")
     @NonNull
     String value;
 
-    @NotNull(message = "type is missing in NameComponent")
-    @NonNull
-    NameComponentType type;
+    private boolean isRfc(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);}
 
     @JsonIgnore
-    public boolean isPrefix() { return type == NameComponentType.PREFIX; }
+    public boolean isPrefix() { return isRfc(NameComponentEnum.PREFIX); }
     @JsonIgnore
-    public boolean isPersonal() { return type == NameComponentType.PERSONAL; }
+    public boolean isPersonal() { return isRfc(NameComponentEnum.PERSONAL); }
     @JsonIgnore
-    public boolean isSurname() { return type == NameComponentType.SURNAME; }
+    public boolean isSurname() { return isRfc(NameComponentEnum.SURNAME); }
     @JsonIgnore
-    public boolean isAdditional() { return type == NameComponentType.ADDITIONAL; }
+    public boolean isAdditional() { return isRfc(NameComponentEnum.ADDITIONAL); }
     @JsonIgnore
-    public boolean isSuffix() { return type == NameComponentType.SUFFIX; }
+    public boolean isSuffix() { return isRfc(NameComponentEnum.SUFFIX); }
+    @JsonIgnore
+    public boolean isSeparator() { return isRfc(NameComponentEnum.SEPARATOR); }
+    @JsonIgnore
+    public boolean isExt() { return type.isExtValue(); }
+
+    private static NameComponent rfc(NameComponentEnum rfcValue, String value) {
+        return NameComponent.builder()
+                .value(value)
+                .type(NameComponentType.builder().rfcValue(rfcValue).build())
+                .build();
+    }
+    public static NameComponent prefix(String value) {return rfc(NameComponentEnum.PREFIX, value);}
+    public static NameComponent personal(String value) {return rfc(NameComponentEnum.PERSONAL, value);}
+    public static NameComponent surname(String value) {return rfc(NameComponentEnum.SURNAME, value);}
+    public static NameComponent additional(String value) {return rfc(NameComponentEnum.ADDITIONAL, value);}
+    public static NameComponent suffix(String value) {return rfc(NameComponentEnum.SUFFIX, value);}
+    public static NameComponent separator(String value) {return rfc(NameComponentEnum.SEPARATOR, value);}
+    public static NameComponent ext(String extValue, String value) {
+        return NameComponent.builder()
+                .value(value)
+                .type(NameComponentType.builder().extValue(extValue).build())
+                .build();
+    }
+
 
 }

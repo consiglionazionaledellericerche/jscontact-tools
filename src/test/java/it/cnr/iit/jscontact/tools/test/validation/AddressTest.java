@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -30,11 +30,11 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testInvalidCountryCode() {
 
-        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                                 .countryCode("ita")
                                                                                 .build());
                                                                         }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -45,11 +45,11 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testValidCountryCode() {
 
-        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                                 .countryCode("it")
                                                                                 .build());
                                                                        }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -61,11 +61,11 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testInvalidCoordinates() {
 
-        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                             .coordinates("46.772673,-71.282945")
                                                                             .build());
                                                                     }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -77,11 +77,11 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testValidCoordinates() {
 
-        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                         .coordinates("geo:46.772673,-71.282945")
                                                                         .build());
                                                                        }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
@@ -93,11 +93,11 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testInvalidAddressId() {
 
-        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("$$$$$", Address.builder()
+        Map addresses = new HashMap<String,Address>() {{ put("$$$$$", Address.builder()
                 .coordinates("geo:46.772673,-71.282945")
                 .build());
         }};
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();

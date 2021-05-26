@@ -19,13 +19,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import ezvcard.util.PartialDate;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
-import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 @NoArgsConstructor
 public class AnniversaryDateDeserializer extends JsonDeserializer<AnniversaryDate> {
@@ -35,16 +32,6 @@ public class AnniversaryDateDeserializer extends JsonDeserializer<AnniversaryDat
     public AnniversaryDate deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        try {
-            Calendar date = DateUtils.toCalendar(node.asText());
-            return AnniversaryDate.builder().date(date).build();
-        } catch (Exception e) {
-            try {
-                PartialDate partialDate = PartialDate.parse(DateUtils.toVCardPartialDateText(node.asText()));
-                return AnniversaryDate.builder().partialDate(partialDate).build();
-            } catch (Exception e1) {
-                return null;
-            }
-        }
+        return AnniversaryDate.parse(node.asText());
     }
 }

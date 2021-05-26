@@ -16,30 +16,38 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
-@Builder
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString(callSuper = true)
 @NoArgsConstructor
-public class KindType implements Serializable {
+@SuperBuilder
+public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
 
-    Kind rfcValue;
-    String extValue;
+    private boolean isRfc(KindEnum value) { return isRfcValue() && rfcValue == value; }
+    @JsonIgnore
+    public boolean isIndividual() { return isRfc(KindEnum.INDIVIDUAL); }
+    @JsonIgnore
+    public boolean isGroup() { return isRfc(KindEnum.GROUP); }
+    @JsonIgnore
+    public boolean isOrg() { return isRfc(KindEnum.ORG); }
+    @JsonIgnore
+    public boolean isDevice() { return isRfc(KindEnum.DEVICE); }
+    @JsonIgnore
+    public boolean isApplication() { return isRfc(KindEnum.APPLICATION); }
+    @JsonIgnore
+    public boolean isLocation() { return isRfc(KindEnum.LOCATION); }
 
-    private boolean isRfc(Kind rfcKind) { return (rfcValue !=null && rfcValue == rfcKind);};
-    @JsonIgnore
-    public boolean isGroup() { return isRfc(Kind.GROUP); }
-    @JsonIgnore
-    public boolean isIndividual() { return isRfc(Kind.INDIVIDUAL); }
-    @JsonIgnore
-    public boolean isOrg() {
-        return isRfc(Kind.ORG);
-    }
-
+    private static KindType rfc(KindEnum rfcValue) { return KindType.builder().rfcValue(rfcValue).build(); }
+    public static KindType individual() { return rfc(KindEnum.INDIVIDUAL);}
+    public static KindType group() { return rfc(KindEnum.GROUP);}
+    public static KindType org() { return rfc(KindEnum.ORG);}
+    public static KindType device() { return rfc(KindEnum.DEVICE);}
+    public static KindType location() { return rfc(KindEnum.LOCATION);}
+    public static KindType application() { return rfc(KindEnum.APPLICATION);}
+    private static KindType ext(String extValue) { return KindType.builder().extValue(extValue).build(); }
 }

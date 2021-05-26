@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
 import it.cnr.iit.jscontact.tools.dto.Context;
-import it.cnr.iit.jscontact.tools.dto.JSCard;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -33,8 +33,8 @@ public class ContactLanguageTest extends AbstractTest {
     @Test
     public void testValidContactLanguage1() {
 
-        Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().context(Context.WORK).build()});}};
-        JSCard jsCard = JSCard.builder()
+        Map map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().context(Context.work()).build()});}};
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
                 .build();
@@ -45,8 +45,8 @@ public class ContactLanguageTest extends AbstractTest {
     @Test
     public void testValidContactLanguage2() {
 
-        Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().pref(1).build()});}};
-        JSCard jsCard = JSCard.builder()
+        Map map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().pref(1).build()});}};
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
                 .build();
@@ -56,8 +56,8 @@ public class ContactLanguageTest extends AbstractTest {
     @Test
     public void testValidContactLanguage3() {
 
-        Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().context(Context.WORK).pref(1).build()});}};
-        JSCard jsCard = JSCard.builder()
+        Map map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().context(Context.work()).pref(1).build()});}};
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
                 .build();
@@ -68,7 +68,7 @@ public class ContactLanguageTest extends AbstractTest {
     @Test
     public void testInvalidContactLanguage1() {
 
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(new HashMap<String, ContactLanguage[]>(){{put("it", null); }})
                 .build();
@@ -82,7 +82,7 @@ public class ContactLanguageTest extends AbstractTest {
     @Test
     public void testInvalidContactLanguage2() {
 
-        JSCard jsCard = JSCard.builder()
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(new HashMap<String, ContactLanguage[]>(){{put("it",new ContactLanguage[] { ContactLanguage.builder().build()});}})
                 .build();
@@ -96,8 +96,8 @@ public class ContactLanguageTest extends AbstractTest {
     @Test
     public void testInvalidContactLanguage3() {
 
-        Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().context(Context.WORK).pref(0).build()});}};
-        JSCard jsCard = JSCard.builder()
+        Map map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().context(Context.work()).pref(0).build()});}};
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
                 .build();
@@ -111,8 +111,8 @@ public class ContactLanguageTest extends AbstractTest {
     @Test
     public void testInvalidContactLanguage4() {
 
-        Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().context(Context.WORK).pref(101).build()});}};
-        JSCard jsCard = JSCard.builder()
+        Map map = new HashMap<String, ContactLanguage[]>(){{ put("it", new ContactLanguage[] { ContactLanguage.builder().context(Context.work()).pref(101).build()});}};
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
                 .build();
@@ -126,8 +126,8 @@ public class ContactLanguageTest extends AbstractTest {
     @Test
     public void testInvalidContactLanguage5() {
 
-        Map<String, ContactLanguage[]> map = new HashMap<String, ContactLanguage[]>(){{put("  ", new ContactLanguage[] { ContactLanguage.builder().context(Context.WORK).pref(101).build()});}};
-        JSCard jsCard = JSCard.builder()
+        Map map = new HashMap<String, ContactLanguage[]>(){{put("  ", new ContactLanguage[] { ContactLanguage.builder().context(Context.work()).pref(101).build()});}};
+        Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactLanguages(map)
                 .build();

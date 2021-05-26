@@ -15,21 +15,20 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.JSCardGroupKindConstraint;
-import it.cnr.iit.jscontact.tools.dto.JSCardGroup;
-import it.cnr.iit.jscontact.tools.dto.Kind;
+import it.cnr.iit.jscontact.tools.constraints.CardGroupKindConstraint;
+import it.cnr.iit.jscontact.tools.dto.CardGroup;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class JSCardGroupKindValidator implements ConstraintValidator<JSCardGroupKindConstraint, JSCardGroup> {
+public class CardGroupKindValidator implements ConstraintValidator<CardGroupKindConstraint, CardGroup> {
 
-    public void initialize(JSCardGroupKindConstraint constraintAnnotation) {
+    public void initialize(CardGroupKindConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(JSCardGroup group, ConstraintValidatorContext context) {
+    public boolean isValid(CardGroup group, ConstraintValidatorContext context) {
 
-        return group.getKind() == null || group.getKind().getRfcValue() == null || group.getKind().getRfcValue() == Kind.GROUP;
+        return group.getCard() == null || group.getCard().getKind() == null || group.getCard().getKind().isGroup();
 
     }
 
