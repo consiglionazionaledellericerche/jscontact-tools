@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
 import it.cnr.iit.jscontact.tools.constraints.*;
+import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
@@ -40,7 +41,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @TitleOrganizationConstraint
-@CardKindConstraint
+@CardKindConstraint(groups = CardConstraintsGroup.class)
 @NoArgsConstructor
 @Getter
 @Setter

@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +42,11 @@ public abstract class ValidableObject {
 
         validationMessages = new ArrayList<>();
 
-        Set<ConstraintViolation<ValidableObject>> constraintViolations = ValidatorBuilder.getValidator().validate(this);
+        Set<ConstraintViolation<ValidableObject>> constraintViolations;
+        if (this instanceof Card)
+                constraintViolations = ValidatorBuilder.getValidator().validate(this, CardConstraintsGroup.class);
+            else
+                constraintViolations = ValidatorBuilder.getValidator().validate(this);
         if (constraintViolations.size() > 0) {
             for (ConstraintViolation<ValidableObject> constraintViolation : constraintViolations)
                 validationMessages.add(constraintViolation.getMessage());

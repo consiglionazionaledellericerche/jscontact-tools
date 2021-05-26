@@ -25,6 +25,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.SerializationUtils;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -47,6 +48,7 @@ public class CardGroup extends JSContact implements Serializable {
 
     String name;
 
+    @Valid
     Card card;
 
     public void addMember(String member) {
