@@ -1,6 +1,6 @@
 # jscontact-tools
 
-Java tools for **JSContact** [draft-ietf-jmap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/) creation, validation, serialization/deserialization and conversion from vCard [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
+Java tools for **JSContact** [draft-ietf-jmap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/) creation, validation, serialization/deserialization and conversion from and to vCard [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
 Validation and conversion of vCard formats leverage the features provided by [ez-vcard](https://github.com/mangstadt/ez-vcard) Java library.
 
 # Maven/Gradle
@@ -48,7 +48,7 @@ Here in the following a successful creation of an EmailAddress instance is shown
                                         .build();
 ```
 
-The build method throws the `java.lang.NullPointerException` when a not null property is missing.
+The build method throws the `java.lang.NullPointerException` when a required property is missing.
 Here in the following an unsuccessful creation of an `EmailAddress` instance is shown.
 
 ```
@@ -61,7 +61,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 Creation can be achieved through cloning as well.
 Cloning can be only applied to Card and CardGroup.
 
-Here in the following a test assessing a successful creation of a cloned Card instane.
+Here in the following a test assessing a successful creation of a cloned Card instance.
  
 ```
 
@@ -83,8 +83,8 @@ Here in the following a test assessing a successful creation of a cloned Card in
 ### JSContact validation
 
 Even if topomost JSContact objects, namely **Card** and **CardGroup**, are correctly created by builders, they might need to be validated as they were obtained from an external producer through deserialization.
-Validation is performed on both Card and CardGroup instances by invoking the method `isValid`.
-This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-jmap-jscontact-05], `false` otherwise.
+Validation is performed on both Card and CardGroup objects by invoking the method `isValid`.
+This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-jmap-jscontact], `false` otherwise.
 If the validation process doesn't end successfully, the list of error messages can be obtained by calling the `getValidationMessages` method.  
 Here in the following a method testing an unsuccessfully ended validation is shown.
 
@@ -92,7 +92,8 @@ Here in the following a method testing an unsuccessfully ended validation is sho
 
     @Test
     public void testInvalidCountryCode() {
-
+        
+        // a contry code must be two-character long
         Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                              .countryCode("ita")
                                                                              .build());
@@ -152,7 +153,7 @@ To pretty print serialized JSContact objects, use the following:
 
 ### Deserialization of a group of cards
 
-Deserialization of a CardGroup object and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. Card instances and CardGroup instances).
+Deserialization of a CardGroup object and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. Card and CardGroup instances).
 
 ```
     @Test
@@ -185,7 +186,7 @@ At present, the following converting methods are available:
 *   XCard2JSContact
     *   List<JSContact> convert(String xml)
 
-All the methods return a list of JSContact (Card or CardGroup) instances and can raise a `CardException`.
+All the methods return a list of JSContact top most objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
@@ -199,18 +200,18 @@ The conversion is executed according to the following rules:
 
 3.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) are matched.
 
-4.  An unmatched property is converted into a topmost Card/CardGroup member with prefix `ietf.org/rfc6350`. The following unmatched properties are considered:
+4.  An unmatched property is converted into a topmost Card/CardGroup property with prefix `ietf.org/rfc6350`. The following unmatched properties are considered:
     GENDER
     CLIENTPIDMAP
     XML
 
-5.  An unmatched parameter is converted into a topmost Card/CardGroup member with prefix `ietf.org/rfc6350/<vCard Property Name>`. The following unmatched parameters are considered:
+5.  An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org/rfc6350/<vCard Property Name>`. The following unmatched parameters are considered:
     GROUP
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-6.  An extension property is converted into a topmost Card/CardGroup member with prefix defined by the configuration property `extensionPrefix`.
+6.  An extension property is converted into a topmost Card/CardGroup property with prefix defined by the configuration property `extensionPrefix`.
   
 7.  Validation is performed before conversion if the configuration property `cardToValidate` is set to `true`.
 
@@ -221,19 +222,19 @@ The conversion is executed according to the following rules:
 
 9.  Where a language is required to represent a localization and the language is not specified, `en` is used by default.
 
-10.  Regardless of their positions inside the card, properties mapped as Anniversary objects appear in the following order:
+10.  Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
 
     1. BDAY (BIRTHDATE)
     2. DEATHDAY (DEATHDATE)
     3. ANNIVERSARY
 
-11.  Regardless of their positions inside the card, properties mapped as PersonalInfo objects appear in the following order:
+11.  Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
 
     1. HOBBY
     2. INTEREST
     3. EXPERTISE
 
-12. Regardless of their positions inside the card, properties mapped as online Resource objects appear in the following order:
+12. Regardless of their positions inside the vCard, properties mapped as online Resource objects appear in the following order:
 
     1. SOURCE
     2. IMPP
@@ -247,20 +248,20 @@ The conversion is executed according to the following rules:
     10. ORG-DIRECTORY
     11. CONTACT-URI
 
-13. Regardless of their positions inside the card, properties mapped as Title objects appear in the following order:
+13. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
     1. TITLE
     2. ROLE
 
 14. If an ADR element doesn't include the LABEL parameter, the full address results from the newline-delimited concatenation of the non-empty address components.
 
-15. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address reported in the card.
+15. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
 
 16. Categories appear in the "categories" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
 17. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-18. If no vCard tel-type value is specified, the "features" map of the "Phone" object includes PhoneFeature.VOICE by default. 
+18. If no vCard tel-type value is specified, the "features" map of the "Phone" object includes the value "PhoneFeature.VOICE" by default. 
 
 19. JSContact UTCDateTime type is mapped onto Java Calendar.
 
@@ -288,7 +289,7 @@ At present, the following converting methods are available:
     *   String convertToXml(JSContact jsContact)
     *   String convertToXml(List<JSContact> jsContacts)
 
-All the methods take in input a list of JSContact (Card or CardGroup) instances and can raise a `CardException`.
+All the methods take in input a list of JSContact top most objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
@@ -296,22 +297,22 @@ All the methods take in input a list of JSContact (Card or CardGroup) instances 
 
 1.  The conversion is based on the content of the [JSContact I-Ds](#drafts).
 
-2.  The following vCard properties are generated by converting the related unmatched JSContact properties:
+2.  The following vCard extension properties are generated by converting the related unmatched JSContact properties:
     `X-JSCONTACT-CREATED`
     `X-JSCONTACT-PREFERREDCONTACTMETHOD`
     
-3.  A topmost Card/CardGroup member with name `ietf.org/rfc6350/<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
+3.  A topmost Card/CardGroup property with name `ietf.org/rfc6350/<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
     GENDER
     CLIENTPIDMAP
     XML
 
-5.  A topmost Card/CardGroup member with name `ietf.org/rfc6350/<vCard Property Name>/<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
+5.  A topmost Card/CardGroup property with name `ietf.org/rfc6350/<vCard Property Name>/<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
     GROUP
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-6.  A topmost Card/CardGroup member with prefix defined by the configuration property `extensionPrefix` is converted into a vCard extension.
+6.  A topmost Card/CardGroup property with prefix defined by the configuration property `extensionPrefix` is converted into a vCard extension.
 
 7.  The Card/CardGroup "titles" property is mapped onto the vCard TITLE property.
     
@@ -513,8 +514,8 @@ Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all 
 <a name="drafts"></a>
 ### JSContact I-Ds
 
-*   [draft-ietf-jmap-jscontact-05](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/)
-*   [draft-ietf-jmap-jscontact-vcard-03](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/)
+*   [draft-ietf-jmap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/)
+*   [draft-ietf-jmap-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/)
 
 
 # Build Instructions
