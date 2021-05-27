@@ -80,7 +80,7 @@ public class PhoneTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"phones\":{\"PHONE-1\": {\"contexts\":{\"work\": true},\"features\":{\"other\": true},\"phone\":\"tel:+33-01-23-45-6\",\"label\":\"textphone\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"contexts\":{\"work\": true},\"features\":{\"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testPhoneValid4 - 1",vcard.getTelephoneNumbers().size() == 1);
@@ -108,7 +108,7 @@ public class PhoneTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"phones\":{\"PHONE-1\": {\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"other\": true},\"phone\":\"tel:+33-01-23-45-6\",\"label\":\"textphone\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testPhoneValid6 - 1",vcard.getTelephoneNumbers().size() == 1);
@@ -122,7 +122,7 @@ public class PhoneTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"phones\":{\"PHONE-1\": {\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"voice\": true},\"phone\":\"tel:+33-01-23-45-6\",\"label\":\"textphone\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"voice\": true, \"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testPhoneValid7 - 1",vcard.getTelephoneNumbers().size() == 1);
