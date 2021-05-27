@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneFeaturesDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.PhoneFeaturesSerializer;
 import lombok.*;
 
 import javax.validation.constraints.Max;
@@ -27,7 +29,9 @@ public class Phone implements IdMapValue, Serializable, HasContext {
     @NonNull
     String phone;
 
-    @BooleanMapConstraint(message = "invalid Map<PhoneType,Boolean> features in Phone - Only Boolean.TRUE allowed")
+    @JsonSerialize(using = PhoneFeaturesSerializer.class)
+    @JsonDeserialize(using = PhoneFeaturesDeserializer.class)
+    @BooleanMapConstraint(message = "invalid Map<PhoneFeature,Boolean> features in Phone - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<PhoneFeature,Boolean> features;
@@ -46,9 +50,14 @@ public class Phone implements IdMapValue, Serializable, HasContext {
     Integer pref;
 
     private boolean asFeature(PhoneFeature feature) { return features != null && features.containsKey(feature); }
-    public boolean asVoice() { return asFeature(PhoneFeature.VOICE); }
-    public boolean asFax() { return asFeature(PhoneFeature.FAX); }
-    public boolean asPager() { return asFeature(PhoneFeature.PAGER); }
-    public boolean asOtherFeature() { return asFeature(PhoneFeature.OTHER); }
+    public boolean asVoice() { return asFeature(PhoneFeature.voice()); }
+    public boolean asFax() { return asFeature(PhoneFeature.fax()); }
+    public boolean asPager() { return asFeature(PhoneFeature.pager()); }
+    public boolean asVideo() { return asFeature(PhoneFeature.video()); }
+    public boolean asCell() { return asFeature(PhoneFeature.cell()); }
+    public boolean asText() { return asFeature(PhoneFeature.text()); }
+    public boolean asTextphone() { return asFeature(PhoneFeature.textphone()); }
+    public boolean asExt(String extValue) { return asFeature(PhoneFeature.ext(extValue)); }
+    public boolean asOtherFeature() { return asFeature(PhoneFeature.other()); }
 
 }

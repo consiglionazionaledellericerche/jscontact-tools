@@ -11,14 +11,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.4.0</version>
+		  <version>0.4.1</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.4.0'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.4.1'
 ```
 
 # Features
@@ -261,7 +261,7 @@ The conversion is executed according to the following rules:
 
 17. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-18. If no vCard tel-type value is specified, the "features" map of the "Phone" object includes the value "PhoneFeature.VOICE" by default. 
+18. If no vCard tel-type value is specified, the "features" map of the "Phone" object includes the value "PhoneFeature.voice()" by default. 
 
 19. JSContact UTCDateTime type is mapped onto Java Calendar.
 

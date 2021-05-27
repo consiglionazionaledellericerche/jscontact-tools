@@ -15,69 +15,66 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-import java.util.Arrays;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-@AllArgsConstructor
-public enum PhoneFeature implements JCardTypeDerivedEnum {
+@Getter
+@Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
+public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Serializable {
 
-    VOICE("voice"),
-    FAX("fax"),
-    PAGER("pager"),
-    OTHER("other");
-
-    private String value;
-
+    private boolean isRfc(PhoneFeatureEnum value) { return isRfcValue() && rfcValue == value; }
     @JsonIgnore
-    private static final List<String> otherVCardTypes = Arrays.asList("textphone", "video", "cell");
-
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
-
-    @JsonCreator
-    public static PhoneFeature getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(PhoneFeature.class, value);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
+    public boolean isVoice() { return isRfc(PhoneFeatureEnum.VOICE); }
     @JsonIgnore
-    public static String getVCardType(PhoneFeature type) {
+    public boolean isFax() { return isRfc(PhoneFeatureEnum.FAX); }
+    @JsonIgnore
+    public boolean isCell() { return isRfc(PhoneFeatureEnum.CELL); }
+    @JsonIgnore
+    public boolean isPager() { return isRfc(PhoneFeatureEnum.PAGER); }
+    @JsonIgnore
+    public boolean isVideo() { return isRfc(PhoneFeatureEnum.VIDEO); }
+    @JsonIgnore
+    public boolean isText() { return isRfc(PhoneFeatureEnum.TEXT); }
+    @JsonIgnore
+    public boolean isTextphone() { return isRfc(PhoneFeatureEnum.TEXTPHONE); }
+    @JsonIgnore
+    public boolean isOther() { return isRfc(PhoneFeatureEnum.OTHER); }
 
-        if (type == OTHER)
+    public static PhoneFeature rfc(PhoneFeatureEnum rfcValue) { return PhoneFeature.builder().rfcValue(rfcValue).build();}
+    public static PhoneFeature voice() { return rfc(PhoneFeatureEnum.VOICE);}
+    public static PhoneFeature fax() { return rfc(PhoneFeatureEnum.FAX);}
+    public static PhoneFeature pager() { return rfc(PhoneFeatureEnum.PAGER);}
+    public static PhoneFeature cell() { return rfc(PhoneFeatureEnum.CELL);}
+    public static PhoneFeature video() { return rfc(PhoneFeatureEnum.VIDEO);}
+    public static PhoneFeature text() { return rfc(PhoneFeatureEnum.TEXT);}
+    public static PhoneFeature textphone() { return rfc(PhoneFeatureEnum.TEXTPHONE);}
+    public static PhoneFeature other() { return rfc(PhoneFeatureEnum.OTHER);}
+    public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(extValue).build(); }
+
+    public static List<PhoneFeatureEnum> getFeatureEnumValues(Collection<PhoneFeature> features) {
+
+        if (features == null)
             return null;
 
-        return type.getValue();
-    }
-
-    @JsonIgnore
-    public static String getVCardType(String label) {
-
-        try {
-            PhoneFeature rc = getEnum(label);
-            return getVCardType(rc);
+        List<PhoneFeatureEnum> enumValues = new ArrayList<>();
+        for (PhoneFeature feature : features) {
+            if (feature.rfcValue != null)
+                enumValues.add(feature.getRfcValue());
         }
-        catch(Exception e) {
 
-            if (otherVCardTypes.contains(label))
-                return label;
-
-            return null;
-        }
+        return enumValues;
     }
-
 
 }
-
