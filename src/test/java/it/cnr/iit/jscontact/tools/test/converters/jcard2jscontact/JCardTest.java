@@ -181,7 +181,9 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 39", jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-555-555-4321"));
         assertTrue("testCompleteJCard1 - 40", jsCard.getPhones().get("PHONE-2").getPref() == null);
         assertTrue("testCompleteJCard1 - 41", jsCard.getPhones().get("PHONE-2").asWork());
-        assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").getLabel().equals("cell,video,text"));
+        assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteJCard1 - 43", jsCard.getPhones().get("PHONE-2").asVideo());
+        assertTrue("testCompleteJCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
         assertTrue("testCompleteJCard1 - 46", jsCard.getOnline().size() == 2);
         assertTrue("testCompleteJCard1 - 47", jsCard.getOnline().get("KEY-1").isUri());
         assertTrue("testCompleteJCard1 - 48", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.example.com/joe.user/joe.asc"));
@@ -284,7 +286,10 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 37", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteJCard4 - 38", jsCard.getPhones().get("PHONE-2").asWork());
         assertTrue("testCompleteJCard4 - 39", jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-418-262-6501"));
-        assertTrue("testCompleteJCard4 - 40", jsCard.getPhones().get("PHONE-2").getLabel().equals("cell,video,text"));
+        assertTrue("testCompleteJCard4 - 40", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteJCard4 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
+        assertTrue("testCompleteJCard4 - 42", jsCard.getPhones().get("PHONE-2").asText());
+        assertTrue("testCompleteJCard4 - 43", jsCard.getPhones().get("PHONE-2").getLabel() == null);
         assertTrue("testCompleteJCard4 - 44", jsCard.getEmails().size() == 1);
         assertTrue("testCompleteJCard4 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
         assertTrue("testCompleteJCard4 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
