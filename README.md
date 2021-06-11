@@ -11,14 +11,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.4.1</version>
+		  <version>0.4.2</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.4.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.4.2'
 ```
 
 # Features
@@ -263,11 +263,43 @@ The conversion is executed according to the following rules:
 
 18. If no vCard tel-type value is specified, the "features" map of the "Phone" object includes the value "PhoneFeature.voice()" by default. 
 
-19. JSContact UTCDateTime type is mapped onto Java Calendar.
+19. JSContact UTCDateTime type is mapped to Java Calendar.
 
-20. Where a collection of objects is mapped onto a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
+20. Media type information of `File` and `Resource` objects is automatically detected when the MEDIATYPE parameter is missing.
 
-21. Media type information of `File` and `Resource` objects is automatically detected when the MEDIATYPE parameter is missing.
+
+### Conversion Profiles from vCard to JSContact
+
+By default, where a collection of objects is mapped to a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
+This setting schema can be modified by defining a different one assigning key values based on the positions of vCard elements.
+To do that, the following steps must be followed:
+
+1. set the `applyAutoIdsProfile` property of the `VCard2JSContactConfig` object to `false`
+
+2. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToApply` of `VCard2JSContactConfig` object property with it
+
+
+### RDAP Conversion Profile from jCard to JSContact
+
+A pre-defined conversion profile to convert a jCard instance inside an RDAP response [RFC7483](https://datatracker.ietf.org/doc/rfc7483/) is available.
+The values of the map keys used in such profile are defined in [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/).
+Additional setting rules are shown in the following code:
+
+```
+
+    public static final VCard2JSContactIdsProfile RDAP_PROFILE = VCard2JSContactIdsProfile.builder()
+                                                                                    .id(JSContactId.organizationsId("org"))
+                                                                                    .id(JSContactId.emailsId("email"))
+                                                                                    .id(JSContactId.phonesId("voice"))  // 1st jCard phone number
+                                                                                    .id(JSContactId.phonesId("fax"))    // 2nd jCard phone number
+                                                                                    .id(JSContactId.addressesId("int")) // 1st jCard address
+                                                                                    .id(JSContactId.addressesId("loc")) // 2nd jCard address
+                                                                                    .build();
+                                                                                    
+```
+
+
+
 
 <a name="jscontact-conversion"></a>
 ## JSContact Conversion
@@ -314,9 +346,9 @@ All the methods take in input a list of JSContact top most objects and can raise
 
 6.  A topmost Card/CardGroup property with prefix defined by the configuration property `extensionPrefix` is converted into a vCard extension.
 
-7.  The Card/CardGroup "titles" property is mapped onto the vCard TITLE property.
+7.  The Card/CardGroup "titles" property is mapped to the vCard TITLE property.
     
-8.  The "timeZone" property is always mapped onto a TZ parameter preserving the time zone name.     
+8.  The "timeZone" property is always mapped to a TZ parameter preserving the time zone name.     
 
 9.  It the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 

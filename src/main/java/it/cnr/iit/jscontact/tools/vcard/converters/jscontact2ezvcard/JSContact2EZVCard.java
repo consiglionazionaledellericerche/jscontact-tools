@@ -365,7 +365,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getAnniversaries() == null)
             return;
 
-        for (Anniversary anniversary : jsCard.getAnniversaries()) {
+        for (Anniversary anniversary : jsCard.getAnniversaries().values()) {
 
             switch(anniversary.getType()) {
                 case BIRTH:
@@ -415,7 +415,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getPersonalInfo() == null)
             return;
 
-        for (PersonalInformation pi : jsCard.getPersonalInfo()) {
+        for (PersonalInformation pi : jsCard.getPersonalInfo().values()) {
             switch (pi.getType()) {
                 case EXPERTISE:
                     vcard.getExpertise().add(getExpertise(pi));

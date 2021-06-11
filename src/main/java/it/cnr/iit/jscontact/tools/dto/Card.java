@@ -113,10 +113,12 @@ public class Card extends JSContact implements Serializable {
 
     //Additional properties
     @Valid
-    Anniversary[] anniversaries;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Anniversary>")
+    Map<String,Anniversary> anniversaries;
 
     @Valid
-    PersonalInformation[] personalInfo;
+    @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
+    Map<String,PersonalInformation> personalInfo;
 
     @Valid
     LocalizedString notes;
@@ -327,12 +329,22 @@ public class Card extends JSContact implements Serializable {
             addresses.put(id,address);
     }
 
-    public void addAnniversary(Anniversary anniversary) {
-        anniversaries = ArrayUtils.add(anniversaries, anniversary);
+    public void addAnniversary(String id, Anniversary anniversary) {
+
+        if(anniversaries == null)
+            anniversaries = new HashMap<>();
+
+        if (!anniversaries.containsKey(id))
+            anniversaries.put(id,anniversary);
     }
 
-    public void addPersonalInfo(PersonalInformation pi) {
-        personalInfo = ArrayUtils.add(personalInfo, pi);
+    public void addPersonalInfo(String id, PersonalInformation pi) {
+
+        if(personalInfo == null)
+            personalInfo = new HashMap<>();
+
+        if (!personalInfo.containsKey(id))
+            personalInfo.put(id,pi);
     }
 
     public void addNote(String note, String language) {

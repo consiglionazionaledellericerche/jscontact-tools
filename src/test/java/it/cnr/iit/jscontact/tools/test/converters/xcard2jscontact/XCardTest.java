@@ -45,12 +45,12 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 9", jsCard.getName()[2].getValue().equals("ing. jr"));
         assertTrue("testCompleteXCard1 - 10", jsCard.getName()[3].isSuffix());
         assertTrue("testCompleteXCard1 - 11", jsCard.getName()[3].getValue().equals("M.Sc."));
-        assertTrue("testCompleteXCard1 - 12", jsCard.getAnniversaries().length==2);
-        assertTrue("testCompleteXCard1 - 13", jsCard.getAnniversaries()[0].isBirth());
-        assertTrue("testCompleteXCard1 - 14", jsCard.getAnniversaries()[0].getDate().isEqual("0000-02-03"));
-        assertTrue("testCompleteXCard1 - 15", jsCard.getAnniversaries()[1].isOtherAnniversary());
-        assertTrue("testCompleteXCard1 - 16", jsCard.getAnniversaries()[1].getLabel().equals("marriage date"));
-        assertTrue("testCompleteXCard1 - 17", jsCard.getAnniversaries()[1].getDate().isEqual("2009-08-08T14:30:00-05:00"));
+        assertTrue("testCompleteXCard1 - 12", jsCard.getAnniversaries().size()==2);
+        assertTrue("testCompleteXCard1 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertTrue("testCompleteXCard1 - 14", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("0000-02-03"));
+        assertTrue("testCompleteXCard1 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isOtherAnniversary());
+        assertTrue("testCompleteXCard1 - 16", jsCard.getAnniversaries().get("ANNIVERSARY-2").getLabel().equals("marriage date"));
+        assertTrue("testCompleteXCard1 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
         assertTrue("testCompleteXCard1 - 18", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteXCard1 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
         assertTrue("testCompleteXCard1 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);

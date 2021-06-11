@@ -34,9 +34,9 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid1 - 1",jsCard.getAnniversaries()!=null);
-        assertTrue("testAnniversariesValid1 - 2",jsCard.getAnniversaries().length == 1);
-        assertTrue("testAnniversariesValid1 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid1 - 4",jsCard.getAnniversaries()[0].isBirth());
+        assertTrue("testAnniversariesValid1 - 2",jsCard.getAnniversaries().size() == 1);
+        assertTrue("testAnniversariesValid1 - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid1 - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
     }
 
     @Test
@@ -49,10 +49,10 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid2 - 1",jsCard.getAnniversaries()!=null);
-        assertTrue("testAnniversariesValid2 - 2",jsCard.getAnniversaries().length == 1);
-        assertTrue("testAnniversariesValid2 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid2 - 4",jsCard.getAnniversaries()[0].isBirth());
-        assertTrue("testAnniversariesValid2 - 5",jsCard.getAnniversaries()[0].getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
+        assertTrue("testAnniversariesValid2 - 2",jsCard.getAnniversaries().size() == 1);
+        assertTrue("testAnniversariesValid2 - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid2 - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertTrue("testAnniversariesValid2 - 5",jsCard.getAnniversaries().get("ANNIVERSARY-1").getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
     }
 
     @Test
@@ -64,9 +64,9 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid3 - 1",jsCard.getAnniversaries()!=null);
-        assertTrue("testAnniversariesValid3 - 2",jsCard.getAnniversaries().length == 1);
-        assertTrue("testAnniversariesValid3 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid3 - 4",jsCard.getAnniversaries()[0].isDeath());
+        assertTrue("testAnniversariesValid3 - 2",jsCard.getAnniversaries().size() == 1);
+        assertTrue("testAnniversariesValid3 - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid3 - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isDeath());
     }
 
 
@@ -80,10 +80,10 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid4 - 1",jsCard.getAnniversaries()!=null);
-        assertTrue("testAnniversariesValid4 - 2",jsCard.getAnniversaries().length == 1);
-        assertTrue("testAnniversariesValid4 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1993-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid4 - 4",jsCard.getAnniversaries()[0].isDeath());
-        assertTrue("testAnniversariesValid4 - 5",jsCard.getAnniversaries()[0].getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
+        assertTrue("testAnniversariesValid4 - 2",jsCard.getAnniversaries().size() == 1);
+        assertTrue("testAnniversariesValid4 - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1993-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid4 - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isDeath());
+        assertTrue("testAnniversariesValid4 - 5",jsCard.getAnniversaries().get("ANNIVERSARY-1").getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
     }
 
 
@@ -99,13 +99,13 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid5 - 1",jsCard.getAnniversaries()!=null);
-        assertTrue("testAnniversariesValid5 - 2",jsCard.getAnniversaries().length == 2);
-        assertTrue("testAnniversariesValid5 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid5 - 4",jsCard.getAnniversaries()[0].isBirth());
-        assertTrue("testAnniversariesValid5 - 5",jsCard.getAnniversaries()[0].getPlace().getFullAddress().getValue().equals("Los Angeles CA USA"));
-        assertTrue("testAnniversariesValid5 - 6",jsCard.getAnniversaries()[1].getDate().isEqual("1993-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid5 - 7",jsCard.getAnniversaries()[1].isDeath());
-        assertTrue("testAnniversariesValid5 - 8",jsCard.getAnniversaries()[1].getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
+        assertTrue("testAnniversariesValid5 - 2",jsCard.getAnniversaries().size() == 2);
+        assertTrue("testAnniversariesValid5 - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid5 - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertTrue("testAnniversariesValid5 - 5",jsCard.getAnniversaries().get("ANNIVERSARY-1").getPlace().getFullAddress().getValue().equals("Los Angeles CA USA"));
+        assertTrue("testAnniversariesValid5 - 6",jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("1993-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid5 - 7",jsCard.getAnniversaries().get("ANNIVERSARY-2").isDeath());
+        assertTrue("testAnniversariesValid5 - 8",jsCard.getAnniversaries().get("ANNIVERSARY-2").getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
     }
 
     @Test
@@ -121,16 +121,16 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid6 - 1",jsCard.getAnniversaries()!=null);
-        assertTrue("testAnniversariesValid6 - 2",jsCard.getAnniversaries().length == 3);
-        assertTrue("testAnniversariesValid6 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid6 - 4",jsCard.getAnniversaries()[0].isBirth());
-        assertTrue("testAnniversariesValid6 - 5",jsCard.getAnniversaries()[0].getPlace().getFullAddress().getValue().equals("Los Angeles CA USA"));
-        assertTrue("testAnniversariesValid6 - 6",jsCard.getAnniversaries()[1].getDate().isEqual("1993-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid6 - 7",jsCard.getAnniversaries()[1].isDeath());
-        assertTrue("testAnniversariesValid6 - 8",jsCard.getAnniversaries()[1].getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
-        assertTrue("testAnniversariesValid6 - 9",jsCard.getAnniversaries()[2].isOtherAnniversary());
-        assertTrue("testAnniversariesValid6 - 10",jsCard.getAnniversaries()[2].getDate().isEqual("1986-02-01T19:00:00Z"));
-        assertTrue("testAnniversariesValid6 - 11",jsCard.getAnniversaries()[2].getLabel().equals("marriage date"));
+        assertTrue("testAnniversariesValid6 - 2",jsCard.getAnniversaries().size() == 3);
+        assertTrue("testAnniversariesValid6 - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid6 - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertTrue("testAnniversariesValid6 - 5",jsCard.getAnniversaries().get("ANNIVERSARY-1").getPlace().getFullAddress().getValue().equals("Los Angeles CA USA"));
+        assertTrue("testAnniversariesValid6 - 6",jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("1993-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid6 - 7",jsCard.getAnniversaries().get("ANNIVERSARY-2").isDeath());
+        assertTrue("testAnniversariesValid6 - 8",jsCard.getAnniversaries().get("ANNIVERSARY-2").getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
+        assertTrue("testAnniversariesValid6 - 9",jsCard.getAnniversaries().get("ANNIVERSARY-3").isOtherAnniversary());
+        assertTrue("testAnniversariesValid6 - 10",jsCard.getAnniversaries().get("ANNIVERSARY-3").getDate().isEqual("1986-02-01T19:00:00Z"));
+        assertTrue("testAnniversariesValid6 - 11",jsCard.getAnniversaries().get("ANNIVERSARY-3").getLabel().equals("marriage date"));
     }
 
     @Test
@@ -146,16 +146,16 @@ public class AnniversariesTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testAnniversariesValid7 - 1",jsCard.getAnniversaries()!=null);
-        assertTrue("testAnniversariesValid7 - 2",jsCard.getAnniversaries().length == 3);
-        assertTrue("testAnniversariesValid7 - 3",jsCard.getAnniversaries()[0].getDate().isEqual("1953-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid7 - 4",jsCard.getAnniversaries()[0].isBirth());
-        assertTrue("testAnniversariesValid7 - 5",jsCard.getAnniversaries()[0].getPlace().getCoordinates().equals("geo:34.15876,-118.45728"));
-        assertTrue("testAnniversariesValid7 - 6",jsCard.getAnniversaries()[1].getDate().isEqual("1993-10-15T23:10:00Z"));
-        assertTrue("testAnniversariesValid7 - 7",jsCard.getAnniversaries()[1].isDeath());
-        assertTrue("testAnniversariesValid7 - 8",jsCard.getAnniversaries()[1].getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
-        assertTrue("testAnniversariesValid7 - 9",jsCard.getAnniversaries()[2].isOtherAnniversary());
-        assertTrue("testAnniversariesValid7 - 10",jsCard.getAnniversaries()[2].getDate().isEqual("1986-02-01T19:00:00Z"));
-        assertTrue("testAnniversariesValid7 - 11",jsCard.getAnniversaries()[2].getLabel().equals("marriage date"));
+        assertTrue("testAnniversariesValid7 - 2",jsCard.getAnniversaries().size() == 3);
+        assertTrue("testAnniversariesValid7 - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid7 - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertTrue("testAnniversariesValid7 - 5",jsCard.getAnniversaries().get("ANNIVERSARY-1").getPlace().getCoordinates().equals("geo:34.15876,-118.45728"));
+        assertTrue("testAnniversariesValid7 - 6",jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("1993-10-15T23:10:00Z"));
+        assertTrue("testAnniversariesValid7 - 7",jsCard.getAnniversaries().get("ANNIVERSARY-2").isDeath());
+        assertTrue("testAnniversariesValid7 - 8",jsCard.getAnniversaries().get("ANNIVERSARY-2").getPlace().getFullAddress().getValue().equals("Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA"));
+        assertTrue("testAnniversariesValid7 - 9",jsCard.getAnniversaries().get("ANNIVERSARY-3").isOtherAnniversary());
+        assertTrue("testAnniversariesValid7 - 10",jsCard.getAnniversaries().get("ANNIVERSARY-3").getDate().isEqual("1986-02-01T19:00:00Z"));
+        assertTrue("testAnniversariesValid7 - 11",jsCard.getAnniversaries().get("ANNIVERSARY-3").getLabel().equals("marriage date"));
     }
 
 }
