@@ -34,38 +34,38 @@ public class PersonalInfoTest extends JSContact2VCardTest {
         String jscard="{" +
                        "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                        "\"fullName\":{\"value\":\"test\"}," +
-                       "\"personalInfo\":[ " +
-                            "{" +
+                       "\"personalInfo\":{ " +
+                            "\"PERSINFO-1\": {" +
                                 "\"type\": \"expertise\"," +
                                 "\"value\": \"chemistry\"," +
                                 "\"level\": \"high\" " +
                             "}," +
-                            "{" +
+                            "\"PERSINFO-2\": {" +
                                 "\"type\": \"expertise\"," +
                                 "\"value\": \"chinese literature\"," +
                                 "\"level\": \"low\"" +
                             "}," +
-                            "{" +
+                            "\"PERSINFO-3\": {" +
                                 "\"type\": \"hobby\"," +
                                 "\"value\": \"reading\"," +
                                 "\"level\": \"high\"" +
                             "}," +
-                            "{" +
+                            "\"PERSINFO-4\": {" +
                                 "\"type\": \"hobby\"," +
                                 "\"value\": \"sewing\"," +
                                 "\"level\": \"high\"" +
                             "}," +
-                            "{" +
+                            "\"PERSINFO-5\": {" +
                                 "\"type\": \"interest\"," +
                                 "\"value\": \"r&b music\"," +
                                 "\"level\": \"medium\" " +
                             "}," +
-                            "{" +
+                            "\"PERSINFO-6\": {" +
                                 "\"type\": \"interest\"," +
                                 "\"value\": \"rock 'n' roll music\"," +
                                 "\"level\": \"high\" " +
                             "}" +
-                       "]" +
+                       "}" +
                        "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testPersonalInfo - 1",vcard.getExpertise().size() == 2);

@@ -33,12 +33,12 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                         "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                         "\"fullName\":{\"value\":\"test\"}," +
-                        "\"anniversaries\":[ " +
+                        "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                    "\"type\":\"birth\", " +
                                    "\"date\":\"1953-10-15T23:10:00Z\"" +
                                "}" +
-                        "]" +
+                        "}" +
                         "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid1 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
@@ -50,7 +50,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"anniversaries\":[ " +
+                "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
                         "\"date\":\"1953-10-15T23:10:00Z\"," +
@@ -60,7 +60,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                              "}" +
                         "}" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid2 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
@@ -73,12 +73,12 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                         "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                         "\"fullName\":{\"value\":\"test\"}," +
-                        "\"anniversaries\":[ " +
+                        "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                    "\"type\":\"death\", " +
                                    "\"date\":\"1953-10-15T23:10:00Z\"" +
                                "}" +
-                        "]" +
+                        "}" +
                         "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid3 - 1",vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
@@ -90,7 +90,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"anniversaries\":[ " +
+                "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"death\", " +
                         "\"date\":\"1953-10-15T23:10:00Z\"," +
@@ -100,7 +100,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "}" +
                         "}" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid4 - 1",vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
@@ -113,7 +113,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"anniversaries\":[ " +
+                "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
                         "\"date\":\"1953-10-15T23:10:00Z\"," +
@@ -123,7 +123,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "}" +
                         "}" +
                     "}," +
-                    "{" +
+                    "\"ANNIVERSARY-2\": {" +
                         "\"type\":\"death\", " +
                         "\"date\":\"1993-10-15T23:10:00Z\"," +
                         "\"place\":{ " +
@@ -132,7 +132,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "}" +
                         "}" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid5 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
@@ -147,7 +147,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"anniversaries\":[ " +
+                "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
                         "\"date\":\"1953-10-15T23:10:00Z\"," +
@@ -157,7 +157,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "}" +
                         "}" +
                     "}," +
-                    "{" +
+                    "\"ANNIVERSARY-2\": {" +
                         "\"type\":\"death\", " +
                         "\"date\":\"1993-10-15T23:10:00Z\"," +
                         "\"place\":{ " +
@@ -166,12 +166,12 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "}" +
                         "}" +
                     "}," +
-                    "{" +
+                    "\"ANNIVERSARY-3\": {" +
                         "\"type\":\"other\", " +
                         "\"label\":\"marriage date\"," +
                         "\"date\":\"1986-02-01T19:00:00Z\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid6 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
@@ -187,7 +187,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"anniversaries\":[ " +
+                "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
                         "\"date\":\"1953-10-15T23:10:00Z\"," +
@@ -195,7 +195,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                               "\"coordinates\":\"geo:34.15876,-118.45728\"" +
                         "}" +
                     "}," +
-                    "{" +
+                    "\"ANNIVERSARY-2\": {" +
                         "\"type\":\"death\", " +
                         "\"date\":\"1993-10-15T23:10:00Z\"," +
                         "\"place\":{ " +
@@ -204,12 +204,12 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "}" +
                         "}" +
                     "}," +
-                    "{" +
+                    "\"ANNIVERSARY-3\": {" +
                         "\"type\":\"other\", " +
                         "\"label\":\"marriage date\"," +
                         "\"date\":\"1986-02-01T19:00:00Z\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid7 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );
@@ -225,7 +225,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"anniversaries\":[ " +
+                "\"anniversaries\": { \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
                         "\"date\":\"1953-10-15T23:10:00Z\"," +
@@ -235,7 +235,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "\"country\":\"USA\"" +
                         "}" +
                     "}," +
-                    "{" +
+                    "\"ANNIVERSARY-2\": {" +
                         "\"type\":\"death\", " +
                         "\"date\":\"1993-10-15T23:10:00Z\"," +
                         "\"place\":{ " +
@@ -244,12 +244,12 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "}" +
                         "}" +
                     "}," +
-                    "{" +
+                    "\"ANNIVERSARY-3\": {" +
                         "\"type\":\"other\", " +
                         "\"label\":\"marriage date\"," +
                         "\"date\":\"1986-02-01T19:00:00Z\"" +
                     "}" +
-                "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testAnniversariesValid8 - 1",vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")) == 0 );

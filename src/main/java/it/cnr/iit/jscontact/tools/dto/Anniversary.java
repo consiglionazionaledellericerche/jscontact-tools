@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
 import lombok.*;
 
@@ -32,7 +33,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Anniversary extends GroupableObject implements Serializable {
+public class Anniversary extends GroupableObject implements IdMapValue, Serializable {
 
     public static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
 

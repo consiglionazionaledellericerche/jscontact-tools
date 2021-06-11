@@ -28,5 +28,9 @@ public class VCard2JSContactConfig {
     private String extensionsPrefix = "extension/";
     @Builder.Default
     private boolean cardToValidate = true;
+    @Builder.Default
+    private boolean applyAutoIdsProfile = true;
+
+    private VCard2JSContactIdsProfile idsProfileToApply = null;
 
 }

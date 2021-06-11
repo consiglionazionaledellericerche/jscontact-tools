@@ -217,12 +217,12 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard4 - 9", jsCard.getName()[2].getValue().equals("ing. jr"));
         assertTrue("testCompleteVCard4 - 10", jsCard.getName()[3].isSuffix());
         assertTrue("testCompleteVCard4 - 11", jsCard.getName()[3].getValue().equals("M.Sc."));
-        assertTrue("testCompleteVCard4 - 12", jsCard.getAnniversaries().length==2);
-        assertTrue("testCompleteVCard4 - 13", jsCard.getAnniversaries()[0].isBirth());
-        assertTrue("testCompleteVCard4 - 14", jsCard.getAnniversaries()[0].getDate().isEqual("0000-02-03"));
-        assertTrue("testCompleteVCard4 - 15", jsCard.getAnniversaries()[1].isOtherAnniversary());
-        assertTrue("testCompleteVCard4 - 16", jsCard.getAnniversaries()[1].getLabel().equals("marriage date"));
-        assertTrue("testCompleteVCard4 - 17", jsCard.getAnniversaries()[1].getDate().isEqual("2009-08-08T14:30:00-05:00"));
+        assertTrue("testCompleteVCard4 - 12", jsCard.getAnniversaries().size()==2);
+        assertTrue("testCompleteVCard4 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertTrue("testCompleteVCard4 - 14", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("0000-02-03"));
+        assertTrue("testCompleteVCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isOtherAnniversary());
+        assertTrue("testCompleteVCard4 - 16", jsCard.getAnniversaries().get("ANNIVERSARY-2").getLabel().equals("marriage date"));
+        assertTrue("testCompleteVCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
         assertTrue("testCompleteVCard4 - 18", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteVCard4 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
         assertTrue("testCompleteVCard4 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
@@ -397,8 +397,8 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 79", jsCard.getNotes()!= null);
 //        assertTrue("testCompleteVCard6 - 80", jsCard.getNotes()[0].equals("Notes line 1\nNotes line 2"));
         assertTrue("testCompleteVCard6 - 81", jsCard.getProdId().equals("ez-vcard 0.9.14-fc"));
-        assertTrue("testCompleteVCard6 - 82", jsCard.getAnniversaries().length == 1);
-        assertTrue("testCompleteVCard6 - 83", jsCard.getAnniversaries()[0].getDate().isEqual("2016-08-01"));
+        assertTrue("testCompleteVCard6 - 82", jsCard.getAnniversaries().size() == 1);
+        assertTrue("testCompleteVCard6 - 83", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("2016-08-01"));
 
         assertTrue("testCompleteVCard6 - 84", jsCard.getPhotos().size() == 3);
         assertTrue("testCompleteVCard6 - 85", jsCard.getPhotos().get("PHOTO-1").getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
