@@ -271,16 +271,61 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid7 - 1",vcard.getAddresses().size() == 1);
-        assertTrue("testAddressesValid7 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid7 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid7 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid7 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid7 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid7 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("Oak St 54321"));
-        assertTrue("testAddressesValid7 - 8",vcard.getAddresses().get(0).getExtendedAddress().equals("Floor: 5 Room: 100"));
-        assertTrue("testAddressesValid7 - 9", vcard.getAddresses().get(0).getLabel().equals("Floor: 5 Room: 100\nOak St 54321\nReston\nVA\n20190\nUSA"));
+        assertTrue("testAddressesValid8 - 1",vcard.getAddresses().size() == 1);
+        assertTrue("testAddressesValid8 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
+        assertTrue("testAddressesValid8 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
+        assertTrue("testAddressesValid8 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
+        assertTrue("testAddressesValid8 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
+        assertTrue("testAddressesValid8 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
+        assertTrue("testAddressesValid8 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("Oak St 54321"));
+        assertTrue("testAddressesValid8 - 8",vcard.getAddresses().get(0).getExtendedAddress().equals("Floor: 5 Room: 100"));
+        assertTrue("testAddressesValid8 - 9", vcard.getAddresses().get(0).getLabel().equals("Floor: 5 Room: 100\nOak St 54321\nReston\nVA\n20190\nUSA"));
     }
 
+
+    @Test
+    public void testAddressesValid9() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"fullName\":{\"value\":\"test\"}," +
+                "\"addresses\":{" +
+                    "\"ADR-1\": {" +
+                            "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                            "\"locality\":\"Reston\"," +
+                            "\"region\":\"VA\"," +
+                            "\"country\":\"USA\"," +
+                            "\"postcode\":\"20190\"," +
+                            "\"countryCode\":\"US\"," +
+                            "\"coordinates\":\"geo:46.772673,-71.282945\"," +
+                            "\"timeZone\":\"/tz1\"" +
+                    "}" +
+                "}," +
+                "\"timeZones\": {" +
+                    "\"/tz1\": {" +
+                        "\"@type\": \"TimeZone\"," +
+                        "\"tzId\": \"TZ-0530\"," +
+                        "\"updated\": \"2021-06-07T14:24:45Z\"," +
+                        "\"standard\": [{" +
+                            "\"@type\": \"TimeZoneRule\"," +
+                            "\"offsetFrom\": \"-0530\"," +
+                            "\"offsetTo\": \"-0530\"," +
+                            "\"start\": \"1601-01-01T00:00:00\"" +
+                        "}]" +
+                    "}" +
+                "}" +
+        "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testAddressesValid9 - 1",vcard.getAddresses().size() == 1);
+        assertTrue("testAddressesValid9 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
+        assertTrue("testAddressesValid9 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
+        assertTrue("testAddressesValid9 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
+        assertTrue("testAddressesValid9 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
+        assertTrue("testAddressesValid9 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
+        assertTrue("testAddressesValid9 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
+        assertTrue("testAddressesValid9 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
+        assertTrue("testAddressesValid9 - 9", vcard.getAddresses().get(0).getGeo().equals(GeoUri.parse("geo:46.772673,-71.282945")));
+        assertTrue("testAddressesValid9 - 10", vcard.getAddresses().get(0).getTimezone().equals("-0530"));
+    }
 
 }

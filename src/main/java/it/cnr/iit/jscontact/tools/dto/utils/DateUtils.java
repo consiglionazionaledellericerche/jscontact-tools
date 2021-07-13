@@ -1,5 +1,6 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
+import com.sun.scenario.effect.Offset;
 import ezvcard.util.PartialDate;
 import ezvcard.util.VCardDateFormat;
 
@@ -9,6 +10,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
+
+    public enum DateTimeType {
+      UTC,
+      LOCAL,
+      NON_ZERO_TIME
+    };
+
 
     public static String toString(Date date) {
 
@@ -38,11 +46,15 @@ public class DateUtils {
     }
 
     public static String toString(Calendar cal) {
+        return toString(cal, DateTimeType.NON_ZERO_TIME);
+    }
+
+    public static String toString(Calendar cal, DateTimeType dateTimeType) {
 
         if (cal == null)
             return null;
 
-        if (hasTime(cal)) {
+        if (dateTimeType!=DateTimeType.NON_ZERO_TIME || hasTime(cal)) {
             int offset = cal.get(Calendar.ZONE_OFFSET);
             if (offset == 0) {
                 return LocalDateTime.of(cal.get(Calendar.YEAR),
@@ -51,9 +63,9 @@ public class DateUtils {
                         cal.get(Calendar.HOUR_OF_DAY),
                         cal.get(Calendar.MINUTE),
                         cal.get(Calendar.SECOND)
-                ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+"Z";
+                ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+((dateTimeType==DateTimeType.UTC) ? "Z" : "");
             } else {
-                return OffsetDateTime.of(cal.get(Calendar.YEAR),
+                OffsetDateTime offsetDateTime = OffsetDateTime.of(cal.get(Calendar.YEAR),
                         cal.get(Calendar.MONTH) + 1,
                         cal.get(Calendar.DAY_OF_MONTH),
                         cal.get(Calendar.HOUR_OF_DAY),
@@ -61,7 +73,15 @@ public class DateUtils {
                         cal.get(Calendar.SECOND),
                         0,
                         getZoneOffset(cal)
-                ).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                );
+                switch (dateTimeType) {
+                    case UTC:
+                        return LocalDateTime.ofInstant(offsetDateTime.toInstant(), ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + "Z";
+                    case LOCAL:
+                        return offsetDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    default:
+                        return offsetDateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                }
             }
         } else {
             return LocalDate.of(cal.get(Calendar.YEAR),

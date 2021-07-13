@@ -11,14 +11,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.4.2</version>
+		  <version>0.5.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.4.2'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.5.0'
 ```
 
 # Features
@@ -211,14 +211,16 @@ The conversion is executed according to the following rules:
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-6.  An extension property is converted into a topmost Card/CardGroup property with prefix defined by the configuration property `extensionPrefix`.
+6.  An extension property is converted into a topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix`.
   
 7.  Validation is performed before conversion if the configuration property `cardToValidate` is set to `true`.
 
 8.  Default values for the configuration properties are:
     
     -  `extensionsPrefix = "extension/"`
+    -  `customTimeZonesPrefix = "/tz"`
     -  `cardToValidate = true`
+    -  `applyAutoIdsProfile = true`
 
 9.  Where a language is required to represent a localization and the language is not specified, `en` is used by default.
 
@@ -267,6 +269,7 @@ The conversion is executed according to the following rules:
 
 20. Media type information of `File` and `Resource` objects is automatically detected when the MEDIATYPE parameter is missing.
 
+21. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `timeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
 
 ### Conversion Profiles from vCard to JSContact
 
@@ -344,11 +347,11 @@ All the methods take in input a list of JSContact top most objects and can raise
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-6.  A topmost Card/CardGroup property with prefix defined by the configuration property `extensionPrefix` is converted into a vCard extension.
+6.  A topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix` is converted into a vCard extension.
 
 7.  The Card/CardGroup "titles" property is mapped to the vCard TITLE property.
     
-8.  The "timeZone" property is always mapped to a TZ parameter preserving the time zone name.     
+8.  The "timeZone" property is always mapped to a TZ parameter either preserving the time zone name or the time zone offset extracted from the `timeZones` map.    
 
 9.  It the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 

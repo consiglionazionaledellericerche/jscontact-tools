@@ -13,26 +13,25 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.vcard.converters.config;
+package it.cnr.iit.jscontact.tools.dto.serializers;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
+import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@AllArgsConstructor
-public class VCard2JSContactConfig {
+import java.io.IOException;
+import java.util.Calendar;
 
-    @Builder.Default
-    private String extensionsPrefix = "extension/";
-    @Builder.Default
-    private String customTimeZonesPrefix = "/tz";
-    @Builder.Default
-    private boolean cardToValidate = true;
-    @Builder.Default
-    private boolean applyAutoIdsProfile = true;
+@NoArgsConstructor
+public class LocalDateTimeSerializer extends JsonSerializer<Calendar> {
 
-    private VCard2JSContactIdsProfile idsProfileToApply = null;
+    @Override
+    public void serialize(
+            Calendar calendar, JsonGenerator jgen, SerializerProvider provider)
+            throws IOException {
 
+            jgen.writeString(DateUtils.toString(calendar, DateUtils.DateTimeType.LOCAL));
+    }
 }

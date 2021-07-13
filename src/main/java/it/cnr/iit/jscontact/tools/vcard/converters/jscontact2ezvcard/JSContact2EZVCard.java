@@ -16,6 +16,7 @@ import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Organization;
+import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
@@ -247,7 +248,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner;
     }
 
-    private static List<ezvcard.property.Address> getAddress(Address address, Integer altId) {
+    private static List<ezvcard.property.Address> getAddress(Address address, Integer altId, Map<String,TimeZone> timeZones) {
 
         if (address == null)
             return null;
@@ -266,8 +267,17 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setExtendedAddress(address.getStreetExtensions());
             addr.setPoBox(address.getPostOfficeBox());
             addr.setPostalCode(address.getPostcode());
-            if (address.getTimeZone()!=null)
-                addr.setTimezone(address.getTimeZone());
+            if (address.getTimeZone()!=null) {
+                TimeZone timeZone = null;
+                if (timeZones!=null)
+                    timeZone = timeZones.get(address.getTimeZone());
+                if (timeZone != null) {
+                    if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
+                        addr.setTimezone(timeZone.getStandard().get(0).getOffsetFrom());
+                }
+                else
+                    addr.setTimezone(address.getTimeZone());
+            }
             if (address.getCoordinates()!=null)
                 addr.setGeo(GeoUri.parse(address.getCoordinates()));
             if (address.getCountryCode()!=null)
@@ -308,7 +318,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                                      (
                                              (address.getFullAddress()!=null && address.getFullAddress().getLocalizations()!=null)
                                      );
-            vcard.getAddresses().addAll(getAddress(address, altIdToBeAdded ? altId : null));
+            vcard.getAddresses().addAll(getAddress(address, altIdToBeAdded ? altId : null, jsCard.getTimeZones()));
         }
     }
 

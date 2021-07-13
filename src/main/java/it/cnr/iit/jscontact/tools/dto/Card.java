@@ -21,11 +21,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
-import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import lombok.*;
@@ -51,11 +51,11 @@ public class Card extends JSContact implements Serializable {
 
     String prodId;
 
-    @JsonSerialize(using = CalendarSerializer.class)
+    @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar created;
 
-    @JsonSerialize(using = CalendarSerializer.class)
+    @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar updated;
 
@@ -125,6 +125,9 @@ public class Card extends JSContact implements Serializable {
 
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> categories in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> categories;
+
+    @Valid
+    Map<String,TimeZone> timeZones;
 
     Map<String,String> extensions;
 

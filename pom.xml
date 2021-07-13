@@ -21,7 +21,7 @@
 
     <groupId>it.cnr.iit.jscontact</groupId>
     <artifactId>jscontact-tools</artifactId>
-    <version>0.4.2</version>
+    <version>0.5.0</version>
     <name>jscontact-tools</name>
     <url>https://github.com/consiglionazionaledellericerche/jscontact-tools</url>
     <organization>
