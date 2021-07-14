@@ -29,6 +29,7 @@ import ezvcard.util.PartialDate;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
+import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
@@ -55,10 +56,16 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     private static final Pattern TIMEZONE_AS_UTC_OFFSET_PATTERN = Pattern.compile("[+-](\\d{2}):?(\\d{2})");
 
+    private static final String CUSTOM_TIME_ZONE_ID_PREFIX = "TZ";
+    public static final String CUSTOM_TIME_ZONE_RULE_START = "1900-01-01T00:00:00";
+
     private static final List<String> fakeExtensions = Collections.singletonList("contact-uri");
 
     protected VCard2JSContactConfig config;
 
+    private int customTimeZoneCounter = 0;
+
+    private Map<String, TimeZone> timeZones = new HashMap<>();
 
     private List<String> getProfileIds(VCard2JSContactIdsProfile.IdType idType, Object... args) {
 
@@ -389,7 +396,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             return property.getUri();
     }
 
-    private static String getValue(Timezone property) {
+    private String getValue(Timezone property) {
 
         if (property.getText()!= null)
             return property.getText();
@@ -398,10 +405,26 @@ public class EZVCard2JSContact extends AbstractConverter {
             String sign = offset.substring(0,1);
             String hours = offset.substring(1,3);
             String minutes = offset.substring(3,5);
-            return String.format("Etc/GMT%s%s%s",
-                                           (hours.equals("00") && minutes.equals("00")) ? "" : (sign.equals("+") ? "-" : "+") ,
-                                           (hours.equals("00") && minutes.equals("00")) ? "" : String.valueOf(Integer.parseInt(hours)),
-                                           (minutes.equals("00") ? "" : ":" + minutes));
+            if (minutes.equals("00"))
+                return String.format("Etc/GMT%s%s%s",
+                                               (hours.equals("00") && minutes.equals("00")) ? "" : (sign.equals("+") ? "-" : "+") ,
+                                               (hours.equals("00") && minutes.equals("00")) ? "" : String.valueOf(Integer.parseInt(hours)),
+                                               (minutes.equals("00") ? "" : ":" + minutes));
+            else {
+                String timeZoneName = String.format("%s%d", config.getCustomTimeZonesPrefix(), ++customTimeZoneCounter);
+                timeZones.put(timeZoneName,TimeZone.builder()
+                                                   .tzId(String.format("%s%s%s%s",CUSTOM_TIME_ZONE_ID_PREFIX,sign,hours,minutes))
+                                                   .updated(Calendar.getInstance())
+                                                   .standardItem(TimeZoneRule.builder()
+                                                                             .offsetFrom(String.format("%s%s%s",sign,hours,minutes))
+                                                                             .offsetTo(String.format("%s%s%s",sign,hours,minutes))
+                                                                             .start(DateUtils.toCalendar(CUSTOM_TIME_ZONE_RULE_START))
+                                                                             .build()
+                                                                )
+                                                   .build()
+                             );
+                return String.format(timeZoneName);
+            }
         }
     }
 
@@ -504,7 +527,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         return addresses.get(ind);
     }
 
-    private static String getTimezoneName(String jcardTzParam) {
+    private String getTimezoneName(String jcardTzParam) {
 
         if (jcardTzParam == null)
             return null;
@@ -1197,6 +1220,8 @@ public class EZVCard2JSContact extends AbstractConverter {
         fillCategories(vCard, jsCard);
         fillNotes(vCard, jsCard);
         fillRelations(vCard, jsCard);
+        if (timeZones.size() > 0)
+            jsCard.setTimeZones(timeZones);
         fillExtensions(vCard, jsCard);
         fillUnmatchedElments(vCard, jsCard);
 

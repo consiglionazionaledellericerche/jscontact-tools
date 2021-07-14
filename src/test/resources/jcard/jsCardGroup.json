@@ -71,9 +71,11 @@
           "work": true
         },
         "features": {
-          "voice": true
+          "voice": true,
+          "cell": true,
+          "video": true,
+          "text": true
         },
-        "label": "cell,video,text",
         "pref": 1,
         "phone": "tel:+1-555-555-1234;ext=102"
       }
