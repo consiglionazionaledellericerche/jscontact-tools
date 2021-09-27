@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
@@ -23,6 +24,8 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.RelationDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.RelationSerializer;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -32,6 +35,12 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Relation extends GroupableObject implements Serializable {
+
+    @NotNull
+    @Pattern(regexp = "Relation", message="Invalid @type value in Relation")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "Relation";
 
     @JsonSerialize(using = RelationSerializer.class)
     @JsonDeserialize(using = RelationDeserializer.class)

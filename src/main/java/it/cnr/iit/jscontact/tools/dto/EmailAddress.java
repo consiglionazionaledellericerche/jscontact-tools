@@ -1,6 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
@@ -9,11 +10,9 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
-import org.hibernate.validator.constraints.Email;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.Map;
 
@@ -23,6 +22,12 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmailAddress implements IdMapValue, Serializable, HasContext {
+
+    @NotNull
+    @Pattern(regexp = "EmailAddress", message="Invalid @type value in EmailAddress")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "EmailAddress";
 
     @NotNull(message = "email is missing in EmailAddress")
     @NonNull

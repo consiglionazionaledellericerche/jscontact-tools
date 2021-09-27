@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
@@ -26,6 +27,7 @@ import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -36,6 +38,12 @@ import java.io.Serializable;
 public class Anniversary extends GroupableObject implements IdMapValue, Serializable {
 
     public static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
+
+    @NotNull
+    @Pattern(regexp = "Anniversary", message="Invalid @type value in Anniversary")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "Anniversary";
 
     @NotNull(message = "type is missing in Anniversary")
     @NonNull

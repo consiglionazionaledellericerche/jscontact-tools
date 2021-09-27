@@ -1,12 +1,14 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,6 +17,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class File implements IdMapValue, Serializable {
+
+    @NotNull
+    @Pattern(regexp = "File", message="Invalid @type value in File")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "File";
 
     @NotNull(message = "href is missing in File")
     @NonNull

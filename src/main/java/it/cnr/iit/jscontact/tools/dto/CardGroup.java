@@ -18,15 +18,13 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.iit.jscontact.tools.constraints.CardGroupKindConstraint;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.SerializationUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -41,6 +39,12 @@ import java.util.Map;
 @SuperBuilder
 public class CardGroup extends JSContact implements Serializable {
 
+    @NotNull
+    @Pattern(regexp = "CardGroup", message="Invalid @type value in CardGroup")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "CardGroup";
+    
     @NotNull
     @Size(min=1)
     @JsonProperty(required = true)

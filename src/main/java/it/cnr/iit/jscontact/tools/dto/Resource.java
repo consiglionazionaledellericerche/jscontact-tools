@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
@@ -33,6 +34,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -43,6 +45,12 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable, HasContext {
+
+    @NotNull
+    @Pattern(regexp = "Resource", message="Invalid @type value in Resource")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "Resource";
 
     @NotNull(message = "resource is missing in Resource")
     @NonNull

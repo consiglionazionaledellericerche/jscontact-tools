@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
@@ -24,6 +25,7 @@ import it.cnr.iit.jscontact.tools.dto.serializers.NameComponentTypeSerializer;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -32,6 +34,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NameComponent extends GroupableObject implements Serializable {
+
+    @NotNull
+    @Pattern(regexp = "NameComponent", message="Invalid @type value in NameComponent")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "NameComponent";
 
     @NotNull(message = "type is missing in NameComponent")
     @NonNull

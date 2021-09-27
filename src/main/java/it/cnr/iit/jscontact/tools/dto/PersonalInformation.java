@@ -17,12 +17,14 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -31,6 +33,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonalInformation extends GroupableObject implements HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
+
+    @NotNull
+    @Pattern(regexp = "PersonalInformation", message="Invalid @type value in PersonalInformation")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "PersonalInformation";
 
     @NotNull(message = "type is missing in PersonalInformation")
     @NonNull

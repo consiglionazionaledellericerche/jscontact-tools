@@ -1,6 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
@@ -15,6 +16,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -25,6 +27,12 @@ import java.util.Map;
 @NoArgsConstructor
 public class Phone implements IdMapValue, Serializable, HasContext {
 
+    @NotNull
+    @Pattern(regexp = "Phone", message="Invalid @type value in Phone")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "Phone";
+    
     @NotNull(message = "phone is missing in Phone")
     @NonNull
     String phone;

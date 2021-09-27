@@ -1,17 +1,19 @@
 {
+  "@type": "Card",
   "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
   "fullName": { "value": "Joe User" },
   "kind": "individual",
   "preferredContactLanguages": {
-  "fr": [{ "pref": 1 }],
-  "en": [{ "pref": 2 }]
+  "fr": [{ "@type": "ContactLanguage", "pref": 1 }],
+  "en": [{ "@type": "ContactLanguage", "pref": 2 }]
   },
-  "organizations": { "ORG-1": { "name": { "value": "Example" }} },
-  "titles": {"TITLE-1": { "title": { "value": "Research Scientist" }},  "TITLE-2": { "title": { "value": "Project Lead" }}},
+  "organizations": { "ORG-1": { "@type": "Organization", "name": { "value": "Example" }} },
+  "titles": {"TITLE-1": { "@type": "Title", "title": { "value": "Research Scientist" }},  "TITLE-2": { "@type": "Title", "title": { "value": "Project Lead" }}},
   "addresses": {
     "ADR-1" : {
+      "@type": "Address",
       "contexts": {"work": true},
-      "street": [{"type": "name","value": "4321 Rue Somewhere"},{"type": "extension","value":"Suite 1234"}],
+      "street": [{"@type": "StreetComponent","type": "name","value": "4321 Rue Somewhere"},{"@type": "StreetComponent","type": "extension","value":"Suite 1234"}],
       "locality": "Quebec",
       "region": "QC",
       "postcode": "G1V 2M2",
@@ -20,6 +22,7 @@
       "timeZone": "Etc/GMT+5"
     },
     "ADR-2" : {
+      "@type": "Address",
       "contexts": {"private": true},
       "fullAddress": {
         "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
@@ -28,6 +31,7 @@
   },
   "phones": {
     "PHONE-1": {
+      "@type": "Phone",
       "contexts": {
         "work": true
       },
@@ -43,6 +47,7 @@
   },
   "emails": {
     "EMAIL-1": {
+      "@type": "EmailAddress",
       "contexts": {
         "work": true
       },
@@ -51,6 +56,7 @@
   },
   "online": {
     "KEY-1": {
+      "@type" : "Resource",
       "contexts": {
         "work": true
       },
@@ -59,6 +65,7 @@
       "resource": "http://www.example.com/joe.user/joe.asc"
     },
     "URL-1": {
+      "@type" : "Resource",
       "contexts": {"private": true},
       "type": "uri",
       "label": "url",

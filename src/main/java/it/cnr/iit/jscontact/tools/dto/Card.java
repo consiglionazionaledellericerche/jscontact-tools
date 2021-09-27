@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
@@ -34,6 +35,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SerializationUtils;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -48,6 +51,12 @@ import java.util.Map;
 @ToString(callSuper = true)
 @SuperBuilder
 public class Card extends JSContact implements Serializable {
+
+    @NotNull
+    @Pattern(regexp = "Card", message="Invalid @type value in Card")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "Card";
 
     String prodId;
 

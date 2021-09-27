@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.StreetComponentTypeDeserializer;
@@ -23,6 +24,7 @@ import it.cnr.iit.jscontact.tools.dto.serializers.StreetComponentTypeSerializer;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Builder
@@ -30,6 +32,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StreetComponent implements Serializable {
+
+    @NotNull
+    @Pattern(regexp = "StreetComponent", message="Invalid @type value in StreetComponent")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "StreetComponent";
 
     @NotNull
     @NonNull

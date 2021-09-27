@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
@@ -28,6 +29,8 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -37,6 +40,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactLanguage extends GroupableObject implements Serializable {
+
+    @NotNull
+    @Pattern(regexp = "ContactLanguage", message="Invalid @type value in ContactLanguage")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "ContactLanguage";
 
     @JsonSerialize(using = ContextSerializer.class)
     @JsonDeserialize(using = ContextDeserializer.class)

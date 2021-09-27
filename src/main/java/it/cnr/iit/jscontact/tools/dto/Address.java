@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
@@ -29,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
@@ -43,6 +45,12 @@ import java.util.StringJoiner;
 public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable {
 
     private static final String STREET_DETAILS_DELIMITER = " ";
+
+    @NotNull
+    @Pattern(regexp = "Address", message="Invalid @type value in Address")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "Address";
 
     LocalizedString fullAddress;
 
