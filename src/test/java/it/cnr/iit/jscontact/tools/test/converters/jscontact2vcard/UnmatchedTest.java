@@ -60,7 +60,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"ietf.org/rfc6350/GENDER\":\"M\"" +
+                "\"ietf.org:rfc6350:GENDER\":\"M\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testUnmatchedProperty - 1",vcard.getGender().getGender().equals("M"));
@@ -86,7 +86,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
                     "\"value\": \"Johnny\"" +
                     "}" +
                 "]," +
-                "\"ietf.org/rfc6350/N/SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
+                "\"ietf.org:rfc6350:N:SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testUnmatchedParameter1 - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));
@@ -112,7 +112,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\": \"test\"}," +
-                "\"ietf.org/rfc6350/FN/GROUP\":\"contact\"" +
+                "\"ietf.org:rfc6350:FN:GROUP\":\"contact\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testUnmatchedParameter2 - 1",vcard.getFormattedName().getValue().equals("test"));

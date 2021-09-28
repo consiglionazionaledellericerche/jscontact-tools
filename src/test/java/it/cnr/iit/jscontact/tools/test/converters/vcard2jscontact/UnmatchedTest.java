@@ -36,7 +36,7 @@ public class UnmatchedTest extends VCard2JSContactTest {
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testUnmatchedProperty - 1",jsCard.getExtensions().size() == 1);
-        assertTrue("testUnmatchedProperty - 2",jsCard.getExtensions().get("ietf.org/rfc6350/GENDER").equals("M"));
+        assertTrue("testUnmatchedProperty - 2",jsCard.getExtensions().get("ietf.org:rfc6350:GENDER").equals("M"));
 
     }
 
@@ -51,7 +51,7 @@ public class UnmatchedTest extends VCard2JSContactTest {
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testUnmatchedParameter - 1",jsCard.getExtensions().size() == 1);
-        assertTrue("testUnmatchedParameter - 2",jsCard.getExtensions().get("ietf.org/rfc6350/N/SORT-AS").equals("Public,John"));
+        assertTrue("testUnmatchedParameter - 2",jsCard.getExtensions().get("ietf.org:rfc6350:N:SORT-AS").equals("Public,John"));
 
     }
 

@@ -33,11 +33,11 @@ public class ExtensionsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":{\"value\":\"test\"}," +
-                "\"extension/myext\":\"extvalue\"" +
+                "\"extension:myext\":\"extvalue\"" +
                 "}";
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder()
                                 .config(JSContact2VCardConfig.builder()
-                                .extensionsPrefix("extension/").build()
+                                .extensionsPrefix("extension:").build()
                                 ).build();
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testExtendedJSContactValid - 4",vcard.getExtendedProperties().size() == 1);

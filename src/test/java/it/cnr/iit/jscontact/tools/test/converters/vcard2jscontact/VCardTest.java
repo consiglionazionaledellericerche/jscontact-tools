@@ -81,7 +81,7 @@ public class VCardTest extends VCard2JSContactTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder()
                 .config(VCard2JSContactConfig.builder()
-                        .extensionsPrefix("extension/")
+                        .extensionsPrefix("extension:")
                         .build()
                 )
                 .build();
@@ -90,7 +90,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testExtendedVCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertTrue("testExtendedVCardValid - 3",jsCard.getFullName().getValue().equals("test"));
         assertTrue("testExtendedVCardValid - 4",jsCard.getExtensions().size() == 1);
-        assertTrue("testExtendedVCardValid - 5",jsCard.getExtensions().get("extension/myext").equals("extvalue"));
+        assertTrue("testExtendedVCardValid - 5",jsCard.getExtensions().get("extension:myext").equals("extvalue"));
     }
 
 
@@ -312,7 +312,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard5 - 43", jsCard.getEmails().get("EMAIL-1").getEmail().equals("forrestgump@example.com"));
         assertTrue("testCompleteVCard5 - 44", jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z"))==0);
         assertTrue("testCompleteVCard5 - 45", jsCard.getExtensions().size() == 1);
-        assertTrue("testCompleteVCard5 - 46", jsCard.getExtensions().get("extension/x-qq").equals("21588891"));
+        assertTrue("testCompleteVCard5 - 46", jsCard.getExtensions().get("extension:x-qq").equals("21588891"));
         assertTrue("testCompleteVCard5 - 47", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 
@@ -475,29 +475,29 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 172", jsCard.getAddresses().get("ADR-4").getCountry().equals("CustomCountry"));
         assertTrue("testCompleteVCard6 - 173", jsCard.getAddresses().get("ADR-4").getPostcode().equals("CustomPostal"));
         assertTrue("testCompleteVCard6 - 174", jsCard.getExtensions().size() == 23);
-        assertTrue("testCompleteVCard6 - 175", jsCard.getExtensions().get("ietf.org/rfc6350/GENDER").equals("M"));
-        assertTrue("testCompleteVCard6 - 176", jsCard.getExtensions().get("extension/X-GENDER").equals("male"));
-        assertTrue("testCompleteVCard6 - 177", jsCard.getExtensions().get("extension/X-ID").equals("14f9aba0c9422da9ae376fe28bd89c2a.0"));
-        assertTrue("testCompleteVCard6 - 178", jsCard.getExtensions().get("extension/X-ETAG").equals("fffffea9056d8166e2b7a427977e570c87dd51279d11d9b137c593eb"));
-        assertTrue("testCompleteVCard6 - 179", jsCard.getExtensions().get("extension/X-FC-TAGS").equals("579c773f-736d-11e6-8dff-0ac8448704fb"));
-        assertTrue("testCompleteVCard6 - 180", jsCard.getExtensions().get("extension/X-FC-LIST-ID").equals("8ad23200aa3e1984736b11e688dc0add41994b95"));
-        assertTrue("testCompleteVCard6 - 181", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A4D6F74686572").equals("Mother"));
-        assertTrue("testCompleteVCard6 - 182", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A466174686572").equals("Father"));
-        assertTrue("testCompleteVCard6 - 183", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A506172656E74").equals("Parent"));
-        assertTrue("testCompleteVCard6 - 184", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A42726F74686572").equals("Brother"));
-        assertTrue("testCompleteVCard6 - 185", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A536973746572").equals("Sister"));
-        assertTrue("testCompleteVCard6 - 186", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A4368696C64").equals("Child"));
-        assertTrue("testCompleteVCard6 - 187", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A467269656E64").equals("Friend"));
-        assertTrue("testCompleteVCard6 - 188", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A53706F757365").equals("Spouse"));
-        assertTrue("testCompleteVCard6 - 189", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A4669616E63C3A9").equals("Fiance"));
-        assertTrue("testCompleteVCard6 - 190", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A506172746E6572").equals("Partner"));
-        assertTrue("testCompleteVCard6 - 191", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A417373697374616E74").equals("Assistant"));
-        assertTrue("testCompleteVCard6 - 192", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A4D616E61676572").equals("Manager"));
-        assertTrue("testCompleteVCard6 - 193", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A4F74686572").equals("Other"));
-        assertTrue("testCompleteVCard6 - 194", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D52656C617465644E616D65733A437573746F6D54595045").equals("Custom"));
-        assertTrue("testCompleteVCard6 - 195", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D4F7468657244617465733A416E6E6976657273617279").equals("2016-08-02"));
-        assertTrue("testCompleteVCard6 - 196", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D4F7468657244617465733A4F74686572").equals("2016-08-03"));
-        assertTrue("testCompleteVCard6 - 197", jsCard.getExtensions().get("extension/X-FCENCODED-582D46432D4F7468657244617465733A437573746F6D54595045").equals("2016-08-04"));
+        assertTrue("testCompleteVCard6 - 175", jsCard.getExtensions().get("ietf.org:rfc6350:GENDER").equals("M"));
+        assertTrue("testCompleteVCard6 - 176", jsCard.getExtensions().get("extension:X-GENDER").equals("male"));
+        assertTrue("testCompleteVCard6 - 177", jsCard.getExtensions().get("extension:X-ID").equals("14f9aba0c9422da9ae376fe28bd89c2a.0"));
+        assertTrue("testCompleteVCard6 - 178", jsCard.getExtensions().get("extension:X-ETAG").equals("fffffea9056d8166e2b7a427977e570c87dd51279d11d9b137c593eb"));
+        assertTrue("testCompleteVCard6 - 179", jsCard.getExtensions().get("extension:X-FC-TAGS").equals("579c773f-736d-11e6-8dff-0ac8448704fb"));
+        assertTrue("testCompleteVCard6 - 180", jsCard.getExtensions().get("extension:X-FC-LIST-ID").equals("8ad23200aa3e1984736b11e688dc0add41994b95"));
+        assertTrue("testCompleteVCard6 - 181", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A4D6F74686572").equals("Mother"));
+        assertTrue("testCompleteVCard6 - 182", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A466174686572").equals("Father"));
+        assertTrue("testCompleteVCard6 - 183", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A506172656E74").equals("Parent"));
+        assertTrue("testCompleteVCard6 - 184", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A42726F74686572").equals("Brother"));
+        assertTrue("testCompleteVCard6 - 185", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A536973746572").equals("Sister"));
+        assertTrue("testCompleteVCard6 - 186", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A4368696C64").equals("Child"));
+        assertTrue("testCompleteVCard6 - 187", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A467269656E64").equals("Friend"));
+        assertTrue("testCompleteVCard6 - 188", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A53706F757365").equals("Spouse"));
+        assertTrue("testCompleteVCard6 - 189", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A4669616E63C3A9").equals("Fiance"));
+        assertTrue("testCompleteVCard6 - 190", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A506172746E6572").equals("Partner"));
+        assertTrue("testCompleteVCard6 - 191", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A417373697374616E74").equals("Assistant"));
+        assertTrue("testCompleteVCard6 - 192", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A4D616E61676572").equals("Manager"));
+        assertTrue("testCompleteVCard6 - 193", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A4F74686572").equals("Other"));
+        assertTrue("testCompleteVCard6 - 194", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D52656C617465644E616D65733A437573746F6D54595045").equals("Custom"));
+        assertTrue("testCompleteVCard6 - 195", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D4F7468657244617465733A416E6E6976657273617279").equals("2016-08-02"));
+        assertTrue("testCompleteVCard6 - 196", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D4F7468657244617465733A4F74686572").equals("2016-08-03"));
+        assertTrue("testCompleteVCard6 - 197", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D4F7468657244617465733A437573746F6D54595045").equals("2016-08-04"));
     }
 
 }

@@ -122,7 +122,7 @@ public class JCardTest extends JCard2JSContactTest {
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"], [\"myext\", {}, \"text\", \"extvalue\"]]]";
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                 .config(VCard2JSContactConfig.builder()
-                        .extensionsPrefix("extension/")
+                        .extensionsPrefix("extension:")
                         .build()
                 )
                 .build();
@@ -131,7 +131,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testExtendedJCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertTrue("testExtendedJCardValid - 3",jsCard.getFullName().getValue().equals("test"));
         assertTrue("testExtendedJCardValid - 4",jsCard.getExtensions().size() == 1);
-        assertTrue("testExtendedJCardValid - 5",jsCard.getExtensions().get("extension/myext").equals("extvalue"));
+        assertTrue("testExtendedJCardValid - 5",jsCard.getExtensions().get("extension:myext").equals("extvalue"));
     }
 
 

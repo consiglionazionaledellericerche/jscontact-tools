@@ -200,12 +200,12 @@ The conversion is executed according to the following rules:
 
 3.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) are matched.
 
-4.  An unmatched property is converted into a topmost Card/CardGroup property with prefix `ietf.org/rfc6350`. The following unmatched properties are considered:
+4.  An unmatched property is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350`. The following unmatched properties are considered:
     GENDER
     CLIENTPIDMAP
     XML
 
-5.  An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org/rfc6350/<vCard Property Name>`. The following unmatched parameters are considered:
+5.  An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350:<vCard Property Name>`. The following unmatched parameters are considered:
     GROUP
     PID
     SORT-AS (only for vCard N property)
@@ -217,7 +217,7 @@ The conversion is executed according to the following rules:
 
 8.  Default values for the configuration properties are:
     
-    -  `extensionsPrefix = "extension/"`
+    -  `extensionsPrefix = "extension:"`
     -  `customTimeZonesPrefix = "/tz"`
     -  `cardToValidate = true`
     -  `applyAutoIdsProfile = true`
@@ -336,12 +336,12 @@ All the methods take in input a list of JSContact top most objects and can raise
     `X-JSCONTACT-CREATED`
     `X-JSCONTACT-PREFERREDCONTACTMETHOD`
     
-3.  A topmost Card/CardGroup property with name `ietf.org/rfc6350/<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
+3.  A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
     GENDER
     CLIENTPIDMAP
     XML
 
-5.  A topmost Card/CardGroup property with name `ietf.org/rfc6350/<vCard Property Name>/<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
+5.  A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>:<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
     GROUP
     PID
     SORT-AS (only for vCard N property)

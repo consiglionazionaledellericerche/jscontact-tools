@@ -10,11 +10,11 @@ public abstract class AbstractConverter {
     protected static final String VCARD_CLIENTPIDMAP_TAG = "CLIENTPIDMAP";
     protected static final String VCARD_XML_TAG = "XML";
     protected static final String DEFAULT_CALSCALE = "gregorian";
-    protected static final String UNMATCHED_PROPERTY_PREFIX = "ietf.org/rfc6350/";
+    protected static final String UNMATCHED_PROPERTY_PREFIX = "ietf.org:rfc6350:";
 
     protected static String getUnmatchedPropertyName(String propertyName, Integer index) {
 
-        return UNMATCHED_PROPERTY_PREFIX + propertyName + ((index != null) ? "/" + index : "");
+        return UNMATCHED_PROPERTY_PREFIX + propertyName + ((index != null) ? ":" + index : "");
     }
 
     protected static String getUnmatchedPropertyName(String propertyName) {
@@ -24,7 +24,7 @@ public abstract class AbstractConverter {
 
     private static String getUnmatchedParamName(String propertyName, Integer index, String paramName) {
 
-        return getUnmatchedPropertyName(propertyName) + "/" + ((index != null) ? "/" + index : "") + paramName;
+        return getUnmatchedPropertyName(propertyName) + ":" + ((index != null) ? ":" + index : "") + paramName;
     }
 
     protected static String getUnmatchedParamName(String propertyName, String paramName) {

@@ -847,8 +847,8 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static String[] getPropertyNamePlusIndex(String extension, String parameterName) {
         String propertyPlusIndex = extension
                                    .replace(UNMATCHED_PROPERTY_PREFIX,"")
-                                   .replace("/" + parameterName,"");
-        return propertyPlusIndex.split("/");
+                                   .replace(":" + parameterName,"");
+        return propertyPlusIndex.split(":");
     }
 
     private static String getPropertyNameFromExtension(String extension, String parameterName) {
@@ -899,9 +899,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.getBirthday().setParameter("CALSCALE", extension.getValue());
             else if (extension.getKey().equals(getUnmatchedParamName("DEATHDATE", "CALSCALE")))
                 vcard.getDeathdate().setParameter("CALSCALE", extension.getValue());
-            else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith("/GROUP"))
+            else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith(":GROUP"))
                 fillVCardUnmatchedParameter(vcard,extension.getKey(),"GROUP", extension.getValue());
-            else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith("/PID"))
+            else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith(":PID"))
                 fillVCardUnmatchedParameter(vcard,extension.getKey(),"PID", extension.getValue());
             else
                 vcard.getExtendedProperties().add(new RawProperty(extension.getKey().replace(config.getExtensionsPrefix(), ""), extension.getValue()));
