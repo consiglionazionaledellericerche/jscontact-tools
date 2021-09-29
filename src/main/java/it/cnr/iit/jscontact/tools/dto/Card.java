@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
@@ -140,6 +141,7 @@ public class Card extends JSContact implements Serializable {
 
     Map<String,String> extensions;
 
+    Map<String,Map<String,JsonNode>> localizations;
 
     private boolean isContactByMethodPreferred(PreferredContactMethodType method) {return preferredContactMethod != null && preferredContactMethod == method; }
     @JsonIgnore
@@ -426,6 +428,30 @@ public class Card extends JSContact implements Serializable {
 
     public Card clone() {
         return SerializationUtils.clone(this);
+    }
+
+
+    public void addLocalization(String language, String path, JsonNode object) {
+
+        if (language == null || path == null || object == null)
+            return;
+
+        if (localizations == null)
+            localizations = new HashMap<>();
+
+        Map<String,JsonNode> localizationsPerLanguage;
+        if (localizations.containsKey(language))
+            localizationsPerLanguage = localizations.get(language);
+        else
+            localizationsPerLanguage = new HashMap<>();
+
+        if (localizationsPerLanguage.containsKey(path))
+            return;
+
+        localizationsPerLanguage.put(path, object);
+
+        localizations.replace(language, localizationsPerLanguage);
+
     }
 
 }
