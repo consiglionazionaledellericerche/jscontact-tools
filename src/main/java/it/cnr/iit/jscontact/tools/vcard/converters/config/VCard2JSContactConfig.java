@@ -33,6 +33,8 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private boolean applyAutoIdsProfile = true;
 
+    private String defaultLanguage;
+
     private VCard2JSContactIdsProfile idsProfileToApply = null;
 
 }

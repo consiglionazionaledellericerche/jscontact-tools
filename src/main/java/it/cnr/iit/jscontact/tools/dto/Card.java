@@ -61,6 +61,8 @@ public class Card extends JSContact implements Serializable {
 
     String prodId;
 
+    String language;
+
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar created;
