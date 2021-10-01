@@ -40,7 +40,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     public static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
 
     @NotNull
-    @Pattern(regexp = "Anniversary", message="Invalid @type value in Anniversary")
+    @Pattern(regexp = "Anniversary", message="invalid @type value in Anniversary")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Anniversary";

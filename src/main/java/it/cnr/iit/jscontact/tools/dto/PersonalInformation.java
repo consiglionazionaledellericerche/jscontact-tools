@@ -35,7 +35,7 @@ import java.io.Serializable;
 public class PersonalInformation extends GroupableObject implements HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
 
     @NotNull
-    @Pattern(regexp = "PersonalInformation", message="Invalid @type value in PersonalInformation")
+    @Pattern(regexp = "PersonalInformation", message="invalid @type value in PersonalInformation")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "PersonalInformation";

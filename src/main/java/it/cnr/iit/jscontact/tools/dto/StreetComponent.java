@@ -34,7 +34,7 @@ import java.io.Serializable;
 public class StreetComponent implements Serializable {
 
     @NotNull
-    @Pattern(regexp = "StreetComponent", message="Invalid @type value in StreetComponent")
+    @Pattern(regexp = "StreetComponent", message="invalid @type value in StreetComponent")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "StreetComponent";

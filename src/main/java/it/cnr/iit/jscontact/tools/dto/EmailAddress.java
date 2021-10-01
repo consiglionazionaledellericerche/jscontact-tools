@@ -24,7 +24,7 @@ import java.util.Map;
 public class EmailAddress implements IdMapValue, Serializable, HasContext {
 
     @NotNull
-    @Pattern(regexp = "EmailAddress", message="Invalid @type value in EmailAddress")
+    @Pattern(regexp = "EmailAddress", message="invalid @type value in EmailAddress")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "EmailAddress";

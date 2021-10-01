@@ -1,0 +1,75 @@
+{
+  "@type": "Card",
+  "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
+  "fullName": { "value": "Joe User" },
+  "kind": "individual",
+  "preferredContactLanguages": {
+  "fr": [{ "@type": "ContactLanguage", "pref": 1 }],
+  "en": [{ "@type": "ContactLanguage", "pref": 2 }]
+  },
+  "organizations": { "ORG-1": { "@type": "Organization", "name": { "value": "Example" }} },
+  "titles": {"TITLE-1": { "@type": "Title", "title": { "value": "Research Scientist" }},  "TITLE-2": { "@type": "Title", "title": { "value": "Project Lead" }}},
+  "addresses": {
+    "ADR-1" : {
+      "@type": "Wrong@TypeValue",
+      "contexts": {"work": true},
+      "street": [{"@type": "StreetComponent","type": "name","value": "4321 Rue Somewhere"},{"@type": "StreetComponent","type": "extension","value":"Suite 1234"}],
+      "locality": "Quebec",
+      "region": "QC",
+      "postcode": "G1V 2M2",
+      "country": "Canada",
+      "coordinates": "geo:46.772673,-71.282945",
+      "timeZone": "Etc/GMT+5"
+    },
+    "ADR-2" : {
+      "@type": "Address",
+      "contexts": {"private": true},
+      "fullAddress": {
+        "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+      }
+    }
+  },
+  "phones": {
+    "PHONE-1": {
+      "@type": "Phone",
+      "contexts": {
+        "work": true
+      },
+      "features": {
+        "voice": true,
+        "cell": true,
+        "video": true,
+        "text": true
+      },
+      "pref": 1,
+      "phone": "tel:+1-555-555-1234;ext=102"
+    }
+  },
+  "emails": {
+    "EMAIL-1": {
+      "@type": "EmailAddress",
+      "contexts": {
+        "work": true
+      },
+      "email": "joe.user@example.com"
+    }
+  },
+  "online": {
+    "KEY-1": {
+      "@type" : "Resource",
+      "contexts": {
+        "work": true
+      },
+      "type": "uri",
+      "label": "key",
+      "resource": "http://www.example.com/joe.user/joe.asc"
+    },
+    "URL-1": {
+      "@type" : "Resource",
+      "contexts": {"private": true},
+      "type": "uri",
+      "label": "url",
+      "resource": "http://example.org"
+    }
+  }
+}

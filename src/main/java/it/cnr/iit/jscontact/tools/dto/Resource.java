@@ -47,7 +47,7 @@ import java.util.Map;
 public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable, HasContext {
 
     @NotNull
-    @Pattern(regexp = "Resource", message="Invalid @type value in Resource")
+    @Pattern(regexp = "Resource", message="invalid @type value in Resource")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Resource";

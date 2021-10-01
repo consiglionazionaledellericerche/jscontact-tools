@@ -37,7 +37,7 @@ import java.util.Map;
 public class Relation extends GroupableObject implements Serializable {
 
     @NotNull
-    @Pattern(regexp = "Relation", message="Invalid @type value in Relation")
+    @Pattern(regexp = "Relation", message="invalid @type value in Relation")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Relation";

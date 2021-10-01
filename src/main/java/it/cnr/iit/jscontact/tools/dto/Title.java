@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class Title implements IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "Title", message="Invalid @type value in Title")
+    @Pattern(regexp = "Title", message="invalid @type value in Title")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Title";

@@ -42,7 +42,7 @@ import java.io.Serializable;
 public class ContactLanguage extends GroupableObject implements Serializable {
 
     @NotNull
-    @Pattern(regexp = "ContactLanguage", message="Invalid @type value in ContactLanguage")
+    @Pattern(regexp = "ContactLanguage", message="invalid @type value in ContactLanguage")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "ContactLanguage";

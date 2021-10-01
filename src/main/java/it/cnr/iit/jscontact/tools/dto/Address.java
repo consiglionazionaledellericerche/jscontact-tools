@@ -47,7 +47,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     private static final String STREET_DETAILS_DELIMITER = " ";
 
     @NotNull
-    @Pattern(regexp = "Address", message="Invalid @type value in Address")
+    @Pattern(regexp = "Address", message="invalid @type value in Address")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Address";

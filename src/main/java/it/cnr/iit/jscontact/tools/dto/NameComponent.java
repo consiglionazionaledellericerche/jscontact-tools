@@ -36,7 +36,7 @@ import java.io.Serializable;
 public class NameComponent extends GroupableObject implements Serializable {
 
     @NotNull
-    @Pattern(regexp = "NameComponent", message="Invalid @type value in NameComponent")
+    @Pattern(regexp = "NameComponent", message="invalid @type value in NameComponent")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "NameComponent";

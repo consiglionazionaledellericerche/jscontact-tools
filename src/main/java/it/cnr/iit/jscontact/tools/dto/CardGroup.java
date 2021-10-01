@@ -40,7 +40,7 @@ import java.util.Map;
 public class CardGroup extends JSContact implements Serializable {
 
     @NotNull
-    @Pattern(regexp = "CardGroup", message="Invalid @type value in CardGroup")
+    @Pattern(regexp = "CardGroup", message="invalid @type value in CardGroup")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "CardGroup";

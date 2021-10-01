@@ -28,7 +28,7 @@ import java.util.Map;
 public class Phone implements IdMapValue, Serializable, HasContext {
 
     @NotNull
-    @Pattern(regexp = "Phone", message="Invalid @type value in Phone")
+    @Pattern(regexp = "Phone", message="invalid @type value in Phone")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Phone";

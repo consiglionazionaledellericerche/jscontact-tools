@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class Organization implements IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "Organization", message="Invalid @type value in Organization")
+    @Pattern(regexp = "Organization", message="invalid @type value in Organization")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Organization";

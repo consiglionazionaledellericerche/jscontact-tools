@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class File implements IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "File", message="Invalid @type value in File")
+    @Pattern(regexp = "File", message="invalid @type value in File")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "File";

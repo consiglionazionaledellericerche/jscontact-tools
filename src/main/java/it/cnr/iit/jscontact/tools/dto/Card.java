@@ -54,7 +54,7 @@ import java.util.Map;
 public class Card extends JSContact implements Serializable {
 
     @NotNull
-    @Pattern(regexp = "Card", message="Invalid @type value in Card")
+    @Pattern(regexp = "Card", message="invalid @type value in Card")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Card";
