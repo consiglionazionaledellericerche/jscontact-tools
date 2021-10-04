@@ -1,14 +1,14 @@
 {
 "@type": "Card",
 "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
-"language": "ja",
+"language": "jp",
 "fullName": "大久保 正仁",
 "titles": {
   "TITLE-1": {
     "@type": "Title",
     "title": {
       "value": "事務局長",
-      "language": "ja",
+      "language": "jp",
       "localizations": {
         "en": "Secretary General"
       }
@@ -17,7 +17,7 @@
 },
 "kind": "individual",
 "preferredContactLanguages": {
-"ja": [{ "@type": "ContactLanguage", "pref": 1 }],
+"jp": [{ "@type": "ContactLanguage", "pref": 1 }],
 "en": [{ "@type": "ContactLanguage", "pref": 2 }]
 },
 "localizations": {

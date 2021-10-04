@@ -45,11 +45,11 @@ public class FullNameTest extends VCard2JSContactTest {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
-                "FN;LANGUAGE=ja:大久保 正仁\n" +
+                "FN;LANGUAGE=jp:大久保 正仁\n" +
                 "FN;LANGUAGE=en:Okubo Masahito\n" +
                 "END:VCARD";
 
-        VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("ja").build()).build();
+        VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("jp").build()).build();
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testFullNameValid2 - 1",jsCard.getFullName().equals("大久保 正仁"));
@@ -63,7 +63,7 @@ public class FullNameTest extends VCard2JSContactTest {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
-                "FN;LANGUAGE=ja:大久保 正仁\n" +
+                "FN;LANGUAGE=jp:大久保 正仁\n" +
                 "FN;LANGUAGE=en:Okubo Masahito\n" +
                 "END:VCARD";
 
@@ -71,7 +71,7 @@ public class FullNameTest extends VCard2JSContactTest {
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testFullNameValid3 - 1",jsCard.getFullName().equals("Okubo Masahito"));
-        assertTrue("testFullNameValid3 - 2",jsCard.getLocalizations().get("ja").get("/fullName").asText().equals("大久保 正仁"));
+        assertTrue("testFullNameValid3 - 2",jsCard.getLocalizations().get("jp").get("/fullName").asText().equals("大久保 正仁"));
 
     }
 }

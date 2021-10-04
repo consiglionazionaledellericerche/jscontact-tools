@@ -30,13 +30,13 @@ public class PreferredContactLanguagesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[ \"lang\", { \"pref\": \"1\" }, \"language-tag\", \"ja\" ], " +
+                "[ \"lang\", { \"pref\": \"1\" }, \"language-tag\", \"jp\" ], " +
                 "[ \"lang\", { \"pref\": \"2\" }, \"language-tag\", \"en\" ] " +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testPreferredContactLanguagesValid1 - 1",jsCard.getPreferredContactLanguages()!=null);
         assertTrue("testPreferredContactLanguagesValid1 - 2",jsCard.getPreferredContactLanguages().size() == 2);
-        assertTrue("testPreferredContactLanguagesValid1 - 3",jsCard.getPreferredContactLanguages().get("ja")[0].getPref() == 1);
+        assertTrue("testPreferredContactLanguagesValid1 - 3",jsCard.getPreferredContactLanguages().get("jp")[0].getPref() == 1);
         assertTrue("testPreferredContactLanguagesValid1 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
     }
 

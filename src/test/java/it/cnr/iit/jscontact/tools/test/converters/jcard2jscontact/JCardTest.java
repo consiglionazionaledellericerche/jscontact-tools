@@ -209,11 +209,11 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard2 - 4", jsCard.getKind().isIndividual());
         assertTrue("testCompleteJCard2 - 5", jsCard.getTitles().size() == 1);
         assertTrue("testCompleteJCard2 - 6", jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("事務局長"));
-        assertTrue("testCompleteJCard2 - 7", jsCard.getTitles().get("TITLE-1").getTitle().getLanguage().equals("ja"));
+        assertTrue("testCompleteJCard2 - 7", jsCard.getTitles().get("TITLE-1").getTitle().getLanguage().equals("jp"));
         assertTrue("testCompleteJCard2 - 8", jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations().get("en").equals("Secretary General"));
         assertTrue("testCompleteJCard2 - 9", jsCard.getKind().isIndividual());
         assertTrue("testCompleteJCard2 - 10", jsCard.getPreferredContactLanguages().size()==2);
-        assertTrue("testCompleteJCard2 - 11", jsCard.getPreferredContactLanguages().get("ja")[0].getPref() == 1);
+        assertTrue("testCompleteJCard2 - 11", jsCard.getPreferredContactLanguages().get("jp")[0].getPref() == 1);
         assertTrue("testCompleteJCard2 - 12", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
         assertTrue("testCompleteJCard2 - 13", StringUtils.isNotEmpty(jsCard.getUid()));
     }

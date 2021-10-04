@@ -53,10 +53,10 @@ public class FullNameTest extends JCard2JSContactTest {
     public void testFullNameValid2() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
-                "[\"fn\", {\"language\":\"ja\", \"altid\" : \"1\"}, \"text\", \"大久保 正仁\"], " +
+                "[\"fn\", {\"language\":\"jp\", \"altid\" : \"1\"}, \"text\", \"大久保 正仁\"], " +
                 "[\"fn\", {\"language\":\"en\", \"altid\" : \"1\"}, \"text\", \"Okubo Masahito\"] " +
                 "]]";
-        JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("ja").build()).build();
+        JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("jp").build()).build();
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testFullNameValid2 - 1",jsCard.getFullName().equals("大久保 正仁"));
@@ -68,14 +68,14 @@ public class FullNameTest extends JCard2JSContactTest {
     public void testFullNameValid3() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
-                "[\"fn\", {\"language\":\"ja\", \"altid\" : \"1\"}, \"text\", \"大久保 正仁\"], " +
+                "[\"fn\", {\"language\":\"jp\", \"altid\" : \"1\"}, \"text\", \"大久保 正仁\"], " +
                 "[\"fn\", {\"language\":\"en\", \"altid\" : \"1\"}, \"text\", \"Okubo Masahito\"] " +
                 "]]";
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertTrue("testFullNameValid3 - 1",jsCard.getFullName().equals("Okubo Masahito"));
-        assertTrue("testFullNameValid3 - 2",jsCard.getLocalizations().get("ja").get("/fullName").asText().equals("大久保 正仁"));
+        assertTrue("testFullNameValid3 - 2",jsCard.getLocalizations().get("jp").get("/fullName").asText().equals("大久保 正仁"));
 
     }
 }

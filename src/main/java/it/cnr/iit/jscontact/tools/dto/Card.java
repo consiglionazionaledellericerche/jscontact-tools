@@ -19,10 +19,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
@@ -34,6 +37,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -43,6 +47,7 @@ import java.util.*;
 
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
+@LocalizationsConstraint
 @NoArgsConstructor
 @Getter
 @Setter
@@ -460,6 +465,50 @@ public class Card extends JSContact implements Serializable {
         }
 
         return (localizationsPerPath.size() != 0) ? localizationsPerPath : null;
+    }
+
+
+    public Map<String,JsonNode> getLocalizationsPerLanguage(String language) {
+
+        if (localizations == null)
+            return null;
+
+        return localizations.get(language);
+    }
+
+
+    public Card getLocalizedVersion(String language) {
+
+        if (localizations == null)
+            return null;
+
+        Map<String,JsonNode> localizationsPerLanguage = getLocalizationsPerLanguage(language);
+
+        if (localizationsPerLanguage == null)
+            return null;
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode root = objectMapper.valueToTree(this);
+
+        for (Map.Entry<String,JsonNode> localization : localizationsPerLanguage.entrySet()) {
+            JsonPointer jsonPointer = JsonPointer.compile(localization.getKey());
+            JsonNode localizedNode = localization.getValue();
+            JsonNode parentNode = root.at(jsonPointer.head());
+
+            if (!parentNode.isMissingNode() && parentNode.isObject()) {
+                ObjectNode parentObjectNode = (ObjectNode) parentNode;
+                String fieldName = jsonPointer.last().toString();
+                fieldName = fieldName.replace(Character.toString(JsonPointer.SEPARATOR), StringUtils.EMPTY);
+                if (parentObjectNode.get(fieldName) != null)
+                    parentObjectNode.set(fieldName, localizedNode);
+            }
+        }
+
+        Card localizedCard = objectMapper.convertValue(root, Card.class);
+        localizedCard.setLanguage(language);
+        localizedCard.setLocalizations(null);
+
+        return localizedCard;
     }
 
 }
