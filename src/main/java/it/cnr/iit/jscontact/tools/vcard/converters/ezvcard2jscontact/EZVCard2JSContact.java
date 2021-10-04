@@ -72,7 +72,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     private boolean isDefaultLanguage(String language) {
 
-        if (StringUtils.isEmpty(language) == true)
+        if (StringUtils.isEmpty(language))
             return false;
 
         if (config.getDefaultLanguage() == null)

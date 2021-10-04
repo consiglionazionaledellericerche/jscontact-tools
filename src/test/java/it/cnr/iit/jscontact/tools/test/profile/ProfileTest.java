@@ -15,11 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.profile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
-import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact.JCard2JSContactTest;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;

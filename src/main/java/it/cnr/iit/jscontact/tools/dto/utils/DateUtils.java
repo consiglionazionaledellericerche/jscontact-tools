@@ -1,6 +1,5 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
-import com.sun.scenario.effect.Offset;
 import ezvcard.util.PartialDate;
 import ezvcard.util.VCardDateFormat;
 
