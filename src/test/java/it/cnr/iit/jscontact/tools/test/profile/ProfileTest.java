@@ -66,7 +66,7 @@ public class ProfileTest extends JCard2JSContactTest {
         assertTrue("testRDAPProfile - 16", jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Research Scientist"));
         assertTrue("testRDAPProfile - 17", jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Project Lead"));
         assertTrue("testRDAPProfile - 18", jsCard.getAddresses().size() == 2);
-        assertTrue("testRDAPProfile - 19", jsCard.getAddresses().get("int").getFullAddress().getValue().equals("Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada"));
+        assertTrue("testRDAPProfile - 19", jsCard.getAddresses().get("int").getFullAddress().equals("Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada"));
         assertTrue("testRDAPProfile - 20", jsCard.getAddresses().get("int").getStreetExtensions().equals("Suite 1234"));
         assertTrue("testRDAPProfile - 21", jsCard.getAddresses().get("int").getStreetDetails().equals("4321 Rue Somewhere"));
         assertTrue("testRDAPProfile - 22", jsCard.getAddresses().get("int").getLocality().equals("Quebec"));
@@ -75,7 +75,7 @@ public class ProfileTest extends JCard2JSContactTest {
         assertTrue("testRDAPProfile - 25", jsCard.getAddresses().get("int").getPostcode().equals("G1V 2M2"));
         assertTrue("testRDAPProfile - 26", jsCard.getAddresses().get("int").getCoordinates().equals("geo:46.772673,-71.282945"));
         assertTrue("testRDAPProfile - 27", jsCard.getAddresses().get("int").getTimeZone().equals("Etc/GMT+5"));
-        assertTrue("testRDAPProfile - 28", jsCard.getAddresses().get("loc").getFullAddress().getValue().equals("123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"));
+        assertTrue("testRDAPProfile - 28", jsCard.getAddresses().get("loc").getFullAddress().equals("123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"));
         assertTrue("testRDAPProfile - 29", jsCard.getEmails().size() == 1);
         assertTrue("testRDAPProfile - 30", jsCard.getEmails().get("email").asWork());
         assertTrue("testRDAPProfile - 31", jsCard.getEmails().get("email").getEmail().equals("joe.user@example.com"));

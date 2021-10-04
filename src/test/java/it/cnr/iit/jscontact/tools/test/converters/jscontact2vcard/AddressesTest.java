@@ -34,7 +34,7 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"fullName\":\"test\"," +
                         "\"addresses\":{" +
                             "\"ADR-1\": {" +
-                                "\"fullAddress\":{\"value\":\"54321 Oak St Reston VA 20190 USA\"}," +
+                                "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
                                 "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                                 "\"locality\":\"Reston\"," +
                                 "\"region\":\"VA\"," +
@@ -194,9 +194,10 @@ public class AddressesTest extends JSContact2VCardTest {
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"fullName\":\"test\"," +
+                "\"language\":\"en\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"fullAddress\":{\"value\":\"54321 Oak St Reston VA 20190 USA\", \"language\":\"en\",\"localizations\":{\"it\":\"Via Moruzzi,1 Pisa Italia\"}}," +
+                        "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -204,6 +205,11 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"postcode\":\"20190\"," +
                         "\"countryCode\":\"US\"" +
                     "}" +
+                "}," +
+                "\"localizations\":{" +
+                   "\"it\":{" +
+                       "\"/addresses/ADR-1/fullAddress\":\"Via Moruzzi,1 Pisa Italia\"" +
+                   "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

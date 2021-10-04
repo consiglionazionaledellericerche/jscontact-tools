@@ -52,7 +52,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     @Builder.Default
     String _type = "Address";
 
-    LocalizedString fullAddress;
+    String fullAddress;
 
     StreetComponent[] street;
 

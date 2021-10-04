@@ -248,7 +248,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner;
     }
 
-    private static List<ezvcard.property.Address> getAddress(Address address, Integer altId, Map<String,TimeZone> timeZones) {
+    private static List<ezvcard.property.Address> getAddress(Address address, Integer altId, Map<String,TimeZone> timeZones, Map<String,JsonNode> localizations, String defaultLanguage) {
 
         if (address == null)
             return null;
@@ -289,15 +289,15 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
         }
         if (address.getFullAddress()!=null) {
-            addr.setLabel(address.getFullAddress().getValue());
-            addr.setLanguage(address.getFullAddress().getLanguage());
+            addr.setLabel(address.getFullAddress());
+            addr.setLanguage(defaultLanguage);
             addr.setAltId((altId != null) ? altId.toString() : null);
         }
         addrs.add(addr);
-        if (address.getFullAddress()!=null && address.getFullAddress().getLocalizations()!=null) {
-            for (Map.Entry<String,String> localization : address.getFullAddress().getLocalizations().entrySet()) {
+        if (localizations!=null) {
+            for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
                 ezvcard.property.Address localAddr = new ezvcard.property.Address();
-                localAddr.setLabel(localization.getValue());
+                localAddr.setLabel(localization.getValue().asText());
                 localAddr.setLanguage(localization.getKey());
                 localAddr.setAltId((altId != null) ? altId.toString() : null);
                 addrs.add(localAddr);
@@ -313,12 +313,12 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         Integer altId = Integer.parseInt("1");
-        for (Address address : jsCard.getAddresses().values()) {
+        for (Map.Entry<String,Address> address : jsCard.getAddresses().entrySet()) {
             boolean altIdToBeAdded = (jsCard.getAddresses().size() > 1) &&
                                      (
-                                             (address.getFullAddress()!=null && address.getFullAddress().getLocalizations()!=null)
+                                             (address.getValue().getFullAddress()!=null && jsCard.getLocalizationsPerPath("/addresses/"+address.getKey()+"/fullAddress")!=null)
                                      );
-            vcard.getAddresses().addAll(getAddress(address, altIdToBeAdded ? altId : null, jsCard.getTimeZones()));
+            vcard.getAddresses().addAll(getAddress(address.getValue(), altIdToBeAdded ? altId : null, jsCard.getTimeZones(), jsCard.getLocalizationsPerPath("/addresses/"+address.getKey()+"/fullAddress"), jsCard.getLanguage()));
         }
     }
 
@@ -331,7 +331,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             Constructor<T> constructor;
             if (anniversary.getPlace().getFullAddress() != null) {
                 constructor = classs.getDeclaredConstructor(String.class);
-                return constructor.newInstance(anniversary.getPlace().getFullAddress().getValue());
+                return constructor.newInstance(anniversary.getPlace().getFullAddress());
             }
 
             if (isStructuredAddress(anniversary.getPlace())) {

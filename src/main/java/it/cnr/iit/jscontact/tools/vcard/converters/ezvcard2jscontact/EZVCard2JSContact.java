@@ -296,7 +296,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static LocalizedString getFulllAddress(ezvcard.property.Address addr) {
+    private static String getFulllAddress(ezvcard.property.Address addr) {
 
         String fullAddress = addr.getLabel();
         if (fullAddress == null) {
@@ -310,7 +310,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             if (StringUtils.isNotEmpty(addr.getCountry())) joiner.add(addr.getCountry());
             fullAddress = joiner.toString();
         }
-        return StringUtils.isNotEmpty(fullAddress) ? LocalizedString.builder().value(fullAddress).language(addr.getLanguage()).build() : null;
+        return StringUtils.isNotEmpty(fullAddress) ? fullAddress : null;
     }
 
     private void addOnline(VCardProperty property, Card jsCard, OnlineLabelKey labelKey, int index) {
@@ -369,11 +369,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         if (property.getText() != null && property.getGeoUri() == null)
             return it.cnr.iit.jscontact.tools.dto.Address.builder()
-                    .fullAddress(LocalizedString.builder()
-                                                .value(property.getText())
-                                                .language(property.getLanguage())
-                                                .build()
-                                )
+                    .fullAddress(property.getText())
                     .build();
         else if (property.getGeoUri() != null)
             return it.cnr.iit.jscontact.tools.dto.Address.builder()
