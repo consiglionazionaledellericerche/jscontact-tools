@@ -42,9 +42,7 @@ public class FullNameTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"\"" +
-                "}" +
+                "\"fullName\": \"\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testEmptyFullName - 1",vcard.getFormattedName().getValue().equals(vcard.getUid().getValue()));
@@ -74,9 +72,7 @@ public class FullNameTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                "\"value\": \"John Q. Public, Esq.\"" +
-                "}" +
+                "\"fullName\":\"John Q. Public, Esq.\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testFullNameValid1 - 1",vcard.getFormattedName().getValue().equals("John Q. Public, Esq."));
@@ -87,12 +83,12 @@ public class FullNameTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                   "\"value\": \"大久保 正仁\"," +
-                   "\"language\": \"ja\"," +
-                   "\"localizations\": { " +
-                     "\"en\": \"Okubo Masahito\""+
-                   "}" +
+                "\"language\": \"ja\"," +
+                "\"fullName\":\"大久保 正仁\"," +
+                "\"localizations\" : {" +
+                  "\"en\": {" +
+                     "\"/fullName\":\"Okubo Masahito\""+
+                  "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

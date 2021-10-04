@@ -32,7 +32,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"extension:myext\":\"extvalue\"" +
                 "}";
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder()

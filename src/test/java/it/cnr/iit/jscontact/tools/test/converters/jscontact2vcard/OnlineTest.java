@@ -32,7 +32,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"XMPP-1\": {" +
                         "\"type\": \"username\","+
@@ -56,7 +56,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"SOURCE-1\": {" +
                         "\"type\": \"uri\","+
@@ -75,7 +75,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"photos\": {"+
                     "\"PHOTO-1\": {" +
                         "\"mediaType\": \"image/gif\","+
@@ -94,7 +94,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"LOGO-1\": {" +
                         "\"type\": \"uri\","+
@@ -113,7 +113,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"CONTACT-URI-1\": {" +
                         "\"type\": \"uri\","+
@@ -133,7 +133,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"SOUND-1\": {" +
                         "\"type\": \"uri\","+
@@ -154,7 +154,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\":{"+
                     "\"SOUND-1\": {" +
                         "\"type\": \"uri\","+
@@ -174,7 +174,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"URL-1\": {" +
                         "\"type\": \"uri\","+
@@ -193,7 +193,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"KEY-1\": {" +
                         "\"type\": \"uri\","+
@@ -212,7 +212,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"FBURL-1\": {" +
                         "\"type\": \"uri\","+
@@ -241,7 +241,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"CALADRURI-1\": {" +
                         "\"type\": \"uri\","+
@@ -268,7 +268,7 @@ public class OnlineTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"CALURI-1\": {" +
                         "\"type\": \"uri\","+

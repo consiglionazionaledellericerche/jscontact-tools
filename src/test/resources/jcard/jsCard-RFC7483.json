@@ -1,7 +1,7 @@
 {
   "@type": "Card",
   "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
-  "fullName": { "value": "Joe User" },
+  "fullName": "Joe User",
   "kind": "individual",
   "preferredContactLanguages": {
   "fr": [{ "@type": "ContactLanguage", "pref": 1 }],

@@ -36,9 +36,7 @@ public class CardGroupTest extends JSContact2VCardTest {
                              "\"card\": {" +
                                  "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
                                  "\"kind\":\"group\"," +
-                                 "\"fullName\": {" +
-                                    "\"value\":\"The Doe family\"" +
-                                 "}" +
+                                 "\"fullName\": \"The Doe family\"" +
                              "}," +
                              "\"members\": {" +
                                 "\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\":true," +
@@ -47,15 +45,11 @@ public class CardGroupTest extends JSContact2VCardTest {
                         "}," +
                         "{" +
                             "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
-                            "\"fullName\": {" +
-                                "\"value\":\"John Doe\"" +
-                            "}" +
+                            "\"fullName\":\"John Doe\"" +
                         "}," +
                         "{" +
                             "\"uid\":\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"," +
-                            "\"fullName\": {" +
-                                "\"value\":\"Jane Doe\"" +
-                            "}" +
+                            "\"fullName\": \"Jane Doe\"" +
                         "}" +
                         "]";
 

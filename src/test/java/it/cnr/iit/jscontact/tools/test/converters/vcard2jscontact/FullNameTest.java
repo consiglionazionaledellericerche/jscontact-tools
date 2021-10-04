@@ -17,6 +17,8 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
+import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSContact;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -34,7 +36,7 @@ public class FullNameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testFullNameValid1 - 1",jsCard.getFullName().getValue().equals("John Q. Public, Esq."));
+        assertTrue("testFullNameValid1 - 1",jsCard.getFullName().equals("John Q. Public, Esq."));
 
     }
 
@@ -47,11 +49,29 @@ public class FullNameTest extends VCard2JSContactTest {
                 "FN;LANGUAGE=en:Okubo Masahito\n" +
                 "END:VCARD";
 
+        VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("ja").build()).build();
+
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testFullNameValid2 - 1",jsCard.getFullName().getValue().equals("大久保 正仁"));
-        assertTrue("testFullNameValid2 - 2",jsCard.getFullName().getLanguage().equals("ja"));
-        assertTrue("testFullNameValid2 - 3",jsCard.getFullName().getLocalizations().get("en").equals("Okubo Masahito"));
+        assertTrue("testFullNameValid2 - 1",jsCard.getFullName().equals("大久保 正仁"));
+        assertTrue("testFullNameValid2 - 2",jsCard.getLocalizations().get("en").get("/fullName").asText().equals("Okubo Masahito"));
 
     }
 
+
+    @Test
+    public void testFullNameValid3() throws IOException, CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN;LANGUAGE=ja:大久保 正仁\n" +
+                "FN;LANGUAGE=en:Okubo Masahito\n" +
+                "END:VCARD";
+
+        VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertTrue("testFullNameValid3 - 1",jsCard.getFullName().equals("Okubo Masahito"));
+        assertTrue("testFullNameValid3 - 2",jsCard.getLocalizations().get("ja").get("/fullName").asText().equals("大久保 正仁"));
+
+    }
 }

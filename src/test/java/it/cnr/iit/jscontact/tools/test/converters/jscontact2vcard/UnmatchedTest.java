@@ -31,7 +31,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"preferredContactMethod\":\"emails\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -45,7 +45,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"created\":\"2010-10-10T10:10:10Z\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -59,7 +59,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"ietf.org:rfc6350:GENDER\":\"M\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -71,9 +71,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"Mr. John Q. Public, Esq.\"" +
-                "}," +
+                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":[ " +
                     "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
                     "{ \"value\":\"John\", \"type\": \"personal\" }," +
@@ -111,7 +109,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\": \"test\"}," +
+                "\"fullName\": \"test\"," +
                 "\"ietf.org:rfc6350:FN:GROUP\":\"contact\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

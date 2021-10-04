@@ -1,13 +1,8 @@
 {
 "@type": "Card",
 "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
-"fullName": {
-  "value": "大久保 正仁",
-  "language": "ja",
-  "localizations": {
-    "en": "Okubo Masahito"
-  }
-},
+"language": "ja",
+"fullName": "大久保 正仁",
 "titles": {
   "TITLE-1": {
     "@type": "Title",
@@ -24,5 +19,10 @@
 "preferredContactLanguages": {
 "ja": [{ "@type": "ContactLanguage", "pref": 1 }],
 "en": [{ "@type": "ContactLanguage", "pref": 2 }]
+},
+"localizations": {
+  "en": {
+    "/fullName": "Okubo Masahito"
+  }
 }
 }

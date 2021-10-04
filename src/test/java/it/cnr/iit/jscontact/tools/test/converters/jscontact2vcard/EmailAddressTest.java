@@ -30,7 +30,7 @@ public class EmailAddressTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"emails\":{ \"EMAIL-1\": {\"contexts\": {\"work\": true},\"email\":\"jqpublic@xyz.example.com\"}}" +
                 "}";
 
@@ -46,7 +46,7 @@ public class EmailAddressTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"emails\":{ " +
                      "\"EMAIL-1\": {\"contexts\":{\"work\": true},\"email\":\"jqpublic@xyz.example.com\"}," +
                      "\"EMAIL-2\": {\"contexts\":{\"private\": true},\"pref\":1,\"email\":\"jane_doe@example.com\"}" +

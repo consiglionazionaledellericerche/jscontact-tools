@@ -34,7 +34,7 @@ public class XCardTest extends XCard2JSContactTest {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("xcard/xCard-RFC6351.xml"), Charset.forName("UTF-8"));
         Card jsCard = (Card) xCard2JSContact.convert(vcard).get(0);
-        assertTrue("testCompleteXCard1 - 1", jsCard.getFullName().getValue().equals("Simon Perreault"));
+        assertTrue("testCompleteXCard1 - 1", jsCard.getFullName().equals("Simon Perreault"));
         assertTrue("testCompleteXCard1 - 2", jsCard.getKind() == null);
         assertTrue("testCompleteXCard1 - 3", jsCard.getName().length == 4);
         assertTrue("testCompleteXCard1 - 4", jsCard.getName()[0].isPersonal());
@@ -97,7 +97,7 @@ public class XCardTest extends XCard2JSContactTest {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("xcard/xCard-Wikipedia.xml"), Charset.forName("UTF-8"));
         Card jsCard = (Card) xCard2JSContact.convert(vcard).get(0);
-        assertTrue("testCompleteXCard2 - 1", jsCard.getFullName().getValue().equals("Forrest Gump"));
+        assertTrue("testCompleteXCard2 - 1", jsCard.getFullName().equals("Forrest Gump"));
         assertTrue("testCompleteXCard2 - 2", jsCard.getKind() == null);
         assertTrue("testCompleteXCard2 - 3", jsCard.getName().length == 3);
         assertTrue("testCompleteXCard2 - 4", jsCard.getName()[0].isPrefix());

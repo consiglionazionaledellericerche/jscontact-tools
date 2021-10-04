@@ -30,9 +30,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"Mr. John Q. Public, Esq.\"" +
-                "}," +
+                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":[ " +
                     "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
                     "{ \"value\":\"John\", \"type\": \"personal\" }," +

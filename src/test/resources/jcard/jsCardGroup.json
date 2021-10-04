@@ -5,9 +5,7 @@
     "card": {
       "@type": "Card",
       "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
-      "fullName": {
-        "value": "a group"
-      },
+      "fullName": "a group",
       "kind": "group"
     },
     "members": {
@@ -19,9 +17,7 @@
   {
     "@type": "Card",
     "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
-    "fullName": {
-      "value": "Joe User"
-    },
+    "fullName": "Joe User",
     "kind": "individual",
     "preferredContactLanguages": {
       "fr": [{ "@type": "ContactLanguage", "pref": 1 }],
@@ -108,13 +104,7 @@
   {
     "@type": "Card",
     "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
-    "fullName": {
-      "value": "大久保 正仁",
-      "language": "ja",
-      "localizations": {
-        "en": "Okubo Masahito"
-      }
-    },
+    "fullName": "大久保 正仁",
     "titles": {
       "TITLE-1" : {
         "@type": "Title",
@@ -131,18 +121,17 @@
     "preferredContactLanguages": {
       "ja": [{ "@type": "ContactLanguage", "pref": 1 }],
       "en": [{ "@type": "ContactLanguage", "pref": 2 }]
+    },
+    "localizations": {
+      "en": {
+        "/fullName": "Okubo Masahito"
+      }
     }
   },
   {
     "@type": "Card",
     "uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
-    "fullName": {
-      "value": "Taiwan Fixed Network CO.,LTD.",
-      "language": "en",
-      "localizations": {
-        "zh-Hant-TW": "台灣固網股份有限公司"
-      }
-    },
+    "fullName": "Taiwan Fixed Network CO.,LTD.",
     "kind": "org",
     "addresses": {
       "ADR-1": {
@@ -164,6 +153,11 @@
         "phone": ""
       }
     },
-    "emails": {}
+    "emails": {},
+    "localizations": {
+       "zh-Hant-TW": {
+         "/fullName": "台灣固網股份有限公司"
+       }
+    }
   }
 ]

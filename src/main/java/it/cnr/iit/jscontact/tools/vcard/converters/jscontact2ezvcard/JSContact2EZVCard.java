@@ -123,7 +123,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static void fillFormattedNames(VCard vcard, Card jsCard) {
 
-        if (jsCard.getFullName() == null || jsCard.getFullName().getValue().isEmpty()) {
+        if (jsCard.getFullName() == null || jsCard.getFullName().isEmpty()) {
             if (jsCard.getName() != null)
                 vcard.setFormattedName(getFormattedName(jsCard.getName()));
             else
@@ -131,14 +131,14 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
         }
 
-        FormattedName fn = new FormattedName(jsCard.getFullName().getValue());
-        fn.setLanguage(jsCard.getFullName().getLanguage());
-        if (jsCard.getFullName().getLocalizations() != null) {
+        FormattedName fn = new FormattedName(jsCard.getFullName());
+        fn.setLanguage(jsCard.getLanguage());
+        if (jsCard.getLocalizationsPerPath("/fullName") != null) {
             fn.setAltId("1");
             vcard.addFormattedName(fn);
-            for (Map.Entry<String,String> localization : jsCard.getFullName().getLocalizations().entrySet()) {
-                fn = new FormattedName(localization.getValue());
-                fn.setLanguage(localization.getKey());
+            for (Map.Entry<String,JsonNode> localizations : jsCard.getLocalizationsPerPath("/fullName").entrySet()) {
+                fn = new FormattedName(localizations.getValue().asText());
+                fn.setLanguage(localizations.getKey());
                 fn.setAltId("1");
                 vcard.addFormattedName(fn);
             }

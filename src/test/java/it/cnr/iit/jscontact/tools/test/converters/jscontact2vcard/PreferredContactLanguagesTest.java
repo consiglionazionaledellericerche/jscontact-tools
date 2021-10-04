@@ -30,7 +30,7 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
 
         String jsCard = "{" +
                          "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
-                         "\"fullName\":{\"value\":\"test\"}," +
+                         "\"fullName\":\"test\"," +
                          "\"preferredContactLanguages\":{" +
                                "\"ja\":[{\"pref\":1}]," +
                                "\"en\":[{\"pref\":2}]" +
@@ -50,7 +50,7 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
 
         String jsCard = "{" +
                 "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"preferredContactLanguages\":{" +
                     "\"en\":[{\"context\":\"work\",\"pref\":1}]," +
                     "\"fr\":[{\"context\":\"work\",\"pref\":2},{\"context\":\"private\"}]" +

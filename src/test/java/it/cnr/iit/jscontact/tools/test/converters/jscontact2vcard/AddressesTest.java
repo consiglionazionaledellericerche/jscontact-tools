@@ -31,7 +31,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                         "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                        "\"fullName\":{\"value\":\"test\"}," +
+                        "\"fullName\":\"test\"," +
                         "\"addresses\":{" +
                             "\"ADR-1\": {" +
                                 "\"fullAddress\":{\"value\":\"54321 Oak St Reston VA 20190 USA\"}," +
@@ -60,7 +60,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
@@ -88,7 +88,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
@@ -131,7 +131,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
@@ -161,7 +161,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
@@ -193,7 +193,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"fullAddress\":{\"value\":\"54321 Oak St Reston VA 20190 USA\", \"language\":\"en\",\"localizations\":{\"it\":\"Via Moruzzi,1 Pisa Italia\"}}," +
@@ -225,7 +225,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"street\":[{\"type\":\"name\", \"value\":\"Oak St\"}, {\"type\":\"number\", \"value\":\"54321\"}]," +
@@ -253,7 +253,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                 "\"ADR-1\": {" +
                 "\"street\":[" +
@@ -288,7 +288,7 @@ public class AddressesTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                             "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +

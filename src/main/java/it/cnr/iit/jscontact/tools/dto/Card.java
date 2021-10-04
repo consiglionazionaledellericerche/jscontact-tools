@@ -39,10 +39,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
@@ -82,8 +79,7 @@ public class Card extends JSContact implements Serializable {
     @Valid
     NameComponent[] name;
 
-    @Valid
-    LocalizedString fullName;
+    String fullName;
 
     @Valid
     LocalizedString[] nickNames;
@@ -182,16 +178,6 @@ public class Card extends JSContact implements Serializable {
 
     public void addName(NameComponent nc) {
         name = ArrayUtils.add(name, nc);
-    }
-
-    public void addFullName(String fn, String language) {
-        if (fullName == null)
-            fullName = LocalizedString.builder()
-                    .value(fn)
-                    .language(language)
-                    .build();
-        else
-            fullName.addLocalization(language, fn);
     }
 
     public void addNickName(LocalizedString nick) {
@@ -452,8 +438,28 @@ public class Card extends JSContact implements Serializable {
 
         localizationsPerLanguage.put(path, object);
 
-        localizations.replace(language, localizationsPerLanguage);
+        if (localizations.containsKey(language))
+            localizations.replace(language, localizationsPerLanguage);
+        else
+            localizations.put(language, localizationsPerLanguage);
+    }
 
+
+    public Map<String,JsonNode> getLocalizationsPerPath(String path) {
+
+        if (localizations == null)
+            return null;
+
+        Map<String, JsonNode> localizationsPerPath = new HashMap<String, JsonNode>();
+
+        for (Map.Entry<String,Map<String,JsonNode>> localizationsPerLang : localizations.entrySet()) {
+
+            if (localizationsPerLang.getValue().containsKey(path))
+                localizationsPerPath.put(localizationsPerLang.getKey(), localizationsPerLang.getValue().get(path));
+
+        }
+
+        return (localizationsPerPath.size() != 0) ? localizationsPerPath : null;
     }
 
 }

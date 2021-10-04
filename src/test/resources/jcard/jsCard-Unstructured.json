@@ -1,13 +1,8 @@
 {
   "@type": "Card",
   "uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
-  "fullName": {
-    "value": "Taiwan Fixed Network CO.,LTD.",
-    "language": "en",
-    "localizations": {
-      "zh-Hant-TW": "台灣固網股份有限公司"
-    }
-  },
+  "language": "en",
+  "fullName": "Taiwan Fixed Network CO.,LTD.",
   "kind": "org",
   "addresses": {
     "ADR-1" : {
@@ -29,5 +24,10 @@
       "phone": ""
     }
   },
-  "emails": {}
+  "emails": {},
+  "localizations": {
+     "zh-Hant-TW": {
+         "/fullName": "台灣固網股份有限公司"
+     }
+  }
 }

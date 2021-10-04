@@ -32,7 +32,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
 
         String jsCard = "{ " +
                         "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                        "\"fullName\":{\"value\":\"test\"}," +
+                        "\"fullName\":\"test\"," +
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                    "\"type\":\"birth\", " +
@@ -49,7 +49,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
 
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
@@ -72,7 +72,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
 
         String jsCard = "{ " +
                         "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                        "\"fullName\":{\"value\":\"test\"}," +
+                        "\"fullName\":\"test\"," +
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                    "\"type\":\"death\", " +
@@ -89,7 +89,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
 
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"death\", " +
@@ -112,7 +112,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
 
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
@@ -146,7 +146,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
 
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
@@ -186,7 +186,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
 
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +
@@ -224,7 +224,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
 
         String jsCard = "{ " +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"anniversaries\": { \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"type\":\"birth\", " +

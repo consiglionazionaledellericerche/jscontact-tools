@@ -30,7 +30,7 @@ public class NotesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                     "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                    "\"fullName\":{\"value\":\"test\"}," +
+                    "\"fullName\":\"test\"," +
                     "\"notes\": {" +
                            "\"value\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"," +
                            "\"localizations\": { \"it\":\"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" }" +
@@ -51,7 +51,7 @@ public class NotesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"notes\": {" +
                         "\"value\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\\nThis is another note\"," +
                         "\"localizations\": { \"it\":\"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" }" +
@@ -75,7 +75,7 @@ public class NotesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"notes\": {" +
                         "\"value\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\\nThis is another note\"," +
                         "\"localizations\": { \"it\":\"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\\nQuesta è un'altra nota\" }" +
