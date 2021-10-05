@@ -31,6 +31,7 @@ import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
+import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import lombok.*;
@@ -133,8 +134,7 @@ public class Card extends JSContact implements Serializable {
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
     Map<String,PersonalInformation> personalInfo;
 
-    @Valid
-    LocalizedString notes;
+    String notes;
 
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> categories in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> categories;
@@ -356,28 +356,19 @@ public class Card extends JSContact implements Serializable {
 
     public void addNote(String note, String language) {
 
-        if (notes == null) {
-            notes = LocalizedString.builder().value(note).language(language).build();
-            return;
-        }
-
-        if ((language == null && notes.getLanguage() == null) ||
-                (language != null && notes.getLanguage() != null && language.equals(notes.getLanguage()))) {
-            notes.setValue(String.format("%s%s%s", notes.getValue(), NoteUtils.NOTE_DELIMITER, note));
-            return;
-        }
-
-        if (notes.getLanguage() != null && language == null) {
-            notes.addLocalization(notes.getLanguage(), notes.getValue());
-            notes.setValue(note);
-            notes.setLanguage(null);
-        } else {
-            if (notes.getLocalizations()!= null && notes.getLocalizations().containsKey(language))
-                notes.getLocalizations().replace(language,String.format("%s%s%s", notes.getLocalizations().get(language), NoteUtils.NOTE_DELIMITER, note));
+        if (StringUtils.equals(language,getLanguage())) {
+            if (notes == null)
+                notes = note;
             else
-                notes.addLocalization(language, note);
+                notes = String.format("%s%s%s", notes, NoteUtils.NOTE_DELIMITER, note);
+            return;
+        } else {
+            JsonNode localization = getLocalization(language,"/notes");
+            if (localization == null)
+                addLocalization(language, "/notes", JsonNodeUtils.textNode(note));
+            else
+                localizations.get(language).replace("/notes", JsonNodeUtils.textNode(String.format("%s%s%s", localization.asText(), NoteUtils.NOTE_DELIMITER, note)));
         }
-
     }
 
     private void addCategory(String category) {
@@ -474,6 +465,19 @@ public class Card extends JSContact implements Serializable {
             return null;
 
         return localizations.get(language);
+    }
+
+    public JsonNode getLocalization(String language, String path) {
+
+        if (localizations == null)
+            return null;
+
+        Map<String, JsonNode> localizationsPerPath = getLocalizationsPerPath(path);
+
+        if (localizationsPerPath == null)
+            return null;
+
+        return localizationsPerPath.get(language);
     }
 
 

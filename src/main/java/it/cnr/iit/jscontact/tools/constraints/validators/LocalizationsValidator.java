@@ -20,6 +20,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.LocalizationsConstraint;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import sun.util.locale.LanguageTag;
+import sun.util.locale.ParseStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -37,6 +39,15 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode root = objectMapper.valueToTree(card);
+
+        for (String language : card.getLocalizations().keySet()) {
+            ParseStatus parseStatus = new ParseStatus();
+            LanguageTag.parse(language, parseStatus);
+            if (parseStatus.getErrorMessage() != null) {
+                context.buildConstraintViolationWithTemplate("invalid language tag in localizations").addConstraintViolation();
+                return false;
+            }
+        }
 
         for (Map<String,JsonNode> localizationsPerlanguage : card.getLocalizations().values()){
 

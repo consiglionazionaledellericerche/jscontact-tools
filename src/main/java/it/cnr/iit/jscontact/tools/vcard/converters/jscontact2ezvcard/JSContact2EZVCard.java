@@ -22,6 +22,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import lombok.NoArgsConstructor;
@@ -228,7 +229,8 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (typeItem != null)
                     joiner.add(typeItem);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                throw new InternalErrorException(e.getMessage());
+
             }
         }
         return joiner;
@@ -242,7 +244,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (typeItem != null)
                     joiner.add(typeItem);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                throw new InternalErrorException(e.getMessage());
             }
         }
         return joiner;
@@ -345,7 +347,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 return constructor.newInstance(geoUri.getCoordA(), geoUri.getCoordB());
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new InternalErrorException(e.getMessage());
         }
 
         return null;
@@ -364,7 +366,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 return constructor.newInstance(anniversary.getDate().getPartialDate());
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new InternalErrorException(e.getMessage());
         }
 
         return null;
@@ -578,10 +580,8 @@ public class JSContact2EZVCard extends AbstractConverter {
             fillVCardProperty(object,resource);
             return object;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new InternalErrorException(e.getMessage());
         }
-
-        return null;
     }
 
     private static <T extends BinaryProperty> T getBinaryProperty(Class<T> classs, Resource resource) {
@@ -593,10 +593,9 @@ public class JSContact2EZVCard extends AbstractConverter {
             fillVCardProperty(object,resource);
             return object;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new InternalErrorException(e.getMessage());
         }
 
-        return null;
     }
 
 
@@ -769,20 +768,22 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getNotes() == null)
             return;
 
-        LocalizedString localized = jsCard.getNotes();
+        String notes = jsCard.getNotes();
 
-        if (localized.getLocalizations() == null) {
-            for (String note : localized.getValue().split(NoteUtils.NOTE_DELIMITER))
-                vcard.getNotes().add(getTextProperty(new Note(note), localized.getLanguage()));
+        Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/notes");
+        if (localizations == null) {
+            for (String note : notes.split(NoteUtils.NOTE_DELIMITER))
+                vcard.getNotes().add(getTextProperty(new Note(note), jsCard.getLanguage()));
         }
         else {
             Integer altId = Integer.parseInt("1");
-            for (String note : localized.getValue().split(NoteUtils.NOTE_DELIMITER))
-                vcard.getNotes().add(getTextProperty(new Note(note), localized.getLanguage(), altId++));
+            for (String note : notes.split(NoteUtils.NOTE_DELIMITER))
+                vcard.getNotes().add(getTextProperty(new Note(note), jsCard.getLanguage(), altId++));
             altId = Integer.parseInt("1");
-            for (Map.Entry<String,String> localization : localized.getLocalizations().entrySet())
-                for (String note : localization.getValue().split(NoteUtils.NOTE_DELIMITER))
+            for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
+                for (String note : localization.getValue().asText().split(NoteUtils.NOTE_DELIMITER))
                     vcard.getNotes().add(getTextProperty(new Note(note), localization.getKey(), altId++));
+            }
         }
     }
 
@@ -889,7 +890,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 try {
                     vcard.getXmls().add(new Xml(extension.getValue()));
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    throw new InternalErrorException(e.getMessage());
                 }
             else if (extension.getKey().equals(getUnmatchedParamName("N", "SORT-AS")))
                 vcard.getStructuredName().setParameter("SORT-AS", extension.getValue());

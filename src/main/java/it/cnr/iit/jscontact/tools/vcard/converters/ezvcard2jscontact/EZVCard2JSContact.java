@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact;
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.ValidationWarnings;
@@ -33,13 +32,11 @@ import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
-import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.*;
 import it.cnr.iit.jscontact.tools.dto.wrappers.CategoryWrapper;
 import it.cnr.iit.jscontact.tools.dto.wrappers.MemberWrapper;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactIdsProfile;
@@ -60,7 +57,7 @@ public class EZVCard2JSContact extends AbstractConverter {
     private static final String CUSTOM_TIME_ZONE_ID_PREFIX = "TZ";
     public static final String CUSTOM_TIME_ZONE_RULE_START = "1900-01-01T00:00:00";
     private static final Integer HIGHEST_PREFERENCE = Integer.valueOf(0);
-    private static final JsonNodeFactory JSON_NODE_FACTORY = JsonNodeFactory.instance;
+
 
     private static final List<String> fakeExtensions = Collections.singletonList("contact-uri");
 
@@ -70,15 +67,15 @@ public class EZVCard2JSContact extends AbstractConverter {
 
     private Map<String, TimeZone> timeZones = new HashMap<>();
 
-    private boolean isDefaultLanguage(String language) {
+    private static boolean isDefaultLanguage(String language, String defaultLanguage) {
 
         if (StringUtils.isEmpty(language))
             return false;
 
-        if (config.getDefaultLanguage() == null)
+        if (defaultLanguage == null)
             return false;
 
-        return StringUtils.equals(config.getDefaultLanguage(),language);
+        return StringUtils.equals(language, defaultLanguage);
     }
 
     private List<String> getProfileIds(VCard2JSContactIdsProfile.IdType idType, Object... args) {
@@ -178,8 +175,8 @@ public class EZVCard2JSContact extends AbstractConverter {
                 E enumInstance = getEnumFromJCardType(enumType, typeItem, exclude, aliases);
                 if (enumInstance != null)
                     enumValues.add(enumInstance);
-            }catch (Exception e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                throw new InternalErrorException(e.getMessage());
             }
         }
 
@@ -461,7 +458,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         return property.getUri().toString();
     }
 
-    private void fillFormattedNames(VCard vcard, Card jsCard) {
+    private static void fillFormattedNames(VCard vcard, Card jsCard) {
 
         List<FormattedName> fns = vcard.getFormattedNames();
         List<LocalizedString> fullNames = new ArrayList<>();
@@ -469,7 +466,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             fullNames.add(LocalizedString.builder()
                                          .value(getValue(fn))
                                          .language(fn.getLanguage())
-                                         .preference(isDefaultLanguage(fn.getLanguage()) ? HIGHEST_PREFERENCE : fn.getPref())
+                                         .preference(isDefaultLanguage(fn.getLanguage(), jsCard.getLanguage()) ? HIGHEST_PREFERENCE : fn.getPref())
                                          .build()
                          );
         }
@@ -478,7 +475,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             if (fullNames.indexOf(ls) == 0)
                 jsCard.setFullName(ls.getValue());
             else
-                jsCard.addLocalization(ls.getLanguage(), "/fullName", JSON_NODE_FACTORY.textNode(ls.getValue()));
+                jsCard.addLocalization(ls.getLanguage(), "/fullName", JsonNodeUtils.textNode(ls.getValue()));
         }
     }
 
@@ -637,7 +634,7 @@ public class EZVCard2JSContact extends AbstractConverter {
             if (date.getText() != null)
                 return null;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new InternalErrorException(e.getMessage());
         }
 
         return null;
