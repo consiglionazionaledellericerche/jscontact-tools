@@ -522,13 +522,18 @@ public class EZVCard2JSContact extends AbstractConverter {
             for (String value : nickname.getValues())
                 nicks.add(LocalizedString.builder()
                                          .value(value)
-                                         .preference(nickname.getPref())
+                                         .preference(isDefaultLanguage(nickname.getLanguage(), jsCard.getLanguage()) ? HIGHEST_PREFERENCE : nickname.getPref())
                                          .build()
                          );
         }
         Collections.sort(nicks);
-        for (LocalizedString nick : nicks)
-            jsCard.addNickName(nick);
+        for (LocalizedString nick : nicks) {
+            jsCard.addNickName(nick.getValue());
+            if (nick.getLocalizations()!=null) {
+                for (Map.Entry<String,String> localization : nick.getLocalizations().entrySet())
+                    jsCard.addNote(localization.getValue(), localization.getKey());
+            }
+        }
     }
 
     private static it.cnr.iit.jscontact.tools.dto.Address getAddressAltrenative(List<it.cnr.iit.jscontact.tools.dto.Address> addresses, String altid) {
@@ -1027,11 +1032,11 @@ public class EZVCard2JSContact extends AbstractConverter {
                                                      .value(getValue(note))
                                                      .language(note.getLanguage())
                                                      .altid(note.getAltId())
-                                                     .preference(note.getPref())
+                                                     .preference(isDefaultLanguage(note.getLanguage(), jsCard.getLanguage()) ? HIGHEST_PREFERENCE : note.getPref())
                                                      .build()
                               );
         }
-
+        Collections.sort(notes);
         for (LocalizedString note : notes) {
             jsCard.addNote(note.getValue(), note.getLanguage());
             if (note.getLocalizations()!=null) {

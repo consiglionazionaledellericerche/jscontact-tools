@@ -38,11 +38,7 @@ public class NameTest extends JSContact2VCardTest {
                     "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
                     "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
                 "], " +
-                "\"nickNames\":[" +
-                    "{" +
-                        "\"value\": \"Johnny\"" +
-                    "}" +
-                "]" +
+                "\"nickNames\":[ \"Johnny\" ]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testName - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));

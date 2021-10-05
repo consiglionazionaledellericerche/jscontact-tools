@@ -87,8 +87,7 @@ public class Card extends JSContact implements Serializable {
 
     String fullName;
 
-    @Valid
-    LocalizedString[] nickNames;
+    String[] nickNames;
 
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
@@ -185,7 +184,7 @@ public class Card extends JSContact implements Serializable {
         name = ArrayUtils.add(name, nc);
     }
 
-    public void addNickName(LocalizedString nick) {
+    public void addNickName(String nick) {
         nickNames = ArrayUtils.add(nickNames, nick);
     }
 

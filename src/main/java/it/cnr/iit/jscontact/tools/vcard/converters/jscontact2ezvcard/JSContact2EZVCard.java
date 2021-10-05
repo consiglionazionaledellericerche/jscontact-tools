@@ -183,15 +183,24 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getNickNames() == null)
             return;
 
-        Integer altId = Integer.parseInt("1");
-        for (LocalizedString localized : jsCard.getNickNames()) {
-            if (localized.getLocalizations() == null)
-                vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, localized.getValue(), localized.getLanguage()));
-            else {
-                vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, localized.getValue(), localized.getLanguage(), altId));
-                for (Map.Entry<String,String> localization : localized.getLocalizations().entrySet())
-                    vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, localization.getValue(), localization.getKey(), altId));
-                altId ++;
+        String[] nickNames = jsCard.getNickNames();
+
+        Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/nickNames");
+        if (localizations == null) {
+            for (String nickName : nickNames)
+                vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, nickName));
+        }
+        else {
+
+            Integer altId = Integer.parseInt("1");
+            for (String nickName : nickNames)
+                vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, nickName, jsCard.getLanguage()));
+            altId = Integer.parseInt("1");
+
+            for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
+                for (JsonNode nickName : localization.getValue())
+                    vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, nickName.asText(), localization.getKey(), altId));
+                altId++;
             }
         }
     }
@@ -684,10 +693,17 @@ public class JSContact2EZVCard extends AbstractConverter {
         return property;
     }
 
+    private static <E extends TextListProperty > E getTextListProperty(E property, String delimiter, String text, Integer altId) {
+        return getTextListProperty(property, delimiter, text, null, altId);
+    }
+
+    private static <E extends TextListProperty > E getTextListProperty(E property, String delimiter, String text) {
+        return getTextListProperty(property, delimiter, text, null, null);
+    }
+
     private static <E extends TextListProperty > E getTextListProperty(E property, String delimiter, String text, String language) {
         return getTextListProperty(property, delimiter, text, language, null);
     }
-
 
     private static void fillTitles(VCard vcard, Card jsCard) {
 
@@ -769,7 +785,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         String notes = jsCard.getNotes();
-
         Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/notes");
         if (localizations == null) {
             for (String note : notes.split(NoteUtils.NOTE_DELIMITER))

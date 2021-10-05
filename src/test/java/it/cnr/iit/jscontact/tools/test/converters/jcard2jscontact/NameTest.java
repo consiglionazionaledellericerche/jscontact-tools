@@ -70,7 +70,7 @@ public class NameTest extends JCard2JSContactTest {
         assertTrue("testNameValid2 - 11",jsCard.getName()[4].isSuffix());
         assertTrue("testNameValid2 - 12",jsCard.getName()[4].getValue().equals("Esq."));
         assertTrue("testNameValid2 - 12",jsCard.getNickNames().length == 1);
-        assertTrue("testNameValid2 - 13",jsCard.getNickNames()[0].getValue().equals("Johnny"));
+        assertTrue("testNameValid2 - 13",jsCard.getNickNames()[0].equals("Johnny"));
 
     }
 
@@ -97,8 +97,8 @@ public class NameTest extends JCard2JSContactTest {
         assertTrue("testNameValid3 - 11",jsCard.getName()[4].isSuffix());
         assertTrue("testNameValid3 - 12",jsCard.getName()[4].getValue().equals("Esq."));
         assertTrue("testNameValid3 - 12",jsCard.getNickNames().length == 2);
-        assertTrue("testNameValid3 - 13",jsCard.getNickNames()[0].getValue().equals("Kid"));
-        assertTrue("testNameValid3 - 14",jsCard.getNickNames()[1].getValue().equals("Johnny"));
+        assertTrue("testNameValid3 - 13",jsCard.getNickNames()[0].equals("Kid"));
+        assertTrue("testNameValid3 - 14",jsCard.getNickNames()[1].equals("Johnny"));
 
     }
 

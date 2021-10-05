@@ -79,11 +79,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
                     "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
                     "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
                 "], " +
-                "\"nickNames\":[" +
-                    "{" +
-                    "\"value\": \"Johnny\"" +
-                    "}" +
-                "]," +
+                "\"nickNames\":[ \"Johnny\" ]," +
                 "\"ietf.org:rfc6350:N:SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

@@ -333,7 +333,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 11", jsCard.getName()[4].isSuffix());
         assertTrue("testCompleteVCard6 - 12", jsCard.getName()[4].getValue().equals("Suffix"));
         assertTrue("testCompleteVCard6 - 13", jsCard.getNickNames().length == 1);
-        assertTrue("testCompleteVCard6 - 14", jsCard.getNickNames()[0].getValue().equals("NickName"));
+        assertTrue("testCompleteVCard6 - 14", jsCard.getNickNames()[0].equals("NickName"));
         assertTrue("testCompleteVCard6 - 15", jsCard.getPhones().size() == 9);
         assertTrue("testCompleteVCard6 - 16", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteVCard6 - 17", jsCard.getPhones().get("PHONE-1").asPrivate());
