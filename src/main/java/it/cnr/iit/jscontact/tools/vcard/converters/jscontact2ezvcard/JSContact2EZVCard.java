@@ -224,7 +224,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static NameComponent[] convertAsNameComponentArray(JsonNode arrayNode) {
+    private static NameComponent[] asNameComponentArray(JsonNode arrayNode) {
 
         if (!arrayNode.isArray())
             return null;
@@ -253,7 +253,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             sn.setLanguage(jsCard.getLanguage());
             sns.add(sn);
             for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("/name").entrySet()) {
-                sn = getStructuredName(convertAsNameComponentArray(localizations.getValue()));
+                sn = getStructuredName(asNameComponentArray(localizations.getValue()));
                 sn.setLanguage(localizations.getKey());
                 sns.add(sn);
             }
@@ -360,15 +360,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner;
     }
 
-    private static List<ezvcard.property.Address> getAddress(Address address, Integer altId, Map<String,TimeZone> timeZones, Map<String,JsonNode> localizations, String defaultLanguage) {
 
-        if (address == null)
-            return null;
+    private static ezvcard.property.Address getAddress(Address address, Map<String,TimeZone> timeZones, String language) {
 
-        if (isNullStructuredAddress(address) && address.getFullAddress() == null)
-            return null;
-
-        List<ezvcard.property.Address> addrs = new ArrayList<>();
         ezvcard.property.Address addr = new ezvcard.property.Address();
         if (!isNullStructuredAddress(address)) {
             addr.setLabel(getFullAddressFromStructuredAddress(address));
@@ -379,44 +373,44 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setExtendedAddress(address.getStreetExtensions());
             addr.setPoBox(address.getPostOfficeBox());
             addr.setPostalCode(address.getPostcode());
-            if (address.getTimeZone()!=null) {
+            if (address.getTimeZone() != null) {
                 TimeZone timeZone = null;
-                if (timeZones!=null)
+                if (timeZones != null)
                     timeZone = timeZones.get(address.getTimeZone());
                 if (timeZone != null) {
                     if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
                         addr.setTimezone(timeZone.getStandard().get(0).getOffsetFrom());
-                }
-                else
+                } else
                     addr.setTimezone(address.getTimeZone());
             }
-            if (address.getCoordinates()!=null)
+            if (address.getCoordinates() != null)
                 addr.setGeo(GeoUri.parse(address.getCoordinates()));
-            if (address.getCountryCode()!=null)
+            if (address.getCountryCode() != null)
                 addr.setParameter("CC", address.getCountryCode());
-            if (address.getContexts()!=null) {
+            if (address.getContexts() != null) {
                 String vCardType = getVCardTypeStringJoiner(AddressContextEnum.class, AddressContext.getAddressContextEnumValues(address.getContexts().keySet())).toString();
                 if (StringUtils.isNotEmpty(vCardType))
                     addr.setParameter("TYPE", vCardType);
             }
         }
-        if (address.getFullAddress()!=null) {
-            addr.setLabel(address.getFullAddress());
-            addr.setLanguage(defaultLanguage);
-            addr.setAltId((altId != null) ? altId.toString() : null);
-        }
-        addrs.add(addr);
-        if (localizations!=null) {
-            for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
-                ezvcard.property.Address localAddr = new ezvcard.property.Address();
-                localAddr.setLabel(localization.getValue().asText());
-                localAddr.setLanguage(localization.getKey());
-                localAddr.setAltId((altId != null) ? altId.toString() : null);
-                addrs.add(localAddr);
-            }
-        }
 
-        return addrs;
+        if (address.getFullAddress() != null)
+            addr.setLabel(address.getFullAddress());
+
+        addr.setLanguage(language);
+
+        return addr;
+    }
+
+    private static Address asAddress(JsonNode jsonNode) {
+
+        if (!jsonNode.isObject())
+            return null;
+        try {
+            return mapper.convertValue(jsonNode, Address.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private static void fillAddresses(VCard vcard, Card jsCard) {
@@ -424,13 +418,32 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getAddresses() == null)
             return;
 
-        Integer altId = Integer.parseInt("1");
-        for (Map.Entry<String,Address> address : jsCard.getAddresses().entrySet()) {
-            boolean altIdToBeAdded = (jsCard.getAddresses().size() > 1) &&
-                                     (
-                                             (address.getValue().getFullAddress()!=null && jsCard.getLocalizationsPerPath("/addresses/"+address.getKey()+"/fullAddress")!=null)
-                                     );
-            vcard.getAddresses().addAll(getAddress(address.getValue(), altIdToBeAdded ? altId : null, jsCard.getTimeZones(), jsCard.getLocalizationsPerPath("/addresses/"+address.getKey()+"/fullAddress"), jsCard.getLanguage()));
+        for (Map.Entry<String,Address> entry : jsCard.getAddresses().entrySet()) {
+
+            Address address = entry.getValue();
+            if (isNullStructuredAddress(address) && address.getFullAddress() == null)
+                continue;
+
+            ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLanguage());
+            if (jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()) == null &&
+                jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()+"/fullAddress")==null)
+                vcard.addAddress(addr);
+            else {
+                List<ezvcard.property.Address> addrs = new ArrayList<>();
+                addrs.add(addr);
+
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey());
+                if (localizations != null) {
+                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
+                        addrs.add(getAddress(asAddress(localization.getValue()), jsCard.getTimeZones(), localization.getKey()));
+                }
+                localizations = jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()+"/fullAddress");
+                if (localizations != null) {
+                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
+                        addrs.add(getAddress(Address.builder().fullAddress(localization.getValue().asText()).build(), jsCard.getTimeZones(), localization.getKey()));
+                }
+                vcard.addAddressAlt(addrs.toArray(new ezvcard.property.Address[0]));
+            }
         }
     }
 
