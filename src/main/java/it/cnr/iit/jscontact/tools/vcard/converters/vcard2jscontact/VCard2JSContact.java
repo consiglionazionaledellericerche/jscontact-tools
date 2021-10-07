@@ -48,7 +48,7 @@ public class VCard2JSContact extends EZVCard2JSContact {
         List<VCard> vcards = Ezvcard.parse(vCard).all();
         if (vcards.size() == 0)
             throw new CardException("Bad vCard format");
-        return convert(vcards);
+        return convert(vcards.toArray(new VCard[0]));
     }
 
 }

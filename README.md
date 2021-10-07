@@ -177,7 +177,7 @@ Deserialization of a CardGroup object and the related cards is performed through
 At present, the following converting methods are available:
 
 *   EZVCard2JSContact
-    *   List<JSContact> convert(List<VCard>)
+    *   List<JSContact> convert(VCard... vcard)
 *   VCard2JSContact
     *   List<JSContact> convert(String vcf)
 *   JCard2JSContact
@@ -310,19 +310,15 @@ Additional setting rules are shown in the following code:
 At present, the following converting methods are available:
 
 *   JSContact2EZVCard
-    *   List<VCard> convert(List<JSContact> jsContacts)
+    *   List<VCard> convert(JSContact... jsContacts)
     *   List<VCard> convert(String json)
 *   JSContact2VCard
-    *   String convertToText(JSContact jsContact)
-    *   String convertToText(List<JSContact> jsContacts)
+    *   String convertToText(JSContact... jsContact)
 *   JSContact2JCard
-    *   String convertToJson(JSContact jsContact)
-    *   String convertToJson(List<JSContact> jsContacts)
-    *   JsonNode convertToJsonNode(JSContact jsContact)
-    *   JsonNode convertToJsonNode(List<JSContact> jsContacts)
+    *   String convertToJson(JSContact... jsContact)
+    *   JsonNode convertToJsonNode(JSContact... jsContact)
 *   JSContact2XCard
-    *   String convertToXml(JSContact jsContact)
-    *   String convertToXml(List<JSContact> jsContacts)
+    *   String convertToXml(JSContact... jsContact)
 
 All the methods take in input a list of JSContact top most objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.

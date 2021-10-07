@@ -49,7 +49,7 @@ public class XCard2JSContact extends EZVCard2JSContact {
         List<VCard> vcards = Ezvcard.parseXml(xCard).all();
         if (vcards.size() == 0)
             throw new CardException("Bad xCard format");
-        return convert(vcards);
+        return convert(vcards.toArray(new VCard[0]));
     }
 
 }

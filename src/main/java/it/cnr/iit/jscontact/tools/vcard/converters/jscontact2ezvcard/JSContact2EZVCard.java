@@ -1100,7 +1100,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    protected List<VCard> convert(List<JSContact> jsContacts) throws CardException {
+    protected List<VCard> convert(JSContact... jsContacts) throws CardException {
 
         List<VCard> vCards = new ArrayList<>();
 
@@ -1141,7 +1141,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         else
             jsContacts = new JSContact[] { objectMapper.treeToValue(jsonNode, JSContact.class)};
 
-        return convert(Arrays.asList(jsContacts));
+        return convert(jsContacts);
     }
 
 }

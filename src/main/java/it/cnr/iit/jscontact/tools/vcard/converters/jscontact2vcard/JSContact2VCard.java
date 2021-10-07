@@ -34,7 +34,7 @@ public class JSContact2VCard extends JSContact2EZVCard {
     }
 
     /**
-     * Converts a list of JSContact objects into a complete vCard v4.0 [RFC6350]
+     * Converts one or more JSContact objects into a complete vCard v4.0 [RFC6350]
      * @param jsContacts a list of JSContact objects
      * @return a vCard as a text
      * @throws CardException if one of the JSContact objects is not valid
@@ -42,25 +42,11 @@ public class JSContact2VCard extends JSContact2EZVCard {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public String convertToText(List<JSContact> jsContacts) throws CardException {
+    public String convertToText(JSContact... jsContacts) throws CardException {
 
         List<VCard> vcards = convert(jsContacts);
         return Ezvcard.write(vcards).go();
     }
 
-    /**
-     * Converts a JSContact object into a complete vCard v4.0 [RFC6350]
-     * @param jsContact a JSContact object
-     * @return a vCard as a text
-     * @throws CardException if the JSContact object is not valid
-     * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
-     */
-    public String convertToText(JSContact jsContact) throws CardException {
-
-        VCard vcard = convert(jsContact);
-        return Ezvcard.write(vcard).go();
-    }
 
 }

@@ -1259,7 +1259,7 @@ public class EZVCard2JSContact extends AbstractConverter {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public List<JSContact> convert(List<VCard> vCards) throws CardException {
+    public List<JSContact> convert(VCard... vCards) throws CardException {
 
         List<JSContact> jsContacts = new ArrayList<>();
 

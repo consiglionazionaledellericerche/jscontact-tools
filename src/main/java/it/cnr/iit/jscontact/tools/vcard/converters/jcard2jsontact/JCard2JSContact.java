@@ -52,7 +52,7 @@ public class JCard2JSContact extends EZVCard2JSContact {
         List<VCard> vcards = Ezvcard.parseJson(jCard).all();
         if (vcards.size() == 0)
             throw new CardException("Bad jCard format");
-        return convert(vcards);
+        return convert(vcards.toArray(new VCard[0]));
     }
 
 
