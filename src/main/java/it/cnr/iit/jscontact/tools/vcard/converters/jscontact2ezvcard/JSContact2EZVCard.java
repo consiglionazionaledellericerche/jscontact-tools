@@ -286,22 +286,23 @@ public class JSContact2EZVCard extends AbstractConverter {
         String[] nickNames = jsCard.getNickNames();
 
         Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/nickNames");
-        if (localizations == null) {
-            for (String nickName : nickNames)
-                vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, nickName));
-        }
+        if (localizations == null)
+            vcard.setNickname(nickNames);
         else {
 
-            Integer altId = Integer.parseInt("1");
+            List<Nickname> nicks = new ArrayList<Nickname>();
+            Nickname nick = new Nickname();
             for (String nickName : nickNames)
-                vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, nickName, jsCard.getLanguage()));
-            altId = Integer.parseInt("1");
-
+                nick = getTextListProperty(nick, COMMA_ARRAY_DELIMITER, nickName, jsCard.getLanguage());
+            nicks.add(nick);
             for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
+                nick = new Nickname();
                 for (JsonNode nickName : localization.getValue())
-                    vcard.getNicknames().add(getTextListProperty(new Nickname(), COMMA_ARRAY_DELIMITER, nickName.asText(), localization.getKey(), altId));
-                altId++;
+                    nick = getTextListProperty(nick, COMMA_ARRAY_DELIMITER, nickName.asText(), localization.getKey());
+                nicks.add(nick);
             }
+
+            vcard.setNicknameAlt(nicks.toArray(new Nickname[0]));
         }
     }
 
