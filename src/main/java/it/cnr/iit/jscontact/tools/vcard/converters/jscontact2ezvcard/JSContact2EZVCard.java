@@ -306,16 +306,16 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static boolean isStructuredAddress(Address address) {
+    private static boolean isNullStructuredAddress(Address address) {
 
-        return (address.getCountry() !=null ||
-                address.getCountryCode() !=null ||
-                address.getRegion() != null ||
-                address.getLocality() != null ||
-                address.getStreetDetails() != null ||
-                address.getPostOfficeBox() != null ||
-                address.getPostcode() != null ||
-                address.getStreetExtensions() != null);
+        return (address.getCountry() ==null &&
+                address.getCountryCode() ==null &&
+                address.getRegion() == null &&
+                address.getLocality() == null &&
+                address.getStreetDetails() == null &&
+                address.getPostOfficeBox() == null &&
+                address.getPostcode() == null &&
+                address.getStreetExtensions() == null);
     }
 
     private static String getFullAddressFromStructuredAddress(Address addr) {
@@ -365,12 +365,12 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (address == null)
             return null;
 
-        if (!isStructuredAddress(address) && address.getFullAddress() == null)
+        if (isNullStructuredAddress(address) && address.getFullAddress() == null)
             return null;
 
         List<ezvcard.property.Address> addrs = new ArrayList<>();
         ezvcard.property.Address addr = new ezvcard.property.Address();
-        if (isStructuredAddress(address)) {
+        if (!isNullStructuredAddress(address)) {
             addr.setLabel(getFullAddressFromStructuredAddress(address));
             addr.setCountry(address.getCountry());
             addr.setRegion(address.getRegion());
@@ -446,7 +446,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 return constructor.newInstance(anniversary.getPlace().getFullAddress());
             }
 
-            if (isStructuredAddress(anniversary.getPlace())) {
+            if (!isNullStructuredAddress(anniversary.getPlace())) {
                 constructor = classs.getDeclaredConstructor(String.class);
                 return constructor.newInstance(getFullAddressFromStructuredAddress(anniversary.getPlace()));
             }
