@@ -29,11 +29,12 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
     public void testPreferredContactLanguagesValid1() throws IOException, CardException {
 
         String jsCard = "{" +
-                         "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
+                        "\"@type\":\"Card\"," +
+                        "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
                          "\"fullName\":\"test\"," +
                          "\"preferredContactLanguages\":{" +
-                               "\"jp\":[{\"pref\":1}]," +
-                               "\"en\":[{\"pref\":2}]" +
+                               "\"jp\":[{\"@type\":\"ContactLanguage\",\"pref\":1}]," +
+                               "\"en\":[{\"@type\":\"ContactLanguage\",\"pref\":2}]" +
                          "}" +
                          "}";
 
@@ -49,11 +50,12 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
     public void testPreferredContactLanguagesValid2() throws IOException, CardException {
 
         String jsCard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
                 "\"fullName\":\"test\"," +
                 "\"preferredContactLanguages\":{" +
-                    "\"en\":[{\"context\":\"work\",\"pref\":1}]," +
-                    "\"fr\":[{\"context\":\"work\",\"pref\":2},{\"context\":\"private\"}]" +
+                    "\"en\":[{\"@type\":\"ContactLanguage\",\"context\":\"work\",\"pref\":1}]," +
+                    "\"fr\":[{\"@type\":\"ContactLanguage\",\"context\":\"work\",\"pref\":2},{\"context\":\"private\"}]" +
                 "}" +
                 "}";
 

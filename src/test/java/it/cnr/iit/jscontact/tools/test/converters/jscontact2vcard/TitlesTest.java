@@ -29,10 +29,12 @@ public class TitlesTest extends JSContact2VCardTest {
     public void testTitles1() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
+                        "\"@type\":\"Title\"," +
                         "\"title\": {" +
                             "\"value\": \"Research Scientist\"," +
                             "\"localizations\": { \"it\":\"Ricercatore\" }" +
@@ -54,16 +56,19 @@ public class TitlesTest extends JSContact2VCardTest {
     public void testTitles2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
+                        "\"@type\":\"Title\"," +
                         "\"title\": {" +
                             "\"value\": \"Research Scientist\"," +
                             "\"localizations\": { \"it\":\"Ricercatore\" }" +
                         "}" +
                     "}," +
                     "\"TITLE-2\" : {" +
+                        "\"@type\":\"Title\"," +
                         "\"title\": {" +
                             "\"value\": \"IETF Area Director\"" +
                         "}" +
@@ -87,16 +92,19 @@ public class TitlesTest extends JSContact2VCardTest {
     public void testTitles3() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
+                        "\"@type\":\"Title\"," +
                         "\"title\": {" +
                             "\"value\": \"Research Scientist\"," +
                             "\"localizations\": { \"it\":\"Ricercatore\" }" +
                         "}" +
                     "}," +
                     "\"TITLE-2\" : {" +
+                        "\"@type\":\"Title\"," +
                         "\"title\": {" +
                             "\"value\": \"IETF Area Director\"," +
                             "\"localizations\": { \"it\":\"Direttore Area IETF\" }" +

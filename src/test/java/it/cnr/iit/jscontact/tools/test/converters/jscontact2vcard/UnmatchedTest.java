@@ -30,6 +30,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testPreferredContactMethod() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"preferredContactMethod\":\"emails\"" +
@@ -44,6 +45,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testCreated() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"created\":\"2010-10-10T10:10:10Z\"" +
@@ -58,6 +60,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testUnmatchedProperty() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"ietf.org:rfc6350:GENDER\":\"M\"" +
@@ -70,14 +73,15 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testUnmatchedParameter1() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":[ " +
-                    "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                    "{ \"value\":\"John\", \"type\": \"personal\" }," +
-                    "{ \"value\":\"Public\", \"type\": \"surname\" }," +
-                    "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                 "], " +
                 "\"nickNames\":[ \"Johnny\" ]," +
                 "\"ietf.org:rfc6350:N:SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
@@ -104,6 +108,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testUnmatchedParameter2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"test\"," +
                 "\"ietf.org:rfc6350:FN:GROUP\":\"contact\"" +

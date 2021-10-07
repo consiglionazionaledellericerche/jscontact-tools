@@ -31,10 +31,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid1() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"XMPP-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"username\","+
                         "\"contexts\": {\"private\": true}," +
                         "\"label\": \"XMPP\"," +
@@ -55,10 +57,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"SOURCE-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"source\"," +
                         "\"resource\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
@@ -74,10 +78,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testPhotoValid() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"photos\": {"+
                     "\"PHOTO-1\": {" +
+                        "\"@type\":\"File\"," +
                         "\"mediaType\": \"image/gif\","+
                         "\"href\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
                     "}" +
@@ -93,10 +99,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid4() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"LOGO-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"logo\"," +
                         "\"resource\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
@@ -112,10 +120,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid5() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"CONTACT-URI-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"contact-uri\"," +
                         "\"resource\": \"mailto:contact@example.com\"" +
@@ -132,10 +142,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid6() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"SOUND-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"sound\"," +
                         "\"mediaType\": \"audio/mp3\"," +
@@ -153,10 +165,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid7() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\":{"+
                     "\"SOUND-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"sound\"," +
                         "\"resource\": \"sound.mp3\"" +
@@ -173,10 +187,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid8() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"URL-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"url\"," +
                         "\"resource\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
@@ -192,10 +208,12 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid9() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"KEY-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"key\"," +
                         "\"resource\": \"http://www.example.com/keys/jdoe.cer\"" +
@@ -211,16 +229,19 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid10() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"FBURL-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"fburl\"," +
                         "\"pref\": 1," +
                         "\"resource\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
                     "\"FBURL-2\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"fburl\"," +
                         "\"mediaType\": \"text/calendar\"," +
@@ -240,16 +261,19 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid11() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"CALADRURI-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"caladruri\"," +
                         "\"pref\": 1," +
                         "\"resource\": \"mailto:janedoe@example.com\"" +
                     "}," +
                     "\"CALADRURI-2\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"caladruri\"," +
                         "\"resource\": \"http://example.com/calendar/jdoe\"" +
@@ -267,16 +291,19 @@ public class OnlineTest extends JSContact2VCardTest {
     public void testOnlineValid12() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
                     "\"CALURI-1\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"caluri\"," +
                         "\"pref\": 1," +
                         "\"resource\": \"http://cal.example.com/calA\"" +
                     "}," +
                     "\"CALURI-2\": {" +
+                        "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
                         "\"label\": \"caluri\"," +
                         "\"mediaType\": \"text/calendar\"," +

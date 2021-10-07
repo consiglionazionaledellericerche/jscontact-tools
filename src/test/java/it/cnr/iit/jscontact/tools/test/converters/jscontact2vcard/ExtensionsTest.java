@@ -31,6 +31,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
     public void testExtendedJSContactValid() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"extension:myext\":\"extvalue\"" +

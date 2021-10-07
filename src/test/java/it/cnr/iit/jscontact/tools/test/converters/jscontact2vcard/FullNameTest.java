@@ -30,6 +30,7 @@ public class FullNameTest extends JSContact2VCardTest {
     public void testMissingFullName() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -41,6 +42,7 @@ public class FullNameTest extends JSContact2VCardTest {
     public void testEmptyFullName() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"\"" +
                 "}";
@@ -53,13 +55,14 @@ public class FullNameTest extends JSContact2VCardTest {
     public void testEmptyFullNameWithValidName() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"name\":[ " +
-                "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                "{ \"value\":\"John\", \"type\": \"personal\" }," +
-                "{ \"value\":\"Public\", \"type\": \"surname\" }," +
-                "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                 "] " +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -71,6 +74,7 @@ public class FullNameTest extends JSContact2VCardTest {
     public void testFullNameValid1() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"John Q. Public, Esq.\"" +
                 "}";
@@ -82,6 +86,7 @@ public class FullNameTest extends JSContact2VCardTest {
     public void testFullNameValid2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"language\": \"jp\"," +
                 "\"fullName\":\"大久保 正仁\"," +
@@ -105,6 +110,7 @@ public class FullNameTest extends JSContact2VCardTest {
     public void testFullNameValid3() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"language\": \"jp\"," +
                 "\"name\":[ " +

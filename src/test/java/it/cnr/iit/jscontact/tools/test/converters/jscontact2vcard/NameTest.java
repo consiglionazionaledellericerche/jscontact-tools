@@ -29,14 +29,15 @@ public class NameTest extends JSContact2VCardTest {
     public void testnameValid1() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":[ " +
-                    "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                    "{ \"value\":\"John\", \"type\": \"personal\" }," +
-                    "{ \"value\":\"Public\", \"type\": \"surname\" }," +
-                    "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                 "], " +
                 "\"nickNames\":[ \"Johnny\", \"Joe\" ]" +
                 "}";
@@ -62,15 +63,16 @@ public class NameTest extends JSContact2VCardTest {
     public void testnameValid2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"language\": \"en\"," +
                 "\"name\":[ " +
-                    "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                    "{ \"value\":\"John\", \"type\": \"personal\" }," +
-                    "{ \"value\":\"Public\", \"type\": \"surname\" }," +
-                    "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                 "], " +
                 "\"nickNames\":[ \"Johnny\", \"Joe\" ], " +
                 "\"localizations\": { " +
@@ -107,11 +109,12 @@ public class NameTest extends JSContact2VCardTest {
     public void testFullNameValid3() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"language\": \"jp\"," +
                 "\"name\":[ " +
-                    "{ \"value\":\"正仁\", \"type\": \"personal\" }," +
-                    "{ \"value\":\"大久保\", \"type\": \"surname\" }" +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"正仁\", \"type\": \"personal\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"大久保\", \"type\": \"surname\" }" +
                 "], " +
                 "\"localizations\" : {" +
                     "\"en\": {" +

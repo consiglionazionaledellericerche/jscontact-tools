@@ -32,35 +32,42 @@ public class PersonalInfoTest extends JSContact2VCardTest {
     public void testPersonalInfo() throws IOException, CardException {
 
         String jscard="{" +
+                        "\"@type\":\"Card\"," +
                        "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                        "\"fullName\":\"test\"," +
                        "\"personalInfo\":{ " +
                             "\"PERSINFO-1\": {" +
+                                "\"@type\":\"PersonalInformation\"," +
                                 "\"type\": \"expertise\"," +
                                 "\"value\": \"chemistry\"," +
                                 "\"level\": \"high\" " +
                             "}," +
                             "\"PERSINFO-2\": {" +
+                                "\"@type\":\"PersonalInformation\"," +
                                 "\"type\": \"expertise\"," +
                                 "\"value\": \"chinese literature\"," +
                                 "\"level\": \"low\"" +
                             "}," +
                             "\"PERSINFO-3\": {" +
+                                "\"@type\":\"PersonalInformation\"," +
                                 "\"type\": \"hobby\"," +
                                 "\"value\": \"reading\"," +
                                 "\"level\": \"high\"" +
                             "}," +
                             "\"PERSINFO-4\": {" +
+                                "\"@type\":\"PersonalInformation\"," +
                                 "\"type\": \"hobby\"," +
                                 "\"value\": \"sewing\"," +
                                 "\"level\": \"high\"" +
                             "}," +
                             "\"PERSINFO-5\": {" +
+                                "\"@type\":\"PersonalInformation\"," +
                                 "\"type\": \"interest\"," +
                                 "\"value\": \"r&b music\"," +
                                 "\"level\": \"medium\" " +
                             "}," +
                             "\"PERSINFO-6\": {" +
+                                "\"@type\":\"PersonalInformation\"," +
                                 "\"type\": \"interest\"," +
                                 "\"value\": \"rock 'n' roll music\"," +
                                 "\"level\": \"high\" " +

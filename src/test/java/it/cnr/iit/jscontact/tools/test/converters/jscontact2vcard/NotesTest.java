@@ -29,6 +29,7 @@ public class NotesTest extends JSContact2VCardTest {
     public void testNotes1() throws IOException, CardException {
 
         String jscard="{" +
+                    "\"@type\":\"Card\"," +
                     "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                     "\"fullName\":\"test\"," +
                     "\"notes\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"," +
@@ -48,6 +49,7 @@ public class NotesTest extends JSContact2VCardTest {
     public void testNotes2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"notes\":\"This fax number is operational 0800 to 1715 EST, Mon-Fri\\nThis is another note\"," +
@@ -70,6 +72,7 @@ public class NotesTest extends JSContact2VCardTest {
     public void testNotes3() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"notes\":\"This fax number is operational 0800 to 1715 EST, Mon-Fri\\nThis is another note\"," +

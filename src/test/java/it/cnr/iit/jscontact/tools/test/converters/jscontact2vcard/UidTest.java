@@ -30,6 +30,7 @@ public class UidTest extends JSContact2VCardTest {
     public void testUidInvalid() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"fullName\":\"test\"" +
                 "}";
         jsContact2VCard.convert(jscard);
@@ -39,6 +40,7 @@ public class UidTest extends JSContact2VCardTest {
     public void testUidValid() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
                 "\"fullName\":\"test\"" +
                 "}";

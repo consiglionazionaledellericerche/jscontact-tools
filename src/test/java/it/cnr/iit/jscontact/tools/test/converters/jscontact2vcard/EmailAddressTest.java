@@ -29,9 +29,10 @@ public class EmailAddressTest extends JSContact2VCardTest {
     public void testEmailAddressValid1() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"emails\":{ \"EMAIL-1\": {\"contexts\": {\"work\": true},\"email\":\"jqpublic@xyz.example.com\"}}" +
+                "\"emails\":{ \"EMAIL-1\": {\"@type\":\"EmailAddress\",\"contexts\": {\"work\": true},\"email\":\"jqpublic@xyz.example.com\"}}" +
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -45,11 +46,12 @@ public class EmailAddressTest extends JSContact2VCardTest {
     public void testEmailAddressValid2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"emails\":{ " +
-                     "\"EMAIL-1\": {\"contexts\":{\"work\": true},\"email\":\"jqpublic@xyz.example.com\"}," +
-                     "\"EMAIL-2\": {\"contexts\":{\"private\": true},\"pref\":1,\"email\":\"jane_doe@example.com\"}" +
+                     "\"EMAIL-1\": {\"@type\":\"EmailAddress\",\"contexts\":{\"work\": true},\"email\":\"jqpublic@xyz.example.com\"}," +
+                     "\"EMAIL-2\": {\"@type\":\"EmailAddress\",\"contexts\":{\"private\": true},\"pref\":1,\"email\":\"jane_doe@example.com\"}" +
                 "}" +
                 "}";
 
