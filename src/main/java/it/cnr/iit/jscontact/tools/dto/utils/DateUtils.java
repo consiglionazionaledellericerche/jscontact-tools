@@ -2,6 +2,7 @@ package it.cnr.iit.jscontact.tools.dto.utils;
 
 import ezvcard.util.PartialDate;
 import ezvcard.util.VCardDateFormat;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -62,7 +63,7 @@ public class DateUtils {
                         cal.get(Calendar.HOUR_OF_DAY),
                         cal.get(Calendar.MINUTE),
                         cal.get(Calendar.SECOND)
-                ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+((dateTimeType==DateTimeType.UTC) ? "Z" : "");
+                ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+((dateTimeType==DateTimeType.UTC) ? "Z" : StringUtils.EMPTY);
             } else {
                 OffsetDateTime offsetDateTime = OffsetDateTime.of(cal.get(Calendar.YEAR),
                         cal.get(Calendar.MONTH) + 1,

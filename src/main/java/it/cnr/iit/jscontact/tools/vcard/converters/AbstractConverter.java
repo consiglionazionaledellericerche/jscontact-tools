@@ -1,8 +1,9 @@
 package it.cnr.iit.jscontact.tools.vcard.converters;
 
+import org.apache.commons.lang3.StringUtils;
+
 public abstract class AbstractConverter {
 
-    protected static final String SPACE_ARRAY_DELIMITER = " ";
     protected static final String COMMA_ARRAY_DELIMITER = ",";
     protected static final String SEMICOMMA_ARRAY_DELIMITER = ";";
     protected static final String AUTO_FULL_ADDRESS_DELIMITER = "\n";
@@ -14,7 +15,7 @@ public abstract class AbstractConverter {
 
     protected static String getUnmatchedPropertyName(String propertyName, Integer index) {
 
-        return UNMATCHED_PROPERTY_PREFIX + propertyName + ((index != null) ? ":" + index : "");
+        return UNMATCHED_PROPERTY_PREFIX + propertyName + ((index != null) ? ":" + index : StringUtils.EMPTY);
     }
 
     protected static String getUnmatchedPropertyName(String propertyName) {
@@ -24,7 +25,7 @@ public abstract class AbstractConverter {
 
     private static String getUnmatchedParamName(String propertyName, Integer index, String paramName) {
 
-        return getUnmatchedPropertyName(propertyName) + ":" + ((index != null) ? ":" + index : "") + paramName;
+        return getUnmatchedPropertyName(propertyName) + ":" + ((index != null) ? ":" + index : StringUtils.EMPTY) + paramName;
     }
 
     protected static String getUnmatchedParamName(String propertyName, String paramName) {

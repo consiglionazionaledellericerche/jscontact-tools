@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
@@ -36,6 +37,8 @@ import java.util.*;
 @NoArgsConstructor
 public class JSContact2EZVCard extends AbstractConverter {
 
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     private static final Map<String,String> ezclassesPerPropertiesMap = new HashMap<String,String>() {{
         put("Address", "ADR");
@@ -105,15 +108,26 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static void addNameComponent(StringJoiner joiner, NameComponent[] name, NameComponentEnum type) {
 
-        for (NameComponent component : name)
-            if (component.getType().getRfcValue()!=null &&  component.getType().getRfcValue() == type)
-                joiner.add(component.getValue());
+        String component = getNameComponent(name, type);
+        joiner.add(component);
+    }
+
+    private static void addNameComponent(StringJoiner joiner, List<String> values) {
+
+        if (values != null && values.size() != 0 )
+            joiner.add(String.join(COMMA_ARRAY_DELIMITER, values));
+    }
+
+    private static void addNameComponent(StringJoiner joiner, String value) {
+
+        if (value != null)
+            joiner.add((value!=null) ? value : StringUtils.EMPTY);
     }
 
     private static FormattedName getFormattedName(NameComponent[] name) {
 
         String separator = getNameComponent(name, NameComponentEnum.SEPARATOR);
-        StringJoiner joiner = new StringJoiner((separator!=null) ? separator : SPACE_ARRAY_DELIMITER);
+        StringJoiner joiner = new StringJoiner((separator!=null) ? separator : StringUtils.SPACE);
         addNameComponent(joiner, name, NameComponentEnum.PREFIX);
         addNameComponent(joiner, name, NameComponentEnum.PERSONAL);
         addNameComponent(joiner, name, NameComponentEnum.SURNAME);
@@ -122,39 +136,69 @@ public class JSContact2EZVCard extends AbstractConverter {
         return new FormattedName(joiner.toString());
     }
 
+    private static FormattedName getFormattedName(StructuredName sn, String separator) {
+
+        StringJoiner joiner = new StringJoiner((separator!=null) ? separator : StringUtils.SPACE);
+        addNameComponent(joiner, sn.getPrefixes());
+        addNameComponent(joiner, sn.getGiven());
+        addNameComponent(joiner, sn.getFamily());
+        addNameComponent(joiner, sn.getAdditionalNames());
+        addNameComponent(joiner, sn.getSuffixes());
+        return new FormattedName(joiner.toString());
+    }
+
+    private static FormattedName getFormattedName(String name) {
+
+        return new FormattedName(name);
+    }
+
     private static void fillFormattedNames(VCard vcard, Card jsCard) {
 
-        if (jsCard.getFullName() == null || jsCard.getFullName().isEmpty()) {
-            if (jsCard.getName() != null)
-                vcard.setFormattedName(getFormattedName(jsCard.getName()));
+        if (StringUtils.isEmpty(jsCard.getFullName())) {
+            if (jsCard.getName() != null) {
+                List<StructuredName> sns = getStructuredNames(jsCard);
+                String separator = getNameComponent(jsCard.getName(), NameComponentEnum.SEPARATOR);
+                if (sns.size() == 1) {
+                    FormattedName fn = getFormattedName(sns.get(0), separator);
+                    fn.setLanguage(jsCard.getLanguage());
+                    vcard.setFormattedName(fn);
+                }
+                else {
+                    List<FormattedName> fns = new ArrayList<FormattedName>();
+                    for (StructuredName sn : sns) {
+                        FormattedName fn = getFormattedName(sn, separator);
+                        fn.setLanguage(sn.getLanguage());
+                        fns.add(fn);
+                    }
+                    vcard.setFormattedNameAlt(fns.toArray(new FormattedName[0]));
+                }
+            }
             else
                 vcard.setFormattedName(jsCard.getUid());
             return;
         }
 
-        FormattedName fn = new FormattedName(jsCard.getFullName());
-        fn.setLanguage(jsCard.getLanguage());
         if (jsCard.getLocalizationsPerPath("/fullName") != null) {
-            fn.setAltId("1");
-            vcard.addFormattedName(fn);
+            List<FormattedName> fns = new ArrayList<FormattedName>();
+            FormattedName fn = getFormattedName(jsCard.getFullName());
+            fn.setLanguage(jsCard.getLanguage());
+            fns.add(fn);
+            vcard.setFormattedName(fn);
             for (Map.Entry<String,JsonNode> localizations : jsCard.getLocalizationsPerPath("/fullName").entrySet()) {
-                fn = new FormattedName(localizations.getValue().asText());
+                fn = getFormattedName(localizations.getValue().asText());
                 fn.setLanguage(localizations.getKey());
-                fn.setAltId("1");
-                vcard.addFormattedName(fn);
+                fns.add(fn);
             }
+            vcard.setFormattedNameAlt(fns.toArray(new FormattedName[0]));
         } else
-            vcard.addFormattedName(fn);
+            vcard.setFormattedName(getFormattedName(jsCard.getFullName()));
 
     }
 
-    private static void fillNames(VCard vcard, Card jsCard) {
-
-        if (jsCard.getName() == null)
-            return;
+    private static StructuredName getStructuredName(NameComponent[] nameComponents) {
 
         StructuredName name = new StructuredName();
-        for (NameComponent component : jsCard.getName()) {
+        for (NameComponent component : nameComponents) {
             if (component.getType().getRfcValue() == null)
                 continue;
             switch(component.getType().getRfcValue()) {
@@ -175,7 +219,63 @@ public class JSContact2EZVCard extends AbstractConverter {
                     break;
             }
         }
-        vcard.setStructuredName(name);
+
+        return name;
+    }
+
+
+    private static NameComponent[] convertAsNameComponentArray(JsonNode arrayNode) {
+
+        if (!arrayNode.isArray())
+            return null;
+        List<NameComponent> ncs = new ArrayList<NameComponent>();
+        try {
+            for (JsonNode node : (ArrayNode) arrayNode) {
+
+                if (node.isObject()) {
+                    NameComponent nc = mapper.convertValue(node, NameComponent.class);
+                    ncs.add(nc);
+                }
+            }
+
+            return (ncs.size() > 0) ? ncs.toArray(new NameComponent[0]) : null;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    private static List<StructuredName> getStructuredNames(Card jsCard) {
+
+        List<StructuredName> sns = new ArrayList<StructuredName>();
+        if (jsCard.getLocalizationsPerPath("/name") != null) {
+            StructuredName sn = getStructuredName(jsCard.getName());
+            sn.setLanguage(jsCard.getLanguage());
+            sns.add(sn);
+            for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("/name").entrySet()) {
+                sn = getStructuredName(convertAsNameComponentArray(localizations.getValue()));
+                sn.setLanguage(localizations.getKey());
+                sns.add(sn);
+            }
+        }
+        else
+            sns.add(getStructuredName(jsCard.getName()));
+
+        return sns;
+
+    }
+
+
+    private static void fillNames(VCard vcard, Card jsCard) {
+
+        if (jsCard.getName() == null)
+            return;
+
+        List<StructuredName> sns = getStructuredNames(jsCard);
+        if (sns.size() == 1)
+            vcard.setStructuredName(sns.get(0));
+        else
+            vcard.setStructuredNameAlt(sns.toArray(new StructuredName[0]));
     }
 
     private static void fillNickNames(VCard vcard, Card jsCard) {
@@ -844,7 +944,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static ClientPidMap getCliendPidMap(String key, String value) {
 
-        Integer pid = Integer.parseInt(key.replace(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)+"/",""));
+        Integer pid = Integer.parseInt(key.replace(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)+"/",StringUtils.EMPTY));
         return new ClientPidMap(pid, value);
     }
 
@@ -862,8 +962,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static String[] getPropertyNamePlusIndex(String extension, String parameterName) {
         String propertyPlusIndex = extension
-                                   .replace(UNMATCHED_PROPERTY_PREFIX,"")
-                                   .replace(":" + parameterName,"");
+                                   .replace(UNMATCHED_PROPERTY_PREFIX,StringUtils.EMPTY)
+                                   .replace(":" + parameterName,StringUtils.EMPTY);
         return propertyPlusIndex.split(":");
     }
 
@@ -920,7 +1020,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith(":PID"))
                 fillVCardUnmatchedParameter(vcard,extension.getKey(),"PID", extension.getValue());
             else
-                vcard.getExtendedProperties().add(new RawProperty(extension.getKey().replace(config.getExtensionsPrefix(), ""), extension.getValue()));
+                vcard.getExtendedProperties().add(new RawProperty(extension.getKey().replace(config.getExtensionsPrefix(), StringUtils.EMPTY), extension.getValue()));
         }
     }
 

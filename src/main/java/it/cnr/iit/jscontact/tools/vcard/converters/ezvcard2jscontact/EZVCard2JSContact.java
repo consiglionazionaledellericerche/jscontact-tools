@@ -414,9 +414,9 @@ public class EZVCard2JSContact extends AbstractConverter {
             String minutes = offset.substring(3,5);
             if (minutes.equals("00"))
                 return String.format("Etc/GMT%s%s%s",
-                                               (hours.equals("00") && minutes.equals("00")) ? "" : (sign.equals("+") ? "-" : "+") ,
-                                               (hours.equals("00") && minutes.equals("00")) ? "" : String.valueOf(Integer.parseInt(hours)),
-                                               (minutes.equals("00") ? "" : ":" + minutes));
+                                               (hours.equals("00") && minutes.equals("00")) ? StringUtils.EMPTY : (sign.equals("+") ? "-" : "+") ,
+                                               (hours.equals("00") && minutes.equals("00")) ? StringUtils.EMPTY : String.valueOf(Integer.parseInt(hours)),
+                                               (minutes.equals("00") ? StringUtils.EMPTY : ":" + minutes));
             else {
                 String timeZoneName = String.format("%s%d", config.getCustomTimeZonesPrefix(), ++customTimeZoneCounter);
                 timeZones.put(timeZoneName,TimeZone.builder()
@@ -550,7 +550,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         Matcher m = TIMEZONE_AS_UTC_OFFSET_PATTERN.matcher(jcardTzParam);
         if (m.find())
-            return getValue(new Timezone(UtcOffset.parse(jcardTzParam.replace(":", ""))));
+            return getValue(new Timezone(UtcOffset.parse(jcardTzParam.replace(":", StringUtils.EMPTY))));
         else
             return jcardTzParam;
     }
