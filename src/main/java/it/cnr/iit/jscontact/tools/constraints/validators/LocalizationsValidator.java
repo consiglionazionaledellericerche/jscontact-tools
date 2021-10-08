@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.LocalizationsConstraint;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import sun.util.locale.LanguageTag;
 import sun.util.locale.ParseStatus;
 
@@ -64,12 +65,9 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
                 try {
                     JsonNode localizedNode = localization.getValue();
                     JsonNode node = root.at(jsonPointer);
-                    if (localizedNode.getNodeType() != node.getNodeType()) {
-                        context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
-                        return false;
-                    } else if (localizedNode.isObject()) {
+                    if (localizedNode.isObject()) {
                         String className = node.get("@type").asText();
-                        Object o = objectMapper.convertValue(localizedNode, Class.forName(className));
+                        Object o = objectMapper.convertValue(localizedNode, Class.forName(ClassUtils.getDtoPackageName()+"."+className));
                     }
                 } catch (Exception e) {
                     context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();

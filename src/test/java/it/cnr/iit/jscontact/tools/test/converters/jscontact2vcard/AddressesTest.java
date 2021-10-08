@@ -378,7 +378,7 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"/addresses/ADR-1\":{" +
                             "\"street\":[{\"type\":\"name\", \"value\":\"Via Moruzzi,1\"}]," +
                             "\"locality\":\"Pisa\"," +
-                            "\"country\":\"Italy\"," +
+                            "\"country\":\"Italia\"," +
                             "\"postcode\":\"56124\"," +
                             "\"countryCode\":\"IT\"" +
                         "}" +
@@ -393,14 +393,14 @@ public class AddressesTest extends JSContact2VCardTest {
         assertTrue("testAddressesValid10 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
         assertTrue("testAddressesValid10 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
         assertTrue("testAddressesValid10 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid10 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St Reston VA 20190 USA"));
+        assertTrue("testAddressesValid10 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
         assertTrue("testAddressesValid10 - 9", vcard.getAddresses().get(0).getLanguage().equals("en"));
         assertTrue("testAddressesValid10 - 10",vcard.getAddresses().get(1).getParameter("CC").equals("IT"));
-        assertTrue("testAddressesValid10 - 11",vcard.getAddresses().get(1).getCountry().equals("Italy"));
+        assertTrue("testAddressesValid10 - 11",vcard.getAddresses().get(1).getCountry().equals("Italia"));
         assertTrue("testAddressesValid10 - 12",vcard.getAddresses().get(1).getPostalCode().equals("56124"));
         assertTrue("testAddressesValid10 - 13",vcard.getAddresses().get(1).getLocality().equals("Pisa"));
-        assertTrue("testAddressesValid10 - 14",vcard.getAddresses().get(1).getStreetAddress().equals("Via Moruzzi, 1"));
-        assertTrue("testAddressesValid10 - 15", vcard.getAddresses().get(1).getLabel().equals("Via Moruzzi,1 Pisa 56124 Italia"));
+        assertTrue("testAddressesValid10 - 14",vcard.getAddresses().get(1).getStreetAddress().equals("Via Moruzzi,1"));
+        assertTrue("testAddressesValid10 - 15", vcard.getAddresses().get(1).getLabel().equals("Via Moruzzi,1\nPisa\n56124\nItalia"));
         assertTrue("testAddressesValid10 - 16", vcard.getAddresses().get(1).getLanguage().equals("it"));
     }
 
