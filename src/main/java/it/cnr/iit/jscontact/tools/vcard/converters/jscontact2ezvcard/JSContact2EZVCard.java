@@ -2,7 +2,6 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import ezvcard.VCard;
@@ -36,9 +35,6 @@ import java.util.*;
 
 @NoArgsConstructor
 public class JSContact2EZVCard extends AbstractConverter {
-
-
-    private static final ObjectMapper mapper = new ObjectMapper();
 
     private static final Map<String,String> ezclassesPerPropertiesMap = new HashMap<String,String>() {{
         put("Address", "ADR");
@@ -1144,16 +1140,15 @@ public class JSContact2EZVCard extends AbstractConverter {
      */
     public List<VCard> convert(String json) throws CardException, JsonProcessingException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
-        objectMapper.registerModule(module);
-        JsonNode jsonNode = objectMapper.readTree(json);
+        mapper.registerModule(module);
+        JsonNode jsonNode = mapper.readTree(json);
         JSContact[] jsContacts;
         if (jsonNode.isArray())
-            jsContacts = objectMapper.treeToValue(jsonNode, JSContact[].class);
+            jsContacts = mapper.treeToValue(jsonNode, JSContact[].class);
         else
-            jsContacts = new JSContact[] { objectMapper.treeToValue(jsonNode, JSContact.class)};
+            jsContacts = new JSContact[] { mapper.treeToValue(jsonNode, JSContact.class)};
 
         return convert(jsContacts);
     }

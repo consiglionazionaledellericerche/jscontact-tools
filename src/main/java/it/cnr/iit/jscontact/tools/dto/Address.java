@@ -42,7 +42,7 @@ import java.util.StringJoiner;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"fullAddress"})
-public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable {
+public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
 
     private static final String STREET_DETAILS_DELIMITER = " ";
 
@@ -87,6 +87,12 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     @JsonIgnore
     String altid;
+
+    @JsonIgnore
+    String language;
+
+    @JsonIgnore
+    Boolean isDefaultLanguage;
 
     private boolean asContext(AddressContext context) { return contexts != null && contexts.containsKey(context); }
     public boolean asWork() { return asContext(AddressContext.work()); }
@@ -138,6 +144,31 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.UNKNOWN))) joiner.add(getStreetDetail(StreetComponentEnum.EXTENSION));
         String streetExtensions = joiner.toString();
         return StringUtils.defaultIfEmpty(streetExtensions, null);
+    }
+
+    @Override
+    public int compareTo(Address o) {
+
+        if (altid == null) {
+            if (o.getAltid() == null)
+                return 0;
+            else
+                return -1;
+        }
+        else {
+            if (o.getAltid() == null)
+                return 1;
+        }
+
+        if (altid.equals(o.getAltid())) {
+            if (isDefaultLanguage)
+                return -1;
+            else
+                return 0;
+        }
+
+        return StringUtils.compare(altid,o.getAltid());
+
     }
 
 }

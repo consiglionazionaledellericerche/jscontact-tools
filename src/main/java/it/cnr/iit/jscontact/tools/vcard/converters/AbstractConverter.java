@@ -1,5 +1,6 @@
 package it.cnr.iit.jscontact.tools.vcard.converters;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 
 public abstract class AbstractConverter {
@@ -12,6 +13,8 @@ public abstract class AbstractConverter {
     protected static final String VCARD_XML_TAG = "XML";
     protected static final String DEFAULT_CALSCALE = "gregorian";
     protected static final String UNMATCHED_PROPERTY_PREFIX = "ietf.org:rfc6350:";
+
+    protected static final ObjectMapper mapper = new ObjectMapper();
 
     protected static String getUnmatchedPropertyName(String propertyName, Integer index) {
 

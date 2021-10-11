@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.ValidationWarnings;
@@ -28,6 +29,7 @@ import ezvcard.util.GeoUri;
 import ezvcard.util.PartialDate;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
@@ -47,7 +49,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 @NoArgsConstructor
 public class EZVCard2JSContact extends AbstractConverter {
@@ -594,6 +595,8 @@ public class EZVCard2JSContact extends AbstractConverter {
                                                                  .postcode(StringUtils.defaultIfEmpty(addr.getPostalCode(), null))
                                                                  .country(StringUtils.defaultIfEmpty(addr.getCountry(), null))
                                                                  .altid(addr.getAltId())
+                                                                 .language(addr.getLanguage())
+                                                                 .isDefaultLanguage(isDefaultLanguage(addr.getLanguage(), jsCard.getLanguage()))
                                                                  .build()
                          );
         }
@@ -614,10 +617,26 @@ public class EZVCard2JSContact extends AbstractConverter {
             addresses.set(addresses.indexOf(address), address);
         }
 
-        int i = 1;
-        for (it.cnr.iit.jscontact.tools.dto.Address address : addresses)
-            jsCard.addAddress(getId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + (i++)), address);
+        if (addresses.size()==0)
+            return;
 
+        Collections.sort(addresses);
+
+        String id = null;
+        String altId = null;
+        int i = 0;
+        for (Address address: addresses) {
+            if (altId!=null && address.getAltid()!=null && altId.equals(address.getAltid())) {
+                id = getId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + i);
+                jsCard.addLocalization(address.getLanguage(),"/addresses/" + id,  mapper.convertValue(address, JsonNode.class));
+            }
+            else {
+                i++;
+                id = getId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + i);
+                jsCard.addAddress(id, address);
+                altId = address.getAltid();
+            }
+        }
     }
 
     private static  <T extends DateOrTimeProperty> AnniversaryDate getAnniversaryDate(T date) {
