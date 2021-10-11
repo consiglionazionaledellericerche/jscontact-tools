@@ -531,8 +531,9 @@ public class EZVCard2JSContact extends AbstractConverter {
         for (LocalizedString nick : nicks) {
             jsCard.addNickName(nick.getValue());
             if (nick.getLocalizations()!=null) {
-                for (Map.Entry<String,String> localization : nick.getLocalizations().entrySet())
-                    jsCard.addNote(localization.getValue(), localization.getKey());
+//TODO: MARIO
+//                for (Map.Entry<String,String> localization : nick.getLocalizations().entrySet())
+//                    jsCard.addNickName(localization.getValue(), localization.getKey());
             }
         }
     }
@@ -1057,10 +1058,15 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
         Collections.sort(notes);
         for (LocalizedString note : notes) {
-            jsCard.addNote(note.getValue(), note.getLanguage());
+            jsCard.addNote(note.getValue());
             if (note.getLocalizations()!=null) {
-                for (Map.Entry<String,String> localization : note.getLocalizations().entrySet())
-                    jsCard.addNote(localization.getValue(), localization.getKey());
+                for (Map.Entry<String,String> localization : note.getLocalizations().entrySet()) {
+                    JsonNode node = jsCard.getLocalization(localization.getKey(),"/notes");
+                    if (node == null)
+                        jsCard.addLocalization(localization.getKey(), "/notes", JsonNodeUtils.textNode(localization.getValue()));
+                    else
+                        jsCard.getLocalizations().get(localization.getKey()).replace("/notes", JsonNodeUtils.textNode(String.format("%s%s%s", node.asText(), NoteUtils.NOTE_DELIMITER, localization.getValue())));
+                }
             }
         }
     }

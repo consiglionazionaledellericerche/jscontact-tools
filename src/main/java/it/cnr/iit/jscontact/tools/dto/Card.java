@@ -353,21 +353,12 @@ public class Card extends JSContact implements Serializable {
             personalInfo.put(id,pi);
     }
 
-    public void addNote(String note, String language) {
+    public void addNote(String note) {
 
-        if (StringUtils.equals(language,getLanguage())) {
-            if (notes == null)
-                notes = note;
-            else
-                notes = String.format("%s%s%s", notes, NoteUtils.NOTE_DELIMITER, note);
-            return;
-        } else {
-            JsonNode localization = getLocalization(language,"/notes");
-            if (localization == null)
-                addLocalization(language, "/notes", JsonNodeUtils.textNode(note));
-            else
-                localizations.get(language).replace("/notes", JsonNodeUtils.textNode(String.format("%s%s%s", localization.asText(), NoteUtils.NOTE_DELIMITER, note)));
-        }
+        if (notes == null)
+            notes = note;
+        else
+            notes = String.format("%s%s%s", notes, NoteUtils.NOTE_DELIMITER, note);
     }
 
     private void addCategory(String category) {
