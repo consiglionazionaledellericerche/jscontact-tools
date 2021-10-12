@@ -15,7 +15,7 @@ public class DateUtils {
       UTC,
       LOCAL,
       NON_ZERO_TIME
-    };
+    }
 
 
     public static String toString(Date date) {

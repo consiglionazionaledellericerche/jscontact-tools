@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.ValidationWarnings;
@@ -521,19 +522,26 @@ public class EZVCard2JSContact extends AbstractConverter {
         List<LocalizedString> nicks = new ArrayList<>();
         for (Nickname nickname : nicknames) {
             for (String value : nickname.getValues())
-                nicks.add(LocalizedString.builder()
-                                         .value(value)
-                                         .preference(isDefaultLanguage(nickname.getLanguage(), jsCard.getLanguage()) ? HIGHEST_PREFERENCE : nickname.getPref())
-                                         .build()
-                         );
+                addLocalizedString(nicks, LocalizedString.builder()
+                                .value(value)
+                                .language(nickname.getLanguage())
+                                .altid(nickname.getAltId())
+                                .preference(nickname.getPref())
+                                .build());
         }
         Collections.sort(nicks);
         for (LocalizedString nick : nicks) {
             jsCard.addNickName(nick.getValue());
             if (nick.getLocalizations()!=null) {
-//TODO: MARIO
-//                for (Map.Entry<String,String> localization : nick.getLocalizations().entrySet())
-//                    jsCard.addNickName(localization.getValue(), localization.getKey());
+                for (Map.Entry<String,String> localization : nick.getLocalizations().entrySet()) {
+                    JsonNode node = jsCard.getLocalization(localization.getKey(),"/nickNames");
+                    if (node == null)
+                        jsCard.addLocalization(localization.getKey(), "/nickNames", JsonNodeUtils.textArrayNode(new String[]{localization.getValue()}));
+                    else {
+                        ArrayNode arrayNode = (ArrayNode) jsCard.getLocalizations().get(localization.getKey()).get("/nickNames");
+                        jsCard.getLocalizations().get(localization.getKey()).replace("/nickNames", arrayNode.add(localization.getValue()));
+                    }
+                }
             }
         }
     }
@@ -623,7 +631,7 @@ public class EZVCard2JSContact extends AbstractConverter {
 
         Collections.sort(addresses);
 
-        String id = null;
+        String id;
         String altId = null;
         int i = 0;
         for (Address address: addresses) {
@@ -692,7 +700,7 @@ public class EZVCard2JSContact extends AbstractConverter {
       }
 
       if (vcard.getAnniversary() != null) {
-          jsCard.addAnniversary(getId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + (i ++)),it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
+          jsCard.addAnniversary(getId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + i),it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                               .type(AnniversaryType.OTHER)
                                                                               .date(getAnniversaryDate(vcard.getAnniversary()))
                                                                               .label(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)
@@ -1052,7 +1060,7 @@ public class EZVCard2JSContact extends AbstractConverter {
                                                      .value(getValue(note))
                                                      .language(note.getLanguage())
                                                      .altid(note.getAltId())
-                                                     .preference(isDefaultLanguage(note.getLanguage(), jsCard.getLanguage()) ? HIGHEST_PREFERENCE : note.getPref())
+                                                     .preference(note.getPref())
                                                      .build()
                               );
         }

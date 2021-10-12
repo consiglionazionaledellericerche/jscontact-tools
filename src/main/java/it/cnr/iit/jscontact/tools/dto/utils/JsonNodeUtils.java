@@ -15,7 +15,7 @@ public class JsonNodeUtils {
     public static ArrayNode textArrayNode(String[] array) {
         ArrayNode arrayNode = JSON_NODE_FACTORY.arrayNode(array.length);
         for (int i=0;i < array.length ; i++)
-          arrayNode.set(i, textNode(array[i]));
+          arrayNode.add(textNode(array[i]));
         return arrayNode;
     }
 }

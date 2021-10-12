@@ -117,7 +117,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static void addNameComponent(StringJoiner joiner, String value) {
 
         if (value != null)
-            joiner.add((value!=null) ? value : StringUtils.EMPTY);
+            joiner.add(value);
     }
 
     private static FormattedName getFormattedName(NameComponent[] name) {

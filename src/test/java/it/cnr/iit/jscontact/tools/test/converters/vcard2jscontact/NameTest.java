@@ -109,4 +109,39 @@ public class NameTest extends VCard2JSContactTest {
 
     }
 
+    @Test
+    public void testNameValid4() throws IOException, CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:John Q. Public, Esq.\n" +
+                "N:Public;John;Quinlan;Mr.;Esq.\n" +
+                "NICKNAME;ALTID=1:Johnny\n" +
+                "NICKNAME;PREF=1;ALTID=2:Kid\n" +
+                "NICKNAME;LANGUAGE=it;ALTID=1:Giovannino\n" +
+                "NICKNAME;PREF=1;LANGUAGE=it;ALTID=2:Ragazzo\n" +
+                "END:VCARD";
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertTrue("testNameValid4 - 1",jsCard.getFullName().equals("John Q. Public, Esq."));
+        assertTrue("testNameValid4 - 2",jsCard.getName().length == 5);
+        assertTrue("testNameValid4 - 3",jsCard.getName()[0].isPrefix());
+        assertTrue("testNameValid4 - 4",jsCard.getName()[0].getValue().equals("Mr."));
+        assertTrue("testNameValid4 - 5",jsCard.getName()[1].isPersonal());
+        assertTrue("testNameValid4 - 6",jsCard.getName()[1].getValue().equals("John"));
+        assertTrue("testNameValid4 - 7",jsCard.getName()[2].isSurname());
+        assertTrue("testNameValid4 - 8",jsCard.getName()[2].getValue().equals("Public"));
+        assertTrue("testNameValid4 - 9",jsCard.getName()[3].isAdditional());
+        assertTrue("testNameValid4 - 10",jsCard.getName()[3].getValue().equals("Quinlan"));
+        assertTrue("testNameValid4 - 11",jsCard.getName()[4].isSuffix());
+        assertTrue("testNameValid4 - 12",jsCard.getName()[4].getValue().equals("Esq."));
+        assertTrue("testNameValid4 - 12",jsCard.getNickNames().length == 2);
+        assertTrue("testNameValid4 - 13",jsCard.getNickNames()[0].equals("Kid"));
+        assertTrue("testNameValid4 - 14",jsCard.getNickNames()[1].equals("Johnny"));
+        assertTrue("testNameValid4 - 15",jsCard.getLocalization("it", "/nickNames").isArray());
+        assertTrue("testNameValid4 - 16", jsCard.getLocalization("it", "/nickNames").get(0).asText().equals("Ragazzo"));
+        assertTrue("testNameValid4 - 17", jsCard.getLocalization("it", "/nickNames").get(1).asText().equals("Giovannino"));
+
+    }
+
 }
