@@ -35,20 +35,17 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "\"organizations\": {" +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
-                        "\"name\": {" +
-                            "\"value\": \"ABC, Inc.\"," +
-                            "\"localizations\": { \"it\":\"ABC, Spa.\" }" +
-                        "}," +
-                        "\"units\": [" +
-                            "{" +
-                                "\"value\": \"North American Division\"," +
-                                "\"localizations\": { \"it\":\"Divisione Nord America\" }" +
-                            "}," +
-                            "{" +
-                                "\"value\": \"Marketing\"," +
-                                "\"localizations\": { \"it\":\"Marketing\" }" +
-                            "}" +
-                        "]" +
+                        "\"name\": \"ABC, Inc.\", " +
+                        "\"units\":[ \"North American Division\", \"Marketing\" ]" +
+                    "}" +
+                "}," +
+                "\"localizations\": { " +
+                    "\"it\" : { " +
+                        "\"/organizations/ORG-1\" : { " +
+                            "\"@type\":\"Organization\"," +
+                            "\"name\" :\"ABC, Spa.\"," +
+                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
@@ -78,25 +75,20 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "\"organizations\":{ " +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
-                        "\"name\": {" +
-                            "\"value\": \"ABC, Inc.\"," +
-                            "\"localizations\": { \"it\":\"ABC, Spa.\" }" +
-                        "}," +
-                        "\"units\": [" +
-                            "{" +
-                                "\"value\": \"North American Division\"," +
-                                "\"localizations\": { \"it\":\"Divisione Nord America\" }" +
-                            "}," +
-                            "{" +
-                                "\"value\": \"Marketing\"," +
-                                "\"localizations\": { \"it\":\"Marketing\" }" +
-                            "}" +
-                        "]" +
+                        "\"name\":\"ABC, Inc.\"," +
+                        "\"units\": [ \"North American Division\",\"Marketing\" ]" +
                     "}," +
                     "\"ORG-2\": {" +
                         "\"@type\":\"Organization\"," +
-                        "\"name\": {" +
-                            "\"value\": \"University of North America\"" +
+                        "\"name\": \"University of North America\"" +
+                    "}" +
+                "}," +
+                "\"localizations\": { " +
+                    "\"it\" : { " +
+                        "\"/organizations/ORG-1\" : { " +
+                            "\"@type\":\"Organization\"," +
+                            "\"name\" :\"ABC, Spa.\"," +
+                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
                         "}" +
                     "}" +
                 "}" +
@@ -131,26 +123,24 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "\"organizations\": {" +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
-                        "\"name\": {" +
-                            "\"value\": \"ABC, Inc.\"," +
-                            "\"localizations\": { \"it\":\"ABC, Spa.\" }" +
-                        "}," +
-                        "\"units\": [" +
-                            "{" +
-                                "\"value\": \"North American Division\"," +
-                                "\"localizations\": { \"it\":\"Divisione Nord America\" }" +
-                            "}," +
-                            "{" +
-                                "\"value\": \"Marketing\"," +
-                                "\"localizations\": { \"it\":\"Marketing\" }" +
-                            "}" +
-                        "]" +
+                        "\"name\":\"ABC, Inc.\"," +
+                        "\"units\": [ \"North American Division\", \"Marketing\" ]" +
                     "}," +
                     "\"ORG-2\": {" +
                         "\"@type\":\"Organization\"," +
-                        "\"name\": {" +
-                            "\"value\": \"University of North America\"," +
-                            "\"localizations\": { \"it\":\"Università del Nord America\" }" +
+                        "\"name\": \"University of North America\"" +
+                    "}" +
+                "}," +
+                "\"localizations\": { " +
+                    "\"it\" : { " +
+                        "\"/organizations/ORG-1\" : { " +
+                            "\"@type\":\"Organization\"," +
+                            "\"name\" :\"ABC, Spa.\"," +
+                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                        "}," +
+                        "\"/organizations/ORG-2\" : { " +
+                            "\"@type\":\"Organization\"," +
+                            "\"name\" :\"Università del Nord America\"" +
                         "}" +
                     "}" +
                 "}" +

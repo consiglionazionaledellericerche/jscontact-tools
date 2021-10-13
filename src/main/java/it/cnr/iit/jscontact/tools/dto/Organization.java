@@ -25,9 +25,7 @@ public class Organization implements IdMapValue, Serializable {
 
     @NotNull(message = "name is missing in Organization")
     @NonNull
-    @Valid
-    LocalizedString name;
+    String name;
 
-    @Valid
-    LocalizedString[] units;
+    String[] units;
 }

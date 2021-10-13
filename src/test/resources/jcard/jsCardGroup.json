@@ -26,9 +26,7 @@
     "organizations": {
       "ORG-1" :{
         "@type": "Organization",
-        "name" : {
-          "value": "Example"
-        }
+        "name" :  "Example"
       }
     },
     "titles": {

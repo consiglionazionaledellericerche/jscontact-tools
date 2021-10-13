@@ -54,7 +54,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 18", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteXCard1 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
         assertTrue("testCompleteXCard1 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
-        assertTrue("testCompleteXCard1 - 21", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Viagenie"));
+        assertTrue("testCompleteXCard1 - 21", jsCard.getOrganizations().get("ORG-1").getName().equals("Viagenie"));
         assertTrue("testCompleteXCard1 - 22", jsCard.getAddresses().size() == 1);
         assertTrue("testCompleteXCard1 - 23", jsCard.getAddresses().get("ADR-1").getFullAddress().equals("Simon Perreault\n                    2875 boul. Laurier, suite D2-630\n                    Quebec, QC, Canada\n                    G1V 2M2"));
         assertTrue("testCompleteXCard1 - 25", jsCard.getAddresses().get("ADR-1").getStreetDetails().equals("2875 boul. Laurier, suite D2-630"));
@@ -106,7 +106,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard2 - 7", jsCard.getName()[1].getValue().equals("Forrest"));
         assertTrue("testCompleteXCard2 - 8", jsCard.getName()[2].isSurname());
         assertTrue("testCompleteXCard2 - 9", jsCard.getName()[2].getValue().equals("Gump"));
-        assertTrue("testCompleteXCard2 - 10", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Bubba Gump Shrimp Co."));
+        assertTrue("testCompleteXCard2 - 10", jsCard.getOrganizations().get("ORG-1").getName().equals("Bubba Gump Shrimp Co."));
         assertTrue("testCompleteXCard2 - 11", jsCard.getTitles().get("TITLE-1").getTitle().equals("Shrimp Man"));
         assertTrue("testCompleteXCard2 - 15", jsCard.getPhotos().get("PHOTO-1").getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
         assertTrue("testCompleteXCard2 - 16", jsCard.getPhotos().get("PHOTO-1").getMediaType().equals("image/gif"));

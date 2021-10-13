@@ -992,15 +992,6 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static Map<String,String> getOrganizationItemLocalizations(LocalizedString organization, int organizationItemIndex) {
-
-        Map<String, String> localizations = new HashMap<>();
-        for (Map.Entry<String, String> unitLocalization : organization.getLocalizations().entrySet()) {
-            String[] localizationItems = unitLocalization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
-            localizations.put(unitLocalization.getKey(), localizationItems[organizationItemIndex]);
-        }
-        return localizations;
-    }
 
     private void fillOrganizations(VCard vcard, Card jsCard) {
 
@@ -1016,52 +1007,20 @@ public class EZVCard2JSContact extends AbstractConverter {
         }
         Collections.sort(organizations);
 
-        List<it.cnr.iit.jscontact.tools.dto.Organization> jsContactOrganizations = new ArrayList<>();
+        int i = 1;
         for (LocalizedString organization : organizations) {
             String[] nameItems = organization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
-            LocalizedString name = LocalizedString.builder()
-                                                  .value(nameItems[0])
-                                                  .language(organization.getLanguage())
-                                                  .build();
-
-            if (organization.getLocalizations() != null)
-                name.setLocalizations(getOrganizationItemLocalizations(organization,0));
-
-            if (nameItems.length > 0) {
-                List<LocalizedString> units = new ArrayList<>();
-                for (int j = 1; j < nameItems.length; j++) {
-                    if (nameItems[j].isEmpty())
-                        continue;
-                    if (organization.getLocalizations() != null)
-                        units.add(LocalizedString.builder()
-                                                 .value(nameItems[j])
-                                                 .language(organization.getLanguage())
-                                                 .localizations(getOrganizationItemLocalizations(organization, j))
-                                                 .build()
-                                 );
-                    else
-                        units.add(LocalizedString.builder()
-                                                 .value(nameItems[j])
-                                                 .language(organization.getLanguage())
-                                                 .build()
-                                 );
+            String id = getId(VCard2JSContactIdsProfile.IdType.ORGANIZATION, i, "ORG-" + (i ++));
+            List<String> units = (nameItems.length > 1 ) ? Arrays.asList(nameItems).subList(1,nameItems.length) : null;
+            jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().name(nameItems[0]).units((units!=null)? units.toArray(new String[0]) : null).build());
+            if (organization.getLocalizations()!=null) {
+                for (Map.Entry<String,String> localization : organization.getLocalizations().entrySet()) {
+                    String[] localizedNameItems =  localization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
+                    List<String> localizedUnits = (localizedNameItems.length > 1 ) ? Arrays.asList(localizedNameItems).subList(1,localizedNameItems.length) : null;
+                    jsCard.addLocalization(localization.getKey(), "/organizations/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Organization.builder().name(localizedNameItems[0]).units((localizedUnits!=null)? localizedUnits.toArray(new String[0]) : null).build(), JsonNode.class));
                 }
-                jsContactOrganizations.add(it.cnr.iit.jscontact.tools.dto.Organization.builder()
-                                                                                      .name(name)
-                                                                                      .units(units.toArray(new LocalizedString[units.size()]))
-                                                                                      .build()
-                                          );
             }
-            else
-                jsContactOrganizations.add(it.cnr.iit.jscontact.tools.dto.Organization.builder()
-                                                                                       .name(name)
-                                                                                       .build()
-                                          );
         }
-
-        int i = 1;
-        for (it.cnr.iit.jscontact.tools.dto.Organization jsContactOrganization : jsContactOrganizations)
-            jsCard.addOrganization(getId(VCard2JSContactIdsProfile.IdType.ORGANIZATION, i, "ORG-" + (i++)), jsContactOrganization);
     }
 
     private static void fillNotes(VCard vcard, Card jsCard) {

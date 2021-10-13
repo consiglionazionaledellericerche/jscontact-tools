@@ -58,7 +58,7 @@ public class ProfileTest extends JCard2JSContactTest {
         assertTrue("testRDAPProfile - 12", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testRDAPProfile - 13", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
         assertTrue("testRDAPProfile - 14", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
-        assertTrue("testRDAPProfile - 15", jsCard.getOrganizations().get("org").getName().getValue().equals("Example"));
+        assertTrue("testRDAPProfile - 15", jsCard.getOrganizations().get("org").getName().equals("Example"));
         assertTrue("testRDAPProfile - 16", jsCard.getTitles().get("TITLE-1").getTitle().equals("Research Scientist"));
         assertTrue("testRDAPProfile - 17", jsCard.getTitles().get("TITLE-2").getTitle().equals("Project Lead"));
         assertTrue("testRDAPProfile - 18", jsCard.getAddresses().size() == 2);

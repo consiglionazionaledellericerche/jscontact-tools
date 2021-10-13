@@ -51,7 +51,7 @@ public class TitleTest extends AbstractTest {
         Map jobTiles = new HashMap<String,Title>();
         jobTiles.put("title-1", Title.builder().title("Researcher").organization("IIT CNR").build());
         Map organizations = new HashMap<String,Organization>();
-        organizations.put("organization-1", Organization.builder().name(LocalizedString.builder().value("an organization").build()).build());
+        organizations.put("organization-1", Organization.builder().name("an organization").build());
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .titles(jobTiles)

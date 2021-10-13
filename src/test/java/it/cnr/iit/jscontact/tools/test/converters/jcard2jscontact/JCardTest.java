@@ -154,7 +154,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 12", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteJCard1 - 13", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
         assertTrue("testCompleteJCard1 - 14", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
-        assertTrue("testCompleteJCard1 - 15", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Example"));
+        assertTrue("testCompleteJCard1 - 15", jsCard.getOrganizations().get("ORG-1").getName().equals("Example"));
         assertTrue("testCompleteJCard1 - 16", jsCard.getTitles().get("TITLE-1").getTitle().equals("Research Scientist"));
         assertTrue("testCompleteJCard1 - 17", jsCard.getTitles().get("TITLE-2").getTitle().equals("Project Lead"));
         assertTrue("testCompleteJCard1 - 18", jsCard.getAddresses().size() == 2);
@@ -264,7 +264,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 18", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteJCard4 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
         assertTrue("testCompleteJCard4 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
-        assertTrue("testCompleteJCard4 - 21", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Viagenie"));
+        assertTrue("testCompleteJCard4 - 21", jsCard.getOrganizations().get("ORG-1").getName().equals("Viagenie"));
         assertTrue("testCompleteJCard4 - 22", jsCard.getAddresses().size() == 1);
         assertTrue("testCompleteJCard4 - 23", jsCard.getAddresses().get("ADR-1").getFullAddress().equals("Suite D2-630\n2875 Laurier\nQuebec\nQC\nG1V 2M2\nCanada"));
         assertTrue("testCompleteJCard4 - 24", jsCard.getAddresses().get("ADR-1").getStreetExtensions().equals("Suite D2-630"));
@@ -317,7 +317,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 7", jsCard.getName()[1].getValue().equals("Forrest"));
         assertTrue("testCompleteJCard5 - 8", jsCard.getName()[2].isSurname());
         assertTrue("testCompleteJCard5 - 9", jsCard.getName()[2].getValue().equals("Gump"));
-        assertTrue("testCompleteJCard5 - 10", jsCard.getOrganizations().get("ORG-1").getName().getValue().equals("Bubba Gump Shrimp Co."));
+        assertTrue("testCompleteJCard5 - 10", jsCard.getOrganizations().get("ORG-1").getName().equals("Bubba Gump Shrimp Co."));
         assertTrue("testCompleteJCard5 - 11", jsCard.getTitles().get("TITLE-1").getTitle().equals("Shrimp Man"));
         assertTrue("testCompleteJCard5 - 15", jsCard.getPhotos().get("PHOTO-1").getHref().equals("http://www.example.com/dir_photos/my_photo.gif"));
         assertTrue("testCompleteJCard5 - 16", jsCard.getPhotos().get("PHOTO-1").getMediaType().equals("image/gif"));

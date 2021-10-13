@@ -17,9 +17,8 @@ public class OrganizationTest {
     @Test(expected = NullPointerException.class)
     public void testInvalidOrganizationBuild2() {
 
-        LocalizedString[] units = { LocalizedString.builder().value("unit1").language("en").build()};
         // name missing
-        Organization.builder().units(units).build();
+        Organization.builder().units(new String[]{"unit1"}).build();
     }
 
 }
