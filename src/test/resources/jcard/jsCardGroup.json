@@ -34,11 +34,11 @@
     "titles": {
       "TITLE-1": {
         "@type": "Title",
-        "title" : {"value": "Research Scientist"}
+        "title": "Research Scientist"
       },
       "TITLE-2": {
         "@type": "Title",
-        "title" : {"value": "Project Lead"}
+        "title": "Project Lead"
       }
     },
     "addresses": {
@@ -106,13 +106,7 @@
     "titles": {
       "TITLE-1" : {
         "@type": "Title",
-        "title": {
-          "value": "事務局長",
-          "language": "jp",
-          "localizations": {
-            "en": "Secretary General"
-          }
-        }
+        "title": "事務局長"
       }
     },
     "kind": "individual",
@@ -122,7 +116,8 @@
     },
     "localizations": {
       "en": {
-        "/fullName": "Okubo Masahito"
+        "/fullName": "Okubo Masahito",
+        "/titles/TITLE-1": { "@type": "Title", "title": "Secretary General" }
       }
     }
   },

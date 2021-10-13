@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
@@ -356,7 +357,6 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner;
     }
 
-
     private static ezvcard.property.Address getAddress(Address address, Map<String,TimeZone> timeZones, String language) {
 
         ezvcard.property.Address addr = new ezvcard.property.Address();
@@ -420,12 +420,14 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (isNullStructuredAddress(address) && address.getFullAddress() == null)
                 continue;
 
-            ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLanguage());
             if (jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()+"/fullAddress")==null)
+                jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()+"/fullAddress")==null) {
+                ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLanguage());
                 vcard.addAddress(addr);
+            }
             else {
                 List<ezvcard.property.Address> addrs = new ArrayList<>();
+                ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLanguage());
                 addrs.add(addr);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey());
@@ -820,15 +822,26 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getTitles() == null)
             return;
 
-        Integer altId = Integer.parseInt("1");
-        for (Title title : jsCard.getTitles().values()) {
-            if (title.getTitle().getLocalizations() == null)
-                vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(title.getTitle().getValue()), title.getTitle().getLanguage()));
+        for (Map.Entry<String,Title> entry : jsCard.getTitles().entrySet()) {
+
+            if (jsCard.getLocalizationsPerPath("/titles/"+entry.getKey()) == null &&
+                jsCard.getLocalizationsPerPath("/titles/"+entry.getKey()+"/title")==null)
+                vcard.addTitle(getTextProperty(new ezvcard.property.Title(entry.getValue().getTitle()), jsCard.getLanguage()));
             else {
-                vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(title.getTitle().getValue()), title.getTitle().getLanguage(), altId));
-                for (Map.Entry<String,String> localization : title.getTitle().getLocalizations().entrySet())
-                    vcard.getTitles().add(getTextProperty(new ezvcard.property.Title(localization.getValue()), localization.getKey(), altId));
-                altId ++;
+                List<ezvcard.property.Title> titles = new ArrayList<>();
+                titles.add(getTextProperty(new ezvcard.property.Title(entry.getValue().getTitle()), jsCard.getLanguage()));
+
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/titles/"+entry.getKey());
+                if (localizations != null) {
+                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
+                        titles.add(getTextProperty(new ezvcard.property.Title(localization.getValue().get("title").asText()), localization.getKey()));
+                }
+                localizations = jsCard.getLocalizationsPerPath("/titles/"+entry.getKey()+"/title");
+                if (localizations != null) {
+                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
+                        titles.add(getTextProperty(new ezvcard.property.Title(localization.getValue().asText()), localization.getKey()));
+                }
+                vcard.addTitleAlt(titles.toArray(new ezvcard.property.Title[0]));
             }
         }
     }

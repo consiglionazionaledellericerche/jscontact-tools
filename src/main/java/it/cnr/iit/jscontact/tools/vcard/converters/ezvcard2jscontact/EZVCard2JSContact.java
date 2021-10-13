@@ -957,8 +957,14 @@ public class EZVCard2JSContact extends AbstractConverter {
         Collections.sort(titles);
 
         int i = 1;
-        for (LocalizedString title : titles)
-            jsCard.addTitle(getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i++)), title);
+        for (LocalizedString title : titles) {
+            String id = getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i ++));
+            jsCard.addTitle(id, title.getValue());
+            if (title.getLocalizations()!=null) {
+                for (Map.Entry<String,String> localization : title.getLocalizations().entrySet())
+                    jsCard.addLocalization(localization.getKey(), "/titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().title(localization.getValue()).build(), JsonNode.class));
+            }
+        }
     }
 
     private void fillRoles(VCard vcard, Card jsCard) {
@@ -976,8 +982,14 @@ public class EZVCard2JSContact extends AbstractConverter {
         Collections.sort(roles);
 
         int i = (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1;
-        for (LocalizedString role : roles)
-            jsCard.addTitle(getId(VCard2JSContactIdsProfile.IdType.TITLE,i,"TITLE-" + (i++)), role);
+        for (LocalizedString role : roles) {
+            String id = getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i ++));
+            jsCard.addTitle(id, role.getValue());
+            if (role.getLocalizations()!=null) {
+                for (Map.Entry<String,String> localization : role.getLocalizations().entrySet())
+                    jsCard.addLocalization(localization.getKey(), "/titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().title(localization.getValue()).build(), JsonNode.class));
+            }
+        }
     }
 
     private static Map<String,String> getOrganizationItemLocalizations(LocalizedString organization, int organizationItemIndex) {

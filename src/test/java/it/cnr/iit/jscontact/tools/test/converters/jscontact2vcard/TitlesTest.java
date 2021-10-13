@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -30,16 +31,18 @@ public class TitlesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359h\"," +
                 "\"fullName\":\"test\"," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": {" +
-                            "\"value\": \"Research Scientist\"," +
-                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
-                        "}" +
+                        "\"title\": \"Research Scientist\"" +
                     "}" +
+                "}," +
+                "\"localizations\" : {" +
+                   "\"it\" : { " +
+                      "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
+                   "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -62,16 +65,16 @@ public class TitlesTest extends JSContact2VCardTest {
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": {" +
-                            "\"value\": \"Research Scientist\"," +
-                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
-                        "}" +
+                        "\"title\": \"Research Scientist\""  +
                     "}," +
                     "\"TITLE-2\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": {" +
-                            "\"value\": \"IETF Area Director\"" +
-                        "}" +
+                        "\"title\": \"IETF Area Director\"" +
+                    "}" +
+                "}," +
+                "\"localizations\" : {" +
+                    "\"it\" : { " +
+                        "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
                     "}" +
                 "}" +
                 "}";
@@ -93,22 +96,22 @@ public class TitlesTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359g\"," +
                 "\"fullName\":\"test\"," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": {" +
-                            "\"value\": \"Research Scientist\"," +
-                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
-                        "}" +
+                        "\"title\": \"Research Scientist\"" +
                     "}," +
                     "\"TITLE-2\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": {" +
-                            "\"value\": \"IETF Area Director\"," +
-                            "\"localizations\": { \"it\":\"Direttore Area IETF\" }" +
-                        "}" +
+                        "\"title\": \"IETF Area Director\"" +
+                    "}" +
+                "}," +
+                "\"localizations\" : {" +
+                    "\"it\" : { " +
+                        "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" }, " +
+                        "\"/titles/TITLE-2\": { \"@type\":\"Title\",\"title\": \"Direttore Area IETF\" } " +
                     "}" +
                 "}" +
                 "}";

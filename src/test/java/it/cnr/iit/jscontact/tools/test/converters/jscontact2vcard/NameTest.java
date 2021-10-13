@@ -119,8 +119,8 @@ public class NameTest extends JSContact2VCardTest {
                 "\"localizations\" : {" +
                     "\"en\": {" +
                         "\"/name\":[ " +
-                            "{ \"value\":\"Masahito\", \"type\": \"personal\" }," +
-                            "{ \"value\":\"Okubo\", \"type\": \"surname\" }" +
+                            "{ \"@type\":\"NameComponent\", \"value\":\"Masahito\", \"type\": \"personal\" }," +
+                            "{ \"@type\":\"NameComponent\", \"value\":\"Okubo\", \"type\": \"surname\" }" +
                         "]" +
                     "}" +
                 "}" +

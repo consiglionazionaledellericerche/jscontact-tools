@@ -194,7 +194,7 @@ public class Card extends JSContact implements Serializable {
         organizations.put(id,organization);
     }
 
-    private void addTitle(String id, LocalizedString title, String organization) {
+    private void addTitle(String id, String title, String organization) {
 
         if(titles == null)
             titles = new HashMap<>();
@@ -203,7 +203,7 @@ public class Card extends JSContact implements Serializable {
             titles.put(id,Title.builder().title(title).organization(organization).build());
     }
 
-    public void addTitle(String id, LocalizedString title) {
+    public void addTitle(String id, String title) {
         addTitle(id, title, null);
     }
 

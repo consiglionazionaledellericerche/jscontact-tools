@@ -8,7 +8,7 @@
   "en": [{ "@type": "ContactLanguage", "pref": 2 }]
   },
   "organizations": { "ORG-1": { "@type": "Organization", "name": { "value": "Example" }} },
-  "titles": {"TITLE-1": { "@type": "Title", "title": { "value": "Research Scientist" }},  "TITLE-2": { "@type": "Title", "title": { "value": "Project Lead" }}},
+  "titles": {"TITLE-1": { "@type": "Title", "title": "Research Scientist" },  "TITLE-2": { "@type": "Title", "title": "Project Lead" }},
   "addresses": {
     "ADR-1" : {
       "@type": "Address",

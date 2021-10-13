@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -25,8 +24,7 @@ public class Title implements IdMapValue, Serializable {
 
     @NotNull(message = "title is missing in Title")
     @NonNull
-    @Valid
-    LocalizedString title;
+    String title;
 
     String organization;
 }

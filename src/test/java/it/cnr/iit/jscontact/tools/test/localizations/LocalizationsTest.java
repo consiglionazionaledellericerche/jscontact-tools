@@ -16,18 +16,20 @@ public class LocalizationsTest {
         String json = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"addresses\":{" +
-                "\"ADR-1\": {" +
-                "\"locality\":\"Tokyo\"" +
-                "}," +
-                "\"ADR-2\": {" +
-                "\"locality\":\"Osaka\"" +
-                "}" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"locality\":\"Tokyo\"" +
+                    "}," +
+                    "\"ADR-2\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"locality\":\"Osaka\"" +
+                    "}" +
                 "}," +
                 "\"localizations\":{" +
-                "\"jp\": {" +
-                "\"/addresses/ADR-1/locality\" : \"東京\"," +
-                "\"/addresses/ADR-2\" : {\"locality\": \"大阪市\"}" +
-                "}" +
+                    "\"jp\": {" +
+                        "\"/addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"/addresses/ADR-2\" : {\"@type\":\"Address\",\"locality\": \"大阪市\"}" +
+                    "}" +
                 "}" +
                 "}";
 
@@ -48,18 +50,20 @@ public class LocalizationsTest {
         String json = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"addresses\":{" +
-                "\"ADR-1\": {" +
-                "\"locality\":\"Tokyo\"" +
-                "}," +
-                "\"ADR-2\": {" +
-                "\"locality\":\"Osaka\"" +
-                "}" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"locality\":\"Tokyo\"" +
+                    "}," +
+                    "\"ADR-2\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"locality\":\"Osaka\"" +
+                    "}" +
                 "}," +
                 "\"localizations\":{" +
-                "\"jp\": {" +
-                "\"/addresses/ADR-1/locality\" : \"東京\"," +
-                "\"/addresses/ADR-2\" : {\"unknown\": \"大阪市\"}" +
-                "}" +
+                    "\"jp\": {" +
+                        "\"/addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"/addresses/ADR-2\" : {\"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                    "}" +
                 "}" +
                 "}";
 
@@ -74,18 +78,20 @@ public class LocalizationsTest {
         String json = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"addresses\":{" +
-                "\"ADR-1\": {" +
-                "\"locality\":\"Tokyo\"" +
-                "}," +
-                "\"ADR-2\": {" +
-                "\"locality\":\"Osaka\"" +
-                "}" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"locality\":\"Tokyo\"" +
+                    "}," +
+                    "\"ADR-2\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"locality\":\"Osaka\"" +
+                    "}" +
                 "}," +
                 "\"localizations\":{" +
-                "\"jp\": {" +
-                "\"/addresses/ADR-1/locality\" : \"東京\"," +
-                "\"/addresses/ADR-2\" : {\"unknown\": \"大阪市\"}" +
-                "}" +
+                    "\"jp\": {" +
+                        "\"/addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"/addresses/ADR-2\" : {\"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                    "}" +
                 "}" +
                 "}";
 
@@ -102,17 +108,19 @@ public class LocalizationsTest {
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"addresses\":{" +
                 "\"ADR-1\": {" +
-                "\"locality\":\"Tokyo\"" +
+                    "\"@type\":\"Address\"," +
+                    "\"locality\":\"Tokyo\"" +
                 "}," +
                 "\"ADR-2\": {" +
-                "\"locality\":\"Osaka\"" +
+                    "\"@type\":\"Address\"," +
+                    "\"locality\":\"Osaka\"" +
                 "}" +
                 "}," +
                 "\"localizations\":{" +
-                "\"jp\": {" +
-                "\"/addresses/ADR-1/locality\" : \"東京\"," +
-                "\"addresses\" : {\"unknown\": \"大阪市\"}" +
-                "}" +
+                    "\"jp\": {" +
+                        "\"/addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"addresses\" : { \"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                    "}" +
                 "}" +
                 "}";
 
