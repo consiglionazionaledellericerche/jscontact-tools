@@ -154,6 +154,12 @@ public class Card extends JSContact implements Serializable {
 
 //Methods for adding items to a mutable collection
 
+    /**
+     * Adds a relation between this object and another Card object.
+     * @param key the uid value of the related Card object
+     * @param relType one of the RELATED property [RFC6350] type parameter values, or an IANA-registered value, or a vendor-specific value
+     * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+     */
     public void addRelation(String key, RelationType relType) {
 
         if (relatedTo == null)
@@ -179,14 +185,27 @@ public class Card extends JSContact implements Serializable {
         }
     }
 
+    /**
+     * Adds a name component to this object.
+     * @param nc the name component
+     */
     public void addName(NameComponent nc) {
         name = ArrayUtils.add(name, nc);
     }
 
-    public void addNickName(String nick) {
-        nickNames = ArrayUtils.add(nickNames, nick);
+    /**
+     * Adds a nickname to this object.
+     * @param nickName the nickname
+     */
+    public void addNickName(String nickName) {
+        nickNames = ArrayUtils.add(nickNames, nickName);
     }
 
+    /**
+     * Adds an organization to this object.
+     * @param id the organization identifier
+     * @param organization the Organization object representing the organization
+     */
     public void addOrganization(String id, Organization organization) {
 
         if(organizations == null)
@@ -195,6 +214,11 @@ public class Card extends JSContact implements Serializable {
         organizations.putIfAbsent(id,organization);
     }
 
+    /**
+     * Adds a title to this object.
+     * @param id the title identifier
+     * @param title the Title object representing the title
+     */
     public void addTitle(String id, Title title) {
 
         if(titles == null)
@@ -203,6 +227,11 @@ public class Card extends JSContact implements Serializable {
         titles.putIfAbsent(id,title);
     }
 
+    /**
+     * Adds an email address to this object.
+     * @param id the email identifier
+     * @param email the EmailAddress object representing the email address
+     */
     public void addEmail(String id, EmailAddress email) {
 
         if (emails == null)
@@ -211,6 +240,11 @@ public class Card extends JSContact implements Serializable {
         emails.putIfAbsent(id, email);
     }
 
+    /**
+     * Adds a phone number to this object.
+     * @param id the phone number identifier
+     * @param phone the Phone object representing the phone number
+     */
     public void addPhone(String id, Phone phone) {
 
         if (phones == null)
@@ -219,12 +253,17 @@ public class Card extends JSContact implements Serializable {
         phones.putIfAbsent(id, phone);
     }
 
-    public void addOnline(String id, Resource ol) {
+    /**
+     * Adds an online resource to this object.
+     * @param id the resource identifier
+     * @param resource the Resource object representing the online resource
+     */
+    public void addOnline(String id, Resource resource) {
 
         if (online == null)
             online = new HashMap<>();
 
-        online.putIfAbsent(id, ol);
+        online.putIfAbsent(id, resource);
     }
 
     @JsonIgnore
@@ -301,26 +340,41 @@ public class Card extends JSContact implements Serializable {
         return getOnline(OnlineLabelKey.CONTACT_URI);
     }
 
-    public void addPhoto(String id, File f) {
+    /**
+     * Adds a photo to this object.
+     * @param id the photo identifier
+     * @param file the File object representing the photo
+     */
+    public void addPhoto(String id, File file) {
 
         if (photos == null)
             photos = new HashMap<>();
 
-        photos.putIfAbsent(id, f);
+        photos.putIfAbsent(id, file);
     }
 
-    public void addContactLanguage(String key, ContactLanguage contactLanguage) {
+    /**
+     * Adds a contact language to this object.
+     * @param id the contact language identifier
+     * @param contactLanguage the ContactLanguage object representing the contact language
+     */
+    public void addContactLanguage(String id, ContactLanguage contactLanguage) {
 
         if (preferredContactLanguages == null)
             preferredContactLanguages = new HashMap<>();
 
-        ContactLanguage[] languagesPerKey = preferredContactLanguages.get(key);
-        if (languagesPerKey == null)
-            preferredContactLanguages.put(key, new ContactLanguage[] {contactLanguage});
+        ContactLanguage[] languagesPerId = preferredContactLanguages.get(id);
+        if (languagesPerId == null)
+            preferredContactLanguages.put(id, new ContactLanguage[] {contactLanguage});
         else
-            preferredContactLanguages.put(key, ArrayUtils.add(languagesPerKey, contactLanguage));
+            preferredContactLanguages.put(id, ArrayUtils.add(languagesPerId, contactLanguage));
     }
 
+    /**
+     * Adds a postal address to this object.
+     * @param id the postal address identifier
+     * @param address the Address object representing the postal address
+     */
     public void addAddress(String id, Address address) {
 
         if(addresses == null)
@@ -329,6 +383,11 @@ public class Card extends JSContact implements Serializable {
         addresses.putIfAbsent(id,address);
     }
 
+    /**
+     * Adds an anniversary to this object.
+     * @param id the anniversary identifier
+     * @param anniversary the Anniversary object representing the anniversary
+     */
     public void addAnniversary(String id, Anniversary anniversary) {
 
         if(anniversaries == null)
@@ -337,14 +396,24 @@ public class Card extends JSContact implements Serializable {
         anniversaries.putIfAbsent(id,anniversary);
     }
 
-    public void addPersonalInfo(String id, PersonalInformation pi) {
+    /**
+     * Adds a personal information to this object.
+     * @param id the personal information identifier
+     * @param personalInformation the PersonalInformation object representing the personal information
+     */
+    public void addPersonalInfo(String id, PersonalInformation personalInformation) {
 
         if(personalInfo == null)
             personalInfo = new HashMap<>();
 
-        personalInfo.putIfAbsent(id,pi);
+        personalInfo.putIfAbsent(id,personalInformation);
     }
 
+
+    /**
+     * Adds a note to this object.
+     * @param note the note
+     */
     public void addNote(String note) {
 
         if (notes == null)
@@ -361,6 +430,10 @@ public class Card extends JSContact implements Serializable {
         categories.putIfAbsent(category,Boolean.TRUE);
     }
 
+    /**
+     * Adds a collection of categories to this object.
+     * @param categories the categories
+     */
     public void addCategories(String[] categories) {
         if (categories==null)
             return;
@@ -383,6 +456,11 @@ public class Card extends JSContact implements Serializable {
         extensions.putIfAbsent(name, value);
     }
 
+    /**
+     * Adds an extension to this object.
+     * @param key the extension identifier
+     * @param value the extension as a text value
+     */
     public void addExtension(String key, String value) {
         if(extensions == null)
             extensions = new HashMap<>();
@@ -390,11 +468,23 @@ public class Card extends JSContact implements Serializable {
         extensions.putIfAbsent(key,value);
     }
 
+    /**
+     * Clones this object.
+     * @return the clone of this Card object
+     */
     public Card clone() {
         return SerializationUtils.clone(this);
     }
 
-
+    /**
+     * Adds a localization to a property of this object.
+     * @param language the localization language tag [RFC5646]
+     * @param path the JSON pointer [RFC6901] to the property
+     * @param object the Jackson library JsonNode object representing the localization for the property
+     * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
+     * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     */
     public void addLocalization(String language, String path, JsonNode object) {
 
         if (language == null || path == null || object == null)
@@ -420,7 +510,14 @@ public class Card extends JSContact implements Serializable {
             localizations.put(language, localizationsPerLanguage);
     }
 
-
+    /**
+     * Returns all the localizations of this object for a given property.
+     * @param path the JSON pointer [RFC6901] to the property
+     * @return a map of language tags [RFC5646] to Jackson library JsonNode objects representing the localizations for the property
+     * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
+     * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     */
     public Map<String,JsonNode> getLocalizationsPerPath(String path) {
 
         if (localizations == null)
@@ -438,7 +535,14 @@ public class Card extends JSContact implements Serializable {
         return (localizationsPerPath.size() != 0) ? localizationsPerPath : null;
     }
 
-
+    /**
+     * Returns all the localizations of this object for a given property.
+     * @param language the localization language tag [RFC5646]
+     * @return a map of JSON pointers [RFC6901] to Jackson library JsonNode objects representing the localizations for the property
+     * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
+     * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     */
     public Map<String,JsonNode> getLocalizationsPerLanguage(String language) {
 
         if (localizations == null)
@@ -447,6 +551,15 @@ public class Card extends JSContact implements Serializable {
         return localizations.get(language);
     }
 
+    /**
+     * Returns the localization to a property of this object for given language and path.
+     * @param language the localization language tag [RFC5646]
+     * @param path the JSON pointer [RFC6901] to the property
+     * @return the Jackson library JsonNode object representing the localization for the property
+     * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
+     * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     */
     public JsonNode getLocalization(String language, String path) {
 
         if (localizations == null)
@@ -461,6 +574,12 @@ public class Card extends JSContact implements Serializable {
     }
 
 
+    /**
+     * Returns the localized version of this object.
+     * @param language the localization language tag [RFC5646]
+     * @return the Card object representing the localization of this object for the given language
+     * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
+     */
     public Card getLocalizedVersion(String language) {
 
         if (localizations == null)

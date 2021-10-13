@@ -55,6 +55,10 @@ public class CardGroup extends JSContact implements Serializable {
     @Valid
     Card card;
 
+    /**
+     * Adds a a member to this object.
+     * @param member the uid value of the Card object representing a group member
+     */
     public void addMember(String member) {
 
         if(members == null)
@@ -63,6 +67,10 @@ public class CardGroup extends JSContact implements Serializable {
         members.putIfAbsent(member,Boolean.TRUE);
     }
 
+    /**
+     * Clones this object.
+     * @return the clone of this CardGroup object
+     */
     public CardGroup clone() {
         return SerializationUtils.clone(this);
     }
