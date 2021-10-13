@@ -192,8 +192,7 @@ public class Card extends JSContact implements Serializable {
         if(organizations == null)
             organizations = new HashMap<>();
 
-        if (!organizations.containsKey(id))
-            organizations.put(id,organization);
+        organizations.putIfAbsent(id,organization);
     }
 
     public void addTitle(String id, Title title) {
@@ -201,8 +200,7 @@ public class Card extends JSContact implements Serializable {
         if(titles == null)
             titles = new HashMap<>();
 
-        if (!titles.containsKey(id))
-            titles.put(id,title);
+        titles.putIfAbsent(id,title);
     }
 
     public void addEmail(String id, EmailAddress email) {
@@ -210,8 +208,7 @@ public class Card extends JSContact implements Serializable {
         if (emails == null)
             emails = new HashMap<>();
 
-        if (!emails.containsKey(id))
-            emails.put(id, email);
+        emails.putIfAbsent(id, email);
     }
 
     public void addPhone(String id, Phone phone) {
@@ -219,8 +216,7 @@ public class Card extends JSContact implements Serializable {
         if (phones == null)
             phones = new HashMap<>();
 
-        if (!phones.containsKey(id))
-            phones.put(id, phone);
+        phones.putIfAbsent(id, phone);
     }
 
     public void addOnline(String id, Resource ol) {
@@ -228,8 +224,7 @@ public class Card extends JSContact implements Serializable {
         if (online == null)
             online = new HashMap<>();
 
-        if (!online.containsKey(id))
-            online.put(id, ol);
+        online.putIfAbsent(id, ol);
     }
 
     @JsonIgnore
@@ -311,8 +306,7 @@ public class Card extends JSContact implements Serializable {
         if (photos == null)
             photos = new HashMap<>();
 
-        if (!photos.containsKey(id))
-            photos.put(id, f);
+        photos.putIfAbsent(id, f);
     }
 
     public void addContactLanguage(String key, ContactLanguage contactLanguage) {
@@ -332,8 +326,7 @@ public class Card extends JSContact implements Serializable {
         if(addresses == null)
             addresses = new HashMap<>();
 
-        if (!addresses.containsKey(id))
-            addresses.put(id,address);
+        addresses.putIfAbsent(id,address);
     }
 
     public void addAnniversary(String id, Anniversary anniversary) {
@@ -341,8 +334,7 @@ public class Card extends JSContact implements Serializable {
         if(anniversaries == null)
             anniversaries = new HashMap<>();
 
-        if (!anniversaries.containsKey(id))
-            anniversaries.put(id,anniversary);
+        anniversaries.putIfAbsent(id,anniversary);
     }
 
     public void addPersonalInfo(String id, PersonalInformation pi) {
@@ -350,8 +342,7 @@ public class Card extends JSContact implements Serializable {
         if(personalInfo == null)
             personalInfo = new HashMap<>();
 
-        if (!personalInfo.containsKey(id))
-            personalInfo.put(id,pi);
+        personalInfo.putIfAbsent(id,pi);
     }
 
     public void addNote(String note) {
@@ -367,8 +358,7 @@ public class Card extends JSContact implements Serializable {
         if(categories == null)
             categories = new LinkedHashMap<>();
 
-        if (!categories.containsKey(category))
-            categories.put(category,Boolean.TRUE);
+        categories.putIfAbsent(category,Boolean.TRUE);
     }
 
     public void addCategories(String[] categories) {
@@ -390,15 +380,14 @@ public class Card extends JSContact implements Serializable {
         if (extensions == null)
             extensions = new HashMap<>();
 
-        extensions.put(name, value);
+        extensions.putIfAbsent(name, value);
     }
 
     public void addExtension(String key, String value) {
         if(extensions == null)
             extensions = new HashMap<>();
 
-        if (!extensions.containsKey(key))
-            extensions.put(key,value);
+        extensions.putIfAbsent(key,value);
     }
 
     public Card clone() {
