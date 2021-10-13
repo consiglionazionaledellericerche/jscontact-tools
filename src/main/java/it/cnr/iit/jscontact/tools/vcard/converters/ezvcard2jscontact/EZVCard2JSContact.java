@@ -959,7 +959,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         int i = 1;
         for (LocalizedString title : titles) {
             String id = getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i ++));
-            jsCard.addTitle(id, title.getValue());
+            jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().title(title.getValue()).build());
             if (title.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : title.getLocalizations().entrySet())
                     jsCard.addLocalization(localization.getKey(), "/titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().title(localization.getValue()).build(), JsonNode.class));
@@ -984,7 +984,7 @@ public class EZVCard2JSContact extends AbstractConverter {
         int i = (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1;
         for (LocalizedString role : roles) {
             String id = getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i ++));
-            jsCard.addTitle(id, role.getValue());
+            jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().title(role.getValue()).build());
             if (role.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : role.getLocalizations().entrySet())
                     jsCard.addLocalization(localization.getKey(), "/titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().title(localization.getValue()).build(), JsonNode.class));

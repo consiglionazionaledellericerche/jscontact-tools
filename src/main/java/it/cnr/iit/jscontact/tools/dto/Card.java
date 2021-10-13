@@ -188,23 +188,21 @@ public class Card extends JSContact implements Serializable {
     }
 
     public void addOrganization(String id, Organization organization) {
+
         if(organizations == null)
             organizations = new HashMap<>();
 
-        organizations.put(id,organization);
+        if (!organizations.containsKey(id))
+            organizations.put(id,organization);
     }
 
-    private void addTitle(String id, String title, String organization) {
+    public void addTitle(String id, Title title) {
 
         if(titles == null)
             titles = new HashMap<>();
 
         if (!titles.containsKey(id))
-            titles.put(id,Title.builder().title(title).organization(organization).build());
-    }
-
-    public void addTitle(String id, String title) {
-        addTitle(id, title, null);
+            titles.put(id,title);
     }
 
     public void addEmail(String id, EmailAddress email) {
@@ -212,7 +210,8 @@ public class Card extends JSContact implements Serializable {
         if (emails == null)
             emails = new HashMap<>();
 
-        emails.put(id, email);
+        if (!emails.containsKey(id))
+            emails.put(id, email);
     }
 
     public void addPhone(String id, Phone phone) {
@@ -220,7 +219,8 @@ public class Card extends JSContact implements Serializable {
         if (phones == null)
             phones = new HashMap<>();
 
-        phones.put(id, phone);
+        if (!phones.containsKey(id))
+            phones.put(id, phone);
     }
 
     public void addOnline(String id, Resource ol) {
@@ -228,7 +228,8 @@ public class Card extends JSContact implements Serializable {
         if (online == null)
             online = new HashMap<>();
 
-        online.put(id, ol);
+        if (!online.containsKey(id))
+            online.put(id, ol);
     }
 
     @JsonIgnore
@@ -310,7 +311,8 @@ public class Card extends JSContact implements Serializable {
         if (photos == null)
             photos = new HashMap<>();
 
-        photos.put(id, f);
+        if (!photos.containsKey(id))
+            photos.put(id, f);
     }
 
     public void addContactLanguage(String key, ContactLanguage contactLanguage) {
