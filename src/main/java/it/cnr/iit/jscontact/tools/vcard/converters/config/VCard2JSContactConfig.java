@@ -35,6 +35,6 @@ public class VCard2JSContactConfig {
 
     private String defaultLanguage;
 
-    private VCard2JSContactIdsProfile idsProfileToApply = null;
+    private VCard2JSContactIdsProfile idsProfileToApply;
 
 }
