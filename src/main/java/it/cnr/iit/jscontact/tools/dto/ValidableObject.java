@@ -38,7 +38,7 @@ public abstract class ValidableObject {
     private List<String> validationMessages;
 
     /**
-     * Checks if a JSContact top most object, namely Card and CardGroup, is valid.
+     * Tests if a JSContact top most object, namely Card and CardGroup, is valid.
      * @return true if the validation check ends successfully
      */
     @JsonIgnore

@@ -147,21 +147,21 @@ public class Card extends JSContact implements Serializable {
     private boolean isContactByMethodPreferred(PreferredContactMethodType method) {return preferredContactMethod != null && preferredContactMethod == method; }
 
     /**
-     * Checks if the preferred contact method is by emails.
+     * Tests if the preferred contact method is by emails.
      * @return true if the preferred contact method is by emails
      */
     @JsonIgnore
     public boolean isContactByEmailsPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.EMAILS); }
 
     /**
-     * Checks if the preferred contact method is by phones.
+     * Tests if the preferred contact method is by phones.
      * @return true if the preferred contact method is by phones
      */
     @JsonIgnore
     public boolean isContactByPhonesPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.PHONES); }
 
     /**
-     * Checks if the preferred contact method is by online service.
+     * Tests if the preferred contact method is by online service.
      * @return true if the preferred contact method is by online service
      */
     @JsonIgnore
@@ -219,7 +219,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds an organization to this object.
      * @param id the organization identifier
-     * @param organization the Organization object representing the organization
+     * @param organization the object representing the organization
      */
     public void addOrganization(String id, Organization organization) {
 
@@ -232,7 +232,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a title to this object.
      * @param id the title identifier
-     * @param title the Title object representing the title
+     * @param title the object representing the title
      */
     public void addTitle(String id, Title title) {
 
@@ -245,7 +245,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds an email address to this object.
      * @param id the email identifier
-     * @param email the EmailAddress object representing the email address
+     * @param email the object representing the email address
      */
     public void addEmail(String id, EmailAddress email) {
 
@@ -258,7 +258,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a phone number to this object.
      * @param id the phone number identifier
-     * @param phone the Phone object representing the phone number
+     * @param phone the object representing the phone number
      */
     public void addPhone(String id, Phone phone) {
 
@@ -271,7 +271,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds an online resource to this object.
      * @param id the resource identifier
-     * @param resource the Resource object representing the online resource
+     * @param resource the object representing the online resource
      */
     public void addOnline(String id, Resource resource) {
 
@@ -413,7 +413,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a photo to this object.
      * @param id the photo identifier
-     * @param file the File object representing the photo
+     * @param file the object representing the photo
      */
     public void addPhoto(String id, File file) {
 
@@ -426,7 +426,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a contact language to this object.
      * @param id the contact language identifier
-     * @param contactLanguage the ContactLanguage object representing the contact language
+     * @param contactLanguage the object representing the contact language
      */
     public void addContactLanguage(String id, ContactLanguage contactLanguage) {
 
@@ -443,7 +443,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a postal address to this object.
      * @param id the postal address identifier
-     * @param address the Address object representing the postal address
+     * @param address the object representing the postal address
      */
     public void addAddress(String id, Address address) {
 
@@ -456,7 +456,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds an anniversary to this object.
      * @param id the anniversary identifier
-     * @param anniversary the Anniversary object representing the anniversary
+     * @param anniversary the object representing the anniversary
      */
     public void addAnniversary(String id, Anniversary anniversary) {
 
@@ -469,7 +469,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a personal information to this object.
      * @param id the personal information identifier
-     * @param personalInformation the PersonalInformation object representing the personal information
+     * @param personalInformation the object representing the personal information
      */
     public void addPersonalInfo(String id, PersonalInformation personalInformation) {
 
@@ -647,7 +647,7 @@ public class Card extends JSContact implements Serializable {
     /**
      * Returns the localized version of this object.
      * @param language the localization language tag [RFC5646]
-     * @return the Card object representing the localization of this object for the given language
+     * @return the localization of this object for the given language
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
      */
     public Card getLocalizedVersion(String language) {
