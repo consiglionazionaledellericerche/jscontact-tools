@@ -541,6 +541,7 @@ public class Card extends JSContact implements Serializable {
      * Clones this object.
      * @return the clone of this Card object
      */
+    @Override
     public Card clone() {
         return SerializationUtils.clone(this);
     }

@@ -30,7 +30,7 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testInvalidCountryCode() {
 
-        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                                 .countryCode("ita")
                                                                                 .build());
                                                                         }};
@@ -45,7 +45,7 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testValidCountryCode() {
 
-        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                                 .countryCode("it")
                                                                                 .build());
                                                                        }};
@@ -61,7 +61,7 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testInvalidCoordinates() {
 
-        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                             .coordinates("46.772673,-71.282945")
                                                                             .build());
                                                                     }};
@@ -77,7 +77,7 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testValidCoordinates() {
 
-        Map addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
                                                                         .coordinates("geo:46.772673,-71.282945")
                                                                         .build());
                                                                        }};
@@ -93,7 +93,7 @@ public class AddressTest extends AbstractTest {
     @Test
     public void testInvalidAddressId() {
 
-        Map addresses = new HashMap<String,Address>() {{ put("$$$$$", Address.builder()
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("$$$$$", Address.builder()
                 .coordinates("geo:46.772673,-71.282945")
                 .build());
         }};

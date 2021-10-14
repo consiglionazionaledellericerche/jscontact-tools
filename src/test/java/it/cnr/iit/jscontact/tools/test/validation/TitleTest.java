@@ -31,7 +31,7 @@ public class TitleTest extends AbstractTest {
     public void testInvalidTitleOrganization1() {
 
         // missing title organization id due to missing organization
-        Map jobTiles = new HashMap<String,Title>();
+        Map<String,Title> jobTiles = new HashMap<String,Title>();
         jobTiles.put("title-1", Title.builder().title("Researcher").organization("IIT CNR").build());
 
         Card jsCard = Card.builder()
@@ -47,9 +47,9 @@ public class TitleTest extends AbstractTest {
     public void testInvalidTitleOrganization2() {
 
         // missing title organization id among organization ids
-        Map jobTiles = new HashMap<String,Title>();
+        Map<String,Title> jobTiles = new HashMap<String,Title>();
         jobTiles.put("title-1", Title.builder().title("Researcher").organization("IIT CNR").build());
-        Map organizations = new HashMap<String,Organization>();
+        Map<String,Organization> organizations = new HashMap<String,Organization>();
         organizations.put("organization-1", Organization.builder().name("an organization").build());
         Card jsCard = Card.builder()
                 .uid(getUUID())

@@ -29,7 +29,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of={"uid"})
+@EqualsAndHashCode(of={"uid"}, callSuper = false)
 @SuperBuilder
 public abstract class JSContact extends ValidableObject implements Serializable {
 

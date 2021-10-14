@@ -74,10 +74,8 @@ public class EZVCard2JSContact extends AbstractConverter {
         if (StringUtils.isEmpty(language))
             return false;
 
-        if (defaultLanguage == null)
-            return false;
+        return defaultLanguage != null && StringUtils.equals(language, defaultLanguage);
 
-        return StringUtils.equals(language, defaultLanguage);
     }
 
     private List<String> getProfileIds(VCard2JSContactIdsProfile.IdType idType, Object... args) {

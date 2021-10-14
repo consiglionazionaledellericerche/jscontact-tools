@@ -71,6 +71,7 @@ public class CardGroup extends JSContact implements Serializable {
      * Clones this object.
      * @return the clone of this CardGroup object
      */
+    @Override
     public CardGroup clone() {
         return SerializationUtils.clone(this);
     }

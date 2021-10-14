@@ -41,7 +41,7 @@ import java.util.StringJoiner;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of={"fullAddress"})
+@EqualsAndHashCode(of={"fullAddress"}, callSuper = false)
 public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
 
     private static final String STREET_DETAILS_DELIMITER = " ";
