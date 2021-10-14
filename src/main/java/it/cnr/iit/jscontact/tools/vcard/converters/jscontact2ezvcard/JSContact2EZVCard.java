@@ -160,7 +160,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     vcard.setFormattedName(fn);
                 }
                 else {
-                    List<FormattedName> fns = new ArrayList<FormattedName>();
+                    List<FormattedName> fns = new ArrayList<>();
                     for (StructuredName sn : sns) {
                         FormattedName fn = getFormattedName(sn, separator);
                         fn.setLanguage(sn.getLanguage());
@@ -175,7 +175,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
 
         if (jsCard.getLocalizationsPerPath("/fullName") != null) {
-            List<FormattedName> fns = new ArrayList<FormattedName>();
+            List<FormattedName> fns = new ArrayList<>();
             FormattedName fn = getFormattedName(jsCard.getFullName());
             fn.setLanguage(jsCard.getLanguage());
             fns.add(fn);
@@ -224,7 +224,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         if (!arrayNode.isArray())
             return null;
-        List<NameComponent> ncs = new ArrayList<NameComponent>();
+        List<NameComponent> ncs = new ArrayList<>();
         try {
             for (JsonNode node : arrayNode) {
 
@@ -243,7 +243,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static List<StructuredName> getStructuredNames(Card jsCard) {
 
-        List<StructuredName> sns = new ArrayList<StructuredName>();
+        List<StructuredName> sns = new ArrayList<>();
         if (jsCard.getLocalizationsPerPath("/name") != null) {
             StructuredName sn = getStructuredName(jsCard.getName());
             sn.setLanguage(jsCard.getLanguage());
@@ -285,7 +285,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (localizations == null)
             vcard.setNickname(nickNames);
         else {
-            List<Nickname> nicks = new ArrayList<Nickname>();
+            List<Nickname> nicks = new ArrayList<>();
             nicks.add(getTextListProperty(new Nickname(), Arrays.asList(nickNames), jsCard.getLanguage()));
             for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
                 nicks.add(getTextListProperty(new Nickname(), Arrays.asList(JsonNodeUtils.asTextArray(localization.getValue())), localization.getKey()));

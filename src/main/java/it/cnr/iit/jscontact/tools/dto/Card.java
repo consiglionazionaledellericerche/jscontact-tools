@@ -593,7 +593,7 @@ public class Card extends JSContact implements Serializable {
         if (localizations == null)
             return null;
 
-        Map<String, JsonNode> localizationsPerPath = new HashMap<String, JsonNode>();
+        Map<String, JsonNode> localizationsPerPath = new HashMap<>();
 
         for (Map.Entry<String,Map<String,JsonNode>> localizationsPerLang : localizations.entrySet()) {
 
