@@ -3,7 +3,6 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
@@ -227,7 +226,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             return null;
         List<NameComponent> ncs = new ArrayList<NameComponent>();
         try {
-            for (JsonNode node : (ArrayNode) arrayNode) {
+            for (JsonNode node : arrayNode) {
 
                 if (node.isObject()) {
                     NameComponent nc = mapper.convertValue(node, NameComponent.class);
@@ -832,10 +831,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         List<String> organizationItems = new ArrayList<>();
         organizationItems.add(organization);
-        if (units != null) {
-            for (String unit : units)
-                organizationItems.add(unit);
-        }
+        if (units != null)
+            organizationItems.addAll(Arrays.asList(units));
         return organizationItems;
     }
 

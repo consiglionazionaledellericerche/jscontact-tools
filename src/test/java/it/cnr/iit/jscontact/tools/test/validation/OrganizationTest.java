@@ -1,6 +1,5 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.LocalizedString;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import org.junit.Test;
 

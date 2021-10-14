@@ -28,10 +28,10 @@ public class JsonNodeUtils {
         if (!node.isArray())
             return null;
 
-        int length = ((ArrayNode) node).size();
+        int length = node.size();
         String[] array = new String[length];
         for (int i=0;i < array.length ; i++)
-            array[i] = ((ArrayNode) node).get(i).asText();
+            array[i] = node.get(i).asText();
         return array;
     }
 }

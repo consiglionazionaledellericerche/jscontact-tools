@@ -109,9 +109,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
             return null;
 
         for (StreetComponent pair : street) {
-            if (pair.isExt())
-                continue;
-            else if (pair.getType().getRfcValue() == detail)
+            if (!pair.isExt() && pair.getType().getRfcValue() == detail)
                 return pair.getValue();
         }
 
