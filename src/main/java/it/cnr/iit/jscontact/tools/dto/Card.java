@@ -145,10 +145,25 @@ public class Card extends JSContact implements Serializable {
     Map<String,Map<String,JsonNode>> localizations;
 
     private boolean isContactByMethodPreferred(PreferredContactMethodType method) {return preferredContactMethod != null && preferredContactMethod == method; }
+
+    /**
+     * Checks if the preferred contact method is by emails.
+     * @return true if the preferred contact method is by emails
+     */
     @JsonIgnore
     public boolean isContactByEmailsPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.EMAILS); }
+
+    /**
+     * Checks if the preferred contact method is by phones.
+     * @return true if the preferred contact method is by phones
+     */
     @JsonIgnore
     public boolean isContactByPhonesPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.PHONES); }
+
+    /**
+     * Checks if the preferred contact method is by online service.
+     * @return true if the preferred contact method is by online service
+     */
     @JsonIgnore
     public boolean isContactByOnlinePreferred() {return isContactByMethodPreferred(PreferredContactMethodType.ONLINE); }
 
@@ -285,56 +300,111 @@ public class Card extends JSContact implements Serializable {
         return getOnline(labelKey.getValue());
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard KEY property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.8.1">Section 6.8.1 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineKey() {
         return getOnline(OnlineLabelKey.KEY);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard URL property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.8">Section 6.7.8 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineUrl() {
         return getOnline(OnlineLabelKey.URL);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard SOURCE property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.3">Section 6.1.3 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineSource() {
         return getOnline(OnlineLabelKey.SOURCE);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard LOGO property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.3">Section 6.6.3 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineLogo() {
         return getOnline(OnlineLabelKey.LOGO);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard SOUND property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.5">Section 6.7.5 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineSound() {
         return getOnline(OnlineLabelKey.SOUND);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard FBURL property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.1">Section 6.9.1 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineFburl() {
         return getOnline(OnlineLabelKey.FBURL);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard CALURI property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.3">Section 6.9.3 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineCaluri() {
         return getOnline(OnlineLabelKey.CALURI);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard CALADRURI property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.2">Section 6.9.2 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineCaladruri() {
         return getOnline(OnlineLabelKey.CALADRURI);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard ORG-DIRECTORY property [RFC6715]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6715.html#section-2.4">Section 2.4 of RFC6715</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineOrgDirectory() {
         return getOnline(OnlineLabelKey.ORG_DIRECTORY);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard IMPP property [RFC6350]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.4.3">Section 6.4.3 of RFC6350</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineImpp() {
         return getOnline(OnlineLabelKey.IMPP);
     }
 
+    /**
+     * Gets all the online resources associated to this object corresponding to vCard CONTACT-URI property [RFC8605]
+     * @return all the resources found, null otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc8605#section-2.1">Section 2.1 of RFC8605</a>
+     */
     @JsonIgnore
     public Map<String,Resource> getOnlineContactUri() {
         return getOnline(OnlineLabelKey.CONTACT_URI);
@@ -408,7 +478,6 @@ public class Card extends JSContact implements Serializable {
 
         personalInfo.putIfAbsent(id,personalInformation);
     }
-
 
     /**
      * Adds a note to this object.

@@ -37,6 +37,10 @@ public abstract class ValidableObject {
     @Getter
     private List<String> validationMessages;
 
+    /**
+     * Checks if a JSContact top most object, namely Card and CardGroup, is valid.
+     * @return true if the validation check ends successfully
+     */
     @JsonIgnore
     public boolean isValid() {
 
@@ -56,6 +60,10 @@ public abstract class ValidableObject {
         return true;
     }
 
+    /**
+     * Returns the error message when the validation check ends unsuccessfully.
+     * @return the validation message as a text
+     */
     @JsonIgnore
     public String getValidationMessage() {
 

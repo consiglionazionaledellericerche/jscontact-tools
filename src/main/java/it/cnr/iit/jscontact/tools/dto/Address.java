@@ -122,6 +122,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     public String getPostOfficeBox() {
         return getStreetDetail(StreetComponentEnum.POST_OFFICE_BOX);
     }
+
     @JsonIgnore
     public String getStreetDetails() {
         String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
