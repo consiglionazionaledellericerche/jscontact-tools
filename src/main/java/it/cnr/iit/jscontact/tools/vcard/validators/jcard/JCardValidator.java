@@ -27,7 +27,7 @@ import lombok.Builder;
 import java.util.List;
 
 /**
- * jCard [RFC7095] validator class.
+ * Utility class for validating a jCard [RFC7095].
  * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
  *
  * @author Mario Loffredo

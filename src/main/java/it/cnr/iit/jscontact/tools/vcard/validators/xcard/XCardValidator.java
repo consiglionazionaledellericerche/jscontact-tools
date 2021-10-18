@@ -24,7 +24,7 @@ import lombok.Builder;
 import java.util.List;
 
 /**
- * xCard [RFC6351] validator class.
+ * Utility class for validating an xCard [RFC6351].
  * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
  *
  * @author Mario Loffredo
