@@ -15,6 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.exceptions;
 
+/**
+ * Thrown when an unpredicted error occurs.
+ *
+ * @author Mario Loffredo
+ */
 public class InternalErrorException extends RuntimeException {
 
     public InternalErrorException(String message) {
