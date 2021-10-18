@@ -23,6 +23,12 @@ import lombok.Builder;
 
 import java.util.List;
 
+/**
+ * xCard [RFC6351] validator class.
+ * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
+ *
+ * @author Mario Loffredo
+ */
 @Builder
 public class XCardValidator extends EZVCardValidator {
 

@@ -23,6 +23,12 @@ import lombok.Builder;
 
 import java.util.List;
 
+/**
+ * vCard [RFC6350] validator class.
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ *
+ * @author Mario Loffredo
+ */
 @Builder
 public class VCardValidator extends EZVCardValidator {
 
