@@ -33,6 +33,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+/**
+ * Utility class for converting a JSContact object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object.
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class JSContact2EZVCard extends AbstractConverter {
 

@@ -51,8 +51,14 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Utility class for converting a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object into a JSContact object.
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
-public class EZVCard2JSContact extends AbstractConverter {
+public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static final Pattern TIMEZONE_AS_UTC_OFFSET_PATTERN = Pattern.compile("[+-](\\d{2}):?(\\d{2})");
 

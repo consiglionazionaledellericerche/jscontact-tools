@@ -25,6 +25,12 @@ import lombok.Builder;
 
 import java.util.List;
 
+/**
+ * Utility class for converting a JSContact object into an xCard [RFC6351].
+ * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
+ *
+ * @author Mario Loffredo
+ */
 public class JSContact2XCard extends JSContact2EZVCard {
 
     @Builder
