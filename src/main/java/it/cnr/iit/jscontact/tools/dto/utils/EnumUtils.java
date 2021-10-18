@@ -18,6 +18,12 @@ package it.cnr.iit.jscontact.tools.dto.utils;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * Utility class for handling generic enums.
+ *
+ * @author Mario Loffredo
+ */
+
 public class EnumUtils {
 
     public static <E extends Enum <E>> E getEnum(Class<E> enumType, String value) {

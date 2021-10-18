@@ -17,6 +17,11 @@ package it.cnr.iit.jscontact.tools.dto.utils;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 
+/**
+ * Utility class for handling objects implementing the HasIndex interface.
+ *
+ * @author Mario Loffredo
+ */
 public class HasIndexUtils {
 
     public static int compareTo(HasIndex o1, HasIndex o2) {

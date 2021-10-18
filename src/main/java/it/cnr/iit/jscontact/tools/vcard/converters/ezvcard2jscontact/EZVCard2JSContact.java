@@ -34,7 +34,7 @@ import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
+import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.*;
 import it.cnr.iit.jscontact.tools.dto.wrappers.CategoryWrapper;
 import it.cnr.iit.jscontact.tools.dto.wrappers.MemberWrapper;
@@ -127,7 +127,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static <E extends Enum<E> & JCardTypeDerivedEnum> E getEnumFromJCardType(Class<E> enumType, String jcardTypeParam, List<String> exclude, Map<String,E> aliases) {
+    private static <E extends Enum<E> & VCardTypeDerivedEnum> E getEnumFromJCardType(Class<E> enumType, String jcardTypeParam, List<String> exclude, Map<String,E> aliases) {
 
         if (jcardTypeParam == null)
             return null;
@@ -169,7 +169,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return rawProperties.get(0);
     }
 
-    private static <E extends Enum<E> & JCardTypeDerivedEnum> List<E> getEnumValues(Class<E> enumType, String jcardTypeParam, List<String> exclude, Map<String, E> aliases) {
+    private static <E extends Enum<E> & VCardTypeDerivedEnum> List<E> getEnumValues(Class<E> enumType, String jcardTypeParam, List<String> exclude, Map<String, E> aliases) {
 
         if (jcardTypeParam == null)
             return null;

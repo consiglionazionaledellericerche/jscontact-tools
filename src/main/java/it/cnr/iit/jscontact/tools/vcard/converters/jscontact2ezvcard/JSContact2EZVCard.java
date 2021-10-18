@@ -18,7 +18,7 @@ import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
+import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -325,7 +325,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner.toString();
     }
 
-    private static <E extends Enum<E> & JCardTypeDerivedEnum> StringJoiner getVCardTypeStringJoiner(Class<E> enumType, Collection<E> enumValues) {
+    private static <E extends Enum<E> & VCardTypeDerivedEnum> StringJoiner getVCardTypeStringJoiner(Class<E> enumType, Collection<E> enumValues) {
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
         for (E value : enumValues) {
             try {
@@ -340,7 +340,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner;
     }
 
-    private static <E extends Enum<E> & JCardTypeDerivedEnum> StringJoiner getVCardTypeStringJoiner(Class<E> enumType, String[] stringValues) {
+    private static <E extends Enum<E> & VCardTypeDerivedEnum> StringJoiner getVCardTypeStringJoiner(Class<E> enumType, String[] stringValues) {
         StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
         for (String value : stringValues) {
             try {

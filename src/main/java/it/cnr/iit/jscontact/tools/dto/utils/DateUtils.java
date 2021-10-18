@@ -9,6 +9,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Utility class for handling date time formats.
+ *
+ * @author Mario Loffredo
+ */
 public class DateUtils {
 
     public enum DateTimeType {
@@ -18,6 +23,11 @@ public class DateUtils {
     }
 
 
+    /**
+     * Returns the text conversion of a date according to the ISO-8601 instant format such as '2011-12-03T10:15:30Z'.
+     * @param date the date represented as java.util.Date object
+     * @return the text conversion
+     */
     public static String toString(Date date) {
 
         Calendar cal = Calendar.getInstance();
@@ -45,34 +55,46 @@ public class DateUtils {
         return ZoneOffset.ofHoursMinutes(hours, minutes);
     }
 
-    public static String toString(Calendar cal) {
-        return toString(cal, DateTimeType.NON_ZERO_TIME);
+
+    /**
+     * Converts a java.util.Calendar object into text according to the NON_ZERO_TIME type.
+     * @param calendar the Calendar object
+     * @return the text representing the Calendar object
+     */
+    public static String toString(Calendar calendar) {
+        return toString(calendar, DateTimeType.NON_ZERO_TIME);
     }
 
-    public static String toString(Calendar cal, DateTimeType dateTimeType) {
+    /**
+     * Converts a java.util.Calendar object into text according to a given date time type.
+     * @param calendar the Calendar object
+     * @param dateTimeType the date time type (i.e. UTC, LOCAL, NON_ZERO_TIME)
+     * @return the text representing the Calendar object
+     */
+    public static String toString(Calendar calendar, DateTimeType dateTimeType) {
 
-        if (cal == null)
+        if (calendar == null)
             return null;
 
-        if (dateTimeType!=DateTimeType.NON_ZERO_TIME || hasTime(cal)) {
-            int offset = cal.get(Calendar.ZONE_OFFSET);
+        if (dateTimeType!=DateTimeType.NON_ZERO_TIME || hasTime(calendar)) {
+            int offset = calendar.get(Calendar.ZONE_OFFSET);
             if (offset == 0) {
-                return LocalDateTime.of(cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH) + 1,
-                        cal.get(Calendar.DAY_OF_MONTH),
-                        cal.get(Calendar.HOUR_OF_DAY),
-                        cal.get(Calendar.MINUTE),
-                        cal.get(Calendar.SECOND)
+                return LocalDateTime.of(calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH) + 1,
+                        calendar.get(Calendar.DAY_OF_MONTH),
+                        calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE),
+                        calendar.get(Calendar.SECOND)
                 ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+((dateTimeType==DateTimeType.UTC) ? "Z" : StringUtils.EMPTY);
             } else {
-                OffsetDateTime offsetDateTime = OffsetDateTime.of(cal.get(Calendar.YEAR),
-                        cal.get(Calendar.MONTH) + 1,
-                        cal.get(Calendar.DAY_OF_MONTH),
-                        cal.get(Calendar.HOUR_OF_DAY),
-                        cal.get(Calendar.MINUTE),
-                        cal.get(Calendar.SECOND),
+                OffsetDateTime offsetDateTime = OffsetDateTime.of(calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH) + 1,
+                        calendar.get(Calendar.DAY_OF_MONTH),
+                        calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE),
+                        calendar.get(Calendar.SECOND),
                         0,
-                        getZoneOffset(cal)
+                        getZoneOffset(calendar)
                 );
                 switch (dateTimeType) {
                     case UTC:
@@ -84,14 +106,18 @@ public class DateUtils {
                 }
             }
         } else {
-            return LocalDate.of(cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH) + 1,
-                    cal.get(Calendar.DAY_OF_MONTH)
+            return LocalDate.of(calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH) + 1,
+                    calendar.get(Calendar.DAY_OF_MONTH)
             ).format(DateTimeFormatter.ISO_LOCAL_DATE);
         }
     }
 
-
+    /**
+     * Converts a text representing a JSContact partial date into a Ezvcard partial date text format.
+     * @param jsContactPartialDateText the JSContact partial date text format
+     * @return the Ezvcard partial date text format
+     */
     public static String toVCardPartialDateText(String jsContactPartialDateText) {
 
         String year = jsContactPartialDateText.substring(0,4);
@@ -102,6 +128,11 @@ public class DateUtils {
                                        (day.equals("00") ? "-" : day));
     }
 
+    /**
+     * Converts an Ezvcard partial date into a JSContact partial date text format.
+     * @param partialDate the partial date as an Ezvcard PartialDate object
+     * @return the Ezvcard partial date as text
+     */
     public static String toJSContactPartialDateText(PartialDate partialDate) {
 
         String year = (partialDate.getYear() != null) ? String.format("%04d",partialDate.getYear()) : "0000";
@@ -111,6 +142,11 @@ public class DateUtils {
     }
 
 
+    /**
+     * Converts date in text format into a java.util.Calendar object.
+     * @param date a date in text format
+     * @return the Calendar object
+     */
     public static Calendar toCalendar(String date) {
         return VCardDateFormat.parseAsCalendar(date);
     }

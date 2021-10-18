@@ -17,6 +17,11 @@ package it.cnr.iit.jscontact.tools.dto.utils;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasPreference;
 
+/**
+ * Utility class for handling objects implementing the HasPreference interface.
+ *
+ * @author Mario Loffredo
+ */
 public class HasPreferenceUtils {
 
     public static int compareTo(HasPreference o1, HasPreference o2) {

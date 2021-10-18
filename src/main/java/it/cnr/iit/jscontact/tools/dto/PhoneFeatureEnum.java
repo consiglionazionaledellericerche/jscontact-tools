@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
+import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor
-public enum PhoneFeatureEnum implements IsExtensible,JCardTypeDerivedEnum {
+public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
 
     VOICE("voice"),
     FAX("fax"),

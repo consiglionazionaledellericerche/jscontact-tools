@@ -5,8 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Utility class for handling messages about constraint violations.
+ *
+ * @author Mario Loffredo
+ */
 public class ConstraintViolationUtils {
 
+    /**
+     * Returns a text message including all the constraint violations included in a set separated by newline.
+     * @param constraintViolations the set of constraint violations
+     * @return the text message
+     */
     public static <T> String getMessage(Set<ConstraintViolation<T>> constraintViolations) {
 
         List<String> messages = new ArrayList<>();

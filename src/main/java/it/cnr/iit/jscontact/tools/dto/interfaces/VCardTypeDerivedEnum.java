@@ -15,4 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
-public interface JCardTypeDerivedEnum { }
+/**
+ * This interface is used to identify an enumerated type that is derived by the vCard TYPE parameter.
+ */
+public interface VCardTypeDerivedEnum { }

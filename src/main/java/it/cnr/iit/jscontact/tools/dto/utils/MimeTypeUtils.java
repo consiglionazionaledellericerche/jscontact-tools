@@ -2,6 +2,11 @@ package it.cnr.iit.jscontact.tools.dto.utils;
 
 import java.util.HashMap;
 
+/**
+ * Utility class for handling MIME types.
+ *
+ * @author Mario Loffredo
+ */
 public class MimeTypeUtils {
 
     public static final String MIME_APPLICATION_ANDREW_INSET = "application/andrew-inset";
