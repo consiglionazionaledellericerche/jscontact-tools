@@ -32,7 +32,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -488,7 +488,7 @@ public class Card extends JSContact implements Serializable {
         if (notes == null)
             notes = note;
         else
-            notes = String.format("%s%s%s", notes, NoteUtils.NOTE_DELIMITER, note);
+            notes = String.format("%s%s%s", notes, DelimiterUtils.NEWLINE_DELIMITER, note);
     }
 
     private void addCategory(String category) {

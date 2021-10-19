@@ -21,7 +21,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
@@ -883,16 +883,16 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/notes");
         if (localizations == null) {
-            for (String note : jsCard.getNotes().split(NoteUtils.NOTE_DELIMITER))
+            for (String note : jsCard.getNotes().split(DelimiterUtils.NEWLINE_DELIMITER))
                 vcard.getNotes().add(getTextProperty(new Note(note), jsCard.getLanguage()));
         }
         else {
             int i = 0;
-            for (String note : jsCard.getNotes().split(NoteUtils.NOTE_DELIMITER)) {
+            for (String note : jsCard.getNotes().split(DelimiterUtils.NEWLINE_DELIMITER)) {
                 List<ezvcard.property.Note> notes = new ArrayList<>();
                 notes.add(getTextProperty(new Note(note), jsCard.getLanguage()));
                 for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
-                    String[] localizedNotes = localization.getValue().asText().split(NoteUtils.NOTE_DELIMITER);
+                    String[] localizedNotes = localization.getValue().asText().split(DelimiterUtils.NEWLINE_DELIMITER);
                     notes.add(getTextProperty(new Note(localizedNotes[i]), localization.getKey()));
                 }
                 vcard.addNoteAlt(notes.toArray(new ezvcard.property.Note[0]));

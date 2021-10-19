@@ -1041,7 +1041,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     if (node == null)
                         jsCard.addLocalization(localization.getKey(), "/notes", JsonNodeUtils.textNode(localization.getValue()));
                     else
-                        jsCard.getLocalizations().get(localization.getKey()).replace("/notes", JsonNodeUtils.textNode(String.format("%s%s%s", node.asText(), NoteUtils.NOTE_DELIMITER, localization.getValue())));
+                        jsCard.getLocalizations().get(localization.getKey()).replace("/notes", JsonNodeUtils.textNode(String.format("%s%s%s", node.asText(), DelimiterUtils.NEWLINE_DELIMITER, localization.getValue())));
                 }
             }
         }
