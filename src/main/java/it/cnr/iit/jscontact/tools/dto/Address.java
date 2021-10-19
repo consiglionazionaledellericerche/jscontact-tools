@@ -25,6 +25,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -43,8 +44,6 @@ import java.util.StringJoiner;
 @NoArgsConstructor
 @EqualsAndHashCode(of={"fullAddress"}, callSuper = false)
 public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
-
-    private static final String STREET_DETAILS_DELIMITER = " ";
 
     @NotNull
     @Pattern(regexp = "Address", message="invalid @type value in Address")
@@ -124,7 +123,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     @JsonIgnore
     public String getStreetDetails() {
         String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
-        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : STREET_DETAILS_DELIMITER);
+        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : DelimiterUtils.SPACE_DELIMITER);
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.NAME))) joiner.add(getStreetDetail(StreetComponentEnum.NAME));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.NUMBER))) joiner.add(getStreetDetail(StreetComponentEnum.NUMBER));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.DIRECTION))) joiner.add(getStreetDetail(StreetComponentEnum.DIRECTION));
@@ -134,7 +133,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     @JsonIgnore
     public String getStreetExtensions() {
         String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
-        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : STREET_DETAILS_DELIMITER);
+        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : DelimiterUtils.SPACE_DELIMITER);
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.BUILDING))) joiner.add("Building: " + getStreetDetail(StreetComponentEnum.BUILDING));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.FLOOR))) joiner.add("Floor: " + getStreetDetail(StreetComponentEnum.FLOOR));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.APARTMENT))) joiner.add("Apartment: " + getStreetDetail(StreetComponentEnum.APARTMENT));

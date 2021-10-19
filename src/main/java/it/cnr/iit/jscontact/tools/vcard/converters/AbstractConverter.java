@@ -5,9 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public abstract class AbstractConverter {
 
-    protected static final String COMMA_ARRAY_DELIMITER = ",";
-    protected static final String SEMICOMMA_ARRAY_DELIMITER = ";";
-    protected static final String AUTO_FULL_ADDRESS_DELIMITER = "\n";
     protected static final String VCARD_GENDER_TAG = "GENDER";
     protected static final String VCARD_CLIENTPIDMAP_TAG = "CLIENTPIDMAP";
     protected static final String VCARD_XML_TAG = "XML";

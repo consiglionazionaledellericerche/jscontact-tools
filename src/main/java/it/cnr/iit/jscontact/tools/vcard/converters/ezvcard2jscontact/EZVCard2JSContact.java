@@ -132,7 +132,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (jcardTypeParam == null)
             return null;
 
-        String[] items = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
+        String[] items = jcardTypeParam.split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         for (String item : items) {
             if (exclude!=null && exclude.contains(item))
                 continue;
@@ -175,7 +175,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return null;
 
         List<E> enumValues = new ArrayList<>();
-        String[] typeItems = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
+        String[] typeItems = jcardTypeParam.split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         for (String typeItem : typeItems) {
             try {
                 E enumInstance = getEnumFromJCardType(enumType, typeItem, exclude, aliases);
@@ -242,9 +242,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             list.addAll(Arrays.asList(include));
 
         if (jcardTypeParam == null)
-            return (list.size()> 0) ? String.join(COMMA_ARRAY_DELIMITER,list) : null;
+            return (list.size()> 0) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,list) : null;
 
-        String[] items = jcardTypeParam.split(COMMA_ARRAY_DELIMITER);
+        String[] items = jcardTypeParam.split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         for (String item : items) {
             if (item.toLowerCase().equals("home")) item = "private";
 
@@ -254,7 +254,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             list.add(item.toLowerCase());
         }
 
-        return (list.size()> 0) ? String.join(COMMA_ARRAY_DELIMITER,list) : null;
+        return (list.size()> 0) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,list) : null;
     }
 
     private static HasAltid getAlternative(List<? extends HasAltid> list, String altid) {
@@ -293,7 +293,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         try {
             List<String> values = parameters.get(param);
             if (values.size()==0) return null;
-            return String.join(COMMA_ARRAY_DELIMITER, values);
+            return String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, values);
         } catch (NullPointerException e) {
             return null;
         }
@@ -303,7 +303,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         String fullAddress = addr.getLabel();
         if (fullAddress == null) {
-            StringJoiner joiner = new StringJoiner(AUTO_FULL_ADDRESS_DELIMITER);
+            StringJoiner joiner = new StringJoiner(DelimiterUtils.NEWLINE_DELIMITER);
             if (StringUtils.isNotEmpty(addr.getPoBox())) joiner.add(addr.getPoBox());
             if (StringUtils.isNotEmpty(addr.getExtendedAddressFull())) joiner.add(addr.getExtendedAddressFull());
             if (StringUtils.isNotEmpty(addr.getStreetAddressFull())) joiner.add(addr.getStreetAddressFull());
@@ -456,7 +456,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static String getValue(TextListProperty property) {
 
-        return StringUtils.join(property.getValues(), SEMICOMMA_ARRAY_DELIMITER);
+        return StringUtils.join(property.getValues(), DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
     }
 
     private static String getValue(Impp property) {
@@ -1006,13 +1006,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (LocalizedString organization : organizations) {
-            String[] nameItems = organization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
+            String[] nameItems = organization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
             String id = getId(VCard2JSContactIdsProfile.IdType.ORGANIZATION, i, "ORG-" + (i ++));
             List<String> units = (nameItems.length > 1 ) ? Arrays.asList(nameItems).subList(1,nameItems.length) : null;
             jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().name(nameItems[0]).units((units!=null)? units.toArray(new String[0]) : null).build());
             if (organization.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : organization.getLocalizations().entrySet()) {
-                    String[] localizedNameItems =  localization.getValue().split(SEMICOMMA_ARRAY_DELIMITER);
+                    String[] localizedNameItems =  localization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
                     List<String> localizedUnits = (localizedNameItems.length > 1 ) ? Arrays.asList(localizedNameItems).subList(1,localizedNameItems.length) : null;
                     jsCard.addLocalization(localization.getKey(), "/organizations/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Organization.builder().name(localizedNameItems[0]).units((localizedUnits!=null)? localizedUnits.toArray(new String[0]) : null).build(), JsonNode.class));
                 }
@@ -1063,7 +1063,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
     private static String getValue(List<RelatedType> list) {
-        StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+        StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         for (RelatedType el : list)
             joiner.add(el.getValue());
         return joiner.toString();
@@ -1116,7 +1116,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
 
         if (property.getParameters().getPids() != null && property.getParameters().getPids().size()>0) {
-            StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+            StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
             for (Pid pid : property.getParameters().getPids())
                 joiner.add(pid.getLocalId().toString());
             jsCard.addExtension(getUnmatchedParamName(propertyName,"PID"),

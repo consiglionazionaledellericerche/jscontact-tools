@@ -13,7 +13,7 @@ import java.util.Set;
 public class ConstraintViolationUtils {
 
     /**
-     * Returns a text message including all the constraint violations included in a set separated by newline.
+     * Returns a text message including all the constraint violations returned by a validation process and separated by newline.
      * @param constraintViolations the set of constraint violations
      * @return the text message
      */
@@ -23,7 +23,7 @@ public class ConstraintViolationUtils {
         for(ConstraintViolation<T> constraintViolation : constraintViolations)
             messages.add(constraintViolation.getMessage());
 
-        return String.join("\n", messages);
+        return String.join(DelimiterUtils.NEWLINE_DELIMITER, messages);
     }
 
 }

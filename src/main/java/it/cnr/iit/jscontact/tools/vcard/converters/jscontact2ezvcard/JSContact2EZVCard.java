@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.NoteUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -117,7 +118,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static void addNameComponent(StringJoiner joiner, List<String> values) {
 
         if (values != null && values.size() != 0 )
-            joiner.add(String.join(COMMA_ARRAY_DELIMITER, values));
+            joiner.add(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, values));
     }
 
     private static void addNameComponent(StringJoiner joiner, String value) {
@@ -314,7 +315,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static String getFullAddressFromStructuredAddress(Address addr) {
 
-        StringJoiner joiner = new StringJoiner(AUTO_FULL_ADDRESS_DELIMITER);
+        StringJoiner joiner = new StringJoiner(DelimiterUtils.NEWLINE_DELIMITER);
         if (StringUtils.isNotEmpty(addr.getPostOfficeBox())) joiner.add(addr.getPostOfficeBox());
         if (StringUtils.isNotEmpty(addr.getStreetExtensions())) joiner.add(addr.getStreetExtensions());
         if (StringUtils.isNotEmpty(addr.getStreetDetails())) joiner.add(addr.getStreetDetails());
@@ -326,7 +327,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
     private static <E extends Enum<E> & VCardTypeDerivedEnum> StringJoiner getVCardTypeStringJoiner(Class<E> enumType, Collection<E> enumValues) {
-        StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+        StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         for (E value : enumValues) {
             try {
                 String typeItem = (String) enumType.getDeclaredMethod("getVCardType", enumType).invoke(null, value);
@@ -341,7 +342,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
     private static <E extends Enum<E> & VCardTypeDerivedEnum> StringJoiner getVCardTypeStringJoiner(Class<E> enumType, String[] stringValues) {
-        StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+        StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         for (String value : stringValues) {
             try {
                 String typeItem = (String) enumType.getDeclaredMethod("getVCardType", String.class).invoke(null, value);
@@ -590,7 +591,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
         tel.setPref(phone.getPref());
 
-        StringJoiner joiner = new StringJoiner(COMMA_ARRAY_DELIMITER);
+        StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         joiner = joiner.merge(getVCardTypeStringJoiner(ContextEnum.class, Context.getContextEnumValues(phone.getContexts().keySet())));
         joiner = joiner.merge(getVCardTypeStringJoiner(PhoneFeatureEnum.class, PhoneFeature.getFeatureEnumValues(phone.getFeatures().keySet())));
 
