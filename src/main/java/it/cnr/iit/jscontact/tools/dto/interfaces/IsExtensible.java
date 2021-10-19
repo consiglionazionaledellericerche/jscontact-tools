@@ -21,7 +21,7 @@ package it.cnr.iit.jscontact.tools.dto.interfaces;
 public interface IsExtensible {
 
     /**
-     * Gets the value of the extensible enumerated type in text format.
+     * Returns the value of the extensible enumerated type in text format.
      * @return tthe value of the extensible enumerated type in text format
      */
     String getValue();

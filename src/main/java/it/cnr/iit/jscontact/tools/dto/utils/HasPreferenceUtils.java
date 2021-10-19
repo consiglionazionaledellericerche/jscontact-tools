@@ -24,6 +24,12 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasPreference;
  */
 public class HasPreferenceUtils {
 
+    /**
+     * Compares two objects of classes implementing the HasPreference interface.
+     * @param o1 the first object
+     * @param o2 the second object
+     * @return a negative integer, zero, or a positive integer as o1 is less than, equal to, or greater than o2.
+     */
     public static int compareTo(HasPreference o1, HasPreference o2) {
 
         if (o1.getPreference() == null) {

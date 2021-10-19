@@ -21,7 +21,7 @@ package it.cnr.iit.jscontact.tools.dto.interfaces;
 public interface HasAltid {
 
     /**
-     * Gets the value of the altid property.
+     * Returns the value of the altid property.
      * @return the value of the altid property
      */
     String getAltid();

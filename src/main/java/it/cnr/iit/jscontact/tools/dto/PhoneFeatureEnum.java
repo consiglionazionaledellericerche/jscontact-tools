@@ -59,7 +59,7 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
     }
 
     @JsonIgnore
-    public static String getVCardType(PhoneFeatureEnum type) {
+    public static String toVCardType(PhoneFeatureEnum type) {
 
         if (type == OTHER)
             return null;
@@ -68,11 +68,11 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
     }
 
     @JsonIgnore
-    public static String getVCardType(String label) {
+    public static String toVCardType(String label) {
 
         try {
             PhoneFeatureEnum rc = getEnum(label);
-            return getVCardType(rc);
+            return toVCardType(rc);
         }
         catch(Exception e) {
 

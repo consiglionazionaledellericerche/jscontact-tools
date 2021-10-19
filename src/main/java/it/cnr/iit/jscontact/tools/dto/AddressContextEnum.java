@@ -61,8 +61,8 @@ public enum AddressContextEnum implements IsExtensible, VCardTypeDerivedEnum {
     }
 
     @JsonIgnore
-    public static String getVCardType(AddressContextEnum context) {
-        return EnumUtils.getVCardType(context);
+    public static String toVCardType(AddressContextEnum context) {
+        return EnumUtils.toVCardType(context);
     }
 
 

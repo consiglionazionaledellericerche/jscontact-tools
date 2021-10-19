@@ -24,6 +24,12 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
  */
 public class HasIndexUtils {
 
+    /**
+     * Compares two objects of classes implementing the HasIndex interface.
+     * @param o1 the first object
+     * @param o2 the second object
+     * @return a negative integer, zero, or a positive integer as o1 is less than, equal to, or greater than o2.
+     */
     public static int compareTo(HasIndex o1, HasIndex o2) {
 
         if (o1.getIndex() == null) {

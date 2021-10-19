@@ -57,7 +57,7 @@ public class DateUtils {
 
 
     /**
-     * Converts a java.util.Calendar object into text according to the NON_ZERO_TIME type.
+     * Converts a java.util.Calendar object into text according to the NON_ZERO_TIME date time type.
      * @param calendar the Calendar object
      * @return the text representing the Calendar object
      */
@@ -140,7 +140,6 @@ public class DateUtils {
         String day = (partialDate.getDate() != null) ? String.format("%02d",partialDate.getDate()) : "00";
         return String.format("%s-%s-%s", year, month, day);
     }
-
 
     /**
      * Converts date in text format into a java.util.Calendar object.

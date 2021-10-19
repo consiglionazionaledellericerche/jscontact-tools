@@ -330,7 +330,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         jcardType = getJcardParam(property.getParameters(), "TYPE");
         Map<Context,Boolean> contexts = getContexts(jcardType);
-        label = getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{labelKey.getValue()});
+        label = getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{labelKey.getValue()});
         jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, index, String.format("%s-%s",labelKey.getValue().toUpperCase(),index), labelKey), Resource.builder()
                                     .resource(value)
                                     .type(ResourceType.URI)
@@ -824,8 +824,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Map<Context,Boolean> contexts = getContexts(jcardType);
             Map<PhoneFeature,Boolean> phoneFeatures = getPhoneFeatures(jcardType);
             String[] exclude = null;
-            if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())));
-            if (!phoneFeatures.containsKey(PhoneFeature.other())) exclude = ArrayUtils.addAll(exclude, EnumUtils.toArrayOfStrings(PhoneFeature.getFeatureEnumValues(phoneFeatures.keySet())));
+            if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toStrings(Context.getContextEnumValues(contexts.keySet())));
+            if (!phoneFeatures.containsKey(PhoneFeature.other())) exclude = ArrayUtils.addAll(exclude, EnumUtils.toStrings(PhoneFeature.getFeatureEnumValues(phoneFeatures.keySet())));
             String label = getLabel(jcardType, exclude, null);
             jsCard.addPhone(getId(VCard2JSContactIdsProfile.IdType.PHONE, i,"PHONE-" + (i++)), Phone.builder()
                                        .phone(getValue(tel))
@@ -881,7 +881,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                         .resource(resource)
                                         .type(ResourceType.USERNAME)
                                         .contexts(contexts)
-                                        .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.IMPP.getValue()}))
+                                        .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.IMPP.getValue()}))
                                         .pref(impp.getPref())
                                         .mediaType(getMediaType(impp.getMediaType(), resource))
                                         .build()
@@ -923,7 +923,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             orgDirectories.add(Resource.builder()
                                        .resource(getValue(od))
                                        .type(ResourceType.URI)
-                                       .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toArrayOfStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.ORG_DIRECTORY.getValue()}))
+                                       .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.getContextEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.ORG_DIRECTORY.getValue()}))
                                        .contexts(contexts)
                                        .pref(od.getPref())
                                        .index(od.getIndex())

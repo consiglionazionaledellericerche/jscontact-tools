@@ -20,7 +20,7 @@ package it.cnr.iit.jscontact.tools.dto.interfaces;
  */
 public interface HasPreference {
     /**
-     * Gets the value of the preference property.
+     * Returns the value of the preference property.
      * @return the value of the preference property
      */
     Integer getPreference();

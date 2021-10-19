@@ -26,11 +26,24 @@ import java.util.Map;
 
 public class EnumUtils {
 
+    /**
+     * Returns the value of an enum class matching the given text value.
+     * @param enumType the enum class
+     * @param value the text value
+     * @return the enum value matching the text value.
+     */
     public static <E extends Enum <E>> E getEnum(Class<E> enumType, String value) {
 
         return getEnum(enumType, value, null);
     }
 
+    /**
+     * Returns the value of an enum class matching the given text value.
+     * The matching is done by considering possible aliases.
+     * @param enumType the enum class
+     * @param value the text value
+     * @return the enum value matching the text value
+     */
     public static <E extends Enum <E>> E getEnum(Class<E> enumType, String value, Map<String,E> aliases) {
 
         if (aliases!=null && aliases.containsKey(value))
@@ -43,7 +56,12 @@ public class EnumUtils {
         throw new IllegalArgumentException();
     }
 
-    public static <E extends Enum <E>> String getVCardType(E context) {
+    /**
+     * Returns the value of vCard TYPE parameter matching the given context value.
+     * @param context the context value
+     * @return the value of vCard TYPE parameter
+     */
+    public static <E extends Enum <E>> String toVCardType(E context) {
 
         if (context == null)
             return null;
@@ -56,19 +74,22 @@ public class EnumUtils {
             return null;
     }
 
-    public static <E extends Enum <E>> String[] toArrayOfStrings(Collection<E> items) {
+    /**
+     * Returns an array of strings matching the given enum values.
+     * @param enumValues a collection of enum values
+     * @return the array of strings
+     */
+    public static <E extends Enum <E>> String[] toStrings(Collection<E> enumValues) {
 
-        if (items == null)
+        if (enumValues == null)
             return null;
 
-        String[] array = new String[items.size()];
+        String[] array = new String[enumValues.size()];
         int i = 0;
-        for (E item : items)
+        for (E item : enumValues)
             array[i++] = item.toString();
 
         return array;
     }
-
-
 
 }

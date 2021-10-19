@@ -60,11 +60,11 @@ public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
     }
 
     @JsonIgnore
-    public static String getVCardType(String label) {
+    public static String toVCardType(String label) {
 
         try {
             ContextEnum rc = getEnum(label);
-            return getVCardType(rc);
+            return toVCardType(rc);
         }
         catch(Exception e) {
             return null;
@@ -72,9 +72,9 @@ public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
     }
 
     @JsonIgnore
-    public static String getVCardType(ContextEnum context) {
+    public static String toVCardType(ContextEnum context) {
 
-        return EnumUtils.getVCardType(context);
+        return EnumUtils.toVCardType(context);
     }
 
 }

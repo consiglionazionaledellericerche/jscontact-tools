@@ -20,7 +20,7 @@ package it.cnr.iit.jscontact.tools.dto.interfaces;
  */
 public interface HasIndex {
     /**
-     * Gets the value of the index property.
+     * Returns the value of the index property.
      * @return the value of the index property
      */
     Integer getIndex();
