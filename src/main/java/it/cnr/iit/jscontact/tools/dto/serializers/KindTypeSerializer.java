@@ -23,6 +23,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+/**
+ * Custom JSON serializer for the KindType value.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class KindTypeSerializer extends JsonSerializer<KindType> {
 

@@ -24,6 +24,11 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 import java.util.Calendar;
 
+/**
+ * Custom JSON serializer for the Calendar value. The value is formatted according the NON_ZERO_TIME DateTimeType value.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class CalendarSerializer extends JsonSerializer<Calendar> {
 

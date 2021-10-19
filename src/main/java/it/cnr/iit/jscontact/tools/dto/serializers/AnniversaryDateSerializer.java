@@ -24,6 +24,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+/**
+ * Custom JSON serializer for the AnniversaryDate value.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class AnniversaryDateSerializer extends JsonSerializer<AnniversaryDate> {
 

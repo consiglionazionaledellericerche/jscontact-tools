@@ -24,6 +24,12 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 import java.util.Calendar;
 
+/**
+ * Custom JSON serializer for a Calendar value used in TimeZone type [RFC8984]. The value is formatted according the LOCAL_TIME DateTimeType value.
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc8984">RFC8984</a>
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class LocalDateTimeSerializer extends JsonSerializer<Calendar> {
 
@@ -32,6 +38,6 @@ public class LocalDateTimeSerializer extends JsonSerializer<Calendar> {
             Calendar calendar, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-            jgen.writeString(DateUtils.toString(calendar, DateUtils.DateTimeType.LOCAL));
+            jgen.writeString(DateUtils.toString(calendar, DateUtils.DateTimeType.LOCAL_TIME));
     }
 }

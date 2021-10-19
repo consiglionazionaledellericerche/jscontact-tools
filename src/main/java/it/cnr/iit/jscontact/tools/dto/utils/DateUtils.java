@@ -17,8 +17,8 @@ import java.util.Date;
 public class DateUtils {
 
     public enum DateTimeType {
-      UTC,
-      LOCAL,
+      UTC_TIME,
+      LOCAL_TIME,
       NON_ZERO_TIME
     }
 
@@ -68,7 +68,7 @@ public class DateUtils {
     /**
      * Converts a java.util.Calendar object into text according to a given date time type.
      * @param calendar the Calendar object
-     * @param dateTimeType the date time type (i.e. UTC, LOCAL, NON_ZERO_TIME)
+     * @param dateTimeType the date time type (i.e. UTC, LOCAL_TIME, NON_ZERO_TIME)
      * @return the text representing the Calendar object
      */
     public static String toString(Calendar calendar, DateTimeType dateTimeType) {
@@ -85,7 +85,7 @@ public class DateUtils {
                         calendar.get(Calendar.HOUR_OF_DAY),
                         calendar.get(Calendar.MINUTE),
                         calendar.get(Calendar.SECOND)
-                ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+((dateTimeType==DateTimeType.UTC) ? "Z" : StringUtils.EMPTY);
+                ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+((dateTimeType==DateTimeType.UTC_TIME) ? "Z" : StringUtils.EMPTY);
             } else {
                 OffsetDateTime offsetDateTime = OffsetDateTime.of(calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH) + 1,
@@ -97,9 +97,9 @@ public class DateUtils {
                         getZoneOffset(calendar)
                 );
                 switch (dateTimeType) {
-                    case UTC:
+                    case UTC_TIME:
                         return LocalDateTime.ofInstant(offsetDateTime.toInstant(), ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + "Z";
-                    case LOCAL:
+                    case LOCAL_TIME:
                         return offsetDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                     default:
                         return offsetDateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
