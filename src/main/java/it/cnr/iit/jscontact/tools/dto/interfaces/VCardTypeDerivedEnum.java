@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
 /**
- * This interface is used to identify an enumerated type that is derived by the vCard TYPE parameter.
+ * This interface is used to identify an enumerated type that is derived by the vCard [RFC6350] TYPE parameter.
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">Section 5.6 of RFC6350</a>
  */
 public interface VCardTypeDerivedEnum { }

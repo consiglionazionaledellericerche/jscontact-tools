@@ -5,7 +5,7 @@ import it.cnr.iit.jscontact.tools.dto.Context;
 import java.util.Map;
 
 /**
- * This interface imposes that a class implementing it must have the context property.
+ * This interface imposes that a class implementing it must include the "context" property.
  */
 public interface HasContext {
 

@@ -16,13 +16,13 @@
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
 /**
- * This interface imposes that < class implementing it must have the altid property.
+ * This interface imposes that a class implementing it must include the "altid" property.
  */
 public interface HasAltid {
 
     /**
-     * Returns the value of the altid property.
-     * @return the value of the altid property
+     * Returns the value of the "altid" property.
+     * @return the value of the "altid" property
      */
     String getAltid();
 }
