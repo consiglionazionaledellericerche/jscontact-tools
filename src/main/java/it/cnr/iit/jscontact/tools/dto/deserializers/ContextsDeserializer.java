@@ -28,6 +28,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Custom JSON deserializer for the Context map.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class ContextsDeserializer extends JsonDeserializer<Map<Context,Boolean>> {
 
