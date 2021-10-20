@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @ToString
-public class GroupableObject {
+public abstract class GroupableObject {
 
     @JsonIgnore
     @Getter

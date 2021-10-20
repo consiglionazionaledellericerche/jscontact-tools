@@ -23,9 +23,9 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Wrapper class for vCard [RFC6350] CATEGORIES elements.
- * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.1">Section 6.7.1 of RFC6350</a>
+ * Wrapper class for vCard CATEGORIES property as defined in section 6.7.1 of [RFC6350].
  *
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.1">RFC6350</a>
  * @author Mario Loffredo
  */
 @Data
@@ -37,7 +37,8 @@ public class CategoryWrapper implements HasPreference, Comparable<CategoryWrappe
     Integer preference;
 
     /**
-     * Compares this object with a given one based on the "preference" property.
+     * Compares this object with another based on the value of the "preference" property.
+     *
      * @param o the object this object must be compared with
      * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
      */

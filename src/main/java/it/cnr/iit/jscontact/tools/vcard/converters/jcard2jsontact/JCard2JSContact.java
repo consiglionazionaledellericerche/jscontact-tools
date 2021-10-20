@@ -30,8 +30,8 @@ import java.util.*;
 
 /**
  * Utility class for converting a jCard [RFC7095] into a JSContact object.
- * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
  *
+ * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
  * @author Mario Loffredo
  */
 public class JCard2JSContact extends EZVCard2JSContact {
@@ -46,6 +46,7 @@ public class JCard2JSContact extends EZVCard2JSContact {
      * Converts a complete vCard v4.0 in JSON format, namely jCard [RFC7095], into a list of JSContact objects
      * JSContact is defined in draft-ietf-jmap-jscontact.
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     *
      * @param jCard a jCard as a JSON string
      * @return a list of JSContact objects
      * @throws CardException if the jCard is not v4.0 compliant

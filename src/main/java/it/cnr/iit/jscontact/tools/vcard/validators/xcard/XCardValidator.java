@@ -33,7 +33,8 @@ import java.util.List;
 public class XCardValidator extends EZVCardValidator {
 
     /**
-     * Validates a complete vCard v4.0 in XML format, namely xCard [RFC6351]
+     * Validates a complete vCard v4.0 in XML format, namely xCard [RFC6351].
+     *
      * @param xCard an xCard as an XML string
      * @throws CardException if the xCard is not v4.0 compliant
      * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>

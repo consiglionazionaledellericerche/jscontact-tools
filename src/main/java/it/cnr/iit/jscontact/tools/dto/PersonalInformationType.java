@@ -20,6 +20,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
+/**
+ * Enum class mapping the values of the PersonalInformation "type" memmber as defined in section 2.6.2 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.2">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @AllArgsConstructor
 public enum PersonalInformationType {
 

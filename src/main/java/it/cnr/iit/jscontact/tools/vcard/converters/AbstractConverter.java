@@ -3,6 +3,12 @@ package it.cnr.iit.jscontact.tools.vcard.converters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Abstract class for converting a JSContact object from/to a vCard 4.0 [RFC6350] and its transliterations.
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ *
+ * @author Mario Loffredo
+ */
 public abstract class AbstractConverter {
 
     protected static final String VCARD_GENDER_TAG = "GENDER";

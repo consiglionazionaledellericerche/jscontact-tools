@@ -27,8 +27,8 @@ import java.util.List;
 
 /**
  * Utility class for converting into a JSContact object into a vCard [RFC6350].
- * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  *
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  * @author Mario Loffredo
  */
 public class JSContact2VCard extends JSContact2EZVCard {
@@ -40,7 +40,8 @@ public class JSContact2VCard extends JSContact2EZVCard {
     }
 
     /**
-     * Converts one or more JSContact objects into a complete vCard v4.0 [RFC6350]
+     * Converts one or more JSContact objects into a complete vCard v4.0 [RFC6350].
+     *
      * @param jsContacts a list of JSContact objects
      * @return a vCard as a text
      * @throws CardException if one of the JSContact objects is not valid

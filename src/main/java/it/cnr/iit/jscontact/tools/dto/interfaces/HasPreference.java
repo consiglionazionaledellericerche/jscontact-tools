@@ -17,10 +17,13 @@ package it.cnr.iit.jscontact.tools.dto.interfaces;
 
 /**
  * This interface imposes that a class implementing it must include the "preference" property.
+ *
+ * @author Mario Loffredo
  */
 public interface HasPreference {
     /**
      * Returns the value of the "preference" property.
+     *
      * @return the value of the "preference" property
      */
     Integer getPreference();

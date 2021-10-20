@@ -9,6 +9,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
+/**
+ * Class mapping the Organization type as defined in section 2.2.4 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.2.4">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data

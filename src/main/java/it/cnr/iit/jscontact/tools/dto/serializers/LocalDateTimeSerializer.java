@@ -26,8 +26,8 @@ import java.util.Calendar;
 
 /**
  * Custom JSON serializer for a Calendar value used in TimeZone type [RFC8984]. The value is formatted according the LOCAL_TIME DateTimeType value.
- * @see <a href="https://datatracker.ietf.org/doc/html/rfc8984">RFC8984</a>
  *
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc8984">RFC8984</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor

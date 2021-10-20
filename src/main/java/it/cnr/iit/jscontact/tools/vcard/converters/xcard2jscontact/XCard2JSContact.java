@@ -27,8 +27,8 @@ import java.util.List;
 
 /**
  * Utility class for converting an xCard [RFC6351] into a JSContact object.
- * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
  *
+ * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
  * @author Mario Loffredo
  */
 public class XCard2JSContact extends EZVCard2JSContact {
@@ -43,6 +43,7 @@ public class XCard2JSContact extends EZVCard2JSContact {
      * Converts a complete vCard v4.0 in XML format, namely xCard [RFC6351], into a list of JSContact objects.
      * JSContact is defined in draft-ietf-jmap-jscontact.
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     *
      * @param xCard an xCard as an XML string
      * @return the list of JSContact objects
      * @throws CardException if the xCard is not v4.0 compliant

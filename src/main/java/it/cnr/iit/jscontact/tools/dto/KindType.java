@@ -21,6 +21,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+/**
+ * Class mapping the "kind" property as defined in section 2.1.6 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.1.6">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -31,56 +37,63 @@ public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
     private boolean isRfc(KindEnum value) { return isRfcValue() && rfcValue == value; }
 
     /**
-     * Tests if this kind of contact card is "individual". See vCard KIND property [RFC6350].
-     * @return true if this kind of contact card is "individual"
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
+     * Tests if this kind of contact card is "individual". See vCard KIND property as defined in section 6.1.4 of [RFC6350].
+     *
+     * @return true if this kind of contact card is "individual", false otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     @JsonIgnore
     public boolean isIndividual() { return isRfc(KindEnum.INDIVIDUAL); }
 
     /**
-     * Tests if this kind of contact card is "group". See vCard KIND property [RFC6350].
-     * @return true if this kind of contact card is "group"
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
+     * Tests if this kind of contact card is "group". See vCard KIND property as defined in section 6.1.4 of [RFC6350].
+     *
+     * @return true if this kind of contact card is "group", false otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     @JsonIgnore
     public boolean isGroup() { return isRfc(KindEnum.GROUP); }
 
     /**
-     * Tests if this kind of contact card is "org". See vCard KIND property [RFC6350].
-     * @return true if this kind of contact card is "org"
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
+     * Tests if this kind of contact card is "org". See vCard KIND property as defined in section 6.1.4 of [RFC6350].
+     *
+     * @return true if this kind of contact card is "org", false otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     @JsonIgnore
     public boolean isOrg() { return isRfc(KindEnum.ORG); }
 
     /**
-     * Tests if this kind of contact card is "device". See [RFC6869].
-     * @return true if this kind of contact card is "device"
+     * Tests if this kind of contact card is "device". See vCard KIND property as defined in section 6.1.4 of [RFC6869].
+     *
+     * @return true if this kind of contact card is "device", false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6869">RFC6869</a>
      */
     @JsonIgnore
     public boolean isDevice() { return isRfc(KindEnum.DEVICE); }
 
     /**
-     * Tests if this kind of contact card is "application". See [RFC6473].
-     * @return true if this kind of contact card is "application"
+     * Tests if this kind of contact card is "application". See vCard KIND property as defined in section 6.1.4 of [RFC6473].
+     *
+     * @return true if this kind of contact card is "application", false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6473">RFC6473</a>
      */
     @JsonIgnore
     public boolean isApplication() { return isRfc(KindEnum.APPLICATION); }
 
     /**
-     * Tests if this kind of contact card is "location". See vCard KIND property [RFC6350].
-     * @return true if this kind of contact card is "location"
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
+     * Tests if this kind of contact card is "location". See vCard KIND property as defined in section 6.1.4 of [RFC6350].
+     *
+     * @return true if this kind of contact card is "location", false otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     @JsonIgnore
     public boolean isLocation() { return isRfc(KindEnum.LOCATION); }
 
     /**
      * Tests if this is a custom kind of contact card.
-     * @return true if this is a custom kind of contact card
+     *
+     * @return true if this is a custom kind of contact card, false otherwise
      */
     @JsonIgnore
     public boolean isExt() { return isExtValue(); }
@@ -88,42 +101,48 @@ public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
     private static KindType rfc(KindEnum rfcValue) { return KindType.builder().rfcValue(rfcValue).build(); }
 
     /**
-     * Creates an "individual" kind of contact card. See vCard KIND property [RFC6350].
+     * Creates an "individual" kind of contact card. See vCard KIND property as defined in section 6.1.4 of [RFC6350].
+     *
      * @return an object representing an "individual" kind of contact card
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     public static KindType individual() { return rfc(KindEnum.INDIVIDUAL);}
 
     /**
-     * Creates a "group" kind of contact card. See vCard KIND property [RFC6350].
+     * Creates a "group" kind of contact card. See vCard KIND property as defined in section 6.1.4 of [RFC6350].
+     *
      * @return an object  representing a "group" kind of contact card
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     public static KindType group() { return rfc(KindEnum.GROUP);}
 
     /**
-     * Creates an "org" kind of contact card. See vCard KIND property [RFC6350].
+     * Creates an "org" kind of contact card. See vCard KIND property as defined in section 6.1.4 of [RFC6350].
+     *
      * @return an object representing a "org" kind of contact card
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     public static KindType org() { return rfc(KindEnum.ORG);}
 
     /**
-     * Creates a "device" kind of contact card. See [RFC6869].
+     * Creates a "device" kind of contact card. See vCard KIND property as defined in section 6.1.4 of [RFC6869].
+     *
      * @return an object representing a "device" kind of contact card
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6869">RFC6869</a>
      */
     public static KindType device() { return rfc(KindEnum.DEVICE);}
 
     /**
-     * Creates a "location" kind of contact card. See vCard KIND property [RFC6350].
+     * Creates a "location" kind of contact card. See vCard KIND property as defined in section 6.1.4 of [RFC6350].
+     *
      * @return an object representing a "location" kind of contact card
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     public static KindType location() { return rfc(KindEnum.LOCATION);}
 
     /**
-     * Creates an "application" kind of contact card. See [RFC6473].
+     * Creates an "application" kind of contact card. See vCard KIND property as defined in section 6.1.4 of [RFC6473].
+     *
      * @return an object representing an "application" kind of contact card
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6473">RFC6473</a>
      */
@@ -131,6 +150,7 @@ public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
 
     /**
      * Creates a custom kind of contact card.
+     *
      * @return an object representing a custom kind of contact card
      */
     private static KindType ext(String extValue) { return KindType.builder().extValue(extValue).build(); }

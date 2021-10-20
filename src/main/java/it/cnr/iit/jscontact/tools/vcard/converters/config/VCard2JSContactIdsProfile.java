@@ -9,6 +9,11 @@ import lombok.Singular;
 
 import java.util.List;
 
+/**
+ * Abstract class for configuring the JSContact Ids profile.
+ *
+ * @author Mario Loffredo
+ */
 @Data
 @Builder
 @AllArgsConstructor

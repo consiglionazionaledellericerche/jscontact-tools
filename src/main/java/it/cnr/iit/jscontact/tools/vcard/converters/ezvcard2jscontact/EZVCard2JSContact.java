@@ -53,8 +53,8 @@ import java.util.regex.Pattern;
 
 /**
  * Utility class for converting a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object into a JSContact object.
- * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  *
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor
@@ -1253,6 +1253,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
      * Converts a list of vCard v4.0 instances [RFC6350] into a list of JSContact objects.
      * JSContact is defined in draft-ietf-jmap-jscontact.
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     *
      * @param vCards a list of instances of the ez-vcard library VCard class
      * @return a list of JSContact objects
      * @throws CardException if one of the vCard instances is not v4.0 compliant

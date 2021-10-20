@@ -28,6 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Abstract class for validating JSContact objects.
+ *
+ * @author Mario Loffredo
+ */
 @ToString
 @NoArgsConstructor
 @SuperBuilder

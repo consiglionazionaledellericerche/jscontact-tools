@@ -301,9 +301,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard KEY property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard KEY property as defined in section 6.8.1 of [RFC6350]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.8.1">Section 6.8.1 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.8.1">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineKey() {
@@ -311,9 +311,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard URL property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard URL property as defined in section 6.7.8 of [RFC6350]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.8">Section 6.7.8 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.8">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineUrl() {
@@ -321,9 +321,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard SOURCE property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard SOURCE property as defined in section 6.1.3 of [RFC6350].
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.3">Section 6.1.3 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.3">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineSource() {
@@ -331,9 +331,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard LOGO property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard LOGO property as defined in section 6.6.3 of [RFC6350]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.3">Section 6.6.3 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.3">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineLogo() {
@@ -341,9 +341,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard SOUND property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard SOUND property as defined in section 6.7.5 of [RFC6350]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.5">Section 6.7.5 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.5">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineSound() {
@@ -351,9 +351,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard FBURL property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard FBURL property as defined in section 6.9.1 of [RFC6350]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.1">Section 6.9.1 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.1">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineFburl() {
@@ -361,9 +361,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CALURI property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard CALURI property as defined in section 6.9.3 of [RFC6350]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.3">Section 6.9.3 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.3">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineCaluri() {
@@ -371,9 +371,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CALADRURI property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard CALADRURI property as defined in section 6.9.2 of [RFC6350]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.2">Section 6.9.2 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.2">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineCaladruri() {
@@ -381,9 +381,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard ORG-DIRECTORY property [RFC6715]
+     * Returns all the online resources associated to this object corresponding to vCard ORG-DIRECTORY property as defined in section 2.4 of [RFC6715]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6715.html#section-2.4">Section 2.4 of RFC6715</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6715.html#section-2.4">RFC6715</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineOrgDirectory() {
@@ -391,9 +391,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard IMPP property [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard IMPP property as defined in section 6.4.3 of [RFC6350]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.4.3">Section 6.4.3 of RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.4.3">RFC6350</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineImpp() {
@@ -401,9 +401,9 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CONTACT-URI property [RFC8605]
+     * Returns all the online resources associated to this object corresponding to vCard CONTACT-URI property as defined in section 21 of [RFC8605]
      * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc8605#section-2.1">Section 2.1 of RFC8605</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc8605#section-2.1">RFC8605</a>
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineContactUri() {

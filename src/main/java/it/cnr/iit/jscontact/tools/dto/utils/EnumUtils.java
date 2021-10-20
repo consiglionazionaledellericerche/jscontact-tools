@@ -57,8 +57,8 @@ public class EnumUtils {
     }
 
     /**
-     * Returns the value of vCard [RFC6350] TYPE parameter matching the given context value.
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">Section 5.6 of RFC6350</a>
+     * Returns the value of vCard TYPE parameter, as defined in section 5.6 of [RFC6350], matching the given context value.
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
      * @param context the context value
      * @return the value of vCard TYPE parameter
      */

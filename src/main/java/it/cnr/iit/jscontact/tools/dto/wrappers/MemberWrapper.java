@@ -21,9 +21,9 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * Wrapper class for vCard [RFC6350] MEMBER elements.
- * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.5">Section 6.6.5 of RFC6350</a>
+ * Wrapper class for vCard MEMBER property as defined in section 6.6.5 of [RFC6350].
  *
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.5">RFC6350</a>
  * @author Mario Loffredo
  */
 @Data
@@ -35,7 +35,8 @@ public class MemberWrapper implements HasPreference, Comparable<MemberWrapper> {
     Integer preference;
 
     /**
-     * Compares this object with a given one based on the "preference" property.
+     * Compares this object with another based on the value of the "preference" property.
+     *
      * @param o the object this object must be compared with
      * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
      */

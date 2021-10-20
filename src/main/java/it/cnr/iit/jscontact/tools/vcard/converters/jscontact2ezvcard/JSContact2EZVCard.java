@@ -36,8 +36,8 @@ import java.util.*;
 
 /**
  * Utility class for converting a JSContact object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object.
- * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  *
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor
@@ -1039,6 +1039,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
      * JSContact objects are defined in draft-ietf-jmap-jscontact.
      * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     *
      * @param jsContact a JSContact object (Card or CardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>

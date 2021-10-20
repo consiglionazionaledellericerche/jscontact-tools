@@ -22,7 +22,12 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 
 import java.util.List;
 
-public class EZVCardValidator {
+/**
+ * Abstract utility class for validating a list of Ezvcard VCard objects.
+ *
+ * @author Mario Loffredo
+ */
+public abstract class EZVCardValidator {
 
     protected void validate(List<VCard> vCards) throws CardException {
 

@@ -12,6 +12,7 @@ public class PrettyPrintSerializer {
 
     /**
      * Returns the formatted JSON text of a given object
+     *
      * @param o the object to serialize
      * @return the formatted JSON text
      */
