@@ -60,7 +60,7 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
     Integer index;
 
     /**
-     * Compares this object with another based on the value of the "index" property.
+     * Compares this personal information with another based on the value of the "index" property.
      *
      * @param o the object this object must be compared with
      * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.

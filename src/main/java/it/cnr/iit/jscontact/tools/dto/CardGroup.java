@@ -30,6 +30,13 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+/**
+ * Class mapping the CardGroup object as defined in section 3 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-3">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @CardGroupKindConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
@@ -57,6 +64,7 @@ public class CardGroup extends JSContact implements Serializable {
 
     /**
      * Adds a a member to this object.
+     *
      * @param member the uid value of the object representing a group member
      */
     public void addMember(String member) {
@@ -69,6 +77,7 @@ public class CardGroup extends JSContact implements Serializable {
 
     /**
      * Clones this object.
+     *
      * @return the clone of this CardGroup object
      */
     @Override

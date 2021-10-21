@@ -35,7 +35,7 @@ public class MemberWrapper implements HasPreference, Comparable<MemberWrapper> {
     Integer preference;
 
     /**
-     * Compares this object with another based on the value of the "preference" property.
+     * Compares this wrapper with another based on the value of the "preference" property.
      *
      * @param o the object this object must be compared with
      * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.

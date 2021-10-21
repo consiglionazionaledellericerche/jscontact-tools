@@ -94,12 +94,47 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     Boolean isDefaultLanguage;
 
     private boolean asContext(AddressContext context) { return contexts != null && contexts.containsKey(context); }
+    /**
+     * Tests if this address is a work address.
+     *
+     * @return true if the context map includes the "work" context, false otherwise
+     */
     public boolean asWork() { return asContext(AddressContext.work()); }
+    /**
+     * Tests if this address is a private address.
+     *
+     * @return true if the context map includes the "private" context, false otherwise
+     */
     public boolean asPrivate() { return asContext(AddressContext.private_()); }
+    /**
+     * Tests if this address is a billing address.
+     *
+     * @return true if the context map includes the "billing" context, false otherwise
+     */
     public boolean asBilling() { return asContext(AddressContext.billing()); }
+    /**
+     * Tests if this address is a postal address.
+     *
+     * @return true if the context map includes the "postal" context, false otherwise
+     */
     public boolean asPostal() { return asContext(AddressContext.postal()); }
+    /**
+     * Tests if this address is used in a context other than those known.
+     *
+     * @return true if the context map includes the "other" context, false otherwise
+     */
     public boolean asOtherContext() { return asContext(AddressContext.other()); }
+    /**
+     * Tests if this address is used in a custom context.
+     *
+     * @return true if the context map includes the given custom context, false otherwise
+     */
     public boolean asExtContext(String extValue) { return asContext(AddressContext.ext(extValue)); }
+    /**
+     * Tests if the context of this address is undefined.
+     *
+     * @return true if the context map is empty, false otherwise
+     */
     public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
 
     private String getStreetDetail(StreetComponentEnum detail) {
@@ -115,11 +150,21 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
         return null;
     }
 
+    /**
+     * Returns the P.O. box of this object.
+     *
+     * @return the value of StreetComponent item in the "street" array tagged as POST_OFFICE_BOX
+     */
     @JsonIgnore
     public String getPostOfficeBox() {
         return getStreetDetail(StreetComponentEnum.POST_OFFICE_BOX);
     }
 
+    /**
+     * Returns the street details of this object.
+     *
+     * @return a text obtained by concatenating the values of StreetComponent items in the "street" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
+     */
     @JsonIgnore
     public String getStreetDetails() {
         String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
@@ -130,6 +175,12 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
         String streetDetails = joiner.toString();
         return StringUtils.defaultIfEmpty(streetDetails, null);
     }
+
+    /**
+     * Returns the street extensions of this object.
+     *
+     * @return a text obtained by concatenating the values of the StreetComponent items in the "street" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
+     */
     @JsonIgnore
     public String getStreetExtensions() {
         String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
@@ -144,6 +195,12 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
         return StringUtils.defaultIfEmpty(streetExtensions, null);
     }
 
+    /**
+     * Compares this address with another based on the value of the "altid" property.
+     *
+     * @param o the object this object must be compared with
+     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
+     */
     @Override
     public int compareTo(Address o) {
 

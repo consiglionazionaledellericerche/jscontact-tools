@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Abstract class for validating JSContact objects.
+ * Abstract class mapping JSContact objects that can be validated.
  *
  * @author Mario Loffredo
  */

@@ -45,6 +45,12 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Class mapping the Card object as defined in section 2 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
 @LocalizationsConstraint
@@ -148,21 +154,24 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Tests if the preferred contact method is by emails.
-     * @return true if the preferred contact method is by emails
+     *
+     * @return true if the preferred contact method is by emails, false otherwise
      */
     @JsonIgnore
     public boolean isContactByEmailsPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.EMAILS); }
 
     /**
      * Tests if the preferred contact method is by phones.
-     * @return true if the preferred contact method is by phones
+     *
+     * @return true if the preferred contact method is by phones, false otherwise
      */
     @JsonIgnore
     public boolean isContactByPhonesPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.PHONES); }
 
     /**
      * Tests if the preferred contact method is by online service.
-     * @return true if the preferred contact method is by online service
+     *
+     * @return true if the preferred contact method is by online service, false otherwise
      */
     @JsonIgnore
     public boolean isContactByOnlinePreferred() {return isContactByMethodPreferred(PreferredContactMethodType.ONLINE); }
@@ -171,6 +180,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a relation between this object and another Card object.
+     *
      * @param key the uid value of the related Card object
      * @param relType one of the RELATED property [RFC6350] type parameter values, or an IANA-registered value, or a vendor-specific value
      * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
@@ -202,6 +212,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a name component to this object.
+     *
      * @param nc the name component
      */
     public void addName(NameComponent nc) {
@@ -210,6 +221,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a nickname to this object.
+     *
      * @param nickName the nickname
      */
     public void addNickName(String nickName) {
@@ -218,6 +230,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds an organization to this object.
+     *
      * @param id the organization identifier
      * @param organization the object representing the organization
      */
@@ -231,6 +244,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a title to this object.
+     *
      * @param id the title identifier
      * @param title the object representing the title
      */
@@ -244,6 +258,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds an email address to this object.
+     *
      * @param id the email identifier
      * @param email the object representing the email address
      */
@@ -257,6 +272,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a phone number to this object.
+     *
      * @param id the phone number identifier
      * @param phone the object representing the phone number
      */
@@ -270,6 +286,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds an online resource to this object.
+     *
      * @param id the resource identifier
      * @param resource the object representing the online resource
      */
@@ -301,7 +318,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard KEY property as defined in section 6.8.1 of [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard KEY property as defined in section 6.8.1 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.8.1">RFC6350</a>
      */
@@ -311,7 +329,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard URL property as defined in section 6.7.8 of [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard URL property as defined in section 6.7.8 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.8">RFC6350</a>
      */
@@ -322,6 +341,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Returns all the online resources associated to this object corresponding to vCard SOURCE property as defined in section 6.1.3 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.3">RFC6350</a>
      */
@@ -331,7 +351,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard LOGO property as defined in section 6.6.3 of [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard LOGO property as defined in section 6.6.3 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.3">RFC6350</a>
      */
@@ -341,7 +362,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard SOUND property as defined in section 6.7.5 of [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard SOUND property as defined in section 6.7.5 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.5">RFC6350</a>
      */
@@ -351,7 +373,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard FBURL property as defined in section 6.9.1 of [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard FBURL property as defined in section 6.9.1 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.1">RFC6350</a>
      */
@@ -361,7 +384,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CALURI property as defined in section 6.9.3 of [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard CALURI property as defined in section 6.9.3 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.3">RFC6350</a>
      */
@@ -371,7 +395,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CALADRURI property as defined in section 6.9.2 of [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard CALADRURI property as defined in section 6.9.2 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.2">RFC6350</a>
      */
@@ -381,7 +406,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard ORG-DIRECTORY property as defined in section 2.4 of [RFC6715]
+     * Returns all the online resources associated to this object corresponding to vCard ORG-DIRECTORY property as defined in section 2.4 of [RFC6715].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6715.html#section-2.4">RFC6715</a>
      */
@@ -391,7 +417,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard IMPP property as defined in section 6.4.3 of [RFC6350]
+     * Returns all the online resources associated to this object corresponding to vCard IMPP property as defined in section 6.4.3 of [RFC6350].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.4.3">RFC6350</a>
      */
@@ -401,7 +428,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CONTACT-URI property as defined in section 21 of [RFC8605]
+     * Returns all the online resources associated to this object corresponding to vCard CONTACT-URI property as defined in section 21 of [RFC8605].
+     *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc8605#section-2.1">RFC8605</a>
      */
@@ -412,6 +440,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a photo to this object.
+     *
      * @param id the photo identifier
      * @param file the object representing the photo
      */
@@ -425,6 +454,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a contact language to this object.
+     *
      * @param id the contact language identifier
      * @param contactLanguage the object representing the contact language
      */
@@ -442,6 +472,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a postal address to this object.
+     *
      * @param id the postal address identifier
      * @param address the object representing the postal address
      */
@@ -455,6 +486,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds an anniversary to this object.
+     *
      * @param id the anniversary identifier
      * @param anniversary the object representing the anniversary
      */
@@ -468,6 +500,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a personal information to this object.
+     *
      * @param id the personal information identifier
      * @param personalInformation the object representing the personal information
      */
@@ -481,6 +514,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a note to this object.
+     *
      * @param note the note
      */
     public void addNote(String note) {
@@ -501,6 +535,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds a collection of categories to this object.
+     *
      * @param categories the categories
      */
     public void addCategories(String[] categories) {
@@ -527,6 +562,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Adds an extension to this object.
+     *
      * @param key the extension identifier
      * @param value the extension as a text value
      */
@@ -538,16 +574,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Clones this object.
-     * @return the clone of this Card object
-     */
-    @Override
-    public Card clone() {
-        return SerializationUtils.clone(this);
-    }
-
-    /**
      * Adds a localization to a property of this object.
+     *
      * @param language the localization language tag [RFC5646]
      * @param path the JSON pointer [RFC6901] to the property
      * @param object the Jackson library JsonNode object representing the localization for the property
@@ -582,6 +610,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Returns all the localizations of this object for a given property.
+     *
      * @param path the JSON pointer [RFC6901] to the property
      * @return a map of language tags [RFC5646] to Jackson library JsonNode objects representing the localizations for the property
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
@@ -607,6 +636,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Returns all the localizations of this object for a given property.
+     *
      * @param language the localization language tag [RFC5646]
      * @return a map of JSON pointers [RFC6901] to Jackson library JsonNode objects representing the localizations for the property
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
@@ -623,6 +653,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Returns the localization to a property of this object for given language and path.
+     *
      * @param language the localization language tag [RFC5646]
      * @param path the JSON pointer [RFC6901] to the property
      * @return the Jackson library JsonNode object representing the localization for the property
@@ -646,6 +677,7 @@ public class Card extends JSContact implements Serializable {
 
     /**
      * Returns the localized version of this object.
+     *
      * @param language the localization language tag [RFC5646]
      * @return the localization of this object for the given language
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
@@ -682,6 +714,16 @@ public class Card extends JSContact implements Serializable {
         localizedCard.setLocalizations(null);
 
         return localizedCard;
+    }
+
+    /**
+     * Clones this object.
+     *
+     * @return the clone of this Card object
+     */
+    @Override
+    public Card clone() {
+        return SerializationUtils.clone(this);
     }
 
 }
