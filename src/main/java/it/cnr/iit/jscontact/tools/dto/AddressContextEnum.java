@@ -26,6 +26,12 @@ import lombok.Getter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enum class mapping the "contexts" map keys of the Address type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1>draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @AllArgsConstructor
 public enum AddressContextEnum implements IsExtensible, VCardTypeDerivedEnum {
 
@@ -60,6 +66,13 @@ public enum AddressContextEnum implements IsExtensible, VCardTypeDerivedEnum {
         return value;
     }
 
+    /**
+     * Returns the vCard 4.0 [RFC6350] TYPE parameter corresponding to the enum value representing the address context.
+     *
+     * @param context the context
+     * @return the vCard 4.0 TYPE parameter value
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
+     */
     @JsonIgnore
     public static String toVCardType(AddressContextEnum context) {
         return EnumUtils.toVCardType(context);

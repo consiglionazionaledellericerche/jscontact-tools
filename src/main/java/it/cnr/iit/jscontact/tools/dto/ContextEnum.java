@@ -27,6 +27,12 @@ import lombok.Getter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enum class mapping the "contexts" map keys of the Context type as defined in section 1.5.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-1.5.1>draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @AllArgsConstructor
 public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
 
@@ -43,7 +49,6 @@ public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
         put("home", PRIVATE);
     }};
 
-
     @JsonValue
     public String getValue() {
         return value;
@@ -59,18 +64,13 @@ public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
         return value;
     }
 
-    @JsonIgnore
-    public static String toVCardType(String label) {
-
-        try {
-            ContextEnum rc = getEnum(label);
-            return toVCardType(rc);
-        }
-        catch(Exception e) {
-            return null;
-        }
-    }
-
+    /**
+     * Returns the vCard 4.0 [RFC6350] TYPE parameter corresponding to the enum value representing the context.
+     *
+     * @param context the context
+     * @return the vCard 4.0 TYPE parameter value
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
+     */
     @JsonIgnore
     public static String toVCardType(ContextEnum context) {
 

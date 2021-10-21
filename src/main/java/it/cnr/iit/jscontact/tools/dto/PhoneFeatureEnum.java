@@ -26,6 +26,12 @@ import lombok.AllArgsConstructor;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.2 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.2>draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @AllArgsConstructor
 public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
 
@@ -58,13 +64,20 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
         return value;
     }
 
+    /**
+     * Returns the vCard 4.0 [RFC6350] TYPE parameter corresponding to the enum value representing the phone feature.
+     *
+     * @param phoneFeature the phone feature
+     * @return the vCard 4.0 TYPE parameter value
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
+     */
     @JsonIgnore
-    public static String toVCardType(PhoneFeatureEnum type) {
+    public static String toVCardType(PhoneFeatureEnum phoneFeature) {
 
-        if (type == OTHER)
+        if (phoneFeature == OTHER)
             return null;
 
-        return type.getValue();
+        return phoneFeature.getValue();
     }
 
     @JsonIgnore

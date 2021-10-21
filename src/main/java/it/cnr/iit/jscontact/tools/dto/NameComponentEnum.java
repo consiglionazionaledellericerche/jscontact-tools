@@ -21,6 +21,12 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
+/**
+ * Enum class mapping the "type" property values of the NameComponent type as defined in section 2.2.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.2.1>draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @AllArgsConstructor
 public enum NameComponentEnum implements IsExtensible {
 

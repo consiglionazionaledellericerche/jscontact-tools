@@ -5,8 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * Abstract class for converting a JSContact object from/to a vCard 4.0 [RFC6350] and its transliterations.
- * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  *
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  * @author Mario Loffredo
  */
 public abstract class AbstractConverter {
