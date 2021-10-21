@@ -825,7 +825,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Map<PhoneFeature,Boolean> phoneFeatures = getPhoneFeatures(jcardType);
             String[] exclude = null;
             if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toStrings(Context.getContextEnumValues(contexts.keySet())));
-            if (!phoneFeatures.containsKey(PhoneFeature.other())) exclude = ArrayUtils.addAll(exclude, EnumUtils.toStrings(PhoneFeature.getFeatureEnumValues(phoneFeatures.keySet())));
+            if (!phoneFeatures.containsKey(PhoneFeature.other())) exclude = ArrayUtils.addAll(exclude, EnumUtils.toStrings(PhoneFeature.toEnumValues(phoneFeatures.keySet())));
             String label = getLabel(jcardType, exclude, null);
             jsCard.addPhone(getId(VCard2JSContactIdsProfile.IdType.PHONE, i,"PHONE-" + (i++)), Phone.builder()
                                        .phone(getValue(tel))

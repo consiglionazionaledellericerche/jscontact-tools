@@ -27,6 +27,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Class mapping the keys of "contexts" map of the Address type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)

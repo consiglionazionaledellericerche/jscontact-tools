@@ -21,7 +21,6 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
@@ -593,7 +592,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         joiner = joiner.merge(toVCardTypeStringJoiner(ContextEnum.class, Context.getContextEnumValues(phone.getContexts().keySet())));
-        joiner = joiner.merge(toVCardTypeStringJoiner(PhoneFeatureEnum.class, PhoneFeature.getFeatureEnumValues(phone.getFeatures().keySet())));
+        joiner = joiner.merge(toVCardTypeStringJoiner(PhoneFeatureEnum.class, PhoneFeature.toEnumValues(phone.getFeatures().keySet())));
 
         if (StringUtils.isNotEmpty(joiner.toString()))
             tel.setParameter("TYPE", joiner.toString());
