@@ -13,7 +13,7 @@ import java.util.Calendar;
 /**
  * Class mapping the "date" property values of the Anniversary type as defined in section 2.6.1 of [draft-ietf-jmap-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1>draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
 @Builder
@@ -30,7 +30,7 @@ public class AnniversaryDate implements Serializable {
      *
      * @param text the date in text format
      * @return true if this anniversary date is equal to the given date in text format, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1>draft-ietf-jmap-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
      */
     public boolean isEqual(String text) {
 
@@ -45,7 +45,7 @@ public class AnniversaryDate implements Serializable {
      *
      * @param text the date in text format
      * @return the anniversary date corresponding to the given date in text format
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1>draft-ietf-jmap-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
      */
     public static AnniversaryDate parse(String text) {
 

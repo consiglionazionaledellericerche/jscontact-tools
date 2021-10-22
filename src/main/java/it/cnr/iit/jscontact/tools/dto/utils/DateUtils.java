@@ -131,7 +131,7 @@ public class DateUtils {
     /**
      * Converts an Ezvcard partial date into a JSContact partial date text format.
      * @param partialDate the partial date as an Ezvcard PartialDate object
-     * @return the Ezvcard partial date as text
+     * @return the Ezvcard partial date in text format
      */
     public static String toJSContactPartialDateText(PartialDate partialDate) {
 

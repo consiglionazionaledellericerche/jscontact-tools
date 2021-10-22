@@ -14,6 +14,8 @@ public class ConstraintViolationUtils {
 
     /**
      * Returns a text message including all the constraint violations returned by a validation process and separated by newline.
+     *
+     * @param <T> a generic type a constraint is set on
      * @param constraintViolations the set of constraint violations
      * @return the text message
      */

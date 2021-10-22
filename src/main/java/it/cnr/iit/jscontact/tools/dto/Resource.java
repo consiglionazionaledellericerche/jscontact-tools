@@ -217,8 +217,9 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
                        .build();
     }
     /**
-     * Tests a resource mapping a vCard 4.0 CALADRURI property as defined in section 6.9.2 of [RFC6350].
+     * Returns a resource mapping a vCard 4.0 CALADRURI property as defined in section 6.9.2 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.2">RFC6350</a>
      */
@@ -226,6 +227,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.3">RFC6350</a>
      */
@@ -233,6 +235,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 CONTACT-URI property as defined in section 2.1 of [RFC8605].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc8605#section-2.1">RFC6350</a>
      */
@@ -240,6 +243,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.1">RFC6350</a>
      */
@@ -248,6 +252,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 IMPP property as defined in section 6.4.3 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.4.3">RFC6350</a>
      */
@@ -255,6 +260,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.8.1">RFC6350</a>
      */
@@ -262,6 +268,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.3">RFC6350</a>
      */
@@ -269,6 +276,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 ORG-DIRECTORY property as defined in section 6.2.4 of [RFC6715].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6715.html#section-2.4">RFC6715</a>
      */
@@ -276,6 +284,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.5">RFC6350</a>
      */
@@ -283,6 +292,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.1.3">RFC6350</a>
      */
@@ -290,6 +300,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     /**
      * Returns a resource mapping a vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
      *
+     * @param resource resource identifier
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.8">RFC6350</a>
      */

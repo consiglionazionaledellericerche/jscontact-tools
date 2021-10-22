@@ -122,7 +122,7 @@ public class AddressContext extends ExtensibleEnum<AddressContextEnum> implement
     /**
      * Returns a custom address context.
      *
-     * @param extValue the custom address context as text
+     * @param extValue the custom address context in text format
      * @return a custom address context
      */
     public static AddressContext ext(String extValue) { return AddressContext.builder().extValue(extValue).build(); }

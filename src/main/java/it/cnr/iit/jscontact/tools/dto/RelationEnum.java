@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 /**
  * Enum class mapping the "relation" map keys of the Relation type as defined in section 2.1.7 of [draft-ietf-jmap-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.1.7>draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.1.7">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

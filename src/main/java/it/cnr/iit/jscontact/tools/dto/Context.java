@@ -97,7 +97,7 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
     /**
      * Returns a custom context.
      *
-     * @param extValue the custom context as text
+     * @param extValue the custom context in text format
      * @return a custom context
      */
     public static Context ext(String extValue) { return Context.builder().extValue(extValue).build(); }

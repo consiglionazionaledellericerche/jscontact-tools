@@ -34,8 +34,9 @@ import java.io.Serializable;
 public class NameComponentType extends ExtensibleEnum<NameComponentEnum> implements Serializable {
 
     /**
-     * Returns a name component type.
+     * Returns a name component type whose enum value is pre-defined.
      *
+     * @param rfcValue a pre-defined name component type
      * @return a name component type
      */
     public static NameComponentType rfc(NameComponentEnum rfcValue) { return NameComponentType.builder().rfcValue(rfcValue).build();}

@@ -15,6 +15,7 @@ public class PrettyPrintSerializer {
      *
      * @param o the object to serialize
      * @return the formatted JSON text
+     * @throws JsonProcessingException if the jCard cannot be serialized
      */
     public static String print(Object o) throws JsonProcessingException {
 

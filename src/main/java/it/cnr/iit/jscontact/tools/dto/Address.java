@@ -40,7 +40,7 @@ import java.util.StringJoiner;
 /**
  * Class mapping the Address type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1>draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -133,6 +133,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     /**
      * Tests if this address is used in a custom context.
      *
+     * @param extValue the custom context in text format
      * @return true if the context map includes the given custom context, false otherwise
      */
     public boolean asExtContext(String extValue) { return asContext(AddressContext.ext(extValue)); }

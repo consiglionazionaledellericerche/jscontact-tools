@@ -29,6 +29,7 @@ public class EnumUtils {
     /**
      * Returns the value of an enum class matching the given text value.
      *
+     * @param <E> a generic enum
      * @param enumType the enum class
      * @param value the text value
      * @return the enum value matching the text value.
@@ -42,8 +43,10 @@ public class EnumUtils {
      * Returns the value of an enum class matching the given text value.
      * The matching is done by considering possible aliases.
      *
+     * @param <E> a generic enum
      * @param enumType the enum class
      * @param value the text value
+     * @param aliases the possible aliases
      * @return the enum value matching the text value
      */
     public static <E extends Enum <E>> E getEnum(Class<E> enumType, String value, Map<String,E> aliases) {
@@ -61,6 +64,7 @@ public class EnumUtils {
     /**
      * Returns the value of vCard 4.0 TYPE parameter, as defined in section 5.6 of [RFC6350], matching the given context value.
      *
+     * @param <E> a generic enum
      * @param context the context value
      * @return the value of vCard 4.0 TYPE parameter
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
@@ -81,6 +85,7 @@ public class EnumUtils {
     /**
      * Returns an array of strings matching the given enum values.
      *
+     * @param <E> a generic enum
      * @param enumValues a collection of enum values
      * @return the array of strings
      */

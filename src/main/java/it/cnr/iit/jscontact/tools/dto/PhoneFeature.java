@@ -162,7 +162,7 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
     /**
      * Returns a custom phone feature.
      *
-     * @param extValue the custom phone feature as text
+     * @param extValue the custom phone feature in text format
      * @return a custom phone feature
      */
     public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(extValue).build(); }

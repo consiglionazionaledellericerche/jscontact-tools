@@ -33,7 +33,7 @@ import java.io.Serializable;
 /**
  * Class mapping the Anniversary type as defined in section 2.6.1 of [draft-ietf-jmap-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1>draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -108,7 +108,8 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     /**
      * Returns a birthday anniversary. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
      *
-     * @return a birthday
+     * @param date the birthday in text format
+     * @return a birthday anniversary
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
      */
     public static Anniversary birth(String date) { return anniversary(AnniversaryType.BIRTH, AnniversaryDate.parse(date), null);}
@@ -116,7 +117,8 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     /**
      * Returns a date of death anniversary. See vCard 4.0 DEATHDATE property as defined in section 2.3 of [RFC6474].
      *
-     * @return a date of death
+     * @param date the death date in text format
+     * @return a date of death anniversary
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
      */
     public static Anniversary death(String date) { return anniversary(AnniversaryType.DEATH, AnniversaryDate.parse(date), null);}
@@ -124,7 +126,8 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     /**
      * Returns a date of marriage, or equivalent, anniversary. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
      *
-     * @return a date of marriage
+     * @param date the marriage date in text format
+     * @return a date of marriage anniversary
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     public static Anniversary marriage(String date) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}
@@ -132,7 +135,9 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     /**
      * Returns an anniversary other than birthday, date of death, date of marriage.
      *
-     * @return an anniversary is other than birthday, date of death, date of marriage
+     * @param date the anniversary date in text format
+     * @param label a text specifying the anniversary
+     * @return an anniversary other than birthday, date of death, date of marriage
      */
     public static Anniversary otherAnniversary(String date, String label) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), label);}
 

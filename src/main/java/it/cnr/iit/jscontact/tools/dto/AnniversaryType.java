@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
 /**
  * Enum class mapping the values of the "type" property of the Anniversary type as defined in section 2.6.1 of [draft-ietf-jmap-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1>draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
