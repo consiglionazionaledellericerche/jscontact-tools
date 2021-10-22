@@ -29,7 +29,8 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 5. [vCard Conversion](#vcard-conversion)
 6. [JSContact Conversion](#jscontact-conversion)
 7. [Testing](#testing)
-8. [References](#references)
+8. [JSContact Compliance](#jscontact-compliance)
+9. [References](#references)
 
 
 <a name="creation"></a>
@@ -558,6 +559,11 @@ Here in the following two examples of conversion between JSContact top most obje
 ## Testing
 
 Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all the features provided.
+
+<a name="jscontact-compliance"></a>
+## JSContact Compliance
+
+This version is compliant with JSContact specification version -08 and JSContact-vCard mapping version -07.
 
 <a name="references"></a>
 ## References
