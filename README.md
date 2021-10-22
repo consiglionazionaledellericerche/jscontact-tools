@@ -563,7 +563,7 @@ Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all 
 <a name="jscontact-compliance"></a>
 ## JSContact Compliance
 
-This version is compliant with JSContact specification version -08 and JSContact-vCard mapping version -07.
+This jscontact-tools version is compliant with JSContact specification version -08 and JSContact-vCard mapping version -07.
 
 <a name="references"></a>
 ## References
