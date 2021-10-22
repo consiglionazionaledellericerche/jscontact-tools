@@ -324,7 +324,7 @@ To do that, the following steps must be followed:
 
 ### RDAP Conversion Profile from jCard to JSContact
 
-A pre-defined conversion profile to convert a jCard instance inside an RDAP response [RFC7483](https://datatracker.ietf.org/doc/rfc7483/) is available.
+A pre-defined conversion profile to convert a jCard instance inside an RDAP response [RFC9083](https://datatracker.ietf.org/doc/rfc9083/) is available.
 The values of the map keys used in such profile are defined in [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/).
 Additional setting rules are shown in the following code:
 
@@ -580,6 +580,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 *   [RFC6901](https://datatracker.ietf.org/doc/rfc6901/)
 *   [RFC7095](https://datatracker.ietf.org/doc/rfc7095/)
 *   [RFC8605](https://datatracker.ietf.org/doc/rfc8605/)
+*   [RFC9083](https://datatracker.ietf.org/doc/rfc9083/)
 
 <a name="drafts"></a>
 ### JSContact I-Ds
