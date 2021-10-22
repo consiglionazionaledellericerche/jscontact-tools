@@ -30,11 +30,13 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid1() throws IOException, CardException {
 
         String jscard = "{" +
+                        "\"@type\":\"Card\"," +
                         "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                        "\"fullName\":{\"value\":\"test\"}," +
+                        "\"fullName\":\"test\"," +
                         "\"addresses\":{" +
                             "\"ADR-1\": {" +
-                                "\"fullAddress\":{\"value\":\"54321 Oak St Reston VA 20190 USA\"}," +
+                                "\"@type\":\"Address\"," +
+                                "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
                                 "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                                 "\"locality\":\"Reston\"," +
                                 "\"region\":\"VA\"," +
@@ -59,10 +61,12 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid2() throws IOException, CardException {
 
         String jscard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -87,10 +91,12 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid3() throws IOException, CardException {
 
         String jscard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -99,6 +105,7 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"countryCode\":\"US\"" +
                     "}," +
                     "\"ADR-2\": {" +
+                        "\"@type\":\"Address\"," +
                         "\"street\":[{\"type\":\"name\", \"value\":\"12345 Elm St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -130,10 +137,12 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid4() throws IOException, CardException {
 
         String jscard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -160,10 +169,12 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid5() throws IOException, CardException {
 
         String jscard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -192,11 +203,14 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid6() throws IOException, CardException {
 
         String jscard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
+                "\"language\":\"en\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"fullAddress\":{\"value\":\"54321 Oak St Reston VA 20190 USA\", \"language\":\"en\",\"localizations\":{\"it\":\"Via Moruzzi,1 Pisa Italia\"}}," +
+                        "\"@type\":\"Address\"," +
+                        "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
                         "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -204,6 +218,11 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"postcode\":\"20190\"," +
                         "\"countryCode\":\"US\"" +
                     "}" +
+                "}," +
+                "\"localizations\":{" +
+                   "\"it\":{" +
+                       "\"/addresses/ADR-1/fullAddress\":\"Via Moruzzi,1 Pisa 56124 Italia\"" +
+                   "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -216,7 +235,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertTrue("testAddressesValid6 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
         assertTrue("testAddressesValid6 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St Reston VA 20190 USA"));
         assertTrue("testAddressesValid6 - 9", vcard.getAddresses().get(0).getLanguage().equals("en"));
-        assertTrue("testAddressesValid6 - 10", vcard.getAddresses().get(1).getLabel().equals("Via Moruzzi,1 Pisa Italia"));
+        assertTrue("testAddressesValid6 - 10", vcard.getAddresses().get(1).getLabel().equals("Via Moruzzi,1 Pisa 56124 Italia"));
         assertTrue("testAddressesValid6 - 11", vcard.getAddresses().get(1).getLanguage().equals("it"));
     }
 
@@ -224,10 +243,12 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid7() throws IOException, CardException {
 
         String jscard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
                         "\"street\":[{\"type\":\"name\", \"value\":\"Oak St\"}, {\"type\":\"number\", \"value\":\"54321\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -252,22 +273,24 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid8() throws IOException, CardException {
 
         String jscard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
-                "\"ADR-1\": {" +
-                "\"street\":[" +
-                             "{\"type\":\"name\", \"value\":\"Oak St\"}," +
-                             "{\"type\":\"number\", \"value\":\"54321\"}," +
-                             "{\"type\":\"floor\", \"value\":\"5\"}," +
-                             "{\"type\":\"room\", \"value\":\"100\"}" +
-                            "]," +
-                "\"locality\":\"Reston\"," +
-                "\"region\":\"VA\"," +
-                "\"country\":\"USA\"," +
-                "\"postcode\":\"20190\"," +
-                "\"countryCode\":\"US\"" +
-                "}" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"street\":[" +
+                                     "{\"type\":\"name\", \"value\":\"Oak St\"}," +
+                                     "{\"type\":\"number\", \"value\":\"54321\"}," +
+                                     "{\"type\":\"floor\", \"value\":\"5\"}," +
+                                     "{\"type\":\"room\", \"value\":\"100\"}" +
+                                    "]," +
+                        "\"locality\":\"Reston\"," +
+                        "\"region\":\"VA\"," +
+                        "\"country\":\"USA\"," +
+                        "\"postcode\":\"20190\"," +
+                        "\"countryCode\":\"US\"" +
+                    "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -287,18 +310,20 @@ public class AddressesTest extends JSContact2VCardTest {
     public void testAddressesValid9() throws IOException, CardException {
 
         String jscard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                            "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                            "\"locality\":\"Reston\"," +
-                            "\"region\":\"VA\"," +
-                            "\"country\":\"USA\"," +
-                            "\"postcode\":\"20190\"," +
-                            "\"countryCode\":\"US\"," +
-                            "\"coordinates\":\"geo:46.772673,-71.282945\"," +
-                            "\"timeZone\":\"/tz1\"" +
+                        "\"@type\":\"Address\"," +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"locality\":\"Reston\"," +
+                        "\"region\":\"VA\"," +
+                        "\"country\":\"USA\"," +
+                        "\"postcode\":\"20190\"," +
+                        "\"countryCode\":\"US\"," +
+                        "\"coordinates\":\"geo:46.772673,-71.282945\"," +
+                        "\"timeZone\":\"/tz1\"" +
                     "}" +
                 "}," +
                 "\"timeZones\": {" +
@@ -326,6 +351,57 @@ public class AddressesTest extends JSContact2VCardTest {
         assertTrue("testAddressesValid9 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
         assertTrue("testAddressesValid9 - 9", vcard.getAddresses().get(0).getGeo().equals(GeoUri.parse("geo:46.772673,-71.282945")));
         assertTrue("testAddressesValid9 - 10", vcard.getAddresses().get(0).getTimezone().equals("-0530"));
+    }
+
+
+    @Test
+    public void testAddressesValid10() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"fullName\":\"test\"," +
+                "\"language\":\"en\"," +
+                "\"addresses\":{" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"locality\":\"Reston\"," +
+                        "\"region\":\"VA\"," +
+                        "\"country\":\"USA\"," +
+                        "\"postcode\":\"20190\"," +
+                        "\"countryCode\":\"US\"" +
+                    "}" +
+                "}," +
+                "\"localizations\":{" +
+                    "\"it\":{" +
+                        "\"/addresses/ADR-1\":{" +
+                            "\"street\":[{\"type\":\"name\", \"value\":\"Via Moruzzi,1\"}]," +
+                            "\"locality\":\"Pisa\"," +
+                            "\"country\":\"Italia\"," +
+                            "\"postcode\":\"56124\"," +
+                            "\"countryCode\":\"IT\"" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testAddressesValid10 - 1",vcard.getAddresses().size() == 2);
+        assertTrue("testAddressesValid10 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
+        assertTrue("testAddressesValid10 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
+        assertTrue("testAddressesValid10 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
+        assertTrue("testAddressesValid10 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
+        assertTrue("testAddressesValid10 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
+        assertTrue("testAddressesValid10 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
+        assertTrue("testAddressesValid10 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
+        assertTrue("testAddressesValid10 - 9", vcard.getAddresses().get(0).getLanguage().equals("en"));
+        assertTrue("testAddressesValid10 - 10",vcard.getAddresses().get(1).getParameter("CC").equals("IT"));
+        assertTrue("testAddressesValid10 - 11",vcard.getAddresses().get(1).getCountry().equals("Italia"));
+        assertTrue("testAddressesValid10 - 12",vcard.getAddresses().get(1).getPostalCode().equals("56124"));
+        assertTrue("testAddressesValid10 - 13",vcard.getAddresses().get(1).getLocality().equals("Pisa"));
+        assertTrue("testAddressesValid10 - 14",vcard.getAddresses().get(1).getStreetAddress().equals("Via Moruzzi,1"));
+        assertTrue("testAddressesValid10 - 15", vcard.getAddresses().get(1).getLabel().equals("Via Moruzzi,1\nPisa\n56124\nItalia"));
+        assertTrue("testAddressesValid10 - 16", vcard.getAddresses().get(1).getLanguage().equals("it"));
     }
 
 }

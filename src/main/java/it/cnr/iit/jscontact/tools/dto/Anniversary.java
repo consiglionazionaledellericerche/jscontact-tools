@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
@@ -26,8 +27,15 @@ import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
+/**
+ * Class mapping the Anniversary type as defined in section 2.6.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -36,6 +44,12 @@ import java.io.Serializable;
 public class Anniversary extends GroupableObject implements IdMapValue, Serializable {
 
     public static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
+
+    @NotNull
+    @Pattern(regexp = "Anniversary", message="invalid @type value in Anniversary")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "Anniversary";
 
     @NotNull(message = "type is missing in Anniversary")
     @NonNull
@@ -52,21 +66,79 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     @Valid
     Address place;
 
+    /**
+     * Tests if this anniversary is a birthday. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
+     *
+     * @return true if this anniversary is a birthday
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
+     */
     @JsonIgnore
     public boolean isBirth() { return type == AnniversaryType.BIRTH; }
+
+    /**
+     * Tests if this anniversary is a date of death. See vCard 4.0 DEATHDATE property as defined in section 6.2.5 of [RFC6474].
+     *
+     * @return true if this anniversary is a date of death
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
+     */
     @JsonIgnore
     public boolean isDeath() { return type == AnniversaryType.DEATH; }
+
+    /**
+     * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property [as defined in section 6.2.6 of [RFC6350].
+     *
+     * @return true if this anniversary is a date of marriage
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
+     */
     @JsonIgnore
     public boolean isMarriage() { return type == AnniversaryType.OTHER && label.equals(ANNIVERSAY_MARRIAGE_LABEL); }
+
+    /**
+     * Tests if this is an undefined anniversary specified by the value of the "label" property.
+     *
+     * @return true if this is an undefined anniversary
+     */
     @JsonIgnore
     public boolean isOtherAnniversary() { return type == AnniversaryType.OTHER; }
 
     private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String label) {
         return Anniversary.builder().type(type).date(date).label(label).build();
     }
+
+    /**
+     * Returns a birthday anniversary. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
+     *
+     * @param date the birthday in text format
+     * @return a birthday anniversary
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
+     */
     public static Anniversary birth(String date) { return anniversary(AnniversaryType.BIRTH, AnniversaryDate.parse(date), null);}
+
+    /**
+     * Returns a date of death anniversary. See vCard 4.0 DEATHDATE property as defined in section 2.3 of [RFC6474].
+     *
+     * @param date the death date in text format
+     * @return a date of death anniversary
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
+     */
     public static Anniversary death(String date) { return anniversary(AnniversaryType.DEATH, AnniversaryDate.parse(date), null);}
+
+    /**
+     * Returns a date of marriage, or equivalent, anniversary. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
+     *
+     * @param date the marriage date in text format
+     * @return a date of marriage anniversary
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
+     */
     public static Anniversary marriage(String date) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}
+
+    /**
+     * Returns an anniversary other than birthday, date of death, date of marriage.
+     *
+     * @param date the anniversary date in text format
+     * @param label a text specifying the anniversary
+     * @return an anniversary other than birthday, date of death, date of marriage
+     */
     public static Anniversary otherAnniversary(String date, String label) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), label);}
 
 }

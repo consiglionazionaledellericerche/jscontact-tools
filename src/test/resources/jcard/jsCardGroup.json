@@ -1,11 +1,11 @@
 [
   {
+    "@type": "CardGroup",
     "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
     "card": {
+      "@type": "Card",
       "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
-      "fullName": {
-        "value": "a group"
-      },
+      "fullName": "a group",
       "kind": "group"
     },
     "members": {
@@ -15,42 +15,35 @@
     }
   },
   {
+    "@type": "Card",
     "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
-    "fullName": {
-      "value": "Joe User"
-    },
+    "fullName": "Joe User",
     "kind": "individual",
     "preferredContactLanguages": {
-      "fr": [
-        {
-          "pref": 1
-        }
-      ],
-      "en": [
-        {
-          "pref": 2
-        }
-      ]
+      "fr": [{ "@type": "ContactLanguage", "pref": 1 }],
+      "en": [{ "@type": "ContactLanguage", "pref": 2 }]
     },
     "organizations": {
       "ORG-1" :{
-        "name" : {
-          "value": "Example"
-        }
+        "@type": "Organization",
+        "name" :  "Example"
       }
     },
     "titles": {
       "TITLE-1": {
-        "title" : {"value": "Research Scientist"}
+        "@type": "Title",
+        "title": "Research Scientist"
       },
       "TITLE-2": {
-        "title" : {"value": "Project Lead"}
+        "@type": "Title",
+        "title": "Project Lead"
       }
     },
     "addresses": {
       "ADR-1": {
+        "@type": "Address",
         "contexts": {"work": true},
-        "street": [{"type": "name","value": "4321 Rue Somewhere"},{"type": "extension","value": "Suite 1234"}],
+        "street": [{"@type": "StreetComponent","type": "name","value": "4321 Rue Somewhere"},{"@type": "StreetComponent","type": "extension","value": "Suite 1234"}],
         "locality": "Quebec",
         "region": "QC",
         "postcode": "G1V 2M2",
@@ -59,14 +52,14 @@
         "timeZone": "Etc/GMT+5"
       },
       "ADR-2" : {
+        "@type": "Address",
         "contexts": {"private": true},
-        "fullAddress": {
-          "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
-        }
+        "fullAddress": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
       }
     },
     "phones": {
       "PHONE-1": {
+        "@type": "Phone",
         "contexts": {
           "work": true
         },
@@ -82,18 +75,21 @@
     },
     "emails": {
       "EMAIL-1": {
+        "@type": "EmailAddress",
         "contexts": {"work": true},
         "email": "joe.user@example.com"
       }
     },
     "online": {
       "KEY-1": {
+        "@type" : "Resource",
         "contexts": {"work": true},
         "type": "uri",
         "label": "key",
         "resource": "http://www.example.com/joe.user/joe.asc"
       },
       "URL-1": {
+        "@type" : "Resource",
         "contexts": {"private": true},
         "type": "uri",
         "label": "url",
@@ -102,66 +98,55 @@
     }
   },
   {
+    "@type": "Card",
     "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
-    "fullName": {
-      "value": "大久保 正仁",
-      "language": "ja",
-      "localizations": {
-        "en": "Okubo Masahito"
-      }
-    },
+    "fullName": "大久保 正仁",
     "titles": {
       "TITLE-1" : {
-        "title": {
-          "value": "事務局長",
-          "language": "ja",
-          "localizations": {
-            "en": "Secretary General"
-          }
-        }
+        "@type": "Title",
+        "title": "事務局長"
       }
     },
     "kind": "individual",
     "preferredContactLanguages": {
-      "ja": [
-        {
-          "pref": 1
-        }
-      ],
-      "en": [
-        {
-          "pref": 2
-        }
-      ]
+      "jp": [{ "@type": "ContactLanguage", "pref": 1 }],
+      "en": [{ "@type": "ContactLanguage", "pref": 2 }]
+    },
+    "localizations": {
+      "en": {
+        "/fullName": "Okubo Masahito",
+        "/titles/TITLE-1": { "@type": "Title", "title": "Secretary General" }
+      }
     }
   },
   {
+    "@type": "Card",
     "uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
-    "fullName": {
-      "value": "Taiwan Fixed Network CO.,LTD.",
-      "language": "en",
-      "localizations": {
-        "zh-Hant-TW": "台灣固網股份有限公司"
-      }
-    },
+    "fullName": "Taiwan Fixed Network CO.,LTD.",
     "kind": "org",
     "addresses": {
       "ADR-1": {
-        "fullAddress": {
-          "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
-        }
+        "@type": "Address",
+        "fullAddress": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
       }
     },
     "phones": {
       "PHONE-1": {
+        "@type": "Phone",
         "features": {"voice": true},
         "phone": ""
       },
       "PHONE-2": {
+        "@type": "Phone",
         "features": {"fax": true},
         "phone": ""
       }
     },
-    "emails": {}
+    "emails": {},
+    "localizations": {
+       "zh-Hant-TW": {
+         "/fullName": "台灣固網股份有限公司"
+       }
+    }
   }
 ]

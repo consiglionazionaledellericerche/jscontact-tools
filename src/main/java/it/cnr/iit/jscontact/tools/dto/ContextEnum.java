@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
-import it.cnr.iit.jscontact.tools.dto.interfaces.JCardTypeDerivedEnum;
+import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +27,14 @@ import lombok.Getter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enum class mapping the "contexts" map keys of the Context type as defined in section 1.5.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-1.5.1">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @AllArgsConstructor
-public enum ContextEnum implements IsExtensible, JCardTypeDerivedEnum {
+public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
 
     PRIVATE("private"),
     WORK("work"),
@@ -42,7 +48,6 @@ public enum ContextEnum implements IsExtensible, JCardTypeDerivedEnum {
     {{
         put("home", PRIVATE);
     }};
-
 
     @JsonValue
     public String getValue() {
@@ -59,22 +64,17 @@ public enum ContextEnum implements IsExtensible, JCardTypeDerivedEnum {
         return value;
     }
 
+    /**
+     * Returns the vCard 4.0 [RFC6350] TYPE parameter corresponding to the enum value representing the context.
+     *
+     * @param context the context
+     * @return the vCard 4.0 TYPE parameter value
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
+     */
     @JsonIgnore
-    public static String getVCardType(String label) {
+    public static String toVCardType(ContextEnum context) {
 
-        try {
-            ContextEnum rc = getEnum(label);
-            return getVCardType(rc);
-        }
-        catch(Exception e) {
-            return null;
-        }
-    }
-
-    @JsonIgnore
-    public static String getVCardType(ContextEnum context) {
-
-        return EnumUtils.getVCardType(context);
+        return EnumUtils.toVCardType(context);
     }
 
 }

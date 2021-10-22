@@ -27,6 +27,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Class mapping the keys of "features" map of the Phone type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -35,35 +41,139 @@ import java.util.List;
 public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Serializable {
 
     private boolean isRfc(PhoneFeatureEnum value) { return isRfcValue() && rfcValue == value; }
+    /**
+     * Tests if this is a "voice" phone feature.
+     *
+     * @return true if this is a "voice" phone feature, false otherwise
+     */
     @JsonIgnore
     public boolean isVoice() { return isRfc(PhoneFeatureEnum.VOICE); }
+    /**
+     * Tests if this is a "fax" phone feature.
+     *
+     * @return true if this is a "fax" phone feature, false otherwise
+     */
     @JsonIgnore
     public boolean isFax() { return isRfc(PhoneFeatureEnum.FAX); }
+    /**
+     * Tests if this is a "cell" phone feature.
+     *
+     * @return true if this is a "cell" phone feature, false otherwise
+     */
     @JsonIgnore
     public boolean isCell() { return isRfc(PhoneFeatureEnum.CELL); }
+    /**
+     * Tests if this is a "pager" phone feature.
+     *
+     * @return true if this is a "pager" phone feature, false otherwise
+     */
     @JsonIgnore
     public boolean isPager() { return isRfc(PhoneFeatureEnum.PAGER); }
+    /**
+     * Tests if this is a "video" phone feature.
+     *
+     * @return true if this is a "video" phone feature, false otherwise
+     */
     @JsonIgnore
     public boolean isVideo() { return isRfc(PhoneFeatureEnum.VIDEO); }
+    /**
+     * Tests if this is a "text" phone feature.
+     *
+     * @return true if this is a "text" phone feature, false otherwise
+     */
     @JsonIgnore
     public boolean isText() { return isRfc(PhoneFeatureEnum.TEXT); }
+    /**
+     * Tests if this is a "textphone" phone feature.
+     *
+     * @return true if this is a "textphone" phone feature, false otherwise
+     */
     @JsonIgnore
     public boolean isTextphone() { return isRfc(PhoneFeatureEnum.TEXTPHONE); }
+    /**
+     * Tests if this is a phone feature not covered by any of the known types.
+     *
+     * @return true if this is an "other" phone feature, false otherwise
+     */
     @JsonIgnore
     public boolean isOther() { return isRfc(PhoneFeatureEnum.OTHER); }
-
+    /**
+     * Tests if this is a custom phone feature.
+     *
+     * @return true if this is a custom phone feature, false otherwise
+     */
+    @JsonIgnore
+    public boolean isExt() { return isExtValue(); }
+    /**
+     * Returns a phone feature whose enum value is pre-defined.
+     *
+     * @param rfcValue the pre-defined feature
+     * @return a pre-defined phone feature
+     */
     public static PhoneFeature rfc(PhoneFeatureEnum rfcValue) { return PhoneFeature.builder().rfcValue(rfcValue).build();}
+    /**
+     * Returns a "voice" phone feature.
+     *
+     * @return a "voice" phone feature
+     */
     public static PhoneFeature voice() { return rfc(PhoneFeatureEnum.VOICE);}
+    /**
+     * Returns a "fax" phone feature.
+     *
+     * @return a "fax" phone feature
+     */
     public static PhoneFeature fax() { return rfc(PhoneFeatureEnum.FAX);}
+    /**
+     * Returns a "pager" phone feature.
+     *
+     * @return a "pager" phone feature
+     */
     public static PhoneFeature pager() { return rfc(PhoneFeatureEnum.PAGER);}
+    /**
+     * Returns a "cell" phone feature.
+     *
+     * @return a "cell" phone feature
+     */
     public static PhoneFeature cell() { return rfc(PhoneFeatureEnum.CELL);}
+    /**
+     * Returns a "video" phone feature.
+     *
+     * @return a "video" phone feature
+     */
     public static PhoneFeature video() { return rfc(PhoneFeatureEnum.VIDEO);}
+    /**
+     * Returns a "text" phone feature.
+     *
+     * @return a "text" phone feature
+     */
     public static PhoneFeature text() { return rfc(PhoneFeatureEnum.TEXT);}
+    /**
+     * Returns a "textphone" phone feature.
+     *
+     * @return a "textphone" phone feature
+     */
     public static PhoneFeature textphone() { return rfc(PhoneFeatureEnum.TEXTPHONE);}
+    /**
+     * Returns a phone feature not covered by any of the known types.
+     *
+     * @return an "other" phone feature
+     */
     public static PhoneFeature other() { return rfc(PhoneFeatureEnum.OTHER);}
+    /**
+     * Returns a custom phone feature.
+     *
+     * @param extValue the custom phone feature in text format
+     * @return a custom phone feature
+     */
     public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(extValue).build(); }
 
-    public static List<PhoneFeatureEnum> getFeatureEnumValues(Collection<PhoneFeature> features) {
+    /**
+     * Returns the list of enum values corresponding to those ones whose type is known in a given collection of phone features.
+     *
+     * @param features the list of phone features
+     * @return list of enum values corresponding to those features whose type is known
+     */
+    public static List<PhoneFeatureEnum> toEnumValues(Collection<PhoneFeature> features) {
 
         if (features == null)
             return null;

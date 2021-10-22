@@ -23,6 +23,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+/**
+ * Custom JSON serializer for the StreetComponentType value.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class StreetComponentTypeSerializer extends JsonSerializer<StreetComponentType> {
 

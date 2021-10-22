@@ -13,6 +13,23 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto.interfaces;
+package it.cnr.iit.jscontact.tools.constraints;
 
-public interface JCardTypeDerivedEnum { }
+import it.cnr.iit.jscontact.tools.constraints.validators.LocalizationsValidator;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
+
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {LocalizationsValidator.class})
+@Documented
+public @interface LocalizationsConstraint {
+
+    String message() default "";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
+}
+

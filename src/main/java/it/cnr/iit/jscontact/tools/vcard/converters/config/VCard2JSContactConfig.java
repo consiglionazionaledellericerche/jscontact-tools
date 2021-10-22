@@ -19,13 +19,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Class for configuring the conversion from a vCard 4.0 [RFC6350] and its transliterations to a JSContact object.
+ *
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ * @author Mario Loffredo
+ */
 @Data
 @Builder
 @AllArgsConstructor
 public class VCard2JSContactConfig {
 
     @Builder.Default
-    private String extensionsPrefix = "extension/";
+    private String extensionsPrefix = "extension:";
     @Builder.Default
     private String customTimeZonesPrefix = "/tz";
     @Builder.Default
@@ -33,6 +39,8 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private boolean applyAutoIdsProfile = true;
 
-    private VCard2JSContactIdsProfile idsProfileToApply = null;
+    private String defaultLanguage;
+
+    private VCard2JSContactIdsProfile idsProfileToApply;
 
 }

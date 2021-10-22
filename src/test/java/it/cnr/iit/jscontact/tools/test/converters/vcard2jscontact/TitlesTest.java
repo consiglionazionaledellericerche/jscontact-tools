@@ -38,11 +38,9 @@ public class TitlesTest extends VCard2JSContactTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testTitleWithAltid1 - 1",jsCard.getTitles()!=null);
         assertTrue("testTitleWithAltid1 - 2",jsCard.getTitles().size() == 1);
-        assertTrue("testTitleWithAltid1 - 3",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Research Scientist"));
-        assertTrue("testTitleWithAltid1 - 4",jsCard.getTitles().get("TITLE-1").getTitle().getLanguage() == null);
-        assertTrue("testTitleWithAltid1 - 5",jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations() != null);
-        assertTrue("testTitleWithAltid1 - 6",jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations().size() == 1);
-        assertTrue("testTitleWithAltid1 - 7",jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations().get("it").equals("Ricercatore"));
+        assertTrue("testTitleWithAltid1 - 3",jsCard.getTitles().get("TITLE-1").getTitle().equals("Research Scientist"));
+        assertTrue("testTitleWithAltid1 - 4",jsCard.getLocalizationsPerLanguage("it").size() == 1);
+        assertTrue("testTitleWithAltid1 - 5",jsCard.getLocalization("it","/titles/TITLE-1").get("title").asText().equals("Ricercatore"));
     }
 
     @Test
@@ -58,12 +56,9 @@ public class TitlesTest extends VCard2JSContactTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testTitleWithoutAltid - 1",jsCard.getTitles()!=null);
         assertTrue("testTitleWithoutAltid - 2",jsCard.getTitles().size() == 2);
-        assertTrue("testTitleWithoutAltid - 3",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Research Scientist"));
-        assertTrue("testTitleWithoutAltid - 4",jsCard.getTitles().get("TITLE-1").getTitle().getLanguage() == null);
-        assertTrue("testTitleWithoutAltid - 5",jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations() == null);
-        assertTrue("testTitleWithoutAltid - 6",jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Ricercatore"));
-        assertTrue("testTitleWithoutAltid - 7",jsCard.getTitles().get("TITLE-2").getTitle().getLanguage().equals("it"));
-        assertTrue("testTitleWithoutAltid - 8",jsCard.getTitles().get("TITLE-2").getTitle().getLocalizations() == null);
+        assertTrue("testTitleWithoutAltid - 3",jsCard.getTitles().get("TITLE-1").getTitle().equals("Research Scientist"));
+        assertTrue("testTitleWithoutAltid - 4",jsCard.getTitles().get("TITLE-2").getTitle().equals("Ricercatore"));
+        assertTrue("testTitleWithoutAltid - 5",jsCard.getLocalizations() == null);
     }
 
     @Test
@@ -80,13 +75,34 @@ public class TitlesTest extends VCard2JSContactTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testTitleWithAltid2 - 1",jsCard.getTitles()!=null);
         assertTrue("testTitleWithAltid2 - 2",jsCard.getTitles().size() == 2);
-        assertTrue("testTitleWithAltid2 - 3",jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Research Scientist"));
-        assertTrue("testTitleWithAltid2 - 4",jsCard.getTitles().get("TITLE-2").getTitle().getLanguage() == null);
-        assertTrue("testTitleWithAltid2 - 5",jsCard.getTitles().get("TITLE-2").getTitle().getLocalizations() != null);
-        assertTrue("testTitleWithAltid2 - 6",jsCard.getTitles().get("TITLE-2").getTitle().getLocalizations().size() == 1);
-        assertTrue("testTitleWithAltid2 - 7",jsCard.getTitles().get("TITLE-2").getTitle().getLocalizations().get("it").equals("Ricercatore"));
-        assertTrue("testTitleWithAltid2 - 8",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("IETF Area Director"));
+        assertTrue("testTitleWithAltid2 - 3",jsCard.getTitles().get("TITLE-2").getTitle().equals("Research Scientist"));
+        assertTrue("testTitleWithAltid2 - 4",jsCard.getTitles().get("TITLE-1").getTitle().equals("IETF Area Director"));
+        assertTrue("testTitleWithAltid2 - 5",jsCard.getLocalizationsPerLanguage("it").size() == 1);
+        assertTrue("testTitleWithAltid2 - 6",jsCard.getLocalization("it","/titles/TITLE-2").get("title").asText().equals("Ricercatore"));
     }
+
+    @Test
+    public void testTitleWithAltid3() throws IOException,CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "TITLE;ALTID=1:Research Scientist\n" +
+                "TITLE;ALTID=1;LANGUAGE=it:Ricercatore\n" +
+                "TITLE;PREF=1;ALTID=2:IETF Area Director\n" +
+                "TITLE;PREF=1;LANGUAGE=it;ALTID=2:Direttore Area IETF\n" +
+                "END:VCARD";
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertTrue("testTitleWithAltid3 - 1",jsCard.getTitles()!=null);
+        assertTrue("testTitleWithAltid3 - 2",jsCard.getLocalizationsPerLanguage("it").size() == 2);
+        assertTrue("testTitleWithAltid3 - 3",jsCard.getTitles().get("TITLE-2").getTitle().equals("Research Scientist"));
+        assertTrue("testTitleWithAltid3 - 4",jsCard.getTitles().get("TITLE-1").getTitle().equals("IETF Area Director"));
+        assertTrue("testTitleWithAltid3 - 5",jsCard.getLocalizationsPerLanguage("it").size() == 2);
+        assertTrue("testTitleWithAltid3 - 6",jsCard.getLocalization("it","/titles/TITLE-2").get("title").asText().equals("Ricercatore"));
+        assertTrue("testTitleWithAltid3 - 7",jsCard.getLocalization("it","/titles/TITLE-1").get("title").asText().equals("Direttore Area IETF"));
+    }
+
 
     @Test
     public void testRoleWithAltid1() throws IOException, CardException {
@@ -101,11 +117,9 @@ public class TitlesTest extends VCard2JSContactTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testRoleWithAltid1 - 1",jsCard.getTitles()!=null);
         assertTrue("testRoleWithAltid1 - 2",jsCard.getTitles().size() == 1);
-        assertTrue("testRoleWithAltid1 - 3",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Project Leader"));
-        assertTrue("testRoleWithAltid1 - 4",jsCard.getTitles().get("TITLE-1").getTitle().getLanguage() == null);
-        assertTrue("testRoleWithAltid1 - 5",jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations() != null);
-        assertTrue("testRoleWithAltid1 - 6",jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations().size() == 1);
-        assertTrue("testRoleWithAltid1 - 7",jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations().get("it").equals("Capo Progetto"));
+        assertTrue("testRoleWithAltid1 - 3",jsCard.getTitles().get("TITLE-1").getTitle().equals("Project Leader"));
+        assertTrue("testRoleWithAltid1 - 4",jsCard.getLocalizationsPerLanguage("it").size() == 1);
+        assertTrue("testRoleWithAltid1 - 5",jsCard.getLocalization("it","/titles/TITLE-1").get("title").asText().equals("Capo Progetto"));
     }
 
     @Test
@@ -121,13 +135,9 @@ public class TitlesTest extends VCard2JSContactTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testRoleWithoutAltid - 1",jsCard.getTitles()!=null);
         assertTrue("testRoleWithoutAltid - 2",jsCard.getTitles().size() == 2);
-        assertTrue("testRoleWithoutAltid - 3",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("Project Leader"));
-        assertTrue("testRoleWithoutAltid - 4",jsCard.getTitles().get("TITLE-1").getTitle().getLanguage() == null);
-        assertTrue("testRoleWithoutAltid - 5",jsCard.getTitles().get("TITLE-1").getTitle().getLocalizations() == null);
-        assertTrue("testRoleWithoutAltid - 6",jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Capo Progetto"));
-        assertTrue("testRoleWithoutAltid - 7",jsCard.getTitles().get("TITLE-2").getTitle().getLanguage().equals("it"));
-        assertTrue("testRoleWithoutAltid - 8",jsCard.getTitles().get("TITLE-2").getTitle().getLocalizations() == null);
-    }
+        assertTrue("testRoleWithoutAltid - 3",jsCard.getTitles().get("TITLE-1").getTitle().equals("Project Leader"));
+        assertTrue("testRoleWithoutAltid - 4",jsCard.getTitles().get("TITLE-2").getTitle().equals("Capo Progetto"));
+        assertTrue("testRoleWithoutAltid - 5",jsCard.getLocalizations() == null);    }
 
     @Test
     public void testRoleWithAltid2() throws IOException, CardException {
@@ -143,12 +153,10 @@ public class TitlesTest extends VCard2JSContactTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testRoleWithAltid2 - 1",jsCard.getTitles()!=null);
         assertTrue("testRoleWithAltid2 - 2",jsCard.getTitles().size() == 2);
-        assertTrue("testRoleWithAltid2 - 3",jsCard.getTitles().get("TITLE-2").getTitle().getValue().equals("Project Leader"));
-        assertTrue("testRoleWithAltid2 - 4",jsCard.getTitles().get("TITLE-2").getTitle().getLanguage() == null);
-        assertTrue("testRoleWithAltid2 - 5",jsCard.getTitles().get("TITLE-2").getTitle().getLocalizations() != null);
-        assertTrue("testRoleWithAltid2 - 6",jsCard.getTitles().get("TITLE-2").getTitle().getLocalizations().size() == 1);
-        assertTrue("testRoleWithAltid2 - 7",jsCard.getTitles().get("TITLE-2").getTitle().getLocalizations().get("it").equals("Capo Progetto"));
-        assertTrue("testRoleWithAltid2 - 8",jsCard.getTitles().get("TITLE-1").getTitle().getValue().equals("IETF Area Director"));
+        assertTrue("testRoleWithAltid2 - 3",jsCard.getTitles().get("TITLE-2").getTitle().equals("Project Leader"));
+        assertTrue("testRoleWithAltid2 - 4",jsCard.getTitles().get("TITLE-1").getTitle().equals("IETF Area Director"));
+        assertTrue("testRoleWithAltid2 - 5",jsCard.getLocalizationsPerLanguage("it").size() == 1);
+        assertTrue("testRoleWithAltid2 - 6",jsCard.getLocalization("it","/titles/TITLE-2").get("title").asText().equals("Capo Progetto"));
     }
 
 

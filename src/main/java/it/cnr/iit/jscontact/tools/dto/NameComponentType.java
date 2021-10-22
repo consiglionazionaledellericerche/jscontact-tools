@@ -20,6 +20,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+/**
+ * Class mapping the values of the "type" property of the NameComponent type as defined in section 2.2.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.2.1">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -27,12 +33,47 @@ import java.io.Serializable;
 @SuperBuilder
 public class NameComponentType extends ExtensibleEnum<NameComponentEnum> implements Serializable {
 
-
+    /**
+     * Returns a name component type whose enum value is pre-defined.
+     *
+     * @param rfcValue a pre-defined name component type
+     * @return a name component type
+     */
     public static NameComponentType rfc(NameComponentEnum rfcValue) { return NameComponentType.builder().rfcValue(rfcValue).build();}
+    /**
+     * Returns a "prefix" name component type.
+     *
+     * @return a "prefix" name component type
+     */
     public static NameComponentType prefix() { return rfc(NameComponentEnum.PREFIX);}
+    /**
+     * Returns a "personal" name component type.
+     *
+     * @return a "personal" name component type
+     */
     public static NameComponentType personal() { return rfc(NameComponentEnum.PERSONAL);}
+    /**
+     * Returns a "surname" name component type.
+     *
+     * @return a "surname" name component type
+     */
     public static NameComponentType surname() { return rfc(NameComponentEnum.SURNAME);}
+    /**
+     * Returns an "additional" name component type.
+     *
+     * @return an "additional" name component type
+     */
     public static NameComponentType additional() { return rfc(NameComponentEnum.ADDITIONAL);}
+    /**
+     * Returns a "separator" name component type.
+     *
+     * @return a "separator" name component type
+     */
     public static NameComponentType separator() { return rfc(NameComponentEnum.SEPARATOR);}
+    /**
+     * Returns a "suffix" name component type.
+     *
+     * @return a "suffix" name component type
+     */
     public static NameComponentType suffix() { return rfc(NameComponentEnum.SUFFIX);}
 }

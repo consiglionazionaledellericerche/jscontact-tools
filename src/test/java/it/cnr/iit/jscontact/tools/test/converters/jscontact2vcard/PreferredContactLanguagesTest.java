@@ -29,17 +29,18 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
     public void testPreferredContactLanguagesValid1() throws IOException, CardException {
 
         String jsCard = "{" +
-                         "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
-                         "\"fullName\":{\"value\":\"test\"}," +
+                        "\"@type\":\"Card\"," +
+                        "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
+                         "\"fullName\":\"test\"," +
                          "\"preferredContactLanguages\":{" +
-                               "\"ja\":[{\"pref\":1}]," +
-                               "\"en\":[{\"pref\":2}]" +
+                               "\"jp\":[{\"@type\":\"ContactLanguage\",\"pref\":1}]," +
+                               "\"en\":[{\"@type\":\"ContactLanguage\",\"pref\":2}]" +
                          "}" +
                          "}";
 
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertTrue("testPreferredContactLanguagesValid1 - 1",vcard.getLanguages().size() == 2);
-        assertTrue("testPreferredContactLanguagesValid1 - 2",vcard.getLanguages().get(0).getValue().equals("ja"));
+        assertTrue("testPreferredContactLanguagesValid1 - 2",vcard.getLanguages().get(0).getValue().equals("jp"));
         assertTrue("testPreferredContactLanguagesValid1 - 3",vcard.getLanguages().get(0).getPref() == 1);
         assertTrue("testPreferredContactLanguagesValid1 - 4",vcard.getLanguages().get(1).getValue().equals("en"));
         assertTrue("testPreferredContactLanguagesValid1 - 5",vcard.getLanguages().get(1).getPref() == 2);
@@ -49,11 +50,12 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
     public void testPreferredContactLanguagesValid2() throws IOException, CardException {
 
         String jsCard = "{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"preferredContactLanguages\":{" +
-                    "\"en\":[{\"context\":\"work\",\"pref\":1}]," +
-                    "\"fr\":[{\"context\":\"work\",\"pref\":2},{\"context\":\"private\"}]" +
+                    "\"en\":[{\"@type\":\"ContactLanguage\",\"context\":\"work\",\"pref\":1}]," +
+                    "\"fr\":[{\"@type\":\"ContactLanguage\",\"context\":\"work\",\"pref\":2},{\"context\":\"private\"}]" +
                 "}" +
                 "}";
 

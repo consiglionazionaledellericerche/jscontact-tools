@@ -1,13 +1,20 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
+/**
+ * Class mapping the Organization type as defined in section 2.2.4 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.2.4">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -15,11 +22,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Organization implements IdMapValue, Serializable {
 
+    @NotNull
+    @Pattern(regexp = "Organization", message="invalid @type value in Organization")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "Organization";
+
     @NotNull(message = "name is missing in Organization")
     @NonNull
-    @Valid
-    LocalizedString name;
+    String name;
 
-    @Valid
-    LocalizedString[] units;
+    String[] units;
 }

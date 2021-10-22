@@ -25,6 +25,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+/**
+ * Custom JSON deserializer for the KindType value.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class KindTypeDeserializer extends JsonDeserializer<KindType> {
 

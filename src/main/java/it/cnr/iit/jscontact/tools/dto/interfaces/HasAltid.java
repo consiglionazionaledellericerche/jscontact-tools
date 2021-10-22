@@ -15,6 +15,17 @@
  */
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
+/**
+ * This interface imposes that a class implementing it must include the "altid" property.
+ *
+ * @author Mario Loffredo
+ */
 public interface HasAltid {
+
+    /**
+     * Returns the value of the "altid" property.
+     *
+     * @return the value of the "altid" property
+     */
     String getAltid();
 }

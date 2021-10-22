@@ -17,20 +17,34 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
+/**
+ * Class mapping the PersonalInformation type as defined in section 2.6.2 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.2">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonalInformation extends GroupableObject implements HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
+
+    @NotNull
+    @Pattern(regexp = "PersonalInformation", message="invalid @type value in PersonalInformation")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "PersonalInformation";
 
     @NotNull(message = "type is missing in PersonalInformation")
     @NonNull
@@ -45,19 +59,59 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
     @JsonIgnore
     Integer index;
 
-    //to compare VCard HOBBY, INTEREST, EXPERTIZE instances based on index
+    /**
+     * Compares this personal information with another based on the value of the "index" property.
+     *
+     * @param o the object this object must be compared with
+     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
+     */
     @Override
     public int compareTo(PersonalInformation o) {
 
         return HasIndexUtils.compareTo(this, o);
     }
 
+    /**
+     * Tests if this personal information is an hobby.
+     *
+     * @return true if this personal information is an hobby, false otherwise
+     */
     public boolean asHobby() { return type == PersonalInformationType.HOBBY; }
+    /**
+     * Tests if this personal information is an interest.
+     *
+     * @return true if this personal information is an interest, false otherwise
+     */
     public boolean asInterest() { return type == PersonalInformationType.INTEREST; }
+    /**
+     * Tests if this personal information is an expertise.
+     *
+     * @return true if this personal information is an expertise, false otherwise
+     */
     public boolean asExpertise() { return type == PersonalInformationType.EXPERTISE; }
+    /**
+     * Tests if this personal information is other than the known types.
+     *
+     * @return true if this personal information is other than the known types, false otherwise
+     */
     public boolean asOtherPersonalInfo() { return type == PersonalInformationType.OTHER; }
-    public boolean ofHighInterest() { return level == PersonalInformationLevel.HIGH; }
-    public boolean ofMediumInterest() { return level == PersonalInformationLevel.MEDIUM; }
-    public boolean ofLowInterest() { return level == PersonalInformationLevel.LOW; }
+    /**
+     * Tests if the level of this personal information is high.
+     *
+     * @return true if the level of this personal information is high, false otherwise
+     */
+    public boolean ofHighLevel() { return level == PersonalInformationLevel.HIGH; }
+    /**
+     * Tests if the level of this personal information is medium.
+     *
+     * @return true if the level of this personal information is medium, false otherwise
+     */
+    public boolean ofMediumLevel() { return level == PersonalInformationLevel.MEDIUM; }
+    /**
+     * Tests if the level of this personal information is low.
+     *
+     * @return true if the level of this personal information is low, false otherwise
+     */
+    public boolean ofLowLevel() { return level == PersonalInformationLevel.LOW; }
 
 }

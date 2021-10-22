@@ -29,15 +29,19 @@ public class TitlesTest extends JSContact2VCardTest {
     public void testTitles1() throws IOException, CardException {
 
         String jscard="{" +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359h\"," +
+                "\"fullName\":\"test\"," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
-                        "\"title\": {" +
-                            "\"value\": \"Research Scientist\"," +
-                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
-                        "}" +
+                        "\"@type\":\"Title\"," +
+                        "\"title\": \"Research Scientist\"" +
                     "}" +
+                "}," +
+                "\"localizations\" : {" +
+                   "\"it\" : { " +
+                      "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
+                   "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -54,19 +58,22 @@ public class TitlesTest extends JSContact2VCardTest {
     public void testTitles2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
-                        "\"title\": {" +
-                            "\"value\": \"Research Scientist\"," +
-                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
-                        "}" +
+                        "\"@type\":\"Title\"," +
+                        "\"title\": \"Research Scientist\""  +
                     "}," +
                     "\"TITLE-2\" : {" +
-                        "\"title\": {" +
-                            "\"value\": \"IETF Area Director\"" +
-                        "}" +
+                        "\"@type\":\"Title\"," +
+                        "\"title\": \"IETF Area Director\"" +
+                    "}" +
+                "}," +
+                "\"localizations\" : {" +
+                    "\"it\" : { " +
+                        "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
                     "}" +
                 "}" +
                 "}";
@@ -87,20 +94,23 @@ public class TitlesTest extends JSContact2VCardTest {
     public void testTitles3() throws IOException, CardException {
 
         String jscard="{" +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359g\"," +
+                "\"fullName\":\"test\"," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
-                        "\"title\": {" +
-                            "\"value\": \"Research Scientist\"," +
-                            "\"localizations\": { \"it\":\"Ricercatore\" }" +
-                        "}" +
+                        "\"@type\":\"Title\"," +
+                        "\"title\": \"Research Scientist\"" +
                     "}," +
                     "\"TITLE-2\" : {" +
-                        "\"title\": {" +
-                            "\"value\": \"IETF Area Director\"," +
-                            "\"localizations\": { \"it\":\"Direttore Area IETF\" }" +
-                        "}" +
+                        "\"@type\":\"Title\"," +
+                        "\"title\": \"IETF Area Director\"" +
+                    "}" +
+                "}," +
+                "\"localizations\" : {" +
+                    "\"it\" : { " +
+                        "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" }, " +
+                        "\"/titles/TITLE-2\": { \"@type\":\"Title\",\"title\": \"Direttore Area IETF\" } " +
                     "}" +
                 "}" +
                 "}";

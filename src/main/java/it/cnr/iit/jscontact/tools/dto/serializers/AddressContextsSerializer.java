@@ -24,6 +24,11 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Custom JSON serializer for the AddressContext map.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class AddressContextsSerializer extends JsonSerializer<Map<AddressContext,Boolean>> {
 

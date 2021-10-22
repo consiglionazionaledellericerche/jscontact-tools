@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.constraints.validators;
 import it.cnr.iit.jscontact.tools.constraints.RelatedToConstraint;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.Relation;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -42,7 +43,7 @@ public class RelatedToValidator implements ConstraintValidator<RelatedToConstrai
 
             Set<ConstraintViolation<Relation>> constraintViolations = ValidatorBuilder.getValidator().validate(rel);
             if (constraintViolations.size() > 0) {
-                context.buildConstraintViolationWithTemplate("").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate(StringUtils.EMPTY).addConstraintViolation();
                 return false;
             }
 

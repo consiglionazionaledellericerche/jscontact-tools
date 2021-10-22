@@ -25,6 +25,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+/**
+ * Custom JSON deserializer for the NameComponentType value.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class NameComponentTypeDeserializer extends JsonDeserializer<NameComponentType> {
 

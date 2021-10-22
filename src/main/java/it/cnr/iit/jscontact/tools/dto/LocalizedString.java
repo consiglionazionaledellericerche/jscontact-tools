@@ -28,12 +28,17 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+/**
+ * Class supporting the conversion of language-dependent alternative properties in a vCard 4.0 [RFC6350] and its transliterations.
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.1">RFC6350</a>
+ * @author Mario Loffredo
+ */
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of={"value"})
+@EqualsAndHashCode(of={"value"}, callSuper = false)
 public class LocalizedString extends GroupableObject implements HasAltid, HasPreference, Comparable<LocalizedString>, Serializable {
 
     @NotNull(message = "value is missing in LocalizedString")
@@ -44,12 +49,16 @@ public class LocalizedString extends GroupableObject implements HasAltid, HasPre
 
     Map<String,String> localizations;
 
-    @JsonIgnore
     String altid;
 
-    @JsonIgnore
     Integer preference;
 
+    /**
+     * Adds a localization to the "localizations" map.
+     *
+     * @param language the localization language
+     * @param value the localization value
+     */
     public void addLocalization(String language, String value) {
 
         if (localizations == null)
@@ -58,7 +67,12 @@ public class LocalizedString extends GroupableObject implements HasAltid, HasPre
         localizations.put(StringUtils.defaultIfEmpty(language, "en" ), value);
     }
 
-    //to compare VCard TITLE, ROLE, NOTES instances based on preference
+    /**
+     * Compares this localized string with another based on the value of the "preference" property.
+     *
+     * @param o the object this object must be compared with
+     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
+     */
     @Override
     public int compareTo(LocalizedString o) {
 

@@ -21,6 +21,12 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
+/**
+ * Enum class mapping the values of the "type" property of the StreetComponent type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @AllArgsConstructor
 public enum StreetComponentEnum implements IsExtensible {
 

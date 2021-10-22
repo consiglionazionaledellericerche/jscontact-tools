@@ -30,8 +30,9 @@ public class UpdatedTest extends JSContact2VCardTest {
     public void testUpdatedValid() throws IOException, CardException {
 
         String jscard="{" +
+                    "\"@type\":\"Card\"," +
                     "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                    "\"fullName\":{\"value\":\"test\"}," +
+                    "\"fullName\":\"test\"," +
                     "\"updated\":\"1995-10-31T22:27:10Z\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

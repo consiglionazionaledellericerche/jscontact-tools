@@ -19,13 +19,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Class for configuring the conversion from a JSContact object to a vCard 4.0 [RFC6350] and its transliterations.
+ *
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ * @author Mario Loffredo
+ */
 @Data
 @Builder
 @AllArgsConstructor
 public class JSContact2VCardConfig {
 
     @Builder.Default
-    private String extensionsPrefix = "extension/";
+    private String extensionsPrefix = "extension:";
     @Builder.Default
     private boolean cardToValidate = true;
 

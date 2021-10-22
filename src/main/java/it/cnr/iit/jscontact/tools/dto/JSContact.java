@@ -24,19 +24,22 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
+/**
+ * Abstract class mapping a JSContact topmost object, namely Card and CardGroup.
+ *
+ * @author Mario Loffredo
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of={"uid"})
+@EqualsAndHashCode(of={"uid"}, callSuper = false)
 @SuperBuilder
 public abstract class JSContact extends ValidableObject implements Serializable {
 
-    //Metadata properties
     @NotNull(message = "uid is missing in JSContact")
     @NonNull
     String uid;
-
 
 }

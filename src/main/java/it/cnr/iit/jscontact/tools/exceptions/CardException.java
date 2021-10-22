@@ -15,6 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.exceptions;
 
+/**
+ * Thrown when either a vCard/xCard/jCard or a JSContact topmost object, namely Card and CardGroup, is not valid.
+ *
+ * @author Mario Loffredo
+ */
 public class CardException extends Exception {
 
     public CardException(String message) {

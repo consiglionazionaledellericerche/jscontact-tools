@@ -25,6 +25,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+/**
+ * Custom JSON deserializer for the Context value.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class ContextDeserializer extends JsonDeserializer<Context> {
 

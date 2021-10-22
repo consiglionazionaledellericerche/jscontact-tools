@@ -15,6 +15,16 @@
  */
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
+/**
+ * This interface imposes that a class implementing it must include the "index" property.
+ *
+ * @author Mario Loffredo
+ */
 public interface HasIndex {
+    /**
+     * Returns the value of the "index" property.
+     *
+     * @return the value of the "index" property
+     */
     Integer getIndex();
 }

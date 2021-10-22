@@ -56,7 +56,7 @@ public class EmailAddressTest extends AbstractTest {
         EmailAddress email = EmailAddress.builder()
                 .email("mario.loffredo@iit.cnr.it")
                 .build();
-        Map emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
+        Map<String, EmailAddress> emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .emails(emailsMap)

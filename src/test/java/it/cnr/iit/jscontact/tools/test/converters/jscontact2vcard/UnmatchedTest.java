@@ -30,8 +30,9 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testPreferredContactMethod() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"preferredContactMethod\":\"emails\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -44,8 +45,9 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testCreated() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
+                "\"fullName\":\"test\"," +
                 "\"created\":\"2010-10-10T10:10:10Z\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -58,9 +60,10 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testUnmatchedProperty() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\":\"test\"}," +
-                "\"ietf.org/rfc6350/GENDER\":\"M\"" +
+                "\"fullName\":\"test\"," +
+                "\"ietf.org:rfc6350:GENDER\":\"M\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testUnmatchedProperty - 1",vcard.getGender().getGender().equals("M"));
@@ -70,23 +73,18 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testUnmatchedParameter1() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{" +
-                    "\"value\": \"Mr. John Q. Public, Esq.\"" +
-                "}," +
+                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":[ " +
-                    "{ \"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                    "{ \"value\":\"John\", \"type\": \"personal\" }," +
-                    "{ \"value\":\"Public\", \"type\": \"surname\" }," +
-                    "{ \"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                    "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                 "], " +
-                "\"nickNames\":[" +
-                    "{" +
-                    "\"value\": \"Johnny\"" +
-                    "}" +
-                "]," +
-                "\"ietf.org/rfc6350/N/SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
+                "\"nickNames\":[ \"Johnny\" ]," +
+                "\"ietf.org:rfc6350:N:SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testUnmatchedParameter1 - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));
@@ -110,9 +108,10 @@ public class UnmatchedTest extends JSContact2VCardTest {
     public void testUnmatchedParameter2() throws IOException, CardException {
 
         String jscard="{" +
+                "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":{\"value\": \"test\"}," +
-                "\"ietf.org/rfc6350/FN/GROUP\":\"contact\"" +
+                "\"fullName\": \"test\"," +
+                "\"ietf.org:rfc6350:FN:GROUP\":\"contact\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testUnmatchedParameter2 - 1",vcard.getFormattedName().getValue().equals("test"));

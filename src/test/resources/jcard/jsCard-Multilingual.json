@@ -1,26 +1,23 @@
 {
+"@type": "Card",
 "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
-"fullName": {
-  "value": "大久保 正仁",
-  "language": "ja",
-  "localizations": {
-    "en": "Okubo Masahito"
-  }
-},
+"language": "jp",
+"fullName": "大久保 正仁",
 "titles": {
   "TITLE-1": {
-    "title": {
-      "value": "事務局長",
-      "language": "ja",
-      "localizations": {
-        "en": "Secretary General"
-      }
-    }
+    "@type": "Title",
+    "title": "事務局長"
   }
 },
 "kind": "individual",
 "preferredContactLanguages": {
-"ja": [{ "pref": 1 }],
-"en": [{ "pref": 2 }]
+"jp": [{ "@type": "ContactLanguage", "pref": 1 }],
+"en": [{ "@type": "ContactLanguage", "pref": 2 }]
+},
+"localizations": {
+  "en": {
+    "/fullName": "Okubo Masahito",
+    "/titles/TITLE-1": { "@type": "Title",  "title": "Secretary General" }
+  }
 }
 }

@@ -24,6 +24,11 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 import java.util.Calendar;
 
+/**
+ * Custom JSON serializer for a Calendar value used in TimeZone type [RFC8984]. The value is formatted according the UTC_TIME DateTimeType value.
+ *
+ * @author Mario Loffredo
+ */
 @NoArgsConstructor
 public class UTCDateTimeSerializer extends JsonSerializer<Calendar> {
 
@@ -32,6 +37,6 @@ public class UTCDateTimeSerializer extends JsonSerializer<Calendar> {
             Calendar calendar, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-            jgen.writeString(DateUtils.toString(calendar, DateUtils.DateTimeType.UTC));
+            jgen.writeString(DateUtils.toString(calendar, DateUtils.DateTimeType.UTC_TIME));
     }
 }

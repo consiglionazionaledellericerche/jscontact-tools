@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
@@ -28,8 +29,16 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
+/**
+ * Class mapping the ContactLanguage type as defined in section 2.3.6 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.6">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NotNullAnyConstraint(fieldNames={"context","pref"}, message = "at least one not null member is missing in ContactLanguage")
 @Builder
@@ -37,6 +46,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactLanguage extends GroupableObject implements Serializable {
+
+    @NotNull
+    @Pattern(regexp = "ContactLanguage", message="invalid @type value in ContactLanguage")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "ContactLanguage";
 
     @JsonSerialize(using = ContextSerializer.class)
     @JsonDeserialize(using = ContextDeserializer.class)

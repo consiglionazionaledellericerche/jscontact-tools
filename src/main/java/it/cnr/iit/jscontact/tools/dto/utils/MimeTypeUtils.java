@@ -2,6 +2,11 @@ package it.cnr.iit.jscontact.tools.dto.utils;
 
 import java.util.HashMap;
 
+/**
+ * Utility class for handling MIME types.
+ *
+ * @author Mario Loffredo
+ */
 public class MimeTypeUtils {
 
     public static final String MIME_APPLICATION_ANDREW_INSET = "application/andrew-inset";
@@ -430,7 +435,7 @@ public class MimeTypeUtils {
     }
 
     /**
-     * Registers MIME type for provided extension. Existing extension type will be overriden.
+     * Registers the MIME type for provided extension. Existing extension type will be overriden.
      * @param ext the extension
      * @param mimeType the MIME type
      */
@@ -439,8 +444,9 @@ public class MimeTypeUtils {
     }
 
     /**
+     * Returns the MIME type related to an extension.
      * @param ext the extension
-     * @return Simply returns MIME type or <code>application/octet-stream</code> if no type is found.
+     * @return MIME type or <code>application/octet-stream</code> if no type is found.
      */
     public static String getMimeType(String ext) {
         String mimeType = lookupMimeType(ext);
@@ -451,25 +457,28 @@ public class MimeTypeUtils {
     }
 
     /**
+     * Returns the MIME type related to an extension.
      * @param ext the extension
-     * @return Simply returns MIME type or <code>null</code> if no type is found.
+     * @return MIME type or <code>null</code> if no type is found.
      */
     public static String lookupMimeType(String ext) {
         return mimeTypeMapping.get(ext.toLowerCase());
     }
 
     /**
+     * Returns the extension related to a MIME type.
      * @param mimeType the MIME type
-     * @return Simply returns Ext or <code>null</code> if no Mimetype is found.
+     * @return the extension or <code>null</code> if no MIME type is found.
      */
     public static String lookupExt(String mimeType) {
         return extMapping.get(mimeType.toLowerCase());
     }
 
     /**
+     * Returns the default extension related to the given MIME type.
      * @param mimeType the MIME type
-     * @return Returns the default Ext to the given MimeType.
-     * If no MIME type was found it returns 'unknown' ext.
+     * @return the default extension to the given MIME type.
+     * If no MIME type was found it returns 'unknown' extesnion.
      */
     public static String getDefaultExt(String mimeType) {
         String ext = lookupExt(mimeType);

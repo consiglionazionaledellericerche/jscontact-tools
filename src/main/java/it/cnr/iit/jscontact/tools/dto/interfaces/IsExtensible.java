@@ -15,6 +15,17 @@
  */
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
+/**
+ * This interface is used to identify an enumerated type that can be extended.
+ *
+ * @author Mario Loffredo
+ */
 public interface IsExtensible {
+
+    /**
+     * Returns the value of the extensible enumerated type in text format.
+     *
+     * @return tthe value of the extensible enumerated type in text format
+     */
     String getValue();
 }

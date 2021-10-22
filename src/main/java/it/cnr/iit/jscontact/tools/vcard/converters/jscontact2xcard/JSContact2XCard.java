@@ -25,6 +25,12 @@ import lombok.Builder;
 
 import java.util.List;
 
+/**
+ * Utility class for converting a JSContact object into an xCard [RFC6351].
+ *
+ * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
+ * @author Mario Loffredo
+ */
 public class JSContact2XCard extends JSContact2EZVCard {
 
     @Builder
@@ -34,7 +40,8 @@ public class JSContact2XCard extends JSContact2EZVCard {
     }
 
     /**
-     * Converts a list of JSContact objects into a complete vCard v4.0 in XML format, namely xCard [RFC6351]
+     * Converts one or more JSContact objects into a complete vCard v4.0 in XML format, namely xCard [RFC6351].
+     *
      * @param jsContacts a list of JSContact objects
      * @return an xCard as an XML string
      * @throws CardException if one of the JSContact objects is not valid
@@ -42,25 +49,11 @@ public class JSContact2XCard extends JSContact2EZVCard {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
      */
-    public String convertToXml(List<JSContact> jsContacts) throws CardException {
+    public String convertToXml(JSContact... jsContacts) throws CardException {
 
         List<VCard> vcards = convert(jsContacts);
         return Ezvcard.writeXml(vcards).go();
     }
 
-    /**
-     * Converts a JSContact object into a complete vCard v4.0 in XML format, namely xCard [RFC6351]
-     * @param jsContact a JSContact object
-     * @return an xCard as an XML string
-     * @throws CardException if the JSContact object is not valid
-     * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
-     */
-    public String convertToXml(JSContact jsContact) throws CardException {
-
-        VCard vcard = convert(jsContact);
-        return Ezvcard.writeXml(vcard).go();
-    }
 
 }

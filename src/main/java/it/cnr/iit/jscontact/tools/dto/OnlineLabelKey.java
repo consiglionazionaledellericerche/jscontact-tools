@@ -21,6 +21,14 @@ import lombok.AllArgsConstructor;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Enum class mapping the values included in the "label" property of the Resource type that is used to represent an online resource as defined in section 2.3.3 of [draft-ietf-jmap-jscontact].
+ * The values are those corresponding to vCard 4.0 [RFC6350] properties that are not directly mapped to a JSContact property.
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/rfc6350">RFC6350</a>
+ * @author Mario Loffredo
+ */
 @AllArgsConstructor
 public enum OnlineLabelKey {
 
@@ -42,6 +50,12 @@ public enum OnlineLabelKey {
         return value;
     }
 
+    /**
+     * Returns a key furtherly specifying the online resource type. The online key can be found among the comma separated items included in the "label" property of the Resource type.
+     *
+     * @param label a text including a comma separated list of items detailing an online resource
+     * @return the online resource key found in the label, null if no online resource key is found
+     */
     public static OnlineLabelKey getLabelKey(String label) {
 
         List<String> labelItems = Arrays.asList(label.split(LabelUtils.LABEL_DELIMITER));

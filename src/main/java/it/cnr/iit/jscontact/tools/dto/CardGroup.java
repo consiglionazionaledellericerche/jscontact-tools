@@ -18,20 +18,25 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.cnr.iit.jscontact.tools.constraints.CardGroupKindConstraint;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.SerializationUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+/**
+ * Class mapping the CardGroup object as defined in section 3 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-3">draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @CardGroupKindConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
@@ -42,6 +47,12 @@ import java.util.Map;
 public class CardGroup extends JSContact implements Serializable {
 
     @NotNull
+    @Pattern(regexp = "CardGroup", message="invalid @type value in CardGroup")
+    @JsonProperty("@type")
+    @Builder.Default
+    String _type = "CardGroup";
+    
+    @NotNull
     @Size(min=1)
     @JsonProperty(required = true)
     Map<String,Boolean> members;
@@ -51,6 +62,11 @@ public class CardGroup extends JSContact implements Serializable {
     @Valid
     Card card;
 
+    /**
+     * Adds a a member to this object.
+     *
+     * @param member the uid value of the object representing a group member
+     */
     public void addMember(String member) {
 
         if(members == null)
@@ -59,6 +75,12 @@ public class CardGroup extends JSContact implements Serializable {
         members.putIfAbsent(member,Boolean.TRUE);
     }
 
+    /**
+     * Clones this object.
+     *
+     * @return the clone of this CardGroup object
+     */
+    @Override
     public CardGroup clone() {
         return SerializationUtils.clone(this);
     }
