@@ -85,6 +85,7 @@ public class AddressContext extends ExtensibleEnum<AddressContextEnum> implement
     /**
      * Returns an address context whose enum value is pre-defined.
      *
+     * @param rfcValue the pre-defined address context
      * @return a pre-defined address context
      */
     public static AddressContext rfc(AddressContextEnum rfcValue) { return AddressContext.builder().rfcValue(rfcValue).build();}

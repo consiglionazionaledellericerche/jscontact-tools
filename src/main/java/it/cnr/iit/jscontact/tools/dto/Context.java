@@ -72,6 +72,7 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
     /**
      * Returns a context whose enum value is pre-defined.
      *
+     * @param rfcValue the pre-defined context
      * @return a pre-defined context
      */
     public static Context rfc(ContextEnum rfcValue) { return Context.builder().rfcValue(rfcValue).build();}

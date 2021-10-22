@@ -56,26 +56,132 @@ public class Relation extends GroupableObject implements Serializable {
     Map<RelationType,Boolean> relation;
 
     private boolean asRelation(RelationType type) { return relation!= null && relation.containsKey(type); }
+    /**
+     * Tests if the collection of relations includes the "acquaintance" relation type.
+     *
+     * @return true if the "relation" map includes "acquaintance", false otherwise
+     */
     public boolean asAcquaintance() {return asRelation(RelationType.acquaintance()); }
+    /**
+     * Tests if the collection of relations includes the "agent" relation type.
+     *
+     * @return true if the "relation" map includes "agent", false otherwise
+     */
     public boolean asAgent() {return asRelation(RelationType.agent()); }
+    /**
+     * Tests if the collection of relations includes the "child" relation type.
+     *
+     * @return true if the "relation" map includes "child", false otherwise
+     */
     public boolean asChild() {return asRelation(RelationType.child()); }
+    /**
+     * Tests if the collection of relations includes the "colleague" relation type.
+     *
+     * @return true if the "relation" map includes "colleague", false otherwise
+     */
     public boolean asColleague() {return asRelation(RelationType.colleague()); }
+    /**
+     * Tests if the collection of relations includes the "contact" relation type.
+     *
+     * @return true if the "relation" map includes "contact", false otherwise
+     */
     public boolean asContact() {return asRelation(RelationType.contact()); }
+    /**
+     * Tests if the collection of relations includes the "co-resident" relation type.
+     *
+     * @return true if the "relation" map includes "co-resident", false otherwise
+     */
     public boolean asCoResident() {return asRelation(RelationType.coResident()); }
+    /**
+     * Tests if the collection of relations includes the "co-worker" relation type.
+     *
+     * @return true if the "relation" map includes "co-worker", false otherwise
+     */
     public boolean asCoWorker() {return asRelation(RelationType.coWorker()); }
+    /**
+     * Tests if the collection of relations includes the "crush" relation type.
+     *
+     * @return true if the "relation" map includes "crush", false otherwise
+     */
     public boolean asCrush() {return asRelation(RelationType.crush()); }
+    /**
+     * Tests if the collection of relations includes the "date" relation type.
+     *
+     * @return true if the "relation" map includes "date", false otherwise
+     */
     public boolean asDate() {return asRelation(RelationType.date()); }
+    /**
+     * Tests if the collection of relations includes the "emergency" relation type.
+     *
+     * @return true if the "relation" map includes "emergency", false otherwise
+     */
     public boolean asEmergency() {return asRelation(RelationType.emergency()); }
+    /**
+     * Tests if the collection of relations includes the "friend" relation type.
+     *
+     * @return true if the "relation" map includes "friend", false otherwise
+     */
     public boolean asFriend() {return asRelation(RelationType.friend()); }
+    /**
+     * Tests if the collection of relations includes the "kin" relation type.
+     *
+     * @return true if the "relation" map includes "kin", false otherwise
+     */
     public boolean asKin() {return asRelation(RelationType.kin()); }
+    /**
+     * Tests if the collection of relations includes the "me" relation type.
+     *
+     * @return true if the "relation" map includes "me", false otherwise
+     */
     public boolean asMe() {return asRelation(RelationType.me()); }
+    /**
+     * Tests if the collection of relations includes the "met" relation type.
+     *
+     * @return true if the "relation" map includes "met", false otherwise
+     */
     public boolean asMet() {return asRelation(RelationType.met()); }
+    /**
+     * Tests if the collection of relations includes the "muse" relation type.
+     *
+     * @return true if the "relation" map includes "muse", false otherwise
+     */
     public boolean asMuse() {return asRelation(RelationType.muse()); }
+    /**
+     * Tests if the collection of relations includes the "neighbor" relation type.
+     *
+     * @return true if the "relation" map includes "neighbor", false otherwise
+     */
     public boolean asNeighbor() {return asRelation(RelationType.neighbor()); }
+    /**
+     * Tests if the collection of relations includes the "parent" relation type.
+     *
+     * @return true if the "relation" map includes "parent", false otherwise
+     */
     public boolean asParent() {return asRelation(RelationType.parent()); }
+    /**
+     * Tests if the collection of relations includes the "sibling" relation type.
+     *
+     * @return true if the "relation" map includes "sibling", false otherwise
+     */
     public boolean asSibling() {return asRelation(RelationType.sibling()); }
+    /**
+     * Tests if the collection of relations includes the "spouse" relation type.
+     *
+     * @return true if the "relation" map includes "spouse", false otherwise
+     */
     public boolean asSpouse() {return asRelation(RelationType.spouse()); }
+    /**
+     * Tests if the collection of relations includes the "sweetheart" relation type.
+     *
+     * @return true if the "relation" map includes "sweetheart", false otherwise
+     */
     public boolean asSweetheart() {return asRelation(RelationType.sweetheart()); }
+    /**
+     * Tests if the collection of relations includes a custom relation type.
+     *
+     * @param extValue the custom relation type
+     * @return true if the "relation" map includes the custom relation type, false otherwise
+     */
     public boolean asExtRelation(String extValue) { return asRelation(RelationType.extRelation(extValue)); }
 
 }

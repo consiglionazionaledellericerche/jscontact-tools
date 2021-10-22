@@ -107,6 +107,7 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
     /**
      * Returns a phone feature whose enum value is pre-defined.
      *
+     * @param rfcValue the pre-defined feature
      * @return a pre-defined phone feature
      */
     public static PhoneFeature rfc(PhoneFeatureEnum rfcValue) { return PhoneFeature.builder().rfcValue(rfcValue).build();}
