@@ -318,7 +318,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard KEY property as defined in section 6.8.1 of [RFC6350].
+     * Returns all the online resources associated to this object mapping the vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.8.1">RFC6350</a>
@@ -329,7 +329,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard URL property as defined in section 6.7.8 of [RFC6350].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.8">RFC6350</a>
@@ -340,7 +340,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard SOURCE property as defined in section 6.1.3 of [RFC6350].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.3">RFC6350</a>
@@ -351,7 +351,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard LOGO property as defined in section 6.6.3 of [RFC6350].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.3">RFC6350</a>
@@ -362,7 +362,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard SOUND property as defined in section 6.7.5 of [RFC6350].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.5">RFC6350</a>
@@ -373,7 +373,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard FBURL property as defined in section 6.9.1 of [RFC6350].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.1">RFC6350</a>
@@ -384,7 +384,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CALURI property as defined in section 6.9.3 of [RFC6350].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.3">RFC6350</a>
@@ -395,7 +395,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CALADRURI property as defined in section 6.9.2 of [RFC6350].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 CALADRURI property as defined in section 6.9.2 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.2">RFC6350</a>
@@ -406,7 +406,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard ORG-DIRECTORY property as defined in section 2.4 of [RFC6715].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 ORG-DIRECTORY property as defined in section 2.4 of [RFC6715].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6715.html#section-2.4">RFC6715</a>
@@ -417,7 +417,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard IMPP property as defined in section 6.4.3 of [RFC6350].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 IMPP property as defined in section 6.4.3 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.4.3">RFC6350</a>
@@ -428,7 +428,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard CONTACT-URI property as defined in section 21 of [RFC8605].
+     * Returns all the online resources associated to this object corresponding to vCard 4.0 CONTACT-URI property as defined in section 21 of [RFC8605].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc8605#section-2.1">RFC8605</a>

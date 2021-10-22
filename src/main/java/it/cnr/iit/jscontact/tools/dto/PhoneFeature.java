@@ -91,67 +91,78 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
     @JsonIgnore
     public boolean isTextphone() { return isRfc(PhoneFeatureEnum.TEXTPHONE); }
     /**
-     * Tests if this is a phone feature other than those known.
+     * Tests if this is a phone feature not covered by any of the known types.
      *
-     * @return true if this is a "other" phone feature, false otherwise
+     * @return true if this is an "other" phone feature, false otherwise
      */
     @JsonIgnore
     public boolean isOther() { return isRfc(PhoneFeatureEnum.OTHER); }
-
+    /**
+     * Tests if this is a custom phone feature.
+     *
+     * @return true if this is a custom phone feature, false otherwise
+     */
+    @JsonIgnore
+    public boolean isExt() { return isExtValue(); }
+    /**
+     * Returns a phone feature whose enum value is pre-defined.
+     *
+     * @return a pre-defined phone feature
+     */
     public static PhoneFeature rfc(PhoneFeatureEnum rfcValue) { return PhoneFeature.builder().rfcValue(rfcValue).build();}
     /**
-     * Creates a "voice" phone feature.
+     * Returns a "voice" phone feature.
      *
-     * @return an object representing a "voice" phone feature
+     * @return a "voice" phone feature
      */
     public static PhoneFeature voice() { return rfc(PhoneFeatureEnum.VOICE);}
     /**
-     * Creates a "fax" phone feature.
+     * Returns a "fax" phone feature.
      *
-     * @return an object representing a "fax" phone feature
+     * @return a "fax" phone feature
      */
     public static PhoneFeature fax() { return rfc(PhoneFeatureEnum.FAX);}
     /**
-     * Creates a "pager" phone feature.
+     * Returns a "pager" phone feature.
      *
-     * @return an object representing a "pager" phone feature
+     * @return a "pager" phone feature
      */
     public static PhoneFeature pager() { return rfc(PhoneFeatureEnum.PAGER);}
     /**
-     * Creates a "cell" phone feature.
+     * Returns a "cell" phone feature.
      *
-     * @return an object representing a "cell" phone feature
+     * @return a "cell" phone feature
      */
     public static PhoneFeature cell() { return rfc(PhoneFeatureEnum.CELL);}
     /**
-     * Creates a "video" phone feature.
+     * Returns a "video" phone feature.
      *
-     * @return an object representing a "video" phone feature
+     * @return a "video" phone feature
      */
     public static PhoneFeature video() { return rfc(PhoneFeatureEnum.VIDEO);}
     /**
-     * Creates a "text" phone feature.
+     * Returns a "text" phone feature.
      *
-     * @return an object representing a "text" phone feature
+     * @return a "text" phone feature
      */
     public static PhoneFeature text() { return rfc(PhoneFeatureEnum.TEXT);}
     /**
-     * Creates a "textphone" phone feature.
+     * Returns a "textphone" phone feature.
      *
-     * @return an object representing a "textphone" phone feature
+     * @return a "textphone" phone feature
      */
     public static PhoneFeature textphone() { return rfc(PhoneFeatureEnum.TEXTPHONE);}
     /**
-     * Creates a phone feature other than those known.
+     * Returns a phone feature not covered by any of the known types.
      *
-     * @return an object representing an "other" phone feature
+     * @return an "other" phone feature
      */
     public static PhoneFeature other() { return rfc(PhoneFeatureEnum.OTHER);}
     /**
-     * Creates a custom phone feature.
+     * Returns a custom phone feature.
      *
      * @param extValue the custom phone feature as text
-     * @return an object representing a custom phone feature
+     * @return a custom phone feature
      */
     public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(extValue).build(); }
 

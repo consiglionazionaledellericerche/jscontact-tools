@@ -38,7 +38,6 @@ import java.io.Serializable;
 @SuperBuilder
 public abstract class JSContact extends ValidableObject implements Serializable {
 
-    //Metadata properties
     @NotNull(message = "uid is missing in JSContact")
     @NonNull
     String uid;

@@ -8,6 +8,11 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+/**
+ * Abstract class mapping extensible enumerated types.
+ *
+ * @author Mario Loffredo
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @Getter
@@ -44,8 +49,13 @@ public abstract class ExtensibleEnum<T extends IsExtensible> implements Serializ
         return extValue.hashCode();
     }
 
+    /**
+     * Tests if this is a pre-defined value of an extensible enumerated type.
+     *
+     * @return true if this is a pre-defined value of an extensible enumerated type, false otherwise
+     */
     @JsonIgnore
     public boolean isRfcValue() { return rfcValue != null; }
     @JsonIgnore
-    public boolean isExtValue() { return extValue != null; }
+    protected boolean isExtValue() { return extValue != null; }
 }

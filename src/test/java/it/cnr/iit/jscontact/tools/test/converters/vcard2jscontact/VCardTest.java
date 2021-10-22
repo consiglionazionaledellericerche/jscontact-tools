@@ -148,12 +148,12 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard1 - 48", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.example.com/joe.user/joe.asc"));
         assertTrue("testCompleteVCard1 - 49", jsCard.getOnline().get("KEY-1").getPref() == null);
         assertTrue("testCompleteVCard1 - 50", jsCard.getOnline().get("KEY-1").asWork());
-        assertTrue("testCompleteVCard1 - 52", jsCard.getOnline().get("KEY-1").asKey());
+        assertTrue("testCompleteVCard1 - 52", jsCard.getOnline().get("KEY-1").isKey());
         assertTrue("testCompleteVCard1 - 53", jsCard.getOnline().get("URL-1").isUri());
         assertTrue("testCompleteVCard1 - 54", jsCard.getOnline().get("URL-1").getResource().equals("http://example.org"));
         assertTrue("testCompleteVCard1 - 55", jsCard.getOnline().get("URL-1").getPref() == null);
         assertTrue("testCompleteVCard1 - 56", jsCard.getOnline().get("URL-1").asPrivate());
-        assertTrue("testCompleteVCard1 - 58", jsCard.getOnline().get("URL-1").asUrl());
+        assertTrue("testCompleteVCard1 - 58", jsCard.getOnline().get("URL-1").isUrl());
         assertTrue("testCompleteVCard1 - 59", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
@@ -251,7 +251,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard4 - 47", jsCard.getOnline().size() == 2);
         assertTrue("testCompleteVCard4 - 48", jsCard.getOnline().get("KEY-1").asWork());
         assertTrue("testCompleteVCard4 - 49", jsCard.getOnline().get("KEY-1").isUri());
-        assertTrue("testCompleteVCard4 - 50", jsCard.getOnline().get("KEY-1").asKey());
+        assertTrue("testCompleteVCard4 - 50", jsCard.getOnline().get("KEY-1").isKey());
         assertTrue("testCompleteVCard4 - 51", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
         assertTrue("testCompleteVCard4 - 52", jsCard.getOnline().get("URL-1").asPrivate());
         assertTrue("testCompleteVCard4 - 53", jsCard.getOnline().get("URL-1").isUri());

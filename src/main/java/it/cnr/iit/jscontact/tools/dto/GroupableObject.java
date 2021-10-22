@@ -19,6 +19,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Abstract class mapping the vCard 4.0 related properties that can be grouped as defined in section 3.3 of [RFC6350].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-3.3">RFC6350</a>
+ * @author Mario Loffredo
+ */
 @ToString
 public abstract class GroupableObject {
 

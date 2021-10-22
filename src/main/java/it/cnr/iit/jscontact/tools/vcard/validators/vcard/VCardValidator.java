@@ -24,7 +24,7 @@ import lombok.Builder;
 import java.util.List;
 
 /**
- * Utility class for validating a vCard [RFC6350].
+ * Utility class for validating a vCard 4.0 [RFC6350].
  * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  *
  * @author Mario Loffredo

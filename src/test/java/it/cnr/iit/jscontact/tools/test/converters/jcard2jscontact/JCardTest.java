@@ -189,12 +189,12 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 48", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.example.com/joe.user/joe.asc"));
         assertTrue("testCompleteJCard1 - 49", jsCard.getOnline().get("KEY-1").getPref() == null);
         assertTrue("testCompleteJCard1 - 50", jsCard.getOnline().get("KEY-1").asWork());
-        assertTrue("testCompleteJCard1 - 52", jsCard.getOnline().get("KEY-1").asKey());
+        assertTrue("testCompleteJCard1 - 52", jsCard.getOnline().get("KEY-1").isKey());
         assertTrue("testCompleteJCard1 - 53", jsCard.getOnline().get("URL-1").isUri());
         assertTrue("testCompleteJCard1 - 54", jsCard.getOnline().get("URL-1").getResource().equals("http://example.org"));
         assertTrue("testCompleteJCard1 - 55", jsCard.getOnline().get("URL-1").getPref() == null);
         assertTrue("testCompleteJCard1 - 56", jsCard.getOnline().get("URL-1").asPrivate());
-        assertTrue("testCompleteJCard1 - 58", jsCard.getOnline().get("URL-1").asUrl());
+        assertTrue("testCompleteJCard1 - 58", jsCard.getOnline().get("URL-1").isUrl());
         assertTrue("testCompleteJCard1 - 59", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
@@ -293,7 +293,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 47", jsCard.getOnline().size() == 2);
         assertTrue("testCompleteJCard4 - 48", jsCard.getOnline().get("KEY-1").asWork());
         assertTrue("testCompleteJCard4 - 49", jsCard.getOnline().get("KEY-1").isUri());
-        assertTrue("testCompleteJCard4 - 50", jsCard.getOnline().get("KEY-1").asKey());
+        assertTrue("testCompleteJCard4 - 50", jsCard.getOnline().get("KEY-1").isKey());
         assertTrue("testCompleteJCard4 - 51", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
         assertTrue("testCompleteJCard4 - 52", jsCard.getOnline().get("URL-1").asPrivate());
         assertTrue("testCompleteJCard4 - 53", jsCard.getOnline().get("URL-1").isUri());

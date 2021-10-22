@@ -37,6 +37,12 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.StringJoiner;
 
+/**
+ * Class mapping the Address type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1>draft-ietf-jmap-jscontact</a>
+ * @author Mario Loffredo
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -119,7 +125,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
      */
     public boolean asPostal() { return asContext(AddressContext.postal()); }
     /**
-     * Tests if this address is used in a context other than those known.
+     * Tests if this address is used in a context not covered by any of the known types.
      *
      * @return true if the context map includes the "other" context, false otherwise
      */

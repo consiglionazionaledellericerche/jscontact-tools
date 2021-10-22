@@ -67,7 +67,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     Address place;
 
     /**
-     * Tests if this anniversary is a birthday. See vCard BDAY property as defined in section 6.2.5 of [RFC6350].
+     * Tests if this anniversary is a birthday. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
      *
      * @return true if this anniversary is a birthday
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
@@ -76,7 +76,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     public boolean isBirth() { return type == AnniversaryType.BIRTH; }
 
     /**
-     * Tests if this anniversary is a date of death. See vCard DEATHDATE property as defined in section 6.2.5 of [RFC6474].
+     * Tests if this anniversary is a date of death. See vCard 4.0 DEATHDATE property as defined in section 6.2.5 of [RFC6474].
      *
      * @return true if this anniversary is a date of death
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
@@ -85,7 +85,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     public boolean isDeath() { return type == AnniversaryType.DEATH; }
 
     /**
-     * Tests if this anniversary is a date of marriage, or equivalent. See vCard ANNIVERSARY property [as defined in section 6.2.6 of [RFC6350].
+     * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property [as defined in section 6.2.6 of [RFC6350].
      *
      * @return true if this anniversary is a date of marriage
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
@@ -106,33 +106,33 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     }
 
     /**
-     * Creates a birthday anniversary. See vCard BDAY property as defined in section 6.2.5 of [RFC6350].
+     * Returns a birthday anniversary. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
      *
-     * @return an object representing a birthday
+     * @return a birthday
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
      */
     public static Anniversary birth(String date) { return anniversary(AnniversaryType.BIRTH, AnniversaryDate.parse(date), null);}
 
     /**
-     * Creates a date of death anniversary. See vCard DEATHDATE property as defined in section 2.3 of [RFC6474].
+     * Returns a date of death anniversary. See vCard 4.0 DEATHDATE property as defined in section 2.3 of [RFC6474].
      *
-     * @return an object representing a date of death
+     * @return a date of death
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
      */
     public static Anniversary death(String date) { return anniversary(AnniversaryType.DEATH, AnniversaryDate.parse(date), null);}
 
     /**
-     * Creates a date of marriage, or equivalent, anniversary. See vCard ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
+     * Returns a date of marriage, or equivalent, anniversary. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
      *
-     * @return an object representing a date of marriage
+     * @return a date of marriage
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     public static Anniversary marriage(String date) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}
 
     /**
-     * Creates an anniversary other than birthday, date of death, date of marriage.
+     * Returns an anniversary other than birthday, date of death, date of marriage.
      *
-     * @return an object representing an anniversary is other than birthday, date of death, date of marriage
+     * @return an anniversary is other than birthday, date of death, date of marriage
      */
     public static Anniversary otherAnniversary(String date, String label) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), label);}
 

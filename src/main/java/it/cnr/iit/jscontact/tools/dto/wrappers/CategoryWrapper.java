@@ -23,7 +23,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Wrapper class for vCard CATEGORIES property as defined in section 6.7.1 of [RFC6350].
+ * Wrapper class for vCard 4.0 CATEGORIES property as defined in section 6.7.1 of [RFC6350].
  *
  * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.1">RFC6350</a>
  * @author Mario Loffredo

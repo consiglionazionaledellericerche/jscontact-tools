@@ -26,7 +26,7 @@ import lombok.Builder;
 import java.util.List;
 
 /**
- * Utility class for converting a vCard [RFC6350] into a JSContact object.
+ * Utility class for converting a vCard 4.0 [RFC6350] into a JSContact object.
  *
  * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  * @author Mario Loffredo

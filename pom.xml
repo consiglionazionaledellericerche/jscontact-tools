@@ -27,7 +27,7 @@
     <organization>
         <name>Consiglio Nazionale delle Ricerche</name>
     </organization>
-    <description>Java tools for JSContact building, validation, serialization/deserialization and conversion from vCard (RFC6350) and its transliterations, namely xCard (RFC6351) and jCard (RFC7095).</description>
+    <description>Java tools for JSContact building, validation, serialization/deserialization and conversion from vCard 4.0 (RFC6350) and its transliterations, namely xCard (RFC6351) and jCard (RFC7095).</description>
 
     <properties>
         <java.version>1.8</java.version>

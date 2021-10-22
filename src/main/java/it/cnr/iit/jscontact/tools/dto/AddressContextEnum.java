@@ -78,6 +78,5 @@ public enum AddressContextEnum implements IsExtensible, VCardTypeDerivedEnum {
         return EnumUtils.toVCardType(context);
     }
 
-
 }
 

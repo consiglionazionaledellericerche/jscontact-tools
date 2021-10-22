@@ -122,15 +122,15 @@ public class StreetComponent implements Serializable {
     public boolean isExtension() { return isRfc(StreetComponentEnum.EXTENSION); }
 
     /**
-     * Tests if this is the post office box number or identifier.
+     * Tests if this is the P.O. box number or identifier.
      *
-     * @return true if this is the the post office box number or identifier, false otherwise
+     * @return true if this is the the P.O. box number or identifier, false otherwise
      */
     @JsonIgnore
     public boolean isPostOfficeBox() { return isRfc(StreetComponentEnum.POST_OFFICE_BOX); }
 
     /**
-     * Tests if this is the separator for two street components used to build the full address.
+     * Tests if this is the separator for street components used to build the full address.
      *
      * @return true if this is the separator, false otherwise
      */
@@ -161,73 +161,87 @@ public class StreetComponent implements Serializable {
     }
 
     /**
-     * Creates a name component of a street address.
+     * Returns a name component of a street address.
      *
+     * @param value the street name
      * @return the name component
      */
     public static StreetComponent name(String value) { return rfc(StreetComponentEnum.NAME, value);}
     /**
-     * Creates a number component of a street address.
+     * Returns a number component of a street address.
      *
+     * @param value the street number
      * @return the number component
      */
     public static StreetComponent number(String value) { return rfc(StreetComponentEnum.NUMBER, value);}
     /**
-     * Creates a direction component of a street address.
+     * Returns a direction component of a street address.
      *
+     * @param value the street direction
      * @return the direction component
      */
     public static StreetComponent direction(String value) { return rfc(StreetComponentEnum.DIRECTION, value);}
     /**
-     * Creates a building component of a street address.
+     * Returns a building component of a street address.
      *
+     * @param value the building number
      * @return the building component
      */
     public static StreetComponent building(String value) { return rfc(StreetComponentEnum.BUILDING, value);}
     /**
-     * Creates a floor component of a street address.
+     * Returns a floor component of a street address.
      *
+     * @param value the floor number
      * @return the floor component
      */
     public static StreetComponent floor(String value) { return rfc(StreetComponentEnum.FLOOR, value);}
     /**
-     * Creates an apartment component of a street address.
+     * Returns an apartment component of a street address.
      *
+     * @param value the apartment number
      * @return the apartment component
      */
     public static StreetComponent apartment(String value) { return rfc(StreetComponentEnum.APARTMENT, value);}
     /**
-     * Creates a room component of a street address.
+     * Returns a room component of a street address.
      *
+     * @param value the room number
      * @return the room component
      */
     public static StreetComponent room(String value) { return rfc(StreetComponentEnum.ROOM, value);}
     /**
-     * Creates an extension component of a street address.
+     * Returns an extension component of a street address.
      *
+     * @param value the extension
      * @return the extension component
      */
     public static StreetComponent extension(String value) { return rfc(StreetComponentEnum.EXTENSION, value);}
     /**
-     * Creates a P.O. component of a street address.
+     * Returns a P.O. box component of a street address.
      *
-     * @return the P.O. component
+     * @param value the P.O. box number
+     * @return the P.O. box component
      */
     public static StreetComponent postOfficeBox(String value) { return rfc(StreetComponentEnum.POST_OFFICE_BOX, value);}
     /**
-     * Creates a separator component of a street address.
+     * Returns a separator component of a street address.
+     *
+     * @param value the separator
      * @return the separator component
      */
     public static StreetComponent separator(String value) { return rfc(StreetComponentEnum.SEPARATOR, value);}
     /**
-     * Creates an unknown component of a street address.
+     * Returns an unknown component of a street address.
      *
+     * @param value the value for the unknown street component
      * @return the unknown component
      */
     public static StreetComponent unknown(String value) { return rfc(StreetComponentEnum.UNKNOWN, value);}
     /**
-     * Creates a custom component of a street address.
+     * Returns a custom component of a street address.
      *
+     * @param extValue the custom street component
+     * @param value the value for the custom street component
      * @return the custom component
      */
     public static StreetComponent ext(String extValue, String value) {

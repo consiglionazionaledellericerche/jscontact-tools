@@ -59,10 +59,10 @@ public class EnumUtils {
     }
 
     /**
-     * Returns the value of vCard TYPE parameter, as defined in section 5.6 of [RFC6350], matching the given context value.
+     * Returns the value of vCard 4.0 TYPE parameter, as defined in section 5.6 of [RFC6350], matching the given context value.
      *
      * @param context the context value
-     * @return the value of vCard TYPE parameter
+     * @return the value of vCard 4.0 TYPE parameter
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
      */
     public static <E extends Enum <E>> String toVCardType(E context) {

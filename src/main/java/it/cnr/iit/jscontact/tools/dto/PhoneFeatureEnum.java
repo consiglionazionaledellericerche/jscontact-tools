@@ -80,22 +80,6 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
         return phoneFeature.getValue();
     }
 
-    @JsonIgnore
-    public static String toVCardType(String label) {
-
-        try {
-            PhoneFeatureEnum rc = getEnum(label);
-            return toVCardType(rc);
-        }
-        catch(Exception e) {
-
-            if (otherVCardTypes.contains(label))
-                return label;
-
-            return null;
-        }
-    }
-
 
 }
 

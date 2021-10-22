@@ -381,7 +381,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (address.getCountryCode() != null)
                 addr.setParameter("CC", address.getCountryCode());
             if (address.getContexts() != null) {
-                String vCardType = toVCardTypeStringJoiner(AddressContextEnum.class, AddressContext.getAddressContextEnumValues(address.getContexts().keySet())).toString();
+                String vCardType = toVCardTypeStringJoiner(AddressContextEnum.class, AddressContext.toEnumValues(address.getContexts().keySet())).toString();
                 if (StringUtils.isNotEmpty(vCardType))
                     addr.setParameter("TYPE", vCardType);
             }
@@ -591,7 +591,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         tel.setPref(phone.getPref());
 
         StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-        joiner = joiner.merge(toVCardTypeStringJoiner(ContextEnum.class, Context.getContextEnumValues(phone.getContexts().keySet())));
+        joiner = joiner.merge(toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(phone.getContexts().keySet())));
         joiner = joiner.merge(toVCardTypeStringJoiner(PhoneFeatureEnum.class, PhoneFeature.toEnumValues(phone.getFeatures().keySet())));
 
         if (StringUtils.isNotEmpty(joiner.toString()))
@@ -614,7 +614,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Email email = new Email(emailAddress.getEmail());
         email.setPref(emailAddress.getPref());
         if (emailAddress.getContexts()!=null) {
-            String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.getContextEnumValues(emailAddress.getContexts().keySet())).toString();
+            String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(emailAddress.getContexts().keySet())).toString();
             if (StringUtils.isNotEmpty(vCardType))
                 email.setParameter("TYPE", vCardType);
         }
@@ -684,7 +684,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (resource.getPref() != null)
             property.setParameter("PREF", resource.getPref().toString());
         if (resource.getContexts()!=null) {
-            String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.getContextEnumValues(resource.getContexts().keySet())).toString();
+            String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(resource.getContexts().keySet())).toString();
             if (StringUtils.isNotEmpty(vCardType))
                 property.setParameter("TYPE", vCardType);
         }

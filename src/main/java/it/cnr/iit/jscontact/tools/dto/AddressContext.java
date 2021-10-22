@@ -41,26 +41,98 @@ import java.util.List;
 public class AddressContext extends ExtensibleEnum<AddressContextEnum> implements Serializable {
 
     private boolean isRfc(AddressContextEnum value) { return isRfcValue() && rfcValue == value; }
+    /**
+     * Tests if this is a "private" address context.
+     *
+     * @return true if this is a "private" address context, false otherwise
+     */
     @JsonIgnore
     public boolean isPrivate() { return isRfc(AddressContextEnum.PRIVATE); }
+    /**
+     * Tests if this is a "work" address context.
+     *
+     * @return true if this is a "work" address context, false otherwise
+     */
     @JsonIgnore
     public boolean isWork() { return isRfc(AddressContextEnum.WORK); }
+    /**
+     * Tests if this is a "postal" address context.
+     *
+     * @return true if this is a "postal" address context, false otherwise
+     */
     @JsonIgnore
     public boolean isPostal() { return isRfc(AddressContextEnum.POSTAL); }
+    /**
+     * Tests if this is a "billing" address context.
+     *
+     * @return true if this is a "billing" address context, false otherwise
+     */
     @JsonIgnore
     public boolean isBilling() { return isRfc(AddressContextEnum.BILLING); }
-    @JsonIgnore
+    /**
+     * Tests if this is an address context not covered by any of the known types.
+     *
+     * @return true if this is an "other" address context, false otherwise
+     */    @JsonIgnore
     public boolean isOther() { return isRfc(AddressContextEnum.OTHER); }
-
+    /**
+     * Tests if this is a custom address context.
+     *
+     * @return true if this is a custom address context, false otherwise
+     */
+    @JsonIgnore
+    public boolean isExt() { return isExtValue(); }
+    /**
+     * Returns an address context whose enum value is pre-defined.
+     *
+     * @return a pre-defined address context
+     */
     public static AddressContext rfc(AddressContextEnum rfcValue) { return AddressContext.builder().rfcValue(rfcValue).build();}
+    /**
+     * Returns a "private" address context.
+     *
+     * @return a "private" address context
+     */
     public static AddressContext private_() { return rfc(AddressContextEnum.PRIVATE);}
+    /**
+     * Returns a "work" address context.
+     *
+     * @return a "work" address context
+     */
     public static AddressContext work() { return rfc(AddressContextEnum.WORK);}
+    /**
+     * Returns a "postal" address context.
+     *
+     * @return a "postal" address context
+     */
     public static AddressContext postal() { return rfc(AddressContextEnum.POSTAL);}
+    /**
+     * Returns a "billing" address context.
+     *
+     * @return a "billing" address context
+     */
     public static AddressContext billing() { return rfc(AddressContextEnum.BILLING);}
+    /**
+     * Returns an address context not covered by any of the known types.
+     *
+     * @return an "other" address context
+     */
     public static AddressContext other() { return rfc(AddressContextEnum.OTHER);}
+    /**
+     * Returns a custom address context.
+     *
+     * @param extValue the custom address context as text
+     * @return a custom address context
+     */
     public static AddressContext ext(String extValue) { return AddressContext.builder().extValue(extValue).build(); }
 
-    public static List<AddressContextEnum> getAddressContextEnumValues(Collection<AddressContext> contexts) {
+    /**
+     * Returns the list of enum values corresponding to those ones whose type is known in a given collection of address contexts.
+     *
+     * @param contexts the list of address contexts
+     * @return list of enum values corresponding to those address contexts whose type is known
+     */
+    public static List<AddressContextEnum> toEnumValues(Collection<AddressContext> contexts) {
 
         if (contexts == null)
             return null;

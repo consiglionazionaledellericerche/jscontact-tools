@@ -41,20 +41,73 @@ import java.util.List;
 public class Context extends ExtensibleEnum<ContextEnum> implements Serializable {
 
     private boolean isRfc(ContextEnum value) { return isRfcValue() && rfcValue == value; }
+    /**
+     * Tests if this is a "private" context.
+     *
+     * @return true if this is a "private" context, false otherwise
+     */
     @JsonIgnore
     public boolean isPrivate() { return isRfc(ContextEnum.PRIVATE); }
+    /**
+     * Tests if this is a "work" context.
+     *
+     * @return true if this is a "work" context, false otherwise
+     */
     @JsonIgnore
     public boolean isWork() { return isRfc(ContextEnum.WORK); }
+    /**
+     * Tests if this is a context not covered by any of the known types.
+     *
+     * @return true if this is an "other" context, false otherwise
+     */
     @JsonIgnore
     public boolean isOther() { return isRfc(ContextEnum.OTHER); }
-
+    /**
+     * Tests if this is a custom context.
+     *
+     * @return true if this is a custom context, false otherwise
+     */
+    @JsonIgnore
+    public boolean isExt() { return isExtValue(); }
+    /**
+     * Returns a context whose enum value is pre-defined.
+     *
+     * @return a pre-defined context
+     */
     public static Context rfc(ContextEnum rfcValue) { return Context.builder().rfcValue(rfcValue).build();}
+    /**
+     * Returns a "private" context.
+     *
+     * @return a "private" context
+     */
     public static Context private_() { return rfc(ContextEnum.PRIVATE);}
+    /**
+     * Returns a "work" context.
+     *
+     * @return a "work" context
+     */
     public static Context work() { return rfc(ContextEnum.WORK);}
+    /**
+     * Returns a context not covered by any of the known types.
+     *
+     * @return an "other" context
+     */
     public static Context other() { return rfc(ContextEnum.OTHER);}
+    /**
+     * Returns a custom context.
+     *
+     * @param extValue the custom context as text
+     * @return a custom context
+     */
     public static Context ext(String extValue) { return Context.builder().extValue(extValue).build(); }
 
-    public static List<ContextEnum> getContextEnumValues(Collection<Context> contexts) {
+    /**
+     * Returns the list of enum values corresponding to those ones whose type is known in a given collection of contexts.
+     *
+     * @param contexts the list of contexts
+     * @return list of enum values corresponding to those contexts whose type is known
+     */
+    public static List<ContextEnum> toEnumValues(Collection<Context> contexts) {
 
         if (contexts == null)
             return null;

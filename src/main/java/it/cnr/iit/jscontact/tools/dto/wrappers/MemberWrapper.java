@@ -21,7 +21,7 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * Wrapper class for vCard MEMBER property as defined in section 6.6.5 of [RFC6350].
+ * Wrapper class for vCard 4.0 MEMBER property as defined in section 6.6.5 of [RFC6350].
  *
  * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.5">RFC6350</a>
  * @author Mario Loffredo
