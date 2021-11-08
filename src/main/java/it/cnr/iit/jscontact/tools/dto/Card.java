@@ -15,10 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,6 +48,13 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
+@JsonPropertyOrder({
+        "@type","uid","prodId","created","updated","kind","relatedTo","language",
+        "name","fullName","nickNames","organizations","titles",
+        "emails","online","photos","preferredContactMethod","preferredContactLanguages",
+        "addresses","localizations",
+        "anniversaries","personalInfo","notes","categpories","timeZones",
+        "extensions"})
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
 @LocalizationsConstraint
@@ -61,6 +65,7 @@ import java.util.*;
 @SuperBuilder
 public class Card extends JSContact implements Serializable {
 
+    //Metadata properties
     @NotNull
     @Pattern(regexp = "Card", message="invalid @type value in Card")
     @JsonProperty("@type")
@@ -68,8 +73,6 @@ public class Card extends JSContact implements Serializable {
     String _type = "Card";
 
     String prodId;
-
-    String language;
 
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
@@ -83,8 +86,11 @@ public class Card extends JSContact implements Serializable {
     @JsonDeserialize(using = KindTypeDeserializer.class)
     KindType kind;
 
+    @JsonPropertyOrder(alphabetic = true)
     @RelatedToConstraint
     Map<String,Relation> relatedTo;
+
+    String language;
 
     //Name and Organization properties
     @Valid
@@ -94,61 +100,75 @@ public class Card extends JSContact implements Serializable {
 
     String[] nickNames;
 
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
     Map<String,Organization> organizations;
 
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
     Map<String,Title> titles;
 
     //Contact and Resource properties
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     Map<String,EmailAddress> emails;
 
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
     Map<String,Phone> phones;
 
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Resource>")
     Map<String,Resource> online;
 
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,File>")
     Map<String,File> photos;
 
     PreferredContactMethodType preferredContactMethod;
 
+    @JsonPropertyOrder(alphabetic = true)
     @PreferredContactLanguagesConstraint
     Map<String, ContactLanguage[]> preferredContactLanguages;
 
     //Address and Location properties
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
     Map<String,Address> addresses;
 
+    @JsonPropertyOrder(alphabetic = true)
+    Map<String,Map<String,JsonNode>> localizations;
+
     //Additional properties
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Anniversary>")
     Map<String,Anniversary> anniversaries;
 
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
     Map<String,PersonalInformation> personalInfo;
 
     String notes;
 
+    @JsonPropertyOrder(alphabetic = true)
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> categories in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> categories;
 
+    @JsonPropertyOrder(alphabetic = true)
     @Valid
     Map<String,TimeZone> timeZones;
 
+    @JsonPropertyOrder(alphabetic = true)
     Map<String,String> extensions;
-
-    Map<String,Map<String,JsonNode>> localizations;
 
     private boolean isContactByMethodPreferred(PreferredContactMethodType method) {return preferredContactMethod != null && preferredContactMethod == method; }
 

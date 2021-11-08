@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
@@ -45,6 +46,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @UriResourceConstraint
+@JsonPropertyOrder({"@type","resource","type","mediaType","contexts","label","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
