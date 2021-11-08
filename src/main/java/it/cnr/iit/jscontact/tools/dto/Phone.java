@@ -2,6 +2,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.2">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
+@JsonPropertyOrder({"@type","phone","features","contexts","label","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data

@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.constraints.CardGroupKindConstraint;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -37,6 +38,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-3">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
+@JsonPropertyOrder({"@type","uid","members","name","card"})
 @CardGroupKindConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
@@ -55,6 +57,7 @@ public class CardGroup extends JSContact implements Serializable {
     @NotNull
     @Size(min=1)
     @JsonProperty(required = true)
+    @JsonPropertyOrder(alphabetic = true)
     Map<String,Boolean> members;
 
     String name;

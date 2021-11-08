@@ -2,6 +2,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
@@ -19,6 +20,7 @@ import java.util.List;
  * @see <a href="https://datatracker.ietf.org/doc/rfc8984#section-4.7.2">RFC8984</a>
  * @author Mario Loffredo
  */
+@JsonPropertyOrder({"@type","tzId","updated","standard"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
