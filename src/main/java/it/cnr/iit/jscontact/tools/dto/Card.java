@@ -28,6 +28,7 @@ import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
+import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
@@ -716,7 +717,7 @@ public class Card extends JSContact implements Serializable {
         JsonNode root = objectMapper.valueToTree(this);
 
         for (Map.Entry<String,JsonNode> localization : localizationsPerLanguage.entrySet()) {
-            JsonPointer jsonPointer = JsonPointer.compile(localization.getKey());
+            JsonPointer jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute(localization.getKey()));
             JsonNode localizedNode = localization.getValue();
             JsonNode parentNode = root.at(jsonPointer.head());
 
