@@ -638,6 +638,7 @@ public class Card extends JSContact implements Serializable {
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      */
+    @JsonIgnore
     public Map<String,JsonNode> getLocalizationsPerPath(String path) {
 
         if (localizations == null)
@@ -664,6 +665,7 @@ public class Card extends JSContact implements Serializable {
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      */
+    @JsonIgnore
     public Map<String,JsonNode> getLocalizationsPerLanguage(String language) {
 
         if (localizations == null)
@@ -682,6 +684,7 @@ public class Card extends JSContact implements Serializable {
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      */
+    @JsonIgnore
     public JsonNode getLocalization(String language, String path) {
 
         if (localizations == null)
@@ -703,6 +706,7 @@ public class Card extends JSContact implements Serializable {
      * @return the localization of this object for the given language
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
      */
+    @JsonIgnore
     public Card getLocalizedVersion(String language) {
 
         if (localizations == null)
@@ -743,6 +747,7 @@ public class Card extends JSContact implements Serializable {
      * @return the array of localization languages [RFC5646]
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
      */
+    @JsonIgnore
     public String[] getLocalizationsLanguages() {
 
         if (localizations == null)
