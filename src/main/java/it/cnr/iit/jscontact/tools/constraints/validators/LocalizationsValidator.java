@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.LocalizationsConstraint;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
 import sun.util.locale.LanguageTag;
 import sun.util.locale.ParseStatus;
 
@@ -56,7 +57,7 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
                 JsonPointer jsonPointer;
                 try {
-                    jsonPointer = JsonPointer.compile(localization.getKey());
+                    jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute(localization.getKey()));
                 } catch (Exception e) {
                     context.buildConstraintViolationWithTemplate("invalid JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
                     return false;

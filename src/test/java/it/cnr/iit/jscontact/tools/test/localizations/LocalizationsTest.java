@@ -2,6 +2,7 @@ package it.cnr.iit.jscontact.tools.test.localizations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -119,7 +120,7 @@ public class LocalizationsTest {
                 "\"localizations\":{" +
                     "\"jp\": {" +
                         "\"/addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"addresses\" : { \"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                        "\"addresses/ADR-1\" : { \"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
@@ -127,7 +128,47 @@ public class LocalizationsTest {
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testLocalizations4 - 1", !jsCard.isValid());
-        assertTrue("testLocalizations4 - 2", jsCard.getValidationMessage().replace("\n","").equals("invalid JSON pointer in localizations: addresses"));
+        assertTrue("testLocalizations4 - 2", jsCard.getValidationMessage().replace("\n","").equals("type mismatch of JSON pointer in localizations: addresses/ADR-1"));
     }
+
+
+    @Test
+    public void testLocalizations5() throws IOException {
+
+        String json = "{" +
+                    "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                    "\"fullName\":\"Vasya Pupkin\"," +
+                    "\"organizations\": { \"org\": { \"@type\": \"Organization\", \"name\": \"My Company\" } }, " +
+                    "\"addresses\":{" +
+                        "\"addr\": {" +
+                            "\"@type\":\"Address\"," +
+                            "\"street\": [{\"@type\": \"StreetComponent\",\"type\": \"name\", \"value\": \"1 Street\"}, " +
+                                         "{\"@type\": \"StreetComponent\",\"type\": \"postOfficeBox\", \"value\":\"01001\"} " +
+                                         "], " +
+                            "\"locality\":\"Kyiv\"," +
+                            "\"countryCode\":\"UA\"" +
+                        "}" +
+                    "}," +
+                    "\"localizations\":{" +
+                        "\"uk\": {" +
+                            "\"/fullName\":\"Вася Пупкин\"," +
+                            "\"/organizations/org\": { \"@type\": \"Organization\", \"name\": \"Моя Компания\" }, " +
+                            "\"/addresses/addr\":{" +
+                                "\"@type\":\"Address\"," +
+                                "\"street\": [{\"@type\": \"StreetComponent\",\"type\": \"name\",\"value\": \"1, Улица\"}, " +
+                                             "{\"@type\": \"StreetComponent\",\"type\": \"postOfficeBox\",\"value\":\"01001\"} " +
+                                             "], " +
+                                "\"locality\":\"Киев\"," +
+                                "\"countryCode\":\"UA\"" +
+                            "}" +
+                        "}" +
+                    "}" +
+                "}";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Card jsCard = objectMapper.readValue(json, Card.class);
+        assertTrue("testLocalizations5 - 1", jsCard.isValid());
+    }
+
 
 }

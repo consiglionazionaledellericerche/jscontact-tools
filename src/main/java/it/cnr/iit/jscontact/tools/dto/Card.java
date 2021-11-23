@@ -28,6 +28,7 @@ import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
+import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
@@ -637,6 +638,7 @@ public class Card extends JSContact implements Serializable {
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      */
+    @JsonIgnore
     public Map<String,JsonNode> getLocalizationsPerPath(String path) {
 
         if (localizations == null)
@@ -663,6 +665,7 @@ public class Card extends JSContact implements Serializable {
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      */
+    @JsonIgnore
     public Map<String,JsonNode> getLocalizationsPerLanguage(String language) {
 
         if (localizations == null)
@@ -681,6 +684,7 @@ public class Card extends JSContact implements Serializable {
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      */
+    @JsonIgnore
     public JsonNode getLocalization(String language, String path) {
 
         if (localizations == null)
@@ -702,6 +706,7 @@ public class Card extends JSContact implements Serializable {
      * @return the localization of this object for the given language
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
      */
+    @JsonIgnore
     public Card getLocalizedVersion(String language) {
 
         if (localizations == null)
@@ -716,7 +721,7 @@ public class Card extends JSContact implements Serializable {
         JsonNode root = objectMapper.valueToTree(this);
 
         for (Map.Entry<String,JsonNode> localization : localizationsPerLanguage.entrySet()) {
-            JsonPointer jsonPointer = JsonPointer.compile(localization.getKey());
+            JsonPointer jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute(localization.getKey()));
             JsonNode localizedNode = localization.getValue();
             JsonNode parentNode = root.at(jsonPointer.head());
 
@@ -734,6 +739,21 @@ public class Card extends JSContact implements Serializable {
         localizedCard.setLocalizations(null);
 
         return localizedCard;
+    }
+
+    /**
+     * Returns the localization languages of this object.
+     *
+     * @return the array of localization languages [RFC5646]
+     * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
+     */
+    @JsonIgnore
+    public String[] getLocalizationsLanguages() {
+
+        if (localizations == null)
+            return null;
+
+        return localizations.keySet().toArray(new String[localizations.size()]);
     }
 
     /**
