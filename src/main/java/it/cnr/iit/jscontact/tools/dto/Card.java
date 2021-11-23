@@ -738,6 +738,20 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
+     * Returns the localization languages of this object.
+     *
+     * @return the array of localization languages [RFC5646]
+     * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
+     */
+    public String[] getLocalizationsLanguages() {
+
+        if (localizations == null)
+            return null;
+
+        return localizations.keySet().toArray(new String[localizations.size()]);
+    }
+
+    /**
      * Clones this object.
      *
      * @return the clone of this Card object
