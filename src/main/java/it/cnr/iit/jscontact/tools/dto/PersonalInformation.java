@@ -34,7 +34,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.2">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","value","level"})
+@JsonPropertyOrder({"@type","type","description","value","level"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data

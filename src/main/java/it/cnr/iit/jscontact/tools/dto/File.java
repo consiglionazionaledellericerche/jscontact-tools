@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.4">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","href","mediaType","size","pref"})
+@JsonPropertyOrder({"@type","href","mediaType","description","size","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -37,6 +37,8 @@ public class File implements IdMapValue, Serializable {
     String href;
 
     String mediaType;
+
+    String description;
 
     @Min(value=0, message = "invalid size in File - value must be greater or equal than 0")
     int size;
