@@ -176,7 +176,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 34", jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+1-555-555-1234;ext=102"));
         assertTrue("testCompleteJCard1 - 35", jsCard.getPhones().get("PHONE-1").getPref() == 1);
         assertTrue("testCompleteJCard1 - 36", jsCard.getPhones().get("PHONE-1").asWork());
-        assertTrue("testCompleteJCard1 - 37", jsCard.getPhones().get("PHONE-1").getLabel() == null);
+        assertTrue("testCompleteJCard1 - 37", jsCard.getPhones().get("PHONE-1").getDescription() == null);
         assertTrue("testCompleteJCard1 - 38", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteJCard1 - 39", jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-555-555-4321"));
         assertTrue("testCompleteJCard1 - 40", jsCard.getPhones().get("PHONE-2").getPref() == null);
@@ -259,7 +259,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
         assertTrue("testCompleteJCard4 - 14", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("0000-02-03"));
         assertTrue("testCompleteJCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isOtherAnniversary());
-        assertTrue("testCompleteJCard4 - 16", jsCard.getAnniversaries().get("ANNIVERSARY-2").getLabel().equals("marriage date"));
+        assertTrue("testCompleteJCard4 - 16", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDescription().equals("marriage date"));
         assertTrue("testCompleteJCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
         assertTrue("testCompleteJCard4 - 18", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteJCard4 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
@@ -286,7 +286,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 40", jsCard.getPhones().get("PHONE-2").asCell());
         assertTrue("testCompleteJCard4 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard4 - 42", jsCard.getPhones().get("PHONE-2").asText());
-        assertTrue("testCompleteJCard4 - 43", jsCard.getPhones().get("PHONE-2").getLabel() == null);
+        assertTrue("testCompleteJCard4 - 43", jsCard.getPhones().get("PHONE-2").getDescription() == null);
         assertTrue("testCompleteJCard4 - 44", jsCard.getEmails().size() == 1);
         assertTrue("testCompleteJCard4 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
         assertTrue("testCompleteJCard4 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
@@ -297,7 +297,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 51", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
         assertTrue("testCompleteJCard4 - 52", jsCard.getOnline().get("URL-1").asPrivate());
         assertTrue("testCompleteJCard4 - 53", jsCard.getOnline().get("URL-1").isUri());
-        assertTrue("testCompleteJCard4 - 54", jsCard.getOnline().get("URL-1").getLabel().equals("url"));
+        assertTrue("testCompleteJCard4 - 54", jsCard.getOnline().get("URL-1").getDescription().equals("url"));
         assertTrue("testCompleteJCard4 - 55", jsCard.getOnline().get("URL-1").getResource().equals("http://nomis80.org"));
         assertTrue("testCompleteJCard4 - 56", StringUtils.isNotEmpty(jsCard.getUid()));
     }
@@ -325,11 +325,11 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 18", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteJCard5 - 19", jsCard.getPhones().get("PHONE-1").asWork());
         assertTrue("testCompleteJCard5 - 20", jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+1-111-555-1212"));
-        assertTrue("testCompleteJCard5 - 21", jsCard.getPhones().get("PHONE-1").getLabel() == null);
+        assertTrue("testCompleteJCard5 - 21", jsCard.getPhones().get("PHONE-1").getDescription() == null);
         assertTrue("testCompleteJCard5 - 22", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteJCard5 - 23", jsCard.getPhones().get("PHONE-2").asPrivate());
         assertTrue("testCompleteJCard5 - 24", jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-404-555-1212"));
-        assertTrue("testCompleteJCard5 - 25", jsCard.getPhones().get("PHONE-2").getLabel() == null);
+        assertTrue("testCompleteJCard5 - 25", jsCard.getPhones().get("PHONE-2").getDescription() == null);
 
         assertTrue("testCompleteJCard5 - 26", jsCard.getAddresses().size() == 2);
         assertTrue("testCompleteJCard5 - 27", jsCard.getAddresses().get("ADR-1").asWork());

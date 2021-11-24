@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","label","date","place"})
+@JsonPropertyOrder({"@type","type","description","date","place"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -55,7 +55,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
 
     AnniversaryType type;
 
-    String label;
+    String description;
 
     @NotNull(message = "date is missing in Anniversary")
     @NonNull
@@ -91,18 +91,18 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isMarriage() { return type == null && label.equals(ANNIVERSAY_MARRIAGE_LABEL); }
+    public boolean isMarriage() { return type == null && description.equals(ANNIVERSAY_MARRIAGE_LABEL); }
 
     /**
-     * Tests if this is an undefined anniversary specified by the value of the "label" property.
+     * Tests if this is an undefined anniversary specified by the value of the "description" property.
      *
      * @return true if this is an undefined anniversary
      */
     @JsonIgnore
     public boolean isOtherAnniversary() { return type == null; }
 
-    private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String label) {
-        return Anniversary.builder().type(type).date(date).label(label).build();
+    private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String description) {
+        return Anniversary.builder().type(type).date(date).description(description).build();
     }
 
     /**
@@ -136,9 +136,9 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * Returns an anniversary other than birthday, date of death, date of marriage.
      *
      * @param date the anniversary date in text format
-     * @param label a text specifying the anniversary
+     * @param description a text specifying the anniversary
      * @return an anniversary other than birthday, date of death, date of marriage
      */
-    public static Anniversary otherAnniversary(String date, String label) { return anniversary(null, AnniversaryDate.parse(date), label);}
+    public static Anniversary otherAnniversary(String date, String description) { return anniversary(null, AnniversaryDate.parse(date), description);}
 
 }

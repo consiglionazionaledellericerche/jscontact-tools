@@ -93,8 +93,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 switch (idType) {
                     case ONLINE:
                         VCard2JSContactIdsProfile.ResourceId resourceId = (VCard2JSContactIdsProfile.ResourceId) jsContactId.getId();
-                        OnlineLabelKey labelKey = (OnlineLabelKey) args[0];
-                        if (resourceId.getLabelKey() == labelKey)
+                        OnlineDescriptionKey descriptionKey = (OnlineDescriptionKey) args[0];
+                        if (resourceId.getDescriptionKey() == descriptionKey)
                             ids.add(resourceId.getId());
                         break;
                     case PERSONAL_INFO:
@@ -234,7 +234,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.voice(), Boolean.TRUE);}};
     }
 
-    private static String getLabel(String jcardTypeParam, String[] exclude, String[] include) {
+    private static String getDescription(String jcardTypeParam, String[] exclude, String[] include) {
 
         List<String> list = new ArrayList<>();
 
@@ -316,7 +316,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return StringUtils.isNotEmpty(fullAddress) ? fullAddress : null;
     }
 
-    private void addOnline(VCardProperty property, Card jsCard, OnlineLabelKey labelKey, int index) {
+    private void addOnline(VCardProperty property, Card jsCard, OnlineDescriptionKey descriptionKey, int index) {
 
         String value;
         if (property instanceof UriProperty)
@@ -326,15 +326,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         String jcardType;
         Context rcontext;
-        String label;
+        String description;
 
         jcardType = getJcardParam(property.getParameters(), "TYPE");
         Map<Context,Boolean> contexts = getContexts(jcardType);
-        label = getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, new String[]{labelKey.getValue()});
-        jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, index, String.format("%s-%s",labelKey.getValue().toUpperCase(),index), labelKey), Resource.builder()
+        description = getDescription(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, new String[]{descriptionKey.getValue()});
+        jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, index, String.format("%s-%s",descriptionKey.getValue().toUpperCase(),index), descriptionKey), Resource.builder()
                                     .resource(value)
                                     .type(ResourceType.URI)
-                                    .label(label)
+                                    .description(description)
                                     .contexts(contexts)
                                     .mediaType(getMediaType(getJcardParam(property.getParameters(), "MEDIATYPE"), value))
                                     .pref(getPreference(getJcardParam(property.getParameters(), "PREF")))
@@ -706,7 +706,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
       if (vcard.getAnniversary() != null) {
           jsCard.addAnniversary(getId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + i),it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                               .date(getAnniversaryDate(vcard.getAnniversary()))
-                                                                              .label(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)
+                                                                              .description(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)
                                                                               .build()
                                    );
           if (vcard.getAnniversary().getCalscale()!= null && !vcard.getAnniversary().getCalscale().getValue().equals(DEFAULT_CALSCALE))
@@ -795,9 +795,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private static boolean labelIncludesTelTypes(String label) {
+    private static boolean descriptionIncludesTelTypes(String description) {
 
-        return LabelUtils.labelIncludesAnyItem(label, Arrays.asList("voice", "textphone", "fax", "pager", "cell", "text", "video"));
+        return DescriptionUtils.descriptionIncludesAnyItem(description, Arrays.asList("voice", "textphone", "fax", "pager", "cell", "text", "video"));
     }
 
     private static String getResourceExt(String resource) {
@@ -825,12 +825,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String[] exclude = null;
             if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())));
             if (phoneFeatures != null) exclude = ArrayUtils.addAll(exclude, EnumUtils.toStrings(PhoneFeature.toEnumValues(phoneFeatures.keySet())));
-            String label = getLabel(jcardType, exclude, null);
+            String description = getDescription(jcardType, exclude, null);
             jsCard.addPhone(getId(VCard2JSContactIdsProfile.IdType.PHONE, i,"PHONE-" + (i++)), Phone.builder()
                                        .phone(getValue(tel))
-                                       .features((phoneFeatures == null && !labelIncludesTelTypes(label)) ? getDefaultPhoneFeatures() : phoneFeatures)
+                                       .features((phoneFeatures == null && !descriptionIncludesTelTypes(description)) ? getDefaultPhoneFeatures() : phoneFeatures)
                                        .contexts(contexts)
-                                       .label(label)
+                                       .description(description)
                                        .pref(tel.getPref())
                                        .build()
                               );
@@ -869,18 +869,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (Source source : vcard.getSources())
-            addOnline(source, jsCard, OnlineLabelKey.SOURCE, i++);
+            addOnline(source, jsCard, OnlineDescriptionKey.SOURCE, i++);
 
         i = 1;
         for (Impp impp : vcard.getImpps()) {
             jcardType = getJcardParam(impp.getParameters(), "TYPE");
             contexts = getContexts(jcardType);
             String resource = getValue(impp);
-            jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, i,"XMPP-" + (i++), OnlineLabelKey.IMPP), Resource.builder()
+            jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, i,"XMPP-" + (i++), OnlineDescriptionKey.IMPP), Resource.builder()
                                         .resource(resource)
                                         .type(ResourceType.USERNAME)
                                         .contexts(contexts)
-                                        .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.IMPP.getValue()}))
+                                        .description(getDescription(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, new String[]{OnlineDescriptionKey.IMPP.getValue()}))
                                         .pref(impp.getPref())
                                         .mediaType(getMediaType(impp.getMediaType(), resource))
                                         .build()
@@ -889,31 +889,31 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         i = 1;
         for (Logo logo : vcard.getLogos())
-            addOnline(logo, jsCard, OnlineLabelKey.LOGO, i++);
+            addOnline(logo, jsCard, OnlineDescriptionKey.LOGO, i++);
 
         i = 1;
         for (Sound sound : vcard.getSounds())
-            addOnline(sound, jsCard, OnlineLabelKey.SOUND, i++);
+            addOnline(sound, jsCard, OnlineDescriptionKey.SOUND, i++);
 
         i = 1;
         for (Url url : vcard.getUrls())
-            addOnline(url, jsCard, OnlineLabelKey.URL, i++);
+            addOnline(url, jsCard, OnlineDescriptionKey.URL, i++);
 
         i = 1;
         for (Key key : vcard.getKeys())
-            addOnline(key, jsCard, OnlineLabelKey.KEY, i++);
+            addOnline(key, jsCard, OnlineDescriptionKey.KEY, i++);
 
         i = 1;
         for (FreeBusyUrl fburl : vcard.getFbUrls())
-            addOnline(fburl, jsCard, OnlineLabelKey.FBURL, i++);
+            addOnline(fburl, jsCard, OnlineDescriptionKey.FBURL, i++);
 
         i = 1;
         for (CalendarRequestUri calendarRequestUri : vcard.getCalendarRequestUris())
-            addOnline(calendarRequestUri, jsCard, OnlineLabelKey.CALADRURI, i++);
+            addOnline(calendarRequestUri, jsCard, OnlineDescriptionKey.CALADRURI, i++);
 
         i = 1;
         for (CalendarUri calendarUri : vcard.getCalendarUris())
-            addOnline(calendarUri, jsCard, OnlineLabelKey.CALURI, i++);
+            addOnline(calendarUri, jsCard, OnlineDescriptionKey.CALURI, i++);
 
         List<Resource> orgDirectories = new ArrayList<>();
         for (OrgDirectory od : vcard.getOrgDirectories()) {
@@ -922,7 +922,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             orgDirectories.add(Resource.builder()
                                        .resource(getValue(od))
                                        .type(ResourceType.URI)
-                                       .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, new String[]{OnlineLabelKey.ORG_DIRECTORY.getValue()}))
+                                       .description(getDescription(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, new String[]{OnlineDescriptionKey.ORG_DIRECTORY.getValue()}))
                                        .contexts(contexts)
                                        .pref(od.getPref())
                                        .index(od.getIndex())
@@ -934,15 +934,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Collections.sort(orgDirectories);
             i = 1;
             for (Resource ol : orgDirectories)
-                jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, i, "ORG-DIRECTORY-" + (i++), OnlineLabelKey.ORG_DIRECTORY), ol);
+                jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, i, "ORG-DIRECTORY-" + (i++), OnlineDescriptionKey.ORG_DIRECTORY), ol);
         }
 
-        List<RawProperty> contactUris = getRawProperties(vcard, OnlineLabelKey.CONTACT_URI.getValue());
+        List<RawProperty> contactUris = getRawProperties(vcard, OnlineDescriptionKey.CONTACT_URI.getValue());
         i = 1;
         for (RawProperty contactUri : contactUris) {
             UriProperty uriProperty = new UriProperty(getValue(contactUri));
             uriProperty.setParameters(contactUri.getParameters());
-            addOnline(uriProperty, jsCard, OnlineLabelKey.CONTACT_URI, i++);
+            addOnline(uriProperty, jsCard, OnlineDescriptionKey.CONTACT_URI, i++);
         }
     }
 

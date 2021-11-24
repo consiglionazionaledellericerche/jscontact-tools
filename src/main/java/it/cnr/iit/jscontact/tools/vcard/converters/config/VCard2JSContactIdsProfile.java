@@ -1,6 +1,6 @@
 package it.cnr.iit.jscontact.tools.vcard.converters.config;
 
-import it.cnr.iit.jscontact.tools.dto.OnlineLabelKey;
+import it.cnr.iit.jscontact.tools.dto.OnlineDescriptionKey;
 import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,21 +56,21 @@ public class VCard2JSContactIdsProfile {
     @AllArgsConstructor
     public static class ResourceId {
 
-        OnlineLabelKey labelKey;
+        OnlineDescriptionKey descriptionKey;
         String id;
 
-        private static ResourceId resourceId(OnlineLabelKey labelKey, String id) { return ResourceId.builder().labelKey(labelKey).id(id).build(); }
-        public static ResourceId keysId(String id) { return resourceId(OnlineLabelKey.KEY,id);}
-        public static ResourceId logosId(String id) { return resourceId(OnlineLabelKey.LOGO,id);}
-        public static ResourceId soundsId(String id) { return resourceId(OnlineLabelKey.SOUND,id);}
-        public static ResourceId orgDirectoriesId(String id) { return resourceId(OnlineLabelKey.ORG_DIRECTORY,id);}
-        public static ResourceId imppsId(String id) { return resourceId(OnlineLabelKey.IMPP,id);}
-        public static ResourceId fbUrlsId(String id) { return resourceId(OnlineLabelKey.FBURL,id);}
-        public static ResourceId urlsId(String id) { return resourceId(OnlineLabelKey.URL,id);}
-        public static ResourceId contactUrisId(String id) { return resourceId(OnlineLabelKey.CONTACT_URI,id);}
-        public static ResourceId caladrUrisId(String id) { return resourceId(OnlineLabelKey.CALADRURI,id);}
-        public static ResourceId calurisId(String id) { return resourceId(OnlineLabelKey.CALURI,id);}
-        public static ResourceId sourcesId(String id) { return resourceId(OnlineLabelKey.SOURCE,id);}
+        private static ResourceId resourceId(OnlineDescriptionKey descriptionKey, String id) { return ResourceId.builder().descriptionKey(descriptionKey).id(id).build(); }
+        public static ResourceId keysId(String id) { return resourceId(OnlineDescriptionKey.KEY,id);}
+        public static ResourceId logosId(String id) { return resourceId(OnlineDescriptionKey.LOGO,id);}
+        public static ResourceId soundsId(String id) { return resourceId(OnlineDescriptionKey.SOUND,id);}
+        public static ResourceId orgDirectoriesId(String id) { return resourceId(OnlineDescriptionKey.ORG_DIRECTORY,id);}
+        public static ResourceId imppsId(String id) { return resourceId(OnlineDescriptionKey.IMPP,id);}
+        public static ResourceId fbUrlsId(String id) { return resourceId(OnlineDescriptionKey.FBURL,id);}
+        public static ResourceId urlsId(String id) { return resourceId(OnlineDescriptionKey.URL,id);}
+        public static ResourceId contactUrisId(String id) { return resourceId(OnlineDescriptionKey.CONTACT_URI,id);}
+        public static ResourceId caladrUrisId(String id) { return resourceId(OnlineDescriptionKey.CALADRURI,id);}
+        public static ResourceId calurisId(String id) { return resourceId(OnlineDescriptionKey.CALURI,id);}
+        public static ResourceId sourcesId(String id) { return resourceId(OnlineDescriptionKey.SOURCE,id);}
     }
 
 

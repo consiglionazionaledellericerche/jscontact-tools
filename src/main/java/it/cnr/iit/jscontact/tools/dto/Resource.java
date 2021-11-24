@@ -29,7 +29,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.DescriptionUtils;
 import lombok.*;
 
 import javax.validation.constraints.Max;
@@ -46,7 +46,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @UriResourceConstraint
-@JsonPropertyOrder({"@type","resource","type","mediaType","contexts","label","pref"})
+@JsonPropertyOrder({"@type","resource","type","mediaType","contexts","description","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -75,7 +75,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    String label;
+    String description;
 
     @Min(value=1, message = "invalid pref in Resource - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Resource - value must be less or equal than 100")
@@ -119,7 +119,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     public boolean isOther() { return type == null; }
 
     @JsonIgnore
-    private boolean isResource(OnlineLabelKey labelKey) { return LabelUtils.labelIncludesItem(label,labelKey.getValue()); }
+    private boolean isResource(OnlineDescriptionKey descriptionKey) { return DescriptionUtils.descriptionIncludesItem(description,descriptionKey.getValue()); }
     /**
      * Tests if this resource maps a vCard 4.0 CALADRURI property as defined in section 6.9.2 of [RFC6350].
      *
@@ -127,7 +127,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.2">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isCaladruri() { return isResource(OnlineLabelKey.CALADRURI); }
+    public boolean isCaladruri() { return isResource(OnlineDescriptionKey.CALADRURI); }
     /**
      * Tests if this resource maps a vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
      *
@@ -135,7 +135,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.3">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isCaluri() { return isResource(OnlineLabelKey.CALURI); }
+    public boolean isCaluri() { return isResource(OnlineDescriptionKey.CALURI); }
     /**
      * Tests if this resource maps a vCard 4.0 CONTACT-URI property as defined in section 2.1 of [RFC8605].
      *
@@ -143,7 +143,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc8605#section-2.1">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isContactUri() { return isResource(OnlineLabelKey.CONTACT_URI); }
+    public boolean isContactUri() { return isResource(OnlineDescriptionKey.CONTACT_URI); }
     /**
      * Tests if this resource maps a vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
      *
@@ -151,7 +151,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.1">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isFburl() { return isResource(OnlineLabelKey.FBURL); }
+    public boolean isFburl() { return isResource(OnlineDescriptionKey.FBURL); }
     /**
      * Tests if this resource maps a vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
      *
@@ -159,7 +159,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.8.1">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isKey() { return isResource(OnlineLabelKey.KEY); }
+    public boolean isKey() { return isResource(OnlineDescriptionKey.KEY); }
     /**
      * Tests if this resource maps a vCard 4.0 IMPP property as defined in section 6.4.3 of [RFC6350].
      *
@@ -167,7 +167,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.4.3">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isImpp() { return isResource(OnlineLabelKey.IMPP); }
+    public boolean isImpp() { return isResource(OnlineDescriptionKey.IMPP); }
     /**
      * Tests if this resource maps a vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
      *
@@ -175,7 +175,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.3">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isLogo() { return isResource(OnlineLabelKey.LOGO); }
+    public boolean isLogo() { return isResource(OnlineDescriptionKey.LOGO); }
     /**
      * Tests if this resource maps a vCard 4.0 ORG-DIRECTORY property as defined in section 6.2.4 of [RFC6715].
      *
@@ -183,7 +183,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6715.html#section-2.4">RFC6715</a>
      */
     @JsonIgnore
-    public boolean isOrgDirectory() { return isResource(OnlineLabelKey.ORG_DIRECTORY); }
+    public boolean isOrgDirectory() { return isResource(OnlineDescriptionKey.ORG_DIRECTORY); }
     /**
      * Tests if this resource maps a vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
      *
@@ -191,7 +191,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.5">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isSound() { return isResource(OnlineLabelKey.SOUND); }
+    public boolean isSound() { return isResource(OnlineDescriptionKey.SOUND); }
     /**
      * Tests if this resource maps a vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
      *
@@ -199,7 +199,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.1.3">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isSource() { return isResource(OnlineLabelKey.SOURCE); }
+    public boolean isSource() { return isResource(OnlineDescriptionKey.SOURCE); }
     /**
      * Tests if this resource maps a vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
      *
@@ -207,14 +207,14 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.8">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isUrl() { return isResource(OnlineLabelKey.URL); }
+    public boolean isUrl() { return isResource(OnlineDescriptionKey.URL); }
 
 
-    private static Resource resource(OnlineLabelKey labelKey, String resource) {
+    private static Resource resource(OnlineDescriptionKey descriptionKey, String resource) {
         return Resource.builder()
                        .resource(resource)
-                       .type((labelKey == OnlineLabelKey.IMPP) ? ResourceType.USERNAME : ResourceType.URI)
-                       .label(labelKey.getValue())
+                       .type((descriptionKey == OnlineDescriptionKey.IMPP) ? ResourceType.USERNAME : ResourceType.URI)
+                       .description(descriptionKey.getValue())
                        .build();
     }
     /**
@@ -224,7 +224,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.2">RFC6350</a>
      */
-    public static Resource caladruri(String resource) { return resource(OnlineLabelKey.CALADRURI, resource);}
+    public static Resource caladruri(String resource) { return resource(OnlineDescriptionKey.CALADRURI, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
      *
@@ -232,7 +232,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.3">RFC6350</a>
      */
-    public static Resource caluri(String resource) { return resource(OnlineLabelKey.CALURI, resource);}
+    public static Resource caluri(String resource) { return resource(OnlineDescriptionKey.CALURI, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 CONTACT-URI property as defined in section 2.1 of [RFC8605].
      *
@@ -240,7 +240,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc8605#section-2.1">RFC6350</a>
      */
-    public static Resource contactUri(String resource) { return resource(OnlineLabelKey.CONTACT_URI, resource);}
+    public static Resource contactUri(String resource) { return resource(OnlineDescriptionKey.CONTACT_URI, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
      *
@@ -248,7 +248,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.1">RFC6350</a>
      */
-    public static Resource fburl(String resource) { return resource(OnlineLabelKey.FBURL, resource);}
+    public static Resource fburl(String resource) { return resource(OnlineDescriptionKey.FBURL, resource);}
 
     /**
      * Returns a resource mapping a vCard 4.0 IMPP property as defined in section 6.4.3 of [RFC6350].
@@ -257,7 +257,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.4.3">RFC6350</a>
      */
-    public static Resource impp(String resource) { return resource(OnlineLabelKey.IMPP, resource);}
+    public static Resource impp(String resource) { return resource(OnlineDescriptionKey.IMPP, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
      *
@@ -265,7 +265,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.8.1">RFC6350</a>
      */
-    public static Resource key(String resource) { return resource(OnlineLabelKey.KEY, resource);}
+    public static Resource key(String resource) { return resource(OnlineDescriptionKey.KEY, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
      *
@@ -273,7 +273,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.3">RFC6350</a>
      */
-    public static Resource logo(String resource) { return resource(OnlineLabelKey.LOGO, resource);}
+    public static Resource logo(String resource) { return resource(OnlineDescriptionKey.LOGO, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 ORG-DIRECTORY property as defined in section 6.2.4 of [RFC6715].
      *
@@ -281,7 +281,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6715.html#section-2.4">RFC6715</a>
      */
-    public static Resource orgDirectory(String resource) { return resource(OnlineLabelKey.ORG_DIRECTORY, resource);}
+    public static Resource orgDirectory(String resource) { return resource(OnlineDescriptionKey.ORG_DIRECTORY, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
      *
@@ -289,7 +289,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.5">RFC6350</a>
      */
-    public static Resource sound(String resource) { return resource(OnlineLabelKey.SOUND, resource);}
+    public static Resource sound(String resource) { return resource(OnlineDescriptionKey.SOUND, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
      *
@@ -297,7 +297,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.1.3">RFC6350</a>
      */
-    public static Resource source(String resource) { return resource(OnlineLabelKey.SOURCE, resource);}
+    public static Resource source(String resource) { return resource(OnlineDescriptionKey.SOURCE, resource);}
     /**
      * Returns a resource mapping a vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
      *
@@ -305,6 +305,6 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.8">RFC6350</a>
      */
-    public static Resource url(String resource) { return resource(OnlineLabelKey.URL, resource);}
+    public static Resource url(String resource) { return resource(OnlineDescriptionKey.URL, resource);}
 
 }

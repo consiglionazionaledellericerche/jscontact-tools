@@ -512,7 +512,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 }
             }
             else{
-                if (anniversary.getLabel().equals(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)) {
+                if (anniversary.getDescription().equals(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)) {
                     vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
                     vcard.getAnniversary().setCalscale(Calscale.GREGORIAN);
                 }
@@ -739,10 +739,10 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Resource resource : jsCard.getOnline().values()) {
 
-            if (resource.getLabel() == null)
+            if (resource.getDescription() == null)
                 continue;
 
-            switch(OnlineLabelKey.getLabelKey(resource.getLabel())) {
+            switch(OnlineDescriptionKey.getDescriptionKey(resource.getDescription())) {
                 case SOUND:
                     vcard.getSounds().add(new Sound(resource.getResource(), getSoundType(resource.getMediaType())));
                     break;
