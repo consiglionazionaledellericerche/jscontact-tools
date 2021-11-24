@@ -30,8 +30,7 @@ import lombok.AllArgsConstructor;
 public enum ResourceType {
 
     URI("uri"),
-    USERNAME("username"),
-    OTHER("other");
+    USERNAME("username");
 
     private String value;
 
@@ -42,7 +41,7 @@ public enum ResourceType {
 
     @JsonCreator
     public static ResourceType getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(ResourceType.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(ResourceType.class, value);
     }
 
     @Override

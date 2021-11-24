@@ -70,12 +70,6 @@ public class AddressContext extends ExtensibleEnum<AddressContextEnum> implement
     @JsonIgnore
     public boolean isBilling() { return isRfc(AddressContextEnum.BILLING); }
     /**
-     * Tests if this is an address context not covered by any of the known types.
-     *
-     * @return true if this is an "other" address context, false otherwise
-     */    @JsonIgnore
-    public boolean isOther() { return isRfc(AddressContextEnum.OTHER); }
-    /**
      * Tests if this is a custom address context.
      *
      * @return true if this is a custom address context, false otherwise
@@ -113,12 +107,6 @@ public class AddressContext extends ExtensibleEnum<AddressContextEnum> implement
      * @return a "billing" address context
      */
     public static AddressContext billing() { return rfc(AddressContextEnum.BILLING);}
-    /**
-     * Returns an address context not covered by any of the known types.
-     *
-     * @return an "other" address context
-     */
-    public static AddressContext other() { return rfc(AddressContextEnum.OTHER);}
     /**
      * Returns a custom address context.
      *

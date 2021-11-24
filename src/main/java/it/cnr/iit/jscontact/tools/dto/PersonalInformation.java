@@ -48,9 +48,9 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
     @Builder.Default
     String _type = "PersonalInformation";
 
-    @NotNull(message = "type is missing in PersonalInformation")
-    @NonNull
     PersonalInformationType type;
+
+    String description;
 
     @NotNull(message = "value is missing in PersonalInformation")
     @NonNull
@@ -96,7 +96,7 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
      *
      * @return true if this personal information is other than the known types, false otherwise
      */
-    public boolean asOtherPersonalInfo() { return type == PersonalInformationType.OTHER; }
+    public boolean asOtherPersonalInfo() { return type == null; }
     /**
      * Tests if the level of this personal information is high.
      *

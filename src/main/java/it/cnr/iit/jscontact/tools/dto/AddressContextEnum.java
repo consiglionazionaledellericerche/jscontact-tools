@@ -38,8 +38,7 @@ public enum AddressContextEnum implements IsExtensible, VCardTypeDerivedEnum {
     PRIVATE("private"),
     WORK("work"),
     BILLING("billing"),
-    POSTAL("postal"),
-    OTHER("other");
+    POSTAL("postal");
 
     private String value;
 
@@ -58,7 +57,7 @@ public enum AddressContextEnum implements IsExtensible, VCardTypeDerivedEnum {
 
     @JsonCreator
     public static AddressContextEnum getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(AddressContextEnum.class, value, aliases);
+        return (value == null) ? null : EnumUtils.getEnum(AddressContextEnum.class, value, aliases);
     }
 
     @Override
@@ -75,6 +74,10 @@ public enum AddressContextEnum implements IsExtensible, VCardTypeDerivedEnum {
      */
     @JsonIgnore
     public static String toVCardType(AddressContextEnum context) {
+
+        if (context == null)
+            return null;
+
         return EnumUtils.toVCardType(context);
     }
 

@@ -51,7 +51,7 @@ public enum StreetComponentEnum implements IsExtensible {
 
     @JsonCreator
     public static StreetComponentEnum getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(StreetComponentEnum.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(StreetComponentEnum.class, value);
     }
 
     @Override

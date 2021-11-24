@@ -91,13 +91,6 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
     @JsonIgnore
     public boolean isTextphone() { return isRfc(PhoneFeatureEnum.TEXTPHONE); }
     /**
-     * Tests if this is a phone feature not covered by any of the known types.
-     *
-     * @return true if this is an "other" phone feature, false otherwise
-     */
-    @JsonIgnore
-    public boolean isOther() { return isRfc(PhoneFeatureEnum.OTHER); }
-    /**
      * Tests if this is a custom phone feature.
      *
      * @return true if this is a custom phone feature, false otherwise
@@ -153,12 +146,6 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
      * @return a "textphone" phone feature
      */
     public static PhoneFeature textphone() { return rfc(PhoneFeatureEnum.TEXTPHONE);}
-    /**
-     * Returns a phone feature not covered by any of the known types.
-     *
-     * @return an "other" phone feature
-     */
-    public static PhoneFeature other() { return rfc(PhoneFeatureEnum.OTHER);}
     /**
      * Returns a custom phone feature.
      *

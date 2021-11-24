@@ -8,7 +8,7 @@ import java.util.Map;
  * This interface imposes that a class implementing it must include the "context" property.
  *
  * @author Mario Loffredo
- */
+C */
 public interface HasContext {
 
     /**
@@ -17,7 +17,7 @@ public interface HasContext {
      * @param context the given context to check
      * @return true if the context map includes the given context, false otherwise
      */
-    default boolean asContext(Context context) { return getContexts() != null && getContexts().containsKey(context); }
+    default boolean asContext(Context context) { return !hasNoContext() && getContexts().containsKey(context); }
     /**
      * Tests if the context map includes the "work" context.
      *
@@ -30,12 +30,6 @@ public interface HasContext {
      * @return true if the context map includes the "private" context, false otherwise
      */
     default boolean asPrivate() { return asContext(Context.private_()); }
-    /**
-     * Tests if the context map includes the "other" context.
-     *
-     * @return true if the context map includes the "other" context, false otherwise
-     */
-    default boolean asOtherContext() { return asContext(Context.other()); }
 
     /**
      * Tests if the context map includes a custom context.

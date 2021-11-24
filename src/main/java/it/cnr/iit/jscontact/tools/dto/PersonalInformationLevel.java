@@ -64,7 +64,7 @@ public enum PersonalInformationLevel {
 
     @JsonCreator
     public static PersonalInformationLevel getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(PersonalInformationLevel.class, value, aliases);
+        return (value == null) ? null : EnumUtils.getEnum(PersonalInformationLevel.class, value, aliases);
     }
 
     @Override

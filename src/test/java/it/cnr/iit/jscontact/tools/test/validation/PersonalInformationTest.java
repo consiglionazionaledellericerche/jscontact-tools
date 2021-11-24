@@ -21,8 +21,7 @@ import org.junit.Test;
 
 public class PersonalInformationTest {
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidPersonalInformationBuild1() {
+    public void testValidPersonalInformationBuild1() {
 
         // type missing
         PersonalInformation.builder()
@@ -31,7 +30,7 @@ public class PersonalInformationTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testInvalidPersonalInformationBuild2() {
+    public void testInvalidPersonalInformationBuild1() {
 
         // value missing
         PersonalInformation.builder()

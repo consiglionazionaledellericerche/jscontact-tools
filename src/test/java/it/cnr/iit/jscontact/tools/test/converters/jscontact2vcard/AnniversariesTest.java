@@ -171,7 +171,6 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"other\", " +
                         "\"label\":\"marriage date\"," +
                         "\"date\":\"1986-02-01T19:00:00Z\"" +
                     "}" +
@@ -213,7 +212,6 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"other\", " +
                         "\"label\":\"marriage date\"," +
                         "\"date\":\"1986-02-01T19:00:00Z\"" +
                     "}" +
@@ -257,7 +255,6 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"other\", " +
                         "\"label\":\"marriage date\"," +
                         "\"date\":\"1986-02-01T19:00:00Z\"" +
                     "}" +

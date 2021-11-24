@@ -380,7 +380,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 addr.setGeo(GeoUri.parse(address.getCoordinates()));
             if (address.getCountryCode() != null)
                 addr.setParameter("CC", address.getCountryCode());
-            if (address.getContexts() != null) {
+            if (!address.hasNoContext()) {
                 String vCardType = toVCardTypeStringJoiner(AddressContextEnum.class, AddressContext.toEnumValues(address.getContexts().keySet())).toString();
                 if (StringUtils.isNotEmpty(vCardType))
                     addr.setParameter("TYPE", vCardType);
@@ -497,23 +497,25 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Anniversary anniversary : jsCard.getAnniversaries().values()) {
 
-            switch(anniversary.getType()) {
-                case BIRTH:
-                    vcard.setBirthday(getDateOrTimeProperty(Birthday.class, anniversary));
-                    vcard.getBirthday().setCalscale(Calscale.GREGORIAN);
-                    vcard.setBirthplace(getPlaceProperty(Birthplace.class, anniversary));
-                    break;
-                case DEATH:
-                    vcard.setDeathdate(getDateOrTimeProperty(Deathdate.class, anniversary));
-                    vcard.getDeathdate().setCalscale(Calscale.GREGORIAN);
-                    vcard.setDeathplace(getPlaceProperty(Deathplace.class, anniversary));
-                    break;
-                case OTHER:
-                    if (anniversary.getLabel().equals(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)) {
-                        vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
-                        vcard.getAnniversary().setCalscale(Calscale.GREGORIAN);
-                    }
-                    break;
+            if (!anniversary.isOtherAnniversary()) {
+                switch (anniversary.getType()) {
+                    case BIRTH:
+                        vcard.setBirthday(getDateOrTimeProperty(Birthday.class, anniversary));
+                        vcard.getBirthday().setCalscale(Calscale.GREGORIAN);
+                        vcard.setBirthplace(getPlaceProperty(Birthplace.class, anniversary));
+                        break;
+                    case DEATH:
+                        vcard.setDeathdate(getDateOrTimeProperty(Deathdate.class, anniversary));
+                        vcard.getDeathdate().setCalscale(Calscale.GREGORIAN);
+                        vcard.setDeathplace(getPlaceProperty(Deathplace.class, anniversary));
+                        break;
+                }
+            }
+            else{
+                if (anniversary.getLabel().equals(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)) {
+                    vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
+                    vcard.getAnniversary().setCalscale(Calscale.GREGORIAN);
+                }
             }
         }
 
@@ -613,7 +615,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Email email = new Email(emailAddress.getEmail());
         email.setPref(emailAddress.getPref());
-        if (emailAddress.getContexts()!=null) {
+        if (!emailAddress.hasNoContext()) {
             String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(emailAddress.getContexts().keySet())).toString();
             if (StringUtils.isNotEmpty(vCardType))
                 email.setParameter("TYPE", vCardType);
@@ -683,7 +685,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             property.setParameter("MEDIATYPE",resource.getMediaType());
         if (resource.getPref() != null)
             property.setParameter("PREF", resource.getPref().toString());
-        if (resource.getContexts()!=null) {
+        if (!resource.hasNoContext()) {
             String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(resource.getContexts().keySet())).toString();
             if (StringUtils.isNotEmpty(vCardType))
                 property.setParameter("TYPE", vCardType);

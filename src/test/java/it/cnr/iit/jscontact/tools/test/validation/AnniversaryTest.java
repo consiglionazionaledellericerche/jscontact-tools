@@ -23,10 +23,8 @@ import org.junit.Test;
 
 public class AnniversaryTest {
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidAnniversaryBuild1() {
+    public void testValidAnniversaryBuild1() {
 
-        // type missing
         Anniversary.builder()
                        .date(AnniversaryDate.builder().date(DateUtils.toCalendar("2020-01-01")).build())
                        .build();

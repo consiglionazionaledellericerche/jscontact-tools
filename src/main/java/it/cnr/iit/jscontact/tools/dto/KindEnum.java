@@ -46,7 +46,7 @@ public enum KindEnum implements IsExtensible {
 
     @JsonCreator
     public static KindEnum getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(KindEnum.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(KindEnum.class, value);
     }
 
     @Override

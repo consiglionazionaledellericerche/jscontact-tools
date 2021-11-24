@@ -60,7 +60,7 @@ public enum RelationEnum implements IsExtensible {
 
     @JsonCreator
     public static RelationEnum getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(RelationEnum.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(RelationEnum.class, value);
     }
 
     @Override

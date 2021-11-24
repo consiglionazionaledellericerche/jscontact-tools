@@ -41,8 +41,7 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
     TEXT("text"),
     CELL("cell"),
     VIDEO("video"),
-    TEXTPHONE("textphone"),
-    OTHER("other");
+    TEXTPHONE("textphone");
 
     private String value;
 
@@ -56,7 +55,7 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
 
     @JsonCreator
     public static PhoneFeatureEnum getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(PhoneFeatureEnum.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(PhoneFeatureEnum.class, value);
     }
 
     @Override
@@ -74,7 +73,7 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
     @JsonIgnore
     public static String toVCardType(PhoneFeatureEnum phoneFeature) {
 
-        if (phoneFeature == OTHER)
+        if (phoneFeature == null)
             return null;
 
         return phoneFeature.getValue();

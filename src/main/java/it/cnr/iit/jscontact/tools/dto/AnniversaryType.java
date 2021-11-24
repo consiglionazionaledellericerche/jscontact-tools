@@ -30,8 +30,7 @@ import lombok.AllArgsConstructor;
 public enum AnniversaryType {
 
     BIRTH("birth"),
-    DEATH("death"),
-    OTHER("other");
+    DEATH("death");
 
     private String value;
 
@@ -42,7 +41,7 @@ public enum AnniversaryType {
 
     @JsonCreator
     public static AnniversaryType getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(AnniversaryType.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(AnniversaryType.class, value);
     }
 
     @Override

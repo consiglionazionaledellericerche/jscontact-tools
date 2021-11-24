@@ -43,7 +43,7 @@ public enum PersonalInformationType {
 
     @JsonCreator
     public static PersonalInformationType getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(PersonalInformationType.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(PersonalInformationType.class, value);
     }
 
     @Override

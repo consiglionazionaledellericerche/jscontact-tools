@@ -56,13 +56,6 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
     @JsonIgnore
     public boolean isWork() { return isRfc(ContextEnum.WORK); }
     /**
-     * Tests if this is a context not covered by any of the known types.
-     *
-     * @return true if this is an "other" context, false otherwise
-     */
-    @JsonIgnore
-    public boolean isOther() { return isRfc(ContextEnum.OTHER); }
-    /**
      * Tests if this is a custom context.
      *
      * @return true if this is a custom context, false otherwise
@@ -88,12 +81,6 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
      * @return a "work" context
      */
     public static Context work() { return rfc(ContextEnum.WORK);}
-    /**
-     * Returns a context not covered by any of the known types.
-     *
-     * @return an "other" context
-     */
-    public static Context other() { return rfc(ContextEnum.OTHER);}
     /**
      * Returns a custom context.
      *

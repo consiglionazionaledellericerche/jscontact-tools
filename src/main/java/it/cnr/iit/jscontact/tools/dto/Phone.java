@@ -109,12 +109,6 @@ public class Phone implements IdMapValue, Serializable, HasContext {
      */
     public boolean asTextphone() { return asFeature(PhoneFeature.textphone()); }
     /**
-     * Tests if this phone number is for some other purpose.
-     *
-     * @return true if this phone number is for some other purpose, false otherwise
-     */
-    public boolean asOtherFeature() { return asFeature(PhoneFeature.other()); }
-    /**
      * Tests if this phone number supports a custom feature.
      *
      * @param extValue the custom feature

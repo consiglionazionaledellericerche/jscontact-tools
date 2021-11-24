@@ -53,8 +53,6 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     @Builder.Default
     String _type = "Anniversary";
 
-    @NotNull(message = "type is missing in Anniversary")
-    @NonNull
     AnniversaryType type;
 
     String label;
@@ -93,7 +91,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isMarriage() { return type == AnniversaryType.OTHER && label.equals(ANNIVERSAY_MARRIAGE_LABEL); }
+    public boolean isMarriage() { return type == null && label.equals(ANNIVERSAY_MARRIAGE_LABEL); }
 
     /**
      * Tests if this is an undefined anniversary specified by the value of the "label" property.
@@ -101,7 +99,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @return true if this is an undefined anniversary
      */
     @JsonIgnore
-    public boolean isOtherAnniversary() { return type == AnniversaryType.OTHER; }
+    public boolean isOtherAnniversary() { return type == null; }
 
     private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String label) {
         return Anniversary.builder().type(type).date(date).label(label).build();
@@ -132,7 +130,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @return a date of marriage anniversary
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
-    public static Anniversary marriage(String date) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}
+    public static Anniversary marriage(String date) { return anniversary(null, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}
 
     /**
      * Returns an anniversary other than birthday, date of death, date of marriage.
@@ -141,6 +139,6 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @param label a text specifying the anniversary
      * @return an anniversary other than birthday, date of death, date of marriage
      */
-    public static Anniversary otherAnniversary(String date, String label) { return anniversary(AnniversaryType.OTHER, AnniversaryDate.parse(date), label);}
+    public static Anniversary otherAnniversary(String date, String label) { return anniversary(null, AnniversaryDate.parse(date), label);}
 
 }

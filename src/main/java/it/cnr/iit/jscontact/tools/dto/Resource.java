@@ -64,8 +64,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @NonNull
     String resource;
 
-    @Builder.Default
-    ResourceType type = ResourceType.OTHER;
+    ResourceType type;
 
     String mediaType;
 
@@ -117,7 +116,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @return true if this resource is identified by a user name, false otherwise
      */
     @JsonIgnore
-    public boolean isOther() { return type == ResourceType.OTHER; }
+    public boolean isOther() { return type == null; }
 
     @JsonIgnore
     private boolean isResource(OnlineLabelKey labelKey) { return LabelUtils.labelIncludesItem(label,labelKey.getValue()); }

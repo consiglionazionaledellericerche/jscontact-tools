@@ -37,8 +37,7 @@ import java.util.Map;
 public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
 
     PRIVATE("private"),
-    WORK("work"),
-    OTHER("other");
+    WORK("work");
 
     private String value;
 
@@ -56,7 +55,7 @@ public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
 
     @JsonCreator
     public static ContextEnum getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(ContextEnum.class, value, aliases);
+        return (value == null) ? null : EnumUtils.getEnum(ContextEnum.class, value, aliases);
     }
 
     @Override
@@ -73,6 +72,9 @@ public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
      */
     @JsonIgnore
     public static String toVCardType(ContextEnum context) {
+
+        if (context == null)
+            return null;
 
         return EnumUtils.toVCardType(context);
     }

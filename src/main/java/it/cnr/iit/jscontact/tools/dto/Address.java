@@ -129,12 +129,6 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
      */
     public boolean asPostal() { return asContext(AddressContext.postal()); }
     /**
-     * Tests if this address is used in a context not covered by any of the known types.
-     *
-     * @return true if the context map includes the "other" context, false otherwise
-     */
-    public boolean asOtherContext() { return asContext(AddressContext.other()); }
-    /**
      * Tests if this address is used in a custom context.
      *
      * @param extValue the custom context in text format

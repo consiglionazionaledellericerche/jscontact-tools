@@ -46,7 +46,7 @@ public enum NameComponentEnum implements IsExtensible {
 
     @JsonCreator
     public static NameComponentEnum getEnum(String value) throws IllegalArgumentException {
-        return EnumUtils.getEnum(NameComponentEnum.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(NameComponentEnum.class, value);
     }
 
     @Override
