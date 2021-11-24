@@ -86,7 +86,7 @@ public class VCard2JSContactIdsProfile {
         public static PersonalInfoId hobbiesId(String id) { return personalInfoId(PersonalInformationType.HOBBY,id);}
         public static PersonalInfoId interestsId(String id) { return personalInfoId(PersonalInformationType.INTEREST,id);}
         public static PersonalInfoId expertisesId(String id) { return personalInfoId(PersonalInformationType.EXPERTISE,id);}
-        public static PersonalInfoId otherPersonalInfosId(String id) { return personalInfoId(PersonalInformationType.OTHER,id);}
+        public static PersonalInfoId otherPersonalInfosId(String id) { return personalInfoId(null,id);}
     }
 
 

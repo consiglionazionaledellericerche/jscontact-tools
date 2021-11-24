@@ -31,8 +31,7 @@ public enum PersonalInformationType {
 
     EXPERTISE("expertise"),
     HOBBY("hobby"),
-    INTEREST("interest"),
-    OTHER("other");
+    INTEREST("interest");
 
     private String value;
 
