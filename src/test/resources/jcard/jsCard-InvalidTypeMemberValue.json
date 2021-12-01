@@ -59,14 +59,14 @@
         "work": true
       },
       "type": "uri",
-      "description": "key",
+      "label": "key",
       "resource": "http://www.example.com/joe.user/joe.asc"
     },
     "URL-1": {
       "@type" : "Resource",
       "contexts": {"private": true},
       "type": "uri",
-      "description": "url",
+      "label": "url",
       "resource": "http://example.org"
     }
   }

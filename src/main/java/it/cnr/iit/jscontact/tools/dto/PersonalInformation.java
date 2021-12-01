@@ -34,7 +34,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.2">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","description","value","level"})
+@JsonPropertyOrder({"@type","type","label","value","level"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -50,7 +50,7 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
 
     PersonalInformationType type;
 
-    String description;
+    String label;
 
     @NotNull(message = "value is missing in PersonalInformation")
     @NonNull

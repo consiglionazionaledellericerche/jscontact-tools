@@ -46,7 +46,7 @@ import java.util.StringJoiner;
  */
 @JsonPropertyOrder({"@type","fullAddress","street","locality","region","country",
                      "postcode","countryCode","coordinates","timeZone","contexts",
-                     "description","pref"})
+                     "label","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -88,7 +88,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     @Singular(ignoreNullCollections = true)
     Map<AddressContext,Boolean> contexts;
 
-    String description;
+    String label;
 
     @Min(value=1, message = "invalid pref in Address - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Address - value must be less or equal than 100")

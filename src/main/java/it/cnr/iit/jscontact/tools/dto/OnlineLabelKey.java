@@ -15,14 +15,14 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import it.cnr.iit.jscontact.tools.dto.utils.DescriptionUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Enum class mapping the values included in the "description" property of the Resource type that is used to represent an online resource as defined in section 2.3.3 of [draft-ietf-jmap-jscontact].
+ * Enum class mapping the values included in the "label" property of the Resource type that is used to represent an online resource as defined in section 2.3.3 of [draft-ietf-jmap-jscontact].
  * The values are those corresponding to vCard 4.0 [RFC6350] properties that are not directly mapped to a JSContact property.
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
@@ -30,7 +30,7 @@ import java.util.List;
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum OnlineDescriptionKey {
+public enum OnlineLabelKey {
 
     KEY("key"),
     LOGO("logo"),
@@ -51,16 +51,16 @@ public enum OnlineDescriptionKey {
     }
 
     /**
-     * Returns a key furtherly specifying the online resource type. The online key can be found among the comma separated items included in the "description" property of the Resource type.
+     * Returns a key furtherly specifying the online resource type. The online key can be found among the comma separated items included in the "label" property of the Resource type.
      *
-     * @param description a text including a comma separated list of items detailing an online resource
-     * @return the online resource key found in the description, null if no online resource key is found
+     * @param label a text including a comma separated list of items detailing an online resource
+     * @return the online resource key found in the label, null if no online resource key is found
      */
-    public static OnlineDescriptionKey getDescriptionKey(String description) {
+    public static OnlineLabelKey getLabelKey(String label) {
 
-        List<String> descriptionItems = Arrays.asList(description.split(DescriptionUtils.LABEL_DELIMITER));
-        for (OnlineDescriptionKey key : OnlineDescriptionKey.values())
-            if (descriptionItems.contains(key.getValue()))
+        List<String> labelItems = Arrays.asList(label.split(LabelUtils.LABEL_DELIMITER));
+        for (OnlineLabelKey key : OnlineLabelKey.values())
+            if (labelItems.contains(key.getValue()))
                 return key;
 
          return null;

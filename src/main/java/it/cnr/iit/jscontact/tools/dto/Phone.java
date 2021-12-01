@@ -27,7 +27,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.2">draft-ietf-jmap-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","phone","features","contexts","description","pref"})
+@JsonPropertyOrder({"@type","phone","features","contexts","label","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -59,7 +59,7 @@ public class Phone implements IdMapValue, Serializable, HasContext {
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    String description;
+    String label;
 
     @Min(value=1, message = "invalid pref in Phone - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Phone - value must be less or equal than 100")

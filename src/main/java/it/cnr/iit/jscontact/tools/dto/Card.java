@@ -29,7 +29,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.DescriptionUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.LabelUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -320,11 +320,11 @@ public class Card extends JSContact implements Serializable {
     }
 
     @JsonIgnore
-    private Map<String,Resource> getOnline(String description) {
+    private Map<String,Resource> getOnline(String label) {
 
         Map<String,Resource> ols = new HashMap<>();
         for (Map.Entry<String,Resource> ol : online.entrySet()) {
-            if (DescriptionUtils.descriptionIncludesItem(ol.getValue().getDescription(), description))
+            if (LabelUtils.labelIncludesItem(ol.getValue().getLabel(), label))
                 ols.put(ol.getKey(),ol.getValue());
         }
         if (ols.size()==0)
@@ -334,8 +334,8 @@ public class Card extends JSContact implements Serializable {
     }
 
     @JsonIgnore
-    private Map<String,Resource> getOnline(OnlineDescriptionKey descriptionKey) {
-        return getOnline(descriptionKey.getValue());
+    private Map<String,Resource> getOnline(OnlineLabelKey labelKey) {
+        return getOnline(labelKey.getValue());
     }
 
     /**
@@ -346,7 +346,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineKey() {
-        return getOnline(OnlineDescriptionKey.KEY);
+        return getOnline(OnlineLabelKey.KEY);
     }
 
     /**
@@ -357,7 +357,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineUrl() {
-        return getOnline(OnlineDescriptionKey.URL);
+        return getOnline(OnlineLabelKey.URL);
     }
 
     /**
@@ -368,7 +368,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineSource() {
-        return getOnline(OnlineDescriptionKey.SOURCE);
+        return getOnline(OnlineLabelKey.SOURCE);
     }
 
     /**
@@ -379,7 +379,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineLogo() {
-        return getOnline(OnlineDescriptionKey.LOGO);
+        return getOnline(OnlineLabelKey.LOGO);
     }
 
     /**
@@ -390,7 +390,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineSound() {
-        return getOnline(OnlineDescriptionKey.SOUND);
+        return getOnline(OnlineLabelKey.SOUND);
     }
 
     /**
@@ -401,7 +401,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineFburl() {
-        return getOnline(OnlineDescriptionKey.FBURL);
+        return getOnline(OnlineLabelKey.FBURL);
     }
 
     /**
@@ -412,7 +412,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineCaluri() {
-        return getOnline(OnlineDescriptionKey.CALURI);
+        return getOnline(OnlineLabelKey.CALURI);
     }
 
     /**
@@ -423,7 +423,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineCaladruri() {
-        return getOnline(OnlineDescriptionKey.CALADRURI);
+        return getOnline(OnlineLabelKey.CALADRURI);
     }
 
     /**
@@ -434,7 +434,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineOrgDirectory() {
-        return getOnline(OnlineDescriptionKey.ORG_DIRECTORY);
+        return getOnline(OnlineLabelKey.ORG_DIRECTORY);
     }
 
     /**
@@ -445,7 +445,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineImpp() {
-        return getOnline(OnlineDescriptionKey.IMPP);
+        return getOnline(OnlineLabelKey.IMPP);
     }
 
     /**
@@ -456,7 +456,7 @@ public class Card extends JSContact implements Serializable {
      */
     @JsonIgnore
     public Map<String,Resource> getOnlineContactUri() {
-        return getOnline(OnlineDescriptionKey.CONTACT_URI);
+        return getOnline(OnlineLabelKey.CONTACT_URI);
     }
 
     /**

@@ -80,7 +80,7 @@ public class ProfileTest extends JCard2JSContactTest {
         assertTrue("testRDAPProfile - 34", jsCard.getPhones().get("voice").getPhone().equals("tel:+1-555-555-1234;ext=102"));
         assertTrue("testRDAPProfile - 35", jsCard.getPhones().get("voice").getPref() == 1);
         assertTrue("testRDAPProfile - 36", jsCard.getPhones().get("voice").asWork());
-        assertTrue("testRDAPProfile - 37", jsCard.getPhones().get("voice").getDescription() == null);
+        assertTrue("testRDAPProfile - 37", jsCard.getPhones().get("voice").getLabel() == null);
         assertTrue("testRDAPProfile - 38", jsCard.getPhones().get("fax").asVoice());
         assertTrue("testRDAPProfile - 39", jsCard.getPhones().get("fax").getPhone().equals("tel:+1-555-555-4321"));
         assertTrue("testRDAPProfile - 40", jsCard.getPhones().get("fax").getPref() == null);

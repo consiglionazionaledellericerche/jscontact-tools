@@ -36,7 +36,7 @@ public class ResourceTest extends AbstractTest {
                 .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.USERNAME)
                 .resource("mario-loffredo")
-                .description("GitHub")
+                .label("GitHub")
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
@@ -64,7 +64,7 @@ public class ResourceTest extends AbstractTest {
                 .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.URI)
                 .resource(" ")
-                .description("url")
+                .label("url")
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
