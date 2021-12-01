@@ -25,6 +25,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserialize
 import it.cnr.iit.jscontact.tools.dto.serializers.NameComponentTypeSerializer;
 import lombok.*;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -58,6 +59,9 @@ public class NameComponent extends GroupableObject implements Serializable {
     @NotNull(message = "value is missing in NameComponent")
     @NonNull
     String value;
+
+    @Min(value = 1, message = "invalid nth in NameComponent - value must be greater or equal than 1")
+    Integer nth;
 
     private boolean isRfc(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);}
 

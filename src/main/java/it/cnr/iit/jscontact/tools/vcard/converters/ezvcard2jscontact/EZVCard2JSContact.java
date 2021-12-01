@@ -504,18 +504,22 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private static void fillNames(VCard vcard, Card jsCard) {
 
         List<StructuredName> sns = vcard.getStructuredNames();
-        for (StructuredName sn : sns) {
-            for (String px : sn.getPrefixes())
-                jsCard.addName(NameComponent.prefix(px));
-            if (sn.getGiven() != null)
-                jsCard.addName(NameComponent.personal(sn.getGiven()));
-            if (sn.getFamily() != null)
-                jsCard.addName(NameComponent.surname(sn.getFamily()));
-            for (String an : sn.getAdditionalNames())
-                jsCard.addName(NameComponent.additional(an));
-            for (String sx : sn.getSuffixes())
-                jsCard.addName(NameComponent.suffix(sx));
-            addUnmatchedParams(sn, "N", null, new String[]{"SORT-AS"}, jsCard);
+        if (sns.size() > 0) {
+            NameComponent[] components = null;
+            for (StructuredName sn : sns) {
+                for (String px : sn.getPrefixes())
+                    components = Name.addComponent(components, NameComponent.prefix(px));
+                if (sn.getGiven() != null)
+                    components = Name.addComponent(components,NameComponent.personal(sn.getGiven()));
+                if (sn.getFamily() != null)
+                    components = Name.addComponent(components,NameComponent.surname(sn.getFamily()));
+                for (String an : sn.getAdditionalNames())
+                    components = Name.addComponent(components,NameComponent.additional(an));
+                for (String sx : sn.getSuffixes())
+                    components = Name.addComponent(components,NameComponent.suffix(sx));
+                jsCard.setName(Name.builder().components(components).build());
+                addUnmatchedParams(sn, "N", null, new String[]{"SORT-AS"}, jsCard);
+            }
         }
 
     }

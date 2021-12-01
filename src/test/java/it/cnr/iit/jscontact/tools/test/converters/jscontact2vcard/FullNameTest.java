@@ -57,13 +57,15 @@ public class FullNameTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"name\":[ " +
-                "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
-                "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
-                "] " +
+                "\"name\":{ " +
+                    "\"components\":[ " +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                    "] " +
+                "} " +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testEmptyFullNameWithValidName - 1",vcard.getFormattedName().getValue().equals("Mr. John Public Quinlan Esq."));
@@ -113,13 +115,15 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"language\": \"jp\"," +
-                "\"name\":[ " +
-                "{ \"value\":\"正仁\", \"type\": \"personal\" }," +
-                "{ \"value\":\"大久保\", \"type\": \"surname\" }" +
-                "], " +
+                "\"name\":{ " +
+                    "\"components\":[ " +
+                        "{ \"value\":\"正仁\", \"type\": \"personal\" }," +
+                        "{ \"value\":\"大久保\", \"type\": \"surname\" }" +
+                    "] " +
+                "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
-                        "\"/name\":[ " +
+                        "\"/name/components\":[ " +
                         "{ \"value\":\"Masahito\", \"type\": \"personal\" }," +
                         "{ \"value\":\"Okubo\", \"type\": \"surname\" }" +
                         "]" +

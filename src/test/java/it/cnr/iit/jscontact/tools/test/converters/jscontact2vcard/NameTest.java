@@ -26,35 +26,37 @@ import static org.junit.Assert.assertTrue;
 public class NameTest extends JSContact2VCardTest {
 
     @Test
-    public void testnameValid1() throws IOException, CardException {
+    public void testNameValid1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
-                "\"name\":[ " +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
-                "], " +
+                "\"name\":{ " +
+                    "\"components\":[ " +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                    "] " +
+                "}, " +
                 "\"nickNames\":[ \"Johnny\", \"Joe\" ]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testnameValid1 - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));
-        assertTrue("testnameValid1 - 2",vcard.getStructuredName() != null);
-        assertTrue("testnameValid1 - 3",vcard.getStructuredName().getFamily().equals("Public"));
-        assertTrue("testnameValid1 - 4",vcard.getStructuredName().getGiven().equals("John"));
-        assertTrue("testnameValid1 - 5",vcard.getStructuredName().getAdditionalNames().size() == 1);
-        assertTrue("testnameValid1 - 6",vcard.getStructuredName().getAdditionalNames().get(0).equals("Quinlan"));
-        assertTrue("testnameValid1 - 7",vcard.getStructuredName().getPrefixes().size() == 1);
-        assertTrue("testnameValid1 - 8",vcard.getStructuredName().getPrefixes().get(0).equals("Mr."));
-        assertTrue("testnameValid1 - 9",vcard.getStructuredName().getSuffixes().size() == 1);
-        assertTrue("testnameValid1 - 10",vcard.getStructuredName().getSuffixes().get(0).equals("Esq."));
-        assertTrue("testnameValid1 - 11",vcard.getNickname().getValues().size() == 2);
-        assertTrue("testnameValid1 - 12",vcard.getNickname().getValues().get(0).equals("Johnny"));
-        assertTrue("testnameValid1 - 13",vcard.getNickname().getValues().get(1).equals("Joe"));
+        assertTrue("testNameValid1 - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));
+        assertTrue("testNameValid1 - 2",vcard.getStructuredName() != null);
+        assertTrue("testNameValid1 - 3",vcard.getStructuredName().getFamily().equals("Public"));
+        assertTrue("testNameValid1 - 4",vcard.getStructuredName().getGiven().equals("John"));
+        assertTrue("testNameValid1 - 5",vcard.getStructuredName().getAdditionalNames().size() == 1);
+        assertTrue("testNameValid1 - 6",vcard.getStructuredName().getAdditionalNames().get(0).equals("Quinlan"));
+        assertTrue("testNameValid1 - 7",vcard.getStructuredName().getPrefixes().size() == 1);
+        assertTrue("testNameValid1 - 8",vcard.getStructuredName().getPrefixes().get(0).equals("Mr."));
+        assertTrue("testNameValid1 - 9",vcard.getStructuredName().getSuffixes().size() == 1);
+        assertTrue("testNameValid1 - 10",vcard.getStructuredName().getSuffixes().get(0).equals("Esq."));
+        assertTrue("testNameValid1 - 11",vcard.getNickname().getValues().size() == 2);
+        assertTrue("testNameValid1 - 12",vcard.getNickname().getValues().get(0).equals("Johnny"));
+        assertTrue("testNameValid1 - 13",vcard.getNickname().getValues().get(1).equals("Joe"));
 
     }
 
@@ -67,13 +69,15 @@ public class NameTest extends JSContact2VCardTest {
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"language\": \"en\"," +
-                "\"name\":[ " +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
-                "], " +
+                "\"name\":{ " +
+                    "\"components\":[ " +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                    "] " +
+                "}, " +
                 "\"nickNames\":[ \"Johnny\", \"Joe\" ], " +
                 "\"localizations\": { " +
                     "\"it\" : { " +
@@ -112,13 +116,15 @@ public class NameTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"language\": \"jp\"," +
-                "\"name\":[ " +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"正仁\", \"type\": \"personal\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"大久保\", \"type\": \"surname\" }" +
-                "], " +
+                "\"name\":{ " +
+                    "\"components\":[ " +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"正仁\", \"type\": \"personal\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"大久保\", \"type\": \"surname\" }" +
+                    "] " +
+                "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
-                        "\"/name\":[ " +
+                        "\"/name/components\":[ " +
                             "{ \"@type\":\"NameComponent\", \"value\":\"Masahito\", \"type\": \"personal\" }," +
                             "{ \"@type\":\"NameComponent\", \"value\":\"Okubo\", \"type\": \"surname\" }" +
                         "]" +

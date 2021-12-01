@@ -95,7 +95,7 @@ public class Card extends JSContact implements Serializable {
 
     //Name and Organization properties
     @Valid
-    NameComponent[] name;
+    Name name;
 
     String fullName;
 
@@ -229,15 +229,6 @@ public class Card extends JSContact implements Serializable {
                     .relation(map)
                     .build());
         }
-    }
-
-    /**
-     * Adds a name component to this object.
-     *
-     * @param nc the name component
-     */
-    public void addName(NameComponent nc) {
-        name = ArrayUtils.add(name, nc);
     }
 
     /**

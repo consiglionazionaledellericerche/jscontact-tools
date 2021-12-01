@@ -159,7 +159,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (StringUtils.isEmpty(jsCard.getFullName())) {
             if (jsCard.getName() != null) {
                 List<StructuredName> sns = getStructuredNames(jsCard);
-                String separator = getNameComponent(jsCard.getName(), NameComponentEnum.SEPARATOR);
+                String separator = getNameComponent(jsCard.getName().getComponents(), NameComponentEnum.SEPARATOR);
                 if (sns.size() == 1) {
                     FormattedName fn = getFormattedName(sns.get(0), separator);
                     fn.setLanguage(jsCard.getLanguage());
@@ -250,18 +250,18 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static List<StructuredName> getStructuredNames(Card jsCard) {
 
         List<StructuredName> sns = new ArrayList<>();
-        if (jsCard.getLocalizationsPerPath("/name") != null) {
-            StructuredName sn = getStructuredName(jsCard.getName());
+        if (jsCard.getLocalizationsPerPath("/name/components") != null) {
+            StructuredName sn = getStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLanguage());
             sns.add(sn);
-            for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("/name").entrySet()) {
+            for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("/name/components").entrySet()) {
                 sn = getStructuredName(asNameComponentArray(localizations.getValue()));
                 sn.setLanguage(localizations.getKey());
                 sns.add(sn);
             }
         }
         else
-            sns.add(getStructuredName(jsCard.getName()));
+            sns.add(getStructuredName(jsCard.getName().getComponents()));
 
         return sns;
 

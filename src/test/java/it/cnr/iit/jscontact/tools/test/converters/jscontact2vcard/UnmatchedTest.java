@@ -76,13 +76,15 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
-                "\"name\":[ " +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
-                    "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
-                "], " +
+                "\"name\":{ " +
+                    "\"components\":[ " +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                    "] " +
+                "}, " +
                 "\"nickNames\":[ \"Johnny\" ]," +
                 "\"ietf.org:rfc6350:N:SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
                 "}";
