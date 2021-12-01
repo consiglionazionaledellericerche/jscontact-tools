@@ -250,7 +250,17 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static List<StructuredName> getStructuredNames(Card jsCard) {
 
         List<StructuredName> sns = new ArrayList<>();
-        if (jsCard.getLocalizationsPerPath("/name/components") != null) {
+        if (jsCard.getLocalizationsPerPath("/name") != null) {
+            StructuredName sn = getStructuredName(jsCard.getName().getComponents());
+            sn.setLanguage(jsCard.getLanguage());
+            sns.add(sn);
+            for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("/name").entrySet()) {
+                sn = getStructuredName(asNameComponentArray(localizations.getValue().get("components")));
+                sn.setLanguage(localizations.getKey());
+                sns.add(sn);
+            }
+        }
+        else if (jsCard.getLocalizationsPerPath("/name/components") != null) {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLanguage());
             sns.add(sn);
