@@ -58,7 +58,8 @@ public class Name extends GroupableObject implements Serializable {
      * Adds a name component to this object.
      *
      * @param nc the name component
-     * @return the components plus the nc component
+     * @param components the name components
+     * @return the name components in input plus the nc component
      */
     public static NameComponent[] addComponent(NameComponent[] components, NameComponent nc) {
         return ArrayUtils.add(components, nc);
