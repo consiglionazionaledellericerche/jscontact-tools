@@ -45,7 +45,7 @@ public abstract class ValidableObject {
     /**
      * Tests if a JSContact top most object, namely Card and CardGroup, is valid.
      *
-     * @return true if the validation check ends successfully
+     * @return true if the validation check ends successfully, false otherwise
      */
     @JsonIgnore
     public boolean isValid() {

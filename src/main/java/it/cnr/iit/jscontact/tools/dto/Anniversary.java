@@ -69,7 +69,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     /**
      * Tests if this anniversary is a birthday. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
      *
-     * @return true if this anniversary is a birthday
+     * @return true if this anniversary is a birthday, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
      */
     @JsonIgnore
@@ -78,7 +78,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     /**
      * Tests if this anniversary is a date of death. See vCard 4.0 DEATHDATE property as defined in section 6.2.5 of [RFC6474].
      *
-     * @return true if this anniversary is a date of death
+     * @return true if this anniversary is a date of death, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
      */
     @JsonIgnore
@@ -87,7 +87,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     /**
      * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property [as defined in section 6.2.6 of [RFC6350].
      *
-     * @return true if this anniversary is a date of marriage
+     * @return true if this anniversary is a date of marriage, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     @JsonIgnore
@@ -96,7 +96,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     /**
      * Tests if this is an undefined anniversary specified by the value of the "label" property.
      *
-     * @return true if this is an undefined anniversary
+     * @return true if this is an undefined anniversary, false otherwise
      */
     @JsonIgnore
     public boolean isOtherAnniversary() { return type == null; }

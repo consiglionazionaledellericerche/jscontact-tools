@@ -42,7 +42,7 @@ import java.io.Serializable;
  */
 @JsonPropertyOrder({"@type","context","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NotNullAnyConstraint(fieldNames={"context","pref"}, message = "at least one not null member is missing in ContactLanguage")
+@NotNullAnyConstraint(fieldNames={"context","pref"}, message = "at least one not null member other than @type is missing in ContactLanguage")
 @Builder
 @Data
 @AllArgsConstructor
