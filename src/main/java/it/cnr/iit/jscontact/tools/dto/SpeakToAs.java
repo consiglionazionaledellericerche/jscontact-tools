@@ -60,6 +60,15 @@ public class SpeakToAs extends GroupableObject implements Serializable {
     public boolean isFemale() { return isRfc(GrammaticalGenderType.FEMALE); }
 
     /**
+     * Tests if the grammatical gender is animate. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
+     *
+     * @return true if the grammatical gender is animate, false otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
+     */
+    @JsonIgnore
+    public boolean isAnimate() { return isRfc(GrammaticalGenderType.ANIMATE); }
+
+    /**
      * Tests if the grammatical gender is inanimate. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
      * @return true if the grammatical gender is inanimate, false otherwise
@@ -76,5 +85,38 @@ public class SpeakToAs extends GroupableObject implements Serializable {
      */
     @JsonIgnore
     public boolean isNeuter() { return isRfc(GrammaticalGenderType.NEUTER); }
+
+    private static SpeakToAs gender(GrammaticalGenderType type) { return SpeakToAs.builder().grammaticalGender(type).build(); }
+
+    /**
+     * Returns a "male" gender.
+     *
+     * @return a "mail" gender
+     */
+    public static SpeakToAs male() { return gender(GrammaticalGenderType.MALE);}
+    /**
+     * Returns a "female" gender.
+     *
+     * @return a "female" gender
+     */
+    public static SpeakToAs female() { return gender(GrammaticalGenderType.FEMALE);}
+    /**
+     * Returns a "neuter" gender.
+     *
+     * @return a "neuter" gender
+     */
+    public static SpeakToAs neuter() { return gender(GrammaticalGenderType.NEUTER);}
+    /**
+     * Returns a "animate" gender.
+     *
+     * @return a "animate" gender
+     */
+    public static SpeakToAs animate() { return gender(GrammaticalGenderType.ANIMATE);}
+    /**
+     * Returns a "animate" gender.
+     *
+     * @return a "animate" gender
+     */
+    public static SpeakToAs inanimate() { return gender(GrammaticalGenderType.INANIMATE);}
 
 }

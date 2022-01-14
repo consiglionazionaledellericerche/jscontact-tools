@@ -30,6 +30,7 @@ public enum GrammaticalGenderType {
 
     MALE("male"),
     FEMALE("female"),
+    ANIMATE("animate"),
     INANIMATE("inanimate"),
     NEUTER("neuter");
 

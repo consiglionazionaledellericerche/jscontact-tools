@@ -464,6 +464,27 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return property.getUri().toString();
     }
 
+    private void fillGender(VCard vCard, Card jsCard) {
+
+        if (vCard.getGender() == null)
+            return;
+
+        if (vCard.getGender().isMale())
+            jsCard.setSpeakToAs(SpeakToAs.male());
+        else if (vCard.getGender().isFemale())
+            jsCard.setSpeakToAs(SpeakToAs.female());
+        else if (vCard.getGender().isOther())
+            jsCard.setSpeakToAs(SpeakToAs.animate());
+        else if (vCard.getGender().isNone())
+            jsCard.setSpeakToAs(SpeakToAs.neuter());
+        else if (vCard.getGender().isUnknown())
+            return;
+
+        if (vCard.getGender().getText() != null)
+            jsCard.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vCard.getGender().getText());
+
+    }
+
     private static void fillFormattedNames(VCard vcard, Card jsCard) {
 
         List<FormattedName> fns = vcard.getFormattedNames();
@@ -1137,13 +1158,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static void fillUnmatchedElments(VCard vcard, Card jsCard) {
 
-        if (vcard.getGender()!=null) {
-            if (vcard.getGender().getGender() != null)
-                jsCard.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vcard.getGender().getGender());
-            else
-                jsCard.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vcard.getGender().getText());
-        }
-
         if (vcard.getClientPidMaps()!=null) {
             for (ClientPidMap pidmap : vcard.getClientPidMaps())
                 jsCard.addExtension(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG, pidmap.getPid()), pidmap.getUri());
@@ -1224,6 +1238,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(getUpdated(vCard.getRevision()));
         jsCard.setLanguage(config.getDefaultLanguage());
+        fillGender(vCard, jsCard);
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
         fillNickNames(vCard, jsCard);
