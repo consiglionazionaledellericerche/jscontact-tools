@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -63,10 +64,11 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"ietf.org:rfc6350:GENDER\":\"M\"" +
+                "\"ietf.org:rfc6350:XML\":\"<note>This is a not in xml</note>\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testUnmatchedProperty - 1",vcard.getGender().getGender().equals("M"));
+        System.out.println(Ezvcard.write(vcard).go());
+        assertTrue("testUnmatchedProperty - 1",vcard.getXmls().size() == 1);
     }
 
     @Test

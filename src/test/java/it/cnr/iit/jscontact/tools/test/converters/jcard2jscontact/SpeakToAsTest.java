@@ -23,19 +23,35 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 
-public class UnmatchedTest extends JCard2JSContactTest {
+public class SpeakToAsTest extends JCard2JSContactTest {
 
     @Test
-    public void testUnmatchedParameter() throws IOException, CardException {
+    public void testSpeakToAs1() throws IOException, CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
-                "[\"fn\", {}, \"text\", \"John Q. Public, Esq.\"], " +
-                "[\"n\", {\"sort-as\": \"Public,John\"}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]] " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"gender\", {}, \"text\", \"M\"] " +
                 "]]";
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testUnmatchedParameter - 1",jsCard.getExtensions().size() == 1);
-        assertTrue("testUnmatchedParameter - 2",jsCard.getExtensions().get("ietf.org:rfc6350:N:SORT-AS").equals("Public,John"));
+        assertTrue("testSpeakToAs1 - 1",jsCard.getSpeakToAs().isMale());
+        assertTrue("testSpeakToAs1 - 2",jsCard.getSpeakToAs().getPronouns() == null);
+        assertTrue("testSpeakToAs1 - 3",jsCard.getExtensions() == null);
+
+    }
+
+    @Test
+    public void testSpeakToAs2() throws IOException, CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"gender\", {}, \"text\", [\"M\",\"boy\"]] " +
+                "]]";
+
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertTrue("testSpeakToAs2 - 1",jsCard.getSpeakToAs().isMale());
+        assertTrue("testSpeakToAs2 - 2",jsCard.getSpeakToAs().getPronouns() == null);
+        assertTrue("testSpeakToAs2 - 3",jsCard.getExtensions().get("ietf.org:rfc6350:GENDER").equals("boy"));
 
     }
 

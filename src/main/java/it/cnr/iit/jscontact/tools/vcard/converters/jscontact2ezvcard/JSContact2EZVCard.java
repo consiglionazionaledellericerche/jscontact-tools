@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
+import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -86,6 +87,34 @@ public class JSContact2EZVCard extends AbstractConverter {
             return null;
 
         return new Revision(update);
+    }
+
+    private void fillGender(VCard vCard, Card jsCard) {
+
+        if (jsCard.getSpeakToAs() == null)
+            return;
+
+        if (jsCard.getSpeakToAs().getGrammaticalGender() != null) {
+
+
+            if (jsCard.getSpeakToAs().isMale())
+                vCard.setGender(new Gender(Gender.MALE));
+            else if (jsCard.getSpeakToAs().isFemale())
+                vCard.setGender(new Gender(Gender.FEMALE));
+            else if (jsCard.getSpeakToAs().isNeuter())
+                vCard.setGender(new Gender(Gender.NONE));
+            else if (jsCard.getSpeakToAs().isAnimate())
+                vCard.setGender(new Gender(Gender.OTHER));
+            else if (jsCard.getSpeakToAs().isInanimate()) {
+                Gender gender = new Gender(Gender.NONE);
+                gender.setText("inanimate");
+                vCard.setGender(gender);
+            }
+
+        }
+
+        if (jsCard.getSpeakToAs().getPronouns() != null)
+            vCard.addExtendedProperty("X-JSCONTACT-PRONOUNS", jsCard.getSpeakToAs().getPronouns());
     }
 
     private static void fillMembers(VCard vcard, CardGroup jsCardGroup) {
@@ -1007,9 +1036,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         for (Map.Entry<String,String> extension : jsCard.getExtensions().entrySet()) {
-            if (extension.getKey().equals(getUnmatchedPropertyName(VCARD_GENDER_TAG)))
-                vcard.setGender(new Gender(extension.getValue()));
-            else if (extension.getKey().startsWith(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)))
+            if (extension.getKey().startsWith(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)))
                 vcard.addClientPidMap(getCliendPidMap(extension.getKey(), extension.getValue()));
             else if ((extension.getKey().startsWith(getUnmatchedPropertyName(VCARD_XML_TAG))))
                 try {
@@ -1078,6 +1105,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         vCard.setKind(getKind(jsCard.getKind()));
         vCard.setProductId(jsCard.getProdId());
         vCard.setRevision(getRevision(jsCard.getUpdated()));
+        fillGender(vCard,jsCard);
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
         fillNickNames(vCard, jsCard);

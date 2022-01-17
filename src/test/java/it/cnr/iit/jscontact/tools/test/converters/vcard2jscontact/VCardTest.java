@@ -220,31 +220,33 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isOtherAnniversary());
         assertTrue("testCompleteVCard4 - 16", jsCard.getAnniversaries().get("ANNIVERSARY-2").getLabel().equals("marriage date"));
         assertTrue("testCompleteVCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
-        assertTrue("testCompleteVCard4 - 18", jsCard.getPreferredContactLanguages().size()==2);
-        assertTrue("testCompleteVCard4 - 19", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
-        assertTrue("testCompleteVCard4 - 20", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
-        assertTrue("testCompleteVCard4 - 21", jsCard.getOrganizations().get("ORG-1").getName().equals("Viagenie"));
-        assertTrue("testCompleteVCard4 - 22", jsCard.getAddresses().size() == 1);
-        assertTrue("testCompleteVCard4 - 23", jsCard.getAddresses().get("ADR-1").getFullAddress().equals("Suite D2-630\n2875 Laurier\nQuebec\nQC\nG1V 2M2\nCanada"));
-        assertTrue("testCompleteVCard4 - 24", jsCard.getAddresses().get("ADR-1").getStreetExtensions().equals("Suite D2-630"));
-        assertTrue("testCompleteVCard4 - 25", jsCard.getAddresses().get("ADR-1").getStreetDetails().equals("2875 Laurier"));
-        assertTrue("testCompleteVCard4 - 26", jsCard.getAddresses().get("ADR-1").getLocality().equals("Quebec"));
-        assertTrue("testCompleteVCard4 - 27", jsCard.getAddresses().get("ADR-1").getRegion().equals("QC"));
-        assertTrue("testCompleteVCard4 - 28", jsCard.getAddresses().get("ADR-1").getCountry().equals("Canada"));
-        assertTrue("testCompleteVCard4 - 29", jsCard.getAddresses().get("ADR-1").getPostcode().equals("G1V 2M2"));
-        assertTrue("testCompleteVCard4 - 30", jsCard.getAddresses().get("ADR-1").getCoordinates().equals("geo:46.772673,-71.282945"));
-        assertTrue("testCompleteVCard4 - 31", jsCard.getAddresses().get("ADR-1").getTimeZone().equals("Etc/GMT+5"));
-        assertTrue("testCompleteVCard4 - 32", jsCard.getPhones().size() == 2);
-        assertTrue("testCompleteVCard4 - 33", jsCard.getPhones().get("PHONE-1").asVoice());
-        assertTrue("testCompleteVCard4 - 34", jsCard.getPhones().get("PHONE-1").asWork());
-        assertTrue("testCompleteVCard4 - 35", jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+1-418-656-9254;ext=102"));
-        assertTrue("testCompleteVCard4 - 36", jsCard.getPhones().get("PHONE-1").getPref() == 1);
-        assertTrue("testCompleteVCard4 - 37", jsCard.getPhones().get("PHONE-2").asVoice());
-        assertTrue("testCompleteVCard4 - 38", jsCard.getPhones().get("PHONE-2").asWork());
-        assertTrue("testCompleteVCard4 - 39", jsCard.getPhones().get("PHONE-2").asCell());
-        assertTrue("testCompleteVCard4 - 40", jsCard.getPhones().get("PHONE-2").asVideo());
-        assertTrue("testCompleteVCard4 - 41", jsCard.getPhones().get("PHONE-2").asText());
-        assertTrue("testCompleteVCard4 - 42", jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-418-262-6501"));
+        assertTrue("testCompleteVCard4 - 18", jsCard.getSpeakToAs().isMale());
+
+        assertTrue("testCompleteVCard4 - 19", jsCard.getPreferredContactLanguages().size()==2);
+        assertTrue("testCompleteVCard4 - 20", jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 1);
+        assertTrue("testCompleteVCard4 - 21", jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
+        assertTrue("testCompleteVCard4 - 22", jsCard.getOrganizations().get("ORG-1").getName().equals("Viagenie"));
+        assertTrue("testCompleteVCard4 - 23", jsCard.getAddresses().size() == 1);
+        assertTrue("testCompleteVCard4 - 24", jsCard.getAddresses().get("ADR-1").getFullAddress().equals("Suite D2-630\n2875 Laurier\nQuebec\nQC\nG1V 2M2\nCanada"));
+        assertTrue("testCompleteVCard4 - 25", jsCard.getAddresses().get("ADR-1").getStreetExtensions().equals("Suite D2-630"));
+        assertTrue("testCompleteVCard4 - 26", jsCard.getAddresses().get("ADR-1").getStreetDetails().equals("2875 Laurier"));
+        assertTrue("testCompleteVCard4 - 27", jsCard.getAddresses().get("ADR-1").getLocality().equals("Quebec"));
+        assertTrue("testCompleteVCard4 - 28", jsCard.getAddresses().get("ADR-1").getRegion().equals("QC"));
+        assertTrue("testCompleteVCard4 - 29", jsCard.getAddresses().get("ADR-1").getCountry().equals("Canada"));
+        assertTrue("testCompleteVCard4 - 30", jsCard.getAddresses().get("ADR-1").getPostcode().equals("G1V 2M2"));
+        assertTrue("testCompleteVCard4 - 31", jsCard.getAddresses().get("ADR-1").getCoordinates().equals("geo:46.772673,-71.282945"));
+        assertTrue("testCompleteVCard4 - 32", jsCard.getAddresses().get("ADR-1").getTimeZone().equals("Etc/GMT+5"));
+        assertTrue("testCompleteVCard4 - 33", jsCard.getPhones().size() == 2);
+        assertTrue("testCompleteVCard4 - 34", jsCard.getPhones().get("PHONE-1").asVoice());
+        assertTrue("testCompleteVCard4 - 35", jsCard.getPhones().get("PHONE-1").asWork());
+        assertTrue("testCompleteVCard4 - 36", jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+1-418-656-9254;ext=102"));
+        assertTrue("testCompleteVCard4 - 37", jsCard.getPhones().get("PHONE-1").getPref() == 1);
+        assertTrue("testCompleteVCard4 - 38", jsCard.getPhones().get("PHONE-2").asVoice());
+        assertTrue("testCompleteVCard4 - 39", jsCard.getPhones().get("PHONE-2").asWork());
+        assertTrue("testCompleteVCard4 - 40", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteVCard4 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
+        assertTrue("testCompleteVCard4 - 42", jsCard.getPhones().get("PHONE-2").asText());
+        assertTrue("testCompleteVCard4 - 43", jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-418-262-6501"));
         assertTrue("testCompleteVCard4 - 44", jsCard.getEmails().size() == 1);
         assertTrue("testCompleteVCard4 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
         assertTrue("testCompleteVCard4 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
@@ -396,14 +398,16 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 81", jsCard.getProdId().equals("ez-vcard 0.9.14-fc"));
         assertTrue("testCompleteVCard6 - 82", jsCard.getAnniversaries().size() == 1);
         assertTrue("testCompleteVCard6 - 83", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("2016-08-01"));
+        assertTrue("testCompleteVCard6 - 84", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertTrue("testCompleteVCard6 - 85", jsCard.getSpeakToAs().isMale());
 
-        assertTrue("testCompleteVCard6 - 84", jsCard.getPhotos().size() == 3);
-        assertTrue("testCompleteVCard6 - 85", jsCard.getPhotos().get("PHOTO-1").getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
-        assertTrue("testCompleteVCard6 - 86", jsCard.getPhotos().get("PHOTO-2").getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
-        assertTrue("testCompleteVCard6 - 87", jsCard.getPhotos().get("PHOTO-3").getHref().equals("https://d2ojpxxtu63wzl.cloudfront.net/static/aa915d1f29f19baf560e5491decdd30a_67c95da9133249fde8b0da7ceebc298bf680117e6f52054f7f5f7a95e8377238"));
 
-        assertTrue("testCompleteVCard6 - 88", jsCard.getOnline().size() == 11);
+        assertTrue("testCompleteVCard6 - 86", jsCard.getPhotos().size() == 3);
+        assertTrue("testCompleteVCard6 - 87", jsCard.getPhotos().get("PHOTO-1").getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
+        assertTrue("testCompleteVCard6 - 88", jsCard.getPhotos().get("PHOTO-2").getHref().equals("https://d3m0kzytmr41b1.cloudfront.net/c335e945d1b60edd9d75eb4837c432f637e95c8a"));
+        assertTrue("testCompleteVCard6 - 89", jsCard.getPhotos().get("PHOTO-3").getHref().equals("https://d2ojpxxtu63wzl.cloudfront.net/static/aa915d1f29f19baf560e5491decdd30a_67c95da9133249fde8b0da7ceebc298bf680117e6f52054f7f5f7a95e8377238"));
 
+        assertTrue("testCompleteVCard6 - 90", jsCard.getOnline().size() == 11);
         assertTrue("testCompleteVCard6 - 97", jsCard.getOnline().get("XMPP-1").isUsername());
         assertTrue("testCompleteVCard6 - 98", jsCard.getOnline().get("XMPP-1").getResource().equals("xmpp:gtalk"));
         assertTrue("testCompleteVCard6 - 100", jsCard.getOnline().get("XMPP-1").getLabel().equals("XMPP"));
@@ -471,8 +475,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 171", jsCard.getAddresses().get("ADR-4").getRegion().equals("CustomState"));
         assertTrue("testCompleteVCard6 - 172", jsCard.getAddresses().get("ADR-4").getCountry().equals("CustomCountry"));
         assertTrue("testCompleteVCard6 - 173", jsCard.getAddresses().get("ADR-4").getPostcode().equals("CustomPostal"));
-        assertTrue("testCompleteVCard6 - 174", jsCard.getExtensions().size() == 23);
-        assertTrue("testCompleteVCard6 - 175", jsCard.getExtensions().get("ietf.org:rfc6350:GENDER").equals("M"));
+        assertTrue("testCompleteVCard6 - 174", jsCard.getExtensions().size() == 22);
         assertTrue("testCompleteVCard6 - 176", jsCard.getExtensions().get("extension:X-GENDER").equals("male"));
         assertTrue("testCompleteVCard6 - 177", jsCard.getExtensions().get("extension:X-ID").equals("14f9aba0c9422da9ae376fe28bd89c2a.0"));
         assertTrue("testCompleteVCard6 - 178", jsCard.getExtensions().get("extension:X-ETAG").equals("fffffea9056d8166e2b7a427977e570c87dd51279d11d9b137c593eb"));
@@ -495,6 +498,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 195", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D4F7468657244617465733A416E6E6976657273617279").equals("2016-08-02"));
         assertTrue("testCompleteVCard6 - 196", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D4F7468657244617465733A4F74686572").equals("2016-08-03"));
         assertTrue("testCompleteVCard6 - 197", jsCard.getExtensions().get("extension:X-FCENCODED-582D46432D4F7468657244617465733A437573746F6D54595045").equals("2016-08-04"));
+
     }
 
 }

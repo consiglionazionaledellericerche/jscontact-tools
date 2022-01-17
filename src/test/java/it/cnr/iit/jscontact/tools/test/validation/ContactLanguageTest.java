@@ -89,7 +89,7 @@ public class ContactLanguageTest extends AbstractTest {
 
         assertTrue("testInvalidContactLanguage2-1", !jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidContactLanguage2-2", messages.contains("at least one not null member is missing in ContactLanguage"));
+        assertTrue("testInvalidContactLanguage2-2", messages.contains("at least one not null member other than @type is missing in ContactLanguage"));
         assertTrue("testInvalidContactLanguage2-3", messages.contains("invalid preferredContactLanguages in JSContact"));
     }
 

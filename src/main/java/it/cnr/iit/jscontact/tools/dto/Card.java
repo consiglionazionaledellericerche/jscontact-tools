@@ -51,7 +51,7 @@ import java.util.*;
  */
 @JsonPropertyOrder({
         "@type","uid","prodId","created","updated","kind","relatedTo","language",
-        "name","fullName","nickNames","organizations","titles",
+        "name","fullName","nickNames","organizations","titles","speakToAs",
         "emails","online","photos","preferredContactMethod","preferredContactLanguages",
         "addresses","localizations",
         "anniversaries","personalInfo","notes","categpories","timeZones",
@@ -110,6 +110,9 @@ public class Card extends JSContact implements Serializable {
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
     Map<String,Title> titles;
+
+    @Valid
+    SpeakToAs speakToAs;
 
     //Contact and Resource properties
     @JsonPropertyOrder(alphabetic = true)
