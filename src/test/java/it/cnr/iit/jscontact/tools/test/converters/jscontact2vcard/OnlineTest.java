@@ -303,4 +303,25 @@ public class OnlineTest extends JSContact2VCardTest {
         assertTrue("testOnlineValid12 - 4",vcard.getCalendarUris().get(1).getValue().equals("ftp://ftp.example.com/calA.ics"));
         assertTrue("testOnlineValid12 - 5",vcard.getCalendarUris().get(1).getMediaType().equals("text/calendar"));
     }
+
+
+    @Test
+    public void testOnlineValid13() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":\"test\"," +
+                "\"online\": {"+
+                    "\"CONTACT-URI-1\": {" +
+                        "\"@type\":\"Resource\"," +
+                        "\"type\": \"contact\","+
+                        "\"resource\": \"mailto:contact@example.com\"" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertTrue("testOnlineValid13 - 1",vcard.getExtendedProperties().size() == 1);
+        assertTrue("testOnlineValid13 - 2",vcard.getExtendedProperty("CONTACT-URI").getValue().equals("mailto:contact@example.com"));
+    }
 }
