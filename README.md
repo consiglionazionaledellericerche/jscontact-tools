@@ -1,6 +1,6 @@
 # jscontact-tools
 
-Java tools for **JSContact** [draft-ietf-jmap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/) creation, validation, serialization/deserialization and conversion from and to vCard 4.0 [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
+Java tools for **JSContact** [draft-ietf-calext-jscontact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/) creation, validation, serialization/deserialization and conversion from and to vCard 4.0 [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
 Validation and conversion of vCard formats leverage the features provided by [ez-vcard](https://github.com/mangstadt/ez-vcard) Java library.
 
 # Maven/Gradle
@@ -11,14 +11,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.8.1</version>
+		  <version>0.9.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.8.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.9.0'
 ```
 
 # Features
@@ -90,7 +90,7 @@ Here in the following a test assessing a successful creation of a cloned Card in
 
 Even if topomost JSContact objects, namely **Card** and **CardGroup**, are correctly created by builders, they might need to be validated as they were obtained from an external producer through deserialization.
 Validation is performed on both Card and CardGroup objects by invoking the method `isValid`.
-This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-jmap-jscontact], `false` otherwise.
+This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-calext-jscontact], `false` otherwise.
 If the validation process doesn't end successfully, the list of error messages can be obtained by calling the `getValidationMessages` method.  
 Here in the following a method testing an unsuccessfully ended validation is shown.
 
@@ -295,10 +295,9 @@ The conversion is executed according to the following rules:
     5. URL
     6. KEY
     7. FBURL
-    8. CALADRURI
-    9. CALURI
-    10. ORG-DIRECTORY
-    11. CONTACT-URI
+    8. CALURI
+    9. ORG-DIRECTORY
+    10. CONTACT-URI
 
 14. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
@@ -504,10 +503,12 @@ Here in the following two examples of conversion between JSContact top most obje
     public void testAddressesValid4() throws IOException, CardException {
 
         String jscard = "{" +
+                "\@type\": \"Card\","
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
+                        "\@type\": \"Address\","
                         "\"street\":[{\"type\":\"name\",\"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -539,8 +540,10 @@ Here in the following two examples of conversion between JSContact top most obje
 
         String jsCards = "[" +
                          "{" +
+                             "\@type\": \"CardGroup\","
                              "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
                              "\"card\": {" +
+                                 "\@type\": \"Card\","
                                  "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
                                  "\"kind\":\"group\"," +
                                  "\"fullName\":\"The Doe family\"" +
@@ -551,10 +554,12 @@ Here in the following two examples of conversion between JSContact top most obje
                              "}" +
                         "}," +
                         "{" +
+                             "\@type\": \"Card\","
                             "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
                             "\"fullName\":\"John Doe\"" +
                         "}," +
                         "{" +
+                             "\@type\": \"Card\","
                             "\"uid\":\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"," +
                             "\"fullName\":\"Jane Doe\"" +
                         "}" +
@@ -607,8 +612,8 @@ This jscontact-tools version is compliant with JSContact specification version -
 <a name="drafts"></a>
 ### JSContact I-Ds
 
-*   [draft-ietf-jmap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/)
-*   [draft-ietf-jmap-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/)
+*   [draft-ietf-calext-jscontact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/)
+*   [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 
 
 # Build Instructions
