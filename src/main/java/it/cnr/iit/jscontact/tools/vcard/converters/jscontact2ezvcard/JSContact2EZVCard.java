@@ -19,7 +19,6 @@ import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -718,6 +717,18 @@ public class JSContact2EZVCard extends AbstractConverter {
         return photo;
     }
 
+
+    private static List<CalendarRequestUri> getCalendarRequestUris(Scheduling s, Integer pref) {
+
+        List<CalendarRequestUri> caladruris = new ArrayList<CalendarRequestUri>();
+        for (String sendTo : s.getSendTo().values()) {
+            CalendarRequestUri caladruri = new CalendarRequestUri(sendTo);
+            caladruri.setPref(pref);
+            caladruris.add(caladruri);
+        }
+        return (caladruris.size() == 0) ? null : caladruris;
+    }
+
     private static <T extends VCardProperty> void fillVCardProperty(T property, Resource resource) {
 
         if (resource.getMediaType()!=null)
@@ -771,6 +782,18 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
+    private static void fillScheduling(VCard vcard, Card jsCard) {
+
+        if (jsCard.getScheduling() == null)
+            return;
+
+        for(Scheduling s : jsCard.getScheduling().values()) {
+            List<CalendarRequestUri> caldruris = getCalendarRequestUris(s, s.getPref());
+            if (caldruris == null) continue;
+            vcard.getCalendarRequestUris().addAll(caldruris);
+        }
+    }
+
     private static void fillOnlines(VCard vcard, Card jsCard) {
 
         if (jsCard.getOnline() == null)
@@ -778,10 +801,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Resource resource : jsCard.getOnline().values()) {
 
-            if (resource.getLabel() == null)
-                continue;
-
-            switch(OnlineLabelKey.getLabelKey(resource.getLabel())) {
+            switch(resource.getType()) {
                 case SOUND:
                     vcard.getSounds().add(new Sound(resource.getResource(), getSoundType(resource.getMediaType())));
                     break;
@@ -794,14 +814,11 @@ public class JSContact2EZVCard extends AbstractConverter {
                 case LOGO:
                     vcard.getLogos().add(getBinaryProperty(Logo.class,resource));
                     break;
-                case URL:
+                case URI:
                     vcard.getUrls().add(getUriProperty(Url.class,resource));
                     break;
                 case FBURL:
                     vcard.getFbUrls().add(getUriProperty(FreeBusyUrl.class,resource));
-                    break;
-                case CALADRURI:
-                    vcard.getCalendarRequestUris().add(getUriProperty(CalendarRequestUri.class,resource));
                     break;
                 case CALURI:
                     vcard.getCalendarUris().add(getUriProperty(CalendarUri.class,resource));
@@ -809,10 +826,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                 case ORG_DIRECTORY:
                     vcard.getOrgDirectories().add(getUriProperty(OrgDirectory.class,resource));
                     break;
-                case IMPP:
-                    Impp impp = new Impp(resource.getResource());
-                    fillVCardProperty(impp,resource);
-                    vcard.getImpps().add(impp);
+                case USERNAME:
+                    if (resource.getLabel().equals("XMPP")) {
+                        Impp impp = new Impp(resource.getResource());
+                        fillVCardProperty(impp, resource);
+                        vcard.getImpps().add(impp);
+                    }
                     break;
                 case CONTACT_URI:
                     RawProperty rp = new RawProperty("CONTACT-URI",resource.getResource());
@@ -1116,6 +1135,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillPhones(vCard, jsCard);
         fillEmails(vCard, jsCard);
         fillPhotos(vCard, jsCard);
+        fillScheduling(vCard,jsCard);
         fillOnlines(vCard, jsCard);
         fillTitles(vCard, jsCard);
         fillOrganizations(vCard, jsCard);

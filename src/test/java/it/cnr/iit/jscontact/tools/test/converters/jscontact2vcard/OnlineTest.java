@@ -63,8 +63,7 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"online\": {"+
                     "\"SOURCE-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"source\"," +
+                        "\"type\": \"directorySource\","+
                         "\"resource\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
                  "}" +
@@ -105,8 +104,7 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"online\": {"+
                     "\"LOGO-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"logo\"," +
+                        "\"type\": \"logo\","+
                         "\"resource\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
                     "}" +
                 "}" +
@@ -126,8 +124,7 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"online\": {"+
                     "\"CONTACT-URI-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"contact-uri\"," +
+                        "\"type\": \"contact\","+
                         "\"resource\": \"mailto:contact@example.com\"" +
                     "}" +
                 "}" +
@@ -148,8 +145,7 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"online\": {"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"sound\"," +
+                        "\"type\": \"audio\","+
                         "\"mediaType\": \"audio/mp3\"," +
                         "\"resource\": \"sound.mp3\"" +
                     "}" +
@@ -171,8 +167,7 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"online\":{"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"sound\"," +
+                        "\"type\": \"audio\","+
                         "\"resource\": \"sound.mp3\"" +
                     "}" +
                 "}" +
@@ -191,10 +186,9 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"online\": {"+
-                    "\"URL-1\": {" +
+                    "\"URI-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
-                        "\"label\": \"url\"," +
                         "\"resource\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
                     "}" +
                 "}" +
@@ -214,8 +208,7 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"online\": {"+
                     "\"KEY-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"key\"," +
+                        "\"type\": \"publicKey\","+
                         "\"resource\": \"http://www.example.com/keys/jdoe.cer\"" +
                     "}" +
                 "}" +
@@ -235,15 +228,13 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"online\": {"+
                     "\"FBURL-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"fburl\"," +
+                        "\"type\": \"freeBusy\","+
                         "\"pref\": 1," +
                         "\"resource\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
                     "\"FBURL-2\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"fburl\"," +
+                        "\"type\": \"freeBusy\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"resource\": \"ftp://example.com/busy/project-a.ifb\"" +
                     "}" +
@@ -264,19 +255,15 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"scheduling\": {"+
                     "\"CALADRURI-1\": {" +
-                        "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"caladruri\"," +
+                        "\"@type\":\"Scheduling\"," +
                         "\"pref\": 1," +
-                        "\"resource\": \"mailto:janedoe@example.com\"" +
+                        "\"sendTo\": { \"imip\":\"mailto:janedoe@example.com\"}" +
                     "}," +
                     "\"CALADRURI-2\": {" +
-                        "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"caladruri\"," +
-                        "\"resource\": \"http://example.com/calendar/jdoe\"" +
+                        "\"@type\":\"Scheduling\"," +
+                        "\"sendTo\": { \"imip\": \"http://example.com/calendar/jdoe\"}" +
                     "}" +
                 "}" +
                 "}";
@@ -297,15 +284,13 @@ public class OnlineTest extends JSContact2VCardTest {
                 "\"online\": {"+
                     "\"CALURI-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"caluri\"," +
+                        "\"type\": \"calendar\","+
                         "\"pref\": 1," +
                         "\"resource\": \"http://cal.example.com/calA\"" +
                     "}," +
                     "\"CALURI-2\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
-                        "\"label\": \"caluri\"," +
+                        "\"type\": \"calendar\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"resource\": \"ftp://ftp.example.com/calA.ics\"" +
                     "}" +
