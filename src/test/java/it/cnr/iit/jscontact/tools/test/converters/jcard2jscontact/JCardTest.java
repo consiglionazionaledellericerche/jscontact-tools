@@ -184,18 +184,16 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asCell());
         assertTrue("testCompleteJCard1 - 43", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
-        assertTrue("testCompleteJCard1 - 46", jsCard.getOnline().size() == 2);
-        assertTrue("testCompleteJCard1 - 47", jsCard.getOnline().get("KEY-1").isUri());
-        assertTrue("testCompleteJCard1 - 48", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.example.com/joe.user/joe.asc"));
-        assertTrue("testCompleteJCard1 - 49", jsCard.getOnline().get("KEY-1").getPref() == null);
-        assertTrue("testCompleteJCard1 - 50", jsCard.getOnline().get("KEY-1").asWork());
-        assertTrue("testCompleteJCard1 - 52", jsCard.getOnline().get("KEY-1").isKey());
-        assertTrue("testCompleteJCard1 - 53", jsCard.getOnline().get("URL-1").isUri());
-        assertTrue("testCompleteJCard1 - 54", jsCard.getOnline().get("URL-1").getResource().equals("http://example.org"));
-        assertTrue("testCompleteJCard1 - 55", jsCard.getOnline().get("URL-1").getPref() == null);
-        assertTrue("testCompleteJCard1 - 56", jsCard.getOnline().get("URL-1").asPrivate());
-        assertTrue("testCompleteJCard1 - 58", jsCard.getOnline().get("URL-1").isUrl());
-        assertTrue("testCompleteJCard1 - 59", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteJCard1 - 45", jsCard.getOnline().size() == 2);
+        assertTrue("testCompleteJCard1 - 46", jsCard.getOnline().get("KEY-1").isPublicKey());
+        assertTrue("testCompleteJCard1 - 47", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.example.com/joe.user/joe.asc"));
+        assertTrue("testCompleteJCard1 - 48", jsCard.getOnline().get("KEY-1").getPref() == null);
+        assertTrue("testCompleteJCard1 - 49", jsCard.getOnline().get("KEY-1").asWork());
+        assertTrue("testCompleteJCard1 - 50", jsCard.getOnline().get("URI-1").getResource().equals("http://example.org"));
+        assertTrue("testCompleteJCard1 - 51", jsCard.getOnline().get("URI-1").getPref() == null);
+        assertTrue("testCompleteJCard1 - 52", jsCard.getOnline().get("URI-1").asPrivate());
+        assertTrue("testCompleteJCard1 - 53", jsCard.getOnline().get("URI-1").isUri());
+        assertTrue("testCompleteJCard1 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
 
@@ -292,14 +290,11 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
         assertTrue("testCompleteJCard4 - 47", jsCard.getOnline().size() == 2);
         assertTrue("testCompleteJCard4 - 48", jsCard.getOnline().get("KEY-1").asWork());
-        assertTrue("testCompleteJCard4 - 49", jsCard.getOnline().get("KEY-1").isUri());
-        assertTrue("testCompleteJCard4 - 50", jsCard.getOnline().get("KEY-1").isKey());
+        assertTrue("testCompleteJCard4 - 50", jsCard.getOnline().get("KEY-1").isPublicKey());
         assertTrue("testCompleteJCard4 - 51", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
-        assertTrue("testCompleteJCard4 - 52", jsCard.getOnline().get("URL-1").asPrivate());
-        assertTrue("testCompleteJCard4 - 53", jsCard.getOnline().get("URL-1").isUri());
-        assertTrue("testCompleteJCard4 - 54", jsCard.getOnline().get("URL-1").getLabel().equals("url"));
-        assertTrue("testCompleteJCard4 - 55", jsCard.getOnline().get("URL-1").getResource().equals("http://nomis80.org"));
-        assertTrue("testCompleteJCard4 - 56", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteJCard4 - 52", jsCard.getOnline().get("URI-1").asPrivate());
+        assertTrue("testCompleteJCard4 - 53", jsCard.getOnline().get("URI-1").getResource().equals("http://nomis80.org"));
+        assertTrue("testCompleteJCard4 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 
 

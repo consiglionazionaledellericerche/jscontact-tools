@@ -62,7 +62,7 @@
       "label": "key",
       "resource": "http://www.example.com/joe.user/joe.asc"
     },
-    "URL-1": {
+    "URI-1": {
       "@type" : "Resource",
       "contexts": {"private": true},
       "type": "uri",

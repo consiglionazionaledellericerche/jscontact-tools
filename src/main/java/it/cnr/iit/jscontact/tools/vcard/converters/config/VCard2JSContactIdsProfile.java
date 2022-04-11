@@ -1,6 +1,6 @@
 package it.cnr.iit.jscontact.tools.vcard.converters.config;
 
-import it.cnr.iit.jscontact.tools.dto.OnlineLabelKey;
+import it.cnr.iit.jscontact.tools.dto.ResourceType;
 import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +26,7 @@ public class VCard2JSContactIdsProfile {
         ADDRESS,
         PHONE,
         PHOTO,
+        SCHEDULING,
         ONLINE,
         ANNIVERSARY,
         PERSONAL_INFO
@@ -46,7 +47,8 @@ public class VCard2JSContactIdsProfile {
         public static JSContactId addressesId(String id) { return jsContactId(IdType.ADDRESS,id); }
         public static JSContactId phonesId(String id) { return jsContactId(IdType.PHONE,id); }
         public static JSContactId photosId(String id) { return jsContactId(IdType.PHOTO,id); }
-        public static JSContactId onlinesId(ResourceId id) { return jsContactId(IdType.PHOTO,id); }
+        public static JSContactId schedulingId(String id) { return jsContactId(IdType.SCHEDULING,id); }
+        public static JSContactId onlinesId(ResourceId id) { return jsContactId(IdType.ONLINE,id); }
         public static JSContactId anniversariesId(String id) { return jsContactId(IdType.ANNIVERSARY,id); }
         public static JSContactId personalInfosId(PersonalInfoId id) { return jsContactId(IdType.PERSONAL_INFO,id); }
     }
@@ -56,21 +58,20 @@ public class VCard2JSContactIdsProfile {
     @AllArgsConstructor
     public static class ResourceId {
 
-        OnlineLabelKey labelKey;
+        ResourceType type;
         String id;
 
-        private static ResourceId resourceId(OnlineLabelKey labelKey, String id) { return ResourceId.builder().labelKey(labelKey).id(id).build(); }
-        public static ResourceId keysId(String id) { return resourceId(OnlineLabelKey.KEY,id);}
-        public static ResourceId logosId(String id) { return resourceId(OnlineLabelKey.LOGO,id);}
-        public static ResourceId soundsId(String id) { return resourceId(OnlineLabelKey.SOUND,id);}
-        public static ResourceId orgDirectoriesId(String id) { return resourceId(OnlineLabelKey.ORG_DIRECTORY,id);}
-        public static ResourceId imppsId(String id) { return resourceId(OnlineLabelKey.IMPP,id);}
-        public static ResourceId fbUrlsId(String id) { return resourceId(OnlineLabelKey.FBURL,id);}
-        public static ResourceId urlsId(String id) { return resourceId(OnlineLabelKey.URL,id);}
-        public static ResourceId contactUrisId(String id) { return resourceId(OnlineLabelKey.CONTACT_URI,id);}
-        public static ResourceId caladrUrisId(String id) { return resourceId(OnlineLabelKey.CALADRURI,id);}
-        public static ResourceId calurisId(String id) { return resourceId(OnlineLabelKey.CALURI,id);}
-        public static ResourceId sourcesId(String id) { return resourceId(OnlineLabelKey.SOURCE,id);}
+        private static ResourceId resourceId(ResourceType type, String id) { return ResourceId.builder().type(type).id(id).build(); }
+        public static ResourceId keysId(String id) { return resourceId(ResourceType.KEY,id);}
+        public static ResourceId logosId(String id) { return resourceId(ResourceType.LOGO,id);}
+        public static ResourceId soundsId(String id) { return resourceId(ResourceType.SOUND,id);}
+        public static ResourceId orgDirectoriesId(String id) { return resourceId(ResourceType.ORG_DIRECTORY,id);}
+        public static ResourceId imppsId(String id) { return resourceId(ResourceType.USERNAME, id);}
+        public static ResourceId fbUrlsId(String id) { return resourceId(ResourceType.FBURL,id);}
+        public static ResourceId urlsId(String id) { return resourceId(ResourceType.URI,id);}
+        public static ResourceId contactUrisId(String id) { return resourceId(ResourceType.CONTACT_URI,id);}
+        public static ResourceId calurisId(String id) { return resourceId(ResourceType.CALURI,id);}
+        public static ResourceId sourcesId(String id) { return resourceId(ResourceType.SOURCE,id);}
     }
 
 

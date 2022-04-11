@@ -81,14 +81,12 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
         assertTrue("testCompleteXCard1 - 47", jsCard.getOnline().size() == 2);
         assertTrue("testCompleteXCard1 - 48", jsCard.getOnline().get("KEY-1").asWork());
-        assertTrue("testCompleteXCard1 - 49", jsCard.getOnline().get("KEY-1").isUri());
-        assertTrue("testCompleteXCard1 - 50", jsCard.getOnline().get("KEY-1").isKey());
-        assertTrue("testCompleteXCard1 - 51", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
-        assertTrue("testCompleteXCard1 - 52", jsCard.getOnline().get("URL-1").asPrivate());
-        assertTrue("testCompleteXCard1 - 53", jsCard.getOnline().get("URL-1").isUri());
-        assertTrue("testCompleteXCard1 - 54", jsCard.getOnline().get("URL-1").getLabel().equals("url"));
-        assertTrue("testCompleteXCard1 - 55", jsCard.getOnline().get("URL-1").getResource().equals("http://nomis80.org"));
-        assertTrue("testCompleteXCard1 - 56", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteXCard1 - 49", jsCard.getOnline().get("KEY-1").isPublicKey());
+        assertTrue("testCompleteXCard1 - 50", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
+        assertTrue("testCompleteXCard1 - 51", jsCard.getOnline().get("URI-1").asPrivate());
+        assertTrue("testCompleteXCard1 - 52", jsCard.getOnline().get("URI-1").isUri());
+        assertTrue("testCompleteXCard1 - 53", jsCard.getOnline().get("URI-1").getResource().equals("http://nomis80.org"));
+        assertTrue("testCompleteXCard1 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
 

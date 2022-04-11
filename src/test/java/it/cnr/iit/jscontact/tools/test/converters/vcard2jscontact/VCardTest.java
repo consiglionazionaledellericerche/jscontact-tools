@@ -144,17 +144,15 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard1 - 43", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteVCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
         assertTrue("testCompleteVCard1 - 46", jsCard.getOnline().size() == 2);
-        assertTrue("testCompleteVCard1 - 47", jsCard.getOnline().get("KEY-1").isUri());
+        assertTrue("testCompleteVCard1 - 47", jsCard.getOnline().get("KEY-1").isPublicKey());
         assertTrue("testCompleteVCard1 - 48", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.example.com/joe.user/joe.asc"));
         assertTrue("testCompleteVCard1 - 49", jsCard.getOnline().get("KEY-1").getPref() == null);
         assertTrue("testCompleteVCard1 - 50", jsCard.getOnline().get("KEY-1").asWork());
-        assertTrue("testCompleteVCard1 - 52", jsCard.getOnline().get("KEY-1").isKey());
-        assertTrue("testCompleteVCard1 - 53", jsCard.getOnline().get("URL-1").isUri());
-        assertTrue("testCompleteVCard1 - 54", jsCard.getOnline().get("URL-1").getResource().equals("http://example.org"));
-        assertTrue("testCompleteVCard1 - 55", jsCard.getOnline().get("URL-1").getPref() == null);
-        assertTrue("testCompleteVCard1 - 56", jsCard.getOnline().get("URL-1").asPrivate());
-        assertTrue("testCompleteVCard1 - 58", jsCard.getOnline().get("URL-1").isUrl());
-        assertTrue("testCompleteVCard1 - 59", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteVCard1 - 51", jsCard.getOnline().get("URI-1").getResource().equals("http://example.org"));
+        assertTrue("testCompleteVCard1 - 52", jsCard.getOnline().get("URI-1").getPref() == null);
+        assertTrue("testCompleteVCard1 - 53", jsCard.getOnline().get("URI-1").asPrivate());
+        assertTrue("testCompleteVCard1 - 54", jsCard.getOnline().get("URI-1").isUri());
+        assertTrue("testCompleteVCard1 - 55", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
 
@@ -252,14 +250,12 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard4 - 46", jsCard.getEmails().get("EMAIL-1").getEmail().equals("simon.perreault@viagenie.ca"));
         assertTrue("testCompleteVCard4 - 47", jsCard.getOnline().size() == 2);
         assertTrue("testCompleteVCard4 - 48", jsCard.getOnline().get("KEY-1").asWork());
-        assertTrue("testCompleteVCard4 - 49", jsCard.getOnline().get("KEY-1").isUri());
-        assertTrue("testCompleteVCard4 - 50", jsCard.getOnline().get("KEY-1").isKey());
-        assertTrue("testCompleteVCard4 - 51", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
-        assertTrue("testCompleteVCard4 - 52", jsCard.getOnline().get("URL-1").asPrivate());
-        assertTrue("testCompleteVCard4 - 53", jsCard.getOnline().get("URL-1").isUri());
-        assertTrue("testCompleteVCard4 - 54", jsCard.getOnline().get("URL-1").getLabel().equals("url"));
-        assertTrue("testCompleteVCard4 - 55", jsCard.getOnline().get("URL-1").getResource().equals("http://nomis80.org"));
-        assertTrue("testCompleteVCard4 - 56", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteVCard4 - 49", jsCard.getOnline().get("KEY-1").isPublicKey());
+        assertTrue("testCompleteVCard4 - 50", jsCard.getOnline().get("KEY-1").getResource().equals("http://www.viagenie.ca/simon.perreault/simon.asc"));
+        assertTrue("testCompleteVCard4 - 51", jsCard.getOnline().get("URI-1").asPrivate());
+        assertTrue("testCompleteVCard4 - 52", jsCard.getOnline().get("URI-1").isUri());
+        assertTrue("testCompleteVCard4 - 53", jsCard.getOnline().get("URI-1").getResource().equals("http://nomis80.org"));
+        assertTrue("testCompleteVCard4 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 
     @Test
@@ -430,18 +426,14 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 122", jsCard.getOnline().get("XMPP-7").getResource().equals("customtype:custom"));
         assertTrue("testCompleteVCard6 - 124", jsCard.getOnline().get("XMPP-7").getLabel().equals("XMPP"));
 
-        assertTrue("testCompleteVCard6 - 125", jsCard.getOnline().get("URL-1").isUri());
-        assertTrue("testCompleteVCard6 - 126", jsCard.getOnline().get("URL-1").getResource().equals("http://www.homepage.com"));
-        assertTrue("testCompleteVCard6 - 128", jsCard.getOnline().get("URL-1").getLabel().equals("url"));
-        assertTrue("testCompleteVCard6 - 129", jsCard.getOnline().get("URL-2").isUri());
-        assertTrue("testCompleteVCard6 - 130", jsCard.getOnline().get("URL-2").getResource().equals("http://www.blog.com"));
-        assertTrue("testCompleteVCard6 - 132", jsCard.getOnline().get("URL-2").getLabel().equals("url"));
-        assertTrue("testCompleteVCard6 - 133", jsCard.getOnline().get("URL-3").isUri());
-        assertTrue("testCompleteVCard6 - 134", jsCard.getOnline().get("URL-3").getResource().equals("http://www.other.com"));
-        assertTrue("testCompleteVCard6 - 136", jsCard.getOnline().get("URL-3").getLabel().equals("url"));
-        assertTrue("testCompleteVCard6 - 137", jsCard.getOnline().get("URL-4").isUri());
-        assertTrue("testCompleteVCard6 - 138", jsCard.getOnline().get("URL-4").getResource().equals("http://www.custom.com"));
-        assertTrue("testCompleteVCard6 - 140", jsCard.getOnline().get("URL-4").getLabel().equals("url"));
+        assertTrue("testCompleteVCard6 - 125", jsCard.getOnline().get("URI-1").isUri());
+        assertTrue("testCompleteVCard6 - 126", jsCard.getOnline().get("URI-1").getResource().equals("http://www.homepage.com"));
+        assertTrue("testCompleteVCard6 - 129", jsCard.getOnline().get("URI-2").isUri());
+        assertTrue("testCompleteVCard6 - 130", jsCard.getOnline().get("URI-2").getResource().equals("http://www.blog.com"));
+        assertTrue("testCompleteVCard6 - 133", jsCard.getOnline().get("URI-3").isUri());
+        assertTrue("testCompleteVCard6 - 134", jsCard.getOnline().get("URI-3").getResource().equals("http://www.other.com"));
+        assertTrue("testCompleteVCard6 - 137", jsCard.getOnline().get("URI-4").isUri());
+        assertTrue("testCompleteVCard6 - 138", jsCard.getOnline().get("URI-4").getResource().equals("http://www.custom.com"));
         assertTrue("testCompleteVCard6 - 141", jsCard.getAddresses().size() == 4);
         assertTrue("testCompleteVCard6 - 142", jsCard.getAddresses().get("ADR-1").asPrivate());
         assertTrue("testCompleteVCard6 - 143", jsCard.getAddresses().get("ADR-1").getFullAddress().equals("HomeExtended\nHomeStreet\nHomeCity\nHomeState\nHomePostal\nHomeCountry"));

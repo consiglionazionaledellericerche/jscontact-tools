@@ -68,7 +68,7 @@ public class ResourceTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .online(new HashMap<String,Resource>(){{ put("URL-1", online);}})
+                .online(new HashMap<String,Resource>(){{ put("URI-1", online);}})
                 .build();
 
         assertTrue("testInvalidResourceUri-1", !jsCard.isValid());

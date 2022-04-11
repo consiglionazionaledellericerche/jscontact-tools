@@ -16,21 +16,34 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
  * Enum class mapping the values of the "type" property of the Resource type as defined in section 2.3.3 of [draft-ietf-jmap-jscontact].
+ * The values are those corresponding to vCard 4.0 [RFC6350] [RFC6715] [RFC8605] properties that are not directly mapped to a JSContact property.
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.3">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/rfc6350">RFC6350</a>
+ * @see <a href="https://datatracker.ietf.org/doc/rfc6715">RFC6715</a>
+ * @see <a href="https://datatracker.ietf.org/doc/rfc8605">RFC8605</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
 public enum ResourceType {
 
     URI("uri"),
-    USERNAME("username");
+    USERNAME("username"),
+    SOURCE("directorySource"),
+    LOGO("logo"),
+    CONTACT_URI("contact"),
+    ORG_DIRECTORY("directory"),
+    SOUND("audio"),
+    KEY("publicKey"),
+    FBURL("freeBusy"),
+    CALURI("calendar");
 
     private String value;
 
@@ -47,6 +60,11 @@ public enum ResourceType {
     @Override
     public String toString() {
         return value;
+    }
+
+    @JsonIgnore
+    public String getMapTag() {
+        return this.name().replace("_", "-");
     }
 
 }
