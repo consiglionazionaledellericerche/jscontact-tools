@@ -67,7 +67,6 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"ietf.org:rfc6350:XML\":\"<note>This is a not in xml</note>\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(Ezvcard.write(vcard).go());
         assertTrue("testUnmatchedProperty - 1",vcard.getXmls().size() == 1);
     }
 
