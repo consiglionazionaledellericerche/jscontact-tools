@@ -91,7 +91,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
             if (jsContactId.getIdType() == idType) {
                 switch (idType) {
-                    case ONLINE:
+                    case RESOURCE:
                         VCard2JSContactIdsProfile.ResourceId resourceId = (VCard2JSContactIdsProfile.ResourceId) jsContactId.getId();
                         ResourceType type = (ResourceType) args[0];
                         if (resourceId.getType() == type)
@@ -118,7 +118,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (config.isApplyAutoIdsProfile() || config.getIdsProfileToApply() == null || config.getIdsProfileToApply().getIds() == null || config.getIdsProfileToApply().getIds().size() == 0)
             return id;
 
-        List<String> ids = (idType == VCard2JSContactIdsProfile.IdType.ONLINE || idType == VCard2JSContactIdsProfile.IdType.PERSONAL_INFO) ? getProfileIds(idType,args[0]) : getProfileIds(idType);
+        List<String> ids = (idType == VCard2JSContactIdsProfile.IdType.RESOURCE || idType == VCard2JSContactIdsProfile.IdType.PERSONAL_INFO) ? getProfileIds(idType,args[0]) : getProfileIds(idType);
 
         if (ids.size() == 0)
             return id;
@@ -331,7 +331,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jcardType = getJcardParam(property.getParameters(), "TYPE");
         Map<Context,Boolean> contexts = getContexts(jcardType);
         label = getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, null);
-        jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, index, String.format("%s-%s",type.getMapTag(),index), type),
+        jsCard.addResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getMapTag(),index), type),
                                     Resource.builder()
                                     .resource(value)
                                     .type(type)
@@ -888,7 +888,28 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private void fillOnlines(VCard vcard, Card jsCard) {
+    private void fillOnlineServices(VCard vcard, Card jsCard) {
+
+        String jcardType;
+        Map<Context,Boolean> contexts;
+
+        int i = 1;
+        for (Impp impp : vcard.getImpps()) {
+            jcardType = getJcardParam(impp.getParameters(), "TYPE");
+            contexts = getContexts(jcardType);
+            jsCard.addOnlineService(getId(VCard2JSContactIdsProfile.IdType.ONLINE_SERVICE, i,"XMPP-" + (i++)), OnlineService.builder()
+                    .uri(getValue(impp))
+                    .contexts(contexts)
+                    .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, new String[]{"XMPP"}))
+                    .pref(impp.getPref())
+                    .build()
+            );
+        }
+
+    }
+
+
+    private void fillResources(VCard vcard, Card jsCard) {
 
         String jcardType;
         Map<Context,Boolean> contexts;
@@ -896,22 +917,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         int i = 1;
         for (Source source : vcard.getSources())
             addOnline(source, jsCard, ResourceType.SOURCE, i++);
-
-        i = 1;
-        for (Impp impp : vcard.getImpps()) {
-            jcardType = getJcardParam(impp.getParameters(), "TYPE");
-            contexts = getContexts(jcardType);
-            String resource = getValue(impp);
-            jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, i,"XMPP-" + (i++), ResourceType.USERNAME), Resource.builder()
-                                        .resource(resource)
-                                        .type(ResourceType.USERNAME)
-                                        .contexts(contexts)
-                                        .label(getLabel(jcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, new String[]{"XMPP"}))
-                                        .pref(impp.getPref())
-                                        .mediaType(getMediaType(impp.getMediaType(), resource))
-                                        .build()
-                               );
-        }
 
         i = 1;
         for (Logo logo : vcard.getLogos())
@@ -961,7 +966,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Collections.sort(orgDirectories);
             i = 1;
             for (Resource ol : orgDirectories)
-                jsCard.addOnline(getId(VCard2JSContactIdsProfile.IdType.ONLINE, i, "ORG-DIRECTORY-" + (i++), ResourceType.ORG_DIRECTORY), ol);
+                jsCard.addResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, i, "ORG-DIRECTORY-" + (i++), ResourceType.ORG_DIRECTORY), ol);
         }
 
         List<RawProperty> contactUris = getRawProperties(vcard, "CONTACT-URI");
@@ -1251,7 +1256,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fillPhones(vCard, jsCard);
         fillEmails(vCard, jsCard);
         fillPhotos(vCard, jsCard);
-        fillOnlines(vCard, jsCard);
+        fillOnlineServices(vCard, jsCard);
+        fillResources(vCard, jsCard);
         fillTitles(vCard, jsCard);
         fillRoles(vCard, jsCard);
         fillOrganizations(vCard, jsCard);
@@ -1271,15 +1277,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     /**
      * Converts a list of vCard v4.0 instances [RFC6350] into a list of JSContact objects.
-     * JSContact is defined in draft-ietf-jmap-jscontact.
-     * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     * JSContact is defined in draft-ietf-calext-jscontact.
+     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
      * @param vCards a list of instances of the ez-vcard library VCard class
      * @return a list of JSContact objects
      * @throws CardException if one of the vCard instances is not v4.0 compliant
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
     public List<JSContact> convert(VCard... vCards) throws CardException {
 

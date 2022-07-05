@@ -41,7 +41,7 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                        "\"/organizations/ORG-1\" : { " +
+                        "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"ABC, Spa.\"," +
                             "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
@@ -85,7 +85,7 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                        "\"/organizations/ORG-1\" : { " +
+                        "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"ABC, Spa.\"," +
                             "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
@@ -133,12 +133,12 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                        "\"/organizations/ORG-1\" : { " +
+                        "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"ABC, Spa.\"," +
                             "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
                         "}," +
-                        "\"/organizations/ORG-2\" : { " +
+                        "\"organizations/ORG-2\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"Università del Nord America\"" +
                         "}" +

@@ -221,7 +221,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\":{" +
                    "\"it\":{" +
-                       "\"/addresses/ADR-1/fullAddress\":\"Via Moruzzi,1 Pisa 56124 Italia\"" +
+                       "\"addresses/ADR-1/fullAddress\":\"Via Moruzzi,1 Pisa 56124 Italia\"" +
                    "}" +
                 "}" +
                 "}";
@@ -375,7 +375,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\":{" +
                     "\"it\":{" +
-                        "\"/addresses/ADR-1\":{" +
+                        "\"addresses/ADR-1\":{" +
                             "\"street\":[{\"type\":\"name\", \"value\":\"Via Moruzzi,1\"}]," +
                             "\"locality\":\"Pisa\"," +
                             "\"country\":\"Italia\"," +

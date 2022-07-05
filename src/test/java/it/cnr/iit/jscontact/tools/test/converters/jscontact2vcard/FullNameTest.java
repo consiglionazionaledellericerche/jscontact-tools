@@ -94,7 +94,7 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"fullName\":\"大久保 正仁\"," +
                 "\"localizations\" : {" +
                   "\"en\": {" +
-                     "\"/fullName\":\"Okubo Masahito\""+
+                     "\"fullName\":\"Okubo Masahito\""+
                   "}" +
                 "}" +
                 "}";
@@ -123,7 +123,7 @@ public class FullNameTest extends JSContact2VCardTest {
                 "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
-                        "\"/name/components\":[ " +
+                        "\"name/components\":[ " +
                         "{ \"value\":\"Masahito\", \"type\": \"personal\" }," +
                         "{ \"value\":\"Okubo\", \"type\": \"surname\" }" +
                         "]" +

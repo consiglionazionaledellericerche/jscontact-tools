@@ -29,12 +29,12 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the PersonalInformation type as defined in section 2.6.2 of [draft-ietf-jmap-jscontact].
+ * Class mapping the PersonalInformation type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.2">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","label","value","level"})
+@JsonPropertyOrder({"@type","type","value","level","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -50,13 +50,13 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
 
     PersonalInformationType type;
 
-    String label;
-
     @NotNull(message = "value is missing in PersonalInformation")
     @NonNull
     String value;
 
     PersonalInformationLevel level;
+
+    String label;
 
     @JsonIgnore
     Integer index;

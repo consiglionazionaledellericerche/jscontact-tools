@@ -32,7 +32,7 @@ public class ResourceTest extends AbstractTest {
     @Test
     public void testValidResource() {
 
-        Resource online = Resource.builder()
+        Resource resource = Resource.builder()
                 .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.USERNAME)
                 .resource("mario-loffredo")
@@ -40,7 +40,7 @@ public class ResourceTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .online(new HashMap<String,Resource>(){{ put("XMPP-1", online);}})
+                .resources(new HashMap<String,Resource>(){{ put("XMPP-1", resource);}})
                 .build();
 
         assertTrue("testValidResource", jsCard.isValid());
@@ -60,7 +60,7 @@ public class ResourceTest extends AbstractTest {
     @Test
     public void testInvalidResourceUri() {
 
-        Resource online = Resource.builder()
+        Resource resource = Resource.builder()
                 .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.URI)
                 .resource(" ")
@@ -68,7 +68,7 @@ public class ResourceTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .online(new HashMap<String,Resource>(){{ put("URI-1", online);}})
+                .resources(new HashMap<String,Resource>(){{ put("URI-1", resource);}})
                 .build();
 
         assertTrue("testInvalidResourceUri-1", !jsCard.isValid());

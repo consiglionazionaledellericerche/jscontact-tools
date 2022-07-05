@@ -22,12 +22,12 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Phone type as defined in section 2.3.2 of [draft-ietf-jmap-jscontact].
+ * Class mapping the Phone type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.2">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","phone","features","contexts","label","pref"})
+@JsonPropertyOrder({"@type","phone","features","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -59,11 +59,11 @@ public class Phone implements IdMapValue, Serializable, HasContext {
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    String label;
-
     @Min(value=1, message = "invalid pref in Phone - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Phone - value must be less or equal than 100")
     Integer pref;
+
+    String label;
 
     private boolean asFeature(PhoneFeature feature) { return features != null && features.containsKey(feature); }
     /**

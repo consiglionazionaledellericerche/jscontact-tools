@@ -40,7 +40,7 @@ public class TitlesTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\" : {" +
                    "\"it\" : { " +
-                      "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
+                      "\"titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
                    "}" +
                 "}" +
                 "}";
@@ -73,7 +73,7 @@ public class TitlesTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\" : {" +
                     "\"it\" : { " +
-                        "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
+                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
                     "}" +
                 "}" +
                 "}";
@@ -109,8 +109,8 @@ public class TitlesTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\" : {" +
                     "\"it\" : { " +
-                        "\"/titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" }, " +
-                        "\"/titles/TITLE-2\": { \"@type\":\"Title\",\"title\": \"Direttore Area IETF\" } " +
+                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" }, " +
+                        "\"titles/TITLE-2\": { \"@type\":\"Title\",\"title\": \"Direttore Area IETF\" } " +
                     "}" +
                 "}" +
                 "}";

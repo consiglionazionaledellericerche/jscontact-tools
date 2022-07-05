@@ -31,9 +31,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Relation type as defined in section 2.1.7 of [draft-ietf-jmap-jscontact].
+ * Class mapping the Relation type as defined in section 2.1.7 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.1.7">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.1.7">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","relation"})

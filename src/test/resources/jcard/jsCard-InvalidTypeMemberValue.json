@@ -52,7 +52,7 @@
       "email": "joe.user@example.com"
     }
   },
-  "online": {
+  "resources": {
     "KEY-1": {
       "@type" : "Resource",
       "contexts": {

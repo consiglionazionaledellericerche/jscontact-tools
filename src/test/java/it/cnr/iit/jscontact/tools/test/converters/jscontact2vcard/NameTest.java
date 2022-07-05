@@ -81,7 +81,7 @@ public class NameTest extends JSContact2VCardTest {
                 "\"nickNames\":[ \"Johnny\", \"Joe\" ], " +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                          "\"/nickNames\" : [ \"Giovanni\", \"Giò\" ]" +
+                          "\"nickNames\" : [ \"Giovanni\", \"Giò\" ]" +
                     "}" +
                 "}" +
                 "}";
@@ -124,7 +124,7 @@ public class NameTest extends JSContact2VCardTest {
                 "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
-                        "\"/name/components\":[ " +
+                        "\"name/components\":[ " +
                             "{ \"@type\":\"NameComponent\", \"value\":\"Masahito\", \"type\": \"personal\" }," +
                             "{ \"@type\":\"NameComponent\", \"value\":\"Okubo\", \"type\": \"surname\" }" +
                         "]" +

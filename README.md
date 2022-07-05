@@ -11,14 +11,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.9.0</version>
+		  <version>0.10.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.9.0'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.10.0'
 ```
 
 # Features
@@ -289,15 +289,14 @@ The conversion is executed according to the following rules:
 13. Regardless of their positions inside the vCard, properties mapped as online Resource objects appear in the following order:
 
     1. SOURCE
-    2. IMPP
-    3. LOGO
-    4. SOUND
-    5. URL
-    6. KEY
-    7. FBURL
-    8. CALURI
-    9. ORG-DIRECTORY
-    10. CONTACT-URI
+    2. LOGO
+    3. SOUND
+    4. URL
+    5. KEY
+    6. FBURL
+    7. CALURI
+    8. ORG-DIRECTORY
+    9. CONTACT-URI
 
 14. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 

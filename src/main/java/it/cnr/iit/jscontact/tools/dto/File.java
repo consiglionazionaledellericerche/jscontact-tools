@@ -13,12 +13,12 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the File type as defined in section 2.3.4 of [draft-ietf-jmap-jscontact].
+ * Class mapping the File type as defined in section 2.3.6 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.4">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.6">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","href","mediaType","label","size","pref"})
+@JsonPropertyOrder({"@type","href","mediaType","size","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -38,13 +38,13 @@ public class File implements IdMapValue, Serializable {
 
     String mediaType;
 
-    String label;
-
     @Min(value=0, message = "invalid size in File - value must be greater or equal than 0")
     int size;
 
     @Min(value=1, message = "invalid pref in File - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in File - value must be less or equal than 100")
     Integer pref;
+
+    String label;
 
 }

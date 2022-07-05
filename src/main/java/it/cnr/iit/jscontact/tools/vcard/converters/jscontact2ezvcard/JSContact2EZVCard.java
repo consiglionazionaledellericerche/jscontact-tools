@@ -717,6 +717,15 @@ public class JSContact2EZVCard extends AbstractConverter {
         return photo;
     }
 
+    private static Impp getImpp(OnlineService onlineService) {
+
+        if (onlineService.getUri() == null)
+            return null;
+
+        Impp impp = new Impp(onlineService.getUri());
+        impp.setPref(onlineService.getPref());
+        return impp;
+    }
 
     private static List<CalendarRequestUri> getCalendarRequestUris(Scheduling s, Integer pref) {
 
@@ -781,6 +790,17 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
+    private static void fillOnlineServices(VCard vcard, Card jsCard) {
+
+        if (jsCard.getOnlineServices() == null)
+            return;
+
+        for(OnlineService onlineService : jsCard.getOnlineServices().values()) {
+            Impp impp = getImpp(onlineService);
+            if (impp == null) continue;
+            vcard.getImpps().add(impp);
+        }
+    }
 
     private static void fillScheduling(VCard vcard, Card jsCard) {
 
@@ -794,12 +814,12 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillOnlines(VCard vcard, Card jsCard) {
+    private static void fillResources(VCard vcard, Card jsCard) {
 
-        if (jsCard.getOnline() == null)
+        if (jsCard.getResources() == null)
             return;
 
-        for (Resource resource : jsCard.getOnline().values()) {
+        for (Resource resource : jsCard.getResources().values()) {
 
             switch(resource.getType()) {
                 case SOUND:
@@ -825,13 +845,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                     break;
                 case ORG_DIRECTORY:
                     vcard.getOrgDirectories().add(getUriProperty(OrgDirectory.class,resource));
-                    break;
-                case USERNAME:
-                    if (resource.getLabel().equals("XMPP")) {
-                        Impp impp = new Impp(resource.getResource());
-                        fillVCardProperty(impp, resource);
-                        vcard.getImpps().add(impp);
-                    }
                     break;
                 case CONTACT_URI:
                     RawProperty rp = new RawProperty("CONTACT-URI",resource.getResource());
@@ -1094,14 +1107,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
-     * JSContact objects are defined in draft-ietf-jmap-jscontact.
-     * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     * JSContact objects are defined in draft-ietf-calext-jscontact.
+     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
      * @param jsContact a JSContact object (Card or CardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
     protected VCard convert(JSContact jsContact) {
 
@@ -1136,7 +1149,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillEmails(vCard, jsCard);
         fillPhotos(vCard, jsCard);
         fillScheduling(vCard,jsCard);
-        fillOnlines(vCard, jsCard);
+        fillOnlineServices(vCard, jsCard);
+        fillResources(vCard, jsCard);
         fillTitles(vCard, jsCard);
         fillOrganizations(vCard, jsCard);
         fillCategories(vCard, jsCard);
@@ -1150,14 +1164,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a list of JSContact objects into a a list of vCard v4.0 instances [RFC6350].
-     * JSContact is defined in draft-ietf-jmap-jscontact.
-     * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     * JSContact is defined in draft-ietf-calext-jscontact.
+     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      * @param jsContacts a list of JSContact objects
      * @return a list of instances of the ez-vcard library VCard class
      * @throws CardException if one of JSContact objects is not valid
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
     protected List<VCard> convert(JSContact... jsContacts) throws CardException {
 
@@ -1177,15 +1191,15 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a JSON array of JSContact objects into a list of vCard v4.0 instances [RFC6350].
-     * JSContact is defined in draft-ietf-jmap-jscontact.
-     * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     * JSContact is defined in draft-ietf-calext-jscontact.
+     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      * @param json a JSON array of JSContact objects
      * @return a list of instances of the ez-vcard library VCard class
      * @throws CardException if one of JSContact objects is not valid
      * @throws JsonProcessingException if json cannot be processed
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
     public List<VCard> convert(String json) throws CardException, JsonProcessingException {
 

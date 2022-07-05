@@ -32,12 +32,12 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the Anniversary type as defined in section 2.6.1 of [draft-ietf-jmap-jscontact].
+ * Class mapping the Anniversary type as defined in section 2.6.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","label","date","place"})
+@JsonPropertyOrder({"@type","type","date","place","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -55,8 +55,6 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
 
     AnniversaryType type;
 
-    String label;
-
     @NotNull(message = "date is missing in Anniversary")
     @NonNull
     @JsonSerialize(using = AnniversaryDateSerializer.class)
@@ -65,6 +63,8 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
 
     @Valid
     Address place;
+
+    String label;
 
     /**
      * Tests if this anniversary is a birthday. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
