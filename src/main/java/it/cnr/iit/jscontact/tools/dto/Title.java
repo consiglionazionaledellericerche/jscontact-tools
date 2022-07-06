@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -18,11 +19,11 @@ import java.io.Serializable;
  */
 @JsonPropertyOrder({"@type","title","organization"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Title implements IdMapValue, Serializable {
+public class Title extends GroupableObject implements IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Title", message="invalid @type value in Title")

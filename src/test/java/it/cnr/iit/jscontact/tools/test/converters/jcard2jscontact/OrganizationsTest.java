@@ -38,13 +38,13 @@ public class OrganizationsTest extends JCard2JSContactTest {
         assertTrue("testOrganizationsWithAltid1 - 2",jsCard.getOrganizations().size() == 1);
         assertTrue("testOrganizationsWithAltid1 - 3",jsCard.getOrganizations().get("ORG-1").getName().equals("ABC, Inc."));
         assertTrue("testOrganizationsWithAltid1 - 4",jsCard.getLocalizationsPerLanguage("it").size() == 1);
-        assertTrue("testOrganizationsWithAltid1 - 5",jsCard.getLocalization("it","/organizations/ORG-1").get("name").asText().equals("ABC, Spa."));
+        assertTrue("testOrganizationsWithAltid1 - 5",jsCard.getLocalization("it","organizations/ORG-1").get("name").asText().equals("ABC, Spa."));
         assertTrue("testOrganizationsWithAltid1 - 6",jsCard.getOrganizations().get("ORG-1").getUnits() != null);
         assertTrue("testOrganizationsWithAltid1 - 7",jsCard.getOrganizations().get("ORG-1").getUnits().length == 2);
         assertTrue("testOrganizationsWithAltid1 - 8",jsCard.getOrganizations().get("ORG-1").getUnits()[0].equals("North American Division"));
-        assertTrue("testOrganizationsWithAltid1 - 9",jsCard.getLocalization("it","/organizations/ORG-1").get("units").get(0).asText().equals("Divisione Nord America"));
+        assertTrue("testOrganizationsWithAltid1 - 9",jsCard.getLocalization("it","organizations/ORG-1").get("units").get(0).asText().equals("Divisione Nord America"));
         assertTrue("testOrganizationsWithAltid1 - 10",jsCard.getOrganizations().get("ORG-1").getUnits()[1].equals("Marketing"));
-        assertTrue("testOrganizationsWithAltid1 - 11",jsCard.getLocalization("it","/organizations/ORG-1").get("units").get(1).asText().equals("Marketing"));
+        assertTrue("testOrganizationsWithAltid1 - 11",jsCard.getLocalization("it","organizations/ORG-1").get("units").get(1).asText().equals("Marketing"));
     }
 
     @Test
@@ -84,13 +84,13 @@ public class OrganizationsTest extends JCard2JSContactTest {
         assertTrue("testOrganizationsWithAltid2 - 3",jsCard.getOrganizations().get("ORG-1").getName().equals("University of North America"));
         assertTrue("testOrganizationsWithAltid2 - 6",jsCard.getOrganizations().get("ORG-2").getName().equals("ABC, Inc."));
         assertTrue("testOrganizationsWithAltid2 - 7",jsCard.getLocalizationsPerLanguage("it").size() == 1);
-        assertTrue("testOrganizationsWithAltid2 - 8",jsCard.getLocalization("it","/organizations/ORG-2").get("name").asText().equals("ABC, Spa."));
+        assertTrue("testOrganizationsWithAltid2 - 8",jsCard.getLocalization("it","organizations/ORG-2").get("name").asText().equals("ABC, Spa."));
         assertTrue("testOrganizationsWithAltid2 - 9",jsCard.getOrganizations().get("ORG-2").getUnits() != null);
         assertTrue("testOrganizationsWithAltid2 - 10",jsCard.getOrganizations().get("ORG-2").getUnits().length == 2);
         assertTrue("testOrganizationsWithAltid2 - 11",jsCard.getOrganizations().get("ORG-2").getUnits()[0].equals("North American Division"));
-        assertTrue("testOrganizationsWithAltid2 - 12",jsCard.getLocalization("it","/organizations/ORG-2").get("units").get(0).asText().equals("Divisione Nord America"));
+        assertTrue("testOrganizationsWithAltid2 - 12",jsCard.getLocalization("it","organizations/ORG-2").get("units").get(0).asText().equals("Divisione Nord America"));
         assertTrue("testOrganizationsWithAltid2 - 13",jsCard.getOrganizations().get("ORG-2").getUnits()[1].equals("Marketing"));
-        assertTrue("testOrganizationsWithAltid2 - 14",jsCard.getLocalization("it","/organizations/ORG-2").get("units").get(1).asText().equals("Marketing"));
+        assertTrue("testOrganizationsWithAltid2 - 14",jsCard.getLocalization("it","organizations/ORG-2").get("units").get(1).asText().equals("Marketing"));
 
     }
 

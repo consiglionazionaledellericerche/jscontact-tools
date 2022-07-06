@@ -34,13 +34,12 @@ public class ResourceTest extends AbstractTest {
 
         Resource resource = Resource.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .type(ResourceType.USERNAME)
-                .resource("mario-loffredo")
-                .label("GitHub")
+                .resource("mailto:mario.loffredo@iit.cnr.it")
+                .type(ResourceType.CONTACT_URI)
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .resources(new HashMap<String,Resource>(){{ put("XMPP-1", resource);}})
+                .resources(new HashMap<String,Resource>(){{ put("MAILTO-1", resource);}})
                 .build();
 
         assertTrue("testValidResource", jsCard.isValid());

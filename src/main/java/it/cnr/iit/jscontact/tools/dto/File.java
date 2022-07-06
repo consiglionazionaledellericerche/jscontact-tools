@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -20,11 +21,11 @@ import java.io.Serializable;
  */
 @JsonPropertyOrder({"@type","href","mediaType","size","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class File implements IdMapValue, Serializable {
+public class File extends GroupableObject implements IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "File", message="invalid @type value in File")

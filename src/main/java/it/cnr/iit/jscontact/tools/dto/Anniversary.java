@@ -25,6 +25,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -39,7 +40,7 @@ import java.io.Serializable;
  */
 @JsonPropertyOrder({"@type","type","date","place","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

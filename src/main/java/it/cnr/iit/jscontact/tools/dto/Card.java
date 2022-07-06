@@ -342,6 +342,48 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
+     * Adds a property JSONPointer to the members of a group identfied by a group id.
+     *
+     * @param key the group key
+     * @param label the group label
+     * @param propertyJSONPointer the JSONPointer of the property included in the group
+     */
+    public void addPropertyGroup(String key, String label, String propertyJSONPointer) {
+
+        if (propertyGroups == null)
+            propertyGroups = new HashMap<>();
+
+        PropertyGroup propertyGroupPerKey = propertyGroups.get(key);
+        if (propertyGroupPerKey == null) {
+            propertyGroups.put(key, PropertyGroup.builder()
+                    .members(new HashMap<String, Boolean>() {{
+                        put(propertyJSONPointer, Boolean.TRUE);
+                    }})
+                    .label(label)
+                    .build());
+        }
+        else {
+            Map<String, Boolean> map = propertyGroupPerKey.getMembers();
+            map.put(propertyJSONPointer, Boolean.TRUE);
+            propertyGroups.replace(key, PropertyGroup.builder()
+                    .members(map)
+                    .label(label)
+                    .build());
+        }
+    }
+
+    /**
+     * Adds a property JSONPointer to the members of a group identfied by a group id.
+     *
+     * @param key the group key
+     * @param propertyJSONPointer the JSONPointer of the property included in the group
+     */
+    public void addPropertyGroup(String key, String propertyJSONPointer) {
+        addPropertyGroup(key, null, propertyJSONPointer);
+    }
+
+
+    /**
      * Adds a resource to this object.
      *
      * @param id the resource identifier
@@ -737,7 +779,7 @@ public class Card extends JSContact implements Serializable {
         JsonNode root = objectMapper.valueToTree(this);
 
         for (Map.Entry<String,JsonNode> localization : localizationsPerLanguage.entrySet()) {
-            JsonPointer jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute((localization.getKey().startsWith(Character.toString(JsonPointer.SEPARATOR))) ? localization.getKey() : Character.toString(JsonPointer.SEPARATOR) + localization.getKey()));
+            JsonPointer jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute(localization.getKey()));
             JsonNode localizedNode = localization.getValue();
             JsonNode parentNode = root.at(jsonPointer.head());
 

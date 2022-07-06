@@ -25,7 +25,7 @@
   "emails": {},
   "localizations": {
      "zh-Hant-TW": {
-         "/fullName": "台灣固網股份有限公司"
+         "fullName": "台灣固網股份有限公司"
      }
   }
 }

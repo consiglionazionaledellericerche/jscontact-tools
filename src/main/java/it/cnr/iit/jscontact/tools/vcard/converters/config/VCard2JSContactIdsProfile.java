@@ -2,10 +2,7 @@ package it.cnr.iit.jscontact.tools.vcard.converters.config;
 
 import it.cnr.iit.jscontact.tools.dto.ResourceType;
 import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 
 import java.util.List;
 

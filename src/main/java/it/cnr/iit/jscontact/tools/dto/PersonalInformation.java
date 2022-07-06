@@ -23,6 +23,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -36,7 +37,7 @@ import java.io.Serializable;
  */
 @JsonPropertyOrder({"@type","type","value","level","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

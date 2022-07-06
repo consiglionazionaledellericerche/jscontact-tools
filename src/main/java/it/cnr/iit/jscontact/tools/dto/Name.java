@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ import java.io.Serializable;
  */
 @JsonPropertyOrder({"@type","components","locale"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

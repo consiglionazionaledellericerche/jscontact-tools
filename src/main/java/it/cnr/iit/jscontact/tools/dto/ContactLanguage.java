@@ -27,6 +27,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -43,7 +44,7 @@ import java.io.Serializable;
 @JsonPropertyOrder({"@type","context","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NotNullAnyConstraint(fieldNames={"context","pref"}, message = "at least one not null member other than @type is missing in ContactLanguage")
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

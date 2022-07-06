@@ -268,7 +268,7 @@ The conversion is executed according to the following rules:
 9.  Default values for the configuration properties are:
     
     -  `extensionsPrefix = "extension:"`
-    -  `customTimeZonesPrefix = "/tz"`
+    -  `customTimeZonesPrefix = "tz"`
     -  `cardToValidate = true`
     -  `applyAutoIdsProfile = true`
 

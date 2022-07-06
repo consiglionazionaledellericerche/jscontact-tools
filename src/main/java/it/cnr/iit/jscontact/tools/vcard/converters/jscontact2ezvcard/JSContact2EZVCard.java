@@ -208,13 +208,13 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
         }
 
-        if (jsCard.getLocalizationsPerPath("/fullName") != null) {
+        if (jsCard.getLocalizationsPerPath("fullName") != null) {
             List<FormattedName> fns = new ArrayList<>();
             FormattedName fn = getFormattedName(jsCard.getFullName());
             fn.setLanguage(jsCard.getLanguage());
             fns.add(fn);
             vcard.setFormattedName(fn);
-            for (Map.Entry<String,JsonNode> localizations : jsCard.getLocalizationsPerPath("/fullName").entrySet()) {
+            for (Map.Entry<String,JsonNode> localizations : jsCard.getLocalizationsPerPath("fullName").entrySet()) {
                 fn = getFormattedName(localizations.getValue().asText());
                 fn.setLanguage(localizations.getKey());
                 fns.add(fn);
@@ -278,21 +278,21 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static List<StructuredName> getStructuredNames(Card jsCard) {
 
         List<StructuredName> sns = new ArrayList<>();
-        if (jsCard.getLocalizationsPerPath("/name") != null) {
+        if (jsCard.getLocalizationsPerPath("name") != null) {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLanguage());
             sns.add(sn);
-            for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("/name").entrySet()) {
+            for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("name").entrySet()) {
                 sn = getStructuredName(asNameComponentArray(localizations.getValue().get("components")));
                 sn.setLanguage(localizations.getKey());
                 sns.add(sn);
             }
         }
-        else if (jsCard.getLocalizationsPerPath("/name/components") != null) {
+        else if (jsCard.getLocalizationsPerPath("name/components") != null) {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLanguage());
             sns.add(sn);
-            for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("/name/components").entrySet()) {
+            for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("name/components").entrySet()) {
                 sn = getStructuredName(asNameComponentArray(localizations.getValue()));
                 sn.setLanguage(localizations.getKey());
                 sns.add(sn);
@@ -325,7 +325,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         String[] nickNames = jsCard.getNickNames();
 
-        Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/nickNames");
+        Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("nickNames");
         if (localizations == null)
             vcard.setNickname(nickNames);
         else {
@@ -455,8 +455,8 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (isNullStructuredAddress(address) && address.getFullAddress() == null)
                 continue;
 
-            if (jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()+"/fullAddress")==null) {
+            if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
+                jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
                 ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLanguage());
                 vcard.addAddress(addr);
             }
@@ -465,12 +465,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                 ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLanguage());
                 addrs.add(addr);
 
-                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey());
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
                         addrs.add(getAddress(asAddress(localization.getValue()), jsCard.getTimeZones(), localization.getKey()));
                 }
-                localizations = jsCard.getLocalizationsPerPath("/addresses/"+entry.getKey()+"/fullAddress");
+                localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
                         addrs.add(getAddress(Address.builder().fullAddress(localization.getValue().asText()).build(), jsCard.getTimeZones(), localization.getKey()));
@@ -719,11 +719,19 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static Impp getImpp(OnlineService onlineService) {
 
-        if (onlineService.getUri() == null)
-            return null;
+        Impp impp;
+        if (onlineService.getUri() == null) {
+            try {
+                impp = new Impp(onlineService.getService(), onlineService.getUsername());
+            }
+            catch (IllegalArgumentException e) {
+                return null;
+            }
+        } else
+            impp = new Impp(onlineService.getUri());
 
-        Impp impp = new Impp(onlineService.getUri());
         impp.setPref(onlineService.getPref());
+
         return impp;
     }
 
@@ -799,6 +807,12 @@ public class JSContact2EZVCard extends AbstractConverter {
             Impp impp = getImpp(onlineService);
             if (impp == null) continue;
             vcard.getImpps().add(impp);
+            if (!onlineService.hasNoContext()) {
+                String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(onlineService.getContexts().keySet())).toString();
+                if (StringUtils.isNotEmpty(vCardType))
+                    impp.setParameter("TYPE", vCardType);
+            }
+
         }
     }
 
@@ -875,19 +889,19 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Map.Entry<String,Title> entry : jsCard.getTitles().entrySet()) {
 
-            if (jsCard.getLocalizationsPerPath("/titles/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("/titles/"+entry.getKey()+"/title")==null)
+            if (jsCard.getLocalizationsPerPath("titles/"+entry.getKey()) == null &&
+                jsCard.getLocalizationsPerPath("titles/"+entry.getKey()+"/title")==null)
                 vcard.addTitle(getTextProperty(new ezvcard.property.Title(entry.getValue().getTitle()), jsCard.getLanguage()));
             else {
                 List<ezvcard.property.Title> titles = new ArrayList<>();
                 titles.add(getTextProperty(new ezvcard.property.Title(entry.getValue().getTitle()), jsCard.getLanguage()));
 
-                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/titles/"+entry.getKey());
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("titles/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
                         titles.add(getTextProperty(new ezvcard.property.Title(localization.getValue().get("title").asText()), localization.getKey()));
                 }
-                localizations = jsCard.getLocalizationsPerPath("/titles/"+entry.getKey()+"/title");
+                localizations = jsCard.getLocalizationsPerPath("titles/"+entry.getKey()+"/title");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
                         titles.add(getTextProperty(new ezvcard.property.Title(localization.getValue().asText()), localization.getKey()));
@@ -922,8 +936,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Map.Entry<String,Organization> entry : jsCard.getOrganizations().entrySet()) {
 
-            if (jsCard.getLocalizationsPerPath("/organizations/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("/organizations/"+entry.getKey()+"/name")==null)
+            if (jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()) == null &&
+                jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name")==null)
 
                 vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLanguage()));
 
@@ -931,15 +945,15 @@ public class JSContact2EZVCard extends AbstractConverter {
                 List<ezvcard.property.Organization> organizations = new ArrayList<>();
                 organizations.add(getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLanguage()));
 
-                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/organizations/"+entry.getKey());
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
                         organizations.add(getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(localization.getValue().get("name").asText(), JsonNodeUtils.asTextArray(localization.getValue().get("units"))), localization.getKey()));
                 }
-                localizations = jsCard.getLocalizationsPerPath("/organizations/"+entry.getKey()+"/name");
+                localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
-                        JsonNode units = jsCard.getLocalization(localization.getKey(),"/organizations/"+entry.getKey()+"/units");
+                        JsonNode units = jsCard.getLocalization(localization.getKey(),"organizations/"+entry.getKey()+"/units");
                         organizations.add(getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(localization.getValue().get("name").asText(), JsonNodeUtils.asTextArray(units)), localization.getKey()));
                     }
                 }
@@ -953,7 +967,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getNotes() == null)
             return;
 
-        Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("/notes");
+        Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("notes");
         if (localizations == null) {
             for (String note : jsCard.getNotes().split(DelimiterUtils.NEWLINE_DELIMITER))
                 vcard.getNotes().add(getTextProperty(new Note(note), jsCard.getLanguage()));

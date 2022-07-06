@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.NameComponentTypeSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -38,7 +39,7 @@ import java.io.Serializable;
  */
 @JsonPropertyOrder({"@type","type","value"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

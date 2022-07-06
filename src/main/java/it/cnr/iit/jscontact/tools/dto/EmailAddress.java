@@ -11,6 +11,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.*;
 
@@ -25,11 +26,11 @@ import java.util.Map;
  */
 @JsonPropertyOrder({"@type","email","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailAddress implements IdMapValue, Serializable, HasContext {
+public class EmailAddress extends GroupableObject implements IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "EmailAddress", message="invalid @type value in EmailAddress")

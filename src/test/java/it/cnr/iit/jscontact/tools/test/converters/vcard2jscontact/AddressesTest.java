@@ -279,16 +279,16 @@ public class AddressesTest extends VCard2JSContactTest {
         assertTrue("testAddressesValid10 - 7",jsCard.getAddresses().get("ADR-1").getRegion().equals("VA"));
         assertTrue("testAddressesValid10 - 8",jsCard.getAddresses().get("ADR-1").getStreetDetails().equals("54321 Oak St"));
         assertTrue("testAddressesValid10 - 9",jsCard.getAddresses().get("ADR-1").getFullAddress().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid10 - 10",jsCard.getAddresses().get("ADR-1").getTimeZone().equals("/tz1"));
+        assertTrue("testAddressesValid10 - 10",jsCard.getAddresses().get("ADR-1").getTimeZone().equals("tz1"));
         assertTrue("testAddressesValid10 - 11",jsCard.getTimeZones().size() == 1);
-        assertTrue("testAddressesValid10 - 12",jsCard.getTimeZones().get("/tz1").getType().equals("TimeZone"));
-        assertTrue("testAddressesValid10 - 13",jsCard.getTimeZones().get("/tz1").getTzId().equals("TZ-0530"));
-        assertTrue("testAddressesValid10 - 14",jsCard.getTimeZones().get("/tz1").getUpdated() != null);
-        assertTrue("testAddressesValid10 - 15",jsCard.getTimeZones().get("/tz1").getStandard().size() == 1);
-        assertTrue("testAddressesValid10 - 16",jsCard.getTimeZones().get("/tz1").getStandard().get(0).getType().equals("TimeZoneRule"));
-        assertTrue("testAddressesValid10 - 17",jsCard.getTimeZones().get("/tz1").getStandard().get(0).getStart().compareTo(DateUtils.toCalendar(EZVCard2JSContact.CUSTOM_TIME_ZONE_RULE_START))==0);
-        assertTrue("testAddressesValid10 - 18",jsCard.getTimeZones().get("/tz1").getStandard().get(0).getOffsetFrom().equals("-0530"));
-        assertTrue("testAddressesValid10 - 19",jsCard.getTimeZones().get("/tz1").getStandard().get(0).getOffsetTo().equals("-0530"));
+        assertTrue("testAddressesValid10 - 12",jsCard.getTimeZones().get("tz1").getType().equals("TimeZone"));
+        assertTrue("testAddressesValid10 - 13",jsCard.getTimeZones().get("tz1").getTzId().equals("TZ-0530"));
+        assertTrue("testAddressesValid10 - 14",jsCard.getTimeZones().get("tz1").getUpdated() != null);
+        assertTrue("testAddressesValid10 - 15",jsCard.getTimeZones().get("tz1").getStandard().size() == 1);
+        assertTrue("testAddressesValid10 - 16",jsCard.getTimeZones().get("tz1").getStandard().get(0).getType().equals("TimeZoneRule"));
+        assertTrue("testAddressesValid10 - 17",jsCard.getTimeZones().get("tz1").getStandard().get(0).getStart().compareTo(DateUtils.toCalendar(EZVCard2JSContact.CUSTOM_TIME_ZONE_RULE_START))==0);
+        assertTrue("testAddressesValid10 - 18",jsCard.getTimeZones().get("tz1").getStandard().get(0).getOffsetFrom().equals("-0530"));
+        assertTrue("testAddressesValid10 - 19",jsCard.getTimeZones().get("tz1").getStandard().get(0).getOffsetTo().equals("-0530"));
     }
 
 
@@ -320,7 +320,7 @@ public class AddressesTest extends VCard2JSContactTest {
         assertTrue("testAddressesValid11 - 14",jsCard.getAddresses().get("ADR-2").getRegion().equals("VA"));
         assertTrue("testAddressesValid11 - 15",jsCard.getAddresses().get("ADR-2").getStreetDetails().equals("12345 Elm St"));
         assertTrue("testAddressesValid11 - 16",jsCard.getAddresses().get("ADR-2").getFullAddress().equals("12345 Elm St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid11 - 17", jsCard.getLocalization("it","/addresses/ADR-2")!=null);
+        assertTrue("testAddressesValid11 - 17", jsCard.getLocalization("it","addresses/ADR-2")!=null);
 
     }
 
@@ -354,7 +354,7 @@ public class AddressesTest extends VCard2JSContactTest {
         assertTrue("testAddressesValid12 - 14",jsCard.getAddresses().get("ADR-2").getRegion().equals("VA"));
         assertTrue("testAddressesValid12 - 15",jsCard.getAddresses().get("ADR-2").getStreetDetails().equals("12345 Elm St"));
         assertTrue("testAddressesValid12 - 16",jsCard.getAddresses().get("ADR-2").getFullAddress().equals("12345 Elm St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid12 - 17", jsCard.getLocalization("it","/addresses/ADR-2")!=null);
+        assertTrue("testAddressesValid12 - 17", jsCard.getLocalization("it","addresses/ADR-2")!=null);
 
     }
 
@@ -387,7 +387,7 @@ public class AddressesTest extends VCard2JSContactTest {
         assertTrue("testAddressesValid13 - 13",jsCard.getAddresses().get("ADR-2").getLocality().equals("Pisa"));
         assertTrue("testAddressesValid13 - 15",jsCard.getAddresses().get("ADR-2").getStreetDetails().equals("Via Moruzzi,1"));
         assertTrue("testAddressesValid13 - 16",jsCard.getAddresses().get("ADR-2").getFullAddress().equals("Via Moruzzi,1\nPisa\n56124\nItaly"));
-        assertTrue("testAddressesValid13 - 17", jsCard.getLocalization("en","/addresses/ADR-2")!=null);
+        assertTrue("testAddressesValid13 - 17", jsCard.getLocalization("en","addresses/ADR-2")!=null);
 
     }
 }

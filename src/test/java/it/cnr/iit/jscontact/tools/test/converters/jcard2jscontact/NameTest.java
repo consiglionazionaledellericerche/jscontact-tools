@@ -130,9 +130,9 @@ public class NameTest extends JCard2JSContactTest {
         assertTrue("testNameValid4 - 12",jsCard.getNickNames().length == 2);
         assertTrue("testNameValid4 - 13",jsCard.getNickNames()[0].equals("Kid"));
         assertTrue("testNameValid4 - 14",jsCard.getNickNames()[1].equals("Johnny"));
-        assertTrue("testNameValid4 - 15",jsCard.getLocalization("it", "/nickNames").isArray());
-        assertTrue("testNameValid4 - 16", jsCard.getLocalization("it", "/nickNames").get(0).asText().equals("Ragazzo"));
-        assertTrue("testNameValid4 - 17", jsCard.getLocalization("it", "/nickNames").get(1).asText().equals("Giovannino"));
+        assertTrue("testNameValid4 - 15",jsCard.getLocalization("it", "nickNames").isArray());
+        assertTrue("testNameValid4 - 16", jsCard.getLocalization("it", "nickNames").get(0).asText().equals("Ragazzo"));
+        assertTrue("testNameValid4 - 17", jsCard.getLocalization("it", "nickNames").get(1).asText().equals("Giovannino"));
 
     }
 

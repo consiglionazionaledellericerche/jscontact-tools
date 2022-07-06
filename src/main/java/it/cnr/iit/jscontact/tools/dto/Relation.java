@@ -24,6 +24,7 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.RelationDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.RelationSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -38,7 +39,7 @@ import java.util.Map;
  */
 @JsonPropertyOrder({"@type","relation"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

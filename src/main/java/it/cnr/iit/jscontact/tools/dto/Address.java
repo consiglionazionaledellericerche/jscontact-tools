@@ -28,6 +28,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
@@ -48,7 +49,7 @@ import java.util.StringJoiner;
                      "postcode","countryCode","coordinates","timeZone","contexts",
                      "pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

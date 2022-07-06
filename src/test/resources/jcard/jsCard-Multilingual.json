@@ -16,8 +16,8 @@
 },
 "localizations": {
   "en": {
-    "/fullName": "Okubo Masahito",
-    "/titles/TITLE-1": { "@type": "Title",  "title": "Secretary General" }
+    "fullName": "Okubo Masahito",
+    "titles/TITLE-1": { "@type": "Title",  "title": "Secretary General" }
   }
 }
 }

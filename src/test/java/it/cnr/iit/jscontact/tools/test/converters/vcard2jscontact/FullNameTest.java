@@ -53,7 +53,7 @@ public class FullNameTest extends VCard2JSContactTest {
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testFullNameValid2 - 1",jsCard.getFullName().equals("大久保 正仁"));
-        assertTrue("testFullNameValid2 - 2",jsCard.getLocalizations().get("en").get("/fullName").asText().equals("Okubo Masahito"));
+        assertTrue("testFullNameValid2 - 2",jsCard.getLocalizations().get("en").get("fullName").asText().equals("Okubo Masahito"));
 
     }
 
@@ -71,7 +71,7 @@ public class FullNameTest extends VCard2JSContactTest {
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testFullNameValid3 - 1",jsCard.getFullName().equals("Okubo Masahito"));
-        assertTrue("testFullNameValid3 - 2",jsCard.getLocalizations().get("jp").get("/fullName").asText().equals("大久保 正仁"));
+        assertTrue("testFullNameValid3 - 2",jsCard.getLocalizations().get("jp").get("fullName").asText().equals("大久保 正仁"));
 
     }
 }

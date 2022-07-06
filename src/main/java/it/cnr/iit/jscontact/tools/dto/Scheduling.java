@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -19,11 +20,11 @@ import java.util.Map;
  */
 @JsonPropertyOrder({"@type","sendTo","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Scheduling implements IdMapValue, Serializable {
+public class Scheduling extends GroupableObject implements IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Scheduling", message="invalid @type value in Scheduling")

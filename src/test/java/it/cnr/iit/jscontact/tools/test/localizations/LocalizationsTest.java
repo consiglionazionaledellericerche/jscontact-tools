@@ -27,8 +27,8 @@ public class LocalizationsTest {
                 "}," +
                 "\"localizations\":{" +
                     "\"jp\": {" +
-                        "\"/addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"/addresses/ADR-2\" : {\"@type\":\"Address\",\"locality\": \"大阪市\"}" +
+                        "\"addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"addresses/ADR-2\" : {\"@type\":\"Address\",\"locality\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
@@ -61,8 +61,8 @@ public class LocalizationsTest {
                 "}," +
                 "\"localizations\":{" +
                     "\"jp\": {" +
-                        "\"/addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"/addresses/ADR-2\" : {\"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                        "\"addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"addresses/ADR-2\" : {\"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
@@ -89,8 +89,8 @@ public class LocalizationsTest {
                 "}," +
                 "\"localizations\":{" +
                     "\"jp\": {" +
-                        "\"/addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"/addresses/ADR-2\" : {\"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                        "\"addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"addresses/ADR-2\" : {\"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
@@ -98,7 +98,7 @@ public class LocalizationsTest {
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testLocalizations3 - 1", !jsCard.isValid());
-        assertTrue("testLocalizations3 - 2", jsCard.getValidationMessage().replace("\n","").equals("type mismatch of JSON pointer in localizations: /addresses/ADR-2"));
+        assertTrue("testLocalizations3 - 2", jsCard.getValidationMessage().replace("\n","").equals("type mismatch of JSON pointer in localizations: addresses/ADR-2"));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class LocalizationsTest {
                 "}," +
                 "\"localizations\":{" +
                     "\"jp\": {" +
-                        "\"/addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"addresses/ADR-1/locality\" : \"東京\"," +
                         "\"addresses/ADR-1\" : { \"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
@@ -150,9 +150,9 @@ public class LocalizationsTest {
                     "}," +
                     "\"localizations\":{" +
                         "\"uk\": {" +
-                            "\"/fullName\":\"Вася Пупкин\"," +
-                            "\"/organizations/org\": { \"@type\": \"Organization\", \"name\": \"Моя Компания\" }, " +
-                            "\"/addresses/addr\":{" +
+                            "\"fullName\":\"Вася Пупкин\"," +
+                            "\"organizations/org\": { \"@type\": \"Organization\", \"name\": \"Моя Компания\" }, " +
+                            "\"addresses/addr\":{" +
                                 "\"@type\":\"Address\"," +
                                 "\"street\": [{\"@type\": \"StreetComponent\",\"type\": \"name\",\"value\": \"1, Улица\"}, " +
                                              "{\"@type\": \"StreetComponent\",\"type\": \"postOfficeBox\",\"value\":\"01001\"} " +

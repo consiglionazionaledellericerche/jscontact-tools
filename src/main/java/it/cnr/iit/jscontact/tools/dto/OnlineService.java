@@ -30,6 +30,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -47,7 +48,7 @@ import java.util.Map;
 @OnlineServiceConstraint
 @JsonPropertyOrder({"@type","service","uri","username","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

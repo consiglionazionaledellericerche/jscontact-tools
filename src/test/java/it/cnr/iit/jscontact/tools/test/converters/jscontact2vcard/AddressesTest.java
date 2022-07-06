@@ -323,11 +323,11 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"postcode\":\"20190\"," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"," +
-                        "\"timeZone\":\"/tz1\"" +
+                        "\"timeZone\":\"tz1\"" +
                     "}" +
                 "}," +
                 "\"timeZones\": {" +
-                    "\"/tz1\": {" +
+                    "\"tz1\": {" +
                         "\"@type\": \"TimeZone\"," +
                         "\"tzId\": \"TZ-0530\"," +
                         "\"updated\": \"2021-06-07T14:24:45Z\"," +

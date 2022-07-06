@@ -33,7 +33,7 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private String extensionsPrefix = "extension:";
     @Builder.Default
-    private String customTimeZonesPrefix = "/tz";
+    private String customTimeZonesPrefix = "tz";
     @Builder.Default
     private boolean cardToValidate = true;
     @Builder.Default

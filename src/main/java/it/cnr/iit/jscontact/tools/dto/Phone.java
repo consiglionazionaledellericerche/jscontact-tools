@@ -13,6 +13,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.PhoneFeaturesSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -29,11 +30,11 @@ import java.util.Map;
  */
 @JsonPropertyOrder({"@type","phone","features","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Phone implements IdMapValue, Serializable, HasContext {
+public class Phone extends GroupableObject implements IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "Phone", message="invalid @type value in Phone")

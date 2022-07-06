@@ -203,11 +203,11 @@ public class JCardTest extends JCard2JSContactTest {
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Multilingual.json"), Charset.forName("UTF-8"));
         Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
         assertTrue("testCompleteJCard2 - 1", jsCard.getFullName().equals("大久保 正仁"));
-        assertTrue("testCompleteJCard2 - 3", jsCard.getLocalizations().get("en").get("/fullName").asText().equals("Okubo Masahito"));
+        assertTrue("testCompleteJCard2 - 3", jsCard.getLocalizations().get("en").get("fullName").asText().equals("Okubo Masahito"));
         assertTrue("testCompleteJCard2 - 4", jsCard.getKind().isIndividual());
         assertTrue("testCompleteJCard2 - 5", jsCard.getTitles().size() == 1);
         assertTrue("testCompleteJCard2 - 6", jsCard.getTitles().get("TITLE-1").getTitle().equals("事務局長"));
-        assertTrue("testCompleteJCard2 - 8", jsCard.getLocalization("en","/titles/TITLE-1").get("title").asText().equals("Secretary General"));
+        assertTrue("testCompleteJCard2 - 8", jsCard.getLocalization("en","titles/TITLE-1").get("title").asText().equals("Secretary General"));
         assertTrue("testCompleteJCard2 - 9", jsCard.getKind().isIndividual());
         assertTrue("testCompleteJCard2 - 10", jsCard.getPreferredContactLanguages().size()==2);
         assertTrue("testCompleteJCard2 - 11", jsCard.getPreferredContactLanguages().get("jp")[0].getPref() == 1);
@@ -221,7 +221,7 @@ public class JCardTest extends JCard2JSContactTest {
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Unstructured.json"), Charset.forName("UTF-8"));
         Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
         assertTrue("testCompleteJCard3 - 1", jsCard.getFullName().equals("台灣固網股份有限公司"));
-        assertTrue("testCompleteJCard3 - 3", jsCard.getLocalizations().get("en").get("/fullName").asText().equals("Taiwan Fixed Network CO.,LTD."));
+        assertTrue("testCompleteJCard3 - 3", jsCard.getLocalizations().get("en").get("fullName").asText().equals("Taiwan Fixed Network CO.,LTD."));
         assertTrue("testCompleteJCard3 - 4", jsCard.getKind().isOrg());
         assertTrue("testCompleteJCard3 - 5", jsCard.getAddresses().size() == 1);
         assertTrue("testCompleteJCard3 - 6", jsCard.getAddresses().get("ADR-1").getFullAddress().equals("8F., No.172-1, Sec.2, Ji-Lung Rd,"));
