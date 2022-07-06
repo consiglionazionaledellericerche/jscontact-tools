@@ -256,7 +256,6 @@ The conversion is executed according to the following rules:
     The gender identity information is mapped to the the Card property named `ietf.org:rfc6350:GENDER`
     
 6.  An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350:<vCard Property Name>`. The following unmatched parameters are considered:
-    GROUP
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
@@ -397,7 +396,6 @@ All the methods take in input a list of JSContact top most objects and can raise
     If a SpeakToAs object includes only the "pronouns" property, it is mapped to the VCARD `X-JSCONTACT-PRONOUNS` extension property. 
     
 5.  A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>:<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
-    GROUP
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
