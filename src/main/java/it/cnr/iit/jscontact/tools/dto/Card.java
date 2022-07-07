@@ -49,7 +49,7 @@ import java.util.*;
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({
-        "@type","uid","prodId","created","updated","kind","relatedTo","language",
+        "@type","uid","prodId","created","updated","kind","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
         "emails","phones","onlineServices","resources","scheduling","photos","preferredContactMethod","preferredContactLanguages",
         "addresses","localizations",
@@ -90,7 +90,8 @@ public class Card extends JSContact implements Serializable {
     @RelatedToConstraint
     Map<String,Relation> relatedTo;
 
-    String language;
+    @LanguageTagConstraint
+    String locale;
 
     //Name and Organization properties
     @Valid
@@ -793,7 +794,7 @@ public class Card extends JSContact implements Serializable {
         }
 
         Card localizedCard = objectMapper.convertValue(root, Card.class);
-        localizedCard.setLanguage(language);
+        localizedCard.setLocale(language);
         localizedCard.setLocalizations(null);
 
         return localizedCard;

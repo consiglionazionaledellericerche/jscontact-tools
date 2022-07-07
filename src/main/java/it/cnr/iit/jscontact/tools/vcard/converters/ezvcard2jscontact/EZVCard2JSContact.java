@@ -507,7 +507,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             fullNames.add(LocalizedString.builder()
                                          .value(getValue(fn))
                                          .language(fn.getLanguage())
-                                         .preference(isDefaultLanguage(fn.getLanguage(), jsCard.getLanguage()) ? HIGHEST_PREFERENCE : fn.getPref())
+                                         .preference(isDefaultLanguage(fn.getLanguage(), jsCard.getLocale()) ? HIGHEST_PREFERENCE : fn.getPref())
                                          .build()
                          );
         }
@@ -651,7 +651,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                                  .country(StringUtils.defaultIfEmpty(addr.getCountry(), null))
                                                                  .altid(addr.getAltId())
                                                                  .language(addr.getLanguage())
-                                                                 .isDefaultLanguage(isDefaultLanguage(addr.getLanguage(), jsCard.getLanguage()))
+                                                                 .isDefaultLanguage(isDefaultLanguage(addr.getLanguage(), jsCard.getLocale()))
                                                                  .build()
             );
         }
@@ -1307,7 +1307,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.setKind(getKind(vCard.getKind()));
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(getUpdated(vCard.getRevision()));
-        jsCard.setLanguage(config.getDefaultLanguage());
+        jsCard.setLocale(config.getDefaultLanguage());
         fillGender(vCard, jsCard);
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
