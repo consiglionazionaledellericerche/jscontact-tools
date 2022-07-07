@@ -68,7 +68,7 @@ public class NameTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
-                "\"language\": \"en\"," +
+                "\"locale\": \"en\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
@@ -115,7 +115,7 @@ public class NameTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"language\": \"jp\"," +
+                "\"locale\": \"jp\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
                         "{ \"@type\":\"NameComponent\",\"value\":\"正仁\", \"type\": \"personal\" }," +

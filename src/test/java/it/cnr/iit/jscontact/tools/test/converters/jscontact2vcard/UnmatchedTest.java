@@ -107,19 +107,4 @@ public class UnmatchedTest extends JSContact2VCardTest {
 
     }
 
-    @Test
-    public void testUnmatchedParameter2() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"test\"," +
-                "\"ietf.org:rfc6350:FN:GROUP\":\"contact\"" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testUnmatchedParameter2 - 1",vcard.getFormattedName().getValue().equals("test"));
-        assertTrue("testUnmatchedParameter2 - 2",vcard.getFormattedName().getGroup().equals("contact"));
-
-    }
-
 }

@@ -61,6 +61,20 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     protected JSContact2VCardConfig config;
 
+
+    private static void addGroup (VCardProperty property, String propertyJSONPointer, Card jsCard) {
+
+        if (jsCard.getPropertyGroups() == null)
+            return;
+
+        for (Map.Entry<String,PropertyGroup> entry : jsCard.getPropertyGroups().entrySet()) {
+
+            if (entry.getValue().getMembers().keySet().contains(propertyJSONPointer))
+                property.setGroup(entry.getKey());
+        }
+    }
+
+
     private static Kind getKind(KindType kind) {
 
         if (kind == null)
@@ -458,11 +472,13 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
                 ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLocale());
+                addGroup(addr, "addresses/"+entry.getKey(), jsCard);
                 vcard.addAddress(addr);
             }
             else {
                 List<ezvcard.property.Address> addrs = new ArrayList<>();
                 ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLocale());
+                addGroup(addr, "addresses/"+entry.getKey(), jsCard);
                 addrs.add(addr);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey());

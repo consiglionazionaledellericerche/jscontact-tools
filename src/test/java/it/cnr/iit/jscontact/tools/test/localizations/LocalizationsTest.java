@@ -37,7 +37,7 @@ public class LocalizationsTest {
         Card jsCard = objectMapper.readValue(json, Card.class);
         Card localizedCard = jsCard.getLocalizedVersion("jp");
 
-        assertTrue("testLocalizations1 - 1", localizedCard.getLanguage().equals("jp"));
+        assertTrue("testLocalizations1 - 1", localizedCard.getLocale().equals("jp"));
         assertTrue("testLocalizations1 - 2", localizedCard.getLocalizations() == null);
         assertTrue("testLocalizations1 - 3", localizedCard.getAddresses().size() == 2);
         assertTrue("testLocalizations1 - 4", localizedCard.getAddresses().get("ADR-1").getLocality().equals("東京"));
