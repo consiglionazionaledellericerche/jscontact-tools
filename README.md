@@ -1,7 +1,9 @@
 # jscontact-tools
 
 Java tools for **JSContact** [draft-ietf-calext-jscontact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/) creation, validation, serialization/deserialization and conversion from and to vCard 4.0 [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
+Conversion from JSContact to vCard formats and viceversa is based on the rules described in [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 Validation and conversion of vCard formats leverage the features provided by [ez-vcard](https://github.com/mangstadt/ez-vcard) Java library.
+
 
 # Maven/Gradle
 
@@ -238,7 +240,7 @@ The conversion is executed according to the following rules:
 
 2.  A card (i.e. vCard, xCard, jCard) is converted into a CardGroup object if it includes a MEMBER property, otherwise into a Card object.
 
-3.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) are matched.
+3.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-jscontact-vcard-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard-extensions/) are matched.
 
 4.  An unmatched property is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350`. The following unmatched properties are considered:    
     CLIENTPIDMAP
@@ -609,8 +611,9 @@ This jscontact-tools version is compliant with JSContact specification version -
 <a name="drafts"></a>
 ### JSContact I-Ds
 
-*   [draft-ietf-calext-jscontact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/)
-*   [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
+* [draft-ietf-calext-jscontact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/)
+* [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
+* [draft-ietf-calext-jscontact-vcard-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard-extensions/)
 
 
 # Build Instructions
