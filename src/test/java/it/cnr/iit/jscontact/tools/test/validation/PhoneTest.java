@@ -43,4 +43,15 @@ public class PhoneTest extends AbstractTest {
         assertTrue("testValidPhone", jsCard.isValid());
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testInvalidPhone() {
+
+       //missing phone
+        Phone phone = Phone.builder()
+                .context(Context.work(), Boolean.TRUE)
+                .context(Context.private_(), Boolean.TRUE)
+                .feature(PhoneFeature.voice(), Boolean.TRUE)
+                .build();
+    }
+
 }
