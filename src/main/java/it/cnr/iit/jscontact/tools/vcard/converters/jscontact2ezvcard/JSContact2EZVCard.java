@@ -109,7 +109,6 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         if (jsCard.getSpeakToAs().getGrammaticalGender() != null) {
 
-
             if (jsCard.getSpeakToAs().isMale())
                 vCard.setGender(new Gender(Gender.MALE));
             else if (jsCard.getSpeakToAs().isFemale())
@@ -126,8 +125,6 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         }
 
-        if (jsCard.getSpeakToAs().getPronouns() != null)
-            vCard.addExtendedProperty("X-JSCONTACT-PRONOUNS", jsCard.getSpeakToAs().getPronouns());
     }
 
     private static void fillMembers(VCard vcard, CardGroup jsCardGroup) {
@@ -1117,16 +1114,25 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillUnmatchedElments(VCard vCard, Card jsCard) {
+    private static void fillExtendedElements(VCard vCard, Card jsCard) {
 
         if (jsCard.getCreated() != null) {
-            vCard.addExtendedProperty("X-JSCONTACT-CREATED", VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsCard.getCreated().getTime()));
+            vCard.addExtendedProperty("CREATED", VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsCard.getCreated().getTime()));
         }
+
+        if (jsCard.getLocale() != null) {
+            vCard.addExtendedProperty("LOCALE", jsCard.getLocale());
+        }
+
+        if (jsCard.getSpeakToAs()!= null && jsCard.getSpeakToAs().getPronouns() != null)
+            vCard.addExtendedProperty("PRONOUNS", jsCard.getSpeakToAs().getPronouns());
+
+    }
+    private static void fillUnmatchedElments(VCard vCard, Card jsCard) {
 
         if (jsCard.getPreferredContactMethod() != null) {
             vCard.addExtendedProperty("X-JSCONTACT-PREFERREDCONTACTMETHOD", jsCard.getPreferredContactMethod().getValue());
         }
-
     }
 
     /**
@@ -1180,6 +1186,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillCategories(vCard, jsCard);
         fillNotes(vCard, jsCard);
         fillRelations(vCard, jsCard);
+        fillExtendedElements(vCard, jsCard);
         fillExtensions(vCard, jsCard);
         fillUnmatchedElments(vCard, jsCard);
 

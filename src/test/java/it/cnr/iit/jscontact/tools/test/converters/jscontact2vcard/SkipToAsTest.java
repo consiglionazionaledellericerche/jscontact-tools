@@ -69,7 +69,7 @@ public class SkipToAsTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testSkipToAs3 - 1",vcard.getGender() == null);
-        assertTrue("testSkipToAs3 - 2",vcard.getExtendedProperty("X-JSCONTACT-PRONOUNS").getValue().equals("he/him"));
+        assertTrue("testSkipToAs3 - 2",vcard.getExtendedProperty("PRONOUNS").getValue().equals("he/him"));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class SkipToAsTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testSkipToAs4 - 1",vcard.getGender().isNone());
         assertTrue("testSkipToAs3 - 2",vcard.getGender().getText().equals("inanimate"));
-        assertTrue("testSkipToAs4 - 3",vcard.getExtendedProperty("X-JSCONTACT-PRONOUNS").getValue().equals("it"));
+        assertTrue("testSkipToAs4 - 3",vcard.getExtendedProperty("PRONOUNS").getValue().equals("it"));
     }
 
 }

@@ -478,25 +478,28 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private void fillGender(VCard vCard, Card jsCard) {
+    private void fillSpeakToAs(VCard vCard, Card jsCard) {
 
-        if (vCard.getGender() == null)
+        if (vCard.getGender() == null && vCard.getExtendedProperty("GRAMMATICAL-GENDER") == null)
             return;
 
-        if (vCard.getGender().isMale())
-            jsCard.setSpeakToAs(SpeakToAs.male());
-        else if (vCard.getGender().isFemale())
-            jsCard.setSpeakToAs(SpeakToAs.female());
-        else if (vCard.getGender().isOther())
-            jsCard.setSpeakToAs(SpeakToAs.animate());
-        else if (vCard.getGender().isNone())
-            jsCard.setSpeakToAs(SpeakToAs.neuter());
-        else if (vCard.getGender().isUnknown())
-            return;
+        if (vCard.getGender() != null) {
+            if (vCard.getGender().isMale())
+                jsCard.setSpeakToAs(SpeakToAs.male());
+            else if (vCard.getGender().isFemale())
+                jsCard.setSpeakToAs(SpeakToAs.female());
+            else if (vCard.getGender().isOther())
+                jsCard.setSpeakToAs(SpeakToAs.animate());
+            else if (vCard.getGender().isNone())
+                jsCard.setSpeakToAs(SpeakToAs.neuter());
+            else if (vCard.getGender().isUnknown())
+                return;
 
-        if (vCard.getGender().getText() != null)
-            jsCard.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vCard.getGender().getText());
-
+            if (vCard.getGender().getText() != null)
+                jsCard.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vCard.getGender().getText());
+        } else {
+            jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(GrammaticalGenderType.valueOf(vCard.getExtendedProperty("GRAMMATICAL-GENDER").getValue().toLowerCase())).build());
+        }
     }
 
     private static void fillFormattedNames(VCard vcard, Card jsCard) {
@@ -1311,7 +1314,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(getUpdated(vCard.getRevision()));
         jsCard.setLocale(config.getDefaultLanguage());
-        fillGender(vCard, jsCard);
+        fillSpeakToAs(vCard, jsCard);
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
         fillNickNames(vCard, jsCard);

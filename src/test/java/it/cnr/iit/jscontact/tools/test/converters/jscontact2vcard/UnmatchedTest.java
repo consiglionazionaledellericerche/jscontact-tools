@@ -53,7 +53,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testCreated - 1",vcard.getExtendedProperties().size() == 1);
-        assertTrue("testCreated - 2",vcard.getExtendedProperties().get(0).getPropertyName().equals("X-JSCONTACT-CREATED"));
+        assertTrue("testCreated - 2",vcard.getExtendedProperties().get(0).getPropertyName().equals("CREATED"));
         assertTrue("testCreated - 3",vcard.getExtendedProperties().get(0).getValue().equals("20101010T101010Z"));
     }
 
