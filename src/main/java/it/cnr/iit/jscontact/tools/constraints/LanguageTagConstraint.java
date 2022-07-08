@@ -27,7 +27,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface LanguageTagConstraint {
 
-    String message() default "invalid Language Tag";
+    String message() default "invalid language tag";
 
     Class<?>[] groups() default { };
 
