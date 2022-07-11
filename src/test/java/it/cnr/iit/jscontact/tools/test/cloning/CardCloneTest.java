@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import static org.junit.Assert.assertTrue;
@@ -32,7 +33,7 @@ public class CardCloneTest {
     @Test
     public void testClone1() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testClone1", Objects.deepEquals(jsCard, jsCard.clone()));
@@ -42,7 +43,7 @@ public class CardCloneTest {
     @Test
     public void testClone2() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testClone2", Objects.deepEquals(jsCard, jsCard.clone()));
@@ -52,7 +53,7 @@ public class CardCloneTest {
     @Test
     public void testClone3() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testClone3", Objects.deepEquals(jsCard, jsCard.clone()));

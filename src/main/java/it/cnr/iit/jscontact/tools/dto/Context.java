@@ -90,7 +90,7 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
     public static Context ext(String extValue) { return Context.builder().extValue(extValue).build(); }
 
     /**
-     * Returns the list of enum values corresponding to those ones whose type is known in a given collection of contexts.
+     * Returns the list of enum values corresponding to those whose type is known in a given collection of contexts.
      *
      * @param contexts the list of contexts
      * @return list of enum values corresponding to those contexts whose type is known

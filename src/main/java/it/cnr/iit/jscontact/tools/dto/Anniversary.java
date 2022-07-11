@@ -86,7 +86,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     public boolean isDeath() { return type == AnniversaryType.DEATH; }
 
     /**
-     * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property [as defined in section 6.2.6 of [RFC6350].
+     * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
      *
      * @return true if this anniversary is a date of marriage, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
@@ -128,7 +128,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * Returns a date of marriage, or equivalent, anniversary. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
      *
      * @param date the marriage date in text format
-     * @return a date of marriage anniversary
+     * @return a date of wedding anniversary
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     public static Anniversary marriage(String date) { return anniversary(null, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}

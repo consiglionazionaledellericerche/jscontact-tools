@@ -44,7 +44,7 @@ public class Scheduling extends GroupableObject implements IdMapValue, Serializa
 
 
     /**
-     * Adds a a member to this object.
+     * Adds a member to this object.
      *
      * @param key the key of the new entry in the "sendTo" map
      * @param value the value of the new entry in the "sendTo" map

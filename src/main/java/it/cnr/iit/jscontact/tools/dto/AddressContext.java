@@ -116,7 +116,7 @@ public class AddressContext extends ExtensibleEnum<AddressContextEnum> implement
     public static AddressContext ext(String extValue) { return AddressContext.builder().extValue(extValue).build(); }
 
     /**
-     * Returns the list of enum values corresponding to those ones whose type is known in a given collection of address contexts.
+     * Returns the list of enum values corresponding to those whose type is known in a given collection of address contexts.
      *
      * @param contexts the list of address contexts
      * @return list of enum values corresponding to those address contexts whose type is known

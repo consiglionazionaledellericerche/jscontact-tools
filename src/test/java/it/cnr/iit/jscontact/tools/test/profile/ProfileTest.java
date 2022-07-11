@@ -27,6 +27,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertTrue;
 
@@ -42,7 +43,7 @@ public class ProfileTest extends JCard2JSContactTest {
                                                                                       .idsProfileToApply(VCard2JSContactIdsProfile.RDAP_PROFILE)
                                                                                       .build())
                                                          .build();
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), StandardCharsets.UTF_8);
         Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
         assertTrue("testRDAPProfile - 1", jsCard.getFullName().equals("Joe User"));
         assertTrue("testRDAPProfile - 2", jsCard.getKind().isIndividual());

@@ -75,9 +75,9 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
     }
 
     /**
-     * Tests if this personal information is an hobby.
+     * Tests if this personal information is a hobby.
      *
-     * @return true if this personal information is an hobby, false otherwise
+     * @return true if this personal information is a hobby, false otherwise
      */
     public boolean asHobby() { return type == PersonalInformationType.HOBBY; }
     /**

@@ -155,7 +155,7 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
     public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(extValue).build(); }
 
     /**
-     * Returns the list of enum values corresponding to those ones whose type is known in a given collection of phone features.
+     * Returns the list of enum values corresponding to those whose type is known in a given collection of phone features.
      *
      * @param features the list of phone features
      * @return list of enum values corresponding to those features whose type is known

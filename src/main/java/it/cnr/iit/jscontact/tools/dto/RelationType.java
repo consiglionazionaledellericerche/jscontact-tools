@@ -246,15 +246,15 @@ public class RelationType extends ExtensibleEnum<RelationEnum> implements Serial
      */
     public static RelationType date() { return rfcRelation(RelationEnum.DATE);}
     /**
-     * Returns a "emergency" relation type.
+     * Returns "emergency" as relation type.
      *
-     * @return a "emergency" relation type
+     * @return "emergency" as relation type
      */
     public static RelationType emergency() { return rfcRelation(RelationEnum.EMERGENCY);}
     /**
-     * Returns a "friend" relation type.
+     * Returns "friend" as relation type.
      *
-     * @return a "friend" relation type
+     * @return "friend" as relation type
      */
     public static RelationType friend() { return rfcRelation(RelationEnum.FRIEND);}
     /**

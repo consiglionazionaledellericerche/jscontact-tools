@@ -119,7 +119,7 @@ public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
     /**
      * Returns an "org" kind of contact card. See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
-     * @return a "org" kind of contact card
+     * @return "org" as kind of contact card
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
      */
     public static KindType org() { return rfc(KindEnum.ORG);}

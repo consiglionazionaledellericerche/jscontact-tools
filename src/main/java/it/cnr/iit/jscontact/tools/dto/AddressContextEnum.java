@@ -40,7 +40,7 @@ public enum AddressContextEnum implements IsExtensible, VCardTypeDerivedEnum {
     BILLING("billing"),
     POSTAL("postal");
 
-    private String value;
+    private final String value;
 
     @Getter
     @JsonIgnore

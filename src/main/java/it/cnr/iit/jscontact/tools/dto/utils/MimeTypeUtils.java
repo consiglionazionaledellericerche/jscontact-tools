@@ -122,8 +122,8 @@ public class MimeTypeUtils {
     public static final String MIME_VIDEO_X_SGI_MOVIE = "video/x-sgi-movie";
     public static final String MIME_X_CONFERENCE_X_COOLTALK = "x-conference/x-cooltalk";
 
-    private static HashMap<String, String> mimeTypeMapping;
-    private static HashMap<String, String> extMapping;
+    private static final HashMap<String, String> mimeTypeMapping;
+    private static final HashMap<String, String> extMapping;
 
     static {
         mimeTypeMapping = new HashMap<String, String>(200) {

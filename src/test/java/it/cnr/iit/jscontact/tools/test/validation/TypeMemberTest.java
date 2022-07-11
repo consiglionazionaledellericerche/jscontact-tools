@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,7 +16,7 @@ public class TypeMemberTest {
     @Test
     public void testInvalidTypeMemberValue() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-InvalidTypeMemberValue.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-InvalidTypeMemberValue.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testInvalidTypeMemberValue-1", !jsCard.isValid());

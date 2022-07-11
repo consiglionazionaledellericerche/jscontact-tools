@@ -66,7 +66,7 @@ public class CardGroup extends JSContact implements Serializable {
     Card card;
 
     /**
-     * Adds a a member to this object.
+     * Adds a member to this object.
      *
      * @param member the uid value of the object representing a group member
      */

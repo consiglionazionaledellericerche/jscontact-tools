@@ -126,7 +126,7 @@ public class StreetComponent implements Serializable {
     /**
      * Tests if this is the P.O. box number or identifier.
      *
-     * @return true if this is the the P.O. box number or identifier, false otherwise
+     * @return true if this is the P.O. box number or identifier, false otherwise
      */
     @JsonIgnore
     public boolean isPostOfficeBox() { return isRfc(StreetComponentEnum.POST_OFFICE_BOX); }

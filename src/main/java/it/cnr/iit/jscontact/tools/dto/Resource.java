@@ -97,9 +97,9 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     }
 
     /**
-     * Tests if this is resource is a uri.
+     * Tests if this is resource is an uri.
      *
-     * @return true if this resource is a uri, false otherwise
+     * @return true if this resource is an uri, false otherwise
      */
     @JsonIgnore
     public boolean isUri() { return type == ResourceType.URI; }
@@ -175,18 +175,10 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @JsonIgnore
     public boolean isDirectorySource() { return isResource(ResourceType.SOURCE); }
 
-
-    private static Resource resource(ResourceType type,  String resource) {
-
-        return resource(type, null, resource);
-
-    }
-
-    private static Resource resource(ResourceType type, String label, String resource) {
+    private static Resource resource(ResourceType type, String resource) {
         return Resource.builder()
                        .resource(resource)
                        .type(type)
-                       .label(label)
                        .build();
     }
     /**

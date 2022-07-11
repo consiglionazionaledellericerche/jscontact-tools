@@ -1194,7 +1194,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
     /**
-     * Converts a list of JSContact objects into a a list of vCard v4.0 instances [RFC6350].
+     * Converts a list of JSContact objects into a list of vCard v4.0 instances [RFC6350].
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      * @param jsContacts a list of JSContact objects

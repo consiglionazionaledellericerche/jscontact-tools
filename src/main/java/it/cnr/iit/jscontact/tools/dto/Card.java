@@ -399,24 +399,17 @@ public class Card extends JSContact implements Serializable {
     }
 
     @JsonIgnore
-    private Map<String,Resource> getResources(ResourceType type, String label) {
+    private Map<String,Resource> getResources(ResourceType type) {
 
         Map<String,Resource> ols = new HashMap<>();
         for (Map.Entry<String,Resource> ol : resources.entrySet()) {
-            if (ol.getValue().getType() == type) {
-                if ( label == null || (label != null && ol.getValue().equals(label)) )
+            if (ol.getValue().getType() == type)
                 ols.put(ol.getKey(), ol.getValue());
-            }
         }
         if (ols.size()==0)
             return null;
 
         return ols;
-    }
-
-    @JsonIgnore
-    private Map<String,Resource> getResources(ResourceType type) {
-        return getResources(type,null);
     }
 
     /**
@@ -579,7 +572,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds a personal information to this object.
+     * Adds personal information to this object.
      *
      * @param id the personal information identifier
      * @param personalInformation the object representing the personal information

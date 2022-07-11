@@ -255,7 +255,7 @@ The conversion is executed according to the following rules:
     N           neuter
     U           SpeakToAs = null
     
-    The gender identity information is mapped to the the Card property named `ietf.org:rfc6350:GENDER`
+    The gender identity information is mapped to the Card property named `ietf.org:rfc6350:GENDER`
     
 6.  An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350:<vCard Property Name>`. The following unmatched parameters are considered:
     PID
@@ -383,7 +383,7 @@ All the methods take in input a list of JSContact top most objects and can raise
     CLIENTPIDMAP
     XML
 
-4.  The the SpeakToAs object is mapped to GENDER property as in the following:
+4.  The SpeakToAs object is mapped to GENDER property as in the following:
 
     SpeakToAs.grammaticalGender     GENDER          
     male                            M
@@ -406,7 +406,7 @@ All the methods take in input a list of JSContact top most objects and can raise
     
 8.  The "timeZone" property is always mapped to a TZ parameter either preserving the time zone name or the time zone offset extracted from the `timeZones` map.    
 
-9.  It the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
+9.  If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
 10. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 

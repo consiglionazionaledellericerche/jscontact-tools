@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import static org.junit.Assert.assertTrue;
@@ -34,7 +35,7 @@ public class CardGroupCloneTest {
     @Test
     public void testClone1() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());

@@ -28,6 +28,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -38,7 +39,7 @@ public class SerializationTest {
     @Test
     public void testSerialization1() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testSerialization1", jsCard.isValid());
@@ -50,7 +51,7 @@ public class SerializationTest {
     @Test
     public void testSerialization2() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testSerialization2", jsCard.isValid());
@@ -62,7 +63,7 @@ public class SerializationTest {
     @Test
     public void testSerialization3() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testSerialization3", jsCard.isValid());
@@ -74,7 +75,7 @@ public class SerializationTest {
     @Test
     public void testSerialization4() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
