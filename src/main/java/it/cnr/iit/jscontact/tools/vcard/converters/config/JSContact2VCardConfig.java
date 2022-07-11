@@ -33,6 +33,6 @@ public class JSContact2VCardConfig {
     @Builder.Default
     private String extensionsPrefix = "extension:";
     @Builder.Default
-    private boolean cardToValidate;
+    private boolean cardToValidate = true;
 
 }
