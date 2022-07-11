@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class CategoriesTest extends VCard2JSContactTest {
 
     @Test
-    public void testCategoriesValid1() throws IOException, CardException {
+    public void testCategoriesValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -44,7 +44,7 @@ public class CategoriesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testCategoriesValid2() throws IOException, CardException {
+    public void testCategoriesValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

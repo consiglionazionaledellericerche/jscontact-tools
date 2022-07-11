@@ -51,7 +51,7 @@ public enum RelationEnum implements IsExtensible {
     AGENT("agent"),
     EMERGENCY("emergency");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

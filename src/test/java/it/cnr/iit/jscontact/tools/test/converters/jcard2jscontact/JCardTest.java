@@ -34,7 +34,7 @@ public class JCardTest extends JCard2JSContactTest {
 
     //jCard is not an array
     @Test(expected = CardException.class)
-    public void testJCardInvalid1() throws IOException, CardException {
+    public void testJCardInvalid1() throws CardException {
 
         String jcard="{}";
         jCard2JSContact.convert(jcard);
@@ -42,7 +42,7 @@ public class JCardTest extends JCard2JSContactTest {
 
     //jCard is an empty array
     @Test(expected = CardException.class)
-    public void testJCardInvalid2() throws IOException, CardException {
+    public void testJCardInvalid2() throws CardException {
 
         String jcard="[]";
         jCard2JSContact.convert(jcard);
@@ -50,7 +50,7 @@ public class JCardTest extends JCard2JSContactTest {
 
     //jCard array includes only one item
     @Test(expected = RuntimeException.class)
-    public void testJCardInvalid3() throws IOException, CardException {
+    public void testJCardInvalid3() throws CardException {
 
         String jcard="[\"vcard\"]";
         jCard2JSContact.convert(jcard);
@@ -58,7 +58,7 @@ public class JCardTest extends JCard2JSContactTest {
 
         //jCard array 2nd item is empty
         @Test(expected = CardException.class)
-        public void testJCardInvalid4() throws IOException, CardException {
+        public void testJCardInvalid4() throws CardException {
 
             String jcard="[\"vcard\",[]]";
             jCard2JSContact.convert(jcard);
@@ -66,7 +66,7 @@ public class JCardTest extends JCard2JSContactTest {
 
     //jCard does not include fn
     @Test(expected = CardException.class)
-    public void testJCardInvalid5() throws IOException, CardException {
+    public void testJCardInvalid5() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"test\"]]]";
         jCard2JSContact.convert(jcard);
@@ -75,7 +75,7 @@ public class JCardTest extends JCard2JSContactTest {
 
     //version param object appears as null instead of empty object
     @Test(expected = RuntimeException.class)
-    public void testJCardInvalid6() throws IOException, CardException {
+    public void testJCardInvalid6() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", null, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
         jCard2JSContact.convert(jcard);
@@ -84,7 +84,7 @@ public class JCardTest extends JCard2JSContactTest {
 
     //jCard array 1st is not vcard
     @Test(expected = CardException.class)
-    public void testJCardInvalid7() throws IOException, CardException {
+    public void testJCardInvalid7() throws CardException {
 
         String jcard="[\"jcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
         jCard2JSContact.convert(jcard);
@@ -92,7 +92,7 @@ public class JCardTest extends JCard2JSContactTest {
 
     //a jCard property includes the value parameter
     @Test(expected = CardException.class)
-    public void testJCardInvalid8() throws IOException, CardException {
+    public void testJCardInvalid8() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", { \"value\": \"a value\" }, \"text\", \"test\"]]]";
         jCard2JSContact.convert(jcard);
@@ -100,14 +100,14 @@ public class JCardTest extends JCard2JSContactTest {
 
     //pref must be between 1 and 100
     @Test(expected = CardException.class)
-    public void testJCardInvalid9() throws IOException, CardException {
+    public void testJCardInvalid9() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {\"pref\":\"0\"}, \"text\", \"test\"]]]";
         jCard2JSContact.convert(jcard);
     }
 
     @Test
-    public void testJCardValid() throws IOException, CardException {
+    public void testJCardValid() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
@@ -118,7 +118,7 @@ public class JCardTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testExtendedJCardValid() throws IOException, CardException {
+    public void testExtendedJCardValid() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"], [\"myext\", {}, \"text\", \"extvalue\"]]]";
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()

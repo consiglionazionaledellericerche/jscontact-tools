@@ -33,7 +33,7 @@ public enum PersonalInformationType {
     HOBBY("hobby"),
     INTEREST("interest");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

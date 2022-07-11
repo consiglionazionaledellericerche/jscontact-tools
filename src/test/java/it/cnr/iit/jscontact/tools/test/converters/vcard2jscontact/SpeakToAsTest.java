@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class SpeakToAsTest extends VCard2JSContactTest {
 
     @Test
-    public void testSpeakToAs1() throws IOException, CardException {
+    public void testSpeakToAs1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -41,7 +41,7 @@ public class SpeakToAsTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testSpeakToAs2() throws IOException, CardException {
+    public void testSpeakToAs2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

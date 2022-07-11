@@ -37,7 +37,7 @@ public enum PersonalInformationLevel {
     MEDIUM("medium"),
     LOW("low");
 
-    private String value;
+    private final String value;
 
     @JsonIgnore
     private static final Map<String, PersonalInformationLevel> aliases = new HashMap<String, PersonalInformationLevel>()

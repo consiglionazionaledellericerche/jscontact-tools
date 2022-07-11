@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class RelatedToTest extends JCard2JSContactTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void testRelatedToInvalid() throws IOException, CardException {
+    public void testRelatedToInvalid() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                                   "[\"fn\", {}, \"text\", \"test\"], " +
@@ -37,7 +37,7 @@ public class RelatedToTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testRelatedToValid1() throws IOException, CardException {
+    public void testRelatedToValid1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -50,7 +50,7 @@ public class RelatedToTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testRelatedToValid2() throws IOException, CardException {
+    public void testRelatedToValid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -65,7 +65,7 @@ public class RelatedToTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testRelatedToValid3() throws IOException, CardException {
+    public void testRelatedToValid3() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +

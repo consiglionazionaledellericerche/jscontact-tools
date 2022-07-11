@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertTrue;
 
@@ -32,7 +33,7 @@ public class XCardTest extends XCard2JSContactTest {
     @Test
     public void testCompleteXCard1() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("xcard/xCard-RFC6351.xml"), Charset.forName("UTF-8"));
+        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("xcard/xCard-RFC6351.xml"), StandardCharsets.UTF_8);
         Card jsCard = (Card) xCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteXCard1 - 1", jsCard.getFullName().equals("Simon Perreault"));
         assertTrue("testCompleteXCard1 - 2", jsCard.getKind() == null);
@@ -93,7 +94,7 @@ public class XCardTest extends XCard2JSContactTest {
     @Test
     public void testCompleteXCard2() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("xcard/xCard-Wikipedia.xml"), Charset.forName("UTF-8"));
+        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("xcard/xCard-Wikipedia.xml"), StandardCharsets.UTF_8);
         Card jsCard = (Card) xCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteXCard2 - 1", jsCard.getFullName().equals("Forrest Gump"));
         assertTrue("testCompleteXCard2 - 2", jsCard.getKind() == null);

@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class FullNameTest extends VCard2JSContactTest {
 
     @Test
-    public void testFullNameValid1() throws IOException, CardException {
+    public void testFullNameValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -41,7 +41,7 @@ public class FullNameTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testFullNameValid2() throws IOException, CardException {
+    public void testFullNameValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -59,7 +59,7 @@ public class FullNameTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testFullNameValid3() throws IOException, CardException {
+    public void testFullNameValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 public class AddressesTest extends VCard2JSContactTest {
 
     @Test
-    public void testAddressesValid1() throws IOException, CardException {
+    public void testAddressesValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -52,7 +52,7 @@ public class AddressesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAddressesValid2() throws IOException, CardException {
+    public void testAddressesValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -74,7 +74,7 @@ public class AddressesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAddressesValid3() throws IOException, CardException {
+    public void testAddressesValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -105,7 +105,7 @@ public class AddressesTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testAddressesValid4() throws IOException, CardException {
+    public void testAddressesValid4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -129,7 +129,7 @@ public class AddressesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAddressesValid5() throws IOException, CardException {
+    public void testAddressesValid5() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -153,7 +153,7 @@ public class AddressesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAddressesValid6() throws IOException, CardException {
+    public void testAddressesValid6() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -178,7 +178,7 @@ public class AddressesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAddressesValid7() throws IOException, CardException {
+    public void testAddressesValid7() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -203,7 +203,7 @@ public class AddressesTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testAddressesValid8() throws IOException, CardException {
+    public void testAddressesValid8() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -235,7 +235,7 @@ public class AddressesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAddressesValid9() throws IOException, CardException {
+    public void testAddressesValid9() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -259,7 +259,7 @@ public class AddressesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAddressesValid10() throws IOException, CardException {
+    public void testAddressesValid10() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -293,7 +293,7 @@ public class AddressesTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testAddressesValid11() throws IOException, CardException {
+    public void testAddressesValid11() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -326,7 +326,7 @@ public class AddressesTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testAddressesValid12() throws IOException, CardException {
+    public void testAddressesValid12() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -360,7 +360,7 @@ public class AddressesTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testAddressesValid13() throws IOException, CardException {
+    public void testAddressesValid13() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

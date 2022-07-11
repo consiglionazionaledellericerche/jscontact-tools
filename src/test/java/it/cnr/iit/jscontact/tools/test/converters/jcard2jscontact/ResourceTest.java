@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class ResourceTest extends JCard2JSContactTest {
     
     @Test
-    public void testResourceValid1() throws IOException, CardException {
+    public void testResourceValid1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -43,7 +43,7 @@ public class ResourceTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testResourceValid2() throws IOException, CardException {
+    public void testResourceValid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -60,7 +60,7 @@ public class ResourceTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testResourceValid3() throws IOException, CardException {
+    public void testResourceValid3() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -76,7 +76,7 @@ public class ResourceTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testResourceValid4() throws IOException, CardException {
+    public void testResourceValid4() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -98,7 +98,7 @@ public class ResourceTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testResourceValid5() throws IOException, CardException {
+    public void testResourceValid5() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -121,7 +121,7 @@ public class ResourceTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testResourceValid6() throws IOException, CardException {
+    public void testResourceValid6() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -137,7 +137,7 @@ public class ResourceTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testResourceValid7() throws IOException, CardException {
+    public void testResourceValid7() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -153,7 +153,7 @@ public class ResourceTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testResourceValid8() throws IOException, CardException {
+    public void testResourceValid8() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -169,7 +169,7 @@ public class ResourceTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testResourceValid9() throws IOException, CardException {
+    public void testResourceValid9() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -192,7 +192,7 @@ public class ResourceTest extends JCard2JSContactTest {
     
 
     @Test
-    public void testResourceValid10() throws IOException, CardException {
+    public void testResourceValid10() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +

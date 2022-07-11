@@ -37,7 +37,7 @@ public enum KindEnum implements IsExtensible {
     APPLICATION("application"),
     GROUP("group");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

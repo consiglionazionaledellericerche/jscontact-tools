@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class FullNameTest extends JCard2JSContactTest {
 
     @Test
-    public void testEmptyFullNameValid() throws IOException, CardException {
+    public void testEmptyFullNameValid() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"\"] " +
@@ -39,7 +39,7 @@ public class FullNameTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testFullNameValid1() throws IOException, CardException {
+    public void testFullNameValid1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"John Q. Public, Esq.\"] " +
@@ -50,7 +50,7 @@ public class FullNameTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testFullNameValid2() throws IOException, CardException {
+    public void testFullNameValid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {\"language\":\"jp\", \"altid\" : \"1\"}, \"text\", \"大久保 正仁\"], " +
@@ -65,7 +65,7 @@ public class FullNameTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testFullNameValid3() throws IOException, CardException {
+    public void testFullNameValid3() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {\"language\":\"jp\", \"altid\" : \"1\"}, \"text\", \"大久保 正仁\"], " +

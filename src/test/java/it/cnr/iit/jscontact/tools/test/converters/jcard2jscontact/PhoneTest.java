@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class PhoneTest extends JCard2JSContactTest {
 
     @Test
-    public void testPhoneValid1() throws IOException, CardException {
+    public void testPhoneValid1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -40,7 +40,7 @@ public class PhoneTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testPhoneValid2() throws IOException, CardException {
+    public void testPhoneValid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -60,7 +60,7 @@ public class PhoneTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testPhoneValid3() throws IOException, CardException {
+    public void testPhoneValid3() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -76,7 +76,7 @@ public class PhoneTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testPhoneValid4() throws IOException, CardException {
+    public void testPhoneValid4() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -92,7 +92,7 @@ public class PhoneTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testPhoneValid5() throws IOException, CardException {
+    public void testPhoneValid5() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -108,7 +108,7 @@ public class PhoneTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testPhoneValid6() throws IOException, CardException {
+    public void testPhoneValid6() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -125,7 +125,7 @@ public class PhoneTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testPhoneValid7() throws IOException, CardException {
+    public void testPhoneValid7() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -141,7 +141,7 @@ public class PhoneTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testPhoneValid8() throws IOException, CardException {
+    public void testPhoneValid8() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -158,7 +158,7 @@ public class PhoneTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testPhoneValid9() throws IOException, CardException {
+    public void testPhoneValid9() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +

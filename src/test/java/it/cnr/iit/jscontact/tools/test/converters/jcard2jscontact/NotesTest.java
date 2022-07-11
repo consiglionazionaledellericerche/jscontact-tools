@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class NotesTest extends JCard2JSContactTest {
 
     @Test
-    public void testNotesWithAltid1() throws IOException, CardException {
+    public void testNotesWithAltid1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -42,7 +42,7 @@ public class NotesTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testNotesWithAltid2() throws IOException, CardException {
+    public void testNotesWithAltid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +

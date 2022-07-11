@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class TitlesTest extends VCard2JSContactTest {
 
     @Test
-    public void testTitleWithAltid1() throws IOException,CardException {
+    public void testTitleWithAltid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -44,7 +44,7 @@ public class TitlesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testTitleWithoutAltid() throws IOException,CardException {
+    public void testTitleWithoutAltid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -62,7 +62,7 @@ public class TitlesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testTitleWithAltid2() throws IOException,CardException {
+    public void testTitleWithAltid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -82,7 +82,7 @@ public class TitlesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testTitleWithAltid3() throws IOException,CardException {
+    public void testTitleWithAltid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -105,7 +105,7 @@ public class TitlesTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testRoleWithAltid1() throws IOException, CardException {
+    public void testRoleWithAltid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -123,7 +123,7 @@ public class TitlesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testRoleWithoutAltid() throws IOException, CardException {
+    public void testRoleWithoutAltid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -140,7 +140,7 @@ public class TitlesTest extends VCard2JSContactTest {
         assertTrue("testRoleWithoutAltid - 5",jsCard.getLocalizations() == null);    }
 
     @Test
-    public void testRoleWithAltid2() throws IOException, CardException {
+    public void testRoleWithAltid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

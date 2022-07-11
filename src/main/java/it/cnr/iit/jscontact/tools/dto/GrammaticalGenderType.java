@@ -34,7 +34,7 @@ public enum GrammaticalGenderType {
     INANIMATE("inanimate"),
     NEUTER("neuter");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

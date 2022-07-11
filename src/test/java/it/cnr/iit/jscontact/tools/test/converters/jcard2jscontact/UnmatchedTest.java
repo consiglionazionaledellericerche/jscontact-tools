@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class UnmatchedTest extends JCard2JSContactTest {
 
     @Test
-    public void testUnmatchedParameter() throws IOException, CardException {
+    public void testUnmatchedParameter() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"John Q. Public, Esq.\"], " +

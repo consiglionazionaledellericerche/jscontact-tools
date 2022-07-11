@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class AnniversariesTest extends VCard2JSContactTest {
 
     @Test
-    public void testAnniversariesValid1() throws IOException, CardException {
+    public void testAnniversariesValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -42,7 +42,7 @@ public class AnniversariesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAnniversariesValid2() throws IOException, CardException {
+    public void testAnniversariesValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -60,7 +60,7 @@ public class AnniversariesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAnniversariesValid3() throws IOException, CardException {
+    public void testAnniversariesValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -77,7 +77,7 @@ public class AnniversariesTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testAnniversariesValid4() throws IOException, CardException {
+    public void testAnniversariesValid4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -96,7 +96,7 @@ public class AnniversariesTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testAnniversariesValid5() throws IOException, CardException {
+    public void testAnniversariesValid5() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -119,7 +119,7 @@ public class AnniversariesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAnniversariesValid6() throws IOException, CardException {
+    public void testAnniversariesValid6() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -146,7 +146,7 @@ public class AnniversariesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testAnniversariesValid7() throws IOException, CardException {
+    public void testAnniversariesValid7() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

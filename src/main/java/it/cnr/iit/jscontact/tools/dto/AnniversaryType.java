@@ -32,7 +32,7 @@ public enum AnniversaryType {
     BIRTH("birth"),
     DEATH("death");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

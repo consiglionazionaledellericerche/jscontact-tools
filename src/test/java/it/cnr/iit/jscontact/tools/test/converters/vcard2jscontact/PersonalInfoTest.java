@@ -27,7 +27,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
 
 
     @Test(expected = CardException.class)
-    public void testPersonalInfoInvalid1() throws IOException, CardException {
+    public void testPersonalInfoInvalid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -40,7 +40,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
     }
 
     @Test(expected = CardException.class)
-    public void testPersonalInfoInvalid2() throws IOException, CardException {
+    public void testPersonalInfoInvalid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -54,7 +54,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testPersonalInfoValid1() throws IOException, CardException {
+    public void testPersonalInfoValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -72,7 +72,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testPersonalInfoValid2() throws IOException, CardException {
+    public void testPersonalInfoValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -94,7 +94,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testPersonalInfoValid3() throws IOException, CardException {
+    public void testPersonalInfoValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -116,7 +116,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testPersonalInfoValid4() throws IOException, CardException {
+    public void testPersonalInfoValid4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -139,7 +139,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testPersonalInfoValid5() throws IOException, CardException {
+    public void testPersonalInfoValid5() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -169,7 +169,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testPersonalInfoValid6() throws IOException, CardException {
+    public void testPersonalInfoValid6() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -199,7 +199,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testPersonalInfoValid7() throws IOException, CardException {
+    public void testPersonalInfoValid7() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

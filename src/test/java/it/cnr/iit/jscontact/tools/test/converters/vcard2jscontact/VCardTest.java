@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertTrue;
 
@@ -33,7 +34,7 @@ public class VCardTest extends VCard2JSContactTest {
 
     //vCard does not include fn
     @Test(expected = CardException.class)
-    public void testVCardInvalid1() throws IOException, CardException {
+    public void testVCardInvalid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:test\n" +
@@ -44,7 +45,7 @@ public class VCardTest extends VCard2JSContactTest {
 
     //PREF must be between 1 and 100
     @Test(expected = CardException.class)
-    public void testVCardInvalid2() throws IOException, CardException {
+    public void testVCardInvalid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:test\n" +
@@ -56,7 +57,7 @@ public class VCardTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testVCardValid() throws IOException, CardException {
+    public void testVCardValid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -71,7 +72,7 @@ public class VCardTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testExtendedVCardValid() throws IOException, CardException {
+    public void testExtendedVCardValid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -97,7 +98,7 @@ public class VCardTest extends VCard2JSContactTest {
     @Test
     public void testCompleteVCard1() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7483.vcf"), Charset.forName("UTF-8"));
+        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7483.vcf"), StandardCharsets.UTF_8);
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard1 - 1", jsCard.getFullName().equals("Joe User"));
         assertTrue("testCompleteVCard1 - 2", jsCard.getKind().isIndividual());
@@ -159,7 +160,7 @@ public class VCardTest extends VCard2JSContactTest {
     @Test
     public void testCompleteVCard2() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Multilingual.vcf"), Charset.forName("UTF-8"));
+        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Multilingual.vcf"), StandardCharsets.UTF_8);
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard2 - 1", jsCard.getFullName().equals("大久保 正仁"));
         assertTrue("testCompleteVCard2 - 3", jsCard.getLocalizations().get("en").get("fullName").asText().equals("Okubo Masahito"));
@@ -177,7 +178,7 @@ public class VCardTest extends VCard2JSContactTest {
     @Test
     public void testCompleteVCard3() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Unstructured.vcf"), Charset.forName("UTF-8"));
+        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Unstructured.vcf"), StandardCharsets.UTF_8);
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard3 - 1", jsCard.getFullName().equals("台灣固網股份有限公司"));
         assertTrue("testCompleteVCard3 - 3", jsCard.getLocalizations().get("en").get("fullName").asText().equals("Taiwan Fixed Network CO.,LTD."));
@@ -199,7 +200,7 @@ public class VCardTest extends VCard2JSContactTest {
     @Test
     public void testCompleteVCard4() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7095.vcf"), Charset.forName("UTF-8"));
+        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7095.vcf"), StandardCharsets.UTF_8);
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard4 - 1", jsCard.getFullName().equals("Simon Perreault"));
         assertTrue("testCompleteVCard4 - 2", jsCard.getKind() == null);
@@ -261,7 +262,7 @@ public class VCardTest extends VCard2JSContactTest {
     @Test
     public void testCompleteVCard5() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Wikipedia.vcf"), Charset.forName("UTF-8"));
+        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Wikipedia.vcf"), StandardCharsets.UTF_8);
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard5 - 1", jsCard.getFullName().equals("Forrest Gump"));
         assertTrue("testCompleteVCard5 - 2", jsCard.getKind() == null);
@@ -315,7 +316,7 @@ public class VCardTest extends VCard2JSContactTest {
     @Test
     public void testCompleteVCard6() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-ezvcard-fullcontact.vcf"), Charset.forName("UTF-8"));
+        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-ezvcard-fullcontact.vcf"), StandardCharsets.UTF_8);
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testCompleteVCard6 - 1", jsCard.getFullName().equals("Prefix FirstName MiddleName LastName Suffix"));
         assertTrue("testCompleteVCard6 - 2", jsCard.getName().getComponents().length == 5);

@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class SchedulingTest extends JCard2JSContactTest {
 
     @Test
-    public void testSchedulingValid() throws IOException, CardException {
+    public void testSchedulingValid() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +

@@ -31,7 +31,7 @@ public class PropertyGroupTest extends VCard2JSContactTest {
     
 
     @Test
-    public void testPropertyGroup1() throws IOException, CardException {
+    public void testPropertyGroup1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

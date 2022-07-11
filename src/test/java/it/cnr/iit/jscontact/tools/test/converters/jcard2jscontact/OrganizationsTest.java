@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class OrganizationsTest extends JCard2JSContactTest {
 
     @Test
-    public void testOrganizationsWithAltid1() throws IOException, CardException {
+    public void testOrganizationsWithAltid1() throws CardException {
         
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -48,7 +48,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testOrganizationsWithoutAltid() throws IOException, CardException {
+    public void testOrganizationsWithoutAltid() throws CardException {
         
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -70,7 +70,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testOrganizationsWithAltid2() throws IOException, CardException {
+    public void testOrganizationsWithAltid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +

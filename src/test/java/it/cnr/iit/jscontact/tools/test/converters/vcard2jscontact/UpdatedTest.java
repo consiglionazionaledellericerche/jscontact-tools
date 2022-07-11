@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class UpdatedTest extends VCard2JSContactTest {
 
     @Test
-    public void testUpdatedValid() throws IOException, CardException {
+    public void testUpdatedValid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

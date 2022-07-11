@@ -46,10 +46,7 @@ public class GroupKeyValidator implements ConstraintValidator<GroupKeyConstraint
 
         Map ciMap = new CaseInsensitiveMap();
         ciMap.putAll(map);
-        if (ciMap.size() != map.size())
-            return false;
-
-        return true;
+        return ciMap.size() == map.size();
     }
 
 }

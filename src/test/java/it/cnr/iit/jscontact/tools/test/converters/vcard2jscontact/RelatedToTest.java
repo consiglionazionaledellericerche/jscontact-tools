@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class RelatedToTest extends VCard2JSContactTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void testRelatedToInvalid() throws IOException, CardException {
+    public void testRelatedToInvalid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -38,7 +38,7 @@ public class RelatedToTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testRelatedToValid1() throws IOException, CardException {
+    public void testRelatedToValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -53,7 +53,7 @@ public class RelatedToTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testRelatedToValid2() throws IOException, CardException {
+    public void testRelatedToValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -70,7 +70,7 @@ public class RelatedToTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testRelatedToValid3() throws IOException, CardException {
+    public void testRelatedToValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

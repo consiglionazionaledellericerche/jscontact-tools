@@ -43,7 +43,7 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
     VIDEO("video"),
     TEXTPHONE("textphone");
 
-    private String value;
+    private final String value;
 
     @JsonIgnore
     private static final List<String> otherVCardTypes = Arrays.asList("textphone", "video", "cell");

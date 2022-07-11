@@ -33,8 +33,7 @@ public class OnlineServiceValidator implements ConstraintValidator<OnlineService
             return true;
 
         if (onlineService.getUri() == null) {
-            if (onlineService.getService() == null || onlineService.getUsername() == null)
-                return false;
+            return onlineService.getService() != null && onlineService.getUsername() != null;
         }
         else {
             try {

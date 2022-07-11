@@ -17,7 +17,7 @@ public class JsonPointerUtils {
     public static String toAbsolute(String jsonPointer) {
 
         if (jsonPointer.charAt(0) != JsonPointer.SEPARATOR)
-            return Character.toString(JsonPointer.SEPARATOR) + jsonPointer;
+            return JsonPointer.SEPARATOR + jsonPointer;
 
         return jsonPointer;
     }

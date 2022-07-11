@@ -32,7 +32,7 @@ public enum PreferredContactMethodType {
     PHONES("phones"),
     ONLINE("online");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

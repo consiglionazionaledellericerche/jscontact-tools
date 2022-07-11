@@ -32,7 +32,7 @@ public class JCardGroupTest extends JCard2JSContactTest {
 
     //member must appear only for a group card
     @Test(expected = CardException.class)
-    public void testJCardGroupInvalid() throws IOException, CardException {
+    public void testJCardGroupInvalid() throws CardException {
 
         String jcard="[" +
                 "[\"vcard\", [ " +
@@ -47,7 +47,7 @@ public class JCardGroupTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testJCardGroupValid1() throws IOException, CardException {
+    public void testJCardGroupValid1() throws CardException {
 
         String jcard="[" +
                 "[\"vcard\", [ " +
@@ -89,7 +89,7 @@ public class JCardGroupTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testJCardGroupValid2() throws IOException, CardException {
+    public void testJCardGroupValid2() throws CardException {
 
         String jcard="[\"vcard\", [ " +
                 "[\"version\", {}, \"text\", \"4.0\"], " +
@@ -118,7 +118,7 @@ public class JCardGroupTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testJCardGroupValid3() throws IOException, CardException {
+    public void testJCardGroupValid3() throws CardException {
 
         String jcard="[" +
                 "[\"vcard\", [ " +
@@ -161,7 +161,7 @@ public class JCardGroupTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testJCardGroupValid4() throws IOException, CardException {
+    public void testJCardGroupValid4() throws CardException {
 
         String jcard="[\"vcard\", [ " +
                 "[\"version\", {}, \"text\", \"4.0\"], " +

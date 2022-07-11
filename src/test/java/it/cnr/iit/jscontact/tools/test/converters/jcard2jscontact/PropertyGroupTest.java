@@ -28,7 +28,7 @@ public class PropertyGroupTest extends JCard2JSContactTest {
     
 
     @Test
-    public void testPropertyGroup1() throws IOException, CardException {
+    public void testPropertyGroup1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +

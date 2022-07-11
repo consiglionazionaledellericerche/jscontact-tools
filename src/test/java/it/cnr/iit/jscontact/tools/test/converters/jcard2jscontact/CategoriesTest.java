@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class CategoriesTest extends JCard2JSContactTest {
 
     @Test
-    public void testCategoriesValid1() throws IOException, CardException {
+    public void testCategoriesValid1() throws CardException {
 
         String categories = "\"INTERNET\",\"IETF\",\"INDUSTRY\",\"INFORMATION TECHNOLOGY\"";
 
@@ -46,7 +46,7 @@ public class CategoriesTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testCategoriesValid2() throws IOException, CardException {
+    public void testCategoriesValid2() throws CardException {
 
         String categories = "\"INTERNET\",\"IETF\",\"INDUSTRY\",\"INFORMATION TECHNOLOGY\"";
 
@@ -68,7 +68,7 @@ public class CategoriesTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testCategoriesValid3() throws IOException, CardException {
+    public void testCategoriesValid3() throws CardException {
 
         String categories = "\"INTERNET\",\"IETF\",\"INDUSTRY\",\"INFORMATION TECHNOLOGY\"";
 

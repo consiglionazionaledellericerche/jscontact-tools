@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class PhotoTest extends JCard2JSContactTest {
 
     @Test
-    public void testPhotoValid() throws IOException, CardException {
+    public void testPhotoValid() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +

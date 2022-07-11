@@ -39,7 +39,7 @@ public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
     PRIVATE("private"),
     WORK("work");
 
-    private String value;
+    private final String value;
 
     @Getter
     @JsonIgnore

@@ -37,7 +37,7 @@ public enum NameComponentEnum implements IsExtensible {
     SUFFIX("suffix"),
     SEPARATOR("separator");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

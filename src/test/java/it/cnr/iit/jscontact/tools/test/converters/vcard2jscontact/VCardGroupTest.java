@@ -32,7 +32,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
 
     //member must appear only for a group card
     @Test(expected = CardException.class)
-    public void testVCardGroupInvalid() throws IOException, CardException {
+    public void testVCardGroupInvalid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -48,7 +48,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testVCardGroupValid1() throws IOException, CardException {
+    public void testVCardGroupValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -89,7 +89,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testVCardGroupValid2() throws IOException, CardException {
+    public void testVCardGroupValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -117,7 +117,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testVCardGroupValid3() throws IOException, CardException {
+    public void testVCardGroupValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -157,7 +157,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testVCardGroupValid4() throws IOException, CardException {
+    public void testVCardGroupValid4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
