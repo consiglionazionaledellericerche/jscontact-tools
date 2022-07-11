@@ -22,6 +22,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class SpeakToAsTest extends AbstractTest {
@@ -74,7 +75,7 @@ public class SpeakToAsTest extends AbstractTest {
                 .speakToAs(SpeakToAs.builder().build())
                 .build();
 
-        assertTrue("testInvalidSpeakToAs1-1", !jsCard.isValid());
+        assertFalse("testInvalidSpeakToAs1-1", jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
         assertTrue("testInvalidSpeakToAs1-2", messages.contains("at least one not null member other than @type is missing in SpeakToAs"));
     }

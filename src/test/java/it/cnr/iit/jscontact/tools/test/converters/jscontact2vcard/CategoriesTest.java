@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CategoriesTest extends JSContact2VCardTest {
@@ -40,11 +41,11 @@ public class CategoriesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testCategories - 1",vcard.getCategories().getValues().size() == 4);
-        assertTrue("testCategories - 2",vcard.getCategories().getValues().get(0).equals("INTERNET"));
-        assertTrue("testCategories - 3",vcard.getCategories().getValues().get(1).equals("IETF"));
-        assertTrue("testCategories - 4",vcard.getCategories().getValues().get(2).equals("INDUSTRY"));
-        assertTrue("testCategories - 5",vcard.getCategories().getValues().get(3).equals("INFORMATION TECHNOLOGY"));
+        assertEquals("testCategories - 1", 4, vcard.getCategories().getValues().size());
+        assertEquals("testCategories - 2", "INTERNET", vcard.getCategories().getValues().get(0));
+        assertEquals("testCategories - 3", "IETF", vcard.getCategories().getValues().get(1));
+        assertEquals("testCategories - 4", "INDUSTRY", vcard.getCategories().getValues().get(2));
+        assertEquals("testCategories - 5", "INFORMATION TECHNOLOGY", vcard.getCategories().getValues().get(3));
     }
 
 

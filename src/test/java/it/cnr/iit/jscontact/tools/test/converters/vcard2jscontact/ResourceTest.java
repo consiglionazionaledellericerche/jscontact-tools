@@ -20,7 +20,7 @@ import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ResourceTest extends VCard2JSContactTest {
     
@@ -34,11 +34,11 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid1 - 1",jsCard.getResources().size() == 1);
-        assertTrue("testResourceValid1 - 2",jsCard.getResources().get("SOURCE-1").getResource().equals("http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf"));
+        assertEquals("testResourceValid1 - 1", 1, jsCard.getResources().size());
+        assertEquals("testResourceValid1 - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", jsCard.getResources().get("SOURCE-1").getResource());
         assertTrue("testResourceValid1 - 3",jsCard.getResources().get("SOURCE-1").isDirectorySource());
-        assertTrue("testResourceValid1 - 4",jsCard.getResources().get("SOURCE-1").getPref() == null);
-        assertTrue("testResourceValid1 - 5",jsCard.getResources().get("SOURCE-1").getMediaType() == null);
+        assertNull("testResourceValid1 - 4", jsCard.getResources().get("SOURCE-1").getPref());
+        assertNull("testResourceValid1 - 5", jsCard.getResources().get("SOURCE-1").getMediaType());
         assertTrue("testResourceValid1 - 6",jsCard.getResources().get("SOURCE-1").hasNoContext());
     }
 
@@ -52,11 +52,11 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid2 - 1",jsCard.getResources().size() == 1);
-        assertTrue("testResourceValid2 - 2",jsCard.getResources().get("LOGO-1").getResource().equals("http://www.example.com/pub/logos/abccorp.jpg"));
+        assertEquals("testResourceValid2 - 1", 1, jsCard.getResources().size());
+        assertEquals("testResourceValid2 - 2", "http://www.example.com/pub/logos/abccorp.jpg", jsCard.getResources().get("LOGO-1").getResource());
         assertTrue("testResourceValid2 - 3",jsCard.getResources().get("LOGO-1").isLogo());
-        assertTrue("testResourceValid2 - 4",jsCard.getResources().get("LOGO-1").getPref() == null);
-        assertTrue("testResourceValid2 - 5",jsCard.getResources().get("LOGO-1").getMediaType().equals(MimeTypeUtils.MIME_IMAGE_JPEG));
+        assertNull("testResourceValid2 - 4", jsCard.getResources().get("LOGO-1").getPref());
+        assertEquals("testResourceValid2 - 5", MimeTypeUtils.MIME_IMAGE_JPEG, jsCard.getResources().get("LOGO-1").getMediaType());
         assertTrue("testResourceValid2 - 6",jsCard.getResources().get("LOGO-1").hasNoContext());
     }
 
@@ -70,11 +70,11 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid3 - 1",jsCard.getResources().size() == 1);
-        assertTrue("testResourceValid3 - 2",jsCard.getResources().get("CONTACT-URI-1").getResource().equals("mailto:contact@example.com"));
+        assertEquals("testResourceValid3 - 1", 1, jsCard.getResources().size());
+        assertEquals("testResourceValid3 - 2", "mailto:contact@example.com", jsCard.getResources().get("CONTACT-URI-1").getResource());
         assertTrue("testResourceValid3 - 3",jsCard.getResources().get("CONTACT-URI-1").isContactUri());
-        assertTrue("testResourceValid3 - 4",jsCard.getResources().get("CONTACT-URI-1").getPref() == 1);
-        assertTrue("testResourceValid3 - 5",jsCard.getResources().get("CONTACT-URI-1").getMediaType() == null);
+        assertEquals("testResourceValid3 - 4", 1, (int) jsCard.getResources().get("CONTACT-URI-1").getPref());
+        assertNull("testResourceValid3 - 5", jsCard.getResources().get("CONTACT-URI-1").getMediaType());
         assertTrue("testResourceValid3 - 6",jsCard.getResources().get("CONTACT-URI-1").hasNoContext());
     }
 
@@ -89,15 +89,15 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid4 - 1",jsCard.getResources().size() == 2);
-        assertTrue("testResourceValid4 - 2",jsCard.getResources().get("ORG-DIRECTORY-1").getResource().equals("http://directory.mycompany.example.com"));
+        assertEquals("testResourceValid4 - 1", 2, jsCard.getResources().size());
+        assertEquals("testResourceValid4 - 2", "http://directory.mycompany.example.com", jsCard.getResources().get("ORG-DIRECTORY-1").getResource());
         assertTrue("testResourceValid4 - 3",jsCard.getResources().get("ORG-DIRECTORY-1").isDirectory());
-        assertTrue("testResourceValid4 - 4",jsCard.getResources().get("ORG-DIRECTORY-1").getPref() == null);
-        assertTrue("testResourceValid4 - 5",jsCard.getResources().get("ORG-DIRECTORY-1").getMediaType() == null);
+        assertNull("testResourceValid4 - 4", jsCard.getResources().get("ORG-DIRECTORY-1").getPref());
+        assertNull("testResourceValid4 - 5", jsCard.getResources().get("ORG-DIRECTORY-1").getMediaType());
         assertTrue("testResourceValid4 - 6",jsCard.getResources().get("ORG-DIRECTORY-1").hasNoContext());
-        assertTrue("testResourceValid4 - 7",jsCard.getResources().get("ORG-DIRECTORY-2").getResource().equals("ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering"));
-        assertTrue("testResourceValid4 - 8",jsCard.getResources().get("ORG-DIRECTORY-2").getPref() == 1);
-        assertTrue("testResourceValid4 - 9",jsCard.getResources().get("ORG-DIRECTORY-2").getMediaType() == null);
+        assertEquals("testResourceValid4 - 7", "ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering", jsCard.getResources().get("ORG-DIRECTORY-2").getResource());
+        assertEquals("testResourceValid4 - 8", 1, (int) jsCard.getResources().get("ORG-DIRECTORY-2").getPref());
+        assertNull("testResourceValid4 - 9", jsCard.getResources().get("ORG-DIRECTORY-2").getMediaType());
         assertTrue("testResourceValid4 - 10",jsCard.getResources().get("ORG-DIRECTORY-2").isDirectory());
         assertTrue("testResourceValid4 - 11",jsCard.getResources().get("ORG-DIRECTORY-2").hasNoContext());
     }
@@ -113,15 +113,15 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid5 - 1",jsCard.getResources().size() == 2);
-        assertTrue("testResourceValid5 - 2",jsCard.getResources().get("ORG-DIRECTORY-1").getResource().equals("http://directory.mycompany.example.com"));
+        assertEquals("testResourceValid5 - 1", 2, jsCard.getResources().size());
+        assertEquals("testResourceValid5 - 2", "http://directory.mycompany.example.com", jsCard.getResources().get("ORG-DIRECTORY-1").getResource());
         assertTrue("testResourceValid5 - 3",jsCard.getResources().get("ORG-DIRECTORY-1").isDirectory());
-        assertTrue("testResourceValid5 - 4",jsCard.getResources().get("ORG-DIRECTORY-1").getPref() == null);
-        assertTrue("testResourceValid5 - 5",jsCard.getResources().get("ORG-DIRECTORY-1").getMediaType() == null);
+        assertNull("testResourceValid5 - 4", jsCard.getResources().get("ORG-DIRECTORY-1").getPref());
+        assertNull("testResourceValid5 - 5", jsCard.getResources().get("ORG-DIRECTORY-1").getMediaType());
         assertTrue("testResourceValid5 - 6",jsCard.getResources().get("ORG-DIRECTORY-1").hasNoContext());
-        assertTrue("testResourceValid5 - 7",jsCard.getResources().get("ORG-DIRECTORY-2").getResource().equals("ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering"));
-        assertTrue("testResourceValid5 - 8",jsCard.getResources().get("ORG-DIRECTORY-2").getPref() == 1);
-        assertTrue("testResourceValid5 - 9",jsCard.getResources().get("ORG-DIRECTORY-2").getMediaType() == null);
+        assertEquals("testResourceValid5 - 7", "ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering", jsCard.getResources().get("ORG-DIRECTORY-2").getResource());
+        assertEquals("testResourceValid5 - 8", 1, (int) jsCard.getResources().get("ORG-DIRECTORY-2").getPref());
+        assertNull("testResourceValid5 - 9", jsCard.getResources().get("ORG-DIRECTORY-2").getMediaType());
         assertTrue("testResourceValid5 - 10",jsCard.getResources().get("ORG-DIRECTORY-2").hasNoContext());
         assertTrue("testResourceValid5 - 11",jsCard.getResources().get("ORG-DIRECTORY-2").isDirectory());
     }
@@ -137,11 +137,11 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid6 - 1",jsCard.getResources().size() == 1);
-        assertTrue("testResourceValid6 - 2",jsCard.getResources().get("SOUND-1").getResource().equals("CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com"));
+        assertEquals("testResourceValid6 - 1", 1, jsCard.getResources().size());
+        assertEquals("testResourceValid6 - 2", "CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com", jsCard.getResources().get("SOUND-1").getResource());
         assertTrue("testResourceValid6 - 3",jsCard.getResources().get("SOUND-1").isAudio());
-        assertTrue("testResourceValid6 - 4",jsCard.getResources().get("SOUND-1").getPref() == null);
-        assertTrue("testResourceValid6 - 5",jsCard.getResources().get("SOUND-1").getMediaType() == null);
+        assertNull("testResourceValid6 - 4", jsCard.getResources().get("SOUND-1").getPref());
+        assertNull("testResourceValid6 - 5", jsCard.getResources().get("SOUND-1").getMediaType());
         assertTrue("testResourceValid6 - 6",jsCard.getResources().get("SOUND-1").hasNoContext());
     }
 
@@ -155,11 +155,11 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid7 - 1",jsCard.getResources().size() == 1);
-        assertTrue("testResourceValid7 - 2",jsCard.getResources().get("URI-1").getResource().equals("http://example.org/restaurant.french/~chezchic.htm"));
+        assertEquals("testResourceValid7 - 1", 1, jsCard.getResources().size());
+        assertEquals("testResourceValid7 - 2", "http://example.org/restaurant.french/~chezchic.htm", jsCard.getResources().get("URI-1").getResource());
         assertTrue("testResourceValid7 - 3",jsCard.getResources().get("URI-1").isUri());
-        assertTrue("testResourceValid7 - 4",jsCard.getResources().get("URI-1").getPref() == null);
-        assertTrue("testResourceValid7 - 5",jsCard.getResources().get("URI-1").getMediaType().equals(MimeTypeUtils.MIME_TEXT_HTML));
+        assertNull("testResourceValid7 - 4", jsCard.getResources().get("URI-1").getPref());
+        assertEquals("testResourceValid7 - 5", MimeTypeUtils.MIME_TEXT_HTML, jsCard.getResources().get("URI-1").getMediaType());
         assertTrue("testResourceValid7 - 6",jsCard.getResources().get("URI-1").hasNoContext());
     }
 
@@ -173,11 +173,11 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid8 - 1",jsCard.getResources().size() == 1);
-        assertTrue("testResourceValid8 - 2",jsCard.getResources().get("KEY-1").getResource().equals("http://www.example.com/keys/jdoe.cer"));
+        assertEquals("testResourceValid8 - 1", 1, jsCard.getResources().size());
+        assertEquals("testResourceValid8 - 2", "http://www.example.com/keys/jdoe.cer", jsCard.getResources().get("KEY-1").getResource());
         assertTrue("testResourceValid8 - 3",jsCard.getResources().get("KEY-1").isPublicKey());
-        assertTrue("testResourceValid8 - 4",jsCard.getResources().get("KEY-1").getPref() == null);
-        assertTrue("testResourceValid8 - 5",jsCard.getResources().get("KEY-1").getMediaType() == null);
+        assertNull("testResourceValid8 - 4", jsCard.getResources().get("KEY-1").getPref());
+        assertNull("testResourceValid8 - 5", jsCard.getResources().get("KEY-1").getMediaType());
         assertTrue("testResourceValid8 - 6",jsCard.getResources().get("KEY-1").hasNoContext());
     }
 
@@ -193,17 +193,17 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid9 - 1",jsCard.getResources().size() == 2);
-        assertTrue("testResourceValid9 - 2",jsCard.getResources().get("FBURL-1").getResource().equals("http://www.example.com/busy/janedoe"));
+        assertEquals("testResourceValid9 - 1", 2, jsCard.getResources().size());
+        assertEquals("testResourceValid9 - 2", "http://www.example.com/busy/janedoe", jsCard.getResources().get("FBURL-1").getResource());
         assertTrue("testResourceValid9 - 3",jsCard.getResources().get("FBURL-1").isFreeBusy());
-        assertTrue("testResourceValid9 - 4",jsCard.getResources().get("FBURL-1").getPref() == 1);
-        assertTrue("testResourceValid9 - 5",jsCard.getResources().get("FBURL-1").getMediaType() == null);
+        assertEquals("testResourceValid9 - 4", 1, (int) jsCard.getResources().get("FBURL-1").getPref());
+        assertNull("testResourceValid9 - 5", jsCard.getResources().get("FBURL-1").getMediaType());
         assertTrue("testResourceValid9 - 6",jsCard.getResources().get("FBURL-1").hasNoContext());
-        assertTrue("testResourceValid9 - 7",jsCard.getResources().get("FBURL-2").getResource().equals("ftp://example.com/busy/project-a.ifb"));
+        assertEquals("testResourceValid9 - 7", "ftp://example.com/busy/project-a.ifb", jsCard.getResources().get("FBURL-2").getResource());
         assertTrue("testResourceValid9 - 8",jsCard.getResources().get("FBURL-2").isFreeBusy());
-        assertTrue("testResourceValid9 - 9",jsCard.getResources().get("FBURL-2").getPref() == null);
+        assertNull("testResourceValid9 - 9", jsCard.getResources().get("FBURL-2").getPref());
         assertTrue("testResourceValid9 - 10",jsCard.getResources().get("FBURL-2").hasNoContext());
-        assertTrue("testResourceValid9 - 11",jsCard.getResources().get("FBURL-2").getMediaType().equals("text/calendar"));
+        assertEquals("testResourceValid9 - 11", "text/calendar", jsCard.getResources().get("FBURL-2").getMediaType());
     }
 
     @Test
@@ -217,17 +217,17 @@ public class ResourceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testResourceValid10 - 1",jsCard.getResources().size() == 2);
-        assertTrue("testResourceValid10 - 2",jsCard.getResources().get("CALURI-1").getResource().equals("http://cal.example.com/calA"));
+        assertEquals("testResourceValid10 - 1", 2, jsCard.getResources().size());
+        assertEquals("testResourceValid10 - 2", "http://cal.example.com/calA", jsCard.getResources().get("CALURI-1").getResource());
         assertTrue("testResourceValid10 - 3",jsCard.getResources().get("CALURI-1").isCalendar());
-        assertTrue("testResourceValid10 - 4",jsCard.getResources().get("CALURI-1").getPref() == 1);
-        assertTrue("testResourceValid10 - 5",jsCard.getResources().get("CALURI-1").getMediaType() == null);
+        assertEquals("testResourceValid10 - 4", 1, (int) jsCard.getResources().get("CALURI-1").getPref());
+        assertNull("testResourceValid10 - 5", jsCard.getResources().get("CALURI-1").getMediaType());
         assertTrue("testResourceValid10 - 6",jsCard.getResources().get("CALURI-1").hasNoContext());
-        assertTrue("testResourceValid10 - 7",jsCard.getResources().get("CALURI-2").getResource().equals("ftp://ftp.example.com/calA.ics"));
+        assertEquals("testResourceValid10 - 7", "ftp://ftp.example.com/calA.ics", jsCard.getResources().get("CALURI-2").getResource());
         assertTrue("testResourceValid10 - 8",jsCard.getResources().get("CALURI-2").isCalendar());
-        assertTrue("testResourceValid10 - 9",jsCard.getResources().get("CALURI-2").getPref() == null);
+        assertNull("testResourceValid10 - 9", jsCard.getResources().get("CALURI-2").getPref());
         assertTrue("testResourceValid10 - 10",jsCard.getResources().get("CALURI-2").hasNoContext());
-        assertTrue("testResourceValid10 - 11",jsCard.getResources().get("CALURI-2").getMediaType().equals("text/calendar"));
+        assertEquals("testResourceValid10 - 11", "text/calendar", jsCard.getResources().get("CALURI-2").getMediaType());
     }
 
 }

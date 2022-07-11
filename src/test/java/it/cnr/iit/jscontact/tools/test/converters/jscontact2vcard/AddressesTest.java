@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AddressesTest extends JSContact2VCardTest {
@@ -47,14 +48,14 @@ public class AddressesTest extends JSContact2VCardTest {
                         "}" +
                         "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid1 - 1",vcard.getAddresses().size() == 1);
-        assertTrue("testAddressesValid1 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid1 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid1 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid1 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid1 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid1 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid1 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St Reston VA 20190 USA"));
+        assertEquals("testAddressesValid1 - 1", 1, vcard.getAddresses().size());
+        assertEquals("testAddressesValid1 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid1 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid1 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid1 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid1 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid1 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid1 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getAddresses().get(0).getLabel());
     }
 
     @Test
@@ -77,14 +78,14 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid2 - 1",vcard.getAddresses().size() == 1);
-        assertTrue("testAddressesValid2 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid2 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid2 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid2 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid2 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid2 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid2 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
+        assertEquals("testAddressesValid2 - 1", 1, vcard.getAddresses().size());
+        assertEquals("testAddressesValid2 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid2 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid2 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid2 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid2 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid2 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid2 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
     }
 
     @Test
@@ -116,21 +117,21 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid3 - 1",vcard.getAddresses().size() == 2);
-        assertTrue("testAddressesValid3 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid3 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid3 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid3 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid3 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid3 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid3 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid3 - 9",vcard.getAddresses().get(1).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid3 - 10",vcard.getAddresses().get(1).getCountry().equals("USA"));
-        assertTrue("testAddressesValid3 - 11",vcard.getAddresses().get(1).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid3 - 12",vcard.getAddresses().get(1).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid3 - 13",vcard.getAddresses().get(1).getRegion().equals("VA"));
-        assertTrue("testAddressesValid3 - 14",vcard.getAddresses().get(1).getStreetAddress().equals("12345 Elm St"));
-        assertTrue("testAddressesValid3 - 15", vcard.getAddresses().get(1).getLabel().equals("12345 Elm St\nReston\nVA\n20190\nUSA"));
+        assertEquals("testAddressesValid3 - 1", 2, vcard.getAddresses().size());
+        assertEquals("testAddressesValid3 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid3 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid3 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid3 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid3 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid3 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid3 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
+        assertEquals("testAddressesValid3 - 9", "US", vcard.getAddresses().get(1).getParameter("CC"));
+        assertEquals("testAddressesValid3 - 10", "USA", vcard.getAddresses().get(1).getCountry());
+        assertEquals("testAddressesValid3 - 11", "20190", vcard.getAddresses().get(1).getPostalCode());
+        assertEquals("testAddressesValid3 - 12", "Reston", vcard.getAddresses().get(1).getLocality());
+        assertEquals("testAddressesValid3 - 13", "VA", vcard.getAddresses().get(1).getRegion());
+        assertEquals("testAddressesValid3 - 14", "12345 Elm St", vcard.getAddresses().get(1).getStreetAddress());
+        assertEquals("testAddressesValid3 - 15", "12345 Elm St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(1).getLabel());
     }
 
     @Test
@@ -154,15 +155,15 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid4 - 1",vcard.getAddresses().size() == 1);
-        assertTrue("testAddressesValid4 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid4 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid4 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid4 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid4 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid4 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid4 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid4 - 8", vcard.getAddresses().get(0).getGeo().equals(GeoUri.parse("geo:46.772673,-71.282945")));
+        assertEquals("testAddressesValid4 - 1", 1, vcard.getAddresses().size());
+        assertEquals("testAddressesValid4 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid4 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid4 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid4 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid4 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid4 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid4 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
+        assertEquals("testAddressesValid4 - 8", vcard.getAddresses().get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
     }
 
     @Test
@@ -187,16 +188,16 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid5 - 1",vcard.getAddresses().size() == 1);
-        assertTrue("testAddressesValid5 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid5 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid5 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid5 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid5 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid5 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid5 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid5 - 9", vcard.getAddresses().get(0).getGeo().equals(GeoUri.parse("geo:46.772673,-71.282945")));
-        assertTrue("testAddressesValid5 - 10", vcard.getAddresses().get(0).getTimezone().equals("Etc/GMT+5"));
+        assertEquals("testAddressesValid5 - 1", 1, vcard.getAddresses().size());
+        assertEquals("testAddressesValid5 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid5 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid5 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid5 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid5 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid5 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid5 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
+        assertEquals("testAddressesValid5 - 9", vcard.getAddresses().get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
+        assertEquals("testAddressesValid5 - 10", "Etc/GMT+5", vcard.getAddresses().get(0).getTimezone());
     }
 
     @Test
@@ -226,17 +227,17 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid6 - 1",vcard.getAddresses().size() == 2);
-        assertTrue("testAddressesValid6 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid6 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid6 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid6 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid6 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid6 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid6 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St Reston VA 20190 USA"));
-        assertTrue("testAddressesValid6 - 9", vcard.getAddresses().get(0).getLanguage().equals("en"));
-        assertTrue("testAddressesValid6 - 10", vcard.getAddresses().get(1).getLabel().equals("Via Moruzzi,1 Pisa 56124 Italia"));
-        assertTrue("testAddressesValid6 - 11", vcard.getAddresses().get(1).getLanguage().equals("it"));
+        assertEquals("testAddressesValid6 - 1", 2, vcard.getAddresses().size());
+        assertEquals("testAddressesValid6 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid6 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid6 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid6 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid6 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid6 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid6 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getAddresses().get(0).getLabel());
+        assertEquals("testAddressesValid6 - 9", "en", vcard.getAddresses().get(0).getLanguage());
+        assertEquals("testAddressesValid6 - 10", "Via Moruzzi,1 Pisa 56124 Italia", vcard.getAddresses().get(1).getLabel());
+        assertEquals("testAddressesValid6 - 11", "it", vcard.getAddresses().get(1).getLanguage());
     }
 
     @Test
@@ -259,14 +260,14 @@ public class AddressesTest extends JSContact2VCardTest {
                     "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid7 - 1",vcard.getAddresses().size() == 1);
-        assertTrue("testAddressesValid7 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid7 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid7 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid7 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid7 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid7 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("Oak St 54321"));
-        assertTrue("testAddressesValid7 - 8", vcard.getAddresses().get(0).getLabel().equals("Oak St 54321\nReston\nVA\n20190\nUSA"));
+        assertEquals("testAddressesValid7 - 1", 1, vcard.getAddresses().size());
+        assertEquals("testAddressesValid7 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid7 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid7 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid7 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid7 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid7 - 7", "Oak St 54321", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid7 - 8", "Oak St 54321\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
     }
 
     @Test
@@ -294,15 +295,15 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid8 - 1",vcard.getAddresses().size() == 1);
-        assertTrue("testAddressesValid8 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid8 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid8 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid8 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid8 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid8 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("Oak St 54321"));
-        assertTrue("testAddressesValid8 - 8",vcard.getAddresses().get(0).getExtendedAddress().equals("Floor: 5 Room: 100"));
-        assertTrue("testAddressesValid8 - 9", vcard.getAddresses().get(0).getLabel().equals("Floor: 5 Room: 100\nOak St 54321\nReston\nVA\n20190\nUSA"));
+        assertEquals("testAddressesValid8 - 1", 1, vcard.getAddresses().size());
+        assertEquals("testAddressesValid8 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid8 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid8 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid8 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid8 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid8 - 7", "Oak St 54321", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid8 - 8", "Floor: 5 Room: 100", vcard.getAddresses().get(0).getExtendedAddress());
+        assertEquals("testAddressesValid8 - 9", "Floor: 5 Room: 100\nOak St 54321\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
     }
 
 
@@ -341,16 +342,16 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
         "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid9 - 1",vcard.getAddresses().size() == 1);
-        assertTrue("testAddressesValid9 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid9 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid9 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid9 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid9 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid9 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid9 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid9 - 9", vcard.getAddresses().get(0).getGeo().equals(GeoUri.parse("geo:46.772673,-71.282945")));
-        assertTrue("testAddressesValid9 - 10", vcard.getAddresses().get(0).getTimezone().equals("-0530"));
+        assertEquals("testAddressesValid9 - 1", 1, vcard.getAddresses().size());
+        assertEquals("testAddressesValid9 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid9 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid9 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid9 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid9 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid9 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid9 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
+        assertEquals("testAddressesValid9 - 9", vcard.getAddresses().get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
+        assertEquals("testAddressesValid9 - 10", "-0530", vcard.getAddresses().get(0).getTimezone());
     }
 
 
@@ -386,22 +387,22 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAddressesValid10 - 1",vcard.getAddresses().size() == 2);
-        assertTrue("testAddressesValid10 - 2",vcard.getAddresses().get(0).getParameter("CC").equals("US"));
-        assertTrue("testAddressesValid10 - 3",vcard.getAddresses().get(0).getCountry().equals("USA"));
-        assertTrue("testAddressesValid10 - 4",vcard.getAddresses().get(0).getPostalCode().equals("20190"));
-        assertTrue("testAddressesValid10 - 5",vcard.getAddresses().get(0).getLocality().equals("Reston"));
-        assertTrue("testAddressesValid10 - 6",vcard.getAddresses().get(0).getRegion().equals("VA"));
-        assertTrue("testAddressesValid10 - 7",vcard.getAddresses().get(0).getStreetAddress().equals("54321 Oak St"));
-        assertTrue("testAddressesValid10 - 8", vcard.getAddresses().get(0).getLabel().equals("54321 Oak St\nReston\nVA\n20190\nUSA"));
-        assertTrue("testAddressesValid10 - 9", vcard.getAddresses().get(0).getLanguage().equals("en"));
-        assertTrue("testAddressesValid10 - 10",vcard.getAddresses().get(1).getParameter("CC").equals("IT"));
-        assertTrue("testAddressesValid10 - 11",vcard.getAddresses().get(1).getCountry().equals("Italia"));
-        assertTrue("testAddressesValid10 - 12",vcard.getAddresses().get(1).getPostalCode().equals("56124"));
-        assertTrue("testAddressesValid10 - 13",vcard.getAddresses().get(1).getLocality().equals("Pisa"));
-        assertTrue("testAddressesValid10 - 14",vcard.getAddresses().get(1).getStreetAddress().equals("Via Moruzzi,1"));
-        assertTrue("testAddressesValid10 - 15", vcard.getAddresses().get(1).getLabel().equals("Via Moruzzi,1\nPisa\n56124\nItalia"));
-        assertTrue("testAddressesValid10 - 16", vcard.getAddresses().get(1).getLanguage().equals("it"));
+        assertEquals("testAddressesValid10 - 1", 2, vcard.getAddresses().size());
+        assertEquals("testAddressesValid10 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddressesValid10 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddressesValid10 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddressesValid10 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddressesValid10 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddressesValid10 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddressesValid10 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
+        assertEquals("testAddressesValid10 - 9", "en", vcard.getAddresses().get(0).getLanguage());
+        assertEquals("testAddressesValid10 - 10", "IT", vcard.getAddresses().get(1).getParameter("CC"));
+        assertEquals("testAddressesValid10 - 11", "Italia", vcard.getAddresses().get(1).getCountry());
+        assertEquals("testAddressesValid10 - 12", "56124", vcard.getAddresses().get(1).getPostalCode());
+        assertEquals("testAddressesValid10 - 13", "Pisa", vcard.getAddresses().get(1).getLocality());
+        assertEquals("testAddressesValid10 - 14", "Via Moruzzi,1", vcard.getAddresses().get(1).getStreetAddress());
+        assertEquals("testAddressesValid10 - 15", "Via Moruzzi,1\nPisa\n56124\nItalia", vcard.getAddresses().get(1).getLabel());
+        assertEquals("testAddressesValid10 - 16", "it", vcard.getAddresses().get(1).getLanguage());
     }
 
 }

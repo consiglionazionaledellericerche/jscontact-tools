@@ -245,7 +245,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         String[] items = jcardTypeParam.split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
         for (String item : items) {
-            if (item.toLowerCase().equals("home")) item = "private";
+            if (item.equalsIgnoreCase("home")) item = "private";
 
             if (exclude != null && Arrays.asList(exclude).contains(item))
                 continue;

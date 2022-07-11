@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class UidTest extends JSContact2VCardTest {
@@ -45,7 +46,7 @@ public class UidTest extends JSContact2VCardTest {
                 "\"fullName\":\"test\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testUidValid - 1",vcard.getUid().getValue().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
+        assertEquals("testUidValid - 1", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", vcard.getUid().getValue());
     }
 
 }

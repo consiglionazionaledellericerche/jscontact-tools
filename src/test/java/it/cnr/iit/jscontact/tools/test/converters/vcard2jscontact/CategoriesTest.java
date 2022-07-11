@@ -19,7 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CategoriesTest extends VCard2JSContactTest {
 
@@ -33,8 +33,8 @@ public class CategoriesTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testCategoriesValid1 - 1",jsCard.getCategories()!=null);
-        assertTrue("testCategoriesValid1 - 2",jsCard.getCategories().size() == 4);
+        assertNotNull("testCategoriesValid1 - 1", jsCard.getCategories());
+        assertEquals("testCategoriesValid1 - 2", 4, jsCard.getCategories().size());
         assertTrue("testCategoriesValid1 - 3",jsCard.getCategories().containsKey("INTERNET"));
         assertTrue("testCategoriesValid1 - 4",jsCard.getCategories().containsKey("IETF"));
         assertTrue("testCategoriesValid1 - 5",jsCard.getCategories().containsKey("INDUSTRY"));
@@ -52,8 +52,8 @@ public class CategoriesTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testCategoriesValid2 - 1",jsCard.getCategories()!=null);
-        assertTrue("testCategoriesValid2 - 2",jsCard.getCategories().size() == 5);
+        assertNotNull("testCategoriesValid2 - 1", jsCard.getCategories());
+        assertEquals("testCategoriesValid2 - 2", 5, jsCard.getCategories().size());
         assertTrue("testCategoriesValid2 - 3",jsCard.getCategories().containsKey("INTERNET"));
         assertTrue("testCategoriesValid2 - 4",jsCard.getCategories().containsKey("IETF"));
         assertTrue("testCategoriesValid2 - 5",jsCard.getCategories().containsKey("INDUSTRY"));

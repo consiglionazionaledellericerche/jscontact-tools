@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class PropertyGroupTest extends JSContact2VCardTest {
@@ -55,7 +56,7 @@ public class PropertyGroupTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testPropertyGroup1 - 1",vcard.getAddresses().get(0).getGroup().equals("CONTACT"));
+        assertEquals("testPropertyGroup1 - 1", "CONTACT", vcard.getAddresses().get(0).getGroup());
 
     }
 

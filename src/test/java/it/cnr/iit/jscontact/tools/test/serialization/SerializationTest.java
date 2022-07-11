@@ -96,7 +96,7 @@ public class SerializationTest {
         jsCard.setUid("549e9dd2-ecb1-46af-8df1-09e98329d0ff");
         ObjectMapper objectMapper = new ObjectMapper();
         String serialized = objectMapper.writeValueAsString(jsCard);
-        assertTrue("testSerialization5", serialized.equals("{\"@type\":\"Card\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"extension:myext\":\"extvalue\"}"));
+        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"extension:myext\":\"extvalue\"}", serialized);
 
     }
 

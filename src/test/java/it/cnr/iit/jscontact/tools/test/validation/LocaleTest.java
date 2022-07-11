@@ -19,7 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class LocaleTest extends AbstractTest {
@@ -43,8 +43,8 @@ public class LocaleTest extends AbstractTest {
                 .locale("@@@@")
                 .build();
 
-        assertTrue("testInvalidLocale-1", !jsCard.isValid());
-        assertTrue("testInvalidLocale-2", jsCard.getValidationMessage().equals("invalid language tag"));
+        assertFalse("testInvalidLocale-1", jsCard.isValid());
+        assertEquals("testInvalidLocale-2", "invalid language tag", jsCard.getValidationMessage());
 
     }
 

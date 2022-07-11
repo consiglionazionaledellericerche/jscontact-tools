@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ProdidTest extends JCard2JSContactTest {
@@ -31,7 +32,7 @@ public class ProdidTest extends JCard2JSContactTest {
                 "[\"prodid\", {}, \"text\", \"-//ONLINE DIRECTORY//NONSGML Version 1//EN\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testProdidValid - 1",jsCard.getProdId().equals("-//ONLINE DIRECTORY//NONSGML Version 1//EN"));
+        assertEquals("testProdidValid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", jsCard.getProdId());
 
     }
 

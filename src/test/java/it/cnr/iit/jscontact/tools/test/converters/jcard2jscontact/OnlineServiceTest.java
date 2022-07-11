@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class OnlineServiceTest extends JCard2JSContactTest {
@@ -31,10 +32,10 @@ public class OnlineServiceTest extends JCard2JSContactTest {
                 "[\"impp\", {\"type\": \"home\", \"pref\": 1}, \"uri\", \"xmpp:alice@example.com\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testOnlineServiceValid1 - 1",jsCard.getOnlineServices().size() == 1);
-        assertTrue("testOnlineServiceValid1 - 2",jsCard.getOnlineServices().get("OS-1").getUri().equals("xmpp:alice@example.com"));
+        assertEquals("testOnlineServiceValid1 - 1", 1, jsCard.getOnlineServices().size());
+        assertEquals("testOnlineServiceValid1 - 2", "xmpp:alice@example.com", jsCard.getOnlineServices().get("OS-1").getUri());
         assertTrue("testOnlineServiceValid1 - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());
-        assertTrue("testOnlineServiceValid1 - 5",jsCard.getOnlineServices().get("OS-1").getPref() == 1);
+        assertEquals("testOnlineServiceValid1 - 5", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
     }
     
 }

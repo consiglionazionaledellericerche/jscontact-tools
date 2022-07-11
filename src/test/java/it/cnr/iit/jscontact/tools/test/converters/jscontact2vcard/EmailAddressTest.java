@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EmailAddressTest extends JSContact2VCardTest {
@@ -36,10 +37,10 @@ public class EmailAddressTest extends JSContact2VCardTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testEmailAddressValid1 - 1",vcard.getEmails().size() == 1);
-        assertTrue("testEmailAddressValid1 - 2",vcard.getEmails().get(0).getValue().equals("jqpublic@xyz.example.com"));
-        assertTrue("testEmailAddressValid1 - 3",vcard.getEmails().get(0).getTypes().size() == 1);
-        assertTrue("testEmailAddressValid1 - 4",vcard.getEmails().get(0).getTypes().get(0).getValue().equals("work"));
+        assertEquals("testEmailAddressValid1 - 1", 1, vcard.getEmails().size());
+        assertEquals("testEmailAddressValid1 - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
+        assertEquals("testEmailAddressValid1 - 3", 1, vcard.getEmails().get(0).getTypes().size());
+        assertEquals("testEmailAddressValid1 - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
     }
 
     @Test
@@ -56,14 +57,14 @@ public class EmailAddressTest extends JSContact2VCardTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testEmailAddressValid2 - 1",vcard.getEmails().size() == 2);
-        assertTrue("testEmailAddressValid2 - 2",vcard.getEmails().get(0).getValue().equals("jqpublic@xyz.example.com"));
-        assertTrue("testEmailAddressValid2 - 3",vcard.getEmails().get(0).getTypes().size() == 1);
-        assertTrue("testEmailAddressValid2 - 4",vcard.getEmails().get(0).getTypes().get(0).getValue().equals("work"));
-        assertTrue("testEmailAddressValid2 - 5",vcard.getEmails().get(1).getValue().equals("jane_doe@example.com"));
-        assertTrue("testEmailAddressValid2 - 6",vcard.getEmails().get(1).getTypes().size() == 1);
-        assertTrue("testEmailAddressValid2 - 7",vcard.getEmails().get(1).getTypes().get(0).getValue().equals("home"));
-        assertTrue("testEmailAddressValid2 - 8",vcard.getEmails().get(1).getPref() == 1);
+        assertEquals("testEmailAddressValid2 - 1", 2, vcard.getEmails().size());
+        assertEquals("testEmailAddressValid2 - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
+        assertEquals("testEmailAddressValid2 - 3", 1, vcard.getEmails().get(0).getTypes().size());
+        assertEquals("testEmailAddressValid2 - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
+        assertEquals("testEmailAddressValid2 - 5", "jane_doe@example.com", vcard.getEmails().get(1).getValue());
+        assertEquals("testEmailAddressValid2 - 6", 1, vcard.getEmails().get(1).getTypes().size());
+        assertEquals("testEmailAddressValid2 - 7", "home", vcard.getEmails().get(1).getTypes().get(0).getValue());
+        assertEquals("testEmailAddressValid2 - 8", 1, (int) vcard.getEmails().get(1).getPref());
     }
 
 }

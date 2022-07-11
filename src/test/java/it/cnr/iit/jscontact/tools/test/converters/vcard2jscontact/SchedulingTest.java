@@ -4,7 +4,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SchedulingTest extends VCard2JSContactTest {
 
@@ -19,13 +19,13 @@ public class SchedulingTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testSchedulingValid - 1",jsCard.getScheduling().size() == 2);
-        assertTrue("testSchedulingValid - 2",jsCard.getScheduling().get("CALADRURI-1").getSendTo().size() == 1);
+        assertEquals("testSchedulingValid - 1", 2, jsCard.getScheduling().size());
+        assertEquals("testSchedulingValid - 2", 1, jsCard.getScheduling().get("CALADRURI-1").getSendTo().size());
         assertTrue("testSchedulingValid - 3",jsCard.getScheduling().get("CALADRURI-1").getSendTo().values().contains("mailto:janedoe@example.com"));
-        assertTrue("testSchedulingValid - 4",jsCard.getScheduling().get("CALADRURI-1").getPref() == 1);
-        assertTrue("testSchedulingValid - 5",jsCard.getScheduling().get("CALADRURI-2").getSendTo().size() == 1);
+        assertEquals("testSchedulingValid - 4", 1, (int) jsCard.getScheduling().get("CALADRURI-1").getPref());
+        assertEquals("testSchedulingValid - 5", 1, jsCard.getScheduling().get("CALADRURI-2").getSendTo().size());
         assertTrue("testSchedulingValid - 6",jsCard.getScheduling().get("CALADRURI-2").getSendTo().values().contains("http://example.com/calendar/jdoe"));
-        assertTrue("testSchedulingValid - 7",jsCard.getScheduling().get("CALADRURI-2").getPref() == null);
+        assertNull("testSchedulingValid - 7", jsCard.getScheduling().get("CALADRURI-2").getPref());
     }
 
 

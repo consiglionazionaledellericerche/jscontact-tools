@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class OrganizationsTest extends JSContact2VCardTest {
 
@@ -50,19 +50,19 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOrganizations1 - 1",vcard.getOrganizations().size() == 2);
-        assertTrue("testOrganizations1 - 2",vcard.getOrganizations().get(0).getValues().size() == 3);
-        assertTrue("testOrganizations1 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Inc."));
-        assertTrue("testOrganizations1 - 4",vcard.getOrganizations().get(0).getValues().get(1).equals("North American Division"));
-        assertTrue("testOrganizations1 - 5",vcard.getOrganizations().get(0).getValues().get(2).equals("Marketing"));
-        assertTrue("testOrganizations1 - 6",vcard.getOrganizations().get(0).getLanguage() == null);
-        assertTrue("testOrganizations1 - 7",vcard.getOrganizations().get(0).getAltId().equals("1"));
-        assertTrue("testOrganizations1 - 8",vcard.getOrganizations().get(1).getValues().size() == 3);
-        assertTrue("testOrganizations1 - 9",vcard.getOrganizations().get(1).getValues().get(0).equals("ABC, Spa."));
-        assertTrue("testOrganizations1 - 10",vcard.getOrganizations().get(1).getValues().get(1).equals("Divisione Nord America"));
-        assertTrue("testOrganizations1 - 11",vcard.getOrganizations().get(1).getValues().get(2).equals("Marketing"));
-        assertTrue("testOrganizations1 - 12",vcard.getOrganizations().get(1).getLanguage().equals("it"));
-        assertTrue("testOrganizations1 - 13",vcard.getOrganizations().get(1).getAltId().equals("1"));
+        assertEquals("testOrganizations1 - 1", 2, vcard.getOrganizations().size());
+        assertEquals("testOrganizations1 - 2", 3, vcard.getOrganizations().get(0).getValues().size());
+        assertEquals("testOrganizations1 - 3", "ABC, Inc.", vcard.getOrganizations().get(0).getValues().get(0));
+        assertEquals("testOrganizations1 - 4", "North American Division", vcard.getOrganizations().get(0).getValues().get(1));
+        assertEquals("testOrganizations1 - 5", "Marketing", vcard.getOrganizations().get(0).getValues().get(2));
+        assertNull("testOrganizations1 - 6", vcard.getOrganizations().get(0).getLanguage());
+        assertEquals("testOrganizations1 - 7", "1", vcard.getOrganizations().get(0).getAltId());
+        assertEquals("testOrganizations1 - 8", 3, vcard.getOrganizations().get(1).getValues().size());
+        assertEquals("testOrganizations1 - 9", "ABC, Spa.", vcard.getOrganizations().get(1).getValues().get(0));
+        assertEquals("testOrganizations1 - 10", "Divisione Nord America", vcard.getOrganizations().get(1).getValues().get(1));
+        assertEquals("testOrganizations1 - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
+        assertEquals("testOrganizations1 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
+        assertEquals("testOrganizations1 - 13", "1", vcard.getOrganizations().get(1).getAltId());
     }
 
     @Test
@@ -94,23 +94,23 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOrganizations2 - 1",vcard.getOrganizations().size() == 3);
-        assertTrue("testOrganizations2 - 2",vcard.getOrganizations().get(0).getValues().size() == 3);
-        assertTrue("testOrganizations2 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Inc."));
-        assertTrue("testOrganizations2 - 4",vcard.getOrganizations().get(0).getValues().get(1).equals("North American Division"));
-        assertTrue("testOrganizations2 - 5",vcard.getOrganizations().get(0).getValues().get(2).equals("Marketing"));
-        assertTrue("testOrganizations2 - 6",vcard.getOrganizations().get(0).getLanguage() == null);
-        assertTrue("testOrganizations2 - 7",vcard.getOrganizations().get(0).getAltId().equals("1"));
-        assertTrue("testOrganizations2 - 8",vcard.getOrganizations().get(1).getValues().size() == 3);
-        assertTrue("testOrganizations2 - 9",vcard.getOrganizations().get(1).getValues().get(0).equals("ABC, Spa."));
-        assertTrue("testOrganizations2 - 10",vcard.getOrganizations().get(1).getValues().get(1).equals("Divisione Nord America"));
-        assertTrue("testOrganizations2 - 11",vcard.getOrganizations().get(1).getValues().get(2).equals("Marketing"));
-        assertTrue("testOrganizations2 - 12",vcard.getOrganizations().get(1).getLanguage().equals("it"));
-        assertTrue("testOrganizations2 - 13",vcard.getOrganizations().get(1).getAltId().equals("1"));
-        assertTrue("testOrganizations2 - 14",vcard.getOrganizations().get(2).getValues().size() == 1);
-        assertTrue("testOrganizations2 - 15",vcard.getOrganizations().get(2).getValues().get(0).equals("University of North America"));
-        assertTrue("testOrganizations2 - 16",vcard.getOrganizations().get(2).getLanguage() == null);
-        assertTrue("testOrganizations2 - 17",vcard.getOrganizations().get(2).getAltId() == null);
+        assertEquals("testOrganizations2 - 1", 3, vcard.getOrganizations().size());
+        assertEquals("testOrganizations2 - 2", 3, vcard.getOrganizations().get(0).getValues().size());
+        assertEquals("testOrganizations2 - 3", "ABC, Inc.", vcard.getOrganizations().get(0).getValues().get(0));
+        assertEquals("testOrganizations2 - 4", "North American Division", vcard.getOrganizations().get(0).getValues().get(1));
+        assertEquals("testOrganizations2 - 5", "Marketing", vcard.getOrganizations().get(0).getValues().get(2));
+        assertNull("testOrganizations2 - 6", vcard.getOrganizations().get(0).getLanguage());
+        assertEquals("testOrganizations2 - 7", "1", vcard.getOrganizations().get(0).getAltId());
+        assertEquals("testOrganizations2 - 8", 3, vcard.getOrganizations().get(1).getValues().size());
+        assertEquals("testOrganizations2 - 9", "ABC, Spa.", vcard.getOrganizations().get(1).getValues().get(0));
+        assertEquals("testOrganizations2 - 10", "Divisione Nord America", vcard.getOrganizations().get(1).getValues().get(1));
+        assertEquals("testOrganizations2 - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
+        assertEquals("testOrganizations2 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
+        assertEquals("testOrganizations2 - 13", "1", vcard.getOrganizations().get(1).getAltId());
+        assertEquals("testOrganizations2 - 14", 1, vcard.getOrganizations().get(2).getValues().size());
+        assertEquals("testOrganizations2 - 15", "University of North America", vcard.getOrganizations().get(2).getValues().get(0));
+        assertNull("testOrganizations2 - 16", vcard.getOrganizations().get(2).getLanguage());
+        assertNull("testOrganizations2 - 17", vcard.getOrganizations().get(2).getAltId());
     }
 
     @Test
@@ -146,27 +146,27 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOrganizations3 - 1",vcard.getOrganizations().size() == 4);
-        assertTrue("testOrganizations3 - 2",vcard.getOrganizations().get(0).getValues().size() == 3);
-        assertTrue("testOrganizations3 - 3",vcard.getOrganizations().get(0).getValues().get(0).equals("ABC, Inc."));
-        assertTrue("testOrganizations3 - 4",vcard.getOrganizations().get(0).getValues().get(1).equals("North American Division"));
-        assertTrue("testOrganizations3 - 5",vcard.getOrganizations().get(0).getValues().get(2).equals("Marketing"));
-        assertTrue("testOrganizations3 - 6",vcard.getOrganizations().get(0).getLanguage() == null);
-        assertTrue("testOrganizations3 - 7",vcard.getOrganizations().get(0).getAltId().equals("1"));
-        assertTrue("testOrganizations3 - 8",vcard.getOrganizations().get(1).getValues().size() == 3);
-        assertTrue("testOrganizations3 - 9",vcard.getOrganizations().get(1).getValues().get(0).equals("ABC, Spa."));
-        assertTrue("testOrganizations3 - 10",vcard.getOrganizations().get(1).getValues().get(1).equals("Divisione Nord America"));
-        assertTrue("testOrganizations3 - 11",vcard.getOrganizations().get(1).getValues().get(2).equals("Marketing"));
-        assertTrue("testOrganizations3 - 12",vcard.getOrganizations().get(1).getLanguage().equals("it"));
-        assertTrue("testOrganizations3 - 13",vcard.getOrganizations().get(1).getAltId().equals("1"));
-        assertTrue("testOrganizations3 - 14",vcard.getOrganizations().get(2).getValues().size() == 1);
-        assertTrue("testOrganizations3 - 15",vcard.getOrganizations().get(2).getValues().get(0).equals("University of North America"));
-        assertTrue("testOrganizations3 - 16",vcard.getOrganizations().get(2).getLanguage() == null);
-        assertTrue("testOrganizations3 - 17",vcard.getOrganizations().get(2).getAltId().equals("2"));
-        assertTrue("testOrganizations3 - 18",vcard.getOrganizations().get(3).getValues().size() == 1);
-        assertTrue("testOrganizations3 - 19",vcard.getOrganizations().get(3).getValues().get(0).equals("Università del Nord America"));
-        assertTrue("testOrganizations3 - 20",vcard.getOrganizations().get(3).getLanguage().equals("it"));
-        assertTrue("testOrganizations3 - 21",vcard.getOrganizations().get(3).getAltId().equals("2"));
+        assertEquals("testOrganizations3 - 1", 4, vcard.getOrganizations().size());
+        assertEquals("testOrganizations3 - 2", 3, vcard.getOrganizations().get(0).getValues().size());
+        assertEquals("testOrganizations3 - 3", "ABC, Inc.", vcard.getOrganizations().get(0).getValues().get(0));
+        assertEquals("testOrganizations3 - 4", "North American Division", vcard.getOrganizations().get(0).getValues().get(1));
+        assertEquals("testOrganizations3 - 5", "Marketing", vcard.getOrganizations().get(0).getValues().get(2));
+        assertNull("testOrganizations3 - 6", vcard.getOrganizations().get(0).getLanguage());
+        assertEquals("testOrganizations3 - 7", "1", vcard.getOrganizations().get(0).getAltId());
+        assertEquals("testOrganizations3 - 8", 3, vcard.getOrganizations().get(1).getValues().size());
+        assertEquals("testOrganizations3 - 9", "ABC, Spa.", vcard.getOrganizations().get(1).getValues().get(0));
+        assertEquals("testOrganizations3 - 10", "Divisione Nord America", vcard.getOrganizations().get(1).getValues().get(1));
+        assertEquals("testOrganizations3 - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
+        assertEquals("testOrganizations3 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
+        assertEquals("testOrganizations3 - 13", "1", vcard.getOrganizations().get(1).getAltId());
+        assertEquals("testOrganizations3 - 14", 1, vcard.getOrganizations().get(2).getValues().size());
+        assertEquals("testOrganizations3 - 15", "University of North America", vcard.getOrganizations().get(2).getValues().get(0));
+        assertNull("testOrganizations3 - 16", vcard.getOrganizations().get(2).getLanguage());
+        assertEquals("testOrganizations3 - 17", "2", vcard.getOrganizations().get(2).getAltId());
+        assertEquals("testOrganizations3 - 18", 1, vcard.getOrganizations().get(3).getValues().size());
+        assertEquals("testOrganizations3 - 19", "Università del Nord America", vcard.getOrganizations().get(3).getValues().get(0));
+        assertEquals("testOrganizations3 - 20", "it", vcard.getOrganizations().get(3).getLanguage());
+        assertEquals("testOrganizations3 - 21", "2", vcard.getOrganizations().get(3).getAltId());
     }
 
 }

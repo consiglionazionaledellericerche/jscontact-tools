@@ -19,7 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PropertyGroupTest extends JCard2JSContactTest {
     
@@ -36,8 +36,8 @@ public class PropertyGroupTest extends JCard2JSContactTest {
                 "]]";
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testPropertyGroup1 - 1",jsCard.getPropertyGroups().size() == 1);
-        assertTrue("testPropertyGroup1 - 2",jsCard.getPropertyGroups().get("CONTACT").getMembers().get("addresses/ADR-1") != null);
+        assertEquals("testPropertyGroup1 - 1", 1, jsCard.getPropertyGroups().size());
+        assertNotNull("testPropertyGroup1 - 2", jsCard.getPropertyGroups().get("CONTACT").getMembers().get("addresses/ADR-1"));
 
     }
 

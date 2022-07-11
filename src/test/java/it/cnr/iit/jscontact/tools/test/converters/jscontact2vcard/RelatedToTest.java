@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RelatedToTest extends JSContact2VCardTest {
@@ -38,9 +39,9 @@ public class RelatedToTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testRelatedToValid1 - 1",vcard.getRelations().size() == 1);
-        assertTrue("testRelatedToValid1 - 2",vcard.getRelations().get(0).getUri().equals("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6"));
-        assertTrue("testRelatedToValid1 - 3",vcard.getRelations().get(0).getTypes().size() == 0);
+        assertEquals("testRelatedToValid1 - 1", 1, vcard.getRelations().size());
+        assertEquals("testRelatedToValid1 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
+        assertEquals("testRelatedToValid1 - 3", 0, vcard.getRelations().get(0).getTypes().size());
     }
 
     @Test
@@ -55,9 +56,9 @@ public class RelatedToTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testRelatedToValid2 - 1",vcard.getRelations().size() == 1);
-        assertTrue("testRelatedToValid2 - 2",vcard.getRelations().get(0).getUri().equals("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6"));
-        assertTrue("testRelatedToValid2 - 3",vcard.getRelations().get(0).getTypes().size() == 1);
+        assertEquals("testRelatedToValid2 - 1", 1, vcard.getRelations().size());
+        assertEquals("testRelatedToValid2 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
+        assertEquals("testRelatedToValid2 - 3", 1, vcard.getRelations().get(0).getTypes().size());
         assertTrue("testRelatedToValid2 - 4",vcard.getRelations().get(0).getTypes().contains(RelatedType.FRIEND));
 
     }
@@ -77,15 +78,15 @@ public class RelatedToTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testRelatedToValid3 - 1",vcard.getRelations().size() == 3);
-        assertTrue("testRelatedToValid3 - 2",vcard.getRelations().get(0).getUri().equals("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6"));
-        assertTrue("testRelatedToValid3 - 3",vcard.getRelations().get(0).getTypes().size() == 2);
+        assertEquals("testRelatedToValid3 - 1", 3, vcard.getRelations().size());
+        assertEquals("testRelatedToValid3 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
+        assertEquals("testRelatedToValid3 - 3", 2, vcard.getRelations().get(0).getTypes().size());
         assertTrue("testRelatedToValid3 - 4",vcard.getRelations().get(0).getTypes().contains(RelatedType.FRIEND));
         assertTrue("testRelatedToValid3 - 5",vcard.getRelations().get(0).getTypes().contains(RelatedType.COLLEAGUE));
-        assertTrue("testRelatedToValid3 - 6",vcard.getRelations().get(1).getUri().equals("http://example.com/directory/jdoe.vcf"));
-        assertTrue("testRelatedToValid3 - 7",vcard.getRelations().get(1).getTypes().size() == 1);
+        assertEquals("testRelatedToValid3 - 6", "http://example.com/directory/jdoe.vcf", vcard.getRelations().get(1).getUri());
+        assertEquals("testRelatedToValid3 - 7", 1, vcard.getRelations().get(1).getTypes().size());
         assertTrue("testRelatedToValid3 - 8",vcard.getRelations().get(1).getTypes().contains(RelatedType.CONTACT));
-        assertTrue("testRelatedToValid3 - 9",vcard.getRelations().get(2).getText().equals("Please contact my assistant Jane Doe for any inquiries."));
+        assertEquals("testRelatedToValid3 - 9", "Please contact my assistant Jane Doe for any inquiries.", vcard.getRelations().get(2).getText());
 
     }
 
@@ -101,9 +102,9 @@ public class RelatedToTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testRelatedToValid4 - 1",vcard.getRelations().size() == 1);
-        assertTrue("testRelatedToValid4 - 2",vcard.getRelations().get(0).getText().equals("freetext"));
-        assertTrue("testRelatedToValid4 - 3",vcard.getRelations().get(0).getTypes().size() == 0);
+        assertEquals("testRelatedToValid4 - 1", 1, vcard.getRelations().size());
+        assertEquals("testRelatedToValid4 - 2", "freetext", vcard.getRelations().get(0).getText());
+        assertEquals("testRelatedToValid4 - 3", 0, vcard.getRelations().get(0).getTypes().size());
     }
 
 }

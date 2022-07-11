@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class KindTest extends JCard2JSContactTest {
@@ -44,7 +45,7 @@ public class KindTest extends JCard2JSContactTest {
                 "]]";
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testExtKind - 1",jsCard.getKind().getExtValue().equals("x-value"));
+        assertEquals("testExtKind - 1", "x-value", jsCard.getKind().getExtValue());
 
     }
 

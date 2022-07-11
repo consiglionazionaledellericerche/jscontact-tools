@@ -32,7 +32,7 @@ public class CardCloneTest {
     @Test
     public void testClone1() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testClone1", Objects.deepEquals(jsCard, jsCard.clone()));
@@ -42,7 +42,7 @@ public class CardCloneTest {
     @Test
     public void testClone2() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json")), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testClone2", Objects.deepEquals(jsCard, jsCard.clone()));
@@ -52,7 +52,7 @@ public class CardCloneTest {
     @Test
     public void testClone3() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json")), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
         assertTrue("testClone3", Objects.deepEquals(jsCard, jsCard.clone()));

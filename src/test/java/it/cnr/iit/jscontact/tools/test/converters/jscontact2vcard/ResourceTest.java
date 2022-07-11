@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ResourceTest extends JSContact2VCardTest {
     
@@ -43,8 +43,8 @@ public class ResourceTest extends JSContact2VCardTest {
                  "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid1 - 1",vcard.getSources().size() == 1);
-        assertTrue("testResourceValid1 - 2",vcard.getSources().get(0).getValue().equals("http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf"));
+        assertEquals("testResourceValid1 - 1", 1, vcard.getSources().size());
+        assertEquals("testResourceValid1 - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", vcard.getSources().get(0).getValue());
     }
 
     @Test
@@ -63,9 +63,9 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testPhotoValid - 1",vcard.getPhotos().size() == 1);
-        assertTrue("testPhotoValid - 2",vcard.getPhotos().get(0).getUrl().equals("http://www.example.com/pub/photos/jqpublic.gif"));
-        assertTrue("testPhotoValid - 3",vcard.getPhotos().get(0).getContentType() == ImageType.GIF);
+        assertEquals("testPhotoValid - 1", 1, vcard.getPhotos().size());
+        assertEquals("testPhotoValid - 2", "http://www.example.com/pub/photos/jqpublic.gif", vcard.getPhotos().get(0).getUrl());
+        assertSame("testPhotoValid - 3", vcard.getPhotos().get(0).getContentType(), ImageType.GIF);
     }
 
     @Test
@@ -84,8 +84,8 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid2 - 1",vcard.getLogos().size() == 1);
-        assertTrue("testResourceValid2 - 2",vcard.getLogos().get(0).getUrl().equals("http://www.example.com/pub/logos/abccorp.jpg"));
+        assertEquals("testResourceValid2 - 1", 1, vcard.getLogos().size());
+        assertEquals("testResourceValid2 - 2", "http://www.example.com/pub/logos/abccorp.jpg", vcard.getLogos().get(0).getUrl());
     }
 
     @Test
@@ -104,9 +104,9 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid3 - 1",vcard.getExtendedProperties().size() == 1);
-        assertTrue("testResourceValid3 - 2",vcard.getExtendedProperties().get(0).getPropertyName().equals("CONTACT-URI"));
-        assertTrue("testResourceValid3 - 2",vcard.getExtendedProperties().get(0).getValue().equals("mailto:contact@example.com"));
+        assertEquals("testResourceValid3 - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testResourceValid3 - 2", "CONTACT-URI", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testResourceValid3 - 2", "mailto:contact@example.com", vcard.getExtendedProperties().get(0).getValue());
     }
 
     @Test
@@ -126,9 +126,9 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid4 - 1",vcard.getSounds().size() == 1);
-        assertTrue("testResourceValid4 - 2",vcard.getSounds().get(0).getUrl().equals("sound.mp3"));
-        assertTrue("testResourceValid4 - 3",vcard.getSounds().get(0).getContentType() == SoundType.MP3);
+        assertEquals("testResourceValid4 - 1", 1, vcard.getSounds().size());
+        assertEquals("testResourceValid4 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
+        assertSame("testResourceValid4 - 3", vcard.getSounds().get(0).getContentType(), SoundType.MP3);
     }
 
     @Test
@@ -147,9 +147,9 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid5 - 1",vcard.getSounds().size() == 1);
-        assertTrue("testResourceValid5 - 2",vcard.getSounds().get(0).getUrl().equals("sound.mp3"));
-        assertTrue("testResourceValid5 - 2",vcard.getSounds().get(0).getContentType() == null);
+        assertEquals("testResourceValid5 - 1", 1, vcard.getSounds().size());
+        assertEquals("testResourceValid5 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
+        assertNull("testResourceValid5 - 2", vcard.getSounds().get(0).getContentType());
     }
 
     @Test
@@ -168,8 +168,8 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid6 - 1",vcard.getUrls().size() == 1);
-        assertTrue("testResourceValid6 - 2",vcard.getUrls().get(0).getValue().equals("http://example.org/restaurant.french/~chezchic.htm"));
+        assertEquals("testResourceValid6 - 1", 1, vcard.getUrls().size());
+        assertEquals("testResourceValid6 - 2", "http://example.org/restaurant.french/~chezchic.htm", vcard.getUrls().get(0).getValue());
     }
 
     @Test
@@ -188,8 +188,8 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid7 - 1",vcard.getKeys().size() == 1);
-        assertTrue("testResourceValid7 - 2",vcard.getKeys().get(0).getUrl().equals("http://www.example.com/keys/jdoe.cer"));
+        assertEquals("testResourceValid7 - 1", 1, vcard.getKeys().size());
+        assertEquals("testResourceValid7 - 2", "http://www.example.com/keys/jdoe.cer", vcard.getKeys().get(0).getUrl());
     }
 
     @Test
@@ -215,11 +215,11 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid8 - 1",vcard.getFbUrls().size() == 2);
-        assertTrue("testResourceValid8 - 2",vcard.getFbUrls().get(0).getValue().equals("http://www.example.com/busy/janedoe"));
-        assertTrue("testResourceValid8 - 3",vcard.getFbUrls().get(0).getPref() == 1);
-        assertTrue("testResourceValid8 - 4",vcard.getFbUrls().get(1).getValue().equals("ftp://example.com/busy/project-a.ifb"));
-        assertTrue("testResourceValid8 - 5",vcard.getFbUrls().get(1).getMediaType().equals("text/calendar"));
+        assertEquals("testResourceValid8 - 1", 2, vcard.getFbUrls().size());
+        assertEquals("testResourceValid8 - 2", "http://www.example.com/busy/janedoe", vcard.getFbUrls().get(0).getValue());
+        assertEquals("testResourceValid8 - 3", 1, (int) vcard.getFbUrls().get(0).getPref());
+        assertEquals("testResourceValid8 - 4", "ftp://example.com/busy/project-a.ifb", vcard.getFbUrls().get(1).getValue());
+        assertEquals("testResourceValid8 - 5", "text/calendar", vcard.getFbUrls().get(1).getMediaType());
     }
 
     @Test
@@ -242,10 +242,10 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid9 - 1",vcard.getCalendarRequestUris().size() == 2);
-        assertTrue("testResourceValid9 - 2",vcard.getCalendarRequestUris().get(0).getValue().equals("mailto:janedoe@example.com"));
-        assertTrue("testResourceValid9 - 3",vcard.getCalendarRequestUris().get(0).getPref() == 1);
-        assertTrue("testResourceValid9 - 4",vcard.getCalendarRequestUris().get(1).getValue().equals("http://example.com/calendar/jdoe"));
+        assertEquals("testResourceValid9 - 1", 2, vcard.getCalendarRequestUris().size());
+        assertEquals("testResourceValid9 - 2", "mailto:janedoe@example.com", vcard.getCalendarRequestUris().get(0).getValue());
+        assertEquals("testResourceValid9 - 3", 1, (int) vcard.getCalendarRequestUris().get(0).getPref());
+        assertEquals("testResourceValid9 - 4", "http://example.com/calendar/jdoe", vcard.getCalendarRequestUris().get(1).getValue());
     }
 
     @Test
@@ -271,11 +271,11 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid10 - 1",vcard.getCalendarUris().size() == 2);
-        assertTrue("testResourceValid10 - 2",vcard.getCalendarUris().get(0).getValue().equals("http://cal.example.com/calA"));
-        assertTrue("testResourceValid10 - 3",vcard.getCalendarUris().get(0).getPref() == 1);
-        assertTrue("testResourceValid10 - 4",vcard.getCalendarUris().get(1).getValue().equals("ftp://ftp.example.com/calA.ics"));
-        assertTrue("testResourceValid10 - 5",vcard.getCalendarUris().get(1).getMediaType().equals("text/calendar"));
+        assertEquals("testResourceValid10 - 1", 2, vcard.getCalendarUris().size());
+        assertEquals("testResourceValid10 - 2", "http://cal.example.com/calA", vcard.getCalendarUris().get(0).getValue());
+        assertEquals("testResourceValid10 - 3", 1, (int) vcard.getCalendarUris().get(0).getPref());
+        assertEquals("testResourceValid10 - 4", "ftp://ftp.example.com/calA.ics", vcard.getCalendarUris().get(1).getValue());
+        assertEquals("testResourceValid10 - 5", "text/calendar", vcard.getCalendarUris().get(1).getMediaType());
     }
 
 
@@ -295,7 +295,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testResourceValid13 - 1",vcard.getExtendedProperties().size() == 1);
-        assertTrue("testResourceValid13 - 2",vcard.getExtendedProperty("CONTACT-URI").getValue().equals("mailto:contact@example.com"));
+        assertEquals("testResourceValid13 - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testResourceValid13 - 2", "mailto:contact@example.com", vcard.getExtendedProperty("CONTACT-URI").getValue());
     }
 }

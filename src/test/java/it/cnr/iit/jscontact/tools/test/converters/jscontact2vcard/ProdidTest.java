@@ -22,7 +22,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ProdidTest extends JSContact2VCardTest {
 
@@ -36,7 +36,7 @@ public class ProdidTest extends JSContact2VCardTest {
                 "\"prodId\":\"-//ONLINE DIRECTORY//NONSGML Version 1//EN\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testProdidValid - 1",vcard.getProductId().getValue().equals("-//ONLINE DIRECTORY//NONSGML Version 1//EN"));
+        assertEquals("testProdidValid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", vcard.getProductId().getValue());
     }
 
     @Test
@@ -48,11 +48,11 @@ public class ProdidTest extends JSContact2VCardTest {
                 "\"fullName\":\"test\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testAutoProdid1 - 1",vcard.getProductId() == null);
+        assertNull("testAutoProdid1 - 1", vcard.getProductId());
         String text1 = Ezvcard.write(vcard).go();
         assertTrue("testAutoProdid2 - 1", text1.contains("PRODID"));
         text1 = Ezvcard.write(vcard).prodId(false).go();
-        assertTrue("testAutoProdid3 - 1", !text1.contains("PRODID"));
+        assertFalse("testAutoProdid3 - 1", text1.contains("PRODID"));
     }
 
 }

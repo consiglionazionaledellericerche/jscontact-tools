@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class UnmatchedTest extends JCard2JSContactTest {
@@ -32,8 +33,8 @@ public class UnmatchedTest extends JCard2JSContactTest {
                 "]]";
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testUnmatchedParameter - 1",jsCard.getExtensions().size() == 1);
-        assertTrue("testUnmatchedParameter - 2",jsCard.getExtensions().get("ietf.org:rfc6350:N:SORT-AS").equals("Public,John"));
+        assertEquals("testUnmatchedParameter - 1", 1, jsCard.getExtensions().size());
+        assertEquals("testUnmatchedParameter - 2", "Public,John", jsCard.getExtensions().get("ietf.org:rfc6350:N:SORT-AS"));
 
     }
 

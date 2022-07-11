@@ -23,6 +23,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ExtensionsTest extends JSContact2VCardTest {
@@ -41,9 +42,9 @@ public class ExtensionsTest extends JSContact2VCardTest {
                                 .extensionsPrefix("extension:").build()
                                 ).build();
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testExtendedJSContactValid - 4",vcard.getExtendedProperties().size() == 1);
-        assertTrue("testExtendedJSContactValid - 5",vcard.getExtendedProperties().get(0).getPropertyName().equals("myext"));
-        assertTrue("testExtendedJSContactValid - 5",vcard.getExtendedProperties().get(0).getValue().equals("extvalue"));
+        assertEquals("testExtendedJSContactValid - 4", 1, vcard.getExtendedProperties().size());
+        assertEquals("testExtendedJSContactValid - 5", "myext", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContactValid - 5", "extvalue", vcard.getExtendedProperties().get(0).getValue());
     }
 
 

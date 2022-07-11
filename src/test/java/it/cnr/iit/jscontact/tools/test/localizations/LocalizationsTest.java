@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class LocalizationsTest {
 
@@ -37,11 +37,11 @@ public class LocalizationsTest {
         Card jsCard = objectMapper.readValue(json, Card.class);
         Card localizedCard = jsCard.getLocalizedVersion("jp");
 
-        assertTrue("testLocalizations1 - 1", localizedCard.getLocale().equals("jp"));
-        assertTrue("testLocalizations1 - 2", localizedCard.getLocalizations() == null);
-        assertTrue("testLocalizations1 - 3", localizedCard.getAddresses().size() == 2);
-        assertTrue("testLocalizations1 - 4", localizedCard.getAddresses().get("ADR-1").getLocality().equals("東京"));
-        assertTrue("testLocalizations1 - 5", localizedCard.getAddresses().get("ADR-2").getLocality().equals("大阪市"));
+        assertEquals("testLocalizations1 - 1", "jp", localizedCard.getLocale());
+        assertNull("testLocalizations1 - 2", localizedCard.getLocalizations());
+        assertEquals("testLocalizations1 - 3", 2, localizedCard.getAddresses().size());
+        assertEquals("testLocalizations1 - 4", "東京", localizedCard.getAddresses().get("ADR-1").getLocality());
+        assertEquals("testLocalizations1 - 5", "大阪市", localizedCard.getAddresses().get("ADR-2").getLocality());
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -97,8 +97,8 @@ public class LocalizationsTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
-        assertTrue("testLocalizations3 - 1", !jsCard.isValid());
-        assertTrue("testLocalizations3 - 2", jsCard.getValidationMessage().replace("\n","").equals("type mismatch of JSON pointer in localizations: addresses/ADR-2"));
+        assertFalse("testLocalizations3 - 1", jsCard.isValid());
+        assertEquals("testLocalizations3 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-2", jsCard.getValidationMessage().replace("\n", ""));
     }
 
     @Test
@@ -126,8 +126,8 @@ public class LocalizationsTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
-        assertTrue("testLocalizations4 - 1", !jsCard.isValid());
-        assertTrue("testLocalizations4 - 2", jsCard.getValidationMessage().replace("\n","").equals("type mismatch of JSON pointer in localizations: addresses/ADR-1"));
+        assertFalse("testLocalizations4 - 1", jsCard.isValid());
+        assertEquals("testLocalizations4 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-1", jsCard.getValidationMessage().replace("\n", ""));
     }
 
 
