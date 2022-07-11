@@ -69,7 +69,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Map.Entry<String,PropertyGroup> entry : jsCard.getPropertyGroups().entrySet()) {
 
-            if (entry.getValue().getMembers().keySet().contains(propertyJSONPointer))
+            if (entry.getValue().getMembers().containsKey(propertyJSONPointer))
                 property.setGroup(entry.getKey());
         }
     }

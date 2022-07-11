@@ -22,7 +22,6 @@ import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSConta
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class FullNameTest extends VCard2JSContactTest {
 
