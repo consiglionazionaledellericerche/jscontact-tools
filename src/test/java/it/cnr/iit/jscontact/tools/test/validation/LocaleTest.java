@@ -16,13 +16,8 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.Context;
-import it.cnr.iit.jscontact.tools.dto.Phone;
-import it.cnr.iit.jscontact.tools.dto.PhoneFeature;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
-
-import java.util.HashMap;
 
 import static org.junit.Assert.assertTrue;
 

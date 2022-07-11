@@ -148,19 +148,21 @@ public class RelationType extends ExtensibleEnum<RelationEnum> implements Serial
      */
     @JsonIgnore
     public boolean isNeighbor() { return isRfcRelation(RelationEnum.NEIGHBOR); }
-    @JsonIgnore
+
     /**
      * Tests if the type of this relation is "parent".
      *
      * @return true if the type of this relation is "parent", false otherwise
      */
-    public boolean isParent() { return isRfcRelation(RelationEnum.PARENT); }
     @JsonIgnore
+    public boolean isParent() { return isRfcRelation(RelationEnum.PARENT); }
+
     /**
      * Tests if the type of this relation is "sibling".
      *
      * @return true if the type of this relation is "sinling", false otherwise
      */
+    @JsonIgnore
     public boolean isSibling() { return isRfcRelation(RelationEnum.SIBLING); }
     /**
      * Tests if the type of this relation is "spouse".

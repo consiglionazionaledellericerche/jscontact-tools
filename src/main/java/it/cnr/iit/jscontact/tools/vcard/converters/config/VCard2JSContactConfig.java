@@ -35,9 +35,9 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private String customTimeZonesPrefix = "tz";
     @Builder.Default
-    private boolean cardToValidate = true;
+    private boolean cardToValidate;
     @Builder.Default
-    private boolean applyAutoIdsProfile = true;
+    private boolean applyAutoIdsProfile;
 
     private String defaultLanguage;
 

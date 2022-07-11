@@ -20,8 +20,6 @@ import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertTrue;
 
 public class UpdatedTest extends VCard2JSContactTest {

@@ -15,15 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard.JSContact2VCardTest;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 

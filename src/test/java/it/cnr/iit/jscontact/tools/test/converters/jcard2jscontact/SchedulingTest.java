@@ -4,8 +4,6 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertTrue;
 
 public class SchedulingTest extends JCard2JSContactTest {

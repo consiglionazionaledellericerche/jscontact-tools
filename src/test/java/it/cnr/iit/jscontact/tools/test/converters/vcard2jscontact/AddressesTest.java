@@ -23,8 +23,6 @@ import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSC
 import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSContact;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertTrue;
 
 public class AddressesTest extends VCard2JSContactTest {

@@ -21,8 +21,6 @@ import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSContact;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertTrue;
 
 public class FullNameTest extends VCard2JSContactTest {

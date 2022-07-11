@@ -64,7 +64,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static final String CUSTOM_TIME_ZONE_ID_PREFIX = "TZ";
     public static final String CUSTOM_TIME_ZONE_RULE_START = "1900-01-01T00:00:00";
-    private static final Integer HIGHEST_PREFERENCE = Integer.valueOf(0);
+    private static final Integer HIGHEST_PREFERENCE = 0;
 
 
     private static final List<String> fakeExtensions = Collections.singletonList("contact-uri");

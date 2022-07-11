@@ -19,8 +19,6 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertTrue;
 
 public class NameTest extends VCard2JSContactTest {
