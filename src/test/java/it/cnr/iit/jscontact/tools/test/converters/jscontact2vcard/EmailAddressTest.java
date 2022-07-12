@@ -40,6 +40,7 @@ public class EmailAddressTest extends JSContact2VCardTest {
         assertEquals("testEmailAddressValid1 - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
         assertEquals("testEmailAddressValid1 - 3", 1, vcard.getEmails().get(0).getTypes().size());
         assertEquals("testEmailAddressValid1 - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
+        assertEquals("testEmailAddressValid1 - 5", "EMAIL-1", vcard.getEmails().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -64,6 +65,8 @@ public class EmailAddressTest extends JSContact2VCardTest {
         assertEquals("testEmailAddressValid2 - 6", 1, vcard.getEmails().get(1).getTypes().size());
         assertEquals("testEmailAddressValid2 - 7", "home", vcard.getEmails().get(1).getTypes().get(0).getValue());
         assertEquals("testEmailAddressValid2 - 8", 1, (int) vcard.getEmails().get(1).getPref());
+        assertEquals("testEmailAddressValid2 - 9", "EMAIL-1", vcard.getEmails().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testEmailAddressValid2 - 10", "EMAIL-2", vcard.getEmails().get(1).getParameter(PROP_ID_PARAM));
     }
 
 }

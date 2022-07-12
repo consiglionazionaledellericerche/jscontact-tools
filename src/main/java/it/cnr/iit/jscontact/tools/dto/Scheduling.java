@@ -38,8 +38,8 @@ public class Scheduling extends GroupableObject implements IdMapValue, Serializa
     @JsonPropertyOrder(alphabetic = true)
     Map<String,String> sendTo;
 
-    @Min(value=1, message = "invalid pref in Email - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in Email - value must be less or equal than 100")
+    @Min(value=1, message = "invalid pref in Scheduling - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in Scheduling - value must be less or equal than 100")
     Integer pref;
 
 

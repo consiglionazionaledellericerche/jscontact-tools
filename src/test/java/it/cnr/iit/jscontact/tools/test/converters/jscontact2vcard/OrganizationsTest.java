@@ -63,6 +63,8 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations1 - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
         assertEquals("testOrganizations1 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
         assertEquals("testOrganizations1 - 13", "1", vcard.getOrganizations().get(1).getAltId());
+        assertEquals("testOrganizations1 - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testOrganizations1 - 15", "ORG-1", vcard.getOrganizations().get(1).getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -111,6 +113,9 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations2 - 15", "University of North America", vcard.getOrganizations().get(2).getValues().get(0));
         assertNull("testOrganizations2 - 16", vcard.getOrganizations().get(2).getLanguage());
         assertNull("testOrganizations2 - 17", vcard.getOrganizations().get(2).getAltId());
+        assertEquals("testOrganizations2 - 18", "ORG-1", vcard.getOrganizations().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testOrganizations2 - 19", "ORG-1", vcard.getOrganizations().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testOrganizations2 - 20", "ORG-2", vcard.getOrganizations().get(2).getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -167,6 +172,10 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations3 - 19", "Università del Nord America", vcard.getOrganizations().get(3).getValues().get(0));
         assertEquals("testOrganizations3 - 20", "it", vcard.getOrganizations().get(3).getLanguage());
         assertEquals("testOrganizations3 - 21", "2", vcard.getOrganizations().get(3).getAltId());
+        assertEquals("testOrganizations3 - 22", "ORG-1", vcard.getOrganizations().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testOrganizations3 - 23", "ORG-1", vcard.getOrganizations().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testOrganizations3 - 24", "ORG-2", vcard.getOrganizations().get(2).getParameter(PROP_ID_PARAM));
+        assertEquals("testOrganizations3 - 25", "ORG-2", vcard.getOrganizations().get(3).getParameter(PROP_ID_PARAM));
     }
 
 }

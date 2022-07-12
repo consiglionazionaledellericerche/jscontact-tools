@@ -43,8 +43,9 @@ public class OnlineServiceTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testOnlineServiceValid1 - 1", 1, vcard.getImpps().size());
-        assertEquals("testOnlineServiceValid1 - 3", "alice@example.com", vcard.getImpps().get(0).getHandle());
-        assertEquals("testOnlineServiceValid1 - 4", "home", vcard.getImpps().get(0).getParameter("TYPE"));
-        assertEquals("testOnlineServiceValid1 - 5", 1, (int) vcard.getImpps().get(0).getPref());
+        assertEquals("testOnlineServiceValid1 - 2", "alice@example.com", vcard.getImpps().get(0).getHandle());
+        assertEquals("testOnlineServiceValid1 - 3", "home", vcard.getImpps().get(0).getParameter("TYPE"));
+        assertEquals("testOnlineServiceValid1 - 4", 1, (int) vcard.getImpps().get(0).getPref());
+        assertEquals("testOnlineServiceValid1 - 5", "OS-1", vcard.getImpps().get(0).getParameter(PROP_ID_PARAM));
     }
 }

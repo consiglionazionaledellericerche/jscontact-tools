@@ -44,6 +44,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertEquals("testAnniversariesValid1 - 1", 0, vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
+        assertEquals("testAnniversariesValid1 - 2", "ANNIVERSARY-1", vcard.getBirthday().getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -68,6 +69,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertEquals("testAnniversariesValid2 - 1", 0, vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
         assertEquals("testAnniversariesValid2 - 2", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getBirthplace().getText());
+        assertEquals("testAnniversariesValid2 - 3", "ANNIVERSARY-1", vcard.getBirthday().getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -87,6 +89,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "}";
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertEquals("testAnniversariesValid3 - 1", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
+        assertEquals("testAnniversariesValid3 - 2", "ANNIVERSARY-1", vcard.getDeathdate().getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -110,6 +113,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertEquals("testAnniversariesValid4 - 1", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
         assertEquals("testAnniversariesValid4 - 2", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getDeathplace().getText());
+        assertEquals("testAnniversariesValid4 - 3", "ANNIVERSARY-1", vcard.getDeathdate().getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -143,6 +147,8 @@ public class AnniversariesTest extends JSContact2VCardTest {
         assertEquals("testAnniversariesValid5 - 2", "Los Angeles CA USA", vcard.getBirthplace().getText());
         assertEquals("testAnniversariesValid5 - 3", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")));
         assertEquals("testAnniversariesValid5 - 4", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getDeathplace().getText());
+        assertEquals("testAnniversariesValid5 - 5", "ANNIVERSARY-1", vcard.getBirthday().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversariesValid5 - 6", "ANNIVERSARY-2", vcard.getDeathdate().getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -182,6 +188,9 @@ public class AnniversariesTest extends JSContact2VCardTest {
         assertEquals("testAnniversariesValid6 - 3", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")));
         assertEquals("testAnniversariesValid6 - 4", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getDeathplace().getText());
         assertEquals("testAnniversariesValid6 - 5", 0, vcard.getAnniversary().getDate().compareTo(VCardDateFormat.parse("1986-02-01T19:00:00Z")));
+        assertEquals("testAnniversariesValid6 - 6", "ANNIVERSARY-1", vcard.getBirthday().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversariesValid6 - 7", "ANNIVERSARY-2", vcard.getDeathdate().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversariesValid6 - 7", "ANNIVERSARY-3", vcard.getAnniversary().getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -223,6 +232,9 @@ public class AnniversariesTest extends JSContact2VCardTest {
         assertEquals("testAnniversariesValid7 - 3", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")));
         assertEquals("testAnniversariesValid7 - 4", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getDeathplace().getText());
         assertEquals("testAnniversariesValid7 - 5", 0, vcard.getAnniversary().getDate().compareTo(VCardDateFormat.parse("1986-02-01T19:00:00Z")));
+        assertEquals("testAnniversariesValid7 - 6", "ANNIVERSARY-1", vcard.getBirthday().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversariesValid7 - 7", "ANNIVERSARY-2", vcard.getDeathdate().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversariesValid7 - 8", "ANNIVERSARY-3", vcard.getAnniversary().getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -266,6 +278,9 @@ public class AnniversariesTest extends JSContact2VCardTest {
         assertEquals("testAnniversariesValid8 - 3", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")));
         assertEquals("testAnniversariesValid8 - 4", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getDeathplace().getText());
         assertEquals("testAnniversariesValid8 - 5", 0, vcard.getAnniversary().getDate().compareTo(VCardDateFormat.parse("1986-02-01T19:00:00Z")));
+        assertEquals("testAnniversariesValid9 - 6", "ANNIVERSARY-1", vcard.getBirthday().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversariesValid9 - 7", "ANNIVERSARY-2", vcard.getDeathdate().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversariesValid9 - 8", "ANNIVERSARY-3", vcard.getAnniversary().getParameter(PROP_ID_PARAM));
     }
 
 }

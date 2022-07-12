@@ -52,6 +52,8 @@ public class TitlesTest extends JSContact2VCardTest {
         assertEquals("testTitles1 - 5", "Ricercatore", vcard.getTitles().get(1).getValue());
         assertEquals("testTitles1 - 6", "it", vcard.getTitles().get(1).getLanguage());
         assertEquals("testTitles1 - 7", "1", vcard.getTitles().get(1).getAltId());
+        assertEquals("testTitles1 - 8", "TITLE-1", vcard.getTitles().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitles1 - 9", "TITLE-1", vcard.getTitles().get(1).getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -88,6 +90,9 @@ public class TitlesTest extends JSContact2VCardTest {
         assertEquals("testTitles2 - 8", "IETF Area Director", vcard.getTitles().get(2).getValue());
         assertNull("testTitles2 - 9", vcard.getTitles().get(2).getLanguage());
         assertNull("testTitles2 - 10", vcard.getTitles().get(2).getAltId());
+        assertEquals("testTitles2 - 11", "TITLE-1", vcard.getTitles().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitles2 - 12", "TITLE-1", vcard.getTitles().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitles2 - 13", "TITLE-2", vcard.getTitles().get(2).getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -128,6 +133,10 @@ public class TitlesTest extends JSContact2VCardTest {
         assertEquals("testTitles3 - 11", "Direttore Area IETF", vcard.getTitles().get(3).getValue());
         assertEquals("testTitles3 - 12", "it", vcard.getTitles().get(3).getLanguage());
         assertEquals("testTitles3 - 13", "2", vcard.getTitles().get(3).getAltId());
+        assertEquals("testTitles3 - 14", "TITLE-1", vcard.getTitles().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitles3 - 15", "TITLE-1", vcard.getTitles().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitles3 - 16", "TITLE-2", vcard.getTitles().get(2).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitles3 - 17", "TITLE-2", vcard.getTitles().get(3).getParameter(PROP_ID_PARAM));
     }
 
 }

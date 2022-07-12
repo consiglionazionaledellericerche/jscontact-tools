@@ -35,4 +35,10 @@ public abstract class GroupableObject {
     @Getter
     @Setter
     String group;
+
+    @JsonIgnore
+    @Getter
+    @Setter
+    String propId;
+
 }
