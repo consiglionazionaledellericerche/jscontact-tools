@@ -15,32 +15,38 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.UriResourceConstraint;
-import it.cnr.iit.jscontact.tools.dto.Resource;
+import it.cnr.iit.jscontact.tools.constraints.GroupKeyConstraint;
+import it.cnr.iit.jscontact.tools.dto.PropertyGroup;
+import org.apache.commons.collections.map.CaseInsensitiveMap;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.net.URI;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class UriResourceValidator implements ConstraintValidator<UriResourceConstraint, Resource> {
+public class GroupKeyValidator implements ConstraintValidator<GroupKeyConstraint, Map<String, PropertyGroup>> {
 
-    public void initialize(UriResourceConstraint constraintAnnotation) {
+    private static final Pattern KEY_PATTERN = Pattern.compile("[A-Za-z0-9\\-]+");
+
+    public void initialize(GroupKeyConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(Resource resource, ConstraintValidatorContext context) {
+    public boolean isValid(Map<String,PropertyGroup> map, ConstraintValidatorContext context) {
 
-        if (resource == null)
+        if (map == null)
             return true;
 
-        if (!resource.isUri())
-            return true;
+        for (String id : map.keySet()){
 
-        try {
-            URI.create(resource.getResource());
-            return true;
-        } catch(Exception e) {
-            return false;
+            Matcher matcher = KEY_PATTERN.matcher(id);
+            if (!matcher.matches())
+                return false;
         }
+
+        Map ciMap = new CaseInsensitiveMap();
+        ciMap.putAll(map);
+        return ciMap.size() == map.size();
     }
 
 }

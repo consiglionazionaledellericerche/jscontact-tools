@@ -19,14 +19,13 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RelatedToTest extends VCard2JSContactTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void testRelatedToInvalid() throws IOException, CardException {
+    public void testRelatedToInvalid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -38,7 +37,7 @@ public class RelatedToTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testRelatedToValid1() throws IOException, CardException {
+    public void testRelatedToValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -47,13 +46,13 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testRelatedToValid1 - 1",jsCard.getRelatedTo().size() == 1);
-        assertTrue("testRelatedToValid1 - 2",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size() == 0);
+        assertEquals("testRelatedToValid1 - 1", 1, jsCard.getRelatedTo().size());
+        assertEquals("testRelatedToValid1 - 2", 0, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
 
     }
 
     @Test
-    public void testRelatedToValid2() throws IOException, CardException {
+    public void testRelatedToValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -62,15 +61,15 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testRelatedToValid2 - 1",jsCard.getRelatedTo().size() == 1);
-        assertTrue("testRelatedToValid2 - 2",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size()== 1);
+        assertEquals("testRelatedToValid2 - 1", 1, jsCard.getRelatedTo().size());
+        assertEquals("testRelatedToValid2 - 2", 1, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
         assertTrue("testRelatedToValid2 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").asFriend());
 
     }
 
 
     @Test
-    public void testRelatedToValid3() throws IOException, CardException {
+    public void testRelatedToValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -81,12 +80,12 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testRelatedToValid3 - 1",jsCard.getRelatedTo().size() == 3);
-        assertTrue("testRelatedToValid3 - 2",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size()== 1);
+        assertEquals("testRelatedToValid3 - 1", 3, jsCard.getRelatedTo().size());
+        assertEquals("testRelatedToValid3 - 2", 1, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
         assertTrue("testRelatedToValid3 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").asFriend());
-        assertTrue("testRelatedToValid3 - 4",jsCard.getRelatedTo().get("http://example.com/directory/jdoe.vcf").getRelation().size()== 1);
+        assertEquals("testRelatedToValid3 - 4", 1, jsCard.getRelatedTo().get("http://example.com/directory/jdoe.vcf").getRelation().size());
         assertTrue("testRelatedToValid3 - 5",jsCard.getRelatedTo().get("http://example.com/directory/jdoe.vcf").asContact());
-        assertTrue("testRelatedToValid3 - 6",jsCard.getRelatedTo().get("Please contact my assistant Jane Doe for any inquiries.").getRelation().size() == 0);
+        assertEquals("testRelatedToValid3 - 6", 0, jsCard.getRelatedTo().get("Please contact my assistant Jane Doe for any inquiries.").getRelation().size());
 
     }
 

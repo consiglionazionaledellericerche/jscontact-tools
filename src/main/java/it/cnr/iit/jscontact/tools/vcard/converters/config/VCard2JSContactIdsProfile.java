@@ -2,10 +2,7 @@ package it.cnr.iit.jscontact.tools.vcard.converters.config;
 
 import it.cnr.iit.jscontact.tools.dto.ResourceType;
 import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 
 import java.util.List;
 
@@ -27,7 +24,8 @@ public class VCard2JSContactIdsProfile {
         PHONE,
         PHOTO,
         SCHEDULING,
-        ONLINE,
+        RESOURCE,
+        ONLINE_SERVICE,
         ANNIVERSARY,
         PERSONAL_INFO
     }
@@ -48,7 +46,8 @@ public class VCard2JSContactIdsProfile {
         public static JSContactId phonesId(String id) { return jsContactId(IdType.PHONE,id); }
         public static JSContactId photosId(String id) { return jsContactId(IdType.PHOTO,id); }
         public static JSContactId schedulingId(String id) { return jsContactId(IdType.SCHEDULING,id); }
-        public static JSContactId onlinesId(ResourceId id) { return jsContactId(IdType.ONLINE,id); }
+        public static JSContactId onlineServicesId(String id) { return jsContactId(IdType.ONLINE_SERVICE,id); }
+        public static JSContactId resourcesId(ResourceId id) { return jsContactId(IdType.RESOURCE,id); }
         public static JSContactId anniversariesId(String id) { return jsContactId(IdType.ANNIVERSARY,id); }
         public static JSContactId personalInfosId(PersonalInfoId id) { return jsContactId(IdType.PERSONAL_INFO,id); }
     }
@@ -66,7 +65,6 @@ public class VCard2JSContactIdsProfile {
         public static ResourceId logosId(String id) { return resourceId(ResourceType.LOGO,id);}
         public static ResourceId soundsId(String id) { return resourceId(ResourceType.SOUND,id);}
         public static ResourceId orgDirectoriesId(String id) { return resourceId(ResourceType.ORG_DIRECTORY,id);}
-        public static ResourceId imppsId(String id) { return resourceId(ResourceType.USERNAME, id);}
         public static ResourceId fbUrlsId(String id) { return resourceId(ResourceType.FBURL,id);}
         public static ResourceId urlsId(String id) { return resourceId(ResourceType.URI,id);}
         public static ResourceId contactUrisId(String id) { return resourceId(ResourceType.CONTACT_URI,id);}

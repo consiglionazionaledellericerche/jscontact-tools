@@ -15,14 +15,13 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class UnmatchedTest extends JSContact2VCardTest {
 
@@ -37,9 +36,9 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"preferredContactMethod\":\"emails\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testPreferredContactMethod - 1",vcard.getExtendedProperties().size() == 1);
-        assertTrue("testPreferredContactMethod - 2",vcard.getExtendedProperties().get(0).getPropertyName().equals("X-JSCONTACT-PREFERREDCONTACTMETHOD"));
-        assertTrue("testPreferredContactMethod - 3",vcard.getExtendedProperties().get(0).getValue().equals("emails"));
+        assertEquals("testPreferredContactMethod - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testPreferredContactMethod - 2", "X-JSCONTACT-PREFERREDCONTACTMETHOD", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testPreferredContactMethod - 3", "emails", vcard.getExtendedProperties().get(0).getValue());
     }
 
     @Test
@@ -52,9 +51,9 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"created\":\"2010-10-10T10:10:10Z\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testCreated - 1",vcard.getExtendedProperties().size() == 1);
-        assertTrue("testCreated - 2",vcard.getExtendedProperties().get(0).getPropertyName().equals("X-JSCONTACT-CREATED"));
-        assertTrue("testCreated - 3",vcard.getExtendedProperties().get(0).getValue().equals("20101010T101010Z"));
+        assertEquals("testCreated - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testCreated - 2", "CREATED", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testCreated - 3", "20101010T101010Z", vcard.getExtendedProperties().get(0).getValue());
     }
 
     @Test
@@ -67,8 +66,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"ietf.org:rfc6350:XML\":\"<note>This is a not in xml</note>\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(Ezvcard.write(vcard).go());
-        assertTrue("testUnmatchedProperty - 1",vcard.getXmls().size() == 1);
+        assertEquals("testUnmatchedProperty - 1", 1, vcard.getXmls().size());
     }
 
     @Test
@@ -91,35 +89,20 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"ietf.org:rfc6350:N:SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testUnmatchedParameter1 - 1",vcard.getFormattedName().getValue().equals("Mr. John Q. Public, Esq."));
-        assertTrue("testUnmatchedParameter1 - 2",vcard.getStructuredName() != null);
-        assertTrue("testUnmatchedParameter1 - 3",vcard.getStructuredName().getFamily().equals("Public"));
-        assertTrue("testUnmatchedParameter1 - 4",vcard.getStructuredName().getGiven().equals("John"));
-        assertTrue("testUnmatchedParameter1 - 5",vcard.getStructuredName().getAdditionalNames().size() == 1);
-        assertTrue("testUnmatchedParameter1 - 6",vcard.getStructuredName().getAdditionalNames().get(0).equals("Quinlan"));
-        assertTrue("testUnmatchedParameter1 - 7",vcard.getStructuredName().getPrefixes().size() == 1);
-        assertTrue("testUnmatchedParameter1 - 8",vcard.getStructuredName().getPrefixes().get(0).equals("Mr."));
-        assertTrue("testUnmatchedParameter1 - 9",vcard.getStructuredName().getSuffixes().size() == 1);
-        assertTrue("testUnmatchedParameter1 - 10",vcard.getStructuredName().getSuffixes().get(0).equals("Esq."));
-        assertTrue("testUnmatchedParameter1 - 11",vcard.getNickname().getValues().size() == 1);
-        assertTrue("testUnmatchedParameter1 - 12",vcard.getNickname().getValues().get(0).equals("Johnny"));
-        assertTrue("testUnmatchedParameter1 - 13",vcard.getStructuredName().getSortAs().size()==1);
-        assertTrue("testUnmatchedParameter1 - 13",vcard.getStructuredName().getSortAs().get(0).equals("Public,John:Public;John;Quinlan;Mr.;Esq."));
-
-    }
-
-    @Test
-    public void testUnmatchedParameter2() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"test\"," +
-                "\"ietf.org:rfc6350:FN:GROUP\":\"contact\"" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testUnmatchedParameter2 - 1",vcard.getFormattedName().getValue().equals("test"));
-        assertTrue("testUnmatchedParameter2 - 2",vcard.getFormattedName().getGroup().equals("contact"));
+        assertEquals("testUnmatchedParameter1 - 1", "Mr. John Q. Public, Esq.", vcard.getFormattedName().getValue());
+        assertNotNull("testUnmatchedParameter1 - 2", vcard.getStructuredName());
+        assertEquals("testUnmatchedParameter1 - 3", "Public", vcard.getStructuredName().getFamily());
+        assertEquals("testUnmatchedParameter1 - 4", "John", vcard.getStructuredName().getGiven());
+        assertEquals("testUnmatchedParameter1 - 5", 1, vcard.getStructuredName().getAdditionalNames().size());
+        assertEquals("testUnmatchedParameter1 - 6", "Quinlan", vcard.getStructuredName().getAdditionalNames().get(0));
+        assertEquals("testUnmatchedParameter1 - 7", 1, vcard.getStructuredName().getPrefixes().size());
+        assertEquals("testUnmatchedParameter1 - 8", "Mr.", vcard.getStructuredName().getPrefixes().get(0));
+        assertEquals("testUnmatchedParameter1 - 9", 1, vcard.getStructuredName().getSuffixes().size());
+        assertEquals("testUnmatchedParameter1 - 10", "Esq.", vcard.getStructuredName().getSuffixes().get(0));
+        assertEquals("testUnmatchedParameter1 - 11", 1, vcard.getNickname().getValues().size());
+        assertEquals("testUnmatchedParameter1 - 12", "Johnny", vcard.getNickname().getValues().get(0));
+        assertEquals("testUnmatchedParameter1 - 13", 1, vcard.getStructuredName().getSortAs().size());
+        assertEquals("testUnmatchedParameter1 - 13", "Public,John:Public;John;Quinlan;Mr.;Esq.", vcard.getStructuredName().getSortAs().get(0));
 
     }
 

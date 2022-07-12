@@ -19,14 +19,13 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
-import java.io.IOException;
-
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class NameTest extends VCard2JSContactTest {
 
     @Test
-    public void testNameValid1() throws IOException, CardException {
+    public void testNameValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -35,24 +34,24 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testNameValid1 - 1",jsCard.getFullName().equals("John Q. Public, Esq."));
-        assertTrue("testNameValid1 - 2",jsCard.getName().getComponents().length == 5);
+        assertEquals("testNameValid1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testNameValid1 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testNameValid1 - 3",jsCard.getName().getComponents()[0].isPrefix());
-        assertTrue("testNameValid1 - 4",jsCard.getName().getComponents()[0].getValue().equals("Mr."));
+        assertEquals("testNameValid1 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testNameValid1 - 5",jsCard.getName().getComponents()[1].isPersonal());
-        assertTrue("testNameValid1 - 6",jsCard.getName().getComponents()[1].getValue().equals("John"));
+        assertEquals("testNameValid1 - 6", "John", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testNameValid1 - 7",jsCard.getName().getComponents()[2].isSurname());
-        assertTrue("testNameValid1 - 8",jsCard.getName().getComponents()[2].getValue().equals("Public"));
+        assertEquals("testNameValid1 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testNameValid1 - 9",jsCard.getName().getComponents()[3].isAdditional());
-        assertTrue("testNameValid1 - 10",jsCard.getName().getComponents()[3].getValue().equals("Quinlan"));
+        assertEquals("testNameValid1 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
         assertTrue("testNameValid1 - 11",jsCard.getName().getComponents()[4].isSuffix());
-        assertTrue("testNameValid1 - 12",jsCard.getName().getComponents()[4].getValue().equals("Esq."));
+        assertEquals("testNameValid1 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
 
     }
 
 
     @Test
-    public void testNameValid2() throws IOException, CardException {
+    public void testNameValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -62,25 +61,25 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testNameValid2 - 1",jsCard.getFullName().equals("John Q. Public, Esq."));
-        assertTrue("testNameValid2 - 2",jsCard.getName().getComponents().length == 5);
+        assertEquals("testNameValid2 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testNameValid2 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testNameValid2 - 3",jsCard.getName().getComponents()[0].isPrefix());
-        assertTrue("testNameValid2 - 4",jsCard.getName().getComponents()[0].getValue().equals("Mr."));
+        assertEquals("testNameValid2 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testNameValid2 - 5",jsCard.getName().getComponents()[1].isPersonal());
-        assertTrue("testNameValid2 - 6",jsCard.getName().getComponents()[1].getValue().equals("John"));
+        assertEquals("testNameValid2 - 6", "John", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testNameValid2 - 7",jsCard.getName().getComponents()[2].isSurname());
-        assertTrue("testNameValid2 - 8",jsCard.getName().getComponents()[2].getValue().equals("Public"));
+        assertEquals("testNameValid2 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testNameValid2 - 9",jsCard.getName().getComponents()[3].isAdditional());
-        assertTrue("testNameValid2 - 10",jsCard.getName().getComponents()[3].getValue().equals("Quinlan"));
+        assertEquals("testNameValid2 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
         assertTrue("testNameValid2 - 11",jsCard.getName().getComponents()[4].isSuffix());
-        assertTrue("testNameValid2 - 12",jsCard.getName().getComponents()[4].getValue().equals("Esq."));
-        assertTrue("testNameValid2 - 12",jsCard.getNickNames().length == 1);
-        assertTrue("testNameValid2 - 13",jsCard.getNickNames()[0].equals("Johnny"));
+        assertEquals("testNameValid2 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
+        assertEquals("testNameValid2 - 12", 1, jsCard.getNickNames().length);
+        assertEquals("testNameValid2 - 13", "Johnny", jsCard.getNickNames()[0]);
 
     }
 
     @Test
-    public void testNameValid3() throws IOException, CardException {
+    public void testNameValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -91,26 +90,26 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testNameValid3 - 1",jsCard.getFullName().equals("John Q. Public, Esq."));
-        assertTrue("testNameValid3 - 2",jsCard.getName().getComponents().length == 5);
+        assertEquals("testNameValid3 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testNameValid3 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testNameValid3 - 3",jsCard.getName().getComponents()[0].isPrefix());
-        assertTrue("testNameValid3 - 4",jsCard.getName().getComponents()[0].getValue().equals("Mr."));
+        assertEquals("testNameValid3 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testNameValid3 - 5",jsCard.getName().getComponents()[1].isPersonal());
-        assertTrue("testNameValid3 - 6",jsCard.getName().getComponents()[1].getValue().equals("John"));
+        assertEquals("testNameValid3 - 6", "John", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testNameValid3 - 7",jsCard.getName().getComponents()[2].isSurname());
-        assertTrue("testNameValid3 - 8",jsCard.getName().getComponents()[2].getValue().equals("Public"));
+        assertEquals("testNameValid3 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testNameValid3 - 9",jsCard.getName().getComponents()[3].isAdditional());
-        assertTrue("testNameValid3 - 10",jsCard.getName().getComponents()[3].getValue().equals("Quinlan"));
+        assertEquals("testNameValid3 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
         assertTrue("testNameValid3 - 11",jsCard.getName().getComponents()[4].isSuffix());
-        assertTrue("testNameValid3 - 12",jsCard.getName().getComponents()[4].getValue().equals("Esq."));
-        assertTrue("testNameValid3 - 12",jsCard.getNickNames().length == 2);
-        assertTrue("testNameValid3 - 13",jsCard.getNickNames()[0].equals("Kid"));
-        assertTrue("testNameValid3 - 14",jsCard.getNickNames()[1].equals("Johnny"));
+        assertEquals("testNameValid3 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
+        assertEquals("testNameValid3 - 12", 2, jsCard.getNickNames().length);
+        assertEquals("testNameValid3 - 13", "Kid", jsCard.getNickNames()[0]);
+        assertEquals("testNameValid3 - 14", "Johnny", jsCard.getNickNames()[1]);
 
     }
 
     @Test
-    public void testNameValid4() throws IOException, CardException {
+    public void testNameValid4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -123,24 +122,24 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testNameValid4 - 1",jsCard.getFullName().equals("John Q. Public, Esq."));
-        assertTrue("testNameValid4 - 2",jsCard.getName().getComponents().length == 5);
+        assertEquals("testNameValid4 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testNameValid4 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testNameValid4 - 3",jsCard.getName().getComponents()[0].isPrefix());
-        assertTrue("testNameValid4 - 4",jsCard.getName().getComponents()[0].getValue().equals("Mr."));
+        assertEquals("testNameValid4 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testNameValid4 - 5",jsCard.getName().getComponents()[1].isPersonal());
-        assertTrue("testNameValid4 - 6",jsCard.getName().getComponents()[1].getValue().equals("John"));
+        assertEquals("testNameValid4 - 6", "John", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testNameValid4 - 7",jsCard.getName().getComponents()[2].isSurname());
-        assertTrue("testNameValid4 - 8",jsCard.getName().getComponents()[2].getValue().equals("Public"));
+        assertEquals("testNameValid4 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testNameValid4 - 9",jsCard.getName().getComponents()[3].isAdditional());
-        assertTrue("testNameValid4 - 10",jsCard.getName().getComponents()[3].getValue().equals("Quinlan"));
+        assertEquals("testNameValid4 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
         assertTrue("testNameValid4 - 11",jsCard.getName().getComponents()[4].isSuffix());
-        assertTrue("testNameValid4 - 12",jsCard.getName().getComponents()[4].getValue().equals("Esq."));
-        assertTrue("testNameValid4 - 12",jsCard.getNickNames().length == 2);
-        assertTrue("testNameValid4 - 13",jsCard.getNickNames()[0].equals("Kid"));
-        assertTrue("testNameValid4 - 14",jsCard.getNickNames()[1].equals("Johnny"));
-        assertTrue("testNameValid4 - 15",jsCard.getLocalization("it", "/nickNames").isArray());
-        assertTrue("testNameValid4 - 16", jsCard.getLocalization("it", "/nickNames").get(0).asText().equals("Ragazzo"));
-        assertTrue("testNameValid4 - 17", jsCard.getLocalization("it", "/nickNames").get(1).asText().equals("Giovannino"));
+        assertEquals("testNameValid4 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
+        assertEquals("testNameValid4 - 12", 2, jsCard.getNickNames().length);
+        assertEquals("testNameValid4 - 13", "Kid", jsCard.getNickNames()[0]);
+        assertEquals("testNameValid4 - 14", "Johnny", jsCard.getNickNames()[1]);
+        assertTrue("testNameValid4 - 15",jsCard.getLocalization("it", "nickNames").isArray());
+        assertEquals("testNameValid4 - 16", "Ragazzo", jsCard.getLocalization("it", "nickNames").get(0).asText());
+        assertEquals("testNameValid4 - 17", "Giovannino", jsCard.getLocalization("it", "nickNames").get(1).asText());
 
     }
 

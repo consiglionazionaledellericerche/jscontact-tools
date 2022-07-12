@@ -19,21 +19,19 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class ProdidTest extends JCard2JSContactTest {
 
     @Test
-    public void testProdidValid() throws IOException, CardException {
+    public void testProdidValid() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"prodid\", {}, \"text\", \"-//ONLINE DIRECTORY//NONSGML Version 1//EN\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testProdidValid - 1",jsCard.getProdId().equals("-//ONLINE DIRECTORY//NONSGML Version 1//EN"));
+        assertEquals("testProdidValid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", jsCard.getProdId());
 
     }
 

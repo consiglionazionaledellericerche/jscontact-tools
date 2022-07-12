@@ -15,19 +15,22 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.UriResourceValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.GroupKeyValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+@Target({java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {UriResourceValidator.class})
+@Constraint(validatedBy = {GroupKeyValidator.class})
 @Documented
-public @interface UriResourceConstraint {
+public @interface GroupKeyConstraint {
 
-    String message() default "invalid uri in Resource";
+    String message() default "";
 
     Class<?>[] groups() default { };
 

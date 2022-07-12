@@ -22,9 +22,9 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the "relation" map keys of the Relation type as defined in section 2.1.7 of [draft-ietf-jmap-jscontact].
+ * Enum class mapping the "relation" map keys of the Relation type as defined in section 2.1.7 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.1.7">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.1.7">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
@@ -51,7 +51,7 @@ public enum RelationEnum implements IsExtensible {
     AGENT("agent"),
     EMERGENCY("emergency");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

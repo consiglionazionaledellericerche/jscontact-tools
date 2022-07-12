@@ -22,7 +22,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class UpdatedTest extends JSContact2VCardTest {
 
@@ -36,7 +36,7 @@ public class UpdatedTest extends JSContact2VCardTest {
                     "\"updated\":\"1995-10-31T22:27:10Z\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testUpdatedValid - 1",vcard.getRevision().getCalendar().compareTo(DateUtils.toCalendar("1995-10-31T22:27:10Z"))==0);
+        assertEquals("testUpdatedValid - 1", 0, vcard.getRevision().getCalendar().compareTo(DateUtils.toCalendar("1995-10-31T22:27:10Z")));
 
     }
 

@@ -19,14 +19,12 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PreferredContactLanguagesTest extends JCard2JSContactTest {
 
     @Test
-    public void testPreferredContactLanguagesValid1() throws IOException, CardException {
+    public void testPreferredContactLanguagesValid1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -34,15 +32,15 @@ public class PreferredContactLanguagesTest extends JCard2JSContactTest {
                 "[ \"lang\", { \"pref\": \"2\" }, \"language-tag\", \"en\" ] " +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testPreferredContactLanguagesValid1 - 1",jsCard.getPreferredContactLanguages()!=null);
-        assertTrue("testPreferredContactLanguagesValid1 - 2",jsCard.getPreferredContactLanguages().size() == 2);
-        assertTrue("testPreferredContactLanguagesValid1 - 3",jsCard.getPreferredContactLanguages().get("jp")[0].getPref() == 1);
-        assertTrue("testPreferredContactLanguagesValid1 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 2);
+        assertNotNull("testPreferredContactLanguagesValid1 - 1", jsCard.getPreferredContactLanguages());
+        assertEquals("testPreferredContactLanguagesValid1 - 2", 2, jsCard.getPreferredContactLanguages().size());
+        assertEquals("testPreferredContactLanguagesValid1 - 3", 1, (int) jsCard.getPreferredContactLanguages().get("jp")[0].getPref());
+        assertEquals("testPreferredContactLanguagesValid1 - 4", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
     }
 
 
     @Test
-    public void testPreferredContactLanguagesValid2() throws IOException, CardException {
+    public void testPreferredContactLanguagesValid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -51,11 +49,11 @@ public class PreferredContactLanguagesTest extends JCard2JSContactTest {
                 "[ \"lang\", { \"type\": \"home\" }, \"language-tag\", \"fr\" ] " +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testPreferredContactLanguagesValid2 - 1",jsCard.getPreferredContactLanguages()!=null);
-        assertTrue("testPreferredContactLanguagesValid2 - 2",jsCard.getPreferredContactLanguages().size() == 2);
-        assertTrue("testPreferredContactLanguagesValid2 - 3",jsCard.getPreferredContactLanguages().get("en")[0].getPref() == 1);
+        assertNotNull("testPreferredContactLanguagesValid2 - 1", jsCard.getPreferredContactLanguages());
+        assertEquals("testPreferredContactLanguagesValid2 - 2", 2, jsCard.getPreferredContactLanguages().size());
+        assertEquals("testPreferredContactLanguagesValid2 - 3", 1, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
         assertTrue("testPreferredContactLanguagesValid2 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getContext().isWork());
-        assertTrue("testPreferredContactLanguagesValid2 - 5",jsCard.getPreferredContactLanguages().get("fr")[0].getPref() == 2);
+        assertEquals("testPreferredContactLanguagesValid2 - 5", 2, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
         assertTrue("testPreferredContactLanguagesValid2 - 6",jsCard.getPreferredContactLanguages().get("fr")[0].getContext().isWork());
         assertTrue("testPreferredContactLanguagesValid2 - 7",jsCard.getPreferredContactLanguages().get("fr")[1].getContext().isPrivate());
     }

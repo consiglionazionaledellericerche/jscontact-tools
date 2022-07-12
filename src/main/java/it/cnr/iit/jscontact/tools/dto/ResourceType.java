@@ -22,10 +22,10 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "type" property of the Resource type as defined in section 2.3.3 of [draft-ietf-jmap-jscontact].
+ * Enum class mapping the values of the "type" property of the Resource type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  * The values are those corresponding to vCard 4.0 [RFC6350] [RFC6715] [RFC8605] properties that are not directly mapped to a JSContact property.
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.3">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @see <a href="https://datatracker.ietf.org/doc/rfc6350">RFC6350</a>
  * @see <a href="https://datatracker.ietf.org/doc/rfc6715">RFC6715</a>
  * @see <a href="https://datatracker.ietf.org/doc/rfc8605">RFC8605</a>
@@ -35,7 +35,6 @@ import lombok.AllArgsConstructor;
 public enum ResourceType {
 
     URI("uri"),
-    USERNAME("username"),
     SOURCE("directorySource"),
     LOGO("logo"),
     CONTACT_URI("contact"),
@@ -45,7 +44,7 @@ public enum ResourceType {
     FBURL("freeBusy"),
     CALURI("calendar");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

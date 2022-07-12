@@ -23,44 +23,18 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class OnlineTest extends JSContact2VCardTest {
-
+public class ResourceTest extends JSContact2VCardTest {
+    
     @Test
-    public void testOnlineValid1() throws IOException, CardException {
+    public void testResourceValid1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
-                    "\"XMPP-1\": {" +
-                        "\"@type\":\"Resource\"," +
-                        "\"type\": \"username\","+
-                        "\"contexts\": {\"private\": true}," +
-                        "\"label\": \"XMPP\"," +
-                        "\"pref\": 1, " +
-                        "\"resource\": \"xmpp:alice@example.com\"" +
-                    "}" +
-                 "}" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid1 - 1",vcard.getImpps().size() == 1);
-        assertTrue("testOnlineValid1 - 2",vcard.getImpps().get(0).isXmpp());
-        assertTrue("testOnlineValid1 - 3",vcard.getImpps().get(0).getHandle().equals("alice@example.com"));
-        assertTrue("testOnlineValid1 - 4",vcard.getImpps().get(0).getParameter("TYPE").equals("home"));
-        assertTrue("testOnlineValid1 - 5",vcard.getImpps().get(0).getPref() == 1);
-    }
-
-    @Test
-    public void testOnlineValid2() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"resources\": {"+
                     "\"SOURCE-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"directorySource\","+
@@ -69,8 +43,9 @@ public class OnlineTest extends JSContact2VCardTest {
                  "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid2 - 1",vcard.getSources().size() == 1);
-        assertTrue("testOnlineValid2 - 2",vcard.getSources().get(0).getValue().equals("http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf"));
+        assertEquals("testResourceValid1 - 1", 1, vcard.getSources().size());
+        assertEquals("testResourceValid1 - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", vcard.getSources().get(0).getValue());
+        assertEquals("testResourceValid1 - 3", "SOURCE-1", vcard.getSources().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
@@ -89,19 +64,20 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testPhotoValid - 1",vcard.getPhotos().size() == 1);
-        assertTrue("testPhotoValid - 2",vcard.getPhotos().get(0).getUrl().equals("http://www.example.com/pub/photos/jqpublic.gif"));
-        assertTrue("testPhotoValid - 3",vcard.getPhotos().get(0).getContentType() == ImageType.GIF);
+        assertEquals("testPhotoValid - 1", 1, vcard.getPhotos().size());
+        assertEquals("testPhotoValid - 2", "http://www.example.com/pub/photos/jqpublic.gif", vcard.getPhotos().get(0).getUrl());
+        assertSame("testPhotoValid - 3", vcard.getPhotos().get(0).getContentType(), ImageType.GIF);
+        assertEquals("testPhotoValid - 4", "PHOTO-1", vcard.getPhotos().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid4() throws IOException, CardException {
+    public void testResourceValid2() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"resources\": {"+
                     "\"LOGO-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"logo\","+
@@ -110,18 +86,19 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid4 - 1",vcard.getLogos().size() == 1);
-        assertTrue("testOnlineValid4 - 2",vcard.getLogos().get(0).getUrl().equals("http://www.example.com/pub/logos/abccorp.jpg"));
+        assertEquals("testResourceValid2 - 1", 1, vcard.getLogos().size());
+        assertEquals("testResourceValid2 - 2", "http://www.example.com/pub/logos/abccorp.jpg", vcard.getLogos().get(0).getUrl());
+        assertEquals("testResourceValid2 - 3", "LOGO-1", vcard.getLogos().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid5() throws IOException, CardException {
+    public void testResourceValid3() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"resources\": {"+
                     "\"CONTACT-URI-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"contact\","+
@@ -130,19 +107,20 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid5 - 1",vcard.getExtendedProperties().size() == 1);
-        assertTrue("testOnlineValid5 - 2",vcard.getExtendedProperties().get(0).getPropertyName().equals("CONTACT-URI"));
-        assertTrue("testOnlineValid5 - 2",vcard.getExtendedProperties().get(0).getValue().equals("mailto:contact@example.com"));
+        assertEquals("testResourceValid3 - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testResourceValid3 - 2", "CONTACT-URI", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testResourceValid3 - 2", "mailto:contact@example.com", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testResourceValid3 - 4", "CONTACT-URI-1", vcard.getExtendedProperties().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid6() throws IOException, CardException {
+    public void testResourceValid4() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"resources\": {"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"audio\","+
@@ -152,19 +130,20 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid6 - 1",vcard.getSounds().size() == 1);
-        assertTrue("testOnlineValid6 - 2",vcard.getSounds().get(0).getUrl().equals("sound.mp3"));
-        assertTrue("testOnlineValid6 - 3",vcard.getSounds().get(0).getContentType() == SoundType.MP3);
+        assertEquals("testResourceValid4 - 1", 1, vcard.getSounds().size());
+        assertEquals("testResourceValid4 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
+        assertSame("testResourceValid4 - 3", vcard.getSounds().get(0).getContentType(), SoundType.MP3);
+        assertEquals("testResourceValid4 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid7() throws IOException, CardException {
+    public void testResourceValid5() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\":{"+
+                "\"resources\":{"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"audio\","+
@@ -173,19 +152,20 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid7 - 1",vcard.getSounds().size() == 1);
-        assertTrue("testOnlineValid7 - 2",vcard.getSounds().get(0).getUrl().equals("sound.mp3"));
-        assertTrue("testOnlineValid7 - 2",vcard.getSounds().get(0).getContentType() == null);
+        assertEquals("testResourceValid5 - 1", 1, vcard.getSounds().size());
+        assertEquals("testResourceValid5 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
+        assertNull("testResourceValid5 - 3", vcard.getSounds().get(0).getContentType());
+        assertEquals("testResourceValid5 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid8() throws IOException, CardException {
+    public void testResourceValid6() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"resources\": {"+
                     "\"URI-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
@@ -194,18 +174,19 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid8 - 1",vcard.getUrls().size() == 1);
-        assertTrue("testOnlineValid8 - 2",vcard.getUrls().get(0).getValue().equals("http://example.org/restaurant.french/~chezchic.htm"));
+        assertEquals("testResourceValid6 - 1", 1, vcard.getUrls().size());
+        assertEquals("testResourceValid6 - 2", "http://example.org/restaurant.french/~chezchic.htm", vcard.getUrls().get(0).getValue());
+        assertEquals("testResourceValid6 - 3", "URI-1", vcard.getUrls().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid9() throws IOException, CardException {
+    public void testResourceValid7() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"resources\": {"+
                     "\"KEY-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"publicKey\","+
@@ -214,18 +195,19 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid9 - 1",vcard.getKeys().size() == 1);
-        assertTrue("testOnlineValid9 - 2",vcard.getKeys().get(0).getUrl().equals("http://www.example.com/keys/jdoe.cer"));
+        assertEquals("testResourceValid7 - 1", 1, vcard.getKeys().size());
+        assertEquals("testResourceValid7 - 2", "http://www.example.com/keys/jdoe.cer", vcard.getKeys().get(0).getUrl());
+        assertEquals("testResourceValid7 - 3", "KEY-1", vcard.getKeys().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid10() throws IOException, CardException {
+    public void testResourceValid8() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"resources\": {"+
                     "\"FBURL-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"freeBusy\","+
@@ -241,15 +223,17 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid10 - 1",vcard.getFbUrls().size() == 2);
-        assertTrue("testOnlineValid10 - 2",vcard.getFbUrls().get(0).getValue().equals("http://www.example.com/busy/janedoe"));
-        assertTrue("testOnlineValid10 - 3",vcard.getFbUrls().get(0).getPref() == 1);
-        assertTrue("testOnlineValid10 - 4",vcard.getFbUrls().get(1).getValue().equals("ftp://example.com/busy/project-a.ifb"));
-        assertTrue("testOnlineValid10 - 5",vcard.getFbUrls().get(1).getMediaType().equals("text/calendar"));
+        assertEquals("testResourceValid8 - 1", 2, vcard.getFbUrls().size());
+        assertEquals("testResourceValid8 - 2", "http://www.example.com/busy/janedoe", vcard.getFbUrls().get(0).getValue());
+        assertEquals("testResourceValid8 - 3", 1, (int) vcard.getFbUrls().get(0).getPref());
+        assertEquals("testResourceValid8 - 4", "ftp://example.com/busy/project-a.ifb", vcard.getFbUrls().get(1).getValue());
+        assertEquals("testResourceValid8 - 5", "text/calendar", vcard.getFbUrls().get(1).getMediaType());
+        assertEquals("testResourceValid8 - 6", "FBURL-1", vcard.getFbUrls().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResourceValid8 - 7", "FBURL-2", vcard.getFbUrls().get(1).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid11() throws IOException, CardException {
+    public void testResourceValid9() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -268,20 +252,22 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid11 - 1",vcard.getCalendarRequestUris().size() == 2);
-        assertTrue("testOnlineValid11 - 2",vcard.getCalendarRequestUris().get(0).getValue().equals("mailto:janedoe@example.com"));
-        assertTrue("testOnlineValid11 - 3",vcard.getCalendarRequestUris().get(0).getPref() == 1);
-        assertTrue("testOnlineValid11 - 4",vcard.getCalendarRequestUris().get(1).getValue().equals("http://example.com/calendar/jdoe"));
+        assertEquals("testResourceValid9 - 1", 2, vcard.getCalendarRequestUris().size());
+        assertEquals("testResourceValid9 - 2", "mailto:janedoe@example.com", vcard.getCalendarRequestUris().get(0).getValue());
+        assertEquals("testResourceValid9 - 3", 1, (int) vcard.getCalendarRequestUris().get(0).getPref());
+        assertEquals("testResourceValid9 - 4", "http://example.com/calendar/jdoe", vcard.getCalendarRequestUris().get(1).getValue());
+        assertEquals("testResourceValid9 - 5", "CALADRURI-1", vcard.getCalendarRequestUris().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResourceValid9 - 6", "CALADRURI-2", vcard.getCalendarRequestUris().get(1).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testOnlineValid12() throws IOException, CardException {
+    public void testResourceValid10() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"online\": {"+
+                "\"resources\": {"+
                     "\"CALURI-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"calendar\","+
@@ -297,31 +283,13 @@ public class OnlineTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid12 - 1",vcard.getCalendarUris().size() == 2);
-        assertTrue("testOnlineValid12 - 2",vcard.getCalendarUris().get(0).getValue().equals("http://cal.example.com/calA"));
-        assertTrue("testOnlineValid12 - 3",vcard.getCalendarUris().get(0).getPref() == 1);
-        assertTrue("testOnlineValid12 - 4",vcard.getCalendarUris().get(1).getValue().equals("ftp://ftp.example.com/calA.ics"));
-        assertTrue("testOnlineValid12 - 5",vcard.getCalendarUris().get(1).getMediaType().equals("text/calendar"));
+        assertEquals("testResourceValid10 - 1", 2, vcard.getCalendarUris().size());
+        assertEquals("testResourceValid10 - 2", "http://cal.example.com/calA", vcard.getCalendarUris().get(0).getValue());
+        assertEquals("testResourceValid10 - 3", 1, (int) vcard.getCalendarUris().get(0).getPref());
+        assertEquals("testResourceValid10 - 4", "ftp://ftp.example.com/calA.ics", vcard.getCalendarUris().get(1).getValue());
+        assertEquals("testResourceValid10 - 5", "text/calendar", vcard.getCalendarUris().get(1).getMediaType());
+        assertEquals("testResourceValid10 - 6", "CALURI-1", vcard.getCalendarUris().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResourceValid10 - 7", "CALURI-2", vcard.getCalendarUris().get(1).getParameter(PROP_ID_PARAM));
     }
 
-
-    @Test
-    public void testOnlineValid13() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
-                "\"online\": {"+
-                    "\"CONTACT-URI-1\": {" +
-                        "\"@type\":\"Resource\"," +
-                        "\"type\": \"contact\","+
-                        "\"resource\": \"mailto:contact@example.com\"" +
-                    "}" +
-                "}" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testOnlineValid13 - 1",vcard.getExtendedProperties().size() == 1);
-        assertTrue("testOnlineValid13 - 2",vcard.getExtendedProperty("CONTACT-URI").getValue().equals("mailto:contact@example.com"));
-    }
 }

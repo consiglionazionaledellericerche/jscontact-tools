@@ -19,14 +19,12 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class ProdidTest extends VCard2JSContactTest {
 
     @Test
-    public void testProdidValid() throws IOException, CardException {
+    public void testProdidValid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -35,7 +33,7 @@ public class ProdidTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testProdidValid - 1",jsCard.getProdId().equals("-//ONLINE DIRECTORY//NONSGML Version 1//EN"));
+        assertEquals("testProdidValid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", jsCard.getProdId());
     }
 
 }

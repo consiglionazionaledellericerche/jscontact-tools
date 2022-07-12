@@ -22,7 +22,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PhotoTest extends AbstractTest {
 
@@ -69,8 +69,8 @@ public class PhotoTest extends AbstractTest {
                 .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
 
-        assertTrue("testInvalidPhoto1-1", !jsCard.isValid());
-        assertTrue("testInvalidPhoto1-2", jsCard.getValidationMessage().equals("invalid pref in File - value must be greater or equal than 1"));
+        assertFalse("testInvalidPhoto1-1", jsCard.isValid());
+        assertEquals("testInvalidPhoto1-2", "invalid pref in File - value must be greater or equal than 1", jsCard.getValidationMessage());
     }
 
 
@@ -87,8 +87,8 @@ public class PhotoTest extends AbstractTest {
                 .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
 
-        assertTrue("testInvalidPhoto2-1", !jsCard.isValid());
-        assertTrue("testInvalidPhoto2-2", jsCard.getValidationMessage().equals("invalid pref in File - value must be less or equal than 100"));
+        assertFalse("testInvalidPhoto2-1", jsCard.isValid());
+        assertEquals("testInvalidPhoto2-2", "invalid pref in File - value must be less or equal than 100", jsCard.getValidationMessage());
     }
 
     @Test
@@ -104,8 +104,8 @@ public class PhotoTest extends AbstractTest {
                 .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
                 .build();
 
-        assertTrue("testInvalidPhoto3-1", !jsCard.isValid());
-        assertTrue("testInvalidPhoto3-2", jsCard.getValidationMessage().equals("invalid size in File - value must be greater or equal than 0"));
+        assertFalse("testInvalidPhoto3-1", jsCard.isValid());
+        assertEquals("testInvalidPhoto3-2", "invalid size in File - value must be greater or equal than 0", jsCard.getValidationMessage());
     }
 
 }

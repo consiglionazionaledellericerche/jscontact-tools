@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class KindTest extends JSContact2VCardTest {
@@ -48,7 +49,7 @@ public class KindTest extends JSContact2VCardTest {
                 "\"kind\":\"x-value\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testExtKind - 1",vcard.getKind().getValue().equals("x-value"));
+        assertEquals("testExtKind - 1", "x-value", vcard.getKind().getValue());
     }
 
 }

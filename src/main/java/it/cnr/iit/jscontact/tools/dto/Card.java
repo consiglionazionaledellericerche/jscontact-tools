@@ -43,17 +43,17 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Class mapping the Card object as defined in section 2 of [draft-ietf-jmap-jscontact].
+ * Class mapping the Card object as defined in section 2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({
-        "@type","uid","prodId","created","updated","kind","relatedTo","language",
+        "@type","uid","prodId","created","updated","kind","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
-        "emails","online","photos","preferredContactMethod","preferredContactLanguages",
+        "emails","phones","onlineServices","resources","scheduling","photos","preferredContactMethod","preferredContactLanguages",
         "addresses","localizations",
-        "anniversaries","personalInfo","notes","categpories","timeZones",
+        "anniversaries","personalInfo","notes","categpories","timeZones","propertyGroups",
         "extensions"})
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
@@ -90,7 +90,8 @@ public class Card extends JSContact implements Serializable {
     @RelatedToConstraint
     Map<String,Relation> relatedTo;
 
-    String language;
+    @LanguageTagConstraint
+    String locale;
 
     //Name and Organization properties
     @Valid
@@ -121,18 +122,23 @@ public class Card extends JSContact implements Serializable {
 
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Scheduling>")
-    Map<String,Scheduling> scheduling;
-
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
     Map<String,Phone> phones;
 
     @JsonPropertyOrder(alphabetic = true)
     @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,OnlineService>")
+    Map<String,OnlineService> onlineServices;
+
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Resource>")
-    Map<String,Resource> online;
+    Map<String,Resource> resources;
+
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,Scheduling>")
+    Map<String,Scheduling> scheduling;
 
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -174,6 +180,11 @@ public class Card extends JSContact implements Serializable {
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     Map<String,TimeZone> timeZones;
+
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @GroupKeyConstraint(message = "invalid group key in Map<String,PropertyGroup>")
+    Map<String,PropertyGroup> propertyGroups;
 
     @JsonPropertyOrder(alphabetic = true)
     Map<String,String> extensions;
@@ -304,6 +315,20 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
+     * Adds an online service to this object.
+     *
+     * @param id the online service identifier
+     * @param onlineService the object representing the online service
+     */
+    public void addOnlineService(String id, OnlineService onlineService) {
+
+        if (this.onlineServices == null)
+            this.onlineServices = new HashMap<>();
+
+        this.onlineServices.putIfAbsent(id, onlineService);
+    }
+
+    /**
      * Adds a phone number to this object.
      *
      * @param id the phone number identifier
@@ -318,28 +343,68 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds an online resource to this object.
+     * Adds a property JSONPointer to the members of a group identfied by a group id.
+     *
+     * @param key the group key
+     * @param label the group label
+     * @param propertyJSONPointer the JSONPointer of the property included in the group
+     */
+    public void addPropertyGroup(String key, String label, String propertyJSONPointer) {
+
+        if (propertyGroups == null)
+            propertyGroups = new HashMap<>();
+
+        PropertyGroup propertyGroupPerKey = propertyGroups.get(key);
+        if (propertyGroupPerKey == null) {
+            propertyGroups.put(key, PropertyGroup.builder()
+                    .members(new HashMap<String, Boolean>() {{
+                        put(propertyJSONPointer, Boolean.TRUE);
+                    }})
+                    .label(label)
+                    .build());
+        }
+        else {
+            Map<String, Boolean> map = propertyGroupPerKey.getMembers();
+            map.put(propertyJSONPointer, Boolean.TRUE);
+            propertyGroups.replace(key, PropertyGroup.builder()
+                    .members(map)
+                    .label(label)
+                    .build());
+        }
+    }
+
+    /**
+     * Adds a property JSONPointer to the members of a group identfied by a group id.
+     *
+     * @param key the group key
+     * @param propertyJSONPointer the JSONPointer of the property included in the group
+     */
+    public void addPropertyGroup(String key, String propertyJSONPointer) {
+        addPropertyGroup(key, null, propertyJSONPointer);
+    }
+
+
+    /**
+     * Adds a resource to this object.
      *
      * @param id the resource identifier
      * @param resource the object representing the online resource
      */
-    public void addOnline(String id, Resource resource) {
+    public void addResource(String id, Resource resource) {
 
-        if (online == null)
-            online = new HashMap<>();
+        if (resources == null)
+            resources = new HashMap<>();
 
-        online.putIfAbsent(id, resource);
+        resources.putIfAbsent(id, resource);
     }
 
     @JsonIgnore
-    private Map<String,Resource> getOnline(ResourceType type, String label) {
+    private Map<String,Resource> getResources(ResourceType type) {
 
         Map<String,Resource> ols = new HashMap<>();
-        for (Map.Entry<String,Resource> ol : online.entrySet()) {
-            if (ol.getValue().getType() == type) {
-                if ( label == null || (label != null && ol.getValue().equals(label)) )
+        for (Map.Entry<String,Resource> ol : resources.entrySet()) {
+            if (ol.getValue().getType() == type)
                 ols.put(ol.getKey(), ol.getValue());
-            }
         }
         if (ols.size()==0)
             return null;
@@ -347,119 +412,103 @@ public class Card extends JSContact implements Serializable {
         return ols;
     }
 
-    @JsonIgnore
-    private Map<String,Resource> getOnline(ResourceType type) {
-        return getOnline(type,null);
-    }
-
     /**
-     * Returns all the online resources associated to this object mapping the vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
+     * Returns all the resources associated to this object mapping the vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.8.1">RFC6350</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineKey() {
-        return getOnline(ResourceType.KEY);
+    public Map<String,Resource> getKeyResources() {
+        return getResources(ResourceType.KEY);
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
+     * Returns all the resources associated to this object corresponding to vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.8">RFC6350</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineUrl() {
-        return getOnline(ResourceType.URI);
+    public Map<String,Resource> getUrlResources() {
+        return getResources(ResourceType.URI);
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
+     * Returns all the resources associated to this object corresponding to vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.3">RFC6350</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineSource() {
-        return getOnline(ResourceType.SOURCE);
+    public Map<String,Resource> getSourceResources() {
+        return getResources(ResourceType.SOURCE);
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
+     * Returns all the resources associated to this object corresponding to vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.3">RFC6350</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineLogo() {
-        return getOnline(ResourceType.LOGO);
+    public Map<String,Resource> getLogoResources() {
+        return getResources(ResourceType.LOGO);
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
+     * Returns all the resources associated to this object corresponding to vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.5">RFC6350</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineSound() {
-        return getOnline(ResourceType.SOUND);
+    public Map<String,Resource> getSoundResources() {
+        return getResources(ResourceType.SOUND);
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
+     * Returns all the resources associated to this object corresponding to vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.1">RFC6350</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineFburl() {
-        return getOnline(ResourceType.FBURL);
+    public Map<String,Resource> getFburlResources() {
+        return getResources(ResourceType.FBURL);
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
+     * Returns all the resources associated to this object corresponding to vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.3">RFC6350</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineCaluri() {
-        return getOnline(ResourceType.CALURI);
+    public Map<String,Resource> getCaluriResources() {
+        return getResources(ResourceType.CALURI);
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 ORG-DIRECTORY property as defined in section 2.4 of [RFC6715].
+     * Returns all the resources associated to this object corresponding to vCard 4.0 ORG-DIRECTORY property as defined in section 2.4 of [RFC6715].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6715.html#section-2.4">RFC6715</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineOrgDirectory() {
-        return getOnline(ResourceType.ORG_DIRECTORY);
+    public Map<String,Resource> getOrgDirectoryResources() {
+        return getResources(ResourceType.ORG_DIRECTORY);
     }
 
     /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 IMPP property as defined in section 6.4.3 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.4.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getOnlineImpp() {
-        return getOnline(ResourceType.USERNAME);
-    }
-
-    /**
-     * Returns all the online resources associated to this object corresponding to vCard 4.0 CONTACT-URI property as defined in section 21 of [RFC8605].
+     * Returns all the resources associated to this object corresponding to vCard 4.0 CONTACT-URI property as defined in section 21 of [RFC8605].
      *
      * @return all the resources found, null otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc8605#section-2.1">RFC8605</a>
      */
     @JsonIgnore
-    public Map<String,Resource> getOnlineContactUri() {
-        return getOnline(ResourceType.CONTACT_URI);
+    public Map<String,Resource> getContactUriResources() {
+        return getResources(ResourceType.CONTACT_URI);
     }
 
     /**
@@ -523,7 +572,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds a personal information to this object.
+     * Adds personal information to this object.
      *
      * @param id the personal information identifier
      * @param personalInformation the object representing the personal information
@@ -738,7 +787,7 @@ public class Card extends JSContact implements Serializable {
         }
 
         Card localizedCard = objectMapper.convertValue(root, Card.class);
-        localizedCard.setLanguage(language);
+        localizedCard.setLocale(language);
         localizedCard.setLocalizations(null);
 
         return localizedCard;

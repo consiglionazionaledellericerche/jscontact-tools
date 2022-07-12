@@ -24,7 +24,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class EmailAddressTest extends AbstractTest {
 
@@ -108,8 +108,8 @@ public class EmailAddressTest extends AbstractTest {
                 .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
-        assertTrue("testInvalidEmail1-1", !jsCard.isValid());
-        assertTrue("testInvalidEmail1-2", jsCard.getValidationMessage().equals("invalid email in Email"));
+        assertFalse("testInvalidEmail1-1", jsCard.isValid());
+        assertEquals("testInvalidEmail1-2", "invalid email in Email", jsCard.getValidationMessage());
     }
 
 
@@ -126,8 +126,8 @@ public class EmailAddressTest extends AbstractTest {
                 .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
-        assertTrue("testInvalidEmail2-1", !jsCard.isValid());
-        assertTrue("testInvalidEmail2-2", jsCard.getValidationMessage().equals("invalid Map<Context,Boolean> contexts in EmailAddress - Only Boolean.TRUE allowed"));
+        assertFalse("testInvalidEmail2-1", jsCard.isValid());
+        assertEquals("testInvalidEmail2-2", "invalid Map<Context,Boolean> contexts in EmailAddress - Only Boolean.TRUE allowed", jsCard.getValidationMessage());
     }
 
 
@@ -145,8 +145,8 @@ public class EmailAddressTest extends AbstractTest {
                 .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
-        assertTrue("testInvalidEmail3-1", !jsCard.isValid());
-        assertTrue("testInvalidEmail3-2", jsCard.getValidationMessage().equals("invalid pref in Email - value must be greater or equal than 1"));
+        assertFalse("testInvalidEmail3-1", jsCard.isValid());
+        assertEquals("testInvalidEmail3-2", "invalid pref in Email - value must be greater or equal than 1", jsCard.getValidationMessage());
     }
 
 }

@@ -19,14 +19,12 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SpeakToAsTest extends VCard2JSContactTest {
 
     @Test
-    public void testSpeakToAs1() throws IOException, CardException {
+    public void testSpeakToAs1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -36,12 +34,12 @@ public class SpeakToAsTest extends VCard2JSContactTest {
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testSpeakToAs1 - 1",jsCard.getSpeakToAs().isMale());
-        assertTrue("testSpeakToAs1 - 2",jsCard.getSpeakToAs().getPronouns() == null);
-        assertTrue("testSpeakToAs1 - 3",jsCard.getExtensions() == null);
+        assertNull("testSpeakToAs1 - 2", jsCard.getSpeakToAs().getPronouns());
+        assertNull("testSpeakToAs1 - 3", jsCard.getExtensions());
     }
 
     @Test
-    public void testSpeakToAs2() throws IOException, CardException {
+    public void testSpeakToAs2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -51,8 +49,8 @@ public class SpeakToAsTest extends VCard2JSContactTest {
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertTrue("testSpeakToAs2 - 1",jsCard.getSpeakToAs().isMale());
-        assertTrue("testSpeakToAs2 - 2",jsCard.getSpeakToAs().getPronouns() == null);
-        assertTrue("testSpeakToAs2 - 3",jsCard.getExtensions().get("ietf.org:rfc6350:GENDER").equals("boy"));
+        assertNull("testSpeakToAs2 - 2", jsCard.getSpeakToAs().getPronouns());
+        assertEquals("testSpeakToAs2 - 3", "boy", jsCard.getExtensions().get("ietf.org:rfc6350:GENDER"));
     }
 
 }

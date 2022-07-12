@@ -19,32 +19,30 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class UidTest extends JCard2JSContactTest {
 
     @Test
-    public void testUidValid1() throws IOException, CardException {
+    public void testUidValid1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"] " +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testUidValid1 - 1",jsCard.getUid()!=null);
+        assertNotNull("testUidValid1 - 1", jsCard.getUid());
 
     }
 
     @Test
-    public void testUidValid2() throws IOException, CardException {
+    public void testUidValid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"uid\", {}, \"text\", \"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testUidValid2 - 1",jsCard.getUid().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"));
+        assertEquals("testUidValid2 - 1", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
 
     }
 

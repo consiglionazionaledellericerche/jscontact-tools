@@ -23,20 +23,21 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the PersonalInformation type as defined in section 2.6.2 of [draft-ietf-jmap-jscontact].
+ * Class mapping the PersonalInformation type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.2">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","label","value","level"})
+@JsonPropertyOrder({"@type","type","value","level","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,13 +51,13 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
 
     PersonalInformationType type;
 
-    String label;
-
     @NotNull(message = "value is missing in PersonalInformation")
     @NonNull
     String value;
 
     PersonalInformationLevel level;
+
+    String label;
 
     @JsonIgnore
     Integer index;
@@ -74,9 +75,9 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
     }
 
     /**
-     * Tests if this personal information is an hobby.
+     * Tests if this personal information is a hobby.
      *
-     * @return true if this personal information is an hobby, false otherwise
+     * @return true if this personal information is a hobby, false otherwise
      */
     public boolean asHobby() { return type == PersonalInformationType.HOBBY; }
     /**

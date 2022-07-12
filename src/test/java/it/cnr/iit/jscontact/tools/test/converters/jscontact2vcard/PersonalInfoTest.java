@@ -24,7 +24,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PersonalInfoTest extends JSContact2VCardTest {
 
@@ -75,21 +75,27 @@ public class PersonalInfoTest extends JSContact2VCardTest {
                        "}" +
                        "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testPersonalInfo - 1",vcard.getExpertise().size() == 2);
-        assertTrue("testPersonalInfo - 2",vcard.getExpertise().get(0).getValue().equals("chemistry"));
-        assertTrue("testPersonalInfo - 3",vcard.getExpertise().get(0).getLevel() == ExpertiseLevel.EXPERT);
-        assertTrue("testPersonalInfo - 4",vcard.getExpertise().get(1).getValue().equals("chinese literature"));
-        assertTrue("testPersonalInfo - 5",vcard.getExpertise().get(1).getLevel() == ExpertiseLevel.BEGINNER);
-        assertTrue("testPersonalInfo - 6",vcard.getHobbies().size() == 2);
-        assertTrue("testPersonalInfo - 7",vcard.getHobbies().get(0).getValue().equals("reading"));
-        assertTrue("testPersonalInfo - 8",vcard.getHobbies().get(0).getLevel() == HobbyLevel.HIGH);
-        assertTrue("testPersonalInfo - 9",vcard.getHobbies().get(1).getValue().equals("sewing"));
-        assertTrue("testPersonalInfo - 10",vcard.getHobbies().get(1).getLevel() == HobbyLevel.HIGH);
-        assertTrue("testPersonalInfo - 11",vcard.getInterests().size() == 2);
-        assertTrue("testPersonalInfo - 12",vcard.getInterests().get(0).getValue().equals("r&b music"));
-        assertTrue("testPersonalInfo - 13",vcard.getInterests().get(0).getLevel() == InterestLevel.MEDIUM);
-        assertTrue("testPersonalInfo - 14",vcard.getInterests().get(1).getValue().equals("rock 'n' roll music"));
-        assertTrue("testPersonalInfo - 15",vcard.getInterests().get(1).getLevel() == InterestLevel.HIGH);
+        assertEquals("testPersonalInfo - 1", 2, vcard.getExpertise().size());
+        assertEquals("testPersonalInfo - 2", "chemistry", vcard.getExpertise().get(0).getValue());
+        assertSame("testPersonalInfo - 3", vcard.getExpertise().get(0).getLevel(), ExpertiseLevel.EXPERT);
+        assertEquals("testPersonalInfo - 4", "chinese literature", vcard.getExpertise().get(1).getValue());
+        assertSame("testPersonalInfo - 5", vcard.getExpertise().get(1).getLevel(), ExpertiseLevel.BEGINNER);
+        assertEquals("testPersonalInfo - 6", 2, vcard.getHobbies().size());
+        assertEquals("testPersonalInfo - 7", "reading", vcard.getHobbies().get(0).getValue());
+        assertSame("testPersonalInfo - 8", vcard.getHobbies().get(0).getLevel(), HobbyLevel.HIGH);
+        assertEquals("testPersonalInfo - 9", "sewing", vcard.getHobbies().get(1).getValue());
+        assertSame("testPersonalInfo - 10", vcard.getHobbies().get(1).getLevel(), HobbyLevel.HIGH);
+        assertEquals("testPersonalInfo - 11", 2, vcard.getInterests().size());
+        assertEquals("testPersonalInfo - 12", "r&b music", vcard.getInterests().get(0).getValue());
+        assertSame("testPersonalInfo - 13", vcard.getInterests().get(0).getLevel(), InterestLevel.MEDIUM);
+        assertEquals("testPersonalInfo - 14", "rock 'n' roll music", vcard.getInterests().get(1).getValue());
+        assertSame("testPersonalInfo - 15", vcard.getInterests().get(1).getLevel(), InterestLevel.HIGH);
+        assertEquals("testPersonalInfo - 16", "PERSINFO-1", vcard.getExpertise().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPersonalInfo - 17", "PERSINFO-2", vcard.getExpertise().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testPersonalInfo - 18", "PERSINFO-3", vcard.getHobbies().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPersonalInfo - 19", "PERSINFO-4", vcard.getHobbies().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testPersonalInfo - 20", "PERSINFO-5", vcard.getInterests().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPersonalInfo - 21", "PERSINFO-6", vcard.getInterests().get(1).getParameter(PROP_ID_PARAM));
     }
 
 

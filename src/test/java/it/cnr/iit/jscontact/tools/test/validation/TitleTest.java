@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TitleTest extends AbstractTest {
 
@@ -39,8 +39,8 @@ public class TitleTest extends AbstractTest {
                 .titles(jobTiles)
                 .build();
 
-        assertTrue("testInvalidTitleOrganization1-1", !jsCard.isValid());
-        assertTrue("testInvalidTitleOrganization1-2", jsCard.getValidationMessage().equals("title organization id is missing in organizations"));
+        assertFalse("testInvalidTitleOrganization1-1", jsCard.isValid());
+        assertEquals("testInvalidTitleOrganization1-2", "title organization id is missing in organizations", jsCard.getValidationMessage());
     }
 
     @Test
@@ -57,8 +57,8 @@ public class TitleTest extends AbstractTest {
                 .organizations(organizations)
                 .build();
 
-        assertTrue("testInvalidTitleOrganization2-1", !jsCard.isValid());
-        assertTrue("testInvalidTitleOrganization2-2", jsCard.getValidationMessage().equals("title organization id is missing in organizations"));
+        assertFalse("testInvalidTitleOrganization2-1", jsCard.isValid());
+        assertEquals("testInvalidTitleOrganization2-2", "title organization id is missing in organizations", jsCard.getValidationMessage());
     }
 
 

@@ -28,9 +28,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class mapping the keys of the "contexts" map as defined in section 1.5.1 of [draft-ietf-jmap-jscontact].
+ * Class mapping the keys of the "contexts" map as defined in section 1.5.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-1.5.1">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @Getter
@@ -90,7 +90,7 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
     public static Context ext(String extValue) { return Context.builder().extValue(extValue).build(); }
 
     /**
-     * Returns the list of enum values corresponding to those ones whose type is known in a given collection of contexts.
+     * Returns the list of enum values corresponding to those whose type is known in a given collection of contexts.
      *
      * @param contexts the list of contexts
      * @return list of enum values corresponding to those contexts whose type is known

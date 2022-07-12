@@ -23,7 +23,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class AddressTest extends AbstractTest {
 
@@ -38,8 +38,8 @@ public class AddressTest extends AbstractTest {
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
-        assertTrue("testInvalidCountryCode-1", !jsCard.isValid());
-        assertTrue("testInvalidCountryCode-2", jsCard.getValidationMessage().equals("invalid countryCode in Address"));
+        assertFalse("testInvalidCountryCode-1", jsCard.isValid());
+        assertEquals("testInvalidCountryCode-2", "invalid countryCode in Address", jsCard.getValidationMessage());
     }
 
     @Test
@@ -70,8 +70,8 @@ public class AddressTest extends AbstractTest {
                 .addresses(addresses)
                 .build();
 
-        assertTrue("testInvalidCoordinates-1", !jsCard.isValid());
-        assertTrue("testInvalidCoordinates-2", jsCard.getValidationMessage().equals("invalid coordinates in Address"));
+        assertFalse("testInvalidCoordinates-1", jsCard.isValid());
+        assertEquals("testInvalidCoordinates-2", "invalid coordinates in Address", jsCard.getValidationMessage());
     }
 
     @Test
@@ -101,8 +101,8 @@ public class AddressTest extends AbstractTest {
                 .uid(getUUID())
                 .addresses(addresses)
                 .build();
-        assertTrue("testInvalidAddressId-1", !jsCard.isValid());
-        assertTrue("testInvalidAddressId-2", jsCard.getValidationMessage().equals("invalid Id in Map<Id,Address>"));
+        assertFalse("testInvalidAddressId-1", jsCard.isValid());
+        assertEquals("testInvalidAddressId-2", "invalid Id in Map<Id,Address>", jsCard.getValidationMessage());
     }
 
 }

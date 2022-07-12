@@ -24,7 +24,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class ResourceTest extends AbstractTest {
@@ -32,15 +32,14 @@ public class ResourceTest extends AbstractTest {
     @Test
     public void testValidResource() {
 
-        Resource online = Resource.builder()
+        Resource resource = Resource.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .type(ResourceType.USERNAME)
-                .resource("mario-loffredo")
-                .label("GitHub")
+                .resource("mailto:mario.loffredo@iit.cnr.it")
+                .type(ResourceType.CONTACT_URI)
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .online(new HashMap<String,Resource>(){{ put("XMPP-1", online);}})
+                .resources(new HashMap<String,Resource>(){{ put("MAILTO-1", resource);}})
                 .build();
 
         assertTrue("testValidResource", jsCard.isValid());
@@ -60,7 +59,7 @@ public class ResourceTest extends AbstractTest {
     @Test
     public void testInvalidResourceUri() {
 
-        Resource online = Resource.builder()
+        Resource resource = Resource.builder()
                 .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.URI)
                 .resource(" ")
@@ -68,11 +67,11 @@ public class ResourceTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .online(new HashMap<String,Resource>(){{ put("URI-1", online);}})
+                .resources(new HashMap<String,Resource>(){{ put("URI-1", resource);}})
                 .build();
 
-        assertTrue("testInvalidResourceUri-1", !jsCard.isValid());
-        assertTrue("testInvalidResourceUri-2", jsCard.getValidationMessage().equals("invalid uri in Resource"));
+        assertFalse("testInvalidResourceUri-1", jsCard.isValid());
+        assertEquals("testInvalidResourceUri-2", "invalid uri in Resource", jsCard.getValidationMessage());
     }
 
 

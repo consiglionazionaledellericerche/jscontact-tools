@@ -33,9 +33,9 @@ import java.util.Map;
 
 
 /**
- * Class mapping the CardGroup object as defined in section 3 of [draft-ietf-jmap-jscontact].
+ * Class mapping the CardGroup object as defined in section 3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-3">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","uid","members","name","card"})
@@ -66,7 +66,7 @@ public class CardGroup extends JSContact implements Serializable {
     Card card;
 
     /**
-     * Adds a a member to this object.
+     * Adds a member to this object.
      *
      * @param member the uid value of the object representing a group member
      */

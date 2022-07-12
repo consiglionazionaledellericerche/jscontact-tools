@@ -17,6 +17,8 @@ public abstract class AbstractConverter {
     protected static final String DEFAULT_CALSCALE = "gregorian";
     protected static final String UNMATCHED_PROPERTY_PREFIX = "ietf.org:rfc6350:";
 
+    protected static final String PROP_ID_PARAM = "PROP-ID";
+
     protected static final ObjectMapper mapper = new ObjectMapper();
 
     protected static String getUnmatchedPropertyName(String propertyName, Integer index) {

@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
-import it.cnr.iit.jscontact.tools.constraints.UriResourceConstraint;
+import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
@@ -30,6 +30,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -39,15 +40,15 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the StreetComponent type as defined in section 2.3.3 of [draft-ietf-jmap-jscontact].
+ * Class mapping the Resource type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.3">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@UriResourceConstraint
-@JsonPropertyOrder({"@type","resource","type","mediaType","contexts","label","pref"})
+@ResourceConstraint
+@JsonPropertyOrder({"@type","resource","type","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -74,11 +75,11 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    String label;
-
     @Min(value=1, message = "invalid pref in Resource - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Resource - value must be less or equal than 100")
     Integer pref;
+
+    String label;
 
     @JsonIgnore
     Integer index;
@@ -96,20 +97,12 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     }
 
     /**
-     * Tests if this is resource is a uri.
+     * Tests if this is resource is an uri.
      *
-     * @return true if this resource is a uri, false otherwise
+     * @return true if this resource is an uri, false otherwise
      */
     @JsonIgnore
     public boolean isUri() { return type == ResourceType.URI; }
-
-    /**
-     * Tests if this is resource is identified by a user name.
-     *
-     * @return true if this resource is identified by a user name, false otherwise
-     */
-    @JsonIgnore
-    public boolean isUsername() { return type == ResourceType.USERNAME; }
 
     @JsonIgnore
     private boolean isResource(ResourceType type) { return this.type == type; }
@@ -150,14 +143,6 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @JsonIgnore
     public boolean isPublicKey() { return isResource(ResourceType.KEY); }
     /**
-     * Tests if this resource maps a vCard 4.0 IMPP property as defined in section 6.4.3 of [RFC6350].
-     *
-     * @return true if this resource maps a vCard 4.0 IMPP property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.4.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public boolean isImpp() { return isResource(ResourceType.USERNAME, "XMPP"); }
-    /**
      * Tests if this resource maps a vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
      *
      * @return true if this resource maps a vCard 4.0 LOGO property, false otherwise
@@ -190,18 +175,10 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @JsonIgnore
     public boolean isDirectorySource() { return isResource(ResourceType.SOURCE); }
 
-
-    private static Resource resource(ResourceType type,  String resource) {
-
-        return resource(type, null, resource);
-
-    }
-
-    private static Resource resource(ResourceType type, String label, String resource) {
+    private static Resource resource(ResourceType type, String resource) {
         return Resource.builder()
                        .resource(resource)
                        .type(type)
-                       .label(label)
                        .build();
     }
     /**
@@ -229,14 +206,6 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      */
     public static Resource fburl(String resource) { return resource(ResourceType.FBURL, resource);}
 
-    /**
-     * Returns a resource mapping a vCard 4.0 IMPP property as defined in section 6.4.3 of [RFC6350].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.4.3">RFC6350</a>
-     */
-    public static Resource impp(String resource) { return resource(ResourceType.USERNAME,  "XMPP", resource);}
     /**
      * Returns a resource mapping a vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
      *

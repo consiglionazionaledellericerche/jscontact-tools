@@ -6,20 +6,20 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TypeMemberTest {
 
     @Test
     public void testInvalidTypeMemberValue() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-InvalidTypeMemberValue.json"), Charset.forName("UTF-8"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-InvalidTypeMemberValue.json"), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
-        assertTrue("testInvalidTypeMemberValue-1", !jsCard.isValid());
-        assertTrue("testInvalidTypeMemberValue-2", jsCard.getValidationMessage().equals("invalid @type value in Address"));
+        assertFalse("testInvalidTypeMemberValue-1", jsCard.isValid());
+        assertEquals("testInvalidTypeMemberValue-2", "invalid @type value in Address", jsCard.getValidationMessage());
 
     }
 }

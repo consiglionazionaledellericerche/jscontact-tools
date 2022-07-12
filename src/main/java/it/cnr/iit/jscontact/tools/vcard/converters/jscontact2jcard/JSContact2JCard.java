@@ -44,15 +44,15 @@ public class JSContact2JCard extends JSContact2EZVCard {
 
     /**
      * Converts a list of JSContact objects into a complete vCard v4.0 in JSON format, namely jCard [RFC7095]
-     * JSContact is defined in draft-ietf-jmap-jscontact.
-     * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     * JSContact is defined in draft-ietf-calext-jscontact.
+     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
      * @param jsContacts a list of JSContact objects
      * @return a jCard as a JSON string
      * @throws CardException if one of the JSContact objects is not valid
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
     public String convertToJson(JSContact... jsContacts) throws CardException {
 
@@ -63,8 +63,8 @@ public class JSContact2JCard extends JSContact2EZVCard {
 
     /**
      * Converts one or more objects into a complete vCard v4.0 in JSON format, namely jCard [RFC7095].
-     * JSContact is defined in draft-ietf-jmap-jscontact.
-     * Conversion rules are defined in draft-ietf-jmap-jscontact-vcard.
+     * JSContact is defined in draft-ietf-calext-jscontact.
+     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
      * @param jsContacts a list of JSContact objects
      * @return a jCard as an istance of Jackson library JsonNode class
@@ -72,8 +72,8 @@ public class JSContact2JCard extends JSContact2EZVCard {
      * @throws JsonProcessingException if the jCard cannot be deserialized
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">draft-ietf-jmap-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">draft-ietf-jmap-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
     public JsonNode convertToJsonNode(JSContact... jsContacts) throws CardException, JsonProcessingException {
 

@@ -20,14 +20,12 @@ import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class UpdatedTest extends VCard2JSContactTest {
 
     @Test
-    public void testUpdatedValid() throws IOException, CardException {
+    public void testUpdatedValid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -36,7 +34,7 @@ public class UpdatedTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testUpdatedValid - 1",jsCard.getUpdated().compareTo(DateUtils.toCalendar("1995-10-31T22:27:10Z"))==0);
+        assertEquals("testUpdatedValid - 1", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("1995-10-31T22:27:10Z")));
 
     }
 

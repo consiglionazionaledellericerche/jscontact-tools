@@ -28,9 +28,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class mapping the keys of "features" map of the Phone type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
+ * Class mapping the keys of "features" map of the Phone type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @Getter
@@ -155,7 +155,7 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
     public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(extValue).build(); }
 
     /**
-     * Returns the list of enum values corresponding to those ones whose type is known in a given collection of phone features.
+     * Returns the list of enum values corresponding to those whose type is known in a given collection of phone features.
      *
      * @param features the list of phone features
      * @return list of enum values corresponding to those features whose type is known

@@ -11,6 +11,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.*;
 
@@ -18,18 +19,18 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the EmailAddress type as defined in section 2.3.1 of [draft-ietf-jmap-jscontact].
+ * Class mapping the EmailAddress type as defined in section 2.3.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.1">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","email","contexts","label","pref"})
+@JsonPropertyOrder({"@type","email","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailAddress implements IdMapValue, Serializable, HasContext {
+public class EmailAddress extends GroupableObject implements IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "EmailAddress", message="invalid @type value in EmailAddress")
@@ -49,10 +50,10 @@ public class EmailAddress implements IdMapValue, Serializable, HasContext {
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    String label;
-
     @Min(value=1, message = "invalid pref in Email - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Email - value must be less or equal than 100")
     Integer pref;
+
+    String label;
 
 }

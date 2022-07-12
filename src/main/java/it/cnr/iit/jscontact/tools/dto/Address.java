@@ -28,6 +28,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
@@ -39,16 +40,16 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 /**
- * Class mapping the Address type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
+ * Class mapping the Address type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","fullAddress","street","locality","region","country",
                      "postcode","countryCode","coordinates","timeZone","contexts",
-                     "label","pref"})
+                     "pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -88,11 +89,11 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     @Singular(ignoreNullCollections = true)
     Map<AddressContext,Boolean> contexts;
 
-    String label;
-
     @Min(value=1, message = "invalid pref in Address - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Address - value must be less or equal than 100")
     Integer pref;
+
+    String label;
 
     @JsonIgnore
     String altid;

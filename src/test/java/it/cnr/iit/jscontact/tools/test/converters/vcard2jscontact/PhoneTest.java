@@ -19,14 +19,12 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PhoneTest extends VCard2JSContactTest {
 
     @Test
-    public void testPhoneValid1() throws IOException, CardException {
+    public void testPhoneValid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -35,13 +33,13 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid1 - 1",jsCard.getPhones().size() == 1);
-        assertTrue("testPhoneValid1 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
+        assertEquals("testPhoneValid1 - 1", 1, jsCard.getPhones().size());
+        assertEquals("testPhoneValid1 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid1 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
     }
 
     @Test
-    public void testPhoneValid2() throws IOException, CardException {
+    public void testPhoneValid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -51,19 +49,19 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid2 - 1",jsCard.getPhones().size() == 2);
-        assertTrue("testPhoneValid2 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
+        assertEquals("testPhoneValid2 - 1", 2, jsCard.getPhones().size());
+        assertEquals("testPhoneValid2 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid3 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhoneValid2 - 4",jsCard.getPhones().get("PHONE-1").asVoice());
-        assertTrue("testPhoneValid2 - 5",jsCard.getPhones().get("PHONE-1").getLabel() == null);
-        assertTrue("testPhoneValid2 - 6",jsCard.getPhones().get("PHONE-2").getPhone().equals("tel:+1-555-555-5555;ext=555"));
+        assertNull("testPhoneValid2 - 5", jsCard.getPhones().get("PHONE-1").getLabel());
+        assertEquals("testPhoneValid2 - 6", "tel:+1-555-555-5555;ext=555", jsCard.getPhones().get("PHONE-2").getPhone());
         assertTrue("testPhoneValid2 - 7",jsCard.getPhones().get("PHONE-2").asVoice());
-        assertTrue("testPhoneValid2 - 8",jsCard.getPhones().get("PHONE-2").getPref() == 1);
-        assertTrue("testPhoneValid2 - 9",jsCard.getPhones().get("PHONE-2").getLabel() == null);
+        assertEquals("testPhoneValid2 - 8", 1, (int) jsCard.getPhones().get("PHONE-2").getPref());
+        assertNull("testPhoneValid2 - 9", jsCard.getPhones().get("PHONE-2").getLabel());
     }
 
     @Test
-    public void testPhoneValid3() throws IOException, CardException {
+    public void testPhoneValid3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -72,16 +70,16 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid3 - 1",jsCard.getPhones().size() == 1);
-        assertTrue("testPhoneValid3 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
+        assertEquals("testPhoneValid3 - 1", 1, jsCard.getPhones().size());
+        assertEquals("testPhoneValid3 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid3 - 3",jsCard.getPhones().get("PHONE-1").asWork());
         assertTrue("testPhoneValid3 - 4",jsCard.getPhones().get("PHONE-1").asFax());
-        assertTrue("testPhoneValid3 - 5",jsCard.getPhones().get("PHONE-1").getLabel() == null);
+        assertNull("testPhoneValid3 - 5", jsCard.getPhones().get("PHONE-1").getLabel());
 
     }
 
     @Test
-    public void testPhoneValid4() throws IOException, CardException {
+    public void testPhoneValid4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -90,14 +88,14 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid4 - 1",jsCard.getPhones().size() == 1);
-        assertTrue("testPhoneValid4 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
+        assertEquals("testPhoneValid4 - 1", 1, jsCard.getPhones().size());
+        assertEquals("testPhoneValid4 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid4 - 3",jsCard.getPhones().get("PHONE-1").asWork());
         assertTrue("testPhoneValid4 - 4",jsCard.getPhones().get("PHONE-1").asTextphone());
     }
 
     @Test
-    public void testPhoneValid5() throws IOException, CardException {
+    public void testPhoneValid5() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -106,17 +104,17 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid5 - 1",jsCard.getPhones().size() == 1);
-        assertTrue("testPhoneValid5 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
+        assertEquals("testPhoneValid5 - 1", 1, jsCard.getPhones().size());
+        assertEquals("testPhoneValid5 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid5 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhoneValid5 - 4",jsCard.getPhones().get("PHONE-1").asWork());
-        assertTrue("testPhoneValid5 - 5",jsCard.getPhones().get("PHONE-1").getLabel() == null);
+        assertNull("testPhoneValid5 - 5", jsCard.getPhones().get("PHONE-1").getLabel());
         assertTrue("testPhoneValid5 - 6",jsCard.getPhones().get("PHONE-1").asVoice());
 
     }
 
     @Test
-    public void testPhoneValid6() throws IOException, CardException {
+    public void testPhoneValid6() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -125,18 +123,18 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid6 - 1",jsCard.getPhones().size() == 1);
-        assertTrue("testPhoneValid6 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
+        assertEquals("testPhoneValid6 - 1", 1, jsCard.getPhones().size());
+        assertEquals("testPhoneValid6 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid6 - 3",jsCard.getPhones().get("PHONE-1").asWork());
         assertTrue("testPhoneValid6 - 4",jsCard.getPhones().get("PHONE-1").asPrivate());
-        assertTrue("testPhoneValid6 - 5",jsCard.getPhones().get("PHONE-1").getLabel() == null);
+        assertNull("testPhoneValid6 - 5", jsCard.getPhones().get("PHONE-1").getLabel());
         assertTrue("testPhoneValid6 - 6",jsCard.getPhones().get("PHONE-1").asFax());
 
     }
 
 
     @Test
-    public void testPhoneValid7() throws IOException, CardException {
+    public void testPhoneValid7() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -145,8 +143,8 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid7 - 1",jsCard.getPhones().size() == 1);
-        assertTrue("testPhoneValid7 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
+        assertEquals("testPhoneValid7 - 1", 1, jsCard.getPhones().size());
+        assertEquals("testPhoneValid7 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid7 - 3",jsCard.getPhones().get("PHONE-1").asWork());
         assertTrue("testPhoneValid7 - 4",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhoneValid7 - 5",jsCard.getPhones().get("PHONE-1").asTextphone());
@@ -154,7 +152,7 @@ public class PhoneTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testPhoneValid8() throws IOException, CardException {
+    public void testPhoneValid8() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -163,8 +161,8 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid8 - 1",jsCard.getPhones().size() == 1);
-        assertTrue("testPhoneValid8 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("tel:+33-01-23-45-6"));
+        assertEquals("testPhoneValid8 - 1", 1, jsCard.getPhones().size());
+        assertEquals("testPhoneValid8 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid8 - 3",jsCard.getPhones().get("PHONE-1").asWork());
         assertTrue("testPhoneValid8 - 4",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhoneValid8 - 6",jsCard.getPhones().get("PHONE-1").asTextphone());
@@ -173,7 +171,7 @@ public class PhoneTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testPhoneValid9() throws IOException, CardException {
+    public void testPhoneValid9() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -182,8 +180,8 @@ public class PhoneTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testPhoneValid9 - 1",jsCard.getPhones().size() == 1);
-        assertTrue("testPhoneValid9 - 2",jsCard.getPhones().get("PHONE-1").getPhone().equals("+33 01 23 45 6"));
+        assertEquals("testPhoneValid9 - 1", 1, jsCard.getPhones().size());
+        assertEquals("testPhoneValid9 - 2", "+33 01 23 45 6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertTrue("testPhoneValid9 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhoneValid9 - 3",jsCard.getPhones().get("PHONE-1").asVoice());
     }

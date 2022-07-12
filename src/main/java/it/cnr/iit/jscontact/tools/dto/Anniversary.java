@@ -25,6 +25,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -32,14 +33,14 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the Anniversary type as defined in section 2.6.1 of [draft-ietf-jmap-jscontact].
+ * Class mapping the Anniversary type as defined in section 2.6.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.6.1">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","label","date","place"})
+@JsonPropertyOrder({"@type","type","date","place","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -55,8 +56,6 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
 
     AnniversaryType type;
 
-    String label;
-
     @NotNull(message = "date is missing in Anniversary")
     @NonNull
     @JsonSerialize(using = AnniversaryDateSerializer.class)
@@ -65,6 +64,8 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
 
     @Valid
     Address place;
+
+    String label;
 
     /**
      * Tests if this anniversary is a birthday. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
@@ -85,7 +86,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     public boolean isDeath() { return type == AnniversaryType.DEATH; }
 
     /**
-     * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property [as defined in section 6.2.6 of [RFC6350].
+     * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
      *
      * @return true if this anniversary is a date of marriage, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
@@ -127,7 +128,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * Returns a date of marriage, or equivalent, anniversary. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
      *
      * @param date the marriage date in text format
-     * @return a date of marriage anniversary
+     * @return a date of wedding anniversary
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     public static Anniversary marriage(String date) { return anniversary(null, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}

@@ -20,9 +20,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "grammaticalGender" property as defined in section 2.2.6 of [draft-ietf-jmap-jscontact].
+ * Enum class mapping the values of the "grammaticalGender" property as defined in section 2.2.6 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.2.6">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.6">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
@@ -34,7 +34,7 @@ public enum GrammaticalGenderType {
     INANIMATE("inanimate"),
     NEUTER("neuter");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

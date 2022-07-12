@@ -22,9 +22,9 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the relation types as defined in section 2.1.7 of [draft-ietf-jmap-jscontact]. The relation types map those presented for the vCard 4.0 RELATED property as defined in section 6.6.4 of [RFC6350]
+ * Class mapping the relation types as defined in section 2.1.7 of [draft-ietf-calext-jscontact]. The relation types map those presented for the vCard 4.0 RELATED property as defined in section 6.6.4 of [RFC6350]
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.1.7">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.1.7">draft-ietf-calext-jscontact</a>
  * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.4">RFC6350</a>
  * @author Mario Loffredo
  */
@@ -148,19 +148,21 @@ public class RelationType extends ExtensibleEnum<RelationEnum> implements Serial
      */
     @JsonIgnore
     public boolean isNeighbor() { return isRfcRelation(RelationEnum.NEIGHBOR); }
-    @JsonIgnore
+
     /**
      * Tests if the type of this relation is "parent".
      *
      * @return true if the type of this relation is "parent", false otherwise
      */
-    public boolean isParent() { return isRfcRelation(RelationEnum.PARENT); }
     @JsonIgnore
+    public boolean isParent() { return isRfcRelation(RelationEnum.PARENT); }
+
     /**
      * Tests if the type of this relation is "sibling".
      *
      * @return true if the type of this relation is "sinling", false otherwise
      */
+    @JsonIgnore
     public boolean isSibling() { return isRfcRelation(RelationEnum.SIBLING); }
     /**
      * Tests if the type of this relation is "spouse".
@@ -246,15 +248,15 @@ public class RelationType extends ExtensibleEnum<RelationEnum> implements Serial
      */
     public static RelationType date() { return rfcRelation(RelationEnum.DATE);}
     /**
-     * Returns a "emergency" relation type.
+     * Returns "emergency" as relation type.
      *
-     * @return a "emergency" relation type
+     * @return "emergency" as relation type
      */
     public static RelationType emergency() { return rfcRelation(RelationEnum.EMERGENCY);}
     /**
-     * Returns a "friend" relation type.
+     * Returns "friend" as relation type.
      *
-     * @return a "friend" relation type
+     * @return "friend" as relation type
      */
     public static RelationType friend() { return rfcRelation(RelationEnum.FRIEND);}
     /**

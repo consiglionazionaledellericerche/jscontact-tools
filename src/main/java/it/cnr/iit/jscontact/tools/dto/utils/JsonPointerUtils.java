@@ -1,5 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
+import com.fasterxml.jackson.core.JsonPointer;
+
 /**
  * Utility class for handling Jackson JSONPointer expressions.
  *
@@ -14,8 +16,8 @@ public class JsonPointerUtils {
      */
     public static String toAbsolute(String jsonPointer) {
 
-        if (jsonPointer.charAt(0) != '/')
-            return "/" + jsonPointer;
+        if (jsonPointer.charAt(0) != JsonPointer.SEPARATOR)
+            return JsonPointer.SEPARATOR + jsonPointer;
 
         return jsonPointer;
     }

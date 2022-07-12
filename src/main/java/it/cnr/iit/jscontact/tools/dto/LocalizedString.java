@@ -19,6 +19,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasPreference;
 import it.cnr.iit.jscontact.tools.dto.utils.HasPreferenceUtils;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
@@ -32,7 +33,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.1">RFC6350</a>
  * @author Mario Loffredo
  */
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

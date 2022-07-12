@@ -22,9 +22,9 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "type" property of the StreetComponent type as defined in section 2.4.1 of [draft-ietf-jmap-jscontact].
+ * Enum class mapping the values of the "type" property of the StreetComponent type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.4.1">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
@@ -42,7 +42,7 @@ public enum StreetComponentEnum implements IsExtensible {
     SEPARATOR("separator"),
     UNKNOWN("unknown");
 
-    private String value;
+    private final String value;
 
     @JsonValue
     public String getValue() {

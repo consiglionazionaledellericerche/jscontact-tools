@@ -27,9 +27,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.2 of [draft-ietf-jmap-jscontact].
+ * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact#section-2.3.2">draft-ietf-jmap-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
@@ -43,7 +43,7 @@ public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
     VIDEO("video"),
     TEXTPHONE("textphone");
 
-    private String value;
+    private final String value;
 
     @JsonIgnore
     private static final List<String> otherVCardTypes = Arrays.asList("textphone", "video", "cell");

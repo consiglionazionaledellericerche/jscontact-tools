@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SkipToAsTest extends JSContact2VCardTest {
 
@@ -53,7 +53,7 @@ public class SkipToAsTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testSkipToAs2 - 1",vcard.getGender().isNone());
-        assertTrue("testSkipToAs2 - 2",vcard.getGender().getText().equals("inanimate"));
+        assertEquals("testSkipToAs2 - 2", "inanimate", vcard.getGender().getText());
     }
 
     @Test
@@ -68,8 +68,8 @@ public class SkipToAsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testSkipToAs3 - 1",vcard.getGender() == null);
-        assertTrue("testSkipToAs3 - 2",vcard.getExtendedProperty("X-JSCONTACT-PRONOUNS").getValue().equals("he/him"));
+        assertNull("testSkipToAs3 - 1", vcard.getGender());
+        assertEquals("testSkipToAs3 - 2", "he/him", vcard.getExtendedProperty("PRONOUNS").getValue());
     }
 
     @Test
@@ -86,8 +86,8 @@ public class SkipToAsTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testSkipToAs4 - 1",vcard.getGender().isNone());
-        assertTrue("testSkipToAs3 - 2",vcard.getGender().getText().equals("inanimate"));
-        assertTrue("testSkipToAs4 - 3",vcard.getExtendedProperty("X-JSCONTACT-PRONOUNS").getValue().equals("it"));
+        assertEquals("testSkipToAs3 - 2", "inanimate", vcard.getGender().getText());
+        assertEquals("testSkipToAs4 - 3", "it", vcard.getExtendedProperty("PRONOUNS").getValue());
     }
 
 }

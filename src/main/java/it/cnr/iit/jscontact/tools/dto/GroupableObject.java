@@ -16,8 +16,8 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Abstract class mapping the vCard 4.0 related properties that can be grouped as defined in section 3.3 of [RFC6350].
@@ -26,9 +26,19 @@ import lombok.ToString;
  * @author Mario Loffredo
  */
 @ToString
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class GroupableObject {
 
     @JsonIgnore
     @Getter
+    @Setter
     String group;
+
+    @JsonIgnore
+    @Getter
+    @Setter
+    String propId;
+
 }
