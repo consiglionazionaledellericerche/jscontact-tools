@@ -21,7 +21,7 @@
 
     <groupId>it.cnr.iit.jscontact</groupId>
     <artifactId>jscontact-tools</artifactId>
-    <version>0.10.0</version>
+    <version>0.10.1</version>
     <name>jscontact-tools</name>
     <url>https://github.com/consiglionazionaledellericerche/jscontact-tools</url>
     <organization>
@@ -251,8 +251,9 @@
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>3.0.0</version>
+            <artifactId>jakarta.el</artifactId>
+            <version>3.0.4</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
@@ -262,7 +263,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -273,17 +274,17 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.12.1</version>
+            <version>2.13.3</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.12.1</version>
+            <version>2.13.3</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.12.1</version>
+            <version>2.13.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -296,4 +297,15 @@
             <version>0.11.3</version>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Repository</name>
+            <layout>default</layout>
+            <url>https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
