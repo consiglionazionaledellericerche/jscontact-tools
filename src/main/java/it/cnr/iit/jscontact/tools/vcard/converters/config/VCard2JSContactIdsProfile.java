@@ -94,8 +94,7 @@ public class VCard2JSContactIdsProfile {
                                                                                     .id(JSContactId.emailsId("email"))
                                                                                     .id(JSContactId.phonesId("voice"))  // 1st jCard phone number
                                                                                     .id(JSContactId.phonesId("fax"))    // 2nd jCard phone number
-                                                                                    .id(JSContactId.addressesId("int")) // 1st jCard address
-                                                                                    .id(JSContactId.addressesId("loc")) // 2nd jCard address
+                                                                                    .id(JSContactId.addressesId("addr")) // 1st jCard address
                                                                                     .build();
 
     @Singular(ignoreNullCollections = true)
