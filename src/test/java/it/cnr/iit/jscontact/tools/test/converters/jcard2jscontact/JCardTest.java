@@ -157,7 +157,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 15", "Example", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteJCard1 - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
         assertEquals("testCompleteJCard1 - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());
-        assertEquals("testCompleteJCard1 - 18", 2, jsCard.getAddresses().size());
+        assertEquals("testCompleteJCard1 - 18", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteJCard1 - 19", "Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("ADR-1").getFullAddress());
         assertEquals("testCompleteJCard1 - 20", "Suite 1234", jsCard.getAddresses().get("ADR-1").getStreetExtensions());
         assertEquals("testCompleteJCard1 - 21", "4321 Rue Somewhere", jsCard.getAddresses().get("ADR-1").getStreetDetails());
@@ -167,7 +167,6 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 25", "G1V 2M2", jsCard.getAddresses().get("ADR-1").getPostcode());
         assertEquals("testCompleteJCard1 - 26", "geo:46.772673,-71.282945", jsCard.getAddresses().get("ADR-1").getCoordinates());
         assertEquals("testCompleteJCard1 - 27", "Etc/GMT+5", jsCard.getAddresses().get("ADR-1").getTimeZone());
-        assertEquals("testCompleteJCard1 - 28", "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n", jsCard.getAddresses().get("ADR-2").getFullAddress());
         assertEquals("testCompleteJCard1 - 29", 1, jsCard.getEmails().size());
         assertTrue("testCompleteJCard1 - 30", jsCard.getEmails().get("EMAIL-1").asWork());
         assertEquals("testCompleteJCard1 - 31", "joe.user@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
