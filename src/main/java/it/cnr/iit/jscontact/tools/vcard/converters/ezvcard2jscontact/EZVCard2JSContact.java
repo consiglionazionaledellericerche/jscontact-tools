@@ -44,6 +44,7 @@ import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactIdsProfile;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -58,6 +59,7 @@ import java.util.regex.Pattern;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
+@ToString
 public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static final Pattern TIMEZONE_AS_UTC_OFFSET_PATTERN = Pattern.compile("[+-](\\d{2}):?(\\d{2})");
@@ -114,7 +116,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private String getId(VCard2JSContactIdsProfile.IdType idType, int index, String id, String propId, Object... args) {
 
-        if (propId != null)
+        if (config.isApplyPropIds() && propId != null)
             return propId;
 
         if (config.isApplyAutoIdsProfile() || config.getIdsProfileToApply() == null || config.getIdsProfileToApply().getIds() == null || config.getIdsProfileToApply().getIds().size() == 0)

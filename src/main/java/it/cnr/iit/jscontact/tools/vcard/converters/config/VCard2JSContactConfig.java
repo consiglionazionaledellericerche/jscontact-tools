@@ -38,6 +38,8 @@ public class VCard2JSContactConfig {
     private boolean cardToValidate = true;
     @Builder.Default
     private boolean applyAutoIdsProfile = true;
+    @Builder.Default
+    private boolean applyPropIds = false;
 
     private String defaultLanguage;
 
