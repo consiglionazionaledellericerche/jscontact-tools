@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.10.2</version>
+		  <version>0.10.3</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.10.2'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.10.3'
 ```
 
 # Features
@@ -328,7 +328,9 @@ To do that, the following steps must be followed:
 
 1. set the `applyAutoIdsProfile` property of the `VCard2JSContactConfig` object to `false`
 
-2. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToApply` of `VCard2JSContactConfig` object property with it
+2. set the `applyPropIds` property of the `VCard2JSContactConfig` object to `false`
+
+3. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToApply` of `VCard2JSContactConfig` object property with it
 
 
 ### RDAP Conversion Profile from jCard to JSContact
