@@ -35,7 +35,7 @@ public class CardCloneTest {
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
-        assertTrue("testClone1", Objects.deepEquals(jsCard, jsCard.clone()));
+        assertTrue("testClone1", jsCard.equals(jsCard.clone()));
 
     }
 
@@ -45,7 +45,7 @@ public class CardCloneTest {
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json")), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
-        assertTrue("testClone2", Objects.deepEquals(jsCard, jsCard.clone()));
+        assertTrue("testClone2", jsCard.equals(jsCard.clone()));
 
     }
 
@@ -55,7 +55,7 @@ public class CardCloneTest {
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json")), StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
         Card jsCard = objectMapper.readValue(json, Card.class);
-        assertTrue("testClone3", Objects.deepEquals(jsCard, jsCard.clone()));
+        assertTrue("testClone3", jsCard.equals(jsCard.clone()));
 
     }
 
