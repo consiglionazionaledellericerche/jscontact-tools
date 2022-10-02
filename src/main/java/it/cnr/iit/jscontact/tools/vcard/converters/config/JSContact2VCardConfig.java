@@ -34,5 +34,15 @@ public class JSContact2VCardConfig {
     private String extensionsPrefix = "extension:";
     @Builder.Default
     private boolean cardToValidate = true;
+    @Builder.Default
+    private boolean applyAutoAddrLabel = true;
+    @Builder.Default
+    private boolean addPropIdParameter = true;
+    @Builder.Default
+    private boolean convertTimezoneToTZParam = true;
+    @Builder.Default
+    private boolean convertCoordinatesToGEOParam = true;
+    @Builder.Default
+    private boolean convertTimezoneToOffset = false;
 
 }

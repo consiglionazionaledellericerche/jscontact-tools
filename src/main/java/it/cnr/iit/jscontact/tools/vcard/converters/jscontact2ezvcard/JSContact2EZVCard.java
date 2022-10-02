@@ -3,14 +3,12 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import ezvcard.Messages;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
 import ezvcard.property.*;
-import ezvcard.util.GeoUri;
-import ezvcard.util.PartialDate;
-import ezvcard.util.TelUri;
-import ezvcard.util.VCardDateFormat;
+import ezvcard.util.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
@@ -32,6 +30,8 @@ import java.lang.reflect.Constructor;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utility class for converting a JSContact object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object.
@@ -61,9 +61,9 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     protected JSContact2VCardConfig config;
 
-    private static void addPropId (VCardProperty property, String propId) {
+    private void addPropId (VCardProperty property, String propId) {
 
-        if (propId != null)
+        if (propId != null && config.isAddPropIdParameter())
            property.addParameter(PROP_ID_PARAM, propId);
     }
 
@@ -334,7 +334,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             vcard.setStructuredNameAlt(sns.toArray(new StructuredName[0]));
     }
 
-    private static void fillNickNames(VCard vcard, Card jsCard) {
+    private void fillNickNames(VCard vcard, Card jsCard) {
 
         if (jsCard.getNickNames() == null)
             return;
@@ -408,11 +408,60 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner;
     }
 
-    private static ezvcard.property.Address getAddress(Address address, Map<String,TimeZone> timeZones, String language) {
+    private static String getOffsetFromTimezone(String timezone) {
+
+        Pattern pattern = Pattern.compile("Etc/GMT(\\+|\\-)\\d{1,2}");
+        Matcher matcher = pattern.matcher(timezone);
+
+        if (!matcher.find())
+            return timezone;
+
+        String offset = "";
+        char[] chars = timezone.toCharArray();
+        if (chars[7] == '+')
+            offset += "-";
+        else
+            offset += "+";
+
+        return offset += String.format("%02d00", Integer.parseInt(timezone.substring(8)));
+    }
+
+    private String getTimezone(String timeZone, Map<String,TimeZone> timeZones)   {
+
+      if (timeZone == null)
+          return null;
+
+      TimeZone tz = null;
+      if (timeZones != null)
+          tz = timeZones.get(timeZone);
+      if (tz != null) {
+          if (tz.getStandard() != null && tz.getStandard().size() > 0)
+              return tz.getStandard().get(0).getOffsetFrom();
+          else
+              return null;
+      }
+      else {
+          if (config.isConvertTimezoneToOffset())
+              return getOffsetFromTimezone(timeZone);
+          else
+              return timeZone;
+      }
+    }
+
+    private GeoUri getGeo(String coordinates) {
+
+        if (coordinates == null)
+            return null;
+
+        return GeoUri.parse(coordinates);
+    }
+
+    private ezvcard.property.Address getAddress(Address address, Map<String,TimeZone> timeZones, String language) {
 
         ezvcard.property.Address addr = new ezvcard.property.Address();
         if (!isNullStructuredAddress(address)) {
-            addr.setLabel(getFullAddressFromStructuredAddress(address));
+            if (config.isApplyAutoAddrLabel())
+                addr.setLabel(getFullAddressFromStructuredAddress(address));
             addr.setCountry(address.getCountry());
             addr.setRegion(address.getRegion());
             addr.setLocality(address.getLocality());
@@ -420,18 +469,8 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setExtendedAddress(address.getStreetExtensions());
             addr.setPoBox(address.getPostOfficeBox());
             addr.setPostalCode(address.getPostcode());
-            if (address.getTimeZone() != null) {
-                TimeZone timeZone = null;
-                if (timeZones != null)
-                    timeZone = timeZones.get(address.getTimeZone());
-                if (timeZone != null) {
-                    if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
-                        addr.setTimezone(timeZone.getStandard().get(0).getOffsetFrom());
-                } else
-                    addr.setTimezone(address.getTimeZone());
-            }
-            if (address.getCoordinates() != null)
-                addr.setGeo(GeoUri.parse(address.getCoordinates()));
+            addr.setTimezone(getTimezone(address.getTimeZone(), timeZones));
+            addr.setGeo(getGeo(address.getCoordinates()));
             if (address.getCountryCode() != null)
                 addr.setParameter("CC", address.getCountryCode());
             if (!address.hasNoContext()) {
@@ -460,7 +499,43 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillAddresses(VCard vcard, Card jsCard) {
+    private void adjustTzAndGeo(VCard vcard) {
+
+        if (!config.isConvertCoordinatesToGEOParam() || !config.isConvertTimezoneToTZParam()) {
+
+            int altid = 0;
+            for (ezvcard.property.Address addr : vcard.getAddresses()) {
+
+                if (addr.getTimezone() != null && !config.isConvertTimezoneToTZParam()) {
+
+                    Timezone timezone = null;
+                    try {
+                        timezone = new Timezone(UtcOffset.parse(addr.getTimezone()));
+                    } catch (Exception e) {
+                        timezone = new Timezone(addr.getTimezone());
+                    }
+                    String altidAsString = (addr.getAltId() != null) ? addr.getAltId() : ((vcard.getAddresses().size() > 1) ? "" + (++altid) : null);
+                    timezone.setAltId(altidAsString);
+                    vcard.addTimezone(timezone);
+                    addr.setAltId(altidAsString);
+                    addr.setTimezone(null);
+                }
+
+                if (addr.getGeo() != null && !config.isConvertCoordinatesToGEOParam()) {
+
+                    Geo geo = new Geo(addr.getGeo());
+                    String altidAsString = (addr.getAltId() != null) ? addr.getAltId() : ((vcard.getAddresses().size() > 1) ? "" + (++altid) : null);
+                    geo.setAltId(altidAsString);
+                    vcard.addGeo(geo);
+                    addr.setAltId(altidAsString);
+                    addr.setGeo(null);
+                }
+
+            }
+        }
+    }
+
+    private void fillAddresses(VCard vcard, Card jsCard) {
 
         if (jsCard.getAddresses() == null)
             return;
@@ -498,6 +573,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.addAddressAlt(addrs.toArray(new ezvcard.property.Address[0]));
             }
         }
+
+        adjustTzAndGeo(vcard);
+
     }
 
     private static <T extends PlaceProperty> T getPlaceProperty(Class<T> classs, Anniversary anniversary) {
@@ -548,7 +626,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return null;
     }
 
-    private static void fillAnniversaries(VCard vcard, Card jsCard) {
+    private void fillAnniversaries(VCard vcard, Card jsCard) {
 
         if (jsCard.getAnniversaries() == null)
             return;
@@ -583,7 +661,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
-    private static Expertise getExpertise(PersonalInformation pi) {
+    private Expertise getExpertise(PersonalInformation pi) {
 
         Expertise e = new Expertise(pi.getValue());
         addPropId(e, pi.getPropId());
@@ -591,7 +669,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return e;
     }
 
-    private static Hobby getHobby(PersonalInformation pi) {
+    private Hobby getHobby(PersonalInformation pi) {
 
         Hobby h = new Hobby(pi.getValue());
         addPropId(h, pi.getPropId());
@@ -599,7 +677,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return h;
     }
 
-    private static Interest getInterest(PersonalInformation pi) {
+    private Interest getInterest(PersonalInformation pi) {
 
         Interest i = new Interest(pi.getValue());
         addPropId(i, pi.getPropId());
@@ -607,7 +685,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return i;
     }
 
-    private static void fillPersonalInfos(VCard vcard, Card jsCard) {
+    private void fillPersonalInfos(VCard vcard, Card jsCard) {
 
         if (jsCard.getPersonalInfo() == null)
             return;
@@ -649,7 +727,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static Telephone getTelephone(Phone phone) {
+    private Telephone getTelephone(Phone phone) {
 
         Telephone tel;
         try {
@@ -670,7 +748,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return tel;
     }
 
-    private static void fillPhones(VCard vcard, Card jsCard) {
+    private void fillPhones(VCard vcard, Card jsCard) {
 
         if (jsCard.getPhones() == null)
             return;
@@ -682,7 +760,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static Email getEmail(EmailAddress emailAddress) {
+    private Email getEmail(EmailAddress emailAddress) {
 
         Email email = new Email(emailAddress.getEmail());
         email.setPref(emailAddress.getPref());
@@ -695,7 +773,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return email;
     }
 
-    private static void fillEmails(VCard vcard, Card jsCard) {
+    private void fillEmails(VCard vcard, Card jsCard) {
 
         if (jsCard.getEmails() == null)
             return;
@@ -772,7 +850,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return impp;
     }
 
-    private static List<CalendarRequestUri> getCalendarRequestUris(Scheduling s) {
+    private List<CalendarRequestUri> getCalendarRequestUris(Scheduling s) {
 
         List<CalendarRequestUri> caladruris = new ArrayList<CalendarRequestUri>();
         for (String sendTo : s.getSendTo().values()) {
@@ -797,7 +875,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static <T extends UriProperty> T getUriProperty(Class<T> classs, Resource resource) {
+    private <T extends UriProperty> T getUriProperty(Class<T> classs, Resource resource) {
 
         try {
             Constructor<T> constructor = classs.getDeclaredConstructor(String.class);
@@ -810,7 +888,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static <T extends BinaryProperty> T getBinaryProperty(Class<T> classs, Resource resource) {
+    private <T extends BinaryProperty> T getBinaryProperty(Class<T> classs, Resource resource) {
 
         try {
             ImageType it = getImageType(resource.getMediaType());
@@ -826,7 +904,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static void fillPhotos(VCard vcard, Card jsCard) {
+    private void fillPhotos(VCard vcard, Card jsCard) {
 
         if (jsCard.getPhotos() == null)
             return;
@@ -840,7 +918,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillOnlineServices(VCard vcard, Card jsCard) {
+    private void fillOnlineServices(VCard vcard, Card jsCard) {
 
         if (jsCard.getOnlineServices() == null)
             return;
@@ -860,7 +938,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillScheduling(VCard vcard, Card jsCard) {
+    private void fillScheduling(VCard vcard, Card jsCard) {
 
         if (jsCard.getScheduling() == null)
             return;
@@ -874,7 +952,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillResources(VCard vcard, Card jsCard) {
+    private void fillResources(VCard vcard, Card jsCard) {
 
         if (jsCard.getResources() == null)
             return;
@@ -922,14 +1000,14 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static <E extends TextProperty > E getTextProperty(E property, String language, String propId) {
+    private <E extends TextProperty > E getTextProperty(E property, String language, String propId) {
 
         if (language != null) property.getParameters().setLanguage(language);
         addPropId(property, propId);
         return property;
     }
 
-    private static <E extends TextListProperty> E getTextListProperty(E property, List<String> textList, String language, String propId) {
+    private <E extends TextListProperty> E getTextListProperty(E property, List<String> textList, String language, String propId) {
 
         property.getValues().addAll(textList);
         addPropId(property, propId);
@@ -937,7 +1015,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return property;
     }
 
-    private static void fillTitles(VCard vcard, Card jsCard) {
+    private void fillTitles(VCard vcard, Card jsCard) {
 
         if (jsCard.getTitles() == null)
             return;
@@ -984,7 +1062,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return organizationItems;
     }
 
-    private static void fillOrganizations(VCard vcard, Card jsCard) {
+    private void fillOrganizations(VCard vcard, Card jsCard) {
 
         if (jsCard.getOrganizations() == null)
             return;
@@ -1017,7 +1095,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static void fillNotes(VCard vcard, Card jsCard) {
+    private void fillNotes(VCard vcard, Card jsCard) {
 
         if (jsCard.getNotes() == null)
             return;

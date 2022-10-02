@@ -40,6 +40,8 @@ public class VCard2JSContactConfig {
     private boolean applyAutoIdsProfile = true;
     @Builder.Default
     private boolean applyPropIds = false;
+    @Builder.Default
+    private boolean applyAutoFullAddress = true;
 
     private String defaultLanguage;
 

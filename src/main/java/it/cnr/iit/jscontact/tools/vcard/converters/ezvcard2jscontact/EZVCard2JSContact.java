@@ -302,21 +302,30 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static String getFulllAddress(ezvcard.property.Address addr) {
+    private static String getAutoFulllAddress(ezvcard.property.Address addr) {
 
-        String fullAddress = addr.getLabel();
-        if (fullAddress == null) {
-            StringJoiner joiner = new StringJoiner(DelimiterUtils.NEWLINE_DELIMITER);
-            if (StringUtils.isNotEmpty(addr.getPoBox())) joiner.add(addr.getPoBox());
-            if (StringUtils.isNotEmpty(addr.getExtendedAddressFull())) joiner.add(addr.getExtendedAddressFull());
-            if (StringUtils.isNotEmpty(addr.getStreetAddressFull())) joiner.add(addr.getStreetAddressFull());
-            if (StringUtils.isNotEmpty(addr.getLocality())) joiner.add(addr.getLocality());
-            if (StringUtils.isNotEmpty(addr.getRegion())) joiner.add(addr.getRegion());
-            if (StringUtils.isNotEmpty(addr.getPostalCode())) joiner.add(addr.getPostalCode());
-            if (StringUtils.isNotEmpty(addr.getCountry())) joiner.add(addr.getCountry());
-            fullAddress = joiner.toString();
+        StringJoiner joiner = new StringJoiner(DelimiterUtils.NEWLINE_DELIMITER);
+        if (StringUtils.isNotEmpty(addr.getPoBox())) joiner.add(addr.getPoBox());
+        if (StringUtils.isNotEmpty(addr.getExtendedAddressFull())) joiner.add(addr.getExtendedAddressFull());
+        if (StringUtils.isNotEmpty(addr.getStreetAddressFull())) joiner.add(addr.getStreetAddressFull());
+        if (StringUtils.isNotEmpty(addr.getLocality())) joiner.add(addr.getLocality());
+        if (StringUtils.isNotEmpty(addr.getRegion())) joiner.add(addr.getRegion());
+        if (StringUtils.isNotEmpty(addr.getPostalCode())) joiner.add(addr.getPostalCode());
+        if (StringUtils.isNotEmpty(addr.getCountry())) joiner.add(addr.getCountry());
+        String autoFullAddress = joiner.toString();
+        return StringUtils.isNotEmpty(autoFullAddress) ? autoFullAddress : null;
+    }
+
+
+
+    private String getFulllAddress(String addressLabel, String autoFullAddress) {
+
+        String fullAddress = addressLabel;
+        if (fullAddress == null && config.isApplyAutoFullAddress()) {
+            fullAddress = autoFullAddress;
         }
-        return StringUtils.isNotEmpty(fullAddress) ? fullAddress : null;
+
+        return fullAddress;
     }
 
 
@@ -600,8 +609,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private static it.cnr.iit.jscontact.tools.dto.Address getAddressAltrenative(List<it.cnr.iit.jscontact.tools.dto.Address> addresses, String altid) {
 
         it.cnr.iit.jscontact.tools.dto.Address address = (it.cnr.iit.jscontact.tools.dto.Address) getAlternative(addresses, altid);
-        int ind = (address != null) ? addresses.indexOf(address) : 0;
-        return addresses.get(ind);
+        return (address != null) ? address : addresses.get(0);
     }
 
     private String getTimezoneName(String jcardTzParam) {
@@ -642,11 +650,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (StringUtils.isNotEmpty(addr.getStreetAddressFull()))
                 streetDetailPairs.add(StreetComponent.name(addr.getStreetAddressFull()));
 
+            String autoFullAddress = getAutoFulllAddress(addr);
             addresses.add(it.cnr.iit.jscontact.tools.dto.Address.builder()
+                                                                 .hash(autoFullAddress)
                                                                  .group(addr.getGroup())
                                                                  .propId(addr.getParameter(PROP_ID_PARAM))
                                                                  .contexts(getAddressContexts(jcardType))
-                                                                 .fullAddress(getFulllAddress(addr))
+                                                                 .fullAddress(getFulllAddress(addr.getLabel(),autoFullAddress))
                                                                  .pref(addr.getPref())
                                                                  .coordinates(geo)
                                                                  .timeZone(tz)

@@ -53,7 +53,7 @@ import java.util.StringJoiner;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of={"fullAddress"}, callSuper = false)
+@EqualsAndHashCode(of={"hash"}, callSuper = false)
 public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
 
     @NotNull
@@ -103,6 +103,9 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     @JsonIgnore
     Boolean isDefaultLanguage;
+
+    @JsonIgnore
+    String hash;
 
     private boolean asContext(AddressContext context) { return contexts != null && contexts.containsKey(context); }
     /**
