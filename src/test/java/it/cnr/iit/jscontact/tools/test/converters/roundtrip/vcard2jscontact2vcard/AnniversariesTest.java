@@ -22,7 +22,6 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
-import it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact.VCard2JSContactTest;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
