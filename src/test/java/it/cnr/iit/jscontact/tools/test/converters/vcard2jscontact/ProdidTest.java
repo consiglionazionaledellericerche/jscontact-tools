@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 public class ProdidTest extends VCard2JSContactTest {
 
     @Test
-    public void testProdidValid() throws CardException {
+    public void testProdid() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -33,7 +33,7 @@ public class ProdidTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testProdidValid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", jsCard.getProdId());
+        assertEquals("testProdid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", jsCard.getProdId());
     }
 
 }

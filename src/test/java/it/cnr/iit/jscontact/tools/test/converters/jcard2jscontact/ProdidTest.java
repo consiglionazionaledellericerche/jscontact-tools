@@ -24,14 +24,14 @@ import static org.junit.Assert.assertEquals;
 public class ProdidTest extends JCard2JSContactTest {
 
     @Test
-    public void testProdidValid() throws CardException {
+    public void testProdid() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"prodid\", {}, \"text\", \"-//ONLINE DIRECTORY//NONSGML Version 1//EN\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testProdidValid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", jsCard.getProdId());
+        assertEquals("testProdid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", jsCard.getProdId());
 
     }
 

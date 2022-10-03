@@ -56,7 +56,7 @@ public class VCardTest extends VCard2JSContactTest {
 
 
     @Test
-    public void testVCardValid() throws CardException {
+    public void testVCard() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -64,14 +64,14 @@ public class VCardTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testVCardValid - 1", jsCard);
-        assertTrue("testVCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
-        assertEquals("testVCardValid - 3", "test", jsCard.getFullName());
+        assertNotNull("testVCard - 1", jsCard);
+        assertTrue("testVCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertEquals("testVCard - 3", "test", jsCard.getFullName());
 
     }
 
     @Test
-    public void testExtendedVCardValid() throws CardException {
+    public void testExtendedVCard() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -86,11 +86,11 @@ public class VCardTest extends VCard2JSContactTest {
                 )
                 .build();
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testExtendedVCardValid - 1", jsCard);
-        assertTrue("testExtendedVCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
-        assertEquals("testExtendedVCardValid - 3", "test", jsCard.getFullName());
-        assertEquals("testExtendedVCardValid - 4", 1, jsCard.getExtensions().size());
-        assertEquals("testExtendedVCardValid - 5", "extvalue", jsCard.getExtensions().get("extension:myext"));
+        assertNotNull("testExtendedVCard - 1", jsCard);
+        assertTrue("testExtendedVCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertEquals("testExtendedVCard - 3", "test", jsCard.getFullName());
+        assertEquals("testExtendedVCard - 4", 1, jsCard.getExtensions().size());
+        assertEquals("testExtendedVCard - 5", "extvalue", jsCard.getExtensions().get("extension:myext"));
     }
 
 

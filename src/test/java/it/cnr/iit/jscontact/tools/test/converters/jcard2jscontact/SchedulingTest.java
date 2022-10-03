@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class SchedulingTest extends JCard2JSContactTest {
 
     @Test
-    public void testSchedulingValid() throws CardException {
+    public void testScheduling() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -17,13 +17,13 @@ public class SchedulingTest extends JCard2JSContactTest {
                 "[\"caladruri\", {}, \"uri\", \"http://example.com/calendar/jdoe\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testSchedulingValid - 1", 2, jsCard.getScheduling().size());
-        assertEquals("testSchedulingValid - 2", 1, jsCard.getScheduling().get("CALADRURI-1").getSendTo().size());
-        assertTrue("testSchedulingValid - 3", jsCard.getScheduling().get("CALADRURI-1").getSendTo().containsValue("mailto:janedoe@example.com"));
-        assertEquals("testSchedulingValid - 4", 1, (int) jsCard.getScheduling().get("CALADRURI-1").getPref());
-        assertEquals("testSchedulingValid - 5", 1, jsCard.getScheduling().get("CALADRURI-2").getSendTo().size());
-        assertTrue("testSchedulingValid - 6", jsCard.getScheduling().get("CALADRURI-2").getSendTo().containsValue("http://example.com/calendar/jdoe"));
-        assertNull("testSchedulingValid - 7", jsCard.getScheduling().get("CALADRURI-2").getPref());
+        assertEquals("testScheduling - 1", 2, jsCard.getScheduling().size());
+        assertEquals("testScheduling - 2", 1, jsCard.getScheduling().get("CALADRURI-1").getSendTo().size());
+        assertTrue("testScheduling - 3", jsCard.getScheduling().get("CALADRURI-1").getSendTo().containsValue("mailto:janedoe@example.com"));
+        assertEquals("testScheduling - 4", 1, (int) jsCard.getScheduling().get("CALADRURI-1").getPref());
+        assertEquals("testScheduling - 5", 1, jsCard.getScheduling().get("CALADRURI-2").getSendTo().size());
+        assertTrue("testScheduling - 6", jsCard.getScheduling().get("CALADRURI-2").getSendTo().containsValue("http://example.com/calendar/jdoe"));
+        assertNull("testScheduling - 7", jsCard.getScheduling().get("CALADRURI-2").getPref());
     }
 
 }

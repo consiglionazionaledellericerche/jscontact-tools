@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
 public class ResourceTest extends JSContact2VCardTest {
     
     @Test
-    public void testResourceValid1() throws IOException, CardException {
+    public void testResource1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -43,13 +43,13 @@ public class ResourceTest extends JSContact2VCardTest {
                  "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid1 - 1", 1, vcard.getSources().size());
-        assertEquals("testResourceValid1 - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", vcard.getSources().get(0).getValue());
-        assertEquals("testResourceValid1 - 3", "SOURCE-1", vcard.getSources().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource1 - 1", 1, vcard.getSources().size());
+        assertEquals("testResource1 - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", vcard.getSources().get(0).getValue());
+        assertEquals("testResource1 - 3", "SOURCE-1", vcard.getSources().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testPhotoValid() throws IOException, CardException {
+    public void testPhoto() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -64,14 +64,14 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPhotoValid - 1", 1, vcard.getPhotos().size());
-        assertEquals("testPhotoValid - 2", "http://www.example.com/pub/photos/jqpublic.gif", vcard.getPhotos().get(0).getUrl());
-        assertSame("testPhotoValid - 3", vcard.getPhotos().get(0).getContentType(), ImageType.GIF);
-        assertEquals("testPhotoValid - 4", "PHOTO-1", vcard.getPhotos().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhoto - 1", 1, vcard.getPhotos().size());
+        assertEquals("testPhoto - 2", "http://www.example.com/pub/photos/jqpublic.gif", vcard.getPhotos().get(0).getUrl());
+        assertSame("testPhoto - 3", vcard.getPhotos().get(0).getContentType(), ImageType.GIF);
+        assertEquals("testPhoto - 4", "PHOTO-1", vcard.getPhotos().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid2() throws IOException, CardException {
+    public void testResource2() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -86,13 +86,13 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid2 - 1", 1, vcard.getLogos().size());
-        assertEquals("testResourceValid2 - 2", "http://www.example.com/pub/logos/abccorp.jpg", vcard.getLogos().get(0).getUrl());
-        assertEquals("testResourceValid2 - 3", "LOGO-1", vcard.getLogos().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource2 - 1", 1, vcard.getLogos().size());
+        assertEquals("testResource2 - 2", "http://www.example.com/pub/logos/abccorp.jpg", vcard.getLogos().get(0).getUrl());
+        assertEquals("testResource2 - 3", "LOGO-1", vcard.getLogos().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid3() throws IOException, CardException {
+    public void testResource3() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -107,14 +107,14 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid3 - 1", 1, vcard.getExtendedProperties().size());
-        assertEquals("testResourceValid3 - 2", "CONTACT-URI", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testResourceValid3 - 2", "mailto:contact@example.com", vcard.getExtendedProperties().get(0).getValue());
-        assertEquals("testResourceValid3 - 4", "CONTACT-URI-1", vcard.getExtendedProperties().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource3 - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testResource3 - 2", "CONTACT-URI", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testResource3 - 2", "mailto:contact@example.com", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testResource3 - 4", "CONTACT-URI-1", vcard.getExtendedProperties().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid4() throws IOException, CardException {
+    public void testResource4() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -130,14 +130,14 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid4 - 1", 1, vcard.getSounds().size());
-        assertEquals("testResourceValid4 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
-        assertSame("testResourceValid4 - 3", vcard.getSounds().get(0).getContentType(), SoundType.MP3);
-        assertEquals("testResourceValid4 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource4 - 1", 1, vcard.getSounds().size());
+        assertEquals("testResource4 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
+        assertSame("testResource4 - 3", vcard.getSounds().get(0).getContentType(), SoundType.MP3);
+        assertEquals("testResource4 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid5() throws IOException, CardException {
+    public void testResource5() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -152,14 +152,14 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid5 - 1", 1, vcard.getSounds().size());
-        assertEquals("testResourceValid5 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
-        assertNull("testResourceValid5 - 3", vcard.getSounds().get(0).getContentType());
-        assertEquals("testResourceValid5 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource5 - 1", 1, vcard.getSounds().size());
+        assertEquals("testResource5 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
+        assertNull("testResource5 - 3", vcard.getSounds().get(0).getContentType());
+        assertEquals("testResource5 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid6() throws IOException, CardException {
+    public void testResource6() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -174,13 +174,13 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid6 - 1", 1, vcard.getUrls().size());
-        assertEquals("testResourceValid6 - 2", "http://example.org/restaurant.french/~chezchic.htm", vcard.getUrls().get(0).getValue());
-        assertEquals("testResourceValid6 - 3", "URI-1", vcard.getUrls().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource6 - 1", 1, vcard.getUrls().size());
+        assertEquals("testResource6 - 2", "http://example.org/restaurant.french/~chezchic.htm", vcard.getUrls().get(0).getValue());
+        assertEquals("testResource6 - 3", "URI-1", vcard.getUrls().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid7() throws IOException, CardException {
+    public void testResource7() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -195,13 +195,13 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid7 - 1", 1, vcard.getKeys().size());
-        assertEquals("testResourceValid7 - 2", "http://www.example.com/keys/jdoe.cer", vcard.getKeys().get(0).getUrl());
-        assertEquals("testResourceValid7 - 3", "KEY-1", vcard.getKeys().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource7 - 1", 1, vcard.getKeys().size());
+        assertEquals("testResource7 - 2", "http://www.example.com/keys/jdoe.cer", vcard.getKeys().get(0).getUrl());
+        assertEquals("testResource7 - 3", "KEY-1", vcard.getKeys().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid8() throws IOException, CardException {
+    public void testResource8() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -223,17 +223,17 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid8 - 1", 2, vcard.getFbUrls().size());
-        assertEquals("testResourceValid8 - 2", "http://www.example.com/busy/janedoe", vcard.getFbUrls().get(0).getValue());
-        assertEquals("testResourceValid8 - 3", 1, (int) vcard.getFbUrls().get(0).getPref());
-        assertEquals("testResourceValid8 - 4", "ftp://example.com/busy/project-a.ifb", vcard.getFbUrls().get(1).getValue());
-        assertEquals("testResourceValid8 - 5", "text/calendar", vcard.getFbUrls().get(1).getMediaType());
-        assertEquals("testResourceValid8 - 6", "FBURL-1", vcard.getFbUrls().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testResourceValid8 - 7", "FBURL-2", vcard.getFbUrls().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource8 - 1", 2, vcard.getFbUrls().size());
+        assertEquals("testResource8 - 2", "http://www.example.com/busy/janedoe", vcard.getFbUrls().get(0).getValue());
+        assertEquals("testResource8 - 3", 1, (int) vcard.getFbUrls().get(0).getPref());
+        assertEquals("testResource8 - 4", "ftp://example.com/busy/project-a.ifb", vcard.getFbUrls().get(1).getValue());
+        assertEquals("testResource8 - 5", "text/calendar", vcard.getFbUrls().get(1).getMediaType());
+        assertEquals("testResource8 - 6", "FBURL-1", vcard.getFbUrls().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource8 - 7", "FBURL-2", vcard.getFbUrls().get(1).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid9() throws IOException, CardException {
+    public void testResource9() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -252,16 +252,16 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid9 - 1", 2, vcard.getCalendarRequestUris().size());
-        assertEquals("testResourceValid9 - 2", "mailto:janedoe@example.com", vcard.getCalendarRequestUris().get(0).getValue());
-        assertEquals("testResourceValid9 - 3", 1, (int) vcard.getCalendarRequestUris().get(0).getPref());
-        assertEquals("testResourceValid9 - 4", "http://example.com/calendar/jdoe", vcard.getCalendarRequestUris().get(1).getValue());
-        assertEquals("testResourceValid9 - 5", "CALADRURI-1", vcard.getCalendarRequestUris().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testResourceValid9 - 6", "CALADRURI-2", vcard.getCalendarRequestUris().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource9 - 1", 2, vcard.getCalendarRequestUris().size());
+        assertEquals("testResource9 - 2", "mailto:janedoe@example.com", vcard.getCalendarRequestUris().get(0).getValue());
+        assertEquals("testResource9 - 3", 1, (int) vcard.getCalendarRequestUris().get(0).getPref());
+        assertEquals("testResource9 - 4", "http://example.com/calendar/jdoe", vcard.getCalendarRequestUris().get(1).getValue());
+        assertEquals("testResource9 - 5", "CALADRURI-1", vcard.getCalendarRequestUris().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource9 - 6", "CALADRURI-2", vcard.getCalendarRequestUris().get(1).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testResourceValid10() throws IOException, CardException {
+    public void testResource10() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -283,13 +283,13 @@ public class ResourceTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResourceValid10 - 1", 2, vcard.getCalendarUris().size());
-        assertEquals("testResourceValid10 - 2", "http://cal.example.com/calA", vcard.getCalendarUris().get(0).getValue());
-        assertEquals("testResourceValid10 - 3", 1, (int) vcard.getCalendarUris().get(0).getPref());
-        assertEquals("testResourceValid10 - 4", "ftp://ftp.example.com/calA.ics", vcard.getCalendarUris().get(1).getValue());
-        assertEquals("testResourceValid10 - 5", "text/calendar", vcard.getCalendarUris().get(1).getMediaType());
-        assertEquals("testResourceValid10 - 6", "CALURI-1", vcard.getCalendarUris().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testResourceValid10 - 7", "CALURI-2", vcard.getCalendarUris().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource10 - 1", 2, vcard.getCalendarUris().size());
+        assertEquals("testResource10 - 2", "http://cal.example.com/calA", vcard.getCalendarUris().get(0).getValue());
+        assertEquals("testResource10 - 3", 1, (int) vcard.getCalendarUris().get(0).getPref());
+        assertEquals("testResource10 - 4", "ftp://ftp.example.com/calA.ics", vcard.getCalendarUris().get(1).getValue());
+        assertEquals("testResource10 - 5", "text/calendar", vcard.getCalendarUris().get(1).getMediaType());
+        assertEquals("testResource10 - 6", "CALURI-1", vcard.getCalendarUris().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource10 - 7", "CALURI-2", vcard.getCalendarUris().get(1).getParameter(PROP_ID_PARAM));
     }
 
 }

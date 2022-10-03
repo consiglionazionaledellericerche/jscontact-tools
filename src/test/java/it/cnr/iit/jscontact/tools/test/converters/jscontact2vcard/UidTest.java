@@ -37,7 +37,7 @@ public class UidTest extends JSContact2VCardTest {
     }
 
     @Test
-    public void testUidValid() throws IOException, CardException {
+    public void testUid() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -45,7 +45,7 @@ public class UidTest extends JSContact2VCardTest {
                 "\"fullName\":\"test\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testUidValid - 1", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", vcard.getUid().getValue());
+        assertEquals("testUid - 1", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", vcard.getUid().getValue());
     }
 
 }

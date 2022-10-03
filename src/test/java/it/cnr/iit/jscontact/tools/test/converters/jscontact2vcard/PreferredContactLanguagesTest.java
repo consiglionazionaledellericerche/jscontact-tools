@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 public class PreferredContactLanguagesTest extends JSContact2VCardTest {
 
     @Test
-    public void testPreferredContactLanguagesValid1() throws IOException, CardException {
+    public void testPreferredContactLanguages1() throws IOException, CardException {
 
         String jsCard = "{" +
                         "\"@type\":\"Card\"," +
@@ -39,15 +39,15 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
                          "}";
 
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
-        assertEquals("testPreferredContactLanguagesValid1 - 1", 2, vcard.getLanguages().size());
-        assertEquals("testPreferredContactLanguagesValid1 - 2", "jp", vcard.getLanguages().get(0).getValue());
-        assertEquals("testPreferredContactLanguagesValid1 - 3", 1, (int) vcard.getLanguages().get(0).getPref());
-        assertEquals("testPreferredContactLanguagesValid1 - 4", "en", vcard.getLanguages().get(1).getValue());
-        assertEquals("testPreferredContactLanguagesValid1 - 5", 2, (int) vcard.getLanguages().get(1).getPref());
+        assertEquals("testPreferredContactLanguages1 - 1", 2, vcard.getLanguages().size());
+        assertEquals("testPreferredContactLanguages1 - 2", "jp", vcard.getLanguages().get(0).getValue());
+        assertEquals("testPreferredContactLanguages1 - 3", 1, (int) vcard.getLanguages().get(0).getPref());
+        assertEquals("testPreferredContactLanguages1 - 4", "en", vcard.getLanguages().get(1).getValue());
+        assertEquals("testPreferredContactLanguages1 - 5", 2, (int) vcard.getLanguages().get(1).getPref());
     }
 
     @Test
-    public void testPreferredContactLanguagesValid2() throws IOException, CardException {
+    public void testPreferredContactLanguages2() throws IOException, CardException {
 
         String jsCard = "{" +
                 "\"@type\":\"Card\"," +
@@ -60,14 +60,14 @@ public class PreferredContactLanguagesTest extends JSContact2VCardTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
-        assertEquals("testPreferredContactLanguagesValid2 - 1", 3, vcard.getLanguages().size());
-        assertEquals("testPreferredContactLanguagesValid2 - 2", "en", vcard.getLanguages().get(0).getValue());
-        assertEquals("testPreferredContactLanguagesValid2 - 3", 1, (int) vcard.getLanguages().get(0).getPref());
-        assertEquals("testPreferredContactLanguagesValid2 - 4", "work", vcard.getLanguages().get(0).getType());
-        assertEquals("testPreferredContactLanguagesValid2 - 5", "fr", vcard.getLanguages().get(1).getValue());
-        assertEquals("testPreferredContactLanguagesValid2 - 6", 2, (int) vcard.getLanguages().get(1).getPref());
-        assertEquals("testPreferredContactLanguagesValid2 - 7", "work", vcard.getLanguages().get(1).getType());
-        assertEquals("testPreferredContactLanguagesValid2 - 8", "fr", vcard.getLanguages().get(2).getValue());
+        assertEquals("testPreferredContactLanguages2 - 1", 3, vcard.getLanguages().size());
+        assertEquals("testPreferredContactLanguages2 - 2", "en", vcard.getLanguages().get(0).getValue());
+        assertEquals("testPreferredContactLanguages2 - 3", 1, (int) vcard.getLanguages().get(0).getPref());
+        assertEquals("testPreferredContactLanguages2 - 4", "work", vcard.getLanguages().get(0).getType());
+        assertEquals("testPreferredContactLanguages2 - 5", "fr", vcard.getLanguages().get(1).getValue());
+        assertEquals("testPreferredContactLanguages2 - 6", 2, (int) vcard.getLanguages().get(1).getPref());
+        assertEquals("testPreferredContactLanguages2 - 7", "work", vcard.getLanguages().get(1).getType());
+        assertEquals("testPreferredContactLanguages2 - 8", "fr", vcard.getLanguages().get(2).getValue());
     }
 
 }

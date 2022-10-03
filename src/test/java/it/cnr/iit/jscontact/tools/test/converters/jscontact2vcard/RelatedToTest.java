@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class RelatedToTest extends JSContact2VCardTest {
 
     @Test
-    public void testRelatedToValid1() throws IOException, CardException {
+    public void testRelatedTo1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -39,13 +39,13 @@ public class RelatedToTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testRelatedToValid1 - 1", 1, vcard.getRelations().size());
-        assertEquals("testRelatedToValid1 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
-        assertEquals("testRelatedToValid1 - 3", 0, vcard.getRelations().get(0).getTypes().size());
+        assertEquals("testRelatedTo1 - 1", 1, vcard.getRelations().size());
+        assertEquals("testRelatedTo1 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
+        assertEquals("testRelatedTo1 - 3", 0, vcard.getRelations().get(0).getTypes().size());
     }
 
     @Test
-    public void testRelatedToValid2() throws IOException, CardException {
+    public void testRelatedTo2() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -56,16 +56,16 @@ public class RelatedToTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testRelatedToValid2 - 1", 1, vcard.getRelations().size());
-        assertEquals("testRelatedToValid2 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
-        assertEquals("testRelatedToValid2 - 3", 1, vcard.getRelations().get(0).getTypes().size());
-        assertTrue("testRelatedToValid2 - 4",vcard.getRelations().get(0).getTypes().contains(RelatedType.FRIEND));
+        assertEquals("testRelatedTo2 - 1", 1, vcard.getRelations().size());
+        assertEquals("testRelatedTo2 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
+        assertEquals("testRelatedTo2 - 3", 1, vcard.getRelations().get(0).getTypes().size());
+        assertTrue("testRelatedTo2 - 4",vcard.getRelations().get(0).getTypes().contains(RelatedType.FRIEND));
 
     }
 
 
     @Test
-    public void testRelatedToValid3() throws IOException, CardException {
+    public void testRelatedTo3() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -78,20 +78,20 @@ public class RelatedToTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testRelatedToValid3 - 1", 3, vcard.getRelations().size());
-        assertEquals("testRelatedToValid3 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
-        assertEquals("testRelatedToValid3 - 3", 2, vcard.getRelations().get(0).getTypes().size());
-        assertTrue("testRelatedToValid3 - 4",vcard.getRelations().get(0).getTypes().contains(RelatedType.FRIEND));
-        assertTrue("testRelatedToValid3 - 5",vcard.getRelations().get(0).getTypes().contains(RelatedType.COLLEAGUE));
-        assertEquals("testRelatedToValid3 - 6", "http://example.com/directory/jdoe.vcf", vcard.getRelations().get(1).getUri());
-        assertEquals("testRelatedToValid3 - 7", 1, vcard.getRelations().get(1).getTypes().size());
-        assertTrue("testRelatedToValid3 - 8",vcard.getRelations().get(1).getTypes().contains(RelatedType.CONTACT));
-        assertEquals("testRelatedToValid3 - 9", "Please contact my assistant Jane Doe for any inquiries.", vcard.getRelations().get(2).getText());
+        assertEquals("testRelatedTo3 - 1", 3, vcard.getRelations().size());
+        assertEquals("testRelatedTo3 - 2", "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6", vcard.getRelations().get(0).getUri());
+        assertEquals("testRelatedTo3 - 3", 2, vcard.getRelations().get(0).getTypes().size());
+        assertTrue("testRelatedTo3 - 4",vcard.getRelations().get(0).getTypes().contains(RelatedType.FRIEND));
+        assertTrue("testRelatedTo3 - 5",vcard.getRelations().get(0).getTypes().contains(RelatedType.COLLEAGUE));
+        assertEquals("testRelatedTo3 - 6", "http://example.com/directory/jdoe.vcf", vcard.getRelations().get(1).getUri());
+        assertEquals("testRelatedTo3 - 7", 1, vcard.getRelations().get(1).getTypes().size());
+        assertTrue("testRelatedTo3 - 8",vcard.getRelations().get(1).getTypes().contains(RelatedType.CONTACT));
+        assertEquals("testRelatedTo3 - 9", "Please contact my assistant Jane Doe for any inquiries.", vcard.getRelations().get(2).getText());
 
     }
 
     @Test
-    public void testRelatedToValid4() throws IOException, CardException {
+    public void testRelatedTo4() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -102,9 +102,9 @@ public class RelatedToTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testRelatedToValid4 - 1", 1, vcard.getRelations().size());
-        assertEquals("testRelatedToValid4 - 2", "freetext", vcard.getRelations().get(0).getText());
-        assertEquals("testRelatedToValid4 - 3", 0, vcard.getRelations().get(0).getTypes().size());
+        assertEquals("testRelatedTo4 - 1", 1, vcard.getRelations().size());
+        assertEquals("testRelatedTo4 - 2", "freetext", vcard.getRelations().get(0).getText());
+        assertEquals("testRelatedTo4 - 3", 0, vcard.getRelations().get(0).getTypes().size());
     }
 
 }

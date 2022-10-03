@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 public class UpdatedTest extends VCard2JSContactTest {
 
     @Test
-    public void testUpdatedValid() throws CardException {
+    public void testUpdated() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -34,7 +34,7 @@ public class UpdatedTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testUpdatedValid - 1", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("1995-10-31T22:27:10Z")));
+        assertEquals("testUpdated - 1", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("1995-10-31T22:27:10Z")));
 
     }
 
