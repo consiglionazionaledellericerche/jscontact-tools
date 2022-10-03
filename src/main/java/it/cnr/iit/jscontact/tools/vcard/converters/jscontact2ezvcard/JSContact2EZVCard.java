@@ -612,8 +612,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         try {
             if (anniversary.getDate().getDate()!=null) {
-                Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class);
-                return constructor.newInstance(anniversary.getDate().getDate());
+                Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class, boolean.class);
+                return constructor.newInstance(anniversary.getDate().getDate(), true);
             }
             if (anniversary.getDate().getPartialDate()!=null) {
                 Constructor<T> constructor = classs.getDeclaredConstructor(PartialDate.class);
@@ -638,13 +638,11 @@ public class JSContact2EZVCard extends AbstractConverter {
                 switch (anniversary.getType()) {
                     case BIRTH:
                         vcard.setBirthday(getDateOrTimeProperty(Birthday.class, anniversary));
-                        vcard.getBirthday().setCalscale(Calscale.GREGORIAN);
                         addPropId(vcard.getBirthday(), entry.getKey());
                         vcard.setBirthplace(getPlaceProperty(Birthplace.class, anniversary));
                         break;
                     case DEATH:
                         vcard.setDeathdate(getDateOrTimeProperty(Deathdate.class, anniversary));
-                        vcard.getDeathdate().setCalscale(Calscale.GREGORIAN);
                         addPropId(vcard.getDeathdate(), entry.getKey());
                         vcard.setDeathplace(getPlaceProperty(Deathplace.class, anniversary));
                         break;
@@ -653,7 +651,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             else{
                 if (anniversary.getLabel().equals(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)) {
                     vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
-                    vcard.getAnniversary().setCalscale(Calscale.GREGORIAN);
                     addPropId(vcard.getAnniversary(), entry.getKey());
                 }
             }

@@ -47,6 +47,11 @@ public class DateUtils {
                (cal.get(Calendar.MILLISECOND) > 0);
     }
 
+    private static boolean hasUTCTime(Calendar cal) {
+
+        return hasTime(cal) && cal.getTimeZone()!=null && (cal.getTimeZone().getID().equals("GMT") || cal.getTimeZone().getID().equals("UTC"));
+    }
+
     private static ZoneOffset getZoneOffset(Calendar cal) {
 
         int gmtOffset = cal.get(Calendar.ZONE_OFFSET);
@@ -62,7 +67,10 @@ public class DateUtils {
      * @return the text representing the Calendar object
      */
     public static String toString(Calendar calendar) {
-        return toString(calendar, DateTimeType.NON_ZERO_TIME);
+        if (hasUTCTime(calendar))
+            return toString(calendar, DateTimeType.UTC_TIME);
+        else
+            return toString(calendar, DateTimeType.NON_ZERO_TIME);
     }
 
     /**
