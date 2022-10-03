@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 public class FullNameTest extends VCard2JSContactTest {
 
     @Test
-    public void testFullNameValid1() throws CardException {
+    public void testFullName1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -34,12 +34,12 @@ public class FullNameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testFullNameValid1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testFullName1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
 
     }
 
     @Test
-    public void testFullNameValid2() throws CardException {
+    public void testFullName2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -50,14 +50,14 @@ public class FullNameTest extends VCard2JSContactTest {
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("jp").build()).build();
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testFullNameValid2 - 1", "大久保 正仁", jsCard.getFullName());
-        assertEquals("testFullNameValid2 - 2", "Okubo Masahito", jsCard.getLocalizations().get("en").get("fullName").asText());
+        assertEquals("testFullName2 - 1", "大久保 正仁", jsCard.getFullName());
+        assertEquals("testFullName2 - 2", "Okubo Masahito", jsCard.getLocalizations().get("en").get("fullName").asText());
 
     }
 
 
     @Test
-    public void testFullNameValid3() throws CardException {
+    public void testFullName3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -68,8 +68,8 @@ public class FullNameTest extends VCard2JSContactTest {
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testFullNameValid3 - 1", "Okubo Masahito", jsCard.getFullName());
-        assertEquals("testFullNameValid3 - 2", "大久保 正仁", jsCard.getLocalizations().get("jp").get("fullName").asText());
+        assertEquals("testFullName3 - 1", "Okubo Masahito", jsCard.getFullName());
+        assertEquals("testFullName3 - 2", "大久保 正仁", jsCard.getLocalizations().get("jp").get("fullName").asText());
 
     }
 }

@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 public class EmailAddressTest extends VCard2JSContactTest {
 
     @Test
-    public void testEmailAddressValid1() throws CardException {
+    public void testEmailAddress1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -34,14 +34,14 @@ public class EmailAddressTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testEmailAddressValid1 - 1", 1, jsCard.getEmails().size());
-        assertEquals("testEmailAddressValid1 - 2", 1, jsCard.getEmails().get("EMAIL-1").getContexts().size());
-        assertTrue("testEmailAddressValid1 - 3",jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testEmailAddressValid1 - 4", "jqpublic@xyz.example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testEmailAddress1 - 1", 1, jsCard.getEmails().size());
+        assertEquals("testEmailAddress1 - 2", 1, jsCard.getEmails().get("EMAIL-1").getContexts().size());
+        assertTrue("testEmailAddress1 - 3",jsCard.getEmails().get("EMAIL-1").asWork());
+        assertEquals("testEmailAddress1 - 4", "jqpublic@xyz.example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
     }
 
     @Test
-    public void testEmailAddressValid2() throws CardException {
+    public void testEmailAddress2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -51,13 +51,13 @@ public class EmailAddressTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testEmailAddressValid2 - 1", 2, jsCard.getEmails().size());
-        assertEquals("testEmailAddressValid2 - 2", 1, jsCard.getEmails().get("EMAIL-1").getContexts().size());
-        assertTrue("testEmailAddressValid2 - 3",jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testEmailAddressValid2 - 4", "jqpublic@xyz.example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
-        assertEquals("testEmailAddressValid2 - 5", 1, jsCard.getEmails().get("EMAIL-2").getContexts().size());
-        assertTrue("testEmailAddressValid2 - 6",jsCard.getEmails().get("EMAIL-2").asPrivate());
-        assertEquals("testEmailAddressValid2 - 7", 1, (int) jsCard.getEmails().get("EMAIL-2").getPref());
+        assertEquals("testEmailAddress2 - 1", 2, jsCard.getEmails().size());
+        assertEquals("testEmailAddress2 - 2", 1, jsCard.getEmails().get("EMAIL-1").getContexts().size());
+        assertTrue("testEmailAddress2 - 3",jsCard.getEmails().get("EMAIL-1").asWork());
+        assertEquals("testEmailAddress2 - 4", "jqpublic@xyz.example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testEmailAddress2 - 5", 1, jsCard.getEmails().get("EMAIL-2").getContexts().size());
+        assertTrue("testEmailAddress2 - 6",jsCard.getEmails().get("EMAIL-2").asPrivate());
+        assertEquals("testEmailAddress2 - 7", 1, (int) jsCard.getEmails().get("EMAIL-2").getPref());
     }
 
 }

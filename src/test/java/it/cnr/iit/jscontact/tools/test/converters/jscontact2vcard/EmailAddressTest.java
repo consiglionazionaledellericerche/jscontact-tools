@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 public class EmailAddressTest extends JSContact2VCardTest {
 
     @Test
-    public void testEmailAddressValid1() throws IOException, CardException {
+    public void testEmailAddress1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -36,15 +36,15 @@ public class EmailAddressTest extends JSContact2VCardTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testEmailAddressValid1 - 1", 1, vcard.getEmails().size());
-        assertEquals("testEmailAddressValid1 - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
-        assertEquals("testEmailAddressValid1 - 3", 1, vcard.getEmails().get(0).getTypes().size());
-        assertEquals("testEmailAddressValid1 - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
-        assertEquals("testEmailAddressValid1 - 5", "EMAIL-1", vcard.getEmails().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testEmailAddress1 - 1", 1, vcard.getEmails().size());
+        assertEquals("testEmailAddress1 - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
+        assertEquals("testEmailAddress1 - 3", 1, vcard.getEmails().get(0).getTypes().size());
+        assertEquals("testEmailAddress1 - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
+        assertEquals("testEmailAddress1 - 5", "EMAIL-1", vcard.getEmails().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testEmailAddressValid2() throws IOException, CardException {
+    public void testEmailAddress2() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -57,16 +57,16 @@ public class EmailAddressTest extends JSContact2VCardTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testEmailAddressValid2 - 1", 2, vcard.getEmails().size());
-        assertEquals("testEmailAddressValid2 - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
-        assertEquals("testEmailAddressValid2 - 3", 1, vcard.getEmails().get(0).getTypes().size());
-        assertEquals("testEmailAddressValid2 - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
-        assertEquals("testEmailAddressValid2 - 5", "jane_doe@example.com", vcard.getEmails().get(1).getValue());
-        assertEquals("testEmailAddressValid2 - 6", 1, vcard.getEmails().get(1).getTypes().size());
-        assertEquals("testEmailAddressValid2 - 7", "home", vcard.getEmails().get(1).getTypes().get(0).getValue());
-        assertEquals("testEmailAddressValid2 - 8", 1, (int) vcard.getEmails().get(1).getPref());
-        assertEquals("testEmailAddressValid2 - 9", "EMAIL-1", vcard.getEmails().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testEmailAddressValid2 - 10", "EMAIL-2", vcard.getEmails().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testEmailAddress2 - 1", 2, vcard.getEmails().size());
+        assertEquals("testEmailAddress2 - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
+        assertEquals("testEmailAddress2 - 3", 1, vcard.getEmails().get(0).getTypes().size());
+        assertEquals("testEmailAddress2 - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
+        assertEquals("testEmailAddress2 - 5", "jane_doe@example.com", vcard.getEmails().get(1).getValue());
+        assertEquals("testEmailAddress2 - 6", 1, vcard.getEmails().get(1).getTypes().size());
+        assertEquals("testEmailAddress2 - 7", "home", vcard.getEmails().get(1).getTypes().get(0).getValue());
+        assertEquals("testEmailAddress2 - 8", 1, (int) vcard.getEmails().get(1).getPref());
+        assertEquals("testEmailAddress2 - 9", "EMAIL-1", vcard.getEmails().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testEmailAddress2 - 10", "EMAIL-2", vcard.getEmails().get(1).getParameter(PROP_ID_PARAM));
     }
 
 }

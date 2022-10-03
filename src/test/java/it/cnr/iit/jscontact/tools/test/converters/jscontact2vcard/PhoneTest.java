@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 public class PhoneTest extends JSContact2VCardTest {
 
     @Test
-    public void testPhoneValid1() throws IOException, CardException {
+    public void testPhone1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -36,14 +36,14 @@ public class PhoneTest extends JSContact2VCardTest {
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPhoneValid1 - 1", 1, vcard.getTelephoneNumbers().size());
-        assertEquals("testPhoneValid1 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
-        assertEquals("testPhoneValid1 - 3", "home,voice", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
-        assertEquals("testPhoneValid1 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone1 - 1", 1, vcard.getTelephoneNumbers().size());
+        assertEquals("testPhone1 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
+        assertEquals("testPhone1 - 3", "home,voice", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
+        assertEquals("testPhone1 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testPhoneValid2() throws IOException, CardException {
+    public void testPhone2() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -55,18 +55,18 @@ public class PhoneTest extends JSContact2VCardTest {
                  "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPhoneValid2 - 1", 2, vcard.getTelephoneNumbers().size());
-        assertEquals("testPhoneValid2 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
-        assertEquals("testPhoneValid2 - 3", "home,voice", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
-        assertEquals("testPhoneValid2 - 4", vcard.getTelephoneNumbers().get(1).getUri(), TelUri.parse("tel:+1-555-555-5555;ext=555"));
-        assertEquals("testPhoneValid2 - 5", "home,voice", vcard.getTelephoneNumbers().get(1).getParameter("TYPE"));
-        assertEquals("testPhoneValid2 - 6", 1, (int) vcard.getTelephoneNumbers().get(1).getPref());
-        assertEquals("testPhoneValid2 - 7", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testPhoneValid2 - 8", "PHONE-2", vcard.getTelephoneNumbers().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone2 - 1", 2, vcard.getTelephoneNumbers().size());
+        assertEquals("testPhone2 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
+        assertEquals("testPhone2 - 3", "home,voice", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
+        assertEquals("testPhone2 - 4", vcard.getTelephoneNumbers().get(1).getUri(), TelUri.parse("tel:+1-555-555-5555;ext=555"));
+        assertEquals("testPhone2 - 5", "home,voice", vcard.getTelephoneNumbers().get(1).getParameter("TYPE"));
+        assertEquals("testPhone2 - 6", 1, (int) vcard.getTelephoneNumbers().get(1).getPref());
+        assertEquals("testPhone2 - 7", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone2 - 8", "PHONE-2", vcard.getTelephoneNumbers().get(1).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testPhoneValid3() throws IOException, CardException {
+    public void testPhone3() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -75,14 +75,14 @@ public class PhoneTest extends JSContact2VCardTest {
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true},\"features\":{\"fax\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPhoneValid3 - 1", 1, vcard.getTelephoneNumbers().size());
-        assertEquals("testPhoneValid3 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
-        assertEquals("testPhoneValid3 - 3", "work,fax", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
-        assertEquals("testPhoneValid3 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone3 - 1", 1, vcard.getTelephoneNumbers().size());
+        assertEquals("testPhone3 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
+        assertEquals("testPhone3 - 3", "work,fax", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
+        assertEquals("testPhone3 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testPhoneValid4() throws IOException, CardException {
+    public void testPhone4() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -91,14 +91,14 @@ public class PhoneTest extends JSContact2VCardTest {
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true},\"features\":{\"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPhoneValid4 - 1", 1, vcard.getTelephoneNumbers().size());
-        assertEquals("testPhoneValid4 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
-        assertEquals("testPhoneValid4 - 3", "work,textphone", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
-        assertEquals("testPhoneValid4 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone4 - 1", 1, vcard.getTelephoneNumbers().size());
+        assertEquals("testPhone4 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
+        assertEquals("testPhone4 - 3", "work,textphone", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
+        assertEquals("testPhone4 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testPhoneValid5() throws IOException, CardException {
+    public void testPhone5() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -107,14 +107,14 @@ public class PhoneTest extends JSContact2VCardTest {
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"voice\": true} ,\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPhoneValid5 - 1", 1, vcard.getTelephoneNumbers().size());
-        assertEquals("testPhoneValid5 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
-        assertEquals("testPhoneValid5 - 3", "home,work,voice", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
-        assertEquals("testPhoneValid5 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone5 - 1", 1, vcard.getTelephoneNumbers().size());
+        assertEquals("testPhone5 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
+        assertEquals("testPhone5 - 3", "home,work,voice", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
+        assertEquals("testPhone5 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testPhoneValid6() throws IOException, CardException {
+    public void testPhone6() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -123,14 +123,14 @@ public class PhoneTest extends JSContact2VCardTest {
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPhoneValid6 - 1", 1, vcard.getTelephoneNumbers().size());
-        assertEquals("testPhoneValid6 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
-        assertEquals("testPhoneValid6 - 3", "home,work,textphone", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
-        assertEquals("testPhoneValid6 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone6 - 1", 1, vcard.getTelephoneNumbers().size());
+        assertEquals("testPhone6 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
+        assertEquals("testPhone6 - 3", "home,work,textphone", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
+        assertEquals("testPhone6 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
     }
 
     @Test
-    public void testPhoneValid7() throws IOException, CardException {
+    public void testPhone7() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -139,10 +139,10 @@ public class PhoneTest extends JSContact2VCardTest {
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"voice\": true, \"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPhoneValid7 - 1", 1, vcard.getTelephoneNumbers().size());
-        assertEquals("testPhoneValid7 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
-        assertEquals("testPhoneValid7 - 3", "home,work,voice,textphone", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
-        assertEquals("testPhoneValid7 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone7 - 1", 1, vcard.getTelephoneNumbers().size());
+        assertEquals("testPhone7 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
+        assertEquals("testPhone7 - 3", "home,work,voice,textphone", vcard.getTelephoneNumbers().get(0).getParameter("TYPE"));
+        assertEquals("testPhone7 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
     }
 
 }

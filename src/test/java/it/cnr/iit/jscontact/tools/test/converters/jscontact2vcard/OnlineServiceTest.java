@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 public class OnlineServiceTest extends JSContact2VCardTest {
 
     @Test
-    public void testOnlineServiceValid1() throws IOException, CardException {
+    public void testOnlineService1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -42,10 +42,10 @@ public class OnlineServiceTest extends JSContact2VCardTest {
                  "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testOnlineServiceValid1 - 1", 1, vcard.getImpps().size());
-        assertEquals("testOnlineServiceValid1 - 2", "alice@example.com", vcard.getImpps().get(0).getHandle());
-        assertEquals("testOnlineServiceValid1 - 3", "home", vcard.getImpps().get(0).getParameter("TYPE"));
-        assertEquals("testOnlineServiceValid1 - 4", 1, (int) vcard.getImpps().get(0).getPref());
-        assertEquals("testOnlineServiceValid1 - 5", "OS-1", vcard.getImpps().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testOnlineService1 - 1", 1, vcard.getImpps().size());
+        assertEquals("testOnlineService1 - 2", "alice@example.com", vcard.getImpps().get(0).getHandle());
+        assertEquals("testOnlineService1 - 3", "home", vcard.getImpps().get(0).getParameter("TYPE"));
+        assertEquals("testOnlineService1 - 4", 1, (int) vcard.getImpps().get(0).getPref());
+        assertEquals("testOnlineService1 - 5", "OS-1", vcard.getImpps().get(0).getParameter(PROP_ID_PARAM));
     }
 }

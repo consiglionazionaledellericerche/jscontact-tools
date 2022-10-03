@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 public class KindTest extends VCard2JSContactTest {
 
     @Test
-    public void testKindValid() throws CardException {
+    public void testKind() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -34,7 +34,7 @@ public class KindTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testKindValid - 1",jsCard.getKind().isIndividual());
+        assertTrue("testKind - 1",jsCard.getKind().isIndividual());
 
     }
 

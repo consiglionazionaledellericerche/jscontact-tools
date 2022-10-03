@@ -106,18 +106,18 @@ public class JCardTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testJCardValid() throws CardException {
+    public void testJCard() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testJCardValid - 1", jsCard);
-        assertTrue("testJCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
-        assertEquals("testJCardValid - 3", "test", jsCard.getFullName());
+        assertNotNull("testJCard - 1", jsCard);
+        assertTrue("testJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertEquals("testJCard - 3", "test", jsCard.getFullName());
 
     }
 
     @Test
-    public void testExtendedJCardValid() throws CardException {
+    public void testExtendedJCard() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"], [\"myext\", {}, \"text\", \"extvalue\"]]]";
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
@@ -127,11 +127,11 @@ public class JCardTest extends JCard2JSContactTest {
                 )
                 .build();
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testExtendedJCardValid - 1", jsCard);
-        assertTrue("testExtendedJCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
-        assertEquals("testExtendedJCardValid - 3", "test", jsCard.getFullName());
-        assertEquals("testExtendedJCardValid - 4", 1, jsCard.getExtensions().size());
-        assertEquals("testExtendedJCardValid - 5", "extvalue", jsCard.getExtensions().get("extension:myext"));
+        assertNotNull("testExtendedJCard - 1", jsCard);
+        assertTrue("testExtendedJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertEquals("testExtendedJCard - 3", "test", jsCard.getFullName());
+        assertEquals("testExtendedJCard - 4", 1, jsCard.getExtensions().size());
+        assertEquals("testExtendedJCard - 5", "extvalue", jsCard.getExtensions().get("extension:myext"));
     }
 
 

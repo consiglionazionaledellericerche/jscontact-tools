@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 public class ExtensionsTest extends JSContact2VCardTest {
 
     @Test
-    public void testExtendedJSContactValid() throws IOException, CardException {
+    public void testExtendedJSContact() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -41,9 +41,9 @@ public class ExtensionsTest extends JSContact2VCardTest {
                                 .extensionsPrefix("extension:").build()
                                 ).build();
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testExtendedJSContactValid - 4", 1, vcard.getExtendedProperties().size());
-        assertEquals("testExtendedJSContactValid - 5", "myext", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testExtendedJSContactValid - 5", "extvalue", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testExtendedJSContact - 4", 1, vcard.getExtendedProperties().size());
+        assertEquals("testExtendedJSContact - 5", "myext", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContact - 5", "extvalue", vcard.getExtendedProperties().get(0).getValue());
     }
 
 
