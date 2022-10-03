@@ -28,6 +28,7 @@ public class RoundtripTest {
             return;
 
         vcard.setUid(null);
+        vcard.getExtendedProperties().clear();
 
     }
 

@@ -57,7 +57,6 @@ public class CardGroup extends JSContact implements Serializable {
     @NotNull
     @Size(min=1)
     @JsonProperty(required = true)
-    @JsonPropertyOrder(alphabetic = true)
     Map<String,Boolean> members;
 
     String name;

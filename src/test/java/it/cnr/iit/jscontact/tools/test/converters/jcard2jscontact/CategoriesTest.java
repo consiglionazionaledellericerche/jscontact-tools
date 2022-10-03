@@ -79,15 +79,13 @@ public class CategoriesTest extends JCard2JSContactTest {
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testCategories3 - 1", jsCard.getCategories());
         assertEquals("testCategories3 - 2", 5, jsCard.getCategories().size());
-        assertTrue("testCategories3 - 3",jsCard.getCategories().containsKey("INTERNET"));
-        assertTrue("testCategories3 - 4",jsCard.getCategories().containsKey("IETF"));
-        assertTrue("testCategories3 - 5",jsCard.getCategories().containsKey("INDUSTRY"));
-        assertTrue("testCategories3 - 6",jsCard.getCategories().containsKey("INFORMATION TECHNOLOGY"));
-        assertTrue("testCategories3 - 7",jsCard.getCategories().containsKey("TRAVEL AGENT"));
-
         Set<String> keys = jsCard.getCategories().keySet();
         String[] array = keys.toArray(new String[0]);
-        assertEquals("testCategories3 - 8", "TRAVEL AGENT", array[0]);
+        assertEquals("testCategories3 - 3", "INTERNET", array[0]);
+        assertEquals("testCategories3 - 4", "IETF", array[1]);
+        assertEquals("testCategories3 - 5", "INDUSTRY", array[2]);
+        assertEquals("testCategories3 - 6", "INFORMATION TECHNOLOGY", array[3]);
+        assertEquals("testCategories3 - 7", "TRAVEL AGENT", array[4]);
 
     }
 

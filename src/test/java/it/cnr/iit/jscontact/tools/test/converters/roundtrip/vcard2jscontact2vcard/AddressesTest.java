@@ -209,8 +209,8 @@ public class AddressesTest extends RoundtripTest {
         assertEquals("testAddresses10 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
-
-//    @Test
+    //TODO - INDISCERNIBLE
+    //@Test
     public void testAddresses11() throws CardException, JsonProcessingException {
 
         String vcard = "BEGIN:VCARD\n" +
@@ -222,16 +222,15 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
         pruneVCard(vcard2);
-        System.out.println(Ezvcard.write(vcard2).go());
         assertEquals("testAddresses11 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
 
+    //TODO - INDISCERNIBLE
     //@Test
-    public void testAddresses12() throws CardException {
+    public void testAddresses12() throws CardException, JsonProcessingException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -243,29 +242,16 @@ public class AddressesTest extends RoundtripTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testAddresses12 - 1", jsCard.getAddresses());
-        assertEquals("testAddresses12 - 2", 2, jsCard.getAddresses().size());
-        assertEquals("testAddresses12 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
-        assertEquals("testAddresses12 - 4", "USA", jsCard.getAddresses().get("ADR-1").getCountry());
-        assertEquals("testAddresses12 - 5", "20190", jsCard.getAddresses().get("ADR-1").getPostcode());
-        assertEquals("testAddresses12 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
-        assertEquals("testAddresses12 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
-        assertEquals("testAddresses12 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetDetails());
-        assertEquals("testAddresses12 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
-        assertEquals("testAddresses12 - 10", "US", jsCard.getAddresses().get("ADR-2").getCountryCode());
-        assertEquals("testAddresses12 - 11", "USA", jsCard.getAddresses().get("ADR-2").getCountry());
-        assertEquals("testAddresses12 - 12", "20190", jsCard.getAddresses().get("ADR-2").getPostcode());
-        assertEquals("testAddresses12 - 13", "Reston", jsCard.getAddresses().get("ADR-2").getLocality());
-        assertEquals("testAddresses12 - 14", "VA", jsCard.getAddresses().get("ADR-2").getRegion());
-        assertEquals("testAddresses12 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetDetails());
-        assertEquals("testAddresses12 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFullAddress());
-        assertNotNull("testAddresses12 - 17", jsCard.getLocalization("it", "addresses/ADR-2"));
+        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        pruneVCard(vcard2);
+        assertEquals("testAddresses12 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 
     }
 
 
+    //TODO - INDISCERNIBLE
     //@Test
-    public void testAddresses13() throws CardException {
+    public void testAddresses13() throws CardException, JsonProcessingException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -277,22 +263,9 @@ public class AddressesTest extends RoundtripTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("it").build()).build();
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testAddresses13 - 1", jsCard.getAddresses());
-        assertEquals("testAddresses13 - 2", 2, jsCard.getAddresses().size());
-        assertEquals("testAddresses13 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
-        assertEquals("testAddresses13 - 4", "USA", jsCard.getAddresses().get("ADR-1").getCountry());
-        assertEquals("testAddresses13 - 5", "20190", jsCard.getAddresses().get("ADR-1").getPostcode());
-        assertEquals("testAddresses13 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
-        assertEquals("testAddresses13 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
-        assertEquals("testAddresses13 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetDetails());
-        assertEquals("testAddresses13 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
-        assertEquals("testAddresses13 - 10", "IT", jsCard.getAddresses().get("ADR-2").getCountryCode());
-        assertEquals("testAddresses13 - 11", "Italy", jsCard.getAddresses().get("ADR-2").getCountry());
-        assertEquals("testAddresses13 - 12", "56124", jsCard.getAddresses().get("ADR-2").getPostcode());
-        assertEquals("testAddresses13 - 13", "Pisa", jsCard.getAddresses().get("ADR-2").getLocality());
-        assertEquals("testAddresses13 - 15", "Via Moruzzi,1", jsCard.getAddresses().get("ADR-2").getStreetDetails());
-        assertEquals("testAddresses13 - 16", "Via Moruzzi,1\nPisa\n56124\nItaly", jsCard.getAddresses().get("ADR-2").getFullAddress());
-        assertNotNull("testAddresses13 - 17", jsCard.getLocalization("en", "addresses/ADR-2"));
+        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        pruneVCard(vcard2);
+        assertEquals("testAddresses13 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 
     }
 }

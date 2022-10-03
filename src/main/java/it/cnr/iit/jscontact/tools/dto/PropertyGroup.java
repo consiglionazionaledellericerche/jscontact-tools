@@ -35,7 +35,6 @@ public class PropertyGroup implements Serializable {
 
     @NotNull(message = "members is missing in PropertyGroup")
     @NonNull
-    @JsonPropertyOrder(alphabetic = true)
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in PropertyGroup - Only Boolean.TRUE allowed")
     Map<String,Boolean> members;
 

@@ -173,7 +173,6 @@ public class Card extends JSContact implements Serializable {
 
     String notes;
 
-    @JsonPropertyOrder(alphabetic = true)
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> categories in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> categories;
 

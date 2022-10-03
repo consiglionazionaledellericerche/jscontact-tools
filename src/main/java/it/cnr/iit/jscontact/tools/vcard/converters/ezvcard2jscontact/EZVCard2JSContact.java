@@ -1178,7 +1178,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                         .build()
                         );
         }
-        Collections.sort(wrappers);
         for (CategoryWrapper wrapper : wrappers)
             jsCard.addCategories(wrapper.getValues().toArray(new String[wrapper.getValues().size()]));
     }
