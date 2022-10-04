@@ -9,8 +9,8 @@ import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSConta
 public class RoundtripTest {
 
     protected final JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
-                                                                                                            .applyAutoAddrLabel(false)
-                                                                                                            .addPropIdParameter(false)
+                                                                                                            .setAutoAddrLabel(false)
+                                                                                                            .setPropIdParam(false)
                                                                                                             .convertCoordinatesToGEOParam(false)
                                                                                                             .convertTimezoneToTZParam(false)
                                                                                                              .convertTimezoneToOffset(true)
@@ -18,7 +18,8 @@ public class RoundtripTest {
                                                                                .build();
 
     protected final VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder()
-                                                                                                            .applyAutoFullAddress(false)
+                                                                                                            .setAutoFullAddress(false)
+                                                                                                            .setVoiceAsDefaultPhoneFeature(false)
                                                                                                             .build())
                                                                                .build();
 

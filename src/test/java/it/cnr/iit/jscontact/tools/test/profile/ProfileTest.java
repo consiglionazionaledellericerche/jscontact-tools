@@ -38,8 +38,8 @@ public class ProfileTest extends JCard2JSContactTest {
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                                                          .config(VCard2JSContactConfig.builder()
-                                                                                      .applyAutoIdsProfile(false)
-                                                                                      .idsProfileToApply(VCard2JSContactIdsProfile.RDAP_PROFILE)
+                                                                                      .setAutoIdsProfile(false)
+                                                                                      .idsProfileToUse(VCard2JSContactIdsProfile.RDAP_PROFILE)
                                                                                       .build())
                                                          .build();
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), StandardCharsets.UTF_8);

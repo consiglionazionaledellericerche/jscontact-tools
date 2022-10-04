@@ -88,7 +88,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private List<String> getProfileIds(VCard2JSContactIdsProfile.IdType idType, Object... args) {
 
         List<String> ids = new ArrayList<>();
-        for (VCard2JSContactIdsProfile.JSContactId jsContactId : config.getIdsProfileToApply().getIds()) {
+        for (VCard2JSContactIdsProfile.JSContactId jsContactId : config.getIdsProfileToUse().getIds()) {
 
             if (jsContactId.getIdType() == idType) {
                 switch (idType) {
@@ -116,10 +116,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private String getId(VCard2JSContactIdsProfile.IdType idType, int index, String id, String propId, Object... args) {
 
-        if (config.isApplyPropIds() && propId != null)
+        if (config.isSetUsePropIds() && propId != null)
             return propId;
 
-        if (config.isApplyAutoIdsProfile() || config.getIdsProfileToApply() == null || config.getIdsProfileToApply().getIds() == null || config.getIdsProfileToApply().getIds().size() == 0)
+        if (config.isSetAutoIdsProfile() || config.getIdsProfileToUse() == null || config.getIdsProfileToUse().getIds() == null || config.getIdsProfileToUse().getIds().size() == 0)
             return id;
 
         List<String> ids = (idType == VCard2JSContactIdsProfile.IdType.RESOURCE || idType == VCard2JSContactIdsProfile.IdType.PERSONAL_INFO) ? getProfileIds(idType,args[0]) : getProfileIds(idType);
@@ -232,9 +232,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return phoneTypes;
     }
 
-    private static Map<PhoneFeature,Boolean> getDefaultPhoneFeatures() {
+    private Map<PhoneFeature,Boolean> getDefaultPhoneFeatures() {
 
-        return new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.voice(), Boolean.TRUE);}};
+        if (config.isSetVoiceAsDefaultPhoneFeature())
+            return new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.voice(), Boolean.TRUE);}};
+
+        return null;
     }
 
     private static String getLabel(String jcardTypeParam, String[] exclude, String[] include) {
@@ -321,7 +324,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private String getFulllAddress(String addressLabel, String autoFullAddress) {
 
         String fullAddress = addressLabel;
-        if (fullAddress == null && config.isApplyAutoFullAddress()) {
+        if (fullAddress == null && config.isSetAutoFullAddress()) {
             fullAddress = autoFullAddress;
         }
 
@@ -1379,7 +1382,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         List<JSContact> jsContacts = new ArrayList<>();
 
         for (VCard vCard : vCards) {
-            if (config.isCardToValidate()) {
+            if (config.isSetCardMustBeValidated()) {
                 ValidationWarnings warnings = vCard.validate(VCardVersion.V4_0);
                 if (!warnings.isEmpty())
                     throw new CardException(warnings.toString());

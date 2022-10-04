@@ -33,11 +33,11 @@ public class JSContact2VCardConfig {
     @Builder.Default
     private String extensionsPrefix = "extension:";
     @Builder.Default
-    private boolean cardToValidate = true;
+    private boolean setCardMustBeValidated = true;
     @Builder.Default
-    private boolean applyAutoAddrLabel = true;
+    private boolean setAutoAddrLabel = true;
     @Builder.Default
-    private boolean addPropIdParameter = true;
+    private boolean setPropIdParam = true;
     @Builder.Default
     private boolean convertTimezoneToTZParam = true;
     @Builder.Default

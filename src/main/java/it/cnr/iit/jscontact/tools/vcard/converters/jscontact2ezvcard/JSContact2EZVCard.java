@@ -3,7 +3,6 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import ezvcard.Messages;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
@@ -63,7 +62,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private void addPropId (VCardProperty property, String propId) {
 
-        if (propId != null && config.isAddPropIdParameter())
+        if (propId != null && config.isSetPropIdParam())
            property.addParameter(PROP_ID_PARAM, propId);
     }
 
@@ -379,33 +378,34 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner.toString();
     }
 
-    private static <E extends Enum<E> & VCardTypeDerivedEnum> StringJoiner toVCardTypeStringJoiner(Class<E> enumType, Collection<E> enumValues) {
-        StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+    private static <E extends Enum<E> & VCardTypeDerivedEnum> List toVCardTypeValues(Class<E> enumType, Collection<E> enumValues) {
+
+        List typeValues = new ArrayList();
         for (E value : enumValues) {
             try {
                 String typeItem = (String) enumType.getDeclaredMethod("toVCardType", enumType).invoke(null, value);
                 if (typeItem != null)
-                    joiner.add(typeItem);
+                    typeValues.add(typeItem);
             } catch (Exception e) {
                 throw new InternalErrorException(e.getMessage());
 
             }
         }
-        return joiner;
+        return typeValues;
     }
 
-    private static <E extends Enum<E> & VCardTypeDerivedEnum> StringJoiner toVCardTypeStringJoiner(Class<E> enumType, String[] stringValues) {
-        StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+    private static <E extends Enum<E> & VCardTypeDerivedEnum> List toVCardTypeValues(Class<E> enumType, String[] stringValues) {
+        List typeValues = new ArrayList();
         for (String value : stringValues) {
             try {
                 String typeItem = (String) enumType.getDeclaredMethod("toVCardType", String.class).invoke(null, value);
                 if (typeItem != null)
-                    joiner.add(typeItem);
+                    typeValues.add(typeItem);
             } catch (Exception e) {
                 throw new InternalErrorException(e.getMessage());
             }
         }
-        return joiner;
+        return typeValues;
     }
 
     private static String getOffsetFromTimezone(String timezone) {
@@ -460,7 +460,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         ezvcard.property.Address addr = new ezvcard.property.Address();
         if (!isNullStructuredAddress(address)) {
-            if (config.isApplyAutoAddrLabel())
+            if (config.isSetAutoAddrLabel())
                 addr.setLabel(getFullAddressFromStructuredAddress(address));
             addr.setCountry(address.getCountry());
             addr.setRegion(address.getRegion());
@@ -474,9 +474,9 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (address.getCountryCode() != null)
                 addr.setParameter("CC", address.getCountryCode());
             if (!address.hasNoContext()) {
-                String vCardType = toVCardTypeStringJoiner(AddressContextEnum.class, AddressContext.toEnumValues(address.getContexts().keySet())).toString();
-                if (StringUtils.isNotEmpty(vCardType))
-                    addr.setParameter("TYPE", vCardType);
+                List<String> vCardTypeValues = toVCardTypeValues(AddressContextEnum.class, AddressContext.toEnumValues(address.getContexts().keySet()));
+                for (String vCardTypeValue : vCardTypeValues)
+                    addr.getTypes().add(AddressType.get(vCardTypeValue));
             }
         }
 
@@ -735,12 +735,11 @@ public class JSContact2EZVCard extends AbstractConverter {
         tel.setPref(phone.getPref());
         addPropId(tel, phone.getPropId());
 
-        StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-        joiner = joiner.merge(toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(phone.getContexts().keySet())));
-        joiner = joiner.merge(toVCardTypeStringJoiner(PhoneFeatureEnum.class, PhoneFeature.toEnumValues(phone.getFeatures().keySet())));
+        List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(phone.getContexts().keySet()));
+        vCardTypeValues.addAll(toVCardTypeValues(PhoneFeatureEnum.class, PhoneFeature.toEnumValues(phone.getFeatures().keySet())));
 
-        if (StringUtils.isNotEmpty(joiner.toString()))
-            tel.setParameter("TYPE", joiner.toString());
+        for (String vCardTypeValue : vCardTypeValues)
+            tel.getTypes().add(TelephoneType.get(vCardTypeValue));
 
         return tel;
     }
@@ -763,9 +762,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         email.setPref(emailAddress.getPref());
         addPropId(email, emailAddress.getPropId());
         if (!emailAddress.hasNoContext()) {
-            String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(emailAddress.getContexts().keySet())).toString();
-            if (StringUtils.isNotEmpty(vCardType))
-                email.setParameter("TYPE", vCardType);
+            List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(emailAddress.getContexts().keySet()));
+            for (String vCardTypeValue : vCardTypeValues)
+                email.getTypes().add(EmailType.get(vCardTypeValue));
         }
         return email;
     }
@@ -866,9 +865,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (resource.getPref() != null)
             property.setParameter("PREF", resource.getPref().toString());
         if (!resource.hasNoContext()) {
-            String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(resource.getContexts().keySet())).toString();
-            if (StringUtils.isNotEmpty(vCardType))
-                property.setParameter("TYPE", vCardType);
+            List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(resource.getContexts().keySet()));
+            if (vCardTypeValues.size() > 0)
+                property.setParameter("TYPE", String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, vCardTypeValues));
         }
     }
 
@@ -927,9 +926,9 @@ public class JSContact2EZVCard extends AbstractConverter {
             addPropId(impp, entry.getKey());
             vcard.getImpps().add(impp);
             if (!onlineService.hasNoContext()) {
-                String vCardType = toVCardTypeStringJoiner(ContextEnum.class, Context.toEnumValues(onlineService.getContexts().keySet())).toString();
-                if (StringUtils.isNotEmpty(vCardType))
-                    impp.setParameter("TYPE", vCardType);
+                List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(onlineService.getContexts().keySet()));
+                for (String vCardTypeValue : vCardTypeValues)
+                    impp.getTypes().add(ImppType.get(vCardTypeValue));
             }
 
         }
@@ -1326,7 +1325,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         List<VCard> vCards = new ArrayList<>();
 
         for (JSContact jsContact : jsContacts) {
-            if (config.isCardToValidate()) {
+            if (config.isSetCardMustBeValidated()) {
                 if (!jsContact.isValid())
                     throw new CardException(jsContact.getValidationMessage());
             }
