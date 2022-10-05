@@ -15,22 +15,19 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class EmailAddressTest extends RoundtripTest {
 
     @Test
-    public void testEmailAddress1() throws CardException, JsonProcessingException {
+    public void testEmailAddress1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -39,13 +36,13 @@ public class EmailAddressTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testEmailAddress1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testEmailAddress2() throws CardException, JsonProcessingException {
+    public void testEmailAddress2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -55,7 +52,7 @@ public class EmailAddressTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testEmailAddress2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }

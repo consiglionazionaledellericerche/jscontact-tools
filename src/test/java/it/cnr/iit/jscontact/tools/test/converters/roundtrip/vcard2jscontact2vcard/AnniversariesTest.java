@@ -15,11 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
 import org.junit.Test;
@@ -29,7 +27,7 @@ import static org.junit.Assert.*;
 public class AnniversariesTest extends RoundtripTest {
 
     @Test
-    public void testAnniversaries1() throws CardException, JsonProcessingException {
+    public void testAnniversaries1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -38,13 +36,13 @@ public class AnniversariesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAnniversaries2() throws CardException, JsonProcessingException {
+    public void testAnniversaries2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -54,13 +52,13 @@ public class AnniversariesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAnniversaries3() throws CardException, JsonProcessingException {
+    public void testAnniversaries3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -69,13 +67,13 @@ public class AnniversariesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries3 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAnniversaries4() throws CardException, JsonProcessingException {
+    public void testAnniversaries4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -85,13 +83,13 @@ public class AnniversariesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries4 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAnniversaries5() throws CardException, JsonProcessingException {
+    public void testAnniversaries5() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -103,13 +101,13 @@ public class AnniversariesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries5 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAnniversaries6() throws CardException, JsonProcessingException {
+    public void testAnniversaries6() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -122,13 +120,13 @@ public class AnniversariesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries6 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAnniversaries7() throws CardException, JsonProcessingException {
+    public void testAnniversaries7() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -141,7 +139,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries7 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }

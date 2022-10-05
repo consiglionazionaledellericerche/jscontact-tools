@@ -24,38 +24,41 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CategoriesTest extends RoundtripTest {
+public class PreferredContactLanguagesTest extends RoundtripTest {
 
     @Test
-    public void testCategories1() throws CardException {
+    public void testPreferredContactLanguages1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
+                "LANG;PREF=1:jp\n" +
+                "LANG;PREF=2:en\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testCategories1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPreferredContactLanguages1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
-    //TODO - INDISCERNIBLE
-    //@Test
-    public void testCategories2() throws CardException {
+
+    @Test
+    public void testPreferredContactLanguages2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
-                "CATEGORIES:TRAVEL AGENT\n" +
+                "LANG;TYPE=work;PREF=1:en\n" +
+                "LANG;TYPE=work;PREF=2:fr\n" +
+                "LANG;TYPE=home:fr\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testCategories2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPreferredContactLanguages2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
+
 
 }

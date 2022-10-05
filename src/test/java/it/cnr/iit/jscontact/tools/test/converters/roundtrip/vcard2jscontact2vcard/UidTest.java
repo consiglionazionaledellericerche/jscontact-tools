@@ -22,40 +22,38 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class CategoriesTest extends RoundtripTest {
+public class UidTest extends RoundtripTest {
 
     @Test
-    public void testCategories1() throws CardException {
+    public void testUid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testCategories1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testUid1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+
     }
 
-    //TODO - INDISCERNIBLE
-    //@Test
-    public void testCategories2() throws CardException {
+    @Test
+    public void testUid2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
-                "CATEGORIES:TRAVEL AGENT\n" +
+                "UID:urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
-        pruneVCard(vcard2);
-        assertEquals("testCategories2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testUid2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+
     }
 
 }

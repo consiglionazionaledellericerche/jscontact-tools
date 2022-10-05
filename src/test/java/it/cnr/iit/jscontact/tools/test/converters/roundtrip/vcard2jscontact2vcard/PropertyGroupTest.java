@@ -22,40 +22,25 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class CategoriesTest extends RoundtripTest {
+public class PropertyGroupTest extends RoundtripTest {
+    
 
     @Test
-    public void testCategories1() throws CardException {
+    public void testPropertyGroup1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
+                "CONTACT.ADR;CC=US;LABEL=54321 Oak St Reston VA 20190 USA:;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testCategories1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
-    }
+        assertEquals("testPropertyGroup1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 
-    //TODO - INDISCERNIBLE
-    //@Test
-    public void testCategories2() throws CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
-                "CATEGORIES:TRAVEL AGENT\n" +
-                "END:VCARD";
-
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
-        pruneVCard(vcard2);
-        assertEquals("testCategories2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
 }

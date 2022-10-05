@@ -24,38 +24,21 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CategoriesTest extends RoundtripTest {
+public class OnlineServiceTest extends RoundtripTest {
 
     @Test
-    public void testCategories1() throws CardException {
+    public void testOnlineService1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
+                "IMPP;TYPE=home;PREF=1:xmpp:alice@example.com\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testCategories1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testOnlineService1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
-
-    //TODO - INDISCERNIBLE
-    //@Test
-    public void testCategories2() throws CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
-                "CATEGORIES:TRAVEL AGENT\n" +
-                "END:VCARD";
-
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
-        pruneVCard(vcard2);
-        assertEquals("testCategories2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
-    }
-
+    
 }

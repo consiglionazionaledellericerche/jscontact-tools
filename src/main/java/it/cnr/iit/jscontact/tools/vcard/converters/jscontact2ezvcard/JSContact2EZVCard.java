@@ -27,7 +27,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Constructor;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1131,12 +1130,12 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static Related getRelated(String uriOrText) {
         Related related = new Related();
         try {
-            URI uri = new URI(uriOrText);
+            URI uri = URI.create(uriOrText);
             if (uri.getScheme() == null)
                 related.setText(uriOrText);
             else
                 related.setUri(uriOrText);
-        } catch (URISyntaxException e) {
+        } catch (IllegalArgumentException e) {
             related.setText(uriOrText);
         }
 
@@ -1320,7 +1319,7 @@ public class JSContact2EZVCard extends AbstractConverter {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    protected List<VCard> convert(JSContact... jsContacts) throws CardException {
+    public List<VCard> convert(JSContact... jsContacts) throws CardException {
 
         List<VCard> vCards = new ArrayList<>();
 

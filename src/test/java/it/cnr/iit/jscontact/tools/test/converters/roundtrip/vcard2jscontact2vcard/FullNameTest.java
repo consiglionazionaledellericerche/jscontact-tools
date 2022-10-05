@@ -15,12 +15,10 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
@@ -32,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 public class FullNameTest extends RoundtripTest {
 
     @Test
-    public void testFullName1() throws CardException, JsonProcessingException {
+    public void testFullName1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -40,14 +38,14 @@ public class FullNameTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testFullName1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 
     }
 
     @Test
-    public void testFullName2() throws CardException, JsonProcessingException {
+    public void testFullName2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -58,7 +56,7 @@ public class FullNameTest extends RoundtripTest {
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("jp").build()).build();
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         for (FormattedName fn : vcard2.getFormattedNames())
             fn.setAltId(null);
@@ -68,7 +66,7 @@ public class FullNameTest extends RoundtripTest {
 
 
     @Test
-    public void testFullName3() throws CardException, JsonProcessingException {
+    public void testFullName3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -79,7 +77,7 @@ public class FullNameTest extends RoundtripTest {
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         for (FormattedName fn : vcard2.getFormattedNames())
             fn.setAltId(null);

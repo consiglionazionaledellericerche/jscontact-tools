@@ -15,11 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
@@ -29,12 +27,11 @@ import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSConta
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class AddressesTest extends RoundtripTest {
 
     @Test
-    public void testAddresses1() throws CardException, JsonProcessingException {
+    public void testAddresses1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -43,13 +40,13 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAddresses2() throws CardException, JsonProcessingException {
+    public void testAddresses2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -58,13 +55,13 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAddresses3() throws CardException, JsonProcessingException {
+    public void testAddresses3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -74,13 +71,13 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses3 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAddresses4() throws CardException, JsonProcessingException {
+    public void testAddresses4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -90,13 +87,13 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses4 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAddresses5() throws CardException, JsonProcessingException {
+    public void testAddresses5() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -107,13 +104,13 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses5 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAddresses6() throws CardException, JsonProcessingException {
+    public void testAddresses6() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -124,13 +121,14 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses6 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
 
-    public void testAddresses7() throws CardException, JsonProcessingException {
+    @Test
+    public void testAddresses7() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -145,14 +143,14 @@ public class AddressesTest extends RoundtripTest {
                 .build();
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses7 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 
     }
 
     @Test
-    public void testAddresses8() throws CardException, JsonProcessingException {
+    public void testAddresses8() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -163,14 +161,14 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses8 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 
     }
 
     @Test
-    public void testAddresses9() throws CardException, JsonProcessingException {
+    public void testAddresses9() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -187,13 +185,13 @@ public class AddressesTest extends RoundtripTest {
                 .build();
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses9 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     @Test
-    public void testAddresses10() throws CardException, JsonProcessingException {
+    public void testAddresses10() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -204,14 +202,14 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses10 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     //TODO - INDISCERNIBLE
     //@Test
-    public void testAddresses11() throws CardException, JsonProcessingException {
+    public void testAddresses11() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -222,7 +220,7 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses11 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
@@ -230,7 +228,7 @@ public class AddressesTest extends RoundtripTest {
 
     //TODO - INDISCERNIBLE
     //@Test
-    public void testAddresses12() throws CardException, JsonProcessingException {
+    public void testAddresses12() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -242,7 +240,7 @@ public class AddressesTest extends RoundtripTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses12 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 
@@ -251,7 +249,7 @@ public class AddressesTest extends RoundtripTest {
 
     //TODO - INDISCERNIBLE
     //@Test
-    public void testAddresses13() throws CardException, JsonProcessingException {
+    public void testAddresses13() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -263,7 +261,7 @@ public class AddressesTest extends RoundtripTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("it").build()).build();
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(PrettyPrintSerializer.print(jsCard)).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses13 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 
