@@ -233,11 +233,16 @@ public class Card extends JSContact implements Serializable {
                         .build());
         }
         else {
-            Map<RelationType, Boolean> map = relationPerKey.getRelation();
-            map.put(relType, Boolean.TRUE);
-            relatedTo.replace(key, Relation.builder()
-                    .relation(map)
-                    .build());
+            if (relType == null)
+                relatedTo.put(key, Relation.builder().build());
+            else {
+                Map<RelationType, Boolean> map = new HashMap<>();
+                map.putAll(relationPerKey.getRelation());
+                map.put(relType, Boolean.TRUE);
+                relatedTo.replace(key, Relation.builder()
+                        .relation(map)
+                        .build());
+            }
         }
     }
 

@@ -23,10 +23,10 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class SkipToAsTest extends JSContact2VCardTest {
+public class SpeakToAsTest extends JSContact2VCardTest {
 
     @Test
-    public void testSkipToAs1() throws IOException, CardException {
+    public void testSpeakToAs1() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -37,11 +37,11 @@ public class SkipToAsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testSkipToAs1 - 1",vcard.getGender().isMale());
+        assertTrue("testSpeakToAs1 - 1",vcard.getGender().isMale());
     }
 
     @Test
-    public void testSkipToAs2() throws IOException, CardException {
+    public void testSpeakToAs2() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -52,12 +52,12 @@ public class SkipToAsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testSkipToAs2 - 1",vcard.getGender().isNone());
-        assertEquals("testSkipToAs2 - 2", "inanimate", vcard.getGender().getText());
+        assertTrue("testSpeakToAs2 - 1",vcard.getGender().isNone());
+        assertEquals("testSpeakToAs2 - 2", "inanimate", vcard.getGender().getText());
     }
 
     @Test
-    public void testSkipToAs3() throws IOException, CardException {
+    public void testSpeakToAs3() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -68,12 +68,12 @@ public class SkipToAsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertNull("testSkipToAs3 - 1", vcard.getGender());
-        assertEquals("testSkipToAs3 - 2", "he/him", vcard.getExtendedProperty("PRONOUNS").getValue());
+        assertNull("testSpeakToAs3 - 1", vcard.getGender());
+        assertEquals("testSpeakToAs3 - 2", "he/him", vcard.getExtendedProperty("PRONOUNS").getValue());
     }
 
     @Test
-    public void testSkipToAs4() throws IOException, CardException {
+    public void testSpeakToAs4() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -85,9 +85,9 @@ public class SkipToAsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertTrue("testSkipToAs4 - 1",vcard.getGender().isNone());
-        assertEquals("testSkipToAs3 - 2", "inanimate", vcard.getGender().getText());
-        assertEquals("testSkipToAs4 - 3", "it", vcard.getExtendedProperty("PRONOUNS").getValue());
+        assertTrue("testSpeakToAs4 - 1",vcard.getGender().isNone());
+        assertEquals("testSpeakToAs3 - 2", "inanimate", vcard.getGender().getText());
+        assertEquals("testSpeakToAs4 - 3", "it", vcard.getExtendedProperty("PRONOUNS").getValue());
     }
 
 }
