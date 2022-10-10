@@ -15,11 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.deserialization;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
-import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -36,8 +34,7 @@ public class DeserializationTest {
     public void testDeserialization1() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertTrue("testDeserialization1", jsCard.isValid());
 
     }
@@ -46,8 +43,7 @@ public class DeserializationTest {
     public void testDeserialization2() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json")), StandardCharsets.UTF_8);
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertTrue("testDeserialization2", jsCard.isValid());
 
     }
@@ -56,8 +52,7 @@ public class DeserializationTest {
     public void testDeserialization3() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json")), StandardCharsets.UTF_8);
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertTrue("testDeserialization3", jsCard.isValid());
 
     }
@@ -66,11 +61,7 @@ public class DeserializationTest {
     public void testDeserialization4() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json")), StandardCharsets.UTF_8);
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(JSContact.class, new JSContactListDeserializer());
-        objectMapper.registerModule(module);
-        JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
+        JSContact[] jsContacts = JSContact.toJSContacts(json);
         for (JSContact jsContact : jsContacts)
             assertTrue("testDeserialization4", jsContact.isValid());
     }

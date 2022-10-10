@@ -1,6 +1,5 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -16,8 +15,7 @@ public class TypeMemberTest {
     public void testInvalidTypeMemberValue() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-InvalidTypeMemberValue.json"), StandardCharsets.UTF_8);
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertFalse("testInvalidTypeMemberValue-1", jsCard.isValid());
         assertEquals("testInvalidTypeMemberValue-2", "invalid @type value in Address", jsCard.getValidationMessage());
 

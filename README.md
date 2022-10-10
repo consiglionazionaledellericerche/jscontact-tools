@@ -175,11 +175,7 @@ Deserialization of a CardGroup object and the related cards is performed through
     public void testDeserialization4() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), Charset.forName("UTF-8"));
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(JSContact.class, new JSContactListDeserializer());
-        objectMapper.registerModule(module);
-        JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
+        JSContact[] jsContacts = JSContact.toJSContacts(json);
         for (JSContact jsContact : jsContacts)
             assertTrue("testDeserialization4", jsContact.isValid());
     }

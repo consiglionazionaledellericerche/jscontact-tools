@@ -16,12 +16,23 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import it.cnr.iit.jscontact.tools.constraints.GroupKeyConstraint;
+import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -41,5 +52,100 @@ public abstract class JSContact extends ValidableObject implements Serializable 
     @NotNull(message = "uid is missing in JSContact")
     @NonNull
     String uid;
+
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @GroupKeyConstraint(message = "invalid group key in Map<String,PropertyGroup>")
+    Map<String,PropertyGroup> propertyGroups;
+
+    @JsonPropertyOrder(alphabetic = true)
+    Map<String,Object> extensions;
+
+    /**
+     * Adds a property JSONPointer to the members of a group identfied by a group id.
+     *
+     * @param key the group key
+     * @param label the group label
+     * @param propertyJSONPointer the JSONPointer of the property included in the group
+     */
+    public void addPropertyGroup(String key, String label, String propertyJSONPointer) {
+
+        if (propertyGroups == null)
+            propertyGroups = new HashMap<>();
+
+        PropertyGroup propertyGroupPerKey = propertyGroups.get(key);
+        if (propertyGroupPerKey == null) {
+            propertyGroups.put(key, PropertyGroup.builder()
+                    .members(new HashMap<String, Boolean>() {{
+                        put(propertyJSONPointer, Boolean.TRUE);
+                    }})
+                    .label(label)
+                    .build());
+        }
+        else {
+            Map<String, Boolean> map = propertyGroupPerKey.getMembers();
+            map.put(propertyJSONPointer, Boolean.TRUE);
+            propertyGroups.replace(key, PropertyGroup.builder()
+                    .members(map)
+                    .label(label)
+                    .build());
+        }
+    }
+
+    /**
+     * Adds a property JSONPointer to the members of a group identfied by a group id.
+     *
+     * @param key the group key
+     * @param propertyJSONPointer the JSONPointer of the property included in the group
+     */
+    public void addPropertyGroup(String key, String propertyJSONPointer) {
+        addPropertyGroup(key, null, propertyJSONPointer);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getExtensions() {
+        return extensions;
+    }
+
+    @JsonAnySetter
+    public void setExtension(String name, Object value) {
+
+        if (extensions == null)
+            extensions = new HashMap<>();
+
+        extensions.putIfAbsent(name, value);
+    }
+
+    /**
+     * Adds an extension to this object.
+     *
+     * @param key the extension identifier
+     * @param value the extension as a text value
+     */
+    public void addExtension(String key, String value) {
+        if(extensions == null)
+            extensions = new HashMap<>();
+
+        extensions.putIfAbsent(key,value);
+    }
+
+
+    public static JSContact[] toJSContacts(String json) throws JsonProcessingException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(JSContact.class, new JSContactListDeserializer());
+        objectMapper.registerModule(module);
+        return objectMapper.readValue(json, JSContact[].class);
+
+    }
+
+
+    public static String toJson(JSContact[] jsContacts) throws JsonProcessingException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(jsContacts);
+
+    }
 
 }

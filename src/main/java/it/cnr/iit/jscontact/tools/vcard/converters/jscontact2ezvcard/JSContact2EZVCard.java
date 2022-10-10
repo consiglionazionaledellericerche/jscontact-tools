@@ -1205,27 +1205,27 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getExtensions() == null)
             return;
 
-        for (Map.Entry<String,String> extension : jsCard.getExtensions().entrySet()) {
+        for (Map.Entry<String,Object> extension : jsCard.getExtensions().entrySet()) {
             if (extension.getKey().startsWith(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)))
-                vcard.addClientPidMap(getCliendPidMap(extension.getKey(), extension.getValue()));
+                vcard.addClientPidMap(getCliendPidMap(extension.getKey(), ((String) extension.getValue())));
             else if ((extension.getKey().startsWith(getUnmatchedPropertyName(VCARD_XML_TAG))))
                 try {
-                    vcard.getXmls().add(new Xml(extension.getValue()));
+                    vcard.getXmls().add(new Xml(((String)extension.getValue())));
                 } catch (Exception e) {
                     throw new InternalErrorException(e.getMessage());
                 }
             else if (extension.getKey().equals(getUnmatchedParamName("N", "SORT-AS")))
-                vcard.getStructuredName().setParameter("SORT-AS", extension.getValue());
+                vcard.getStructuredName().setParameter("SORT-AS", ((String)extension.getValue()));
             else if (extension.getKey().equals(getUnmatchedParamName("ANNIVERSARY", "CALSCALE")))
-                vcard.getAnniversary().setParameter("CALSCALE", extension.getValue());
+                vcard.getAnniversary().setParameter("CALSCALE", ((String)extension.getValue()));
             else if (extension.getKey().equals(getUnmatchedParamName("BDAY", "CALSCALE")))
-                vcard.getBirthday().setParameter("CALSCALE", extension.getValue());
+                vcard.getBirthday().setParameter("CALSCALE", ((String)extension.getValue()));
             else if (extension.getKey().equals(getUnmatchedParamName("DEATHDATE", "CALSCALE")))
-                vcard.getDeathdate().setParameter("CALSCALE", extension.getValue());
+                vcard.getDeathdate().setParameter("CALSCALE", ((String)extension.getValue()));
             else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith(":PID"))
-                fillVCardUnmatchedParameter(vcard,extension.getKey(),"PID", extension.getValue());
+                fillVCardUnmatchedParameter(vcard,extension.getKey(),"PID", ((String)extension.getValue()));
             else
-                vcard.getExtendedProperties().add(new RawProperty(extension.getKey().replace(config.getExtensionsPrefix(), StringUtils.EMPTY), extension.getValue()));
+                vcard.getExtendedProperties().add(new RawProperty(extension.getKey().replace(config.getExtensionsPrefix(), StringUtils.EMPTY), ((String)extension.getValue())));
         }
     }
 

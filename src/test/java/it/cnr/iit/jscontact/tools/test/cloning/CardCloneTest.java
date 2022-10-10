@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.cloning;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -33,8 +32,7 @@ public class CardCloneTest {
     public void testClone1() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertTrue("testClone1", jsCard.equals(jsCard.clone()));
 
     }
@@ -43,8 +41,7 @@ public class CardCloneTest {
     public void testClone2() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json")), StandardCharsets.UTF_8);
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertTrue("testClone2", jsCard.equals(jsCard.clone()));
 
     }
@@ -53,8 +50,7 @@ public class CardCloneTest {
     public void testClone3() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json")), StandardCharsets.UTF_8);
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertTrue("testClone3", jsCard.equals(jsCard.clone()));
 
     }

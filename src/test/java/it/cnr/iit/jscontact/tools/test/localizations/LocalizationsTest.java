@@ -1,6 +1,5 @@
 package it.cnr.iit.jscontact.tools.test.localizations;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
@@ -33,8 +32,8 @@ public class LocalizationsTest {
                 "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+
+        Card jsCard = Card.toCard(json);
         Card localizedCard = jsCard.getLocalizedVersion("jp");
 
         assertEquals("testLocalizations1 - 1", "jp", localizedCard.getLocale());
@@ -67,8 +66,7 @@ public class LocalizationsTest {
                 "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         Card localizedCard = jsCard.getLocalizedVersion("jp");
     }
 
@@ -95,8 +93,7 @@ public class LocalizationsTest {
                 "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertFalse("testLocalizations3 - 1", jsCard.isValid());
         assertEquals("testLocalizations3 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-2", jsCard.getValidationMessage().replace("\n", ""));
     }
@@ -124,8 +121,7 @@ public class LocalizationsTest {
                 "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertFalse("testLocalizations4 - 1", jsCard.isValid());
         assertEquals("testLocalizations4 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-1", jsCard.getValidationMessage().replace("\n", ""));
     }
@@ -164,8 +160,7 @@ public class LocalizationsTest {
                     "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertTrue("testLocalizations5 - 1", jsCard.isValid());
     }
 
