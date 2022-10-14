@@ -58,16 +58,14 @@
       "contexts": {
         "work": true
       },
-      "type": "uri",
-      "label": "key",
-      "resource": "http://www.example.com/joe.user/joe.asc"
+      "type": "publicKey",
+      "uri": "http://www.example.com/joe.user/joe.asc"
     },
     "URI-1": {
       "@type" : "Resource",
       "contexts": {"private": true},
       "type": "uri",
-      "label": "url",
-      "resource": "http://example.org"
+      "uri": "http://example.org"
     }
   }
 }

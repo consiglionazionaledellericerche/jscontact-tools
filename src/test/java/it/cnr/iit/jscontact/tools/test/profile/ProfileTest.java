@@ -89,10 +89,10 @@ public class ProfileTest extends JCard2JSContactTest {
         assertTrue("testRDAPProfile - 44", jsCard.getPhones().get("fax").asText());
         assertEquals("testRDAPProfile - 45", 2, jsCard.getResources().size());
         assertTrue("testRDAPProfile - 46", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testRDAPProfile - 47", "http://www.example.com/joe.user/joe.asc", jsCard.getResources().get("KEY-1").getResource());
+        assertEquals("testRDAPProfile - 47", "http://www.example.com/joe.user/joe.asc", jsCard.getResources().get("KEY-1").getUri());
         assertNull("testRDAPProfile - 48", jsCard.getResources().get("KEY-1").getPref());
         assertTrue("testRDAPProfile - 49", jsCard.getResources().get("KEY-1").asWork());
-        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getResources().get("URI-1").getResource());
+        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getResources().get("URI-1").getUri());
         assertNull("testRDAPProfile - 51", jsCard.getResources().get("URI-1").getPref());
         assertTrue("testRDAPProfile - 52", jsCard.getResources().get("URI-1").asPrivate());
         assertTrue("testRDAPProfile - 53", jsCard.getResources().get("URI-1").isUri());

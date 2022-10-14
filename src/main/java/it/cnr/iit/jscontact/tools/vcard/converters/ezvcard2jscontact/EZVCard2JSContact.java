@@ -349,7 +349,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.addResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getMapTag(),index), property.getParameter(PROP_ID_PARAM), type),
                                     Resource.builder()
                                     .group(property.getGroup())
-                                    .resource(value)
+                                    .uri(value)
                                     .type(type)
                                     .label(label)
                                     .contexts(contexts)
@@ -1033,7 +1033,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             orgDirectories.add(Resource.builder()
                                        .group(od.getGroup())
                                        .propId(od.getParameter(PROP_ID_PARAM))
-                                       .resource(getValue(od))
+                                       .uri(getValue(od))
                                        .type(ResourceType.ORG_DIRECTORY)
                                        .label(getLabel(vcardType, (contexts != null) ? EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())) : null, null))
                                        .contexts(contexts)

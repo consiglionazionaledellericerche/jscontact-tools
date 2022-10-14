@@ -82,10 +82,10 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard1 - 47", 2, jsCard.getResources().size());
         assertTrue("testCompleteXCard1 - 48", jsCard.getResources().get("KEY-1").asWork());
         assertTrue("testCompleteXCard1 - 49", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testCompleteXCard1 - 50", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getResources().get("KEY-1").getResource());
+        assertEquals("testCompleteXCard1 - 50", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getResources().get("KEY-1").getUri());
         assertTrue("testCompleteXCard1 - 51", jsCard.getResources().get("URI-1").asPrivate());
         assertTrue("testCompleteXCard1 - 52", jsCard.getResources().get("URI-1").isUri());
-        assertEquals("testCompleteXCard1 - 53", "http://nomis80.org", jsCard.getResources().get("URI-1").getResource());
+        assertEquals("testCompleteXCard1 - 53", "http://nomis80.org", jsCard.getResources().get("URI-1").getUri());
         assertTrue("testCompleteXCard1 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }

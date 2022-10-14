@@ -185,10 +185,10 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
         assertEquals("testCompleteJCard1 - 45", 2, jsCard.getResources().size());
         assertTrue("testCompleteJCard1 - 46", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testCompleteJCard1 - 47", "http://www.example.com/joe.user/joe.asc", jsCard.getResources().get("KEY-1").getResource());
+        assertEquals("testCompleteJCard1 - 47", "http://www.example.com/joe.user/joe.asc", jsCard.getResources().get("KEY-1").getUri());
         assertNull("testCompleteJCard1 - 48", jsCard.getResources().get("KEY-1").getPref());
         assertTrue("testCompleteJCard1 - 49", jsCard.getResources().get("KEY-1").asWork());
-        assertEquals("testCompleteJCard1 - 50", "http://example.org", jsCard.getResources().get("URI-1").getResource());
+        assertEquals("testCompleteJCard1 - 50", "http://example.org", jsCard.getResources().get("URI-1").getUri());
         assertNull("testCompleteJCard1 - 51", jsCard.getResources().get("URI-1").getPref());
         assertTrue("testCompleteJCard1 - 52", jsCard.getResources().get("URI-1").asPrivate());
         assertTrue("testCompleteJCard1 - 53", jsCard.getResources().get("URI-1").isUri());
@@ -290,9 +290,9 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 47", 2, jsCard.getResources().size());
         assertTrue("testCompleteJCard4 - 48", jsCard.getResources().get("KEY-1").asWork());
         assertTrue("testCompleteJCard4 - 50", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testCompleteJCard4 - 51", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getResources().get("KEY-1").getResource());
+        assertEquals("testCompleteJCard4 - 51", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getResources().get("KEY-1").getUri());
         assertTrue("testCompleteJCard4 - 52", jsCard.getResources().get("URI-1").asPrivate());
-        assertEquals("testCompleteJCard4 - 53", "http://nomis80.org", jsCard.getResources().get("URI-1").getResource());
+        assertEquals("testCompleteJCard4 - 53", "http://nomis80.org", jsCard.getResources().get("URI-1").getUri());
         assertTrue("testCompleteJCard4 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 

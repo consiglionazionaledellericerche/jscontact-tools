@@ -34,7 +34,7 @@ public class ResourceTest extends AbstractTest {
 
         Resource resource = Resource.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .resource("mailto:mario.loffredo@iit.cnr.it")
+                .uri("mailto:mario.loffredo@iit.cnr.it")
                 .type(ResourceType.CONTACT_URI)
                 .build();
         Card jsCard = Card.builder()
@@ -62,7 +62,7 @@ public class ResourceTest extends AbstractTest {
         Resource resource = Resource.builder()
                 .context(Context.work(), Boolean.TRUE)
                 .type(ResourceType.URI)
-                .resource(" ")
+                .uri(" ")
                 .label("url")
                 .build();
         Card jsCard = Card.builder()

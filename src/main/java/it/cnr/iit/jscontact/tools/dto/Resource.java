@@ -46,7 +46,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @ResourceConstraint
-@JsonPropertyOrder({"@type","resource","type","mediaType","contexts","pref","label"})
+@JsonPropertyOrder({"@type","uri","type","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -60,9 +60,10 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @Builder.Default
     String _type = "Resource";
 
-    @NotNull(message = "resource is missing in Resource")
+    @NotNull(message = "uri is missing in Resource")
     @NonNull
-    String resource;
+    @JsonProperty("uri")
+    String uri;
 
     ResourceType type;
 
@@ -177,7 +178,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
 
     private static Resource resource(ResourceType type, String resource) {
         return Resource.builder()
-                       .resource(resource)
+                       .uri(resource)
                        .type(type)
                        .build();
     }

@@ -38,7 +38,7 @@ public class ResourceTest extends JSContact2VCardTest {
                     "\"SOURCE-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"directorySource\","+
-                        "\"resource\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
+                        "\"uri\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
                  "}" +
                 "}";
@@ -81,7 +81,7 @@ public class ResourceTest extends JSContact2VCardTest {
                     "\"LOGO-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"logo\","+
-                        "\"resource\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
+                        "\"uri\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
                     "}" +
                 "}" +
                 "}";
@@ -102,7 +102,7 @@ public class ResourceTest extends JSContact2VCardTest {
                     "\"CONTACT-URI-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"contact\","+
-                        "\"resource\": \"mailto:contact@example.com\"" +
+                        "\"uri\": \"mailto:contact@example.com\"" +
                     "}" +
                 "}" +
                 "}";
@@ -125,13 +125,13 @@ public class ResourceTest extends JSContact2VCardTest {
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"audio\","+
                         "\"mediaType\": \"audio/mp3\"," +
-                        "\"resource\": \"sound.mp3\"" +
+                        "\"uri\": \"android.resource:///com.my.android.sharesound/2130968609\"" +
                     "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testResource4 - 1", 1, vcard.getSounds().size());
-        assertEquals("testResource4 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
+        assertEquals("testResource4 - 2", "android.resource:///com.my.android.sharesound/2130968609", vcard.getSounds().get(0).getUrl());
         assertSame("testResource4 - 3", vcard.getSounds().get(0).getContentType(), SoundType.MP3);
         assertEquals("testResource4 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
     }
@@ -147,13 +147,13 @@ public class ResourceTest extends JSContact2VCardTest {
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"audio\","+
-                        "\"resource\": \"sound.mp3\"" +
+                        "\"uri\": \"android.resource:///com.my.android.sharesound/2130968609\"" +
                     "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testResource5 - 1", 1, vcard.getSounds().size());
-        assertEquals("testResource5 - 2", "sound.mp3", vcard.getSounds().get(0).getUrl());
+        assertEquals("testResource5 - 2", "android.resource:///com.my.android.sharesound/2130968609", vcard.getSounds().get(0).getUrl());
         assertNull("testResource5 - 3", vcard.getSounds().get(0).getContentType());
         assertEquals("testResource5 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
     }
@@ -169,7 +169,7 @@ public class ResourceTest extends JSContact2VCardTest {
                     "\"URI-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
-                        "\"resource\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
+                        "\"uri\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
                     "}" +
                 "}" +
                 "}";
@@ -190,7 +190,7 @@ public class ResourceTest extends JSContact2VCardTest {
                     "\"KEY-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"publicKey\","+
-                        "\"resource\": \"http://www.example.com/keys/jdoe.cer\"" +
+                        "\"uri\": \"http://www.example.com/keys/jdoe.cer\"" +
                     "}" +
                 "}" +
                 "}";
@@ -212,13 +212,13 @@ public class ResourceTest extends JSContact2VCardTest {
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"freeBusy\","+
                         "\"pref\": 1," +
-                        "\"resource\": \"http://www.example.com/busy/janedoe\"" +
+                        "\"uri\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
                     "\"FBURL-2\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"freeBusy\","+
                         "\"mediaType\": \"text/calendar\"," +
-                        "\"resource\": \"ftp://example.com/busy/project-a.ifb\"" +
+                        "\"uri\": \"ftp://example.com/busy/project-a.ifb\"" +
                     "}" +
                 "}" +
                 "}";
@@ -272,13 +272,13 @@ public class ResourceTest extends JSContact2VCardTest {
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"calendar\","+
                         "\"pref\": 1," +
-                        "\"resource\": \"http://cal.example.com/calA\"" +
+                        "\"uri\": \"http://cal.example.com/calA\"" +
                     "}," +
                     "\"CALURI-2\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"calendar\","+
                         "\"mediaType\": \"text/calendar\"," +
-                        "\"resource\": \"ftp://ftp.example.com/calA.ics\"" +
+                        "\"uri\": \"ftp://ftp.example.com/calA.ics\"" +
                     "}" +
                 "}" +
                 "}";

@@ -38,7 +38,7 @@ public class ResourceTest extends RoundtripTest {
                     "\"SOURCE-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"directorySource\","+
-                        "\"resource\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
+                        "\"uri\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
                  "}" +
                 "}";
@@ -78,7 +78,7 @@ public class ResourceTest extends RoundtripTest {
                     "\"LOGO-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"logo\","+
-                        "\"resource\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
+                        "\"uri\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
                     "}" +
                 "}" +
                 "}";
@@ -98,7 +98,7 @@ public class ResourceTest extends RoundtripTest {
                     "\"CONTACT-URI-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"contact\","+
-                        "\"resource\": \"mailto:contact@example.com\"" +
+                        "\"uri\": \"mailto:contact@example.com\"" +
                     "}" +
                 "}" +
                 "}";
@@ -119,7 +119,7 @@ public class ResourceTest extends RoundtripTest {
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"audio\","+
                         "\"mediaType\": \"audio/mp3\"," +
-                        "\"resource\": \"sound.mp3\"" +
+                        "\"uri\": \"sound.mp3\"" +
                     "}" +
                 "}" +
                 "}";
@@ -139,7 +139,7 @@ public class ResourceTest extends RoundtripTest {
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"audio\","+
-                        "\"resource\": \"sound.mp3\"" +
+                        "\"uri\": \"sound.mp3\"" +
                     "}" +
                 "}" +
                 "}";
@@ -159,7 +159,7 @@ public class ResourceTest extends RoundtripTest {
                     "\"URI-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"uri\","+
-                        "\"resource\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
+                        "\"uri\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
                     "}" +
                 "}" +
                 "}";
@@ -179,7 +179,7 @@ public class ResourceTest extends RoundtripTest {
                     "\"KEY-1\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"publicKey\","+
-                        "\"resource\": \"http://www.example.com/keys/jdoe.cer\"" +
+                        "\"uri\": \"http://www.example.com/keys/jdoe.cer\"" +
                     "}" +
                 "}" +
                 "}";
@@ -200,13 +200,13 @@ public class ResourceTest extends RoundtripTest {
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"freeBusy\","+
                         "\"pref\": 1," +
-                        "\"resource\": \"http://www.example.com/busy/janedoe\"" +
+                        "\"uri\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
                     "\"FBURL-2\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"freeBusy\","+
                         "\"mediaType\": \"text/calendar\"," +
-                        "\"resource\": \"ftp://example.com/busy/project-a.ifb\"" +
+                        "\"uri\": \"ftp://example.com/busy/project-a.ifb\"" +
                     "}" +
                 "}" +
                 "}";
@@ -251,13 +251,13 @@ public class ResourceTest extends RoundtripTest {
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"calendar\","+
                         "\"pref\": 1," +
-                        "\"resource\": \"http://cal.example.com/calA\"" +
+                        "\"uri\": \"http://cal.example.com/calA\"" +
                     "}," +
                     "\"CALURI-2\": {" +
                         "\"@type\":\"Resource\"," +
                         "\"type\": \"calendar\","+
                         "\"mediaType\": \"text/calendar\"," +
-                        "\"resource\": \"ftp://ftp.example.com/calA.ics\"" +
+                        "\"uri\": \"ftp://ftp.example.com/calA.ics\"" +
                     "}" +
                 "}" +
                 "}";

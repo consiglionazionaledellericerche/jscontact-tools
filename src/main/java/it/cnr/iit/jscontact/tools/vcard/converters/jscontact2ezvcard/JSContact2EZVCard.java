@@ -874,7 +874,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         try {
             Constructor<T> constructor = classs.getDeclaredConstructor(String.class);
-            T object = constructor.newInstance(resource.getResource());
+            T object = constructor.newInstance(resource.getUri());
             fillVCardProperty(object,resource);
             addPropId(object, resource.getPropId());
             return object;
@@ -888,7 +888,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         try {
             ImageType it = getImageType(resource.getMediaType());
             Constructor<T> constructor = classs.getDeclaredConstructor(String.class, ImageType.class);
-            T object = constructor.newInstance(resource.getResource(), it);
+            T object = constructor.newInstance(resource.getUri(), it);
             fillVCardProperty(object,resource);
             addPropId(object, resource.getPropId());
             return object;
@@ -958,7 +958,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             resource.setPropId(entry.getKey());
             switch(resource.getType()) {
                 case SOUND:
-                    Sound sound = new Sound(resource.getResource(), getSoundType(resource.getMediaType()));
+                    Sound sound = new Sound(resource.getUri(), getSoundType(resource.getMediaType()));
                     addPropId(sound, resource.getPropId());
                     vcard.getSounds().add(sound);
                     break;
@@ -966,7 +966,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     vcard.getSources().add(getUriProperty(Source.class,resource));
                     break;
                 case KEY:
-                    Key key = new Key(resource.getResource(), getKeyType(resource.getMediaType()));
+                    Key key = new Key(resource.getUri(), getKeyType(resource.getMediaType()));
                     addPropId(key, resource.getPropId());
                     vcard.getKeys().add(key);
                     break;
@@ -986,7 +986,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     vcard.getOrgDirectories().add(getUriProperty(OrgDirectory.class,resource));
                     break;
                 case CONTACT_URI:
-                    RawProperty rp = new RawProperty("CONTACT-URI",resource.getResource());
+                    RawProperty rp = new RawProperty("CONTACT-URI",resource.getUri());
                     fillVCardProperty(rp,resource);
                     addPropId(rp, resource.getPropId());
                     vcard.getExtendedProperties().add(rp);
