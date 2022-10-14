@@ -123,7 +123,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"resources\": {"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"audio\","+
+                        "\"type\": \"sound\","+
                         "\"mediaType\": \"audio/mp3\"," +
                         "\"uri\": \"android.resource:///com.my.android.sharesound/2130968609\"" +
                     "}" +
@@ -146,7 +146,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"resources\":{"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"audio\","+
+                        "\"type\": \"sound\","+
                         "\"uri\": \"android.resource:///com.my.android.sharesound/2130968609\"" +
                     "}" +
                 "}" +

@@ -39,7 +39,7 @@ public enum ResourceType {
     LOGO("logo"),
     CONTACT_URI("contact"),
     ORG_DIRECTORY("directory"),
-    SOUND("audio"),
+    SOUND("sound"),
     KEY("publicKey"),
     FBURL("freeBusy"),
     CALURI("calendar");

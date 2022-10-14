@@ -117,7 +117,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"resources\": {"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"audio\","+
+                        "\"type\": \"sound\","+
                         "\"mediaType\": \"audio/mp3\"," +
                         "\"uri\": \"sound.mp3\"" +
                     "}" +
@@ -138,7 +138,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"resources\":{"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"audio\","+
+                        "\"type\": \"sound\","+
                         "\"uri\": \"sound.mp3\"" +
                     "}" +
                 "}" +

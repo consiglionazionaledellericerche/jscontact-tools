@@ -166,7 +166,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.5">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isAudio() { return isResource(ResourceType.SOUND); }
+    public boolean isSound() { return isResource(ResourceType.SOUND); }
     /**
      * Tests if this resource maps a vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
      *

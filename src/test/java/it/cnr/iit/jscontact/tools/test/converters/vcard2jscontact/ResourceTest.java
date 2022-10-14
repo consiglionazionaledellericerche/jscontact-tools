@@ -139,7 +139,7 @@ public class ResourceTest extends VCard2JSContactTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource6 - 1", 1, jsCard.getResources().size());
         assertEquals("testResource6 - 2", "CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com", jsCard.getResources().get("SOUND-1").getUri());
-        assertTrue("testResource6 - 3",jsCard.getResources().get("SOUND-1").isAudio());
+        assertTrue("testResource6 - 3",jsCard.getResources().get("SOUND-1").isSound());
         assertNull("testResource6 - 4", jsCard.getResources().get("SOUND-1").getPref());
         assertNull("testResource6 - 5", jsCard.getResources().get("SOUND-1").getMediaType());
         assertTrue("testResource6 - 6",jsCard.getResources().get("SOUND-1").hasNoContext());
