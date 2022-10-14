@@ -35,12 +35,12 @@ public class CategoriesTest extends JCard2JSContactTest {
                 String.format("[\"categories\", {}, \"text\", %s]", categories) +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testCategories1 - 1", jsCard.getCategories());
-        assertEquals("testCategories1 - 2", 4, jsCard.getCategories().size());
-        assertTrue("testCategories1 - 3",jsCard.getCategories().containsKey("INTERNET"));
-        assertTrue("testCategories1 - 4",jsCard.getCategories().containsKey("IETF"));
-        assertTrue("testCategories1 - 5",jsCard.getCategories().containsKey("INDUSTRY"));
-        assertTrue("testCategories1 - 6",jsCard.getCategories().containsKey("INFORMATION TECHNOLOGY"));
+        assertNotNull("testCategories1 - 1", jsCard.getKeywords());
+        assertEquals("testCategories1 - 2", 4, jsCard.getKeywords().size());
+        assertTrue("testCategories1 - 3",jsCard.getKeywords().containsKey("INTERNET"));
+        assertTrue("testCategories1 - 4",jsCard.getKeywords().containsKey("IETF"));
+        assertTrue("testCategories1 - 5",jsCard.getKeywords().containsKey("INDUSTRY"));
+        assertTrue("testCategories1 - 6",jsCard.getKeywords().containsKey("INFORMATION TECHNOLOGY"));
 
     }
 
@@ -55,13 +55,13 @@ public class CategoriesTest extends JCard2JSContactTest {
                 "[\"categories\", {}, \"text\", \"TRAVEL AGENT\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testCategories2 - 1", jsCard.getCategories());
-        assertEquals("testCategories2 - 2", 5, jsCard.getCategories().size());
-        assertTrue("testCategories2 - 3",jsCard.getCategories().containsKey("INTERNET"));
-        assertTrue("testCategories2 - 4",jsCard.getCategories().containsKey("IETF"));
-        assertTrue("testCategories2 - 5",jsCard.getCategories().containsKey("INDUSTRY"));
-        assertTrue("testCategories2 - 6",jsCard.getCategories().containsKey("INFORMATION TECHNOLOGY"));
-        assertTrue("testCategories2 - 7",jsCard.getCategories().containsKey("TRAVEL AGENT"));
+        assertNotNull("testCategories2 - 1", jsCard.getKeywords());
+        assertEquals("testCategories2 - 2", 5, jsCard.getKeywords().size());
+        assertTrue("testCategories2 - 3",jsCard.getKeywords().containsKey("INTERNET"));
+        assertTrue("testCategories2 - 4",jsCard.getKeywords().containsKey("IETF"));
+        assertTrue("testCategories2 - 5",jsCard.getKeywords().containsKey("INDUSTRY"));
+        assertTrue("testCategories2 - 6",jsCard.getKeywords().containsKey("INFORMATION TECHNOLOGY"));
+        assertTrue("testCategories2 - 7",jsCard.getKeywords().containsKey("TRAVEL AGENT"));
 
     }
 
@@ -77,9 +77,9 @@ public class CategoriesTest extends JCard2JSContactTest {
                 "[\"categories\", {\"pref\" : \"1\"}, \"text\", \"TRAVEL AGENT\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testCategories3 - 1", jsCard.getCategories());
-        assertEquals("testCategories3 - 2", 5, jsCard.getCategories().size());
-        Set<String> keys = jsCard.getCategories().keySet();
+        assertNotNull("testCategories3 - 1", jsCard.getKeywords());
+        assertEquals("testCategories3 - 2", 5, jsCard.getKeywords().size());
+        Set<String> keys = jsCard.getKeywords().keySet();
         String[] array = keys.toArray(new String[0]);
         assertEquals("testCategories3 - 3", "INTERNET", array[0]);
         assertEquals("testCategories3 - 4", "IETF", array[1]);

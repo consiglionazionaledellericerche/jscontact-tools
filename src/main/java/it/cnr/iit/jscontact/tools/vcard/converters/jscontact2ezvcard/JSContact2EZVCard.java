@@ -1043,10 +1043,10 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static void fillCategories(VCard vcard, Card jsCard) {
 
-        if (jsCard.getCategories() == null)
+        if (jsCard.getKeywords() == null)
             return;
 
-        vcard.setCategories(jsCard.getCategories().keySet().toArray(new String[jsCard.getCategories().size()]));
+        vcard.setCategories(jsCard.getKeywords().keySet().toArray(new String[jsCard.getKeywords().size()]));
     }
 
     private static List<String> getOrganizationItems(String organization, String[] units) {

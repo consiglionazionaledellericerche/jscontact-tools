@@ -1182,7 +1182,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         );
         }
         for (CategoryWrapper wrapper : wrappers)
-            jsCard.addCategories(wrapper.getValues().toArray(new String[wrapper.getValues().size()]));
+            jsCard.addKeywords(wrapper.getValues().toArray(new String[wrapper.getValues().size()]));
     }
 
     private static String getValue(List<RelatedType> list) {

@@ -32,7 +32,7 @@ public class CategoriesTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"categories\":{" +
+                "\"keywords\":{" +
                     "\"INTERNET\": true," +
                     "\"IETF\" : true, " +
                     "\"INDUSTRY\" : true, " +

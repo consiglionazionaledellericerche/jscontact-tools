@@ -307,7 +307,7 @@ The conversion is executed according to the following rules:
 
 16. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
 
-17. Categories appear in the "categories" map according to the values of the PREF parameter of the CATEGORIES properties. 
+17. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
 18. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
 

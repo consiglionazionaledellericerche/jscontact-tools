@@ -54,7 +54,7 @@ import java.util.*;
         "name","fullName","nickNames","organizations","titles","speakToAs",
         "emails","phones","onlineServices","resources","scheduling","photos","preferredContactMethod","preferredContactLanguages",
         "addresses","localizations",
-        "anniversaries","personalInfo","notes","categpories","timeZones","propertyGroups",
+        "anniversaries","personalInfo","notes","keywords","timeZones","propertyGroups",
         "extensions"})
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
@@ -174,8 +174,8 @@ public class Card extends JSContact implements Serializable {
 
     String notes;
 
-    @BooleanMapConstraint(message = "invalid Map<String,Boolean> categories in JSContact - Only Boolean.TRUE allowed")
-    Map<String,Boolean> categories;
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
+    Map<String,Boolean> keywords;
 
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -554,25 +554,25 @@ public class Card extends JSContact implements Serializable {
             notes = String.format("%s%s%s", notes, DelimiterUtils.NEWLINE_DELIMITER, note);
     }
 
-    private void addCategory(String category) {
+    private void addKeyword(String keyword) {
 
-        if(categories == null)
-            categories = new LinkedHashMap<>();
+        if(keywords == null)
+            keywords = new LinkedHashMap<>();
 
-        categories.putIfAbsent(category,Boolean.TRUE);
+        keywords.putIfAbsent(keyword,Boolean.TRUE);
     }
 
     /**
-     * Adds a collection of categories to this object.
+     * Adds a collection of keywords to this object.
      *
-     * @param categories the categories
+     * @param keywords the keywords
      */
-    public void addCategories(String[] categories) {
-        if (categories==null)
+    public void addKeywords(String[] keywords) {
+        if (keywords==null)
             return;
 
-        for (String category: categories)
-            addCategory(category);
+        for (String keyword: keywords)
+            addKeyword(keyword);
     }
 
     /**

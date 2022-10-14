@@ -109,7 +109,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
 
         assertFalse("testInvalidEmail1-1", jsCard.isValid());
-        assertEquals("testInvalidEmail1-2", "invalid email in Email", jsCard.getValidationMessage());
+        assertEquals("testInvalidEmail1-2", "invalid email in EmailAddress", jsCard.getValidationMessage());
     }
 
 
@@ -146,7 +146,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
 
         assertFalse("testInvalidEmail3-1", jsCard.isValid());
-        assertEquals("testInvalidEmail3-2", "invalid pref in Email - value must be greater or equal than 1", jsCard.getValidationMessage());
+        assertEquals("testInvalidEmail3-2", "invalid pref in EmailAddress - value must be greater or equal than 1", jsCard.getValidationMessage());
     }
 
 }

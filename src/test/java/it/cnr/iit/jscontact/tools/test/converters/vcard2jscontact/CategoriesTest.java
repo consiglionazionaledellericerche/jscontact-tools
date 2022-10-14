@@ -33,12 +33,12 @@ public class CategoriesTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testCategories1 - 1", jsCard.getCategories());
-        assertEquals("testCategories1 - 2", 4, jsCard.getCategories().size());
-        assertTrue("testCategories1 - 3",jsCard.getCategories().containsKey("INTERNET"));
-        assertTrue("testCategories1 - 4",jsCard.getCategories().containsKey("IETF"));
-        assertTrue("testCategories1 - 5",jsCard.getCategories().containsKey("INDUSTRY"));
-        assertTrue("testCategories1 - 6",jsCard.getCategories().containsKey("INFORMATION TECHNOLOGY"));
+        assertNotNull("testCategories1 - 1", jsCard.getKeywords());
+        assertEquals("testCategories1 - 2", 4, jsCard.getKeywords().size());
+        assertTrue("testCategories1 - 3",jsCard.getKeywords().containsKey("INTERNET"));
+        assertTrue("testCategories1 - 4",jsCard.getKeywords().containsKey("IETF"));
+        assertTrue("testCategories1 - 5",jsCard.getKeywords().containsKey("INDUSTRY"));
+        assertTrue("testCategories1 - 6",jsCard.getKeywords().containsKey("INFORMATION TECHNOLOGY"));
     }
 
     @Test
@@ -52,13 +52,13 @@ public class CategoriesTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testCategories2 - 1", jsCard.getCategories());
-        assertEquals("testCategories2 - 2", 5, jsCard.getCategories().size());
-        assertTrue("testCategories2 - 3",jsCard.getCategories().containsKey("INTERNET"));
-        assertTrue("testCategories2 - 4",jsCard.getCategories().containsKey("IETF"));
-        assertTrue("testCategories2 - 5",jsCard.getCategories().containsKey("INDUSTRY"));
-        assertTrue("testCategories2 - 6",jsCard.getCategories().containsKey("INFORMATION TECHNOLOGY"));
-        assertTrue("testCategories2 - 7",jsCard.getCategories().containsKey("TRAVEL AGENT"));
+        assertNotNull("testCategories2 - 1", jsCard.getKeywords());
+        assertEquals("testCategories2 - 2", 5, jsCard.getKeywords().size());
+        assertTrue("testCategories2 - 3",jsCard.getKeywords().containsKey("INTERNET"));
+        assertTrue("testCategories2 - 4",jsCard.getKeywords().containsKey("IETF"));
+        assertTrue("testCategories2 - 5",jsCard.getKeywords().containsKey("INDUSTRY"));
+        assertTrue("testCategories2 - 6",jsCard.getKeywords().containsKey("INFORMATION TECHNOLOGY"));
+        assertTrue("testCategories2 - 7",jsCard.getKeywords().containsKey("TRAVEL AGENT"));
     }
 
 }
