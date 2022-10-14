@@ -34,7 +34,7 @@ public class ResourceTest extends JCard2JSContactTest {
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertEquals("testResource1 - 1", 1, jsCard.getResources().size());
         assertEquals("testResource1 - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", jsCard.getResources().get("SOURCE-1").getUri());
-        assertTrue("testResource1 - 3",jsCard.getResources().get("SOURCE-1").isDirectorySource());
+        assertTrue("testResource1 - 3",jsCard.getResources().get("SOURCE-1").isEntry());
         assertNull("testResource1 - 4", jsCard.getResources().get("SOURCE-1").getPref());
         assertNull("testResource1 - 5", jsCard.getResources().get("SOURCE-1").getMediaType());
         assertTrue("testResource1 - 6",jsCard.getResources().get("SOURCE-1").hasNoContext());

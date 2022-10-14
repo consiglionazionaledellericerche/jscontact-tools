@@ -37,7 +37,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"resources\": {"+
                     "\"SOURCE-1\": {" +
                         "\"@type\":\"Resource\"," +
-                        "\"type\": \"directorySource\","+
+                        "\"type\": \"entry\","+
                         "\"uri\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
                  "}" +

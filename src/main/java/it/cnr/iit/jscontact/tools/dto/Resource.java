@@ -174,7 +174,7 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.1.3">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isDirectorySource() { return isResource(ResourceType.SOURCE); }
+    public boolean isEntry() { return isResource(ResourceType.SOURCE); }
 
     private static Resource resource(ResourceType type, String resource) {
         return Resource.builder()

@@ -35,7 +35,7 @@ import lombok.AllArgsConstructor;
 public enum ResourceType {
 
     URI("uri"),
-    SOURCE("directorySource"),
+    SOURCE("entry"),
     LOGO("logo"),
     CONTACT_URI("contact"),
     ORG_DIRECTORY("directory"),
