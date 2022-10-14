@@ -40,9 +40,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the OnlineService type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the OnlineService type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @OnlineServiceConstraint

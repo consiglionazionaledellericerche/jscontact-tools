@@ -20,9 +20,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "preferredContactMethod" property as defined in section 2.3.7 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "preferredContactMethod" property as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.7">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

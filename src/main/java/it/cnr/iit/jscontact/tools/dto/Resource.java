@@ -40,9 +40,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Resource type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the Resource type as defined in section 2.6 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @ResourceConstraint

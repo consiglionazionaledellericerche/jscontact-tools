@@ -40,7 +40,7 @@ public class EmailAddress extends GroupableObject implements IdMapValue, Seriali
 
     @NotNull(message = "email is missing in EmailAddress")
     @NonNull
-    @Email(message = "invalid email in Email")
+    @Email(message = "invalid email in EmailAddress")
     String email;
 
     @JsonSerialize(using = ContextsSerializer.class)
@@ -50,8 +50,8 @@ public class EmailAddress extends GroupableObject implements IdMapValue, Seriali
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in Email - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in Email - value must be less or equal than 100")
+    @Min(value=1, message = "invalid pref in EmailAddress - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in EmailAddress - value must be less or equal than 100")
     Integer pref;
 
     String label;

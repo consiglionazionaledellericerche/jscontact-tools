@@ -7,6 +7,7 @@ import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
 import ezvcard.property.*;
+import ezvcard.property.Note;
 import ezvcard.util.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.*;

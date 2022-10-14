@@ -27,9 +27,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3>draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

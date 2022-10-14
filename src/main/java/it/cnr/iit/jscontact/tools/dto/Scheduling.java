@@ -13,9 +13,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Class mapping the Scheduling type as defined in section 2.3.5 of [draft-ietf-calext-jscontact].
+ * Class mapping the Scheduling type as defined in section 2.4.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.5">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","sendTo","pref"})

@@ -22,7 +22,7 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "type" property of the Resource type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "type" property of the Resource type as defined in section 2.6 of [draft-ietf-calext-jscontact].
  * The values are those corresponding to vCard 4.0 [RFC6350] [RFC6715] [RFC8605] properties that are not directly mapped to a JSContact property.
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
