@@ -74,7 +74,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private int customTimeZoneCounter = 0;
 
-    private Map<String, TimeZone> timeZones = new HashMap<>();
+    private final Map<String, TimeZone> timeZones = new HashMap<>();
 
     private static boolean isDefaultLanguage(String language, String defaultLanguage) {
 
