@@ -152,6 +152,14 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @JsonIgnore
     public boolean isLogo() { return isResource(ResourceType.LOGO); }
     /**
+     * Tests if this resource maps a vCard 4.0 PHOTO property as defined in section 6.2.4 of [RFC6350].
+     *
+     * @return true if this resource maps a vCard 4.0 PHOTO property, false otherwise
+     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.2.4">RFC6350</a>
+     */
+    @JsonIgnore
+    public boolean isPhoto() { return isResource(ResourceType.PHOTO); }
+    /**
      * Tests if this resource maps a vCard 4.0 ORG-DIRECTORY property as defined in section 6.2.4 of [RFC6715].
      *
      * @return true if this resource maps a vCard 4.0 ORG-DIRECTORY property, false otherwise
@@ -176,84 +184,94 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     @JsonIgnore
     public boolean isEntry() { return isResource(ResourceType.SOURCE); }
 
-    private static Resource resource(ResourceType type, String resource) {
+    private static Resource resource(ResourceType type, String uri) {
         return Resource.builder()
-                       .uri(resource)
+                       .uri(uri)
                        .type(type)
                        .build();
     }
     /**
      * Returns a resource mapping a vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.3">RFC6350</a>
      */
-    public static Resource caluri(String resource) { return resource(ResourceType.CALURI, resource);}
+    public static Resource caluri(String uri) { return resource(ResourceType.CALURI, uri);}
     /**
      * Returns a resource mapping a vCard 4.0 CONTACT-URI property as defined in section 2.1 of [RFC8605].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc8605#section-2.1">RFC6350</a>
      */
-    public static Resource contactUri(String resource) { return resource(ResourceType.CONTACT_URI, resource);}
+    public static Resource contactUri(String uri) { return resource(ResourceType.CONTACT_URI, uri);}
     /**
      * Returns a resource mapping a vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.1">RFC6350</a>
      */
-    public static Resource fburl(String resource) { return resource(ResourceType.FBURL, resource);}
+    public static Resource fburl(String uri) { return resource(ResourceType.FBURL, uri);}
 
     /**
      * Returns a resource mapping a vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.8.1">RFC6350</a>
      */
-    public static Resource key(String resource) { return resource(ResourceType.KEY, resource);}
+    public static Resource key(String uri) { return resource(ResourceType.KEY, uri);}
     /**
      * Returns a resource mapping a vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.3">RFC6350</a>
      */
-    public static Resource logo(String resource) { return resource(ResourceType.LOGO, resource);}
+    public static Resource logo(String uri) { return resource(ResourceType.LOGO, uri);}
+
+    /**
+     * Returns a resource mapping a vCard 4.0 PHOTO property as defined in section 6.2.4 of [RFC6350].
+     *
+     * @param uri resource uri
+     * @return the resource
+     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.2.4">RFC6350</a>
+     */
+    public static Resource photo(String uri) { return resource(ResourceType.PHOTO, uri);}
+
     /**
      * Returns a resource mapping a vCard 4.0 ORG-DIRECTORY property as defined in section 6.2.4 of [RFC6715].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6715.html#section-2.4">RFC6715</a>
      */
-    public static Resource orgDirectory(String resource) { return resource(ResourceType.ORG_DIRECTORY, resource);}
+    public static Resource orgDirectory(String uri) { return resource(ResourceType.ORG_DIRECTORY, uri);}
     /**
      * Returns a resource mapping a vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.5">RFC6350</a>
      */
-    public static Resource sound(String resource) { return resource(ResourceType.SOUND, resource);}
+    public static Resource sound(String uri) { return resource(ResourceType.SOUND, uri);}
     /**
      * Returns a resource mapping a vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.1.3">RFC6350</a>
      */
-    public static Resource source(String resource) { return resource(ResourceType.SOURCE, resource);}
+    public static Resource source(String uri) { return resource(ResourceType.SOURCE, uri);}
     /**
      * Returns a resource mapping a vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
      *
-     * @param resource resource identifier
+     * @param uri resource uri
      * @return the resource
      * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.8">RFC6350</a>
      */
-    public static Resource url(String resource) { return resource(ResourceType.URI, resource);}
+    public static Resource url(String uri) { return resource(ResourceType.URI, uri);}
 
 }

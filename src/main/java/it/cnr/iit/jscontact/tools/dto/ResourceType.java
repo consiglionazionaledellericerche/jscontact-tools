@@ -37,6 +37,7 @@ public enum ResourceType {
     URI("uri"),
     SOURCE("entry"),
     LOGO("logo"),
+    PHOTO("photo"),
     CONTACT_URI("contact"),
     ORG_DIRECTORY("directory"),
     SOUND("sound"),
