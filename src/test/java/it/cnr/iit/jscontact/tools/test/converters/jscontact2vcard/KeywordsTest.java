@@ -23,10 +23,10 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class CategoriesTest extends JSContact2VCardTest {
+public class KeywordsTest extends JSContact2VCardTest {
 
     @Test
-    public void testCategories() throws IOException, CardException {
+    public void testKeywords() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -40,11 +40,11 @@ public class CategoriesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testCategories - 1", 4, vcard.getCategories().getValues().size());
-        assertEquals("testCategories - 2", "INTERNET", vcard.getCategories().getValues().get(0));
-        assertEquals("testCategories - 3", "IETF", vcard.getCategories().getValues().get(1));
-        assertEquals("testCategories - 4", "INDUSTRY", vcard.getCategories().getValues().get(2));
-        assertEquals("testCategories - 5", "INFORMATION TECHNOLOGY", vcard.getCategories().getValues().get(3));
+        assertEquals("testKeywords - 1", 4, vcard.getCategories().getValues().size());
+        assertEquals("testKeywords - 2", "INTERNET", vcard.getCategories().getValues().get(0));
+        assertEquals("testKeywords - 3", "IETF", vcard.getCategories().getValues().get(1));
+        assertEquals("testKeywords - 4", "INDUSTRY", vcard.getCategories().getValues().get(2));
+        assertEquals("testKeywords - 5", "INFORMATION TECHNOLOGY", vcard.getCategories().getValues().get(3));
     }
 
 

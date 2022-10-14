@@ -24,10 +24,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CategoriesTest extends RoundtripTest {
+public class KeywordsTest extends RoundtripTest {
 
     @Test
-    public void testCategories1() throws CardException {
+    public void testKeywords1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -38,12 +38,12 @@ public class CategoriesTest extends RoundtripTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testCategories1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testKeywords1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
     //TODO - INDISCERNIBLE
     //@Test
-    public void testCategories2() throws CardException {
+    public void testKeywords2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -55,7 +55,7 @@ public class CategoriesTest extends RoundtripTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testCategories2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testKeywords2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
 }

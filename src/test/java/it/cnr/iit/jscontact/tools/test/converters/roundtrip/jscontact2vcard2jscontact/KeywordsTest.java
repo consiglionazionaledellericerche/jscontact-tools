@@ -25,10 +25,10 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class CategoriesTest extends RoundtripTest {
+public class KeywordsTest extends RoundtripTest {
 
     @Test
-    public void testCategories() throws IOException, CardException {
+    public void testKeywords() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -43,7 +43,7 @@ public class CategoriesTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCategories - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testKeywords - 1", jscard2, Card.toCard(jscard));
     }
 
 

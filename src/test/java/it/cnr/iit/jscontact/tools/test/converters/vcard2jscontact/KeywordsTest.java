@@ -21,10 +21,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CategoriesTest extends VCard2JSContactTest {
+public class KeywordsTest extends VCard2JSContactTest {
 
     @Test
-    public void testCategories1() throws CardException {
+    public void testKeywords1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -33,16 +33,16 @@ public class CategoriesTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testCategories1 - 1", jsCard.getKeywords());
-        assertEquals("testCategories1 - 2", 4, jsCard.getKeywords().size());
-        assertTrue("testCategories1 - 3",jsCard.getKeywords().containsKey("INTERNET"));
-        assertTrue("testCategories1 - 4",jsCard.getKeywords().containsKey("IETF"));
-        assertTrue("testCategories1 - 5",jsCard.getKeywords().containsKey("INDUSTRY"));
-        assertTrue("testCategories1 - 6",jsCard.getKeywords().containsKey("INFORMATION TECHNOLOGY"));
+        assertNotNull("testKeywords1 - 1", jsCard.getKeywords());
+        assertEquals("testKeywords1 - 2", 4, jsCard.getKeywords().size());
+        assertTrue("testKeywords1 - 3",jsCard.getKeywords().containsKey("INTERNET"));
+        assertTrue("testKeywords1 - 4",jsCard.getKeywords().containsKey("IETF"));
+        assertTrue("testKeywords1 - 5",jsCard.getKeywords().containsKey("INDUSTRY"));
+        assertTrue("testKeywords1 - 6",jsCard.getKeywords().containsKey("INFORMATION TECHNOLOGY"));
     }
 
     @Test
-    public void testCategories2() throws CardException {
+    public void testKeywords2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -52,13 +52,13 @@ public class CategoriesTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testCategories2 - 1", jsCard.getKeywords());
-        assertEquals("testCategories2 - 2", 5, jsCard.getKeywords().size());
-        assertTrue("testCategories2 - 3",jsCard.getKeywords().containsKey("INTERNET"));
-        assertTrue("testCategories2 - 4",jsCard.getKeywords().containsKey("IETF"));
-        assertTrue("testCategories2 - 5",jsCard.getKeywords().containsKey("INDUSTRY"));
-        assertTrue("testCategories2 - 6",jsCard.getKeywords().containsKey("INFORMATION TECHNOLOGY"));
-        assertTrue("testCategories2 - 7",jsCard.getKeywords().containsKey("TRAVEL AGENT"));
+        assertNotNull("testKeywords2 - 1", jsCard.getKeywords());
+        assertEquals("testKeywords2 - 2", 5, jsCard.getKeywords().size());
+        assertTrue("testKeywords2 - 3",jsCard.getKeywords().containsKey("INTERNET"));
+        assertTrue("testKeywords2 - 4",jsCard.getKeywords().containsKey("IETF"));
+        assertTrue("testKeywords2 - 5",jsCard.getKeywords().containsKey("INDUSTRY"));
+        assertTrue("testKeywords2 - 6",jsCard.getKeywords().containsKey("INFORMATION TECHNOLOGY"));
+        assertTrue("testKeywords2 - 7",jsCard.getKeywords().containsKey("TRAVEL AGENT"));
     }
 
 }
