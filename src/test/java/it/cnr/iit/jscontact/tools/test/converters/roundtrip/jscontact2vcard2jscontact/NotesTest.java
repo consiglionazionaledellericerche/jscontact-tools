@@ -34,42 +34,14 @@ public class NotesTest extends RoundtripTest {
                     "\"@type\":\"Card\"," +
                     "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                     "\"fullName\":\"test\"," +
-                    "\"notes\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"," +
-                    "\"localizations\": { \"it\": { \"notes\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" } }" +
+                    "\"notes\": [" +
+                        "{ \"@type\": \"Note\", \"note\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"} ," +
+                        "{ \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\", \"language\":\"it\" } " +
+                    "]" +
                     "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testNotes1 - 1", jscard2, Card.toCard(jscard));
-    }
-
-    @Test
-    public void testNotes2() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
-                "\"notes\":\"This fax number is operational 0800 to 1715 EST, Mon-Fri\"," +
-                "\"localizations\": { \"it\": { \"notes\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" } }" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testNotes2 - 1", jscard2, Card.toCard(jscard));
-    }
-
-    @Test
-    public void testNotes3() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
-                "\"notes\":\"This fax number is operational 0800 to 1715 EST, Mon-Fri\\nThis is another note\"," +
-                "\"localizations\": { \"it\": { \"notes\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\\nQuesta è un'altra nota\" } }" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testNotes3 - 1", jscard2, Card.toCard(jscard));
     }
 
 }

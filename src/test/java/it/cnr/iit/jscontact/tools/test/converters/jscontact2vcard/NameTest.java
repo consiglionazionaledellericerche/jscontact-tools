@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -41,8 +42,11 @@ public class NameTest extends JSContact2VCardTest {
                         "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                     "] " +
                 "}, " +
-                "\"nickNames\":[ \"Johnny\", \"Joe\" ]" +
-                "}";
+                "\"nickNames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Joe\" } " +
+                "}" +
+        "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testName1 - 1", "Mr. John Q. Public, Esq.", vcard.getFormattedName().getValue());
         assertNotNull("testName1 - 2", vcard.getStructuredName());
@@ -54,9 +58,9 @@ public class NameTest extends JSContact2VCardTest {
         assertEquals("testName1 - 8", "Mr.", vcard.getStructuredName().getPrefixes().get(0));
         assertEquals("testName1 - 9", 1, vcard.getStructuredName().getSuffixes().size());
         assertEquals("testName1 - 10", "Esq.", vcard.getStructuredName().getSuffixes().get(0));
-        assertEquals("testName1 - 11", 2, vcard.getNickname().getValues().size());
-        assertEquals("testName1 - 12", "Johnny", vcard.getNickname().getValues().get(0));
-        assertEquals("testName1 - 13", "Joe", vcard.getNickname().getValues().get(1));
+        assertEquals("testName1 - 11", 2, vcard.getNicknames().size());
+        assertEquals("testName1 - 12", "Johnny", vcard.getNicknames().get(0).getValues().get(0));
+        assertEquals("testName1 - 13", "Joe", vcard.getNicknames().get(1).getValues().get(0));
 
     }
 
@@ -78,10 +82,14 @@ public class NameTest extends JSContact2VCardTest {
                         "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                     "] " +
                 "}, " +
-                "\"nickNames\":[ \"Johnny\", \"Joe\" ], " +
+                "\"nickNames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Joe\" } " +
+                "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                          "\"nickNames\" : [ \"Giovanni\", \"Giò\" ]" +
+                        "\"nickNames/NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Giovannino\" }, " +
+                        "\"nickNames/NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Giò\" } " +
                     "}" +
                 "}" +
                 "}";
@@ -96,16 +104,19 @@ public class NameTest extends JSContact2VCardTest {
         assertEquals("testName2 - 8", "Mr.", vcard.getStructuredName().getPrefixes().get(0));
         assertEquals("testName2 - 9", 1, vcard.getStructuredName().getSuffixes().size());
         assertEquals("testName2 - 10", "Esq.", vcard.getStructuredName().getSuffixes().get(0));
-        assertEquals("testName2 - 11", 2, vcard.getNickname().getValues().size());
+        assertEquals("testName2 - 11", 4, vcard.getNicknames().size());
         assertEquals("testName2 - 12", "Johnny", vcard.getNicknames().get(0).getValues().get(0));
-        assertEquals("testName2 - 13", "Joe", vcard.getNicknames().get(0).getValues().get(1));
-        assertEquals("testName2 - 14", "en", vcard.getNicknames().get(0).getLanguage());
-        assertEquals("testName2 - 15", "1", vcard.getNicknames().get(0).getAltId());
-        assertEquals("testName2 - 16", "Giovanni", vcard.getNicknames().get(1).getValues().get(0));
-        assertEquals("testName2 - 17", "Giò", vcard.getNicknames().get(1).getValues().get(1));
-        assertEquals("testName2 - 18", "it", vcard.getNicknames().get(1).getLanguage());
-        assertEquals("testName2 - 19", "1", vcard.getNicknames().get(1).getAltId());
-
+        assertEquals("testName2 - 13", "en", vcard.getNicknames().get(0).getLanguage());
+        assertEquals("testName2 - 14", "1", vcard.getNicknames().get(0).getAltId());
+        assertEquals("testName2 - 15", "Giovannino", vcard.getNicknames().get(1).getValues().get(0));
+        assertEquals("testName2 - 16", "it", vcard.getNicknames().get(1).getLanguage());
+        assertEquals("testName2 - 17", "1", vcard.getNicknames().get(1).getAltId());
+        assertEquals("testName2 - 18", "Joe", vcard.getNicknames().get(2).getValues().get(0));
+        assertEquals("testName2 - 19", "en", vcard.getNicknames().get(2).getLanguage());
+        assertEquals("testName2 - 20", "2", vcard.getNicknames().get(2).getAltId());
+        assertEquals("testName2 - 21", "Giò", vcard.getNicknames().get(3).getValues().get(0));
+        assertEquals("testName2 - 22", "it", vcard.getNicknames().get(3).getLanguage());
+        assertEquals("testName2 - 23", "2", vcard.getNicknames().get(3).getAltId());
     }
 
 

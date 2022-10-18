@@ -17,20 +17,23 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
+import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "preferredContactMethod" property as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the "preferredContactChannels" map keys as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum PreferredContactMethodType {
+public enum ChannelEnum implements IsExtensible {
 
+    ADDRESSES("addresses"),
     EMAILS("emails"),
-    PHONES("phones"),
-    ONLINE("online");
+    ONLINE_SERVICES("onlineServices"),
+    PHONES("phones");
 
     private final String value;
 
@@ -40,14 +43,13 @@ public enum PreferredContactMethodType {
     }
 
     @JsonCreator
-    public static PreferredContactMethodType getEnum(String value) throws IllegalArgumentException {
+    public static ChannelEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(ChannelEnum.class, value);
+    }
 
-        for(PreferredContactMethodType en : PreferredContactMethodType.values()) {
-            if (en.getValue().equals(value))
-                return en;
-        }
-
-        throw new IllegalArgumentException();
+    @Override
+    public String toString() {
+        return value;
     }
 
 }

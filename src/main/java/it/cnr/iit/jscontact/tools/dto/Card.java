@@ -26,11 +26,12 @@ import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
+import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -52,7 +53,7 @@ import java.util.*;
 @JsonPropertyOrder({
         "@type","uid","prodId","created","updated","kind","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
-        "emails","phones","onlineServices","resources","scheduling","photos","preferredContactMethod","preferredContactLanguages",
+        "emails","phones","onlineServices","resources","scheduling","photos","preferredContactChannels","preferredContactLanguages",
         "addresses","localizations",
         "anniversaries","personalInfo","notes","keywords","timeZones","propertyGroups",
         "extensions"})
@@ -100,7 +101,10 @@ public class Card extends JSContact implements Serializable {
 
     String fullName;
 
-    String[] nickNames;
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,NickName>")
+    Map<String,NickName> nickNames;
 
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -146,7 +150,10 @@ public class Card extends JSContact implements Serializable {
     @IdMapConstraint(message = "invalid Id in Map<Id,File>")
     Map<String,File> photos;
 
-    PreferredContactMethodType preferredContactMethod;
+    @JsonPropertyOrder(alphabetic = true)
+    @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
+    @JsonDeserialize(keyUsing = ContactChannelsKeyDeserializer.class)
+    Map<ChannelType,ContactChannelPreference[]> preferredContactChannels;
 
     @JsonPropertyOrder(alphabetic = true)
     @PreferredContactLanguagesConstraint
@@ -172,7 +179,7 @@ public class Card extends JSContact implements Serializable {
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
     Map<String,PersonalInformation> personalInfo;
 
-    String notes;
+    Note[] notes;
 
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> keywords;
@@ -180,32 +187,6 @@ public class Card extends JSContact implements Serializable {
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     Map<String,TimeZone> timeZones;
-
-    private boolean isContactByMethodPreferred(PreferredContactMethodType method) {return preferredContactMethod != null && preferredContactMethod == method; }
-
-    /**
-     * Tests if the preferred contact method is by emails.
-     *
-     * @return true if the preferred contact method is by emails, false otherwise
-     */
-    @JsonIgnore
-    public boolean isContactByEmailsPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.EMAILS); }
-
-    /**
-     * Tests if the preferred contact method is by phones.
-     *
-     * @return true if the preferred contact method is by phones, false otherwise
-     */
-    @JsonIgnore
-    public boolean isContactByPhonesPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.PHONES); }
-
-    /**
-     * Tests if the preferred contact method is by online service.
-     *
-     * @return true if the preferred contact method is by online service, false otherwise
-     */
-    @JsonIgnore
-    public boolean isContactByOnlinePreferred() {return isContactByMethodPreferred(PreferredContactMethodType.ONLINE); }
 
 //Methods for adding items to a mutable collection
 
@@ -247,14 +228,18 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds a nickname to this object.
+     * Adds an nickname to this object.
      *
-     * @param nickName the nickname
+     * @param id the nickname identifier
+     * @param nickName the object representing the nickname
      */
-    public void addNickName(String nickName) {
-        nickNames = ArrayUtils.add(nickNames, nickName);
-    }
+    public void addNickName(String id, NickName nickName) {
 
+        if(nickNames == null)
+            nickNames = new HashMap<>();
+
+        nickNames.putIfAbsent(id,nickName);
+    }
     /**
      * Adds an organization to this object.
      *
@@ -544,14 +529,11 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a note to this object.
      *
-     * @param note the note
+     * @param note the note object
      */
-    public void addNote(String note) {
+    public void addNote(Note note) {
 
-        if (notes == null)
-            notes = note;
-        else
-            notes = String.format("%s%s%s", notes, DelimiterUtils.NEWLINE_DELIMITER, note);
+        notes = ArrayUtils.add(notes, note);
     }
 
     private void addKeyword(String keyword) {

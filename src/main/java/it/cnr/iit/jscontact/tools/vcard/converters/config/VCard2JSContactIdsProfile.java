@@ -17,6 +17,7 @@ import java.util.List;
 public class VCard2JSContactIdsProfile {
 
     public enum IdType {
+        NICKNAME,
         ORGANIZATION,
         TITLE,
         EMAIL,
@@ -39,6 +40,7 @@ public class VCard2JSContactIdsProfile {
         Object id;
 
         private static JSContactId jsContactId(IdType idType, Object id) { return JSContactId.builder().idType(idType).id(id).build(); }
+        public static JSContactId nicknamesId(String id) { return jsContactId(IdType.NICKNAME, id); }
         public static JSContactId organizationsId(String id) { return jsContactId(IdType.ORGANIZATION, id); }
         public static JSContactId titlesId(String id) { return jsContactId(IdType.TITLE,id); }
         public static JSContactId emailsId(String id) { return jsContactId(IdType.EMAIL,id); }

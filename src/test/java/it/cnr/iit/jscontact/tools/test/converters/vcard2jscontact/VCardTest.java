@@ -329,8 +329,8 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 10", "MiddleName", jsCard.getName().getComponents()[3].getValue());
         assertTrue("testCompleteVCard6 - 11", jsCard.getName().getComponents()[4].isSuffix());
         assertEquals("testCompleteVCard6 - 12", "Suffix", jsCard.getName().getComponents()[4].getValue());
-        assertEquals("testCompleteVCard6 - 13", 1, jsCard.getNickNames().length);
-        assertEquals("testCompleteVCard6 - 14", "NickName", jsCard.getNickNames()[0]);
+        assertEquals("testCompleteVCard6 - 13", 1, jsCard.getNickNames().size());
+        assertEquals("testCompleteVCard6 - 14", "NickName", jsCard.getNickNames().get("NICK-1").getName());
         assertEquals("testCompleteVCard6 - 15", 9, jsCard.getPhones().size());
         assertTrue("testCompleteVCard6 - 16", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteVCard6 - 17", jsCard.getPhones().get("PHONE-1").asPrivate());

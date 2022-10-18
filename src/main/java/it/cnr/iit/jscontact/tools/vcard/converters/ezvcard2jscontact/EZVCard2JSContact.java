@@ -16,7 +16,6 @@
 package it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.ValidationWarnings;
@@ -32,6 +31,7 @@ import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
+import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
@@ -276,12 +276,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return null;
     }
 
-    private static void addLocalizedString(List<LocalizedString> list, LocalizedString localized) {
+    private static void addLocalizedText(List<LocalizedText> list, LocalizedText localized) {
 
         if (list.size() == 0)
             list.add(localized);
         else {
-            LocalizedString ls = (LocalizedString) getAlternative(list, localized.getAltid());
+            LocalizedText ls = (LocalizedText) getAlternative(list, localized.getAltid());
             if (ls == null)
                 list.add(localized);
             else {
@@ -520,9 +520,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private static void fillFormattedNames(VCard vcard, Card jsCard) {
 
         List<FormattedName> fns = vcard.getFormattedNames();
-        List<LocalizedString> fullNames = new ArrayList<>();
+        List<LocalizedText> fullNames = new ArrayList<>();
         for (FormattedName fn : fns) {
-            fullNames.add(LocalizedString.builder()
+            fullNames.add(LocalizedText.builder()
                                          .value(getValue(fn))
                                          .language(fn.getLanguage())
                                          .preference(isDefaultLanguage(fn.getLanguage(), jsCard.getLocale()) ? HIGHEST_PREFERENCE : fn.getPref())
@@ -530,7 +530,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                          );
         }
         Collections.sort(fullNames);
-        for (LocalizedString ls : fullNames) {
+        for (LocalizedText ls : fullNames) {
             if (fullNames.indexOf(ls) == 0)
                 jsCard.setFullName(ls.getValue());
             else
@@ -579,34 +579,33 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillNickNames(VCard vcard, Card jsCard) {
+    private void fillNickNames(VCard vcard, Card jsCard) {
 
         List<Nickname> nicknames = vcard.getNicknames();
-        List<LocalizedString> nicks = new ArrayList<>();
+        List<LocalizedText> nicks = new ArrayList<>();
         for (Nickname nickname : nicknames) {
-            for (String value : nickname.getValues())
-                addLocalizedString(nicks, LocalizedString.builder()
-                                .value(value)
-                                .language(nickname.getLanguage())
-                                .altid(nickname.getAltId())
-                                .preference(nickname.getPref())
-                                .build());
+            String vcardType = getVCardParam(nickname.getParameters(), "TYPE");
+            Map<Context, Boolean> contexts = getContexts(vcardType);
+            addLocalizedText(nicks, LocalizedText.builder()
+                    .value(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,nickname.getValues()))
+                    .language(nickname.getLanguage())
+                    .altid(nickname.getAltId())
+                    .preference(nickname.getPref())
+                    .contexts(contexts)
+                    .build());
         }
-        Collections.sort(nicks);
-        for (LocalizedString nick : nicks) {
-            jsCard.addNickName(nick.getValue());
-            if (nick.getLocalizations()!=null) {
-                for (Map.Entry<String,String> localization : nick.getLocalizations().entrySet()) {
-                    JsonNode node = jsCard.getLocalization(localization.getKey(),"nickNames");
-                    if (node == null)
-                        jsCard.addLocalization(localization.getKey(), "nickNames", JsonNodeUtils.textArrayNode(new String[]{localization.getValue()}));
-                    else {
-                        ArrayNode arrayNode = (ArrayNode) jsCard.getLocalizations().get(localization.getKey()).get("nickNames");
-                        jsCard.getLocalizations().get(localization.getKey()).replace("nickNames", arrayNode.add(localization.getValue()));
-                    }
+        int i = 1;
+        for (LocalizedText nick : nicks) {
+            String id = getId(VCard2JSContactIdsProfile.IdType.NICKNAME, i, "NICK-" + (i ++), nick.getPropId());
+            NickName nickName = NickName.builder().name(nick.getValue()).pref(nick.getPreference()).contexts(nick.getContexts()).build();
+            jsCard.addNickName(id, nickName);
+            if (nick.getLocalizations() != null) {
+                for (Map.Entry<String, String> localization : nick.getLocalizations().entrySet()) {
+                    jsCard.addLocalization(localization.getKey(), "nickNames/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.NickName.builder().name(localization.getValue()).build(), JsonNode.class));
                 }
             }
         }
+        addPropertyGroups(jsCard.getNickNames(), "nickNames/", jsCard);
     }
 
     private static it.cnr.iit.jscontact.tools.dto.Address getAddressAltrenative(List<it.cnr.iit.jscontact.tools.dto.Address> addresses, String altid) {
@@ -864,11 +863,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private static void fillContactLanguages(VCard vcard, Card jsCard) {
 
         for (Language lang : vcard.getLanguages()) {
+            String vcardType = getVCardParam(lang.getParameters(), "TYPE");
             jsCard.addContactLanguage(getValue(lang),
                                         ContactLanguage.builder()
                                                        .group(lang.getGroup())
-                                                       .context((lang.getType() != null) ? Context.rfc(ContextEnum.getEnum(lang.getType())) : null)
-                                                       .pref(lang.getPref())
+                                                       .contexts(getContexts(vcardType))                                                       .pref(lang.getPref())
                                                        .build()
                                         );
         }
@@ -1063,9 +1062,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private void fillTitles(List<LocalizedString> localizedStrings, Card jsCard, int i) {
+    private void fillTitles(List<LocalizedText> localizedStrings, Card jsCard, int i) {
 
-        for (LocalizedString localizedString : localizedStrings) {
+        for (LocalizedText localizedString : localizedStrings) {
             String id = getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i ++), localizedString.getPropId());
             jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().title(localizedString.getValue()).build());
             if (localizedString.getLocalizations()!=null) {
@@ -1077,9 +1076,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private void fillTitles(VCard vcard, Card jsCard) {
 
-        List<LocalizedString> titles = new ArrayList<>();
+        List<LocalizedText> titles = new ArrayList<>();
         for (Title title : vcard.getTitles())
-            addLocalizedString(titles, LocalizedString.builder()
+            addLocalizedText(titles, LocalizedText.builder()
                                                      .value(getValue(title))
                                                      .language(title.getLanguage())
                                                      .altid(title.getAltId())
@@ -1092,9 +1091,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private void fillRoles(VCard vcard, Card jsCard) {
 
-        List<LocalizedString> roles = new ArrayList<>();
+        List<LocalizedText> roles = new ArrayList<>();
         for (Role role : vcard.getRoles()) {
-            addLocalizedString(roles, LocalizedString.builder()
+            addLocalizedText(roles, LocalizedText.builder()
                                                      .value(getValue(role))
                                                      .language(role.getLanguage())
                                                      .altid(role.getAltId())
@@ -1111,9 +1110,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private void fillOrganizations(VCard vcard, Card jsCard) {
 
-        List<LocalizedString> organizations = new ArrayList<>();
+        List<LocalizedText> organizations = new ArrayList<>();
         for (Organization org : vcard.getOrganizations()) {
-            addLocalizedString(organizations, LocalizedString.builder()
+            addLocalizedText(organizations, LocalizedText.builder()
                                                              .group(org.getGroup())
                                                              .propId(org.getParameter(PROP_ID_PARAM))
                                                              .value(getValue(org))
@@ -1126,7 +1125,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         Collections.sort(organizations);
 
         int i = 1;
-        for (LocalizedString organization : organizations) {
+        for (LocalizedText organization : organizations) {
             String[] nameItems = organization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
             String id = getId(VCard2JSContactIdsProfile.IdType.ORGANIZATION, i, "ORG-" + (i ++), organization.getPropId());
             List<String> units = (nameItems.length > 1 ) ? Arrays.asList(nameItems).subList(1,nameItems.length) : null;
@@ -1146,29 +1145,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static void fillNotes(VCard vcard, Card jsCard) {
 
-        List<LocalizedString> notes = new ArrayList<>();
-        for (Note note : vcard.getNotes()) {
-            addLocalizedString(notes, LocalizedString.builder()
-                                                     .value(getValue(note))
-                                                     .language(note.getLanguage())
-                                                     .altid(note.getAltId())
-                                                     .preference(note.getPref())
-                                                     .build()
-                              );
-        }
-        Collections.sort(notes);
-        for (LocalizedString note : notes) {
-            jsCard.addNote(note.getValue());
-            if (note.getLocalizations()!=null) {
-                for (Map.Entry<String,String> localization : note.getLocalizations().entrySet()) {
-                    JsonNode node = jsCard.getLocalization(localization.getKey(),"notes");
-                    if (node == null)
-                        jsCard.addLocalization(localization.getKey(), "notes", JsonNodeUtils.textNode(localization.getValue()));
-                    else
-                        jsCard.getLocalizations().get(localization.getKey()).replace("notes", JsonNodeUtils.textNode(String.format("%s%s%s", node.asText(), DelimiterUtils.NEWLINE_DELIMITER, localization.getValue())));
-                }
-            }
-        }
+        List<LocalizedText> notes = new ArrayList<>();
+        for (ezvcard.property.Note note : vcard.getNotes())
+            jsCard.addNote(Note.builder().note(note.getValue()).language(note.getLanguage()).build());
     }
 
     private static void fillCategories(VCard vcard, Card jsCard) {

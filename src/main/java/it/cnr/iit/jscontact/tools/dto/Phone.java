@@ -66,6 +66,14 @@ public class Phone extends GroupableObject implements IdMapValue, Serializable, 
 
     String label;
 
+    /**
+     * Tests if the pheature of this phone is undefined.
+     *
+     * @return true if the features map is empty, false otherwise
+     */
+    public boolean hasNoFeature() { return features == null || features.size() ==  0; }
+
+
     private boolean asFeature(PhoneFeature feature) { return features != null && features.containsKey(feature); }
     /**
      * Tests if this phone number is for calling by voice.

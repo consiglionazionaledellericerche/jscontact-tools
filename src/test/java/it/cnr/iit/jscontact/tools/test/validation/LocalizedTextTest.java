@@ -15,16 +15,16 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.LocalizedString;
+import it.cnr.iit.jscontact.tools.dto.LocalizedText;
 import org.junit.Test;
 
-public class LocalizedStringTest {
+public class LocalizedTextTest {
 
     @Test(expected = java.lang.NullPointerException.class)
-    public void testInvalidLocalizedStringBuild() {
+    public void testInvalidLocalizedTextBuild() {
 
         // value missing
-        LocalizedString.builder()
+        LocalizedText.builder()
                        .language("it")
                        .build();
     }

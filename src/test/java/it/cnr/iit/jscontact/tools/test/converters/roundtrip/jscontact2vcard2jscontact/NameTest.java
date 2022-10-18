@@ -43,7 +43,10 @@ public class NameTest extends RoundtripTest {
                         "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                     "] " +
                 "}, " +
-                "\"nickNames\":[ \"Johnny\", \"Joe\" ]" +
+                "\"nickNames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Joe\" } " +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
@@ -68,10 +71,14 @@ public class NameTest extends RoundtripTest {
                         "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                     "] " +
                 "}, " +
-                "\"nickNames\":[ \"Johnny\", \"Joe\" ], " +
+                "\"nickNames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Joe\" } " +
+                "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                          "\"nickNames\" : [ \"Giovanni\", \"Giò\" ]" +
+                            "\"nickNames/NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Giovannino\" }, " +
+                            "\"nickNames/NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Giò\" } " +
                     "}" +
                 "}" +
                 "}";

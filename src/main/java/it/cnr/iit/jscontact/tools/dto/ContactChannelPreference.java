@@ -36,35 +36,35 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the ContactLanguage type as defined in section 2.3.5 of [draft-ietf-calext-jscontact].
+ * Class mapping the ContactChannelPreference type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.5">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","contexts","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is missing in ContactLanguage")
+@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is missing in ContactChannelPreference")
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactLanguage extends GroupableObject implements Serializable, HasContext {
+public class ContactChannelPreference extends GroupableObject implements Serializable, HasContext {
 
     @NotNull
-    @Pattern(regexp = "ContactLanguage", message="invalid @type value in ContactLanguage")
+    @Pattern(regexp = "ContactChannelPreference", message="invalid @type value in ContactChannelPreference")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "ContactLanguage";
+    String _type = "ContactChannelPreference";
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in ContactLanguage - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in ContactChannelPreference - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in ContactLanguage - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in ContactLanguage - value must be less or equal than 100")
+    @Min(value=1, message = "invalid pref in ContactChannelPreference - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in ContactChannelPreference - value must be less or equal than 100")
     Integer pref;
 
 }

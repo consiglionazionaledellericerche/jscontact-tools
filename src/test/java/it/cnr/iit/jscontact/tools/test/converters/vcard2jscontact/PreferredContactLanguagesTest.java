@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -56,10 +57,10 @@ public class PreferredContactLanguagesTest extends VCard2JSContactTest {
         assertNotNull("testPreferredContactLanguages2 - 1", jsCard.getPreferredContactLanguages());
         assertEquals("testPreferredContactLanguages2 - 2", 2, jsCard.getPreferredContactLanguages().size());
         assertEquals("testPreferredContactLanguages2 - 3", 1, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
-        assertTrue("testPreferredContactLanguages2 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getContext().isWork());
+        assertSame("testPreferredContactLanguages2 - 4",jsCard.getPreferredContactLanguages().get("en")[0].getContexts().get(Context.work()), Boolean.TRUE);
         assertEquals("testPreferredContactLanguages2 - 5", 2, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
-        assertTrue("testPreferredContactLanguages2 - 6",jsCard.getPreferredContactLanguages().get("fr")[0].getContext().isWork());
-        assertTrue("testPreferredContactLanguages2 - 7",jsCard.getPreferredContactLanguages().get("fr")[1].getContext().isPrivate());
+        assertSame("testPreferredContactLanguages2 - 6",jsCard.getPreferredContactLanguages().get("fr")[0].getContexts().get(Context.work()), Boolean.TRUE);
+        assertSame("testPreferredContactLanguages2 - 7",jsCard.getPreferredContactLanguages().get("fr")[1].getContexts().get(Context.private_()), Boolean.TRUE);
     }
 
 

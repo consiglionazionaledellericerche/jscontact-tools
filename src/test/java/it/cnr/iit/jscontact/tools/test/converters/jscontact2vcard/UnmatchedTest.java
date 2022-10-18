@@ -25,9 +25,8 @@ import static org.junit.Assert.*;
 
 public class UnmatchedTest extends JSContact2VCardTest {
 
-
-    @Test
-    public void testPreferredContactMethod() throws IOException, CardException {
+    //@Test
+    public void testPreferredContactChannels() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -85,7 +84,9 @@ public class UnmatchedTest extends JSContact2VCardTest {
                         "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                     "] " +
                 "}, " +
-                "\"nickNames\":[ \"Johnny\" ]," +
+                "\"nickNames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\" } " +
+                "}," +
                 "\"ietf.org:rfc6350:N:SORT-AS\":\"Public,John:Public;John;Quinlan;Mr.;Esq.\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

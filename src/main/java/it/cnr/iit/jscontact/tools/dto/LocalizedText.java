@@ -38,9 +38,9 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"value"}, callSuper = false)
-public class LocalizedString extends GroupableObject implements HasAltid, HasPreference, Comparable<LocalizedString>, Serializable {
+public class LocalizedText extends GroupableObject implements HasAltid, HasPreference, Comparable<LocalizedText>, Serializable {
 
-    @NotNull(message = "value is missing in LocalizedString")
+    @NotNull(message = "value is missing in LocalizedText")
     @NonNull
     String value;
 
@@ -51,6 +51,8 @@ public class LocalizedString extends GroupableObject implements HasAltid, HasPre
     String altid;
 
     Integer preference;
+
+    Map<Context,Boolean> contexts;
 
     /**
      * Adds a localization to the "localizations" map.
@@ -73,7 +75,7 @@ public class LocalizedString extends GroupableObject implements HasAltid, HasPre
      * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
      */
     @Override
-    public int compareTo(LocalizedString o) {
+    public int compareTo(LocalizedText o) {
 
         return HasPreferenceUtils.compareTo(this, o);
     }

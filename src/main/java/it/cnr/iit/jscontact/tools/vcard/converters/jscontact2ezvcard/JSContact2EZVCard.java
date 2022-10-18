@@ -3,15 +3,16 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
 import ezvcard.property.*;
-import ezvcard.property.Note;
 import ezvcard.util.*;
-import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
+import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
@@ -333,23 +334,72 @@ public class JSContact2EZVCard extends AbstractConverter {
             vcard.setStructuredNameAlt(sns.toArray(new StructuredName[0]));
     }
 
+    private Nickname getNickname(NickName nickName, String language, String key) {
+
+        if (nickName == null)
+            return null;
+
+        Nickname nickname = new Nickname();
+        nickname.getValues().addAll(Arrays.asList(nickName.getName().split(DelimiterUtils.COMMA_ARRAY_DELIMITER)));
+        nickname.setPref(nickname.getPref());
+        nickname.setLanguage(language);
+        if (!nickName.hasNoContext()) {
+            List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(nickName.getContexts().keySet()));
+            nickname.setType(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, vCardTypeValues));
+        }
+        addPropId(nickname, key);
+        return nickname;
+    }
+
+    private Nickname getNickname(String nickNames, String language, String key) {
+
+        if (nickNames == null)
+            return null;
+
+        Nickname nickname = new Nickname();
+        nickname.getValues().addAll(Arrays.asList(nickNames.split(DelimiterUtils.COMMA_ARRAY_DELIMITER)));
+        nickname.setLanguage(language);
+        addPropId(nickname, key);
+        return nickname;
+    }
+
+    private Nickname asNickname(JsonNode node, String language, String key) {
+
+        if (!node.isObject())
+            return null;
+
+        Nickname nickname = new Nickname();
+        nickname.getValues().addAll(Arrays.asList(node.get("name").asText().split(DelimiterUtils.COMMA_ARRAY_DELIMITER)));
+        nickname.setLanguage(language);
+        addPropId(nickname, key);
+        return nickname;
+    }
+
     private void fillNickNames(VCard vcard, Card jsCard) {
 
         if (jsCard.getNickNames() == null)
             return;
 
-        String[] nickNames = jsCard.getNickNames();
+        for (Map.Entry<String,NickName> entry : jsCard.getNickNames().entrySet()) {
+            if (jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()) == null &&
+                    jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name")==null)
+                vcard.addNickname(getNickname(entry.getValue(), jsCard.getLocale(), entry.getKey()));
+            else {
+                List<ezvcard.property.Nickname> nicknames = new ArrayList<>();
+                nicknames.add(getNickname(entry.getValue(), jsCard.getLocale(), entry.getKey()));
 
-        Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("nickNames");
-        if (localizations == null)
-            vcard.setNickname(nickNames);
-        else {
-            List<Nickname> nicks = new ArrayList<>();
-            nicks.add(getTextListProperty(new Nickname(), Arrays.asList(nickNames), jsCard.getLocale(), null));
-            for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
-                nicks.add(getTextListProperty(new Nickname(), Arrays.asList(JsonNodeUtils.asTextArray(localization.getValue())), localization.getKey(), null));
-
-            vcard.setNicknameAlt(nicks.toArray(new Nickname[0]));
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey());
+                if (localizations != null) {
+                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
+                        nicknames.add(asNickname(localization.getValue(), localization.getKey(), entry.getKey()));
+                }
+                localizations = jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name");
+                if (localizations != null) {
+                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
+                        nicknames.add(getNickname(localization.getValue().asText(), localization.getKey(), entry.getKey()));
+                }
+                vcard.addNicknameAlt(nicknames.toArray(new ezvcard.property.Nickname[0]));
+            }
         }
     }
 
@@ -707,8 +757,10 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static Language getLanguage(String lang, ContactLanguage cl) {
 
         Language language = new Language(lang);
-        if (cl.getContext()!=null && cl.getContext().isRfcValue())
-            language.setType(ContextEnum.toVCardType(cl.getContext().getRfcValue()));
+        if (!cl.hasNoContext()) {
+            List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(cl.getContexts().keySet()));
+            language.setParameter("TYPE", String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, vCardTypeValues));
+        }
         language.setPref(cl.getPref());
         return language;
     }
@@ -735,8 +787,11 @@ public class JSContact2EZVCard extends AbstractConverter {
         tel.setPref(phone.getPref());
         addPropId(tel, phone.getPropId());
 
-        List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(phone.getContexts().keySet()));
-        vCardTypeValues.addAll(toVCardTypeValues(PhoneFeatureEnum.class, PhoneFeature.toEnumValues(phone.getFeatures().keySet())));
+        List<String> vCardTypeValues = new ArrayList<>();
+        if (!phone.hasNoContext())
+            vCardTypeValues.addAll(toVCardTypeValues(ContextEnum.class, Context.toEnumValues(phone.getContexts().keySet())));
+        if (!phone.hasNoFeature())
+            vCardTypeValues.addAll(toVCardTypeValues(PhoneFeatureEnum.class, PhoneFeature.toEnumValues(phone.getFeatures().keySet())));
 
         for (String vCardTypeValue : vCardTypeValues)
             tel.getTypes().add(TelephoneType.get(vCardTypeValue));
@@ -1091,29 +1146,31 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
+
+    private static ezvcard.property.Note getNote(Note jsNote) {
+
+        ezvcard.property.Note note = new ezvcard.property.Note(jsNote.getNote());
+        note.setLanguage(jsNote.getLanguage());
+        return note;
+    }
+
+
     private void fillNotes(VCard vcard, Card jsCard) {
 
         if (jsCard.getNotes() == null)
             return;
 
-        Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("notes");
-        if (localizations == null) {
-            for (String note : jsCard.getNotes().split(DelimiterUtils.NEWLINE_DELIMITER))
-                vcard.getNotes().add(getTextProperty(new Note(note), jsCard.getLocale(), null));
+        List<ezvcard.property.Note> notes = new ArrayList<>();
+        boolean languageFound = false;
+        for (Note note : jsCard.getNotes()) {
+            if (!languageFound)
+                languageFound = StringUtils.isNotEmpty(note.getLanguage());
+            notes.add(getNote(note));
         }
-        else {
-            int i = 0;
-            for (String note : jsCard.getNotes().split(DelimiterUtils.NEWLINE_DELIMITER)) {
-                List<ezvcard.property.Note> notes = new ArrayList<>();
-                notes.add(getTextProperty(new Note(note), jsCard.getLocale(), null));
-                for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
-                    String[] localizedNotes = localization.getValue().asText().split(DelimiterUtils.NEWLINE_DELIMITER);
-                    notes.add(getTextProperty(new Note(localizedNotes[i]), localization.getKey(), null));
-                }
-                vcard.addNoteAlt(notes.toArray(new ezvcard.property.Note[0]));
-                i++;
-            }
-        }
+        if (!languageFound)
+            vcard.getNotes().addAll(notes);
+        else
+            vcard.addNoteAlt(notes.toArray(new ezvcard.property.Note[0]));
     }
 
     private static Related getRelated(String uriOrText, List<RelationType> types) {
@@ -1244,12 +1301,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             vCard.addExtendedProperty("PRONOUNS", jsCard.getSpeakToAs().getPronouns());
 
     }
-    private static void fillUnmatchedElments(VCard vCard, Card jsCard) {
-
-        if (jsCard.getPreferredContactMethod() != null) {
-            vCard.addExtendedProperty("X-JSCONTACT-PREFERREDCONTACTMETHOD", jsCard.getPreferredContactMethod().getValue());
-        }
-    }
 
     /**
      * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
@@ -1304,7 +1355,6 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillRelations(vCard, jsCard);
         fillExtendedElements(vCard, jsCard);
         fillExtensions(vCard, jsCard);
-        fillUnmatchedElments(vCard, jsCard);
 
         return vCard;
     }
