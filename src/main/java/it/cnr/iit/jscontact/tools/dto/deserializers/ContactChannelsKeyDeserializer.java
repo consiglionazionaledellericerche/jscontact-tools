@@ -20,9 +20,6 @@ import com.fasterxml.jackson.databind.KeyDeserializer;
 import it.cnr.iit.jscontact.tools.dto.*;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
-import java.util.*;
-
 /**
  * Custom JSON deserializer for the "preferredContactChannels" map.
  *
@@ -33,7 +30,6 @@ public class ContactChannelsKeyDeserializer extends KeyDeserializer {
 
     @Override
     public ChannelType deserializeKey(String key, DeserializationContext ctxt) {
-        //Use the string key here to return a real map key object
         ChannelType channelType;
         try {
             channelType = ChannelType.builder().rfcValue(ChannelEnum.getEnum(key)).build();

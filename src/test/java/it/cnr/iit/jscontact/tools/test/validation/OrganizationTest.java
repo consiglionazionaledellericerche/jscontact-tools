@@ -1,23 +1,26 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.Organization;
+import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
-public class OrganizationTest {
+import java.util.HashMap;
+import java.util.Map;
 
+import static org.junit.Assert.*;
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidOrganizationBuild1() {
+public class OrganizationTest extends AbstractTest {
 
-        // name missing
-        Organization.builder().build();
+    @Test
+    public void testInvalidOrganization1() {
+
+        Map<String, Organization> organizations = new HashMap<String,Organization>() {{ put("ORG-1", Organization.builder().build()); }};
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .organizations(organizations)
+                .build();
+        assertFalse("testInvalidOrganization1-1", jsCard.isValid());
+        assertEquals("testInvalidOrganization1-2", "at least one not null member other than @type is missing in Organization", jsCard.getValidationMessage());
     }
-
-    @Test(expected = NullPointerException.class)
-    public void testInvalidOrganizationBuild2() {
-
-        // name missing
-        Organization.builder().units(new String[]{"unit1"}).build();
-    }
-
 }

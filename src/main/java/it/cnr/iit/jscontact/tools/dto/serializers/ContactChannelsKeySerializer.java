@@ -42,7 +42,7 @@ public class ContactChannelsKeySerializer extends JsonSerializer<ChannelType> {
             throws IOException {
 
         StringWriter writer = new StringWriter();
-        mapper.writeValue(writer, (value.getRfcValue() != null) ? value.getRfcValue().getValue() : value.getExtValue());
+        mapper.writeValue(writer, (value.getRfcValue()!=null) ? value.getRfcValue().getValue() : value.getExtValue());
         gen.writeFieldName(writer.toString());
     }
 }

@@ -64,7 +64,13 @@ public class SpeakToAsTest extends JSContact2VCardTest {
                 "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
                 "\"speakToAs\": {" +
                     "\"@type\":\"SpeakToAs\"," +
-                    "\"pronouns\":\"he/him\"" +
+                    "\"pronouns\": { " +
+                         "\"PRONOUNS-1\": { " +
+                               "\"@type\":\"Pronouns\"," +
+                               "\"pronouns\":\"he/him\"" +
+                        "}" +
+                    "}" +
+                "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -81,13 +87,18 @@ public class SpeakToAsTest extends JSContact2VCardTest {
                 "\"speakToAs\": {" +
                     "\"@type\":\"SpeakToAs\"," +
                     "\"grammaticalGender\":\"inanimate\"," +
-                    "\"pronouns\":\"it\"" +
+                    "\"pronouns\": { " +
+                        "\"PRONOUNS-1\": { " +
+                            "\"@type\":\"Pronouns\"," +
+                            "\"pronouns\":\"he/him\"" +
+                        "}" +
+                    "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertTrue("testSpeakToAs4 - 1",vcard.getGender().isNone());
         assertEquals("testSpeakToAs3 - 2", "inanimate", vcard.getGender().getText());
-        assertEquals("testSpeakToAs4 - 3", "it", vcard.getExtendedProperty("PRONOUNS").getValue());
+        assertEquals("testSpeakToAs4 - 3", "he/him", vcard.getExtendedProperty("PRONOUNS").getValue());
     }
 
 }

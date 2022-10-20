@@ -15,12 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstraint;
+import it.cnr.iit.jscontact.tools.constraints.PreferredContactChannelsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
-import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
+import it.cnr.iit.jscontact.tools.dto.ChannelType;
+import it.cnr.iit.jscontact.tools.dto.ContactChannelPreference;
 import it.cnr.iit.jscontact.tools.dto.utils.ConstraintViolationUtils;
-import sun.util.locale.LanguageTag;
-import sun.util.locale.ParseStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -29,33 +28,26 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class PreferredContactLanguagesValidator implements ConstraintValidator<PreferredContactLanguagesConstraint, Map<String, ContactLanguage[]>> {
+public class PreferredContactChannelsValidator implements ConstraintValidator<PreferredContactChannelsConstraint, Map<ChannelType, ContactChannelPreference[]>> {
 
-    public void initialize(PreferredContactLanguagesConstraint constraintAnnotation) {
+    public void initialize(PreferredContactChannelsConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(Map<String, ContactLanguage[]> clMap, ConstraintValidatorContext context) {
+    public boolean isValid(Map<ChannelType, ContactChannelPreference[]> clMap, ConstraintValidatorContext context) {
 
         if (clMap == null)
             return true;
 
-        for(Map.Entry<String, ContactLanguage[]> entry : clMap.entrySet()) {
-
-            ParseStatus parseStatus = new ParseStatus();
-            LanguageTag.parse(entry.getKey(), parseStatus);
-            if (parseStatus.getErrorMessage() != null) {
-                context.buildConstraintViolationWithTemplate("invalid language tag in preferredContactLanguages").addConstraintViolation();
-                return false;
-            }
+        for(Map.Entry<ChannelType, ContactChannelPreference[]> entry : clMap.entrySet()) {
 
             if (entry.getValue() == null) {
-                context.buildConstraintViolationWithTemplate("null ContactLanguage in preferredContactLanguages").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate("null ContactChannelPreference in preferredContactedChannels").addConstraintViolation();
                 return false;
             }
 
-            for (ContactLanguage cl : entry.getValue()) {
+            for (ContactChannelPreference cl : entry.getValue()) {
 
-                Set<ConstraintViolation<ContactLanguage>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
+                Set<ConstraintViolation<ContactChannelPreference>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
                 if (constraintViolations.size() > 0) {
                     context.buildConstraintViolationWithTemplate(ConstraintViolationUtils.getMessage(constraintViolations)).addConstraintViolation();
                     return false;

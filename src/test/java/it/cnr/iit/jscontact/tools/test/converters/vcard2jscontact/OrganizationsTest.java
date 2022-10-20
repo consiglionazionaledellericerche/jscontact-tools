@@ -48,7 +48,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testOrganizationsWithoutAltid() throws CardException {
+    public void testOrganizationsWithoutAltid1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -58,16 +58,16 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testOrganizationsWithoutAltid - 1", jsCard.getOrganizations());
-        assertEquals("testOrganizationsWithoutAltid - 2", 2, jsCard.getOrganizations().size());
-        assertEquals("testOrganizationsWithoutAltid - 3", "ABC, Inc.", jsCard.getOrganizations().get("ORG-1").getName());
-        assertEquals("testOrganizationsWithoutAltid - 4", 2, jsCard.getOrganizations().get("ORG-1").getUnits().length);
-        assertEquals("testOrganizationsWithoutAltid - 5", "North American Division", jsCard.getOrganizations().get("ORG-1").getUnits()[0]);
-        assertEquals("testOrganizationsWithoutAltid - 6", "Marketing", jsCard.getOrganizations().get("ORG-1").getUnits()[1]);
-        assertEquals("testOrganizationsWithoutAltid - 7", "ABC, Spa.", jsCard.getOrganizations().get("ORG-2").getName());
-        assertEquals("testOrganizationsWithoutAltid - 8", 2, jsCard.getOrganizations().get("ORG-2").getUnits().length);
-        assertEquals("testOrganizationsWithoutAltid - 9", "Divisione Nord America", jsCard.getOrganizations().get("ORG-2").getUnits()[0]);
-        assertEquals("testOrganizationsWithoutAltid - 10", "Marketing", jsCard.getOrganizations().get("ORG-2").getUnits()[1]);
+        assertNotNull("testOrganizationsWithoutAltid1 - 1", jsCard.getOrganizations());
+        assertEquals("testOrganizationsWithoutAltid1 - 2", 2, jsCard.getOrganizations().size());
+        assertEquals("testOrganizationsWithoutAltid1 - 3", "ABC, Inc.", jsCard.getOrganizations().get("ORG-1").getName());
+        assertEquals("testOrganizationsWithoutAltid1 - 4", 2, jsCard.getOrganizations().get("ORG-1").getUnits().length);
+        assertEquals("testOrganizationsWithoutAltid1 - 5", "North American Division", jsCard.getOrganizations().get("ORG-1").getUnits()[0]);
+        assertEquals("testOrganizationsWithoutAltid1 - 6", "Marketing", jsCard.getOrganizations().get("ORG-1").getUnits()[1]);
+        assertEquals("testOrganizationsWithoutAltid1 - 7", "ABC, Spa.", jsCard.getOrganizations().get("ORG-2").getName());
+        assertEquals("testOrganizationsWithoutAltid1 - 8", 2, jsCard.getOrganizations().get("ORG-2").getUnits().length);
+        assertEquals("testOrganizationsWithoutAltid1 - 9", "Divisione Nord America", jsCard.getOrganizations().get("ORG-2").getUnits()[0]);
+        assertEquals("testOrganizationsWithoutAltid1 - 10", "Marketing", jsCard.getOrganizations().get("ORG-2").getUnits()[1]);
     }
 
     @Test
@@ -96,5 +96,27 @@ public class OrganizationsTest extends VCard2JSContactTest {
         assertEquals("testOrganizationsWithAltid2 - 14", "Marketing", jsCard.getLocalization("it", "organizations/ORG-2").get("units").get(1).asText());
     }
 
+    @Test
+    public void testOrganizationsWithoutAltid2() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ORG:;North American Division;Marketing\n" +
+                "ORG;LANGUAGE=it:;Divisione Nord America;Marketing\n" +
+                "END:VCARD";
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testOrganizationsWithoutAltid2 - 1", jsCard.getOrganizations());
+        assertEquals("testOrganizationsWithoutAltid2 - 2", 2, jsCard.getOrganizations().size());
+        assertTrue("testOrganizationsWithoutAltid2 - 3", jsCard.getOrganizations().get("ORG-1").getName() == null);
+        assertEquals("testOrganizationsWithoutAltid2 - 4", 2, jsCard.getOrganizations().get("ORG-1").getUnits().length);
+        assertEquals("testOrganizationsWithoutAltid2 - 5", "North American Division", jsCard.getOrganizations().get("ORG-1").getUnits()[0]);
+        assertEquals("testOrganizationsWithoutAltid2 - 6", "Marketing", jsCard.getOrganizations().get("ORG-1").getUnits()[1]);
+        assertTrue("testOrganizationsWithoutAltid2 - 7", jsCard.getOrganizations().get("ORG-2").getName() == null);
+        assertEquals("testOrganizationsWithoutAltid2 - 8", 2, jsCard.getOrganizations().get("ORG-2").getUnits().length);
+        assertEquals("testOrganizationsWithoutAltid2 - 9", "Divisione Nord America", jsCard.getOrganizations().get("ORG-2").getUnits()[0]);
+        assertEquals("testOrganizationsWithoutAltid2 - 10", "Marketing", jsCard.getOrganizations().get("ORG-2").getUnits()[1]);
+    }
 
 }

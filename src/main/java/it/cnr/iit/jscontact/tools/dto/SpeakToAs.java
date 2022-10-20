@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import it.cnr.iit.jscontact.tools.constraints.IdMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +12,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class mapping the SpeakToAs type as defined in section 2.2.6 of [draft-ietf-calext-jscontact].
@@ -38,7 +42,10 @@ public class SpeakToAs extends GroupableObject implements Serializable {
 
     GrammaticalGenderType grammaticalGender;
 
-    String pronouns;
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,Pronouns>")
+    Map<String,Pronouns> pronouns;
 
     private boolean isRfc(GrammaticalGenderType type) { return grammaticalGender != null && grammaticalGender == type; }
 
@@ -120,4 +127,18 @@ public class SpeakToAs extends GroupableObject implements Serializable {
      */
     public static SpeakToAs inanimate() { return gender(GrammaticalGenderType.INANIMATE);}
 
+
+    /**
+     * Adds a pronouns object to this object.
+     *
+     * @param id the pronouns object identifier
+     * @param pronouns the pronouns object
+     */
+    public void addPronouns(String id, Pronouns pronouns) {
+
+        if (pronouns == null)
+            this.pronouns = new HashMap<String, Pronouns>();
+
+        this.pronouns.putIfAbsent(id, pronouns);
+    }
 }

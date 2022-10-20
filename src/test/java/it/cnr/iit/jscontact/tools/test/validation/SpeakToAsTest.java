@@ -20,7 +20,9 @@ import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -42,11 +44,15 @@ public class SpeakToAsTest extends AbstractTest {
 
     @Test
     public void testValidSpeakToAs2() {
+        Map<String,Pronouns> pronouns = new HashMap<String,Pronouns>() {{ put("PRONOUNS-1", Pronouns.builder()
+                .pronouns("he/him")
+                .build());
+        }};
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .speakToAs(SpeakToAs.builder()
-                                    .pronouns("he/him")
+                                    .pronouns(pronouns)
                                     .build())
                 .build();
 
@@ -56,11 +62,16 @@ public class SpeakToAsTest extends AbstractTest {
     @Test
     public void testValidSpeakToAs3() {
 
+        Map<String,Pronouns> pronouns = new HashMap<String,Pronouns>() {{ put("PRONOUNS-1", Pronouns.builder()
+                .pronouns("he/him")
+                .build());
+        }};
+
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .speakToAs(SpeakToAs.builder()
                                     .grammaticalGender(GrammaticalGenderType.MALE)
-                                    .pronouns("he/him")
+                                    .pronouns(pronouns)
                                     .build())
                 .build();
 

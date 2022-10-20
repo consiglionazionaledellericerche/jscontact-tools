@@ -35,9 +35,9 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class ChannelType extends ExtensibleEnum<ChannelEnum> implements Serializable {
+public class ChannelType extends ExtensibleEnum<ChannelEnum> implements Serializable, Comparable<ChannelType> {
 
-    private boolean isRfc(ChannelEnum value) { return isRfcValue() && rfcValue == value; }
+    public boolean isRfc(ChannelEnum value) { return isRfcValue() && rfcValue == value; }
 
     /**
      * Tests if this contact channel type  is "addresses".
@@ -79,7 +79,7 @@ public class ChannelType extends ExtensibleEnum<ChannelEnum> implements Serializ
     @JsonIgnore
     public boolean isExt() { return isExtValue(); }
 
-    private static ChannelType rfc(ChannelEnum rfcValue) { return ChannelType.builder().rfcValue(rfcValue).build(); }
+    public static ChannelType rfc(ChannelEnum rfcValue) { return ChannelType.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns an "addresses" contact channel type.
@@ -114,5 +114,16 @@ public class ChannelType extends ExtensibleEnum<ChannelEnum> implements Serializ
      *
      * @return a custom contact channel type
      */
-    private static ChannelType ext(String extValue) { return ChannelType.builder().extValue(extValue).build(); }
+    public static ChannelType ext(String extValue) { return ChannelType.builder().extValue(extValue).build(); }
+
+    @Override
+    public int compareTo(ChannelType o) {
+
+        return this.toString().compareTo(o.toString());
+    }
+
+    @Override
+    public String toString() {
+        return (this.isRfcValue()) ? this.getRfcValue().toString() : this.getExtValue();
+    }
 }

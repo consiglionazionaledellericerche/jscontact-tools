@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -176,6 +177,47 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations3 - 23", "ORG-1", vcard.getOrganizations().get(1).getParameter(PROP_ID_PARAM));
         assertEquals("testOrganizations3 - 24", "ORG-2", vcard.getOrganizations().get(2).getParameter(PROP_ID_PARAM));
         assertEquals("testOrganizations3 - 25", "ORG-2", vcard.getOrganizations().get(3).getParameter(PROP_ID_PARAM));
+    }
+
+
+    @Test
+    public void testOrganizations5() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":\"test\"," +
+                "\"organizations\": {" +
+                    "\"ORG-1\": {" +
+                        "\"@type\":\"Organization\"," +
+                        "\"units\":[ \"North American Division\", \"Marketing\" ]" +
+                    "}" +
+                "}," +
+                "\"localizations\": { " +
+                    "\"it\" : { " +
+                        "\"organizations/ORG-1\" : { " +
+                            "\"@type\":\"Organization\"," +
+                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testOrganizations5 - 1", 2, vcard.getOrganizations().size());
+        assertEquals("testOrganizations5 - 2", 3, vcard.getOrganizations().get(0).getValues().size());
+        assertTrue("testOrganizations5 - 3",  vcard.getOrganizations().get(0).getValues().get(0).isEmpty());
+        assertEquals("testOrganizations5 - 4", "North American Division", vcard.getOrganizations().get(0).getValues().get(1));
+        assertEquals("testOrganizations5 - 5", "Marketing", vcard.getOrganizations().get(0).getValues().get(2));
+        assertNull("testOrganizations5 - 6", vcard.getOrganizations().get(0).getLanguage());
+        assertEquals("testOrganizations5 - 7", "1", vcard.getOrganizations().get(0).getAltId());
+        assertEquals("testOrganizations5 - 8", 3, vcard.getOrganizations().get(1).getValues().size());
+        assertTrue("testOrganizations5 - 9", vcard.getOrganizations().get(1).getValues().get(0).isEmpty());
+        assertEquals("testOrganizations5 - 10", "Divisione Nord America", vcard.getOrganizations().get(1).getValues().get(1));
+        assertEquals("testOrganizations5 - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
+        assertEquals("testOrganizations5 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
+        assertEquals("testOrganizations5 - 13", "1", vcard.getOrganizations().get(1).getAltId());
+        assertEquals("testOrganizations5 - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testOrganizations5 - 15", "ORG-1", vcard.getOrganizations().get(1).getParameter(PROP_ID_PARAM));
     }
 
 }

@@ -28,7 +28,8 @@ public class VCard2JSContactIdsProfile {
         RESOURCE,
         ONLINE_SERVICE,
         ANNIVERSARY,
-        PERSONAL_INFO
+        PERSONAL_INFO,
+        PRONOUNS
     }
 
     @Builder
@@ -52,6 +53,7 @@ public class VCard2JSContactIdsProfile {
         public static JSContactId resourcesId(ResourceId id) { return jsContactId(IdType.RESOURCE,id); }
         public static JSContactId anniversariesId(String id) { return jsContactId(IdType.ANNIVERSARY,id); }
         public static JSContactId personalInfosId(PersonalInfoId id) { return jsContactId(IdType.PERSONAL_INFO,id); }
+        public static JSContactId pronounsId(String id) { return jsContactId(IdType.PRONOUNS,id); }
     }
 
     @Builder

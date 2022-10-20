@@ -153,6 +153,7 @@ public class Card extends JSContact implements Serializable {
     @JsonPropertyOrder(alphabetic = true)
     @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
     @JsonDeserialize(keyUsing = ContactChannelsKeyDeserializer.class)
+    @PreferredContactChannelsConstraint
     Map<ChannelType,ContactChannelPreference[]> preferredContactChannels;
 
     @JsonPropertyOrder(alphabetic = true)
@@ -324,7 +325,6 @@ public class Card extends JSContact implements Serializable {
         phones.putIfAbsent(id, phone);
     }
 
-
     /**
      * Adds a resource to this object.
      *
@@ -478,10 +478,39 @@ public class Card extends JSContact implements Serializable {
             preferredContactLanguages = new HashMap<>();
 
         ContactLanguage[] languagesPerId = preferredContactLanguages.get(id);
-        if (languagesPerId == null)
-            preferredContactLanguages.put(id, new ContactLanguage[] {contactLanguage});
+        ContactLanguage[] languages;
+        if (contactLanguage == null)
+            languages = new ContactLanguage[]{};
         else
-            preferredContactLanguages.put(id, ArrayUtils.add(languagesPerId, contactLanguage));
+            languages = new ContactLanguage[] {contactLanguage};
+        if (languagesPerId == null)
+            preferredContactLanguages.put(id, languages);
+        else
+            preferredContactLanguages.put(id, ArrayUtils.addAll(languagesPerId, languages));
+    }
+
+    /**
+     * Adds a contact channel preference to this object.
+     *
+     * @param id the contact channel preference identifier
+     * @param contactChannelPreference the object representing the contact channel preference
+     */
+    public void addContactChannel(ChannelType id, ContactChannelPreference contactChannelPreference) {
+
+        if (preferredContactChannels == null)
+            preferredContactChannels = new HashMap<>();
+
+        ContactChannelPreference[] contactChannelsPerId = preferredContactChannels.get(id);
+
+        ContactChannelPreference[] channels;
+        if (contactChannelPreference == null)
+            channels = new ContactChannelPreference[]{};
+        else
+            channels = new ContactChannelPreference[] {contactChannelPreference};
+        if (contactChannelsPerId == null)
+            preferredContactChannels.put(id, channels);
+        else
+            preferredContactChannels.put(id, ArrayUtils.addAll(contactChannelsPerId, channels));
     }
 
     /**

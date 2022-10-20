@@ -23,7 +23,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class OrganizationsTest extends RoundtripTest {
 
@@ -124,6 +125,34 @@ public class OrganizationsTest extends RoundtripTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testOrganizations3 - 1", jscard2, Card.toCard(jscard));
+    }
+
+
+    @Test
+    public void testOrganizations5() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":\"test\"," +
+                "\"organizations\": {" +
+                    "\"ORG-1\": {" +
+                        "\"@type\":\"Organization\"," +
+                        "\"units\":[ \"North American Division\", \"Marketing\" ]" +
+                    "}" +
+                "}," +
+                "\"localizations\": { " +
+                    "\"it\" : { " +
+                        "\"organizations/ORG-1\" : { " +
+                            "\"@type\":\"Organization\"," +
+                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testOrganizations5 - 1", jscard2, Card.toCard(jscard));
     }
 
 }

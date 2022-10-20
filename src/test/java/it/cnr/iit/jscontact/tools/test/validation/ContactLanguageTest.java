@@ -76,7 +76,7 @@ public class ContactLanguageTest extends AbstractTest {
 
         assertFalse("testInvalidContactLanguage1-1", jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidContactLanguage1-2", messages.contains("null ContactLanguage in PreferredContactedLanguages"));
+        assertTrue("testInvalidContactLanguage1-2", messages.contains("null ContactLanguage in preferredContactLanguages"));
         assertTrue("testInvalidContactLanguage1-3", messages.contains("invalid preferredContactLanguages in JSContact"));
     }
 
@@ -135,7 +135,7 @@ public class ContactLanguageTest extends AbstractTest {
 
         assertFalse("testInvalidContactLanguage5-1", jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidContactLanguage5-2", messages.contains("invalid language tag in PreferredContactedLanguages"));
+        assertTrue("testInvalidContactLanguage5-2", messages.contains("invalid language tag in preferredContactLanguages"));
         assertTrue("testInvalidContactLanguage5-3", messages.contains("invalid preferredContactLanguages in JSContact"));
     }
 

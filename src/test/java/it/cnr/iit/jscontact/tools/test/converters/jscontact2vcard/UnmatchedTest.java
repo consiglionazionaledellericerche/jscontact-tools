@@ -25,36 +25,6 @@ import static org.junit.Assert.*;
 
 public class UnmatchedTest extends JSContact2VCardTest {
 
-    //@Test
-    public void testPreferredContactChannels() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
-                "\"preferredContactMethod\":\"emails\"" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPreferredContactMethod - 1", 1, vcard.getExtendedProperties().size());
-        assertEquals("testPreferredContactMethod - 2", "X-JSCONTACT-PREFERREDCONTACTMETHOD", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testPreferredContactMethod - 3", "emails", vcard.getExtendedProperties().get(0).getValue());
-    }
-
-    @Test
-    public void testCreated() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
-                "\"created\":\"2010-10-10T10:10:10Z\"" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testCreated - 1", 1, vcard.getExtendedProperties().size());
-        assertEquals("testCreated - 2", "CREATED", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testCreated - 3", "20101010T101010Z", vcard.getExtendedProperties().get(0).getValue());
-    }
-
     @Test
     public void testUnmatchedProperty() throws IOException, CardException {
 

@@ -16,10 +16,14 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Enum class mapping the "preferredContactChannels" map keys as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
@@ -35,6 +39,14 @@ public enum ChannelEnum implements IsExtensible {
     ONLINE_SERVICES("onlineServices"),
     PHONES("phones");
 
+    private static final Map<String, ChannelEnum> aliases = new HashMap<String, ChannelEnum>()
+    {{
+        put("tel", PHONES);
+        put("impp", ONLINE_SERVICES);
+        put("email", EMAILS);
+        put("adr", ADDRESSES);
+    }};
+
     private final String value;
 
     @JsonValue
@@ -44,12 +56,33 @@ public enum ChannelEnum implements IsExtensible {
 
     @JsonCreator
     public static ChannelEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(ChannelEnum.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(ChannelEnum.class, value, aliases);
     }
 
     @Override
     public String toString() {
         return value;
+    }
+
+    /**
+     * Returns the vCard 4.0 CONTACT-CHANNEL-PREF value corresponding to the enum value representing the channel type.
+     *
+     * @param channel the channel type
+     * @return the vCard 4.0 CONTACT-CHANNEL-PREF value
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions">draft-ietf-calext-vcard-jscontact-extensions</a>
+     */
+    @JsonIgnore
+    public static String toVCardChannelType(ChannelEnum channel) {
+
+        if (channel == null)
+            return null;
+
+        for (Map.Entry<String,ChannelEnum> entry : aliases.entrySet()) {
+            if (entry.getValue() == channel)
+                return entry.getKey().toUpperCase();
+        }
+
+        return null;
     }
 
 }

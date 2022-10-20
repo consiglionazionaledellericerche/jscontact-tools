@@ -68,8 +68,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     public static final String CUSTOM_TIME_ZONE_RULE_START = "1900-01-01T00:00:00";
     private static final Integer HIGHEST_PREFERENCE = 0;
 
-    private static final List<String> fakeExtensions = Collections.singletonList("contact-uri");
-
     protected VCard2JSContactConfig config;
 
     private int customTimeZoneCounter = 0;
@@ -864,12 +862,16 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         for (Language lang : vcard.getLanguages()) {
             String vcardType = getVCardParam(lang.getParameters(), "TYPE");
-            jsCard.addContactLanguage(getValue(lang),
-                                        ContactLanguage.builder()
-                                                       .group(lang.getGroup())
-                                                       .contexts(getContexts(vcardType))                                                       .pref(lang.getPref())
-                                                       .build()
-                                        );
+            if (vcardType!=null || lang.getPref()!=null)
+                jsCard.addContactLanguage(getValue(lang),
+                                            ContactLanguage.builder()
+                                                           .group(lang.getGroup())
+                                                           .contexts(getContexts(vcardType))
+                                                            .pref(lang.getPref())
+                                                           .build()
+                                            );
+            else
+                jsCard.addContactLanguage(getValue(lang),null);
         }
 
         if (jsCard.getPreferredContactLanguages() == null)
@@ -1129,12 +1131,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String[] nameItems = organization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
             String id = getId(VCard2JSContactIdsProfile.IdType.ORGANIZATION, i, "ORG-" + (i ++), organization.getPropId());
             List<String> units = (nameItems.length > 1 ) ? Arrays.asList(nameItems).subList(1,nameItems.length) : null;
-            jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().group(organization.getGroup()).name(nameItems[0]).units((units!=null)? units.toArray(new String[0]) : null).build());
+            jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().group(organization.getGroup()).name((!nameItems[0].isEmpty()) ? nameItems[0] : null).units((units!=null)? units.toArray(new String[0]) : null).build());
             if (organization.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : organization.getLocalizations().entrySet()) {
                     String[] localizedNameItems =  localization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
                     List<String> localizedUnits = (localizedNameItems.length > 1 ) ? Arrays.asList(localizedNameItems).subList(1,localizedNameItems.length) : null;
-                    jsCard.addLocalization(localization.getKey(), "organizations/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Organization.builder().name(localizedNameItems[0]).units((localizedUnits!=null)? localizedUnits.toArray(new String[0]) : null).build(), JsonNode.class));
+                    jsCard.addLocalization(localization.getKey(), "organizations/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Organization.builder().name((!localizedNameItems[0].isEmpty()) ? localizedNameItems[0] : null).units((localizedUnits!=null)? localizedUnits.toArray(new String[0]) : null).build(), JsonNode.class));
                 }
             }
         }
@@ -1183,6 +1185,71 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+    //TODO: replace XXXX with RFC number after draft-ietf-calext-vcard-jscontact-extensions
+    private void fillRFCXXXXProperties(VCard vcard, Card jsCard) {
+
+        int i = 0;
+        for (RawProperty extension : vcard.getExtendedProperties()) {
+
+            String language = extension.getParameter("LANGUAGE");
+            String vcardPref = extension.getParameter("PREF");
+            Integer pref;
+            try {
+                pref = Integer.parseInt(vcardPref);
+            } catch (Exception e) {
+                pref = null;
+            }
+            String vcardType = extension.getParameter("TYPE");
+            Map<Context,Boolean> contexts = getContexts(vcardType);
+            String jsonPointer = fakeExtensionsMapping.get(extension.getPropertyName().toLowerCase());
+
+            if (extension.getPropertyName().toUpperCase().equals("LOCALE"))
+                jsCard.setLocale(extension.getValue());
+            else if (extension.getPropertyName().toUpperCase().equals("CREATED"))
+                jsCard.setCreated(DateUtils.toCalendar(extension.getValue()));
+            else if (extension.getPropertyName().toUpperCase().equals("GRAMMATICAL-GENDER")) {
+                GrammaticalGenderType gender = GrammaticalGenderType.valueOf(extension.getValue().toLowerCase());
+                if (jsCard.getSpeakToAs() != null)
+                    jsCard.getSpeakToAs().setGrammaticalGender(gender);
+                else
+                    jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(gender).build());
+            }
+            else if (extension.getPropertyName().toUpperCase().equals("PRONOUNS")) {
+                String id = getId(VCard2JSContactIdsProfile.IdType.PRONOUNS, i,"PRONOUNS-" + (i++), extension.getParameter(PROP_ID_PARAM));
+                Pronouns pronouns = Pronouns.builder().contexts(contexts).pref(pref).build();
+                jsonPointer=String.format("%s/%s", jsonPointer, id);
+                if (language==null || config.getDefaultLanguage().equalsIgnoreCase(language)) {
+                    if (jsCard.getSpeakToAs() != null)
+                        jsCard.getSpeakToAs().addPronouns(id, pronouns);
+                    else {
+                        SpeakToAs speakToAs = SpeakToAs.builder().build();
+                        speakToAs.addPronouns(id,pronouns);
+                        jsCard.setSpeakToAs(speakToAs);
+                    }
+                } else {
+                    jsCard.addLocalization(language,jsonPointer, mapper.convertValue(pronouns, JsonNode.class));
+                }
+            }
+            else if (extension.getPropertyName().toUpperCase().equals("CONTACT-CHANNEL-PREF")) {
+                if (!extension.getValue().isEmpty()) {
+                    ChannelType channelType;
+                    try {
+                        channelType = ChannelType.rfc(ChannelEnum.getEnum(extension.getValue().toLowerCase()));
+                    } catch (Exception e) {
+                        channelType = ChannelType.ext(extension.getValue().toLowerCase());
+                    }
+                    if (contexts!=null || pref != null)
+                        jsCard.addContactChannel(channelType, ContactChannelPreference.builder().contexts(contexts).pref(pref).build());
+                    else
+                        jsCard.addContactChannel(channelType, null);
+                }
+            }
+
+            if (extension.getGroup() != null)
+                jsCard.addPropertyGroup(extension.getGroup(),jsonPointer);
+        }
+    }
+
     private String getExtPropertyName(String propertyName) {
 
         return (config.getExtensionsPrefix() != null) ? config.getExtensionsPrefix() + propertyName : propertyName;
@@ -1196,8 +1263,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillExtensions(VCard vcard, Card jsCard) {
 
         for (RawProperty extension : vcard.getExtendedProperties()) {
-            if (!fakeExtensions.contains(extension.getPropertyName()) &&
-                    !fakeExtensions.contains(extension.getPropertyName().toUpperCase())) {
+            if (!fakeExtensionsMapping.keySet().contains(extension.getPropertyName()) &&
+                    !fakeExtensionsMapping.keySet().contains(extension.getPropertyName().toLowerCase())) {
                 String propertyName = getExtPropertyName(extension.getPropertyName());
                 jsCard.addExtension(propertyName, getValue(extension));
                 if (extension.getGroup() != null)
@@ -1335,6 +1402,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fillRelations(vCard, jsCard);
         if (timeZones.size() > 0)
             jsCard.setTimeZones(timeZones);
+        fillRFCXXXXProperties(vCard,jsCard);
         fillExtensions(vCard, jsCard);
         fillUnmatchedElments(vCard, jsCard);
 
