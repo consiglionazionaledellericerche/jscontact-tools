@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;

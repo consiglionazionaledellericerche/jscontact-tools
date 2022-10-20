@@ -1207,18 +1207,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Map<Context,Boolean> contexts = getContexts(vcardType);
             String jsonPointer = fakeExtensionsMapping.get(extension.getPropertyName().toLowerCase());
 
-            if (extension.getPropertyName().toUpperCase().equals("LOCALE"))
+            if (extension.getPropertyName().equalsIgnoreCase("LOCALE"))
                 jsCard.setLocale(extension.getValue());
-            else if (extension.getPropertyName().toUpperCase().equals("CREATED"))
+            else if (extension.getPropertyName().equalsIgnoreCase("CREATED"))
                 jsCard.setCreated(DateUtils.toCalendar(extension.getValue()));
-            else if (extension.getPropertyName().toUpperCase().equals("GRAMMATICAL-GENDER")) {
+            else if (extension.getPropertyName().equalsIgnoreCase("GRAMMATICAL-GENDER")) {
                 GrammaticalGenderType gender = GrammaticalGenderType.getEnum(extension.getValue().toLowerCase());
                 if (jsCard.getSpeakToAs() != null)
                     jsCard.getSpeakToAs().setGrammaticalGender(gender);
                 else
                     jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(gender).build());
             }
-            else if (extension.getPropertyName().toUpperCase().equals("PRONOUNS")) {
+            else if (extension.getPropertyName().equalsIgnoreCase("PRONOUNS")) {
                 String id = getId(VCard2JSContactIdsProfile.IdType.PRONOUNS, i,"PRONOUNS-" + (i++), extension.getParameter(PROP_ID_PARAM));
                 Pronouns pronouns = Pronouns.builder().pronouns(extension.getValue()).contexts(contexts).pref(pref).build();
                 jsonPointer=String.format("%s/%s", jsonPointer, id);
@@ -1233,7 +1233,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     jsCard.addLocalization(language,jsonPointer, mapper.convertValue(pronouns, JsonNode.class));
                 }
             }
-            else if (extension.getPropertyName().toUpperCase().equals("CONTACT-CHANNEL-PREF")) {
+            else if (extension.getPropertyName().equalsIgnoreCase("CONTACT-CHANNEL-PREF")) {
                 if (!extension.getValue().isEmpty()) {
                     ChannelType channelType;
                     try {
@@ -1266,8 +1266,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillExtensions(VCard vcard, Card jsCard) {
 
         for (RawProperty extension : vcard.getExtendedProperties()) {
-            if (!fakeExtensionsMapping.keySet().contains(extension.getPropertyName()) &&
-                    !fakeExtensionsMapping.keySet().contains(extension.getPropertyName().toLowerCase())) {
+            if (!fakeExtensionsMapping.containsKey(extension.getPropertyName()) &&
+                    !fakeExtensionsMapping.containsKey(extension.getPropertyName().toLowerCase())) {
                 String propertyName = getExtPropertyName(extension.getPropertyName());
                 jsCard.addExtension(propertyName, getValue(extension));
                 if (extension.getGroup() != null)
