@@ -242,7 +242,7 @@ The conversion is executed according to the following rules:
     CLIENTPIDMAP
     XML
 
-5.  The sex information of the GENDER property is mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing as in the following:
+5.  The sex information of the GENDER property is mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the 'convertGenderToSpeakToAs' configuration value is set to true as in the following:
 
     GENDER      SpeakToAs.grammaticalGender    
     M           male
@@ -250,9 +250,7 @@ The conversion is executed according to the following rules:
     O           animate
     N           neuter
     U           SpeakToAs = null
-    
-    The gender identity information is mapped to the Card property named `ietf.org:rfc6350:GENDER`
-    
+     
 6.  An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350:<vCard Property Name>`. The following unmatched parameters are considered:
     PID
     SORT-AS (only for vCard N property)
@@ -271,6 +269,7 @@ The conversion is executed according to the following rules:
     - `setPropIds = false`
     - `setAutoFullAddress = true`
     - `setVoiceAsDefaultPhoneFeature = true`
+    - `convertGenderToSpeakToAs = true` 
 
 10.  Where a language is required to represent a localization and the language is not specified, `en` is used by default.
 
@@ -378,27 +377,15 @@ All the methods take in input a list of JSContact top most objects and can raise
 2. A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
     CLIENTPIDMAP
     XML
-
-3. The SpeakToAs object is mapped to GENDER property as in the following:
-
-    SpeakToAs.grammaticalGender     GENDER          
-    male                            M
-    female                          F
-    animate                         O
-    neuter                          N
-    inanimate                       N;inanimate          
-    null                            null
-    
-    If a SpeakToAs object includes only the "pronouns" property, it is mapped to the VCARD `PRONOUNS` extension property. 
-    
-4. A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>:<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
+ 
+3. A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>:<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-5. A topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix` is converted into a vCard extension.
+4. topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix` is converted into a vCard extension.
 
-6. Default values for the configuration properties are:
+5. Default values for the configuration properties are:
 
     - `extensionsPrefix = "extension:"`
     - `setCardMustBeValidated = true`
@@ -408,17 +395,17 @@ All the methods take in input a list of JSContact top most objects and can raise
     - `convertCoordinatesToGEOParam = true`
     - `convertTimezoneToOffset = true`
 
-7. The Card/CardGroup "titles" property is mapped to the vCard TITLE property.
+6. The Card/CardGroup "titles" property is mapped to the vCard TITLE property.
     
-8. The "timeZone" property is always mapped to a TZ parameter either preserving the time zone name or the time zone offset extracted from the `timeZones` map.    
+7. The "timeZone" property is always mapped to a TZ parameter either preserving the time zone name or the time zone offset extracted from the `timeZones` map.    
 
-9. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
+8. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
-10. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+9. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-11. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+10. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-12. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, the value of the LABEL parameter results from the newline-delimited concatenation of the non-empty "Address" members.
+11. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, the value of the LABEL parameter results from the newline-delimited concatenation of the non-empty "Address" members.
 
 ### Conversion examples
 

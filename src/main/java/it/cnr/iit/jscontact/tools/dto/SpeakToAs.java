@@ -136,7 +136,7 @@ public class SpeakToAs extends GroupableObject implements Serializable {
      */
     public void addPronouns(String id, Pronouns pronouns) {
 
-        if (pronouns == null)
+        if (this.pronouns == null)
             this.pronouns = new HashMap<String, Pronouns>();
 
         this.pronouns.putIfAbsent(id, pronouns);

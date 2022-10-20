@@ -122,31 +122,6 @@ public class JSContact2EZVCard extends AbstractConverter {
         return new Revision(update);
     }
 
-    private void fillGender(VCard vCard, Card jsCard) {
-
-        if (jsCard.getSpeakToAs() == null)
-            return;
-
-        if (jsCard.getSpeakToAs().getGrammaticalGender() != null) {
-
-            if (jsCard.getSpeakToAs().isMale())
-                vCard.setGender(new Gender(Gender.MALE));
-            else if (jsCard.getSpeakToAs().isFemale())
-                vCard.setGender(new Gender(Gender.FEMALE));
-            else if (jsCard.getSpeakToAs().isNeuter())
-                vCard.setGender(new Gender(Gender.NONE));
-            else if (jsCard.getSpeakToAs().isAnimate())
-                vCard.setGender(new Gender(Gender.OTHER));
-            else if (jsCard.getSpeakToAs().isInanimate()) {
-                Gender gender = new Gender(Gender.NONE);
-                gender.setText("inanimate");
-                vCard.setGender(gender);
-            }
-
-        }
-
-    }
-
     private static void fillMembers(VCard vcard, CardGroup jsCardGroup) {
 
         if (jsCardGroup.getMembers() == null)
@@ -1422,7 +1397,6 @@ public class JSContact2EZVCard extends AbstractConverter {
         vCard.setKind(getKind(jsCard.getKind()));
         vCard.setProductId(jsCard.getProdId());
         vCard.setRevision(getRevision(jsCard.getUpdated()));
-        fillGender(vCard,jsCard);
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
         fillNickNames(vCard, jsCard);

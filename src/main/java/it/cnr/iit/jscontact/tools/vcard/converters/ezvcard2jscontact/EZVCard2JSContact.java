@@ -491,9 +491,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private void fillSpeakToAs(VCard vCard, Card jsCard) {
+    private void fillSpeakToAsWithGender(VCard vCard, Card jsCard) {
 
-        if (vCard.getGender() == null && vCard.getExtendedProperty("GRAMMATICAL-GENDER") == null)
+        if (vCard.getGender() == null)
+            return;
+
+        if (vCard.getExtendedProperty("GRAMMATICAL-GENDER") != null)
+            return;
+
+        if (!config.isConvertGenderToSpeakToAs())
             return;
 
         if (vCard.getGender() != null) {
@@ -511,7 +517,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (vCard.getGender().getText() != null)
                 jsCard.addExtension(getUnmatchedPropertyName(VCARD_GENDER_TAG), vCard.getGender().getText());
         } else {
-            jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(GrammaticalGenderType.valueOf(vCard.getExtendedProperty("GRAMMATICAL-GENDER").getValue().toLowerCase())).build());
+            jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(GrammaticalGenderType.getEnum(vCard.getExtendedProperty("GRAMMATICAL-GENDER").getValue().toLowerCase())).build());
         }
     }
 
@@ -1188,7 +1194,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     //TODO: replace XXXX with RFC number after draft-ietf-calext-vcard-jscontact-extensions
     private void fillRFCXXXXProperties(VCard vcard, Card jsCard) {
 
-        int i = 0;
+        int i = 1;
         for (RawProperty extension : vcard.getExtendedProperties()) {
 
             String language = extension.getParameter("LANGUAGE");
@@ -1208,7 +1214,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             else if (extension.getPropertyName().toUpperCase().equals("CREATED"))
                 jsCard.setCreated(DateUtils.toCalendar(extension.getValue()));
             else if (extension.getPropertyName().toUpperCase().equals("GRAMMATICAL-GENDER")) {
-                GrammaticalGenderType gender = GrammaticalGenderType.valueOf(extension.getValue().toLowerCase());
+                GrammaticalGenderType gender = GrammaticalGenderType.getEnum(extension.getValue().toLowerCase());
                 if (jsCard.getSpeakToAs() != null)
                     jsCard.getSpeakToAs().setGrammaticalGender(gender);
                 else
@@ -1216,15 +1222,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             }
             else if (extension.getPropertyName().toUpperCase().equals("PRONOUNS")) {
                 String id = getId(VCard2JSContactIdsProfile.IdType.PRONOUNS, i,"PRONOUNS-" + (i++), extension.getParameter(PROP_ID_PARAM));
-                Pronouns pronouns = Pronouns.builder().contexts(contexts).pref(pref).build();
+                Pronouns pronouns = Pronouns.builder().pronouns(extension.getValue()).contexts(contexts).pref(pref).build();
                 jsonPointer=String.format("%s/%s", jsonPointer, id);
                 if (language==null || config.getDefaultLanguage().equalsIgnoreCase(language)) {
-                    if (jsCard.getSpeakToAs() != null)
+                    if (jsCard.getSpeakToAs() != null) {
                         jsCard.getSpeakToAs().addPronouns(id, pronouns);
+                    }
                     else {
-                        SpeakToAs speakToAs = SpeakToAs.builder().build();
-                        speakToAs.addPronouns(id,pronouns);
-                        jsCard.setSpeakToAs(speakToAs);
+                        jsCard.setSpeakToAs(SpeakToAs.builder().pronouns(new HashMap<String,Pronouns>(){{ put(id,pronouns); }}).build());
                     }
                 } else {
                     jsCard.addLocalization(language,jsonPointer, mapper.convertValue(pronouns, JsonNode.class));
@@ -1381,7 +1386,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(getUpdated(vCard.getRevision()));
         jsCard.setLocale(config.getDefaultLanguage());
-        fillSpeakToAs(vCard, jsCard);
+        fillSpeakToAsWithGender(vCard, jsCard);
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
         fillNickNames(vCard, jsCard);

@@ -21,8 +21,8 @@ import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
 
@@ -62,5 +62,101 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
         assertEquals("testPreferredContactChannels - 9", 0, jsCard.getPreferredContactChannels().get(ChannelType.addresses()).length);
     }
 
+
+    @Test
+    public void testLocale() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"locale\",{},\"text\",\"it\"] " +
+                "]]";
+
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertEquals("testLocale - 1", "it", jsCard.getLocale());
+
+    }
+
+
+    @Test
+    public void testSpeakToAsWithGender1() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"gender\", {}, \"text\", \"M\"] " +
+                "]]";
+
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertTrue("testSpeakToAsWithGender1 - 1",jsCard.getSpeakToAs().isMale());
+        assertNull("testSpeakToAsWithGender1 - 2", jsCard.getSpeakToAs().getPronouns());
+        assertNull("testSpeakToAsWithGender1 - 3", jsCard.getExtensions());
+    }
+
+    @Test
+    public void testSpeakToAsWithGender2() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"gender\", {}, \"text\", [\"M\",\"boy\"]] " +
+                "]]";
+
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertTrue("testSpeakToAsWithGender2 - 1",jsCard.getSpeakToAs().isMale());
+        assertNull("testSpeakToAsWithGender2 - 2", jsCard.getSpeakToAs().getPronouns());
+        assertEquals("testSpeakToAsWithGender2 - 3", "boy", jsCard.getExtensions().get("ietf.org:rfc6350:GENDER"));
+
+    }
+
+    @Test
+    public void testSpeakToAs1() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"grammatical-gender\",{},\"text\",\"MALE\"] " +
+                "]]";
+
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertTrue("testSpeakToAs1 - 1",jsCard.getSpeakToAs().isMale());
+        assertNull("testSpeakToAs1 - 2", jsCard.getSpeakToAs().getPronouns());
+    }
+
+    @Test
+    public void testSpeakToAs2() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"grammatical-gender\",{},\"text\",\"INANIMATE\"] " +
+                "]]";
+
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertTrue("testSpeakToAs2 - 1",jsCard.getSpeakToAs().isInanimate());
+        assertNull("testSpeakToAs2 - 2", jsCard.getSpeakToAs().getPronouns());
+    }
+
+    @Test
+    public void testSpeakToAs3() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"pronouns\",{},\"text\",\"he/him\"] " +
+                "]]";
+
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertEquals("testSpeakToAs3 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
+        assertNull("testSpeakToAs3 - 2", jsCard.getSpeakToAs().getGrammaticalGender());
+    }
+
+    @Test
+    public void testSpeakToAs4() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"grammatical-gender\",{},\"text\",\"MALE\"], " +
+                "[\"pronouns\",{},\"text\",\"he/him\"] " +
+                "]]";
+
+        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertEquals("testSpeakToAs4 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
+        assertTrue("testSpeakToAs4 - 2", jsCard.getSpeakToAs().isMale());
+    }
 
 }
