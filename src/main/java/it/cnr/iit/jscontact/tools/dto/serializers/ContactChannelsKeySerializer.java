@@ -33,7 +33,7 @@ import java.io.StringWriter;
 @NoArgsConstructor
 public class ContactChannelsKeySerializer extends JsonSerializer<ChannelType> {
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public void serialize(ChannelType value,

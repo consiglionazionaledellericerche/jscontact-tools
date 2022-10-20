@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 public class PropIdTest extends RoundtripTest {
 
     @Test
-    public void testPropId1() throws CardException, JsonProcessingException {
+    public void testPropId1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +

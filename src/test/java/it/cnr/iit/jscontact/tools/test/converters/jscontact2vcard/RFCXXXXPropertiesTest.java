@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -23,7 +22,6 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
 
 public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
 
