@@ -229,7 +229,7 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds an nickname to this object.
+     * Adds a nickname to this object.
      *
      * @param id the nickname identifier
      * @param nickName the object representing the nickname

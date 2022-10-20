@@ -66,16 +66,16 @@ public class TitleType extends ExtensibleEnum<TitleEnum> implements Serializable
     private static TitleType rfc(TitleEnum rfcValue) { return TitleType.builder().rfcValue(rfcValue).build(); }
 
     /**
-     * Returns an "title" type of title.
+     * Returns a "title" type of title.
      *
-     * @return an "title" type of title
+     * @return a "title" type of title
      */
     public static TitleType title() { return rfc(TitleEnum.TITLE);}
 
     /**
-     * Returns an "role" type of title.
+     * Returns a "role" type of title.
      *
-     * @return an "role" type of title
+     * @return a "role" type of title
      */
     public static TitleType role() { return rfc(TitleEnum.ROLE);}
 

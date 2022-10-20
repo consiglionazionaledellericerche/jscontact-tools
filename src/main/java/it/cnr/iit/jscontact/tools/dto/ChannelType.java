@@ -103,9 +103,9 @@ public class ChannelType extends ExtensibleEnum<ChannelEnum> implements Serializ
     public static ChannelType onlineServices() { return rfc(ChannelEnum.ONLINE_SERVICES);}
 
     /**
-     * Returns an "phones" contact channel type.
+     * Returns a "phones" contact channel type.
      *
-     * @return an "phones" contact channel type.
+     * @return a "phones" contact channel type.
      */
     public static ChannelType phones() { return rfc(ChannelEnum.PHONES);}
 
