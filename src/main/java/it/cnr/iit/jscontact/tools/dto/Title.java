@@ -3,7 +3,11 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.dto.deserializers.TitleTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.serializers.TitleTypeSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -17,7 +21,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.5">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","title","organization"})
+@JsonPropertyOrder({"@type","title","type","organization"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -34,6 +38,10 @@ public class Title extends GroupableObject implements IdMapValue, Serializable {
     @NotNull(message = "title is missing in Title")
     @NonNull
     String title;
+
+    @JsonSerialize(using = TitleTypeSerializer.class)
+    @JsonDeserialize(using = TitleTypeDeserializer.class)
+    TitleType type;
 
     String organization;
 }
