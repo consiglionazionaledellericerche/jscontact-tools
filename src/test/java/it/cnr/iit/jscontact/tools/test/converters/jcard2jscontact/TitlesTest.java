@@ -35,8 +35,10 @@ public class TitlesTest extends JCard2JSContactTest {
         assertNotNull("testTitleWithAltid1 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid1 - 2", 1, jsCard.getTitles().size());
         assertEquals("testTitleWithAltid1 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testTitleWithAltid1 - 4", 1, jsCard.getLocalizationsPerLanguage("it").size());
-        assertEquals("testTitleWithAltid1 - 5", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("title").asText());
+        assertTrue("testTitleWithAltid1 - 4", jsCard.getTitles().get("TITLE-1").getType().isTitle());
+        assertEquals("testTitleWithAltid1 - 5", 1, jsCard.getLocalizationsPerLanguage("it").size());
+        assertEquals("testTitleWithAltid1 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("title").asText());
+        assertEquals("testTitleWithAltid1 - 7", "title", jsCard.getLocalization("it", "titles/TITLE-1").get("type").asText());
     }
 
     @Test

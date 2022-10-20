@@ -1067,17 +1067,16 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         addPropertyGroups(jsCard.getScheduling(), "scheduling/", jsCard);
         addPropertyGroups(jsCard.getResources(), "resources/", jsCard);
-
     }
 
-    private void fillTitles(List<LocalizedText> localizedStrings, Card jsCard, int i) {
+    private void fillTitles(List<LocalizedText> localizedStrings, Card jsCard, TitleType type, int i) {
 
         for (LocalizedText localizedString : localizedStrings) {
             String id = getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i ++), localizedString.getPropId());
-            jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().title(localizedString.getValue()).build());
+            jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().title(localizedString.getValue()).type(type).build());
             if (localizedString.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : localizedString.getLocalizations().entrySet())
-                    jsCard.addLocalization(localization.getKey(), "titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().title(localization.getValue()).build(), JsonNode.class));
+                    jsCard.addLocalization(localization.getKey(), "titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().title(localization.getValue()).type(type).build(), JsonNode.class));
             }
         }
     }
@@ -1094,7 +1093,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                      .build()
                               );
         Collections.sort(titles);
-        fillTitles(titles, jsCard, 1);
+        fillTitles(titles, jsCard, TitleType.title(), 1);
     }
 
     private void fillRoles(VCard vcard, Card jsCard) {
@@ -1110,10 +1109,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                               );
         }
         Collections.sort(roles);
-        fillTitles(roles, jsCard, (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1);
+        fillTitles(roles, jsCard, TitleType.role(), (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1);
 
         addPropertyGroups(jsCard.getTitles(), "titles/", jsCard);
-
     }
 
     private void fillOrganizations(VCard vcard, Card jsCard) {

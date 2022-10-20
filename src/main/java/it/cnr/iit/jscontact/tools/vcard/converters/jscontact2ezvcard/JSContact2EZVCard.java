@@ -1069,22 +1069,42 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (jsCard.getLocalizationsPerPath("titles/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("titles/"+entry.getKey()+"/title")==null)
-                vcard.addTitle(getTextProperty(new ezvcard.property.Title(entry.getValue().getTitle()), jsCard.getLocale(), entry.getKey()));
+
+                if (entry.getValue().getType() == null || entry.getValue().getType().isTitle())
+                    vcard.addTitle(getTextProperty(new ezvcard.property.Title(entry.getValue().getTitle()), jsCard.getLocale(), entry.getKey()));
+                else
+                    vcard.addRole(getTextProperty(new ezvcard.property.Role(entry.getValue().getTitle()), jsCard.getLocale(), entry.getKey()));
+
             else {
                 List<ezvcard.property.Title> titles = new ArrayList<>();
-                titles.add(getTextProperty(new ezvcard.property.Title(entry.getValue().getTitle()), jsCard.getLocale(), entry.getKey()));
+                List<ezvcard.property.Role> roles = new ArrayList<>();
+
+                if (entry.getValue().getType() == null || entry.getValue().getType().isTitle())
+                    titles.add(getTextProperty(new ezvcard.property.Title(entry.getValue().getTitle()), jsCard.getLocale(), entry.getKey()));
+                else
+                    roles.add(getTextProperty(new ezvcard.property.Role(entry.getValue().getTitle()), jsCard.getLocale(), entry.getKey()));
+
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("titles/"+entry.getKey());
                 if (localizations != null) {
-                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
-                        titles.add(getTextProperty(new ezvcard.property.Title(localization.getValue().get("title").asText()), localization.getKey(), entry.getKey()));
+                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
+                        if (jsCard.getTitles().get(entry.getKey()).getType() == null || jsCard.getTitles().get(entry.getKey()).getType().isTitle())
+                            titles.add(getTextProperty(new ezvcard.property.Title(localization.getValue().get("title").asText()), localization.getKey(), entry.getKey()));
+                        else
+                            roles.add(getTextProperty(new ezvcard.property.Role(localization.getValue().get("title").asText()), localization.getKey(), entry.getKey()));
+                    }
                 }
                 localizations = jsCard.getLocalizationsPerPath("titles/"+entry.getKey()+"/title");
                 if (localizations != null) {
-                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
-                        titles.add(getTextProperty(new ezvcard.property.Title(localization.getValue().asText()), localization.getKey(), entry.getKey()));
+                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
+                        if (jsCard.getTitles().get(entry.getKey()).getType() == null || jsCard.getTitles().get(entry.getKey()).getType().isTitle())
+                            titles.add(getTextProperty(new ezvcard.property.Title(localization.getValue().asText()), localization.getKey(), entry.getKey()));
+                        else
+                            roles.add(getTextProperty(new ezvcard.property.Role(localization.getValue().asText()), localization.getKey(), entry.getKey()));
+                    }
                 }
                 vcard.addTitleAlt(titles.toArray(new ezvcard.property.Title[0]));
+                vcard.addRoleAlt(roles.toArray(new ezvcard.property.Role[0]));
             }
         }
     }
