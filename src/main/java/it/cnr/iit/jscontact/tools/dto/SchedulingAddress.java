@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Class mapping the Scheduling type as defined in section 2.4.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the SchedulingAddress type as defined in section 2.4.2 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -24,13 +24,13 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Scheduling extends GroupableObject implements IdMapValue, Serializable {
+public class SchedulingAddress extends GroupableObject implements IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "Scheduling", message="invalid @type value in Scheduling")
+    @Pattern(regexp = "SchedulingAddress", message="invalid @type value in SchedulingAddress")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "Scheduling";
+    String _type = "SchedulingAddress";
 
     @NotNull
     @Size(min=1)
@@ -38,8 +38,8 @@ public class Scheduling extends GroupableObject implements IdMapValue, Serializa
     @JsonPropertyOrder(alphabetic = true)
     Map<String,String> sendTo;
 
-    @Min(value=1, message = "invalid pref in Scheduling - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in Scheduling - value must be less or equal than 100")
+    @Min(value=1, message = "invalid pref in SchedulingAddress - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in SchedulingAddress - value must be less or equal than 100")
     Integer pref;
 
 

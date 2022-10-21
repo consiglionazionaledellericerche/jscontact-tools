@@ -9,10 +9,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class SchedulingTest extends RoundtripTest {
+public class SchedulingAddressTest extends RoundtripTest {
 
     @Test
-    public void testScheduling() throws CardException {
+    public void testSchedulingAddress() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -24,7 +24,7 @@ public class SchedulingTest extends RoundtripTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testScheduling - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testSchedulingAddress - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
 

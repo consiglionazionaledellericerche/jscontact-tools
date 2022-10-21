@@ -14,7 +14,6 @@ import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.Organization;
-import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
@@ -444,26 +443,15 @@ public class JSContact2EZVCard extends AbstractConverter {
         return offset += String.format("%02d00", Integer.parseInt(timezone.substring(8)));
     }
 
-    private String getTimezone(String timeZone, Map<String,TimeZone> timeZones)   {
+    private String getTimezone(String timeZone)   {
 
       if (timeZone == null)
           return null;
 
-      TimeZone tz = null;
-      if (timeZones != null)
-          tz = timeZones.get(timeZone);
-      if (tz != null) {
-          if (tz.getStandard() != null && tz.getStandard().size() > 0)
-              return tz.getStandard().get(0).getOffsetFrom();
-          else
-              return null;
-      }
-      else {
-          if (config.isConvertTimezoneToOffset())
-              return getOffsetFromTimezone(timeZone);
-          else
-              return timeZone;
-      }
+      if (config.isConvertTimezoneToOffset())
+          return getOffsetFromTimezone(timeZone);
+      else
+          return timeZone;
     }
 
     private GeoUri getGeo(String coordinates) {
@@ -474,7 +462,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return GeoUri.parse(coordinates);
     }
 
-    private ezvcard.property.Address getAddress(Address address, Map<String,TimeZone> timeZones, String language) {
+    private ezvcard.property.Address getAddress(Address address, String language) {
 
         ezvcard.property.Address addr = new ezvcard.property.Address();
         if (!isNullStructuredAddress(address)) {
@@ -487,7 +475,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setExtendedAddress(address.getStreetExtensions());
             addr.setPoBox(address.getPostOfficeBox());
             addr.setPostalCode(address.getPostcode());
-            addr.setTimezone(getTimezone(address.getTimeZone(), timeZones));
+            addr.setTimezone(getTimezone(address.getTimeZone()));
             addr.setGeo(getGeo(address.getCoordinates()));
             if (address.getCountryCode() != null)
                 addr.setParameter("CC", address.getCountryCode());
@@ -595,14 +583,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
-                ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLocale());
+                ezvcard.property.Address addr = getAddress(address, jsCard.getLocale());
                 addGroup(addr, "addresses/"+entry.getKey(), jsCard);
                 addPropId(addr, entry.getKey());
                 vcard.addAddress(addr);
             }
             else {
                 List<ezvcard.property.Address> addrs = new ArrayList<>();
-                ezvcard.property.Address addr = getAddress(address, jsCard.getTimeZones(), jsCard.getLocale());
+                ezvcard.property.Address addr = getAddress(address, jsCard.getLocale());
                 addGroup(addr, "addresses/"+entry.getKey(), jsCard);
                 addPropId(addr, entry.getKey());
                 addrs.add(addr);
@@ -610,12 +598,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
-                        addrs.add(getAddress(asAddress(localization.getValue()), jsCard.getTimeZones(), localization.getKey()));
+                        addrs.add(getAddress(asAddress(localization.getValue()), localization.getKey()));
                 }
                 localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
-                        addrs.add(getAddress(Address.builder().fullAddress(localization.getValue().asText()).build(), jsCard.getTimeZones(), localization.getKey()));
+                        addrs.add(getAddress(Address.builder().fullAddress(localization.getValue().asText()).build(), localization.getKey()));
                 }
                 vcard.addAddressAlt(addrs.toArray(new ezvcard.property.Address[0]));
             }
@@ -868,12 +856,11 @@ public class JSContact2EZVCard extends AbstractConverter {
         return null;
     }
 
-
-    private static Photo getPhoto(File file) {
+    private static Photo getPhoto(MediaResource file) {
 
         ImageType it = getImageType(file.getMediaType());
         if (it == null) return null;
-        Photo photo = new Photo(file.getHref(), it);
+        Photo photo = new Photo(file.getUri(), it);
         photo.setPref(file.getPref());
         photo.setContentType(it);
         return photo;
@@ -897,7 +884,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return impp;
     }
 
-    private List<CalendarRequestUri> getCalendarRequestUris(Scheduling s) {
+    private List<CalendarRequestUri> getCalendarRequestUris(SchedulingAddress s) {
 
         List<CalendarRequestUri> caladruris = new ArrayList<CalendarRequestUri>();
         for (String sendTo : s.getSendTo().values()) {
@@ -948,21 +935,6 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
-
-    private void fillPhotos(VCard vcard, Card jsCard) {
-
-        if (jsCard.getPhotos() == null)
-            return;
-
-        for(Map.Entry<String,File> entry : jsCard.getPhotos().entrySet()) {
-            File file = entry.getValue();
-            Photo photo = getPhoto(file);
-            if (photo == null) continue;
-            addPropId(photo,entry.getKey());
-            vcard.getPhotos().add(photo);
-        }
-    }
-
     private void fillOnlineServices(VCard vcard, Card jsCard) {
 
         if (jsCard.getOnlineServices() == null)
@@ -983,13 +955,13 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private void fillScheduling(VCard vcard, Card jsCard) {
+    private void fillSchedulingAddresses(VCard vcard, Card jsCard) {
 
-        if (jsCard.getScheduling() == null)
+        if (jsCard.getSchedulingAddresses() == null)
             return;
 
-        for(Map.Entry<String,Scheduling> entry : jsCard.getScheduling().entrySet()) {
-            Scheduling s = entry.getValue();
+        for(Map.Entry<String, SchedulingAddress> entry : jsCard.getSchedulingAddresses().entrySet()) {
+            SchedulingAddress s = entry.getValue();
             s.setPropId(entry.getKey());
             List<CalendarRequestUri> caldruris = getCalendarRequestUris(s);
             if (caldruris == null) continue;
@@ -997,51 +969,120 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private void fillResources(VCard vcard, Card jsCard) {
+    private void fillCalendars(VCard vcard, Card jsCard) {
 
-        if (jsCard.getResources() == null)
+        if (jsCard.getCalendars() == null)
             return;
 
-        for (Map.Entry<String,Resource> entry : jsCard.getResources().entrySet()) {
+        for (Map.Entry<String,CalendarResource> entry : jsCard.getCalendars().entrySet()) {
 
-            Resource resource = entry.getValue();
+            CalendarResource resource = entry.getValue();
             resource.setPropId(entry.getKey());
-            switch(resource.getType()) {
-                case SOUND:
-                    Sound sound = new Sound(resource.getUri(), getSoundType(resource.getMediaType()));
-                    addPropId(sound, resource.getPropId());
-                    vcard.getSounds().add(sound);
-                    break;
-                case SOURCE:
-                    vcard.getSources().add(getUriProperty(Source.class,resource));
-                    break;
-                case KEY:
-                    Key key = new Key(resource.getUri(), getKeyType(resource.getMediaType()));
-                    addPropId(key, resource.getPropId());
-                    vcard.getKeys().add(key);
-                    break;
-                case LOGO:
-                    vcard.getLogos().add(getBinaryProperty(Logo.class,resource));
-                    break;
-                case URI:
-                    vcard.getUrls().add(getUriProperty(Url.class,resource));
-                    break;
-                case FBURL:
-                    vcard.getFbUrls().add(getUriProperty(FreeBusyUrl.class,resource));
-                    break;
-                case CALURI:
-                    vcard.getCalendarUris().add(getUriProperty(CalendarUri.class,resource));
-                    break;
-                case ORG_DIRECTORY:
-                    vcard.getOrgDirectories().add(getUriProperty(OrgDirectory.class,resource));
-                    break;
-                case CONTACT_URI:
-                    RawProperty rp = new RawProperty("CONTACT-URI",resource.getUri());
-                    fillVCardProperty(rp,resource);
-                    addPropId(rp, resource.getPropId());
-                    vcard.getExtendedProperties().add(rp);
-                    break;
+            if (resource.getType().isRfcValue()) {
+                switch (resource.getType().getRfcValue()) {
+                    case FREE_BUSY:
+                        vcard.getFbUrls().add(getUriProperty(FreeBusyUrl.class, resource));
+                        break;
+                    case CALENDAR:
+                        vcard.getCalendarUris().add(getUriProperty(CalendarUri.class, resource));
+                        break;
+                }
             }
+            //TODO: extension
+        }
+    }
+
+
+    private void fillCryptoKeys(VCard vcard, Card jsCard) {
+
+        if (jsCard.getCryptoKeys() == null)
+            return;
+
+        for (Map.Entry<String,CryptoResource> entry : jsCard.getCryptoKeys().entrySet()) {
+            Key key = new Key(entry.getValue().getUri(), getKeyType(entry.getValue().getMediaType()));
+            addPropId(key, entry.getValue().getPropId());
+            vcard.getKeys().add(key);
+            break;
+        }
+    }
+
+    private void fillLinks(VCard vcard, Card jsCard) {
+
+        if (jsCard.getLinks() == null)
+            return;
+
+        for (Map.Entry<String,LinkResource> entry : jsCard.getLinks().entrySet()) {
+
+            LinkResource resource = entry.getValue();
+            resource.setPropId(entry.getKey());
+            if (resource.isGenericLink())
+                vcard.getUrls().add(getUriProperty(Url.class,resource));
+            else {
+                if (resource.getType().isRfcValue()) {
+                    switch (resource.getType().getRfcValue()) {
+                        case CONTACT:
+                            RawProperty rp = new RawProperty("CONTACT-URI", resource.getUri());
+                            fillVCardProperty(rp, resource);
+                            addPropId(rp, resource.getPropId());
+                            vcard.getExtendedProperties().add(rp);
+                            break;
+                    }
+                }
+                //TODO: extension
+            }
+        }
+    }
+
+    private void fillMedia(VCard vcard, Card jsCard) {
+
+        if (jsCard.getMedia() == null)
+            return;
+
+        for (Map.Entry<String,MediaResource> entry : jsCard.getMedia().entrySet()) {
+
+            MediaResource resource = entry.getValue();
+            resource.setPropId(entry.getKey());
+            if (resource.getType().isRfcValue()) {
+                switch (resource.getType().getRfcValue()) {
+                    case SOUND:
+                        Sound sound = new Sound(resource.getUri(), getSoundType(resource.getMediaType()));
+                        addPropId(sound, resource.getPropId());
+                        vcard.getSounds().add(sound);
+                        break;
+                    case LOGO:
+                        vcard.getLogos().add(getBinaryProperty(Logo.class, resource));
+                        break;
+                    case PHOTO:
+                        Photo photo = getPhoto(resource);
+                        if (photo == null) continue;
+                        addPropId(photo, entry.getKey());
+                        vcard.getPhotos().add(photo);
+                }
+            }
+            //TODO: extension
+        }
+    }
+
+    private void fillDirectories(VCard vcard, Card jsCard) {
+
+        if (jsCard.getDirectories() == null)
+            return;
+
+        for (Map.Entry<String,DirectoryResource> entry : jsCard.getDirectories().entrySet()) {
+
+            DirectoryResource resource = entry.getValue();
+            resource.setPropId(entry.getKey());
+            if (resource.getType().isRfcValue()) {
+                switch (resource.getType().getRfcValue()) {
+                    case ENTRY:
+                        vcard.getSources().add(getUriProperty(Source.class, resource));
+                        break;
+                    case DIRECTORY:
+                        vcard.getOrgDirectories().add(getUriProperty(OrgDirectory.class, resource));
+                        break;
+                }
+            }
+            //TODO: extension
         }
     }
 
@@ -1426,10 +1467,13 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillContactLanguages(vCard, jsCard);
         fillPhones(vCard, jsCard);
         fillEmails(vCard, jsCard);
-        fillPhotos(vCard, jsCard);
-        fillScheduling(vCard,jsCard);
+        fillSchedulingAddresses(vCard,jsCard);
         fillOnlineServices(vCard, jsCard);
-        fillResources(vCard, jsCard);
+        fillCalendars(vCard, jsCard);
+        fillCryptoKeys(vCard, jsCard);
+        fillLinks(vCard, jsCard);
+        fillMedia(vCard, jsCard);
+        fillDirectories(vCard, jsCard);
         fillTitles(vCard, jsCard);
         fillOrganizations(vCard, jsCard);
         fillCategories(vCard, jsCard);

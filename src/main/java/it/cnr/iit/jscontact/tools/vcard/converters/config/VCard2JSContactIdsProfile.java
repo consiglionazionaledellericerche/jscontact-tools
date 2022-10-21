@@ -23,7 +23,6 @@ public class VCard2JSContactIdsProfile {
         EMAIL,
         ADDRESS,
         PHONE,
-        PHOTO,
         SCHEDULING,
         RESOURCE,
         ONLINE_SERVICE,
@@ -47,8 +46,7 @@ public class VCard2JSContactIdsProfile {
         public static JSContactId emailsId(String id) { return jsContactId(IdType.EMAIL,id); }
         public static JSContactId addressesId(String id) { return jsContactId(IdType.ADDRESS,id); }
         public static JSContactId phonesId(String id) { return jsContactId(IdType.PHONE,id); }
-        public static JSContactId photosId(String id) { return jsContactId(IdType.PHOTO,id); }
-        public static JSContactId schedulingId(String id) { return jsContactId(IdType.SCHEDULING,id); }
+        public static JSContactId schedulingAddressId(String id) { return jsContactId(IdType.SCHEDULING,id); }
         public static JSContactId onlineServicesId(String id) { return jsContactId(IdType.ONLINE_SERVICE,id); }
         public static JSContactId resourcesId(ResourceId id) { return jsContactId(IdType.RESOURCE,id); }
         public static JSContactId anniversariesId(String id) { return jsContactId(IdType.ANNIVERSARY,id); }
@@ -68,12 +66,12 @@ public class VCard2JSContactIdsProfile {
         public static ResourceId keysId(String id) { return resourceId(ResourceType.KEY,id);}
         public static ResourceId logosId(String id) { return resourceId(ResourceType.LOGO,id);}
         public static ResourceId soundsId(String id) { return resourceId(ResourceType.SOUND,id);}
-        public static ResourceId orgDirectoriesId(String id) { return resourceId(ResourceType.ORG_DIRECTORY,id);}
-        public static ResourceId fbUrlsId(String id) { return resourceId(ResourceType.FBURL,id);}
-        public static ResourceId urlsId(String id) { return resourceId(ResourceType.URI,id);}
-        public static ResourceId contactUrisId(String id) { return resourceId(ResourceType.CONTACT_URI,id);}
-        public static ResourceId calurisId(String id) { return resourceId(ResourceType.CALURI,id);}
-        public static ResourceId sourcesId(String id) { return resourceId(ResourceType.SOURCE,id);}
+        public static ResourceId directoriesId(String id) { return resourceId(ResourceType.DIRECTORY,id);}
+        public static ResourceId freeBusysId(String id) { return resourceId(ResourceType.FREEBUSY,id);}
+        public static ResourceId linksId(String id) { return resourceId(ResourceType.LINK,id);}
+        public static ResourceId contactsId(String id) { return resourceId(ResourceType.CONTACT,id);}
+        public static ResourceId calsId(String id) { return resourceId(ResourceType.CALENDAR,id);}
+        public static ResourceId entriesId(String id) { return resourceId(ResourceType.ENTRY,id);}
     }
 
 

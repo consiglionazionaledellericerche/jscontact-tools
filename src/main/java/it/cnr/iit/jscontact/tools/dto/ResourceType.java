@@ -15,57 +15,20 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
-/**
- * Enum class mapping the values of the "type" property of the Resource type as defined in section 2.6 of [draft-ietf-calext-jscontact].
- * The values are those corresponding to vCard 4.0 [RFC6350] [RFC6715] [RFC8605] properties that are not directly mapped to a JSContact property.
- *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
- * @see <a href="https://datatracker.ietf.org/doc/rfc6350">RFC6350</a>
- * @see <a href="https://datatracker.ietf.org/doc/rfc6715">RFC6715</a>
- * @see <a href="https://datatracker.ietf.org/doc/rfc8605">RFC8605</a>
- * @author Mario Loffredo
- */
 @AllArgsConstructor
 public enum ResourceType {
 
-    URI("uri"),
-    SOURCE("entry"),
-    LOGO("logo"),
-    PHOTO("photo"),
-    CONTACT_URI("contact"),
-    ORG_DIRECTORY("directory"),
-    SOUND("sound"),
-    KEY("publicKey"),
-    FBURL("freeBusy"),
-    CALURI("calendar");
-
-    private final String value;
-
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
-
-    @JsonCreator
-    public static ResourceType getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(ResourceType.class, value);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @JsonIgnore
-    public String getMapTag() {
-        return this.name().replace("_", "-");
-    }
-
+    LINK,
+    ENTRY,
+    LOGO,
+    PHOTO,
+    CONTACT,
+    DIRECTORY,
+    SOUND,
+    KEY,
+    FREEBUSY,
+    CALENDAR;
 }
 

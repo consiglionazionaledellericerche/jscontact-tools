@@ -87,15 +87,15 @@ public class ProfileTest extends JCard2JSContactTest {
         assertTrue("testRDAPProfile - 42", jsCard.getPhones().get("fax").asCell());
         assertTrue("testRDAPProfile - 43", jsCard.getPhones().get("fax").asVideo());
         assertTrue("testRDAPProfile - 44", jsCard.getPhones().get("fax").asText());
-        assertEquals("testRDAPProfile - 45", 2, jsCard.getResources().size());
-        assertTrue("testRDAPProfile - 46", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testRDAPProfile - 47", "http://www.example.com/joe.user/joe.asc", jsCard.getResources().get("KEY-1").getUri());
-        assertNull("testRDAPProfile - 48", jsCard.getResources().get("KEY-1").getPref());
-        assertTrue("testRDAPProfile - 49", jsCard.getResources().get("KEY-1").asWork());
-        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getResources().get("URI-1").getUri());
-        assertNull("testRDAPProfile - 51", jsCard.getResources().get("URI-1").getPref());
-        assertTrue("testRDAPProfile - 52", jsCard.getResources().get("URI-1").asPrivate());
-        assertTrue("testRDAPProfile - 53", jsCard.getResources().get("URI-1").isUri());
+        assertEquals("testRDAPProfile - 45", 1, jsCard.getCryptoKeys().size());
+        assertEquals("testRDAPProfile - 46", "http://www.example.com/joe.user/joe.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
+        assertNull("testRDAPProfile - 47", jsCard.getCryptoKeys().get("KEY-1").getPref());
+        assertTrue("testRDAPProfile - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
+        assertEquals("testRDAPProfile - 45", 1, jsCard.getLinks().size());
+        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getLinks().get("LINK-1").getUri());
+        assertNull("testRDAPProfile - 51", jsCard.getLinks().get("LINK-1").getPref());
+        assertTrue("testRDAPProfile - 52", jsCard.getLinks().get("LINK-1").asPrivate());
+        assertTrue("testRDAPProfile - 53", jsCard.getLinks().get("LINK-1").isGenericLink());
         assertTrue("testRDAPProfile - 54", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }

@@ -183,15 +183,14 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asCell());
         assertTrue("testCompleteJCard1 - 43", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
-        assertEquals("testCompleteJCard1 - 45", 2, jsCard.getResources().size());
-        assertTrue("testCompleteJCard1 - 46", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testCompleteJCard1 - 47", "http://www.example.com/joe.user/joe.asc", jsCard.getResources().get("KEY-1").getUri());
-        assertNull("testCompleteJCard1 - 48", jsCard.getResources().get("KEY-1").getPref());
-        assertTrue("testCompleteJCard1 - 49", jsCard.getResources().get("KEY-1").asWork());
-        assertEquals("testCompleteJCard1 - 50", "http://example.org", jsCard.getResources().get("URI-1").getUri());
-        assertNull("testCompleteJCard1 - 51", jsCard.getResources().get("URI-1").getPref());
-        assertTrue("testCompleteJCard1 - 52", jsCard.getResources().get("URI-1").asPrivate());
-        assertTrue("testCompleteJCard1 - 53", jsCard.getResources().get("URI-1").isUri());
+        assertEquals("testCompleteJCard1 - 45", 1, jsCard.getCryptoKeys().size());
+        assertEquals("testCompleteJCard1 - 46", "http://www.example.com/joe.user/joe.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
+        assertNull("testCompleteJCard1 - 47", jsCard.getCryptoKeys().get("KEY-1").getPref());
+        assertTrue("testCompleteJCard1 - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
+        assertEquals("testCompleteJCard1 - 49", 1, jsCard.getLinks().size());
+        assertEquals("testCompleteJCard1 - 50", "http://example.org", jsCard.getLinks().get("LINK-1").getUri());
+        assertNull("testCompleteJCard1 - 51", jsCard.getLinks().get("LINK-1").getPref());
+        assertTrue("testCompleteJCard1 - 52", jsCard.getLinks().get("LINK-1").asPrivate());
         assertTrue("testCompleteJCard1 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
@@ -287,13 +286,13 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 44", 1, jsCard.getEmails().size());
         assertTrue("testCompleteJCard4 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
         assertEquals("testCompleteJCard4 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getEmail());
-        assertEquals("testCompleteJCard4 - 47", 2, jsCard.getResources().size());
-        assertTrue("testCompleteJCard4 - 48", jsCard.getResources().get("KEY-1").asWork());
-        assertTrue("testCompleteJCard4 - 50", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testCompleteJCard4 - 51", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getResources().get("KEY-1").getUri());
-        assertTrue("testCompleteJCard4 - 52", jsCard.getResources().get("URI-1").asPrivate());
-        assertEquals("testCompleteJCard4 - 53", "http://nomis80.org", jsCard.getResources().get("URI-1").getUri());
-        assertTrue("testCompleteJCard4 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertEquals("testCompleteJCard4 - 47", 1, jsCard.getCryptoKeys().size());
+        assertTrue("testCompleteJCard4 - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
+        assertEquals("testCompleteJCard4 - 49", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
+        assertEquals("testCompleteJCard4 - 50", 1, jsCard.getLinks().size());
+        assertTrue("testCompleteJCard4 - 51", jsCard.getLinks().get("LINK-1").asPrivate());
+        assertEquals("testCompleteJCard4 - 52", "http://nomis80.org", jsCard.getLinks().get("LINK-1").getUri());
+        assertTrue("testCompleteJCard4 - 53", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 
 
@@ -313,8 +312,8 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard5 - 9", "Gump", jsCard.getName().getComponents()[2].getValue());
         assertEquals("testCompleteJCard5 - 10", "Bubba Gump Shrimp Co.", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteJCard5 - 11", "Shrimp Man", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testCompleteJCard5 - 15", "http://www.example.com/dir_photos/my_photo.gif", jsCard.getPhotos().get("PHOTO-1").getHref());
-        assertEquals("testCompleteJCard5 - 16", "image/gif", jsCard.getPhotos().get("PHOTO-1").getMediaType());
+        assertEquals("testCompleteJCard5 - 15", "http://www.example.com/dir_photos/my_photo.gif", jsCard.getMedia().get("PHOTO-1").getUri());
+        assertEquals("testCompleteJCard5 - 16", "image/gif", jsCard.getMedia().get("PHOTO-1").getMediaType());
         assertEquals("testCompleteJCard5 - 17", 2, jsCard.getPhones().size());
         assertTrue("testCompleteJCard5 - 18", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteJCard5 - 19", jsCard.getPhones().get("PHONE-1").asWork());

@@ -52,9 +52,12 @@ import java.util.*;
 @JsonPropertyOrder({
         "@type","uid","prodId","created","updated","kind","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
-        "emails","phones","onlineServices","resources","scheduling","photos","preferredContactChannels","preferredContactLanguages",
-        "addresses","localizations",
-        "anniversaries","personalInfo","notes","keywords","timeZones","propertyGroups",
+        "emails","onlineServices","phones","preferredContactChannels","preferredContactLanguages",
+        "calendars","schedulingAddresses",
+        "addresses",
+        "cryptoKeys","directories","links","media",
+        "localizations",
+        "anniversaries","personalInfo","notes","keywords","propertyGroups",
         "extensions"})
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
@@ -66,7 +69,9 @@ import java.util.*;
 @SuperBuilder
 public class Card extends JSContact implements Serializable {
 
-    //Metadata properties
+    /*
+    Metadata properties
+     */
     @NotNull
     @Pattern(regexp = "Card", message="invalid @type value in Card")
     @JsonProperty("@type")
@@ -93,7 +98,10 @@ public class Card extends JSContact implements Serializable {
     @LanguageTagConstraint
     String locale;
 
-    //Name and Organization properties
+
+    /*
+    Name and Organization properties
+     */
     @Valid
     Name name;
 
@@ -117,16 +125,14 @@ public class Card extends JSContact implements Serializable {
     @Valid
     SpeakToAs speakToAs;
 
-    //Contact and Resource properties
+
+    /*
+    Contact and Resource properties
+     */
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     Map<String,EmailAddress> emails;
-
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
-    Map<String,Phone> phones;
 
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -135,18 +141,8 @@ public class Card extends JSContact implements Serializable {
 
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Resource>")
-    Map<String,Resource> resources;
-
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Scheduling>")
-    Map<String,Scheduling> scheduling;
-
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,File>")
-    Map<String,File> photos;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
+    Map<String,Phone> phones;
 
     @JsonPropertyOrder(alphabetic = true)
     @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
@@ -158,16 +154,63 @@ public class Card extends JSContact implements Serializable {
     @PreferredContactLanguagesConstraint
     Map<String, ContactLanguage[]> preferredContactLanguages;
 
-    //Address and Location properties
+
+    /*
+     Calendaring and Scheduling properties
+     */
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,CalendarResource>")
+    Map<String,CalendarResource> calendars;
+
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,SchedulingAddress>")
+    Map<String, SchedulingAddress> schedulingAddresses;
+
+
+    /*
+    Address and Location properties
+     */
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
     Map<String,Address> addresses;
 
+    /*
+    Resource properties
+     */
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,CryptoResource>")
+    Map<String,CryptoResource> cryptoKeys;
+
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,DirectoryResource>")
+    Map<String,DirectoryResource> directories;
+
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,LinkResource>")
+    Map<String,LinkResource> links;
+
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,MediaResource>")
+    Map<String,MediaResource> media;
+
+
+    /*
+    Multilingual properties
+     */
     @JsonPropertyOrder(alphabetic = true)
     Map<String,Map<String,JsonNode>> localizations;
 
-    //Additional properties
+
+    /*
+    Additional properties
+     */
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Anniversary>")
@@ -183,9 +226,6 @@ public class Card extends JSContact implements Serializable {
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> keywords;
 
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    Map<String,TimeZone> timeZones;
 
 //Methods for adding items to a mutable collection
 
@@ -282,17 +322,17 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds a calendar scheduling to this object.
+     * Adds a scheduling address to this object.
      *
-     * @param id the calendar scheduling identifier
-     * @param scheduling the object representing the calendar scheduling
+     * @param id the scheduling address identifier
+     * @param scheduling the object representing the scheduling address
      */
-    public void addScheduling(String id, Scheduling scheduling) {
+    public void addSchedulingAddress(String id, SchedulingAddress scheduling) {
 
-        if (this.scheduling == null)
-            this.scheduling = new HashMap<>();
+        if (this.schedulingAddresses == null)
+            this.schedulingAddresses = new HashMap<>();
 
-        this.scheduling.putIfAbsent(id, scheduling);
+        this.schedulingAddresses.putIfAbsent(id, scheduling);
     }
 
     /**
@@ -324,144 +364,75 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds a resource to this object.
+     * Adds a directory resource to this object.
      *
-     * @param id the resource identifier
-     * @param resource the object representing the online resource
+     * @param id the directory resource identifier
+     * @param resource the object representing the directory resource
      */
-    public void addResource(String id, Resource resource) {
+    public void addDirectoryResource(String id, DirectoryResource resource) {
 
-        if (resources == null)
-            resources = new HashMap<>();
+        if (directories == null)
+            directories = new HashMap<>();
 
-        resources.putIfAbsent(id, resource);
-    }
-
-    @JsonIgnore
-    private Map<String,Resource> getResources(ResourceType type) {
-
-        Map<String,Resource> ols = new HashMap<>();
-        for (Map.Entry<String,Resource> ol : resources.entrySet()) {
-            if (ol.getValue().getType() == type)
-                ols.put(ol.getKey(), ol.getValue());
-        }
-        if (ols.size()==0)
-            return null;
-
-        return ols;
+        directories.putIfAbsent(id, resource);
     }
 
     /**
-     * Returns all the resources associated to this object mapping the vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
+     * Adds a crypto resource to this object.
      *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.8.1">RFC6350</a>
+     * @param id the crypto resource identifier
+     * @param resource the object representing the crypto resource
      */
-    @JsonIgnore
-    public Map<String,Resource> getKeyResources() {
-        return getResources(ResourceType.KEY);
+    public void addCryptoResource(String id, CryptoResource resource) {
+
+        if (cryptoKeys == null)
+            cryptoKeys = new HashMap<>();
+
+        cryptoKeys.putIfAbsent(id, resource);
+    }
+
+
+    /**
+     * Adds a calendar resource to this object.
+     *
+     * @param id the calendar resource identifier
+     * @param resource the object representing the calendar resource
+     */
+    public void addCalendarResource(String id, CalendarResource resource) {
+
+        if (calendars == null)
+            calendars = new HashMap<>();
+
+        calendars.putIfAbsent(id, resource);
     }
 
     /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
+     * Adds a link resource to this object.
      *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.8">RFC6350</a>
+     * @param id the link resource identifier
+     * @param resource the object representing the link resource
      */
-    @JsonIgnore
-    public Map<String,Resource> getUrlResources() {
-        return getResources(ResourceType.URI);
+    public void addLinkResource(String id, LinkResource resource) {
+
+        if (links == null)
+            links = new HashMap<>();
+
+        links.putIfAbsent(id, resource);
     }
 
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getSourceResources() {
-        return getResources(ResourceType.SOURCE);
-    }
 
     /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
+     * Adds a media resource to this object.
      *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.3">RFC6350</a>
+     * @param id the media resource identifier
+     * @param resource the object representing the media resource
      */
-    @JsonIgnore
-    public Map<String,Resource> getLogoResources() {
-        return getResources(ResourceType.LOGO);
-    }
+    public void addMediaResource(String id, MediaResource resource) {
 
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.5">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getSoundResources() {
-        return getResources(ResourceType.SOUND);
-    }
+        if (media == null)
+            media = new HashMap<>();
 
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.1">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getFburlResources() {
-        return getResources(ResourceType.FBURL);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getCaluriResources() {
-        return getResources(ResourceType.CALURI);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 ORG-DIRECTORY property as defined in section 2.4 of [RFC6715].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6715.html#section-2.4">RFC6715</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getOrgDirectoryResources() {
-        return getResources(ResourceType.ORG_DIRECTORY);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 CONTACT-URI property as defined in section 21 of [RFC8605].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc8605#section-2.1">RFC8605</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getContactUriResources() {
-        return getResources(ResourceType.CONTACT_URI);
-    }
-
-    /**
-     * Adds a photo to this object.
-     *
-     * @param id the photo identifier
-     * @param file the object representing the photo
-     */
-    public void addPhoto(String id, File file) {
-
-        if (photos == null)
-            photos = new HashMap<>();
-
-        photos.putIfAbsent(id, file);
+        media.putIfAbsent(id, resource);
     }
 
     /**

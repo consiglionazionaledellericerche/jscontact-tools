@@ -52,19 +52,19 @@
       "email": "joe.user@example.com"
     }
   },
-  "resources": {
+  "cryptoKeys": {
     "KEY-1": {
-      "@type" : "Resource",
+      "@type": "CryptoResource",
       "contexts": {
         "work": true
       },
-      "type": "publicKey",
       "uri": "http://www.example.com/joe.user/joe.asc"
-    },
-    "URI-1": {
-      "@type" : "Resource",
+    }
+  },
+  "links": {
+    "LINK-1": {
+      "@type" : "LinkResource",
       "contexts": {"private": true},
-      "type": "uri",
       "uri": "http://example.org"
     }
   }

@@ -34,9 +34,9 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\": {"+
-                    "\"SOURCE-1\": {" +
-                        "\"@type\":\"Resource\"," +
+                "\"directories\": {"+
+                    "\"ENTRY-1\": {" +
+                        "\"@type\":\"DirectoryResource\"," +
                         "\"type\": \"entry\","+
                         "\"uri\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
@@ -54,9 +54,10 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"photos\": {"+
+                "\"media\": {"+
                     "\"PHOTO-1\": {" +
-                        "\"@type\":\"File\"," +
+                        "\"@type\":\"MediaResource\"," +
+                        "\"type\":\"photo\"," +
                         "\"mediaType\": \"image/gif\","+
                         "\"href\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
                     "}" +
@@ -74,9 +75,9 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\": {"+
+                "\"media\": {"+
                     "\"LOGO-1\": {" +
-                        "\"@type\":\"Resource\"," +
+                        "\"@type\":\"MediaResource\"," +
                         "\"type\": \"logo\","+
                         "\"uri\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
                     "}" +
@@ -94,9 +95,9 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\": {"+
-                    "\"CONTACT-URI-1\": {" +
-                        "\"@type\":\"Resource\"," +
+                "\"links\": {"+
+                    "\"CONTACT-1\": {" +
+                        "\"@type\":\"LinkResource\"," +
                         "\"type\": \"contact\","+
                         "\"uri\": \"mailto:contact@example.com\"" +
                     "}" +
@@ -114,9 +115,9 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\": {"+
+                "\"media\": {"+
                     "\"SOUND-1\": {" +
-                        "\"@type\":\"Resource\"," +
+                        "\"@type\":\"MediaResource\"," +
                         "\"type\": \"sound\","+
                         "\"mediaType\": \"audio/mp3\"," +
                         "\"uri\": \"sound.mp3\"" +
@@ -135,9 +136,9 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\":{"+
+                "\"media\":{"+
                     "\"SOUND-1\": {" +
-                        "\"@type\":\"Resource\"," +
+                        "\"@type\":\"MediaResource\"," +
                         "\"type\": \"sound\","+
                         "\"uri\": \"sound.mp3\"" +
                     "}" +
@@ -155,10 +156,9 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\": {"+
-                    "\"URI-1\": {" +
-                        "\"@type\":\"Resource\"," +
-                        "\"type\": \"uri\","+
+                "\"links\": {"+
+                    "\"LINK-1\": {" +
+                        "\"@type\":\"LinkResource\"," +
                         "\"uri\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
                     "}" +
                 "}" +
@@ -175,10 +175,9 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\": {"+
+                "\"cryptokeys\": {"+
                     "\"KEY-1\": {" +
-                        "\"@type\":\"Resource\"," +
-                        "\"type\": \"publicKey\","+
+                        "\"@type\":\"CryptoResource\"," +
                         "\"uri\": \"http://www.example.com/keys/jdoe.cer\"" +
                     "}" +
                 "}" +
@@ -195,15 +194,15 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\": {"+
-                    "\"FBURL-1\": {" +
-                        "\"@type\":\"Resource\"," +
+                "\"calendars\": {"+
+                    "\"FREEBUSY-1\": {" +
+                        "\"@type\":\"CalendarResource\"," +
                         "\"type\": \"freeBusy\","+
                         "\"pref\": 1," +
                         "\"uri\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
-                    "\"FBURL-2\": {" +
-                        "\"@type\":\"Resource\"," +
+                    "\"FREEBUSY-2\": {" +
+                        "\"@type\":\"CalendarResource\"," +
                         "\"type\": \"freeBusy\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"uri\": \"ftp://example.com/busy/project-a.ifb\"" +
@@ -222,14 +221,14 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"scheduling\": {"+
+                "\"schedulingAddresses\": {"+
                     "\"CALADRURI-1\": {" +
-                        "\"@type\":\"Scheduling\"," +
+                        "\"@type\":\"SchedulingAddress\"," +
                         "\"pref\": 1," +
                         "\"sendTo\": { \"imip\":\"mailto:janedoe@example.com\"}" +
                     "}," +
                     "\"CALADRURI-2\": {" +
-                        "\"@type\":\"Scheduling\"," +
+                        "\"@type\":\"SchedulingAddress\"," +
                         "\"sendTo\": { \"imip\": \"http://example.com/calendar/jdoe\"}" +
                     "}" +
                 "}" +
@@ -246,15 +245,15 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"resources\": {"+
-                    "\"CALURI-1\": {" +
-                        "\"@type\":\"Resource\"," +
+                "\"calendars\": {"+
+                    "\"CALENDAR-1\": {" +
+                        "\"@type\":\"CalendarResource\"," +
                         "\"type\": \"calendar\","+
                         "\"pref\": 1," +
                         "\"uri\": \"http://cal.example.com/calA\"" +
                     "}," +
-                    "\"CALURI-2\": {" +
-                        "\"@type\":\"Resource\"," +
+                    "\"CALENDAR-2\": {" +
+                        "\"@type\":\"CalendarResource\"," +
                         "\"type\": \"calendar\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"uri\": \"ftp://ftp.example.com/calA.ics\"" +
