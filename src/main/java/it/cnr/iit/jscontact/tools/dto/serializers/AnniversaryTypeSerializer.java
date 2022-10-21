@@ -13,31 +13,29 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.test.validation;
+package it.cnr.iit.jscontact.tools.dto.serializers;
 
-import it.cnr.iit.jscontact.tools.dto.Anniversary;
-import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryType;
-import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
-import org.junit.Test;
+import lombok.NoArgsConstructor;
 
-public class AnniversaryTest {
+import java.io.IOException;
 
-    public void testValidAnniversaryBuild1() {
+/**
+ * Custom JSON serializer for the AnniversaryType value.
+ *
+ * @author Mario Loffredo
+ */
+@NoArgsConstructor
+public class AnniversaryTypeSerializer extends JsonSerializer<AnniversaryType> {
 
-        Anniversary.builder()
-                       .date(AnniversaryDate.builder().date(DateUtils.toCalendar("2020-01-01")).build())
-                       .build();
+    @Override
+    public void serialize(
+            AnniversaryType type, JsonGenerator jgen, SerializerProvider provider)
+            throws IOException {
+
+        jgen.writeString((type.getRfcValue()!=null) ? type.getRfcValue().getValue() : type.getExtValue());
     }
-
-    @Test(expected = NullPointerException.class)
-    public void testInvalidAnniversaryBuild2() {
-
-        // date missing
-        Anniversary.builder()
-                .type(AnniversaryType.birth())
-                .build();
-    }
-
-
 }

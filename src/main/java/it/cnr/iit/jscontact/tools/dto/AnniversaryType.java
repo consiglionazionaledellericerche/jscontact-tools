@@ -15,39 +15,77 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 /**
- * Enum class mapping the values of the "type" property of the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "type" property of the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@AllArgsConstructor
-public enum AnniversaryType {
+@Getter
+@Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
+public class AnniversaryType extends ExtensibleEnum<AnniversaryEnum> implements Serializable {
 
-    BIRTH("birth"),
-    DEATH("death");
+    private boolean isRfc(AnniversaryEnum value) { return isRfcValue() && rfcValue == value; }
 
-    private final String value;
+    /**
+     * Tests if this anniverary type is "birth".
+     *
+     * @return true if this anniverary type is "birth", false otherwise
+     */
+    @JsonIgnore
+    public boolean isBirth() { return isRfc(AnniversaryEnum.BIRTH); }
 
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
+    /**
+     * Tests if this anniverary type is "death".
+     *
+     * @return true if this anniverary type is "death", false otherwise
+     */
+    @JsonIgnore
+    public boolean isDeath() { return isRfc(AnniversaryEnum.DEATH); }
 
-    @JsonCreator
-    public static AnniversaryType getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(AnniversaryType.class, value);
-    }
 
-    @Override
-    public String toString() {
-        return value;
-    }
+    /**
+     * Tests if this is a custom kind of contact card.
+     *
+     * @return true if this is a custom kind of contact card, false otherwise
+     */
+    @JsonIgnore
+    public boolean isExt() { return isExtValue(); }
 
+    private static AnniversaryType rfc(AnniversaryEnum rfcValue) { return AnniversaryType.builder().rfcValue(rfcValue).build(); }
+
+    /**
+     * Returns an "birth" anniversary type.
+     *
+     * @return an an "birth" anniversary type
+     
+     */
+    public static AnniversaryType birth() { return rfc(AnniversaryEnum.BIRTH);}
+
+    /**
+     * Returns an "death" anniversary type.
+     *
+     * @return an an "death" anniversary type
+
+     */
+    public static AnniversaryType death() { return rfc(AnniversaryEnum.DEATH);}
+
+    /**
+     * Returns a custom kind of contact card.
+     *
+     * @return a custom kind of contact card
+     */
+    private static AnniversaryType ext(String extValue) { return AnniversaryType.builder().extValue(extValue).build(); }
 }
-

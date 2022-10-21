@@ -752,7 +752,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
       if (vcard.getBirthday() != null) {
           jsCard.addAnniversary(getId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + (i ++), vcard.getBirthday().getParameter(PROP_ID_PARAM)),it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                              .group(vcard.getBirthday().getGroup())
-                                                                             .type(AnniversaryType.BIRTH)
+                                                                             .type(AnniversaryType.birth())
                                                                              .date(getAnniversaryDate(vcard.getBirthday()))
                                                                              .place(getValue(vcard.getBirthplace()))
                                                                              .build()
@@ -764,7 +764,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
       if (vcard.getDeathdate() != null) {
           jsCard.addAnniversary(getId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + (i ++), vcard.getDeathdate().getParameter(PROP_ID_PARAM)),it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                              .group(vcard.getDeathdate().getGroup())
-                                                                             .type(AnniversaryType.DEATH)
+                                                                             .type(AnniversaryType.death())
                                                                              .date(getAnniversaryDate(vcard.getDeathdate()))
                                                                              .place(getValue(vcard.getDeathplace()))
                                                                              .build()

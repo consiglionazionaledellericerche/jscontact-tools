@@ -682,7 +682,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             Anniversary anniversary = entry.getValue();
             if (!anniversary.isOtherAnniversary()) {
-                switch (anniversary.getType()) {
+                switch (anniversary.getType().getRfcValue()) {
                     case BIRTH:
                         vcard.setBirthday(getDateOrTimeProperty(Birthday.class, anniversary));
                         addPropId(vcard.getBirthday(), entry.getKey());

@@ -22,8 +22,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryTypeSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -54,6 +56,8 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     @Builder.Default
     String _type = "Anniversary";
 
+    @JsonSerialize(using = AnniversaryTypeSerializer.class)
+    @JsonDeserialize(using = AnniversaryTypeDeserializer.class)
     AnniversaryType type;
 
     @NotNull(message = "date is missing in Anniversary")
@@ -74,7 +78,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isBirth() { return type == AnniversaryType.BIRTH; }
+    public boolean isBirth() { return type.isBirth(); }
 
     /**
      * Tests if this anniversary is a date of death. See vCard 4.0 DEATHDATE property as defined in section 6.2.5 of [RFC6474].
@@ -83,7 +87,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
      */
     @JsonIgnore
-    public boolean isDeath() { return type == AnniversaryType.DEATH; }
+    public boolean isDeath() { return type.isDeath(); }
 
     /**
      * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
@@ -113,7 +117,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @return a birthday anniversary
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
      */
-    public static Anniversary birth(String date) { return anniversary(AnniversaryType.BIRTH, AnniversaryDate.parse(date), null);}
+    public static Anniversary birth(String date) { return anniversary(AnniversaryType.birth(), AnniversaryDate.parse(date), null);}
 
     /**
      * Returns a date of death anniversary. See vCard 4.0 DEATHDATE property as defined in section 2.3 of [RFC6474].
@@ -122,7 +126,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @return a date of death anniversary
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
      */
-    public static Anniversary death(String date) { return anniversary(AnniversaryType.DEATH, AnniversaryDate.parse(date), null);}
+    public static Anniversary death(String date) { return anniversary(AnniversaryType.death(), AnniversaryDate.parse(date), null);}
 
     /**
      * Returns a date of marriage, or equivalent, anniversary. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
