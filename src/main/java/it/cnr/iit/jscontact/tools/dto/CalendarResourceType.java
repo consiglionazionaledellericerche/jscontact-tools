@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class CalendarResourceType extends ExtensibleEnum<CalendarResourceEnum> implements Serializable {
+public class CalendarResourceType extends ExtensibleEnumType<CalendarResourceEnum> implements Serializable {
 
     /**
      * Tests if this calendar resource type is "calendar".

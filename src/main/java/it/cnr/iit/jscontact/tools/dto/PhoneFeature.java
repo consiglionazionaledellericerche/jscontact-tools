@@ -38,7 +38,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Serializable {
+public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implements Serializable {
 
     /**
      * Tests if this is a "voice" phone feature.

@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class AnniversaryType extends ExtensibleEnum<AnniversaryEnum> implements Serializable {
+public class AnniversaryType extends ExtensibleEnumType<AnniversaryEnum> implements Serializable {
 
     /**
      * Tests if this anniverary type is "birth".

@@ -38,7 +38,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class AddressContext extends ExtensibleEnum<AddressContextEnum> implements Serializable {
+public class AddressContext extends ExtensibleEnumType<AddressContextEnum> implements Serializable {
 
     /**
      * Tests if this is a "private" address context.

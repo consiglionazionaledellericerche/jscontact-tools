@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class ChannelType extends ExtensibleEnum<ChannelEnum> implements Serializable, Comparable<ChannelType> {
+public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Serializable, Comparable<ChannelType> {
 
     /**
      * Tests if this contact channel type  is "addresses".

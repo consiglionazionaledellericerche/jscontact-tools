@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class TitleType extends ExtensibleEnum<TitleEnum> implements Serializable {
+public class TitleType extends ExtensibleEnumType<TitleEnum> implements Serializable {
 
     /**
      * Tests if this type of title is "title".

@@ -31,7 +31,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class StreetComponentType extends ExtensibleEnum<StreetComponentEnum> implements Serializable {
+public class StreetComponentType extends ExtensibleEnumType<StreetComponentEnum> implements Serializable {
 
     /**
      * Returns a street component type whose enum value is pre-defined.

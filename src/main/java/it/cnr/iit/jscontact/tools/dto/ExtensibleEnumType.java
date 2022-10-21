@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @SuperBuilder
-public abstract class ExtensibleEnum<T extends IsExtensible> implements Serializable {
+public abstract class ExtensibleEnumType<T extends IsExtensible> implements Serializable {
 
     T rfcValue;
     String extValue;
@@ -33,7 +33,7 @@ public abstract class ExtensibleEnum<T extends IsExtensible> implements Serializ
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ExtensibleEnum type = (ExtensibleEnum) obj;
+        ExtensibleEnumType type = (ExtensibleEnumType) obj;
         if (type.rfcValue != null )
             return type.rfcValue == rfcValue;
 

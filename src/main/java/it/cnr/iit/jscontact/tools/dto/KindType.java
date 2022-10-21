@@ -32,7 +32,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
+public class KindType extends ExtensibleEnumType<KindEnum> implements Serializable {
 
     /**
      * Tests if this kind of contact card is "individual". See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
