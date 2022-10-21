@@ -57,9 +57,9 @@ public class AnniversaryType extends ExtensibleEnum<AnniversaryEnum> implements 
 
 
     /**
-     * Tests if this is a custom kind of contact card.
+     * Tests if this is a custom anniverary type.
      *
-     * @return true if this is a custom kind of contact card, false otherwise
+     * @return true if this is a custom anniverary type, false otherwise
      */
     @JsonIgnore
     public boolean isExt() { return isExtValue(); }
@@ -67,25 +67,25 @@ public class AnniversaryType extends ExtensibleEnum<AnniversaryEnum> implements 
     private static AnniversaryType rfc(AnniversaryEnum rfcValue) { return AnniversaryType.builder().rfcValue(rfcValue).build(); }
 
     /**
-     * Returns an "birth" anniversary type.
+     * Returns a "birth" anniversary type.
      *
-     * @return an an "birth" anniversary type
+     * @return a "birth" anniversary type
      
      */
     public static AnniversaryType birth() { return rfc(AnniversaryEnum.BIRTH);}
 
     /**
-     * Returns an "death" anniversary type.
+     * Returns a "death" anniversary type.
      *
-     * @return an an "death" anniversary type
+     * @return a "death" anniversary type
 
      */
     public static AnniversaryType death() { return rfc(AnniversaryEnum.DEATH);}
 
     /**
-     * Returns a custom kind of contact card.
+     * Returns a custom anniverary type.
      *
-     * @return a custom kind of contact card
+     * @return a custom anniverary type
      */
     private static AnniversaryType ext(String extValue) { return AnniversaryType.builder().extValue(extValue).build(); }
 }
