@@ -29,7 +29,6 @@ import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
 import lombok.*;
@@ -84,7 +83,6 @@ public class Card extends JSContact implements Serializable {
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar updated;
 
-    @JsonSerialize(using = KindTypeSerializer.class)
     @JsonDeserialize(using = KindTypeDeserializer.class)
     KindType kind;
 

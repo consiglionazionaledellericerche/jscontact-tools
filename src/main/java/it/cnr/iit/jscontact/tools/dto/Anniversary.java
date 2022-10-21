@@ -25,7 +25,6 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryTypeSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -56,7 +55,6 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     @Builder.Default
     String _type = "Anniversary";
 
-    @JsonSerialize(using = AnniversaryTypeSerializer.class)
     @JsonDeserialize(using = AnniversaryTypeDeserializer.class)
     AnniversaryType type;
 

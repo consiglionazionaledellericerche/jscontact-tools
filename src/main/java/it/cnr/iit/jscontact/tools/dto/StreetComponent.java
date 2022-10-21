@@ -19,9 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.StreetComponentTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.StreetComponentTypeSerializer;
+
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -49,7 +48,6 @@ public class StreetComponent implements Serializable {
 
     @NotNull
     @NonNull
-    @JsonSerialize(using = StreetComponentTypeSerializer.class)
     @JsonDeserialize(using = StreetComponentTypeDeserializer.class)
     StreetComponentType type;
 

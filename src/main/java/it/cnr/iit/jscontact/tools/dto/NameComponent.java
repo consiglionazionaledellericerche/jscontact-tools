@@ -20,9 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.NameComponentTypeSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -53,7 +51,6 @@ public class NameComponent extends GroupableObject implements Serializable {
 
     @NotNull(message = "type is missing in NameComponent")
     @NonNull
-    @JsonSerialize(using = NameComponentTypeSerializer.class)
     @JsonDeserialize(using = NameComponentTypeDeserializer.class)
     NameComponentType type;
 

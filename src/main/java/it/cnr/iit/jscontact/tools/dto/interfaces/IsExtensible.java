@@ -25,7 +25,7 @@ public interface IsExtensible {
     /**
      * Returns the value of the extensible enumerated type in text format.
      *
-     * @return tthe value of the extensible enumerated type in text format
+     * @return the value of the extensible enumerated type in text format
      */
     String getValue();
 }

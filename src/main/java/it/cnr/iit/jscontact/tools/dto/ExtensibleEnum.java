@@ -2,6 +2,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -66,4 +67,9 @@ public abstract class ExtensibleEnum<T extends IsExtensible> implements Serializ
     public boolean isExtValue() { return extValue != null; }
 
     public boolean isRfc(T value) { return isRfcValue() && rfcValue == value; }
+
+    @JsonValue
+    public String toJson() {
+        return (isRfcValue()) ? getRfcValue().getValue() : getExtValue();
+    }
 }

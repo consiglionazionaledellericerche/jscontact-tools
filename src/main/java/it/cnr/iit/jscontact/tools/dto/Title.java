@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.TitleTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
-import it.cnr.iit.jscontact.tools.dto.serializers.TitleTypeSerializer;
+
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -39,7 +38,6 @@ public class Title extends GroupableObject implements IdMapValue, Serializable {
     @NonNull
     String title;
 
-    @JsonSerialize(using = TitleTypeSerializer.class)
     @JsonDeserialize(using = TitleTypeDeserializer.class)
     TitleType type;
 
