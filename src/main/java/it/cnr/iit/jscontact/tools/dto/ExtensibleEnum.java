@@ -56,6 +56,14 @@ public abstract class ExtensibleEnum<T extends IsExtensible> implements Serializ
      */
     @JsonIgnore
     public boolean isRfcValue() { return rfcValue != null; }
+
+    /**
+     * Tests if this is an extension of an extensible enumerated type.
+     *
+     * @return true if this is an extension of an extensible enumerated type, false otherwise
+     */
     @JsonIgnore
-    protected boolean isExtValue() { return extValue != null; }
+    public boolean isExtValue() { return extValue != null; }
+
+    public boolean isRfc(T value) { return isRfcValue() && rfcValue == value; }
 }

@@ -37,8 +37,6 @@ import java.io.Serializable;
 @SuperBuilder
 public class ChannelType extends ExtensibleEnum<ChannelEnum> implements Serializable, Comparable<ChannelType> {
 
-    public boolean isRfc(ChannelEnum value) { return isRfcValue() && rfcValue == value; }
-
     /**
      * Tests if this contact channel type  is "addresses".
      *
@@ -70,14 +68,6 @@ public class ChannelType extends ExtensibleEnum<ChannelEnum> implements Serializ
      */
     @JsonIgnore
     public boolean isPhones() { return isRfc(ChannelEnum.PHONES); }
-
-    /**
-     * Tests if this is a custom contact channel type.
-     *
-     * @return true if this is a custom contact channel type, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
 
     public static ChannelType rfc(ChannelEnum rfcValue) { return ChannelType.builder().rfcValue(rfcValue).build(); }
 

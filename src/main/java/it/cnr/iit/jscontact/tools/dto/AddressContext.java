@@ -40,7 +40,6 @@ import java.util.List;
 @SuperBuilder
 public class AddressContext extends ExtensibleEnum<AddressContextEnum> implements Serializable {
 
-    private boolean isRfc(AddressContextEnum value) { return isRfcValue() && rfcValue == value; }
     /**
      * Tests if this is a "private" address context.
      *
@@ -69,13 +68,7 @@ public class AddressContext extends ExtensibleEnum<AddressContextEnum> implement
      */
     @JsonIgnore
     public boolean isBilling() { return isRfc(AddressContextEnum.BILLING); }
-    /**
-     * Tests if this is a custom address context.
-     *
-     * @return true if this is a custom address context, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
+
     /**
      * Returns an address context whose enum value is pre-defined.
      *

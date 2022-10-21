@@ -40,7 +40,6 @@ import java.util.List;
 @SuperBuilder
 public class Context extends ExtensibleEnum<ContextEnum> implements Serializable {
 
-    private boolean isRfc(ContextEnum value) { return isRfcValue() && rfcValue == value; }
     /**
      * Tests if this is a "private" context.
      *
@@ -55,13 +54,7 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
      */
     @JsonIgnore
     public boolean isWork() { return isRfc(ContextEnum.WORK); }
-    /**
-     * Tests if this is a custom context.
-     *
-     * @return true if this is a custom context, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
+
     /**
      * Returns a context whose enum value is pre-defined.
      *

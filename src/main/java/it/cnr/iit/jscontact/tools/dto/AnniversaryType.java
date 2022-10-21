@@ -37,8 +37,6 @@ import java.io.Serializable;
 @SuperBuilder
 public class AnniversaryType extends ExtensibleEnum<AnniversaryEnum> implements Serializable {
 
-    private boolean isRfc(AnniversaryEnum value) { return isRfcValue() && rfcValue == value; }
-
     /**
      * Tests if this anniverary type is "birth".
      *
@@ -56,21 +54,12 @@ public class AnniversaryType extends ExtensibleEnum<AnniversaryEnum> implements 
     public boolean isDeath() { return isRfc(AnniversaryEnum.DEATH); }
 
 
-    /**
-     * Tests if this is a custom anniverary type.
-     *
-     * @return true if this is a custom anniverary type, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
-
     private static AnniversaryType rfc(AnniversaryEnum rfcValue) { return AnniversaryType.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns a "birth" anniversary type.
      *
      * @return a "birth" anniversary type
-     
      */
     public static AnniversaryType birth() { return rfc(AnniversaryEnum.BIRTH);}
 
@@ -78,7 +67,6 @@ public class AnniversaryType extends ExtensibleEnum<AnniversaryEnum> implements 
      * Returns a "death" anniversary type.
      *
      * @return a "death" anniversary type
-
      */
     public static AnniversaryType death() { return rfc(AnniversaryEnum.DEATH);}
 

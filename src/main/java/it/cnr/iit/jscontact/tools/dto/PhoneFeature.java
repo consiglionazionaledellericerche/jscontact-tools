@@ -40,7 +40,6 @@ import java.util.List;
 @SuperBuilder
 public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Serializable {
 
-    private boolean isRfc(PhoneFeatureEnum value) { return isRfcValue() && rfcValue == value; }
     /**
      * Tests if this is a "voice" phone feature.
      *
@@ -90,13 +89,7 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
      */
     @JsonIgnore
     public boolean isTextphone() { return isRfc(PhoneFeatureEnum.TEXTPHONE); }
-    /**
-     * Tests if this is a custom phone feature.
-     *
-     * @return true if this is a custom phone feature, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
+
     /**
      * Returns a phone feature whose enum value is pre-defined.
      *

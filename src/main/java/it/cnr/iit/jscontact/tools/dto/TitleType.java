@@ -37,8 +37,6 @@ import java.io.Serializable;
 @SuperBuilder
 public class TitleType extends ExtensibleEnum<TitleEnum> implements Serializable {
 
-    private boolean isRfc(TitleEnum value) { return isRfcValue() && rfcValue == value; }
-
     /**
      * Tests if this type of title is "title".
      *
@@ -55,13 +53,6 @@ public class TitleType extends ExtensibleEnum<TitleEnum> implements Serializable
     @JsonIgnore
     public boolean isRole() { return isRfc(TitleEnum.ROLE); }
 
-    /**
-     * Tests if this is a custom type of title.
-     *
-     * @return true if this is a custom type of title, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
 
     private static TitleType rfc(TitleEnum rfcValue) { return TitleType.builder().rfcValue(rfcValue).build(); }
 
