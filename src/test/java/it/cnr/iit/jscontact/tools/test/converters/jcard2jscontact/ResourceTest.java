@@ -67,7 +67,7 @@ public class ResourceTest extends JCard2JSContactTest {
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertEquals("testResource3 - 1", 1, jsCard.getLinks().size());
         assertEquals("testResource3 - 2", "mailto:contact@example.com", jsCard.getLinks().get("CONTACT-1").getUri());
-        assertTrue("testResource3 - 3",jsCard.getLinks().get("CONTACT-1").isGenericLink());
+        assertTrue("testResource3 - 3",jsCard.getLinks().get("CONTACT-1").isContact());
         assertEquals("testResource3 - 4", 1, (int) jsCard.getLinks().get("CONTACT-1").getPref());
         assertNull("testResource3 - 5", jsCard.getLinks().get("CONTACT-1").getMediaType());
         assertTrue("testResource3 - 6",jsCard.getLinks().get("CONTACT-1").hasNoContext());

@@ -57,7 +57,7 @@ public class MediaResource extends Resource {
     MediaResourceType type;
 
     @JsonIgnore
-    private boolean isMediaResource(MediaResourceType type) { return this.type == type; }
+    private boolean isMediaResource(MediaResourceType type) { return this.type.equals(type); }
 
     /**
      * Tests if this media resource is a photo.

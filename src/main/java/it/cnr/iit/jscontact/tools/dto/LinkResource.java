@@ -57,7 +57,7 @@ public class LinkResource extends Resource {
     LinkResourceType type;
 
     @JsonIgnore
-    private boolean isLinkResource(LinkResourceType type) { return this.type == type; }
+    private boolean isLinkResource(LinkResourceType type) { return this.type.equals(type); }
 
     /**
      * Tests if this directory resource is a contact link.

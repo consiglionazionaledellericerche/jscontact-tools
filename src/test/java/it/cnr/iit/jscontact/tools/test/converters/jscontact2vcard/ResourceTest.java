@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.parameter.SoundType;
@@ -34,7 +35,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"derectories\": {"+
+                "\"directories\": {"+
                     "\"ENTRY-1\": {" +
                         "\"@type\":\"DirectoryResource\"," +
                         "\"type\": \"entry\","+
@@ -60,7 +61,7 @@ public class ResourceTest extends JSContact2VCardTest {
                         "\"@type\":\"MediaResource\"," +
                         "\"type\":\"photo\"," +
                         "\"mediaType\": \"image/gif\","+
-                        "\"href\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
+                        "\"uri\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
                     "}" +
                 "}" +
                 "}";
@@ -239,12 +240,12 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"schedulingAddresses\": {"+
-                    "\"CALADRURI-1\": {" +
+                    "\"SCHEDULING-1\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
                         "\"pref\": 1," +
                         "\"sendTo\": { \"imip\":\"mailto:janedoe@example.com\"}" +
                     "}," +
-                    "\"CALADRURI-2\": {" +
+                    "\"SCHEDULING-2\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
                         "\"sendTo\": { \"imip\": \"http://example.com/calendar/jdoe\"}" +
                     "}" +
@@ -255,8 +256,8 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource9 - 2", "mailto:janedoe@example.com", vcard.getCalendarRequestUris().get(0).getValue());
         assertEquals("testResource9 - 3", 1, (int) vcard.getCalendarRequestUris().get(0).getPref());
         assertEquals("testResource9 - 4", "http://example.com/calendar/jdoe", vcard.getCalendarRequestUris().get(1).getValue());
-        assertEquals("testResource9 - 5", "CALADRURI-1", vcard.getCalendarRequestUris().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testResource9 - 6", "CALADRURI-2", vcard.getCalendarRequestUris().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource9 - 5", "SCHEDULING-1", vcard.getCalendarRequestUris().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource9 - 6", "SCHEDULING-2", vcard.getCalendarRequestUris().get(1).getParameter(PROP_ID_PARAM));
     }
 
     @Test

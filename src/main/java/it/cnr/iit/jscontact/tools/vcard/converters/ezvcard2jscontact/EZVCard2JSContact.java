@@ -357,7 +357,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         Resource resource = getResource(property);
 
-        jsCard.addMediaResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(PROP_ID_PARAM), type),
+        jsCard.addMediaResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(PROP_ID_PARAM),  ResourceType.valueOf(type.getRfcValue().name())),
                                     MediaResource.builder()
                                      .type(type)
                                     .group(resource.getGroup())
@@ -371,29 +371,40 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                            );
     }
 
+    private DirectoryResource getDirectoryResource(VCardProperty property, DirectoryResourceType type) {
+
+        String index = property.getParameter("INDEX");
+        Resource resource = getResource(property);
+        return   DirectoryResource.builder()
+                .type(type)
+                .group(resource.getGroup())
+                .propId(resource.getPropId())
+                .uri(resource.getUri())
+                .label(resource.getLabel())
+                .contexts(resource.getContexts())
+                .mediaType(resource.getMediaType())
+                .pref(resource.getPref())
+                .index((index!=null) ? Integer.parseInt(index) : null) //used only for DirectoryResource objects whose "type" is "directory"
+                .build();
+    }
+
     private void addDirectoryResource(VCardProperty property, Card jsCard, DirectoryResourceType type, int index) {
 
-        Resource resource = getResource(property);
-
         jsCard.addDirectoryResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(PROP_ID_PARAM), type),
-                DirectoryResource.builder()
-                        .type(type)
-                        .group(resource.getGroup())
-                        .propId(resource.getPropId())
-                        .uri(resource.getUri())
-                        .label(resource.getLabel())
-                        .contexts(resource.getContexts())
-                        .mediaType(resource.getMediaType())
-                        .pref(resource.getPref())
-                        .build()
-        );
+                                    getDirectoryResource(property,type));
+    }
+
+    private void addDirectoryResource(Card jsCard, DirectoryResource resource, int index) {
+
+        jsCard.addDirectoryResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",resource.getType().getRfcValue().name(),index), resource.getPropId(), ResourceType.valueOf(resource.getType().getRfcValue().name())),
+                                   resource);
     }
 
     private void addCryptoResource(VCardProperty property, Card jsCard, int index) {
 
         Resource resource = getResource(property);
 
-        jsCard.addCryptoResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("KEY-%s",index), property.getParameter(PROP_ID_PARAM)),
+        jsCard.addCryptoResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("KEY-%s",index), property.getParameter(PROP_ID_PARAM), ResourceType.KEY),
                 CryptoResource.builder()
                         .group(resource.getGroup())
                         .propId(resource.getPropId())
@@ -410,7 +421,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         Resource resource = getResource(property);
 
-        jsCard.addCalendarResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(PROP_ID_PARAM), type),
+        jsCard.addCalendarResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(PROP_ID_PARAM), ResourceType.valueOf(type.getRfcValue().name())),
                 CalendarResource.builder()
                         .type(type)
                         .group(resource.getGroup())
@@ -428,7 +439,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         Resource resource = getResource(property);
 
-        jsCard.addLinkResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",(type!=null) ? type.getRfcValue().name() : "LINK",index), property.getParameter(PROP_ID_PARAM), type),
+        jsCard.addLinkResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",(type!=null) ? type.getRfcValue().name() : "LINK",index), property.getParameter(PROP_ID_PARAM), (type!=null) ? ResourceType.valueOf(type.getRfcValue().name()) : ResourceType.LINK),
                 LinkResource.builder()
                         .type(type)
                         .group(resource.getGroup())
@@ -587,7 +598,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                          .build()
                          );
         }
-        Collections.sort(fullNames);
+        Collections.sort(fullNames); // sort based on preference
         for (LocalizedText ls : fullNames) {
             if (fullNames.indexOf(ls) == 0)
                 jsCard.setFullName(ls.getValue());
@@ -606,7 +617,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                       .build()
                         );
         }
-        Collections.sort(wrappers);
+        Collections.sort(wrappers); // sort based on preference
         for (MemberWrapper wrapper : wrappers)
             jsCardGroup.addMember(wrapper.getValue());
 
@@ -752,7 +763,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (addresses.size()==0)
             return;
 
-        Collections.sort(addresses);
+        Collections.sort(addresses); //sort based on preference
 
         String id;
         String altId = null;
@@ -870,7 +881,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int j = 0;
         if (hobbies.size() > 0) {
-            Collections.sort(hobbies);
+            Collections.sort(hobbies); //sorted based on index
             int i = 1;
             for (PersonalInformation pi : hobbies)
                 jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "HOBBY-" + (i++), pi.getPropId(), PersonalInformationType.HOBBY), pi);
@@ -889,7 +900,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
 
         if (interests.size() > 0) {
-            Collections.sort(interests);
+            Collections.sort(interests); //sorted based on index
             int i = 1;
             for (PersonalInformation pi : interests)
                 jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "INTEREST-" + (i++), pi.getPropId(), PersonalInformationType.INTEREST), pi);
@@ -908,7 +919,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
 
         if (expertizes.size() > 0) {
-            Collections.sort(expertizes);
+            Collections.sort(expertizes); //sorted based on index
             int i = 1;
             for (PersonalInformation pi : expertizes)
                 jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "EXPERTISE-" + (i++), pi.getPropId(), PersonalInformationType.EXPERTISE), pi);
@@ -1069,11 +1080,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         for (Source source : vcard.getSources())
             addDirectoryResource(source, jsCard, DirectoryResourceType.entry(), i++);
 
-        i = 1;
-        for (OrgDirectory od : vcard.getOrgDirectories())
-            addDirectoryResource(od, jsCard, DirectoryResourceType.directory(), i++);
-
-            addPropertyGroups(jsCard.getDirectories(), "directories/", jsCard);
+        List<DirectoryResource> orgDirectories = new ArrayList<>();
+        for (OrgDirectory od : vcard.getOrgDirectories()) {
+            orgDirectories.add(getDirectoryResource(od, DirectoryResourceType.directory()));
+        }
+        if (orgDirectories.size() > 0) {
+            Collections.sort(orgDirectories);  //sorted based on index
+            i = 1;
+            for (DirectoryResource ds : orgDirectories)
+                addDirectoryResource(jsCard,ds,i++);
+        }
+        addPropertyGroups(jsCard.getDirectories(), "directories/", jsCard);
     }
 
     private void fillCalendars(VCard vcard, Card jsCard) {
@@ -1141,7 +1158,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                      .preference(title.getPref())
                                                      .build()
                               );
-        Collections.sort(titles);
+        Collections.sort(titles); //sort based on preference
         fillTitles(titles, jsCard, TitleType.title(), 1);
     }
 
@@ -1157,7 +1174,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                      .build()
                               );
         }
-        Collections.sort(roles);
+        Collections.sort(roles); //sort based on preference
         fillTitles(roles, jsCard, TitleType.role(), (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1);
 
         addPropertyGroups(jsCard.getTitles(), "titles/", jsCard);
@@ -1177,7 +1194,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                              .build()
                               );
         }
-        Collections.sort(organizations);
+        Collections.sort(organizations); //sort based on preference
 
         int i = 1;
         for (LocalizedText organization : organizations) {

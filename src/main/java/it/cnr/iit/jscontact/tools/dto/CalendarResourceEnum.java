@@ -31,7 +31,7 @@ import lombok.AllArgsConstructor;
 public enum CalendarResourceEnum implements IsExtensible {
 
     CALENDAR("calendar"),
-    FREE_BUSY("freeBusy");
+    FREEBUSY("freeBusy");
 
     private final String value;
 

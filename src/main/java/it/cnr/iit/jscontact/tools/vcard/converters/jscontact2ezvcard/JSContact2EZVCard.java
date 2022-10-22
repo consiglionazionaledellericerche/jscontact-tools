@@ -980,7 +980,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             resource.setPropId(entry.getKey());
             if (resource.getType().isRfcValue()) {
                 switch (resource.getType().getRfcValue()) {
-                    case FREE_BUSY:
+                    case FREEBUSY:
                         vcard.getFbUrls().add(getUriProperty(FreeBusyUrl.class, resource));
                         break;
                     case CALENDAR:
@@ -1000,7 +1000,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Map.Entry<String,CryptoResource> entry : jsCard.getCryptoKeys().entrySet()) {
             Key key = new Key(entry.getValue().getUri(), getKeyType(entry.getValue().getMediaType()));
-            addPropId(key, entry.getValue().getPropId());
+            addPropId(key, entry.getKey());
             vcard.getKeys().add(key);
             break;
         }

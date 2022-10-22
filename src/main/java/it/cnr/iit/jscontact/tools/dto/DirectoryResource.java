@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.DirectoryResourceTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
+import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -42,7 +44,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DirectoryResource extends Resource {
+public class DirectoryResource extends Resource implements HasIndex, Comparable<DirectoryResource> {
 
     @NotNull
     @Pattern(regexp = "DirectoryResource", message="invalid @type value in DirectoryResource")
@@ -54,7 +56,22 @@ public class DirectoryResource extends Resource {
     DirectoryResourceType type;
 
     @JsonIgnore
-    private boolean isDirectoryResource(DirectoryResourceType type) { return this.type == type; }
+    Integer index;
+
+    /**
+     * Compares this resource with another based on the value of the "index" property.
+     *
+     * @param o the object this object must be compared with
+     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
+     */
+    @Override
+    public int compareTo(DirectoryResource o) {
+
+        return HasIndexUtils.compareTo(this, o);
+    }
+
+    @JsonIgnore
+    private boolean isDirectoryResource(DirectoryResourceType type) { return this.type.equals(type); }
 
     /**
      * Tests if this directory resource is a directory.

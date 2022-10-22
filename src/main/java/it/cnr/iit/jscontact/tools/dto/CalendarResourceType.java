@@ -51,7 +51,7 @@ public class CalendarResourceType extends ExtensibleEnumType<CalendarResourceEnu
      * @return true if calendar resource type is "freeBusy", false otherwise
      */
     @JsonIgnore
-    public boolean isFreeBusy() { return isRfc(CalendarResourceEnum.FREE_BUSY); }
+    public boolean isFreeBusy() { return isRfc(CalendarResourceEnum.FREEBUSY); }
 
 
     private static CalendarResourceType rfc(CalendarResourceEnum rfcValue) { return CalendarResourceType.builder().rfcValue(rfcValue).build(); }
@@ -68,7 +68,7 @@ public class CalendarResourceType extends ExtensibleEnumType<CalendarResourceEnu
      *
      * @return a "freeBusy" calendar resource type
      */
-    public static CalendarResourceType freeBusy() { return rfc(CalendarResourceEnum.FREE_BUSY);}
+    public static CalendarResourceType freeBusy() { return rfc(CalendarResourceEnum.FREEBUSY);}
 
     /**
      * Returns a custom calendar resource type.

@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,11 +23,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
-import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -51,7 +48,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable, HasContext {
+public class Resource extends GroupableObject implements IdMapValue, Serializable, HasContext {
 
     @NotNull(message = "uri is missing in Resource")
     @NonNull
@@ -72,20 +69,5 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     Integer pref;
 
     String label;
-
-    @JsonIgnore
-    Integer index;
-
-    /**
-     * Compares this resource with another based on the value of the "index" property.
-     *
-     * @param o the object this object must be compared with
-     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
-     */
-    @Override
-    public int compareTo(Resource o) {
-
-        return HasIndexUtils.compareTo(this, o);
-    }
 
 }

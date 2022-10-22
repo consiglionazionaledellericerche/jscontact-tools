@@ -190,23 +190,6 @@ public class AddressesTest extends RoundtripTest {
         assertEquals("testAddresses9 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
 
-    @Test
-    public void testAddresses10() throws CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
-                "GEO:geo:46.772673,-71.282945\n" +
-                "TZ:-0530\n" +
-                "END:VCARD";
-
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
-        pruneVCard(vcard2);
-        assertEquals("testAddresses10 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
-    }
-
     //TODO - INDISCERNIBLE
     //@Test
     public void testAddresses11() throws CardException {

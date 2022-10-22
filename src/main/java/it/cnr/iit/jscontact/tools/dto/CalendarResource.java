@@ -57,7 +57,7 @@ public class CalendarResource extends Resource {
     CalendarResourceType type;
 
     @JsonIgnore
-    private boolean isCalendarResource(CalendarResourceType type) { return this.type == type; }
+    private boolean isCalendarResource(CalendarResourceType type) { return this.type.equals(type); }
 
     /**
      * Tests if this calendar resource is a calendar.

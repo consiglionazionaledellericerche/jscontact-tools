@@ -59,7 +59,7 @@ public class ResourceTest extends RoundtripTest {
                         "\"@type\":\"MediaResource\"," +
                         "\"type\":\"photo\"," +
                         "\"mediaType\": \"image/gif\","+
-                        "\"href\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
+                        "\"uri\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
                     "}" +
                 "}" +
                 "}";
@@ -175,7 +175,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"cryptokeys\": {"+
+                "\"cryptoKeys\": {"+
                     "\"KEY-1\": {" +
                         "\"@type\":\"CryptoResource\"," +
                         "\"uri\": \"http://www.example.com/keys/jdoe.cer\"" +
@@ -222,12 +222,12 @@ public class ResourceTest extends RoundtripTest {
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"schedulingAddresses\": {"+
-                    "\"CALADRURI-1\": {" +
+                    "\"SCHEDULING-1\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
                         "\"pref\": 1," +
                         "\"sendTo\": { \"imip\":\"mailto:janedoe@example.com\"}" +
                     "}," +
-                    "\"CALADRURI-2\": {" +
+                    "\"SCHEDULING-2\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
                         "\"sendTo\": { \"imip\": \"http://example.com/calendar/jdoe\"}" +
                     "}" +

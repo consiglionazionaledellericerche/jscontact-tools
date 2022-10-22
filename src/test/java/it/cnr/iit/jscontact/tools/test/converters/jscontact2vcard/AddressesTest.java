@@ -332,20 +332,7 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"postcode\":\"20190\"," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"," +
-                        "\"timeZone\":\"tz1\"" +
-                    "}" +
-                "}," +
-                "\"timeZones\": {" +
-                    "\"tz1\": {" +
-                        "\"@type\": \"TimeZone\"," +
-                        "\"tzId\": \"TZ-0530\"," +
-                        "\"updated\": \"2021-06-07T14:24:45Z\"," +
-                        "\"standard\": [{" +
-                            "\"@type\": \"TimeZoneRule\"," +
-                            "\"offsetFrom\": \"-0530\"," +
-                            "\"offsetTo\": \"-0530\"," +
-                            "\"start\": \"1601-01-01T00:00:00\"" +
-                        "}]" +
+                        "\"timeZone\":\"-0530\"" +
                     "}" +
                 "}" +
         "}";

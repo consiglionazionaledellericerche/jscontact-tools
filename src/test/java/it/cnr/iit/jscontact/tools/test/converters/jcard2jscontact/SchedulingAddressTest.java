@@ -18,12 +18,12 @@ public class SchedulingAddressTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertEquals("testSchedulingAddress - 1", 2, jsCard.getSchedulingAddresses().size());
-        assertEquals("testSchedulingAddress - 2", 1, jsCard.getSchedulingAddresses().get("CALADRURI-1").getSendTo().size());
-        assertTrue("testSchedulingAddress - 3", jsCard.getSchedulingAddresses().get("CALADRURI-1").getSendTo().containsValue("mailto:janedoe@example.com"));
-        assertEquals("testSchedulingAddress - 4", 1, (int) jsCard.getSchedulingAddresses().get("CALADRURI-1").getPref());
-        assertEquals("testSchedulingAddress - 5", 1, jsCard.getSchedulingAddresses().get("CALADRURI-2").getSendTo().size());
-        assertTrue("testSchedulingAddress - 6", jsCard.getSchedulingAddresses().get("CALADRURI-2").getSendTo().containsValue("http://example.com/calendar/jdoe"));
-        assertNull("testSchedulingAddress - 7", jsCard.getSchedulingAddresses().get("CALADRURI-2").getPref());
+        assertEquals("testSchedulingAddress - 2", 1, jsCard.getSchedulingAddresses().get("SCHEDULING-1").getSendTo().size());
+        assertTrue("testSchedulingAddress - 3", jsCard.getSchedulingAddresses().get("SCHEDULING-1").getSendTo().containsValue("mailto:janedoe@example.com"));
+        assertEquals("testSchedulingAddress - 4", 1, (int) jsCard.getSchedulingAddresses().get("SCHEDULING-1").getPref());
+        assertEquals("testSchedulingAddress - 5", 1, jsCard.getSchedulingAddresses().get("SCHEDULING-2").getSendTo().size());
+        assertTrue("testSchedulingAddress - 6", jsCard.getSchedulingAddresses().get("SCHEDULING-2").getSendTo().containsValue("http://example.com/calendar/jdoe"));
+        assertNull("testSchedulingAddress - 7", jsCard.getSchedulingAddresses().get("SCHEDULING-2").getPref());
     }
 
 }
