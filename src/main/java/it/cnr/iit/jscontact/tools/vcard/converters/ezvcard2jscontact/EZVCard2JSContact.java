@@ -32,6 +32,7 @@ import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Note;
+import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.*;
@@ -70,6 +71,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     protected VCard2JSContactConfig config;
 
     private int customTimeZoneCounter = 0;
+
+    private Map<String, TimeZone> customTimeZones = new HashMap<>();
 
     private static boolean isDefaultLanguage(String language, String defaultLanguage) {
 
@@ -517,6 +520,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                (minutes.equals("00") ? StringUtils.EMPTY : ":" + minutes));
             else {
                 String timeZoneName = String.format("%s%d", config.getCustomTimeZonesPrefix(), ++customTimeZoneCounter);
+                customTimeZones.put(timeZoneName, TimeZone.builder()
+                        .tzId(String.format("%s%s%s%s",CUSTOM_TIME_ZONE_ID_PREFIX,sign,hours,minutes))
+                        .updated(Calendar.getInstance())
+                        .standardItem(TimeZoneRule.builder()
+                                .offsetFrom(String.format("%s%s%s",sign,hours,minutes))
+                                .offsetTo(String.format("%s%s%s",sign,hours,minutes))
+                                .start(DateUtils.toCalendar(CUSTOM_TIME_ZONE_RULE_START))
+                                .build()
+                        )
+                        .build()
+                );
                 return timeZoneName;
             }
         }
@@ -1474,6 +1488,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fillNotes(vCard, jsCard);
         fillRelations(vCard, jsCard);
         fillRFCXXXXProperties(vCard,jsCard);
+        if (customTimeZones.size() > 0)
+            jsCard.setCustomTimeZones(customTimeZones);
         fillExtensions(vCard, jsCard);
         fillUnmatchedElments(vCard, jsCard);
 

@@ -179,7 +179,6 @@ public class AddressesTest extends RoundtripTest {
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                         .setAutoAddrLabel(false)
                         .setPropIdParam(false)
-                        .convertTimezoneToTZParam(true)
                         .convertTimezoneToOffset(true)
                         .build())
                 .build();
@@ -189,6 +188,32 @@ public class AddressesTest extends RoundtripTest {
         pruneVCard(vcard2);
         assertEquals("testAddresses9 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
+
+    @Test
+    public void testAddresses10() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "GEO:geo:46.772673,-71.282945\n" +
+                "TZ:-0530\n" +
+                "END:VCARD";
+
+        JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
+                        .setAutoAddrLabel(false)
+                        .setPropIdParam(false)
+                        .convertCoordinatesToGEOParam(false)
+                        .convertTimezoneToTZParam(false)
+                        .build())
+                .build();
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
+        pruneVCard(vcard2);
+        assertEquals("testAddresses10 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+    }
+
 
     //TODO - INDISCERNIBLE
     //@Test

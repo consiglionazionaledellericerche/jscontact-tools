@@ -14,6 +14,7 @@ import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.Organization;
+import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
@@ -462,7 +463,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return GeoUri.parse(coordinates);
     }
 
-    private ezvcard.property.Address getAddress(Address address, String language) {
+    private ezvcard.property.Address getAddress(Address address, Map<String, TimeZone> timeZones, String language) {
 
         ezvcard.property.Address addr = new ezvcard.property.Address();
         if (!isNullStructuredAddress(address)) {
@@ -475,7 +476,16 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setExtendedAddress(address.getStreetExtensions());
             addr.setPoBox(address.getPostOfficeBox());
             addr.setPostalCode(address.getPostcode());
-            addr.setTimezone(getTimezone(address.getTimeZone()));
+            if (address.getTimeZone() != null) {
+                TimeZone timeZone = null;
+                if (timeZones != null)
+                    timeZone = timeZones.get(address.getTimeZone());
+                if (timeZone != null) {
+                    if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
+                        addr.setTimezone(timeZone.getStandard().get(0).getOffsetFrom());
+                } else
+                    addr.setTimezone(getTimezone(address.getTimeZone()));
+            }
             addr.setGeo(getGeo(address.getCoordinates()));
             if (address.getCountryCode() != null)
                 addr.setParameter("CC", address.getCountryCode());
@@ -583,14 +593,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
-                ezvcard.property.Address addr = getAddress(address, jsCard.getLocale());
+                ezvcard.property.Address addr = getAddress(address, jsCard.getCustomTimeZones(), jsCard.getLocale());
                 addGroup(addr, "addresses/"+entry.getKey(), jsCard);
                 addPropId(addr, entry.getKey());
                 vcard.addAddress(addr);
             }
             else {
                 List<ezvcard.property.Address> addrs = new ArrayList<>();
-                ezvcard.property.Address addr = getAddress(address, jsCard.getLocale());
+                ezvcard.property.Address addr = getAddress(address, jsCard.getCustomTimeZones(), jsCard.getLocale());
                 addGroup(addr, "addresses/"+entry.getKey(), jsCard);
                 addPropId(addr, entry.getKey());
                 addrs.add(addr);
@@ -598,12 +608,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
-                        addrs.add(getAddress(asAddress(localization.getValue()), localization.getKey()));
+                        addrs.add(getAddress(asAddress(localization.getValue()), jsCard.getCustomTimeZones(),localization.getKey()));
                 }
                 localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
-                        addrs.add(getAddress(Address.builder().fullAddress(localization.getValue().asText()).build(), localization.getKey()));
+                        addrs.add(getAddress(Address.builder().fullAddress(localization.getValue().asText()).build(), jsCard.getCustomTimeZones(), localization.getKey()));
                 }
                 vcard.addAddressAlt(addrs.toArray(new ezvcard.property.Address[0]));
             }

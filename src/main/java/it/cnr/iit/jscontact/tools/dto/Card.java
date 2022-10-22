@@ -226,6 +226,8 @@ public class Card extends JSContact implements Serializable {
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> keywords;
 
+    @JsonIgnore
+    Map<String,TimeZone> customTimeZones;
 
 //Methods for adding items to a mutable collection
 

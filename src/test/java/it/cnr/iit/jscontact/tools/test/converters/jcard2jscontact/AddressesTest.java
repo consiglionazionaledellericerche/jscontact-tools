@@ -16,8 +16,10 @@
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
+import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
 import org.junit.Test;
 
@@ -199,7 +201,13 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses8 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetDetails());
         assertEquals("testAddresses8 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
         assertEquals("testAddresses8 - 10", "tz1", jsCard.getAddresses().get("ADR-1").getTimeZone());
-
+        assertEquals("testAddresses8 - 11", 1, jsCard.getCustomTimeZones().size());
+        assertEquals("testAddresses8 - 13", "TZ+0530", jsCard.getCustomTimeZones().get("tz1").getTzId());
+        assertNotNull("testAddresses8 - 14", jsCard.getCustomTimeZones().get("tz1").getUpdated());
+        assertEquals("testAddresses8 - 15", 1, jsCard.getCustomTimeZones().get("tz1").getStandard().size());
+        assertEquals("testAddresses8 - 17", 0, jsCard.getCustomTimeZones().get("tz1").getStandard().get(0).getStart().compareTo(DateUtils.toCalendar(EZVCard2JSContact.CUSTOM_TIME_ZONE_RULE_START)));
+        assertEquals("testAddresses8 - 18", "+0530", jsCard.getCustomTimeZones().get("tz1").getStandard().get(0).getOffsetFrom());
+        assertEquals("testAddresses8 - 19", "+0530", jsCard.getCustomTimeZones().get("tz1").getStandard().get(0).getOffsetTo());
     }
 
     @Test
