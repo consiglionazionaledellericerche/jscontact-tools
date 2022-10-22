@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.10.3</version>
+		  <version>0.11.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.10.3'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.11.0'
 ```
 
 # Features
@@ -232,35 +232,26 @@ All the methods return a list of JSContact top most objects and can raise a `Car
 
 The conversion is executed according to the following rules:
 
-1.  The conversion is based on the content of the [JSContact I-Ds](#drafts).
+1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
 
-2.  A card (i.e. vCard, xCard, jCard) is converted into a CardGroup object if it includes a MEMBER property, otherwise into a Card object.
+2. A card (i.e. vCard, xCard, jCard) is converted into a CardGroup object if it includes a MEMBER property, otherwise into a Card object.
 
-3.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
+3. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
 
-4.  An unmatched property is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350`. The following unmatched properties are considered:    
+4. An unmatched property is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350`. The following unmatched properties are considered:    
     CLIENTPIDMAP
     XML
 
-5.  The sex information of the GENDER property is mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the 'convertGenderToSpeakToAs' configuration value is set to true as in the following:
-
-    GENDER      SpeakToAs.grammaticalGender    
-    M           male
-    F           female
-    O           animate
-    N           neuter
-    U           SpeakToAs = null
-     
-6.  An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350:<vCard Property Name>`. The following unmatched parameters are considered:
+5. An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350:<vCard Property Name>`. The following unmatched parameters are considered:
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-7.  An extension property is converted into a topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix`.
+6. An extension property is converted into a topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix`.
   
-8.  Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
+7. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
 
-9.  Default values for the configuration properties are:
+8. Default values for the configuration properties are:
     
     - `extensionsPrefix = "extension:"`
     - `customTimeZonesPrefix = "tz"`
@@ -271,50 +262,68 @@ The conversion is executed according to the following rules:
     - `setVoiceAsDefaultPhoneFeature = true`
     - `convertGenderToSpeakToAs = true` 
 
-10.  Where a language is required to represent a localization and the language is not specified, `en` is used by default.
+9. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
 
-11.  Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
+    GENDER      SpeakToAs.grammaticalGender    
+    M           male
+    F           female
+    O           animate
+    N           neuter
+    U           SpeakToAs = null
 
-    1. BDAY (BIRTHDATE)
-    2. DEATHDAY (DEATHDATE)
-    3. ANNIVERSARY
+10. Where a language is required to represent a localization and the language is not specified, `en` is used by default to set the mapping configuration parameter `defaultLanguage`.
 
-12.  Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
+11. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
 
-    1. HOBBY
-    2. INTEREST
-    3. EXPERTISE
+12. BDAY (BIRTHDATE)
+13. DEATHDAY (DEATHDATE)
+14. ANNIVERSARY
 
-13. Regardless of their positions inside the vCard, properties mapped as online Resource objects appear in the following order:
+15. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
 
-    1. SOURCE
-    2. LOGO
+16. HOBBY
+17. INTEREST
+18. EXPERTISE
+
+19. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
+
+    1. PHOTO
     3. SOUND
-    4. URL
-    5. KEY
-    6. FBURL
-    7. CALURI
-    8. ORG-DIRECTORY
-    9. CONTACT-URI
+    2. LOGO
 
-14. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
+20. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
+
+    1. CALURI
+    2. FBURL
+
+21. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
+
+    1. URL
+    2. CONTACT-URI
+
+22. Regardless of their positions inside the vCard, properties mapped as DrectoryResource objects appear in the following order:
+
+    4. SOURCE
+    8. ORG-DIRECTORY
+
+23. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
     1. TITLE
     2. ROLE
 
-15. If an ADR element doesn't include the LABEL parameter, the full address results from the newline-delimited concatenation of the non-empty address components.
+24. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
 
-16. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
+25. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
 
-17. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
+26. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
-18. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
+27. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-19. JSContact UTCDateTime type is mapped to Java Calendar.
+28. JSContact UTCDateTime type is mapped to Java Calendar.
 
-20. Media type information of `File` and `Resource` objects is automatically detected when the MEDIATYPE parameter is missing.
+29. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
 
-21. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `timeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
+30. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
 
 ### Conversion Profiles from vCard to JSContact
 
@@ -383,7 +392,7 @@ All the methods take in input a list of JSContact top most objects and can raise
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-4. topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix` is converted into a vCard extension.
+4. A topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix` is converted into a vCard extension.
 
 5. Default values for the configuration properties are:
 
@@ -395,9 +404,9 @@ All the methods take in input a list of JSContact top most objects and can raise
     - `convertCoordinatesToGEOParam = true`
     - `convertTimezoneToOffset = true`
 
-6. The Card/CardGroup "titles" property is mapped to the vCard TITLE property.
-    
-7. The "timeZone" property is always mapped to a TZ parameter either preserving the time zone name or the time zone offset extracted from the `timeZones` map.    
+6. The "timeZone" property can be mapped to either a TZ parameter or the TZ property based on the value of the mapping configuration parameter `convertTimezoneToTZParam` either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
+
+7. The "cooridnates" property can be mapped to either a GEO parameter or the GEO property based on the value of the mapping configuration parameter `convertCoordinatesToGEOParam`.
 
 8. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
@@ -405,7 +414,9 @@ All the methods take in input a list of JSContact top most objects and can raise
 
 10. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-11. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, the value of the LABEL parameter results from the newline-delimited concatenation of the non-empty "Address" members.
+11. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL parameter can results from the newline-delimited concatenation of the non-empty "Address" members or.
+
+12. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration parameter `setPropIdParam`.
 
 ### Conversion examples
 

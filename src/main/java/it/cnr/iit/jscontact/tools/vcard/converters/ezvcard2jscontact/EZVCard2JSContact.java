@@ -1066,15 +1066,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillMedia(VCard vcard, Card jsCard) {
 
         int i = 1;
-        for (Logo logo : vcard.getLogos())
-            addMediaResource(logo, jsCard, MediaResourceType.logo(), i++);
+        for (Photo photo : vcard.getPhotos())
+            addMediaResource(photo, jsCard, MediaResourceType.photo(), i++);
         i = 1;
         for (Sound sound : vcard.getSounds())
             addMediaResource(sound, jsCard, MediaResourceType.sound(), i++);
 
         i = 1;
-        for (Photo photo : vcard.getPhotos())
-            addMediaResource(photo, jsCard, MediaResourceType.photo(), i++);
+        for (Logo logo : vcard.getLogos())
+            addMediaResource(logo, jsCard, MediaResourceType.logo(), i++);
 
         addPropertyGroups(jsCard.getMedia(), "media/", jsCard);
     }
@@ -1110,12 +1110,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillCalendars(VCard vcard, Card jsCard) {
 
         int i = 1;
-        for (FreeBusyUrl fburl : vcard.getFbUrls())
-            addCalendarResource(fburl, jsCard, CalendarResourceType.freeBusy(), i++);
-
-        i = 1;
         for (CalendarUri calendarUri : vcard.getCalendarUris())
             addCalendarResource(calendarUri, jsCard, CalendarResourceType.calendar(), i++);
+
+        i = 1;
+        for (FreeBusyUrl fburl : vcard.getFbUrls())
+            addCalendarResource(fburl, jsCard, CalendarResourceType.freeBusy(), i++);
 
         addPropertyGroups(jsCard.getDirectories(), "calendars/", jsCard);
     }
