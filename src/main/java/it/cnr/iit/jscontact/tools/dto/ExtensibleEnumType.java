@@ -3,7 +3,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensibleEnum;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @SuperBuilder
-public abstract class ExtensibleEnumType<T extends IsExtensible> implements Serializable {
+public abstract class ExtensibleEnumType<T extends IsExtensibleEnum> implements Serializable {
 
     T rfcValue;
     String extValue;
@@ -66,10 +66,12 @@ public abstract class ExtensibleEnumType<T extends IsExtensible> implements Seri
     @JsonIgnore
     public boolean isExtValue() { return extValue != null; }
 
+    @JsonIgnore
     public boolean isRfc(T value) { return isRfcValue() && rfcValue == value; }
 
     @JsonValue
     public String toJson() {
         return (isRfcValue()) ? getRfcValue().getValue() : getExtValue();
     }
+
 }

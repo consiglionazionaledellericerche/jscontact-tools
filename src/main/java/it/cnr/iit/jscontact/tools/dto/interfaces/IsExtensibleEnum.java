@@ -20,7 +20,7 @@ package it.cnr.iit.jscontact.tools.dto.interfaces;
  *
  * @author Mario Loffredo
  */
-public interface IsExtensible {
+public interface IsExtensibleEnum {
 
     /**
      * Returns the value of the extensible enumerated type in text format.

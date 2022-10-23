@@ -18,7 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
@@ -34,7 +34,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum ContextEnum implements IsExtensible, VCardTypeDerivedEnum {
+public enum ContextEnum implements IsExtensibleEnum, VCardTypeDerivedEnum {
 
     PRIVATE("private"),
     WORK("work");

@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
@@ -28,7 +28,7 @@ import lombok.AllArgsConstructor;
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum LinkResourceEnum implements IsExtensible {
+public enum LinkResourceEnum implements IsExtensibleEnum {
 
     CONTACT("contact");
 
