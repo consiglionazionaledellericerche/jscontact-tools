@@ -60,8 +60,6 @@ public class CardGroup extends JSContact implements Serializable {
     @JsonProperty(required = true)
     Map<String,Boolean> members;
 
-    String name;
-
     @Valid
     Card card;
 
