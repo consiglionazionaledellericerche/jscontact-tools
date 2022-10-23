@@ -19,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformatioLevelTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
@@ -55,7 +57,8 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
     @NonNull
     String value;
 
-    PersonalInformationLevel level;
+    @JsonDeserialize(using = PersonalInformatioLevelTypeDeserializer.class)
+    PersonalInformationLevelType level;
 
     String label;
 
@@ -103,18 +106,24 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
      *
      * @return true if the level of this personal information is high, false otherwise
      */
-    public boolean ofHighLevel() { return level == PersonalInformationLevel.HIGH; }
+    public boolean ofHighLevel() { return level.isHigh(); }
     /**
      * Tests if the level of this personal information is medium.
      *
      * @return true if the level of this personal information is medium, false otherwise
      */
-    public boolean ofMediumLevel() { return level == PersonalInformationLevel.MEDIUM; }
+    public boolean ofMediumLevel() { return level.isMedium(); }
     /**
      * Tests if the level of this personal information is low.
      *
      * @return true if the level of this personal information is low, false otherwise
      */
-    public boolean ofLowLevel() { return level == PersonalInformationLevel.LOW; }
+    public boolean ofLowLevel() { return level.isLow(); }
+    /**
+     * Tests if this address is used in a custom context.
+     *
+     * @return true if the personal information level is equal to the given personal information level, false otherwise
+     */
+    public boolean ofOtherLevel() { return level.isExtValue(); }
 
 }

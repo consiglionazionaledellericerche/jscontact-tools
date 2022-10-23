@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
@@ -31,7 +32,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum PersonalInformationLevel {
+public enum PersonalInformationLevelEnum implements IsExtensible {
 
     HIGH("high"),
     MEDIUM("medium"),
@@ -40,7 +41,7 @@ public enum PersonalInformationLevel {
     private final String value;
 
     @JsonIgnore
-    private static final Map<String, PersonalInformationLevel> aliases = new HashMap<String, PersonalInformationLevel>()
+    private static final Map<String, PersonalInformationLevelEnum> aliases = new HashMap<String, PersonalInformationLevelEnum>()
     {{
        put("beginner", LOW);
        put("average", MEDIUM);
@@ -53,7 +54,7 @@ public enum PersonalInformationLevel {
     }
 
     @JsonIgnore
-    public static String getVCardExpertiseLevel(PersonalInformationLevel level) {
+    public static String getVCardExpertiseLevel(PersonalInformationLevelEnum level) {
 
         for (String key : aliases.keySet())
             if (aliases.get(key).equals(level))
@@ -63,8 +64,8 @@ public enum PersonalInformationLevel {
     }
 
     @JsonCreator
-    public static PersonalInformationLevel getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(PersonalInformationLevel.class, value, aliases);
+    public static PersonalInformationLevelEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(PersonalInformationLevelEnum.class, value, aliases);
     }
 
     @Override

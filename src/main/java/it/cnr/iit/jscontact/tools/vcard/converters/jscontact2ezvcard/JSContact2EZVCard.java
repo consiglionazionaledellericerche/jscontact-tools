@@ -707,7 +707,10 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Expertise e = new Expertise(pi.getValue());
         addPropId(e, pi.getPropId());
-        e.setLevel(ExpertiseLevel.get(PersonalInformationLevel.getVCardExpertiseLevel(pi.getLevel())));
+        if (pi.getLevel().isRfcValue())
+            e.setLevel(ExpertiseLevel.get(PersonalInformationLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
+        else
+            e.setParameter("LEVEL", pi.getLevel().getExtValue().toUpperCase());
         return e;
     }
 
@@ -715,7 +718,10 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Hobby h = new Hobby(pi.getValue());
         addPropId(h, pi.getPropId());
-        h.setLevel(HobbyLevel.get(pi.getLevel().getValue()));
+        if (pi.getLevel().isRfcValue())
+            h.setLevel(HobbyLevel.get(pi.getLevel().getRfcValue().name()));
+        else
+            h.setParameter("LEVEL", pi.getLevel().getExtValue().toUpperCase());
         return h;
     }
 
@@ -723,7 +729,10 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Interest i = new Interest(pi.getValue());
         addPropId(i, pi.getPropId());
-        i.setLevel(InterestLevel.get(pi.getLevel().getValue()));
+        if (pi.getLevel().isRfcValue())
+            i.setLevel(InterestLevel.get(pi.getLevel().getRfcValue().name()));
+        else
+            i.setParameter("LEVEL", pi.getLevel().getExtValue().toUpperCase());
         return i;
     }
 

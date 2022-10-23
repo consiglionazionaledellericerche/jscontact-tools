@@ -867,9 +867,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static PersonalInformationLevel getLevel(String vcardLevelParam) throws CardException {
+    private static PersonalInformationLevelType getLevel(String vcardLevelParam) throws CardException {
         try {
-            return PersonalInformationLevel.getEnum(vcardLevelParam);
+            return PersonalInformationLevelType.builder().rfcValue(PersonalInformationLevelEnum.getEnum(vcardLevelParam)).build();
         } catch (IllegalArgumentException e) {
             throw new CardException("Unknown LEVEL value " + vcardLevelParam);
         }
