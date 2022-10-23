@@ -744,18 +744,21 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,PersonalInformation> entry : jsCard.getPersonalInfo().entrySet()) {
             PersonalInformation pi = entry.getValue();
             pi.setPropId(entry.getKey());
-            switch (pi.getType()) {
-                case EXPERTISE:
-                    vcard.getExpertise().add(getExpertise(pi));
-                    break;
-                case HOBBY:
-                    vcard.getHobbies().add(getHobby(pi));
-                    break;
-                case INTEREST:
-                    vcard.getInterests().add(getInterest(pi));
-                    break;
+            if (pi.getType().isRfcValue()) {
+                switch (pi.getType().getRfcValue()) {
+                    case EXPERTISE:
+                        vcard.getExpertise().add(getExpertise(pi));
+                        break;
+                    case HOBBY:
+                        vcard.getHobbies().add(getHobby(pi));
+                        break;
+                    case INTEREST:
+                        vcard.getInterests().add(getInterest(pi));
+                        break;
+                }
             }
         }
+        //TODO: extension
     }
 
     private static Language getLanguage(String lang, ContactLanguage cl) {

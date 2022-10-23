@@ -15,40 +15,79 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 /**
- * Enum class mapping the values of the PersonalInformation "type" memmber as defined in section 2.8.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "type" property of the PersonalInformation type as defined in section 2.8.2 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@AllArgsConstructor
-public enum PersonalInformationType {
+@Getter
+@Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
+public class PersonalInformationType extends ExtensibleEnumType<PersonalInformationEnum> implements Serializable {
 
-    EXPERTISE("expertise"),
-    HOBBY("hobby"),
-    INTEREST("interest");
+    /**
+     * Tests if this personal information type is "hobby".
+     *
+     * @return true if this personal information type is "hobby", false otherwise
+     */
+    @JsonIgnore
+    public boolean isHobby() { return isRfc(PersonalInformationEnum.HOBBY); }
 
-    private final String value;
+    /**
+     * Tests if this personal information type is "interest".
+     *
+     * @return true if this personal information type is "interest", false otherwise
+     */
+    @JsonIgnore
+    public boolean isInterest() { return isRfc(PersonalInformationEnum.INTEREST); }
 
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
+    /**
+     * Tests if this personal information type is "expertise".
+     *
+     * @return true if this personal information type is "expertise", false otherwise
+     */
+    @JsonIgnore
+    public boolean isExpertise() { return isRfc(PersonalInformationEnum.EXPERTISE); }
 
-    @JsonCreator
-    public static PersonalInformationType getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(PersonalInformationType.class, value);
-    }
+    private static PersonalInformationType rfc(PersonalInformationEnum rfcValue) { return PersonalInformationType.builder().rfcValue(rfcValue).build(); }
 
-    @Override
-    public String toString() {
-        return value;
-    }
+    /**
+     * Returns a "hobby" personal information type.
+     *
+     * @return a "hobby" personal information type
+     */
+    public static PersonalInformationType hobby() { return rfc(PersonalInformationEnum.HOBBY);}
 
+    /**
+     * Returns a "interest" personal information type.
+     *
+     * @return a "interest" personal information type
+     */
+    public static PersonalInformationType interest() { return rfc(PersonalInformationEnum.INTEREST);}
+
+    /**
+     * Returns a "expertise" personal information type.
+     *
+     * @return a "expertise" personal information type
+     */
+    public static PersonalInformationType expertise() { return rfc(PersonalInformationEnum.EXPERTISE);}
+
+    /**
+     * Returns a custom personal information type.
+     *
+     * @return a custom personal information type
+     */
+    public static PersonalInformationType ext(String extValue) { return PersonalInformationType.builder().extValue(extValue).build(); }
 }
-

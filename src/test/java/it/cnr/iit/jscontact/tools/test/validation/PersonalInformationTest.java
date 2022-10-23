@@ -34,7 +34,7 @@ public class PersonalInformationTest {
 
         // value missing
         PersonalInformation.builder()
-                .type(PersonalInformationType.HOBBY)
+                .type(PersonalInformationType.hobby())
                 .build();
     }
 

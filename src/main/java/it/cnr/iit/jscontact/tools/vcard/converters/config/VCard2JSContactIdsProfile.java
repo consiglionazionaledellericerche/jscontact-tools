@@ -1,7 +1,7 @@
 package it.cnr.iit.jscontact.tools.vcard.converters.config;
 
 import it.cnr.iit.jscontact.tools.dto.ResourceType;
-import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
+import it.cnr.iit.jscontact.tools.dto.PersonalInformationEnum;
 import lombok.*;
 
 import java.util.List;
@@ -80,13 +80,13 @@ public class VCard2JSContactIdsProfile {
     @AllArgsConstructor
     public static class PersonalInfoId {
 
-        PersonalInformationType type;
+        PersonalInformationEnum type;
         String id;
 
-        private static PersonalInfoId personalInfoId(PersonalInformationType type, String id) { return PersonalInfoId.builder().type(type).id(id).build(); }
-        public static PersonalInfoId hobbiesId(String id) { return personalInfoId(PersonalInformationType.HOBBY,id);}
-        public static PersonalInfoId interestsId(String id) { return personalInfoId(PersonalInformationType.INTEREST,id);}
-        public static PersonalInfoId expertisesId(String id) { return personalInfoId(PersonalInformationType.EXPERTISE,id);}
+        private static PersonalInfoId personalInfoId(PersonalInformationEnum type, String id) { return PersonalInfoId.builder().type(type).id(id).build(); }
+        public static PersonalInfoId hobbiesId(String id) { return personalInfoId(PersonalInformationEnum.HOBBY,id);}
+        public static PersonalInfoId interestsId(String id) { return personalInfoId(PersonalInformationEnum.INTEREST,id);}
+        public static PersonalInfoId expertisesId(String id) { return personalInfoId(PersonalInformationEnum.EXPERTISE,id);}
         public static PersonalInfoId otherPersonalInfosId(String id) { return personalInfoId(null,id);}
     }
 

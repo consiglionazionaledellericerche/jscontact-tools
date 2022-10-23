@@ -20,7 +20,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformatioLevelTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationLevelTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
@@ -51,13 +52,14 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
     @Builder.Default
     String _type = "PersonalInformation";
 
+    @JsonDeserialize(using = PersonalInformationTypeDeserializer.class)
     PersonalInformationType type;
 
     @NotNull(message = "value is missing in PersonalInformation")
     @NonNull
     String value;
 
-    @JsonDeserialize(using = PersonalInformatioLevelTypeDeserializer.class)
+    @JsonDeserialize(using = PersonalInformationLevelTypeDeserializer.class)
     PersonalInformationLevelType level;
 
     String label;
@@ -82,19 +84,19 @@ public class PersonalInformation extends GroupableObject implements HasIndex, Id
      *
      * @return true if this personal information is a hobby, false otherwise
      */
-    public boolean asHobby() { return type == PersonalInformationType.HOBBY; }
+    public boolean asHobby() { return type.isHobby(); }
     /**
      * Tests if this personal information is an interest.
      *
      * @return true if this personal information is an interest, false otherwise
      */
-    public boolean asInterest() { return type == PersonalInformationType.INTEREST; }
+    public boolean asInterest() { return type.isInterest(); }
     /**
      * Tests if this personal information is an expertise.
      *
      * @return true if this personal information is an expertise, false otherwise
      */
-    public boolean asExpertise() { return type == PersonalInformationType.EXPERTISE; }
+    public boolean asExpertise() { return type.isExpertise(); }
     /**
      * Tests if this personal information is other than the known types.
      *

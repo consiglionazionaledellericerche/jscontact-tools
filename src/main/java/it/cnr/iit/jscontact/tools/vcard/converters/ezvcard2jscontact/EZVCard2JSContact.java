@@ -98,7 +98,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         break;
                     case PERSONAL_INFO:
                         VCard2JSContactIdsProfile.PersonalInfoId piId = (VCard2JSContactIdsProfile.PersonalInfoId) jsContactId.getId();
-                        PersonalInformationType piType = (PersonalInformationType) args[0];
+                        PersonalInformationEnum piType = (PersonalInformationEnum) args[0];
                         if (piId.getType() == piType)
                             ids.add(piId.getId());
                         break;
@@ -885,7 +885,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             hobbies.add(PersonalInformation.builder()
                                             .group(hobby.getGroup())
                                             .propId(hobby.getParameter(PROP_ID_PARAM))
-                                            .type(PersonalInformationType.HOBBY)
+                                            .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.HOBBY).build())
                                             .value(getValue(hobby))
                                             .level((hobby.getLevel() != null) ? getLevel(hobby.getLevel().getValue()) : null)
                                             .index(hobby.getIndex())
@@ -898,14 +898,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Collections.sort(hobbies); //sorted based on index
             int i = 1;
             for (PersonalInformation pi : hobbies)
-                jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "HOBBY-" + (i++), pi.getPropId(), PersonalInformationType.HOBBY), pi);
+                jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "HOBBY-" + (i++), pi.getPropId(), PersonalInformationEnum.HOBBY), pi);
         }
 
         for (Interest interest : vcard.getInterests()) {
             interests.add(PersonalInformation.builder()
                                              .group(interest.getGroup())
                                              .propId(interest.getParameter(PROP_ID_PARAM))
-                                             .type(PersonalInformationType.INTEREST)
+                                             .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.INTEREST).build())
                                              .value(getValue(interest))
                                              .level((interest.getLevel() != null) ? getLevel(interest.getLevel().getValue()) : null)
                                              .index(interest.getIndex())
@@ -917,14 +917,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Collections.sort(interests); //sorted based on index
             int i = 1;
             for (PersonalInformation pi : interests)
-                jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "INTEREST-" + (i++), pi.getPropId(), PersonalInformationType.INTEREST), pi);
+                jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "INTEREST-" + (i++), pi.getPropId(), PersonalInformationEnum.INTEREST), pi);
         }
 
         for (Expertise expertise : vcard.getExpertise()) {
             expertizes.add(PersonalInformation.builder()
                                               .group(expertise.getGroup())
                                               .propId(expertise.getParameter(PROP_ID_PARAM))
-                                              .type(PersonalInformationType.EXPERTISE)
+                                              .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.EXPERTISE).build())
                                               .value(getValue(expertise))
                                               .level((expertise.getLevel() != null) ? getLevel(expertise.getLevel().getValue()) : null)
                                               .index(expertise.getIndex())
@@ -936,7 +936,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Collections.sort(expertizes); //sorted based on index
             int i = 1;
             for (PersonalInformation pi : expertizes)
-                jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "EXPERTISE-" + (i++), pi.getPropId(), PersonalInformationType.EXPERTISE), pi);
+                jsCard.addPersonalInfo(getId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "EXPERTISE-" + (i++), pi.getPropId(), PersonalInformationEnum.EXPERTISE), pi);
         }
 
         addPropertyGroups(jsCard.getPersonalInfo(), "personalInfo/", jsCard);
