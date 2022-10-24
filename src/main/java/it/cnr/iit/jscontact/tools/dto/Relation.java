@@ -43,7 +43,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Relation extends GroupableObject implements Serializable {
+public class Relation extends AbstractJSContactType implements Serializable {
 
     @NotNull
     @Pattern(regexp = "Relation", message="invalid @type value in Relation")

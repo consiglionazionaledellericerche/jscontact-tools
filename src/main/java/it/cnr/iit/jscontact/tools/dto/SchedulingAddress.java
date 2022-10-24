@@ -24,7 +24,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SchedulingAddress extends GroupableObject implements IdMapValue, Serializable {
+public class SchedulingAddress extends AbstractJSContactType implements IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "SchedulingAddress", message="invalid @type value in SchedulingAddress")

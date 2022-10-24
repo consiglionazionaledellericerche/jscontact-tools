@@ -44,7 +44,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonalInformation extends GroupableObject implements HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
+public class PersonalInformation extends AbstractJSContactType implements HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
 
     @NotNull
     @Pattern(regexp = "PersonalInformation", message="invalid @type value in PersonalInformation")

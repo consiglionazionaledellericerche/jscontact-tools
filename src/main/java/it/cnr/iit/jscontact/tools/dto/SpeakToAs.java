@@ -32,7 +32,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpeakToAs extends GroupableObject implements Serializable {
+public class SpeakToAs extends AbstractJSContactType implements Serializable {
 
     @NotNull
     @Pattern(regexp = "SpeakToAs", message="invalid @type value in SpeakToAs")

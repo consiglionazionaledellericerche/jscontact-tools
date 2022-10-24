@@ -559,12 +559,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return property.getUri().toString();
     }
 
-    private void addPropertyGroups(Map<String, ? extends GroupableObject> map, String keyPrefix, Card jsCard) {
+    private void addPropertyGroups(Map<String, ? extends AbstractJSContactType> map, String keyPrefix, Card jsCard) {
 
         if (map == null)
             return;
 
-        for (Map.Entry<String,? extends GroupableObject> entry : map.entrySet()) {
+        for (Map.Entry<String,? extends AbstractJSContactType> entry : map.entrySet()) {
             if (entry.getValue().getGroup() != null)
                 jsCard.addPropertyGroup(entry.getValue().getGroup(),keyPrefix + entry.getKey());
         }

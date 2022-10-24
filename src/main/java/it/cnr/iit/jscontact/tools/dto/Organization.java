@@ -25,7 +25,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Organization extends GroupableObject implements IdMapValue, Serializable {
+public class Organization extends AbstractJSContactType implements IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Organization", message="invalid @type value in Organization")

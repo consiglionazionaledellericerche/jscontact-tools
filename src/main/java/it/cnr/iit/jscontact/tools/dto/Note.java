@@ -22,7 +22,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Note extends GroupableObject implements Serializable {
+public class Note extends AbstractJSContactType implements Serializable {
 
     @NotNull
     @Pattern(regexp = "Note", message="invalid @type value in Note")

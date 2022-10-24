@@ -45,7 +45,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Anniversary extends GroupableObject implements IdMapValue, Serializable {
+public class Anniversary extends AbstractJSContactType implements IdMapValue, Serializable {
 
     public static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
 

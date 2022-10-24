@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class GroupableObject {
+public abstract class AbstractJSContactType {
 
     @JsonIgnore
     @Getter

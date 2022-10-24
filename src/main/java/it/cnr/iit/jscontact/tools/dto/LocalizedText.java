@@ -38,7 +38,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"value"}, callSuper = false)
-public class LocalizedText extends GroupableObject implements HasAltid, HasPreference, Comparable<LocalizedText>, Serializable {
+public class LocalizedText extends AbstractJSContactType implements HasAltid, HasPreference, Comparable<LocalizedText>, Serializable {
 
     @NotNull(message = "value is missing in LocalizedText")
     @NonNull

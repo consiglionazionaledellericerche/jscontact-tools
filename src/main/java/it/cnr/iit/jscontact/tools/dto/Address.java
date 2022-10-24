@@ -54,7 +54,7 @@ import java.util.StringJoiner;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
-public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
+public class Address extends AbstractJSContactType implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
 
     @NotNull
     @Pattern(regexp = "Address", message="invalid @type value in Address")

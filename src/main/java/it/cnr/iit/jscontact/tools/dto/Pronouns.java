@@ -32,7 +32,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pronouns extends GroupableObject implements IdMapValue, Serializable, HasContext {
+public class Pronouns extends AbstractJSContactType implements IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "Pronouns", message="invalid @type value in Pronouns")

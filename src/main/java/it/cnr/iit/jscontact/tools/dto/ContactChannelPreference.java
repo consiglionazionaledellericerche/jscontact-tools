@@ -48,7 +48,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactChannelPreference extends GroupableObject implements Serializable, HasContext {
+public class ContactChannelPreference extends AbstractJSContactType implements Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "ContactChannelPreference", message="invalid @type value in ContactChannelPreference")

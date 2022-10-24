@@ -48,7 +48,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactLanguage extends GroupableObject implements Serializable, HasContext {
+public class ContactLanguage extends AbstractJSContactType implements Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "ContactLanguage", message="invalid @type value in ContactLanguage")

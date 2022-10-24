@@ -41,7 +41,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NameComponent extends GroupableObject implements Serializable {
+public class NameComponent extends AbstractJSContactType implements Serializable {
 
     @NotNull
     @Pattern(regexp = "NameComponent", message="invalid @type value in NameComponent")

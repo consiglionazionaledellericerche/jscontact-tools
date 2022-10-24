@@ -52,7 +52,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OnlineService extends GroupableObject implements HasIndex, Comparable<OnlineService>, IdMapValue, Serializable, HasContext {
+public class OnlineService extends AbstractJSContactType implements HasIndex, Comparable<OnlineService>, IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "OnlineService", message="invalid @type value in OnlineService")

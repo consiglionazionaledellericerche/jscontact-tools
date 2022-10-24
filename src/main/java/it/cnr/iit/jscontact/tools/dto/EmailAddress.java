@@ -30,7 +30,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailAddress extends GroupableObject implements IdMapValue, Serializable, HasContext {
+public class EmailAddress extends AbstractJSContactType implements IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "EmailAddress", message="invalid @type value in EmailAddress")

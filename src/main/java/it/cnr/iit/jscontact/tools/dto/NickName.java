@@ -29,7 +29,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NickName extends GroupableObject implements IdMapValue, Serializable, HasContext {
+public class NickName extends AbstractJSContactType implements IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "NickName", message="invalid @type value in NickName")

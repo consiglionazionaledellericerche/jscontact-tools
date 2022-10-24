@@ -48,7 +48,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements IdMapValue, Serializable, HasContext {
+public class Resource extends AbstractJSContactType implements IdMapValue, Serializable, HasContext {
 
     @NotNull(message = "uri is missing in Resource")
     @NonNull

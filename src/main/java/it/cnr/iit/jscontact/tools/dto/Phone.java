@@ -34,7 +34,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Phone extends GroupableObject implements IdMapValue, Serializable, HasContext {
+public class Phone extends AbstractJSContactType implements IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "Phone", message="invalid @type value in Phone")
