@@ -15,10 +15,14 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,16 +35,36 @@ import java.util.Map;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class AbstractJSContactType extends AbstractExtensibleJSContactType {
+public abstract class AbstractExtensibleJSContactType {
 
-    @JsonIgnore
-    @Getter
-    @Setter
-    String group;
+    @JsonPropertyOrder(alphabetic = true)
+    Map<String,Object> extensions;
 
-    @JsonIgnore
-    @Getter
-    @Setter
-    String propId;
+    @JsonAnyGetter
+    public Map<String, Object> getExtensions() {
+        return extensions;
+    }
+
+    @JsonAnySetter
+    public void setExtension(String name, Object value) {
+
+        if (extensions == null)
+            extensions = new HashMap<>();
+
+        extensions.putIfAbsent(name, value);
+    }
+
+    /**
+     * Adds an extension to this object.
+     *
+     * @param key the extension identifier
+     * @param value the extension as an object
+     */
+    public void addExtension(String key, Object value) {
+        if(extensions == null)
+            extensions = new HashMap<>();
+
+        extensions.putIfAbsent(key,value);
+    }
 
 }

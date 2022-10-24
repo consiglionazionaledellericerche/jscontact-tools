@@ -16,8 +16,6 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -57,9 +55,6 @@ public abstract class JSContact extends ValidableObject implements Serializable 
     @Valid
     @GroupKeyConstraint(message = "invalid group key in Map<String,PropertyGroup>")
     Map<String,PropertyGroup> propertyGroups;
-
-    @JsonPropertyOrder(alphabetic = true)
-    Map<String,Object> extensions;
 
     /**
      * Adds a property JSONPointer to the members of a group identfied by a group id.
@@ -101,34 +96,6 @@ public abstract class JSContact extends ValidableObject implements Serializable 
     public void addPropertyGroup(String key, String propertyJSONPointer) {
         addPropertyGroup(key, null, propertyJSONPointer);
     }
-
-    @JsonAnyGetter
-    public Map<String, Object> getExtensions() {
-        return extensions;
-    }
-
-    @JsonAnySetter
-    public void setExtension(String name, Object value) {
-
-        if (extensions == null)
-            extensions = new HashMap<>();
-
-        extensions.putIfAbsent(name, value);
-    }
-
-    /**
-     * Adds an extension to this object.
-     *
-     * @param key the extension identifier
-     * @param value the extension as a text value
-     */
-    public void addExtension(String key, String value) {
-        if(extensions == null)
-            extensions = new HashMap<>();
-
-        extensions.putIfAbsent(key,value);
-    }
-
 
     public static JSContact[] toJSContacts(String json) throws JsonProcessingException {
 

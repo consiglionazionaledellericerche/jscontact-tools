@@ -294,6 +294,7 @@ public class AddressesTest extends RoundtripTest {
                 "\"localizations\":{" +
                     "\"it\":{" +
                         "\"addresses/ADR-1\":{" +
+                            "\"@type\":\"Address\"," +
                             "\"street\":[{\"type\":\"name\", \"value\":\"Via Moruzzi,1\"}]," +
                             "\"locality\":\"Pisa\"," +
                             "\"country\":\"Italia\"," +

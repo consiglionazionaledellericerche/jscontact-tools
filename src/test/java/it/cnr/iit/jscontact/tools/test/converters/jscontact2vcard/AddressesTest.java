@@ -373,6 +373,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"localizations\":{" +
                     "\"it\":{" +
                         "\"addresses/ADR-1\":{" +
+                            "\"@type\":\"Address\"," +
                             "\"street\":[{\"type\":\"name\", \"value\":\"Via Moruzzi,1\"}]," +
                             "\"locality\":\"Pisa\"," +
                             "\"country\":\"Italia\"," +

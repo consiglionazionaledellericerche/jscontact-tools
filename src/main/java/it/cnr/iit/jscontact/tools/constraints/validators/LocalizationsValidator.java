@@ -34,6 +34,7 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
     public void initialize(LocalizationsConstraint constraintAnnotation) {
     }
 
+
     public boolean isValid(Card card, ConstraintValidatorContext context) {
 
         if (card.getLocalizations() == null)
@@ -66,9 +67,22 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
                 try {
                     JsonNode localizedNode = localization.getValue();
                     JsonNode node = root.at(jsonPointer);
+                    if (node.getNodeType() != localizedNode.getNodeType()) {
+                        context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
+                        return false;
+                    }
                     if (localizedNode.isObject()) {
-                        String className = node.get("@type").asText();
-                        Object o = objectMapper.convertValue(localizedNode, Class.forName(ClassUtils.getDtoPackageName()+"."+className));
+                        String nodeClassName = node.get("@type").asText();
+                        if (localizedNode.get("@type") == null) {
+                            context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
+                            return false;
+                        }
+                        String localizedNodeClassName = localizedNode.get("@type").asText();
+                        if (!nodeClassName.equals(localizedNodeClassName)) {
+                            context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
+                            return false;
+                        }
+                        objectMapper.convertValue(localizedNode, Class.forName(ClassUtils.getDtoPackageName()+"."+nodeClassName));
                     }
                 } catch (Exception e) {
                     context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();

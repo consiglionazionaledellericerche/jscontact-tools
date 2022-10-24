@@ -57,8 +57,7 @@ import java.util.*;
         "addresses",
         "cryptoKeys","directories","links","media",
         "localizations",
-        "anniversaries","personalInfo","notes","keywords","propertyGroups",
-        "extensions"})
+        "anniversaries","personalInfo","notes","keywords","propertyGroups"})
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
 @LocalizationsConstraint

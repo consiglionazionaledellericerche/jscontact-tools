@@ -36,7 +36,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public abstract class ValidableObject {
+public abstract class ValidableObject extends AbstractExtensibleJSContactType {
 
     @JsonIgnore
     @Getter
