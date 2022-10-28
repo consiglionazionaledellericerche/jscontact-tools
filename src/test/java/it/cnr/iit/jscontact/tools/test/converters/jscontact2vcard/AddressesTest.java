@@ -108,7 +108,7 @@ public class AddressesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ADR-2\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"12345 Elm St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"12345 Elm St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -374,7 +374,7 @@ public class AddressesTest extends JSContact2VCardTest {
                     "\"it\":{" +
                         "\"addresses/ADR-1\":{" +
                             "\"@type\":\"Address\"," +
-                            "\"street\":[{\"type\":\"name\", \"value\":\"Via Moruzzi,1\"}]," +
+                            "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"Via Moruzzi,1\"}]," +
                             "\"locality\":\"Pisa\"," +
                             "\"country\":\"Italia\"," +
                             "\"postcode\":\"56124\"," +

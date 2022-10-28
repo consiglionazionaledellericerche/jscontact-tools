@@ -39,7 +39,7 @@ public class PropertyGroupTest extends RoundtripTest {
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
                         "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
