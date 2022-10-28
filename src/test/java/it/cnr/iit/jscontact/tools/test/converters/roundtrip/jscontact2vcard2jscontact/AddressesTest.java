@@ -38,7 +38,7 @@ public class AddressesTest extends RoundtripTest {
                             "\"ADR-1\": {" +
                                 "\"@type\":\"Address\"," +
                                 "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
-                                "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                                "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                                 "\"locality\":\"Reston\"," +
                                 "\"region\":\"VA\"," +
                                 "\"country\":\"USA\"," +
@@ -62,7 +62,7 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -86,7 +86,7 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -119,7 +119,7 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -144,7 +144,7 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -172,7 +172,7 @@ public class AddressesTest extends RoundtripTest {
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
                         "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -201,7 +201,7 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"Oak St\"}, {\"type\":\"number\", \"value\":\"54321\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"Oak St\"}, {\"@type\":\"NameComponent\",\"type\":\"number\", \"value\":\"54321\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -226,10 +226,10 @@ public class AddressesTest extends RoundtripTest {
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
                         "\"street\":[" +
-                                     "{\"type\":\"name\", \"value\":\"Oak St\"}," +
-                                     "{\"type\":\"number\", \"value\":\"54321\"}," +
-                                     "{\"type\":\"floor\", \"value\":\"5\"}," +
-                                     "{\"type\":\"room\", \"value\":\"100\"}" +
+                                     "{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"Oak St\"}," +
+                                     "{\"@type\":\"StreetComponent\",\"type\":\"number\", \"value\":\"54321\"}," +
+                                     "{\"@type\":\"StreetComponent\",\"type\":\"floor\", \"value\":\"5\"}," +
+                                     "{\"@type\":\"StreetComponent\",\"type\":\"room\", \"value\":\"100\"}" +
                                     "]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -255,7 +255,7 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -283,7 +283,7 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +

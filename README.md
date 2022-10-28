@@ -510,7 +510,7 @@ Here in the following two examples of conversion between JSContact top most obje
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\@type\": \"Address\","
-                        "\"street\":[{\"type\":\"name\",\"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{"@type":"StreetComponent",\"type\":\"name\",\"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
