@@ -103,8 +103,11 @@ public abstract class JSContact extends ValidableObject implements Serializable 
         SimpleModule module = new SimpleModule();
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
         objectMapper.registerModule(module);
-        return objectMapper.readValue(json, JSContact[].class);
-
+        try {
+            return objectMapper.readValue(json, JSContact[].class);
+        } catch(Exception e) {
+            return new JSContact[]{objectMapper.readValue(json, JSContact.class)};
+        }
     }
 
 

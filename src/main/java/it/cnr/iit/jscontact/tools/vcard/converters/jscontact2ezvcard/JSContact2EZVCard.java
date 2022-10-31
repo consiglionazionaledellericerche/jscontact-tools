@@ -21,6 +21,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.X_RFC0000_JSPROP_Utils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
@@ -1335,7 +1336,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private void fillExtensions(VCard vcard, Card jsCard) {
+    private void fillExtensionsOld(VCard vcard, Card jsCard) {
 
         if (jsCard.getExtensions() == null)
             return;
@@ -1359,8 +1360,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.getDeathdate().setParameter("CALSCALE", ((String)extension.getValue()));
             else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith(":PID"))
                 fillVCardUnmatchedParameter(vcard,extension.getKey(),"PID", ((String)extension.getValue()));
-            else
-                vcard.getExtendedProperties().add(new RawProperty(extension.getKey().replace(config.getExtensionsPrefix(), StringUtils.EMPTY), ((String)extension.getValue())));
         }
     }
 
@@ -1448,6 +1447,20 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
+    private void fillExtensions(VCard vcard, Card jsCard) {
+
+        Map<String,Object> allExtensionsMap = new HashMap<String,Object>();
+        jsCard.buildAllExtensionsMap(allExtensionsMap,"");
+
+        for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
+            try {
+                RawProperty property = new RawProperty("X-RFC0000-JSPROP", X_RFC0000_JSPROP_Utils.toValue(entry.getValue()), VCardDataType.URI);
+                property.setParameter("X-RFC0000-JSPATH", entry.getKey());
+                vcard.addProperty(property);
+            } catch (Exception e) {}
+        }
+    }
+
     /**
      * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
      * JSContact objects are defined in draft-ietf-calext-jscontact.
@@ -1502,7 +1515,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillNotes(vCard, jsCard);
         fillRelations(vCard, jsCard);
         fillRFCXXXXProperties(vCard, jsCard);
-        fillExtensions(vCard, jsCard);
+        fillExtensionsOld(vCard, jsCard);
+        fillExtensions(vCard,jsCard);
 
         return vCard;
     }

@@ -38,7 +38,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StreetComponent implements Serializable {
+public class StreetComponent extends AbstractJSContactType implements Serializable {
 
     @NotNull
     @Pattern(regexp = "StreetComponent", message="invalid @type value in StreetComponent")

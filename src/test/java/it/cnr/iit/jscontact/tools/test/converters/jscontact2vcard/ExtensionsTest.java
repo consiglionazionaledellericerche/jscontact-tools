@@ -17,8 +17,6 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
-import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2vcard.JSContact2VCard;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -36,14 +34,12 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "\"fullName\":\"test\"," +
                 "\"extension:myext\":\"extvalue\"" +
                 "}";
-        JSContact2VCard jsContact2VCard = JSContact2VCard.builder()
-                                .config(JSContact2VCardConfig.builder()
-                                .extensionsPrefix("extension:").build()
-                                ).build();
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testExtendedJSContact - 4", 1, vcard.getExtendedProperties().size());
-        assertEquals("testExtendedJSContact - 5", "myext", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testExtendedJSContact - 5", "extvalue", vcard.getExtendedProperties().get(0).getValue());
+        System.out.println("MARIO " + vcard.getExtendedProperties());
+        assertEquals("testExtendedJSContact - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testExtendedJSContact - 2", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContact - 3", "extension:myext", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact - 4", "data:application/json;&quot;extvalue&quot;", vcard.getExtendedProperties().get(0).getValue());
     }
 
 

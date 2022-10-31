@@ -31,8 +31,6 @@ import lombok.Data;
 public class JSContact2VCardConfig {
 
     @Builder.Default
-    private String extensionsPrefix = "extension:";
-    @Builder.Default
     private boolean setCardMustBeValidated = true;
     @Builder.Default
     private boolean setAutoAddrLabel = true;

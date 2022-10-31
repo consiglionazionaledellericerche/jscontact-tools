@@ -246,14 +246,11 @@ The conversion is executed according to the following rules:
     PID
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
+ 
+6. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
 
-6. An extension property is converted into a topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix`.
-  
-7. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
-
-8. Default values for the configuration properties are:
+7. Default values for the configuration properties are:
     
-    - `extensionsPrefix = "extension:"`
     - `customTimeZonesPrefix = "tz"`
     - `setCardMustBeValidated = true`
     - `setAutoIdsProfile = true`
@@ -262,7 +259,7 @@ The conversion is executed according to the following rules:
     - `setVoiceAsDefaultPhoneFeature = true`
     - `convertGenderToSpeakToAs = true` 
 
-9. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
+8. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
 
     GENDER      SpeakToAs.grammaticalGender    
     M           male
@@ -271,59 +268,59 @@ The conversion is executed according to the following rules:
     N           neuter
     U           SpeakToAs = null
 
-10. Where a language is required to represent a localization and the language is not specified, `en` is used by default to set the mapping configuration parameter `defaultLanguage`.
+9. Where a language is required to represent a localization and the language is not specified, `en` is used by default to set the mapping configuration parameter `defaultLanguage`.
 
-11. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
+10. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
 
-12. BDAY (BIRTHDATE)
-13. DEATHDAY (DEATHDATE)
-14. ANNIVERSARY
+11. BDAY (BIRTHDATE)
+12. DEATHDAY (DEATHDATE)
+13. ANNIVERSARY
 
-15. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
+14. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
 
-16. HOBBY
-17. INTEREST
-18. EXPERTISE
+15. HOBBY
+16. INTEREST
+17. EXPERTISE
 
-19. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
+18. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
 
     1. PHOTO
     3. SOUND
     2. LOGO
 
-20. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
+19. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
 
     1. CALURI
     2. FBURL
 
-21. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
+20. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
 
     1. URL
     2. CONTACT-URI
 
-22. Regardless of their positions inside the vCard, properties mapped as DrectoryResource objects appear in the following order:
+21. Regardless of their positions inside the vCard, properties mapped as DrectoryResource objects appear in the following order:
 
     4. SOURCE
     8. ORG-DIRECTORY
 
-23. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
+22. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
     1. TITLE
     2. ROLE
 
-24. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
+23. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
 
-25. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
+24. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
 
-26. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
+25. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
-27. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
+26. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-28. JSContact UTCDateTime type is mapped to Java Calendar.
+27. JSContact UTCDateTime type is mapped to Java Calendar.
 
-29. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
+28. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
 
-30. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
+29. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
 
 ### Conversion Profiles from vCard to JSContact
 
@@ -392,11 +389,8 @@ All the methods take in input a list of JSContact top most objects and can raise
     SORT-AS (only for vCard N property)
     CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-4. A topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix` is converted into a vCard extension.
+4. Default values for the configuration properties are:
 
-5. Default values for the configuration properties are:
-
-    - `extensionsPrefix = "extension:"`
     - `setCardMustBeValidated = true`
     - `setAutoAddrLabel = true`
     - `setPropIdParam = true`
@@ -404,19 +398,19 @@ All the methods take in input a list of JSContact top most objects and can raise
     - `convertCoordinatesToGEOParam = true`
     - `convertTimezoneToOffset = true`
 
-6. The "timeZone" property can be mapped to either a TZ parameter or the TZ property based on the value of the mapping configuration parameter `convertTimezoneToTZParam` either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
+5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property based on the value of the mapping configuration parameter `convertTimezoneToTZParam` either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
 
-7. The "cooridnates" property can be mapped to either a GEO parameter or the GEO property based on the value of the mapping configuration parameter `convertCoordinatesToGEOParam`.
+6. The "cooridnates" property can be mapped to either a GEO parameter or the GEO property based on the value of the mapping configuration parameter `convertCoordinatesToGEOParam`.
 
-8. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
+7. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
-9. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+8. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-10. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+9. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-11. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL parameter can results from the newline-delimited concatenation of the non-empty "Address" members or.
+10. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL parameter can results from the newline-delimited concatenation of the non-empty "Address" members or.
 
-12. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration parameter `setPropIdParam`.
+11. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration parameter `setPropIdParam`.
 
 ### Conversion examples
 

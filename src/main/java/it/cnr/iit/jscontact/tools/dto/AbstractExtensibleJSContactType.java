@@ -17,11 +17,11 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +65,57 @@ public abstract class AbstractExtensibleJSContactType {
             extensions = new HashMap<>();
 
         extensions.putIfAbsent(key,value);
+    }
+
+
+    public void buildAllExtensionsMap(Map<String,Object> map, String jsonPointer) {
+
+        if (extensions != null) {
+            for (Map.Entry<String,Object> extension : extensions.entrySet())
+                map.put(String.format("%s%s", jsonPointer, extension.getKey()), extension.getValue());
+        }
+
+        for (Field field : this.getClass().getDeclaredFields()) {
+            if (field.getDeclaringClass().isPrimitive())
+                continue;
+            else if (field.getType().isArray()) {
+                try {
+                    AbstractExtensibleJSContactType[] subarray = (AbstractExtensibleJSContactType[]) field.get(this);
+                    if (subarray != null) {
+                        int i = 0;
+                        for (AbstractExtensibleJSContactType o : subarray)
+                            o.buildAllExtensionsMap(map, String.format("%s%s/%d/", jsonPointer, field.getName(), i++));
+                    }
+                } catch(Exception e) {}
+            } else if (Map.class.isAssignableFrom(field.getType())) {
+                try {
+                    Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
+                    if (submap != null) {
+                        for (Map.Entry<String, AbstractExtensibleJSContactType> entry : submap.entrySet())
+                            entry.getValue().buildAllExtensionsMap(map, String.format("%s%s/%s/", jsonPointer, field.getName(), entry.getKey()));
+                    }
+                } catch(Exception e) {
+                    try {
+                        Map<String, AbstractExtensibleJSContactType[]> submap2 = (Map<String, AbstractExtensibleJSContactType[]>) field.get(this);
+                        if (submap2 != null) {
+                            for (Map.Entry<String, AbstractExtensibleJSContactType[]> entry2 : submap2.entrySet()) {
+                                AbstractExtensibleJSContactType[] subarray2 = entry2.getValue();
+                                if (subarray2 != null) {
+                                    int i = 0;
+                                    for (AbstractExtensibleJSContactType o : subarray2)
+                                        o.buildAllExtensionsMap(map, String.format("%s%s/%s/%d/", jsonPointer, field.getName(), entry2.getKey(), i++));
+                                }
+                            }
+                        }
+                    } catch (Exception e2) {}
+                }
+            } else {
+                try {
+                    AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
+                    o.buildAllExtensionsMap(map, String.format("%s%s/", jsonPointer, field.getName()));
+                } catch (Exception e) {}
+            }
+        }
     }
 
 }
