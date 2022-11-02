@@ -153,9 +153,11 @@ public abstract class JSContact extends ValidableObject implements Serializable 
 
 
     /**
-     * Adds a JCardProp object to this object.
+     * Convert the jCardExtensions array into a map
+     * where the keys are the extnsion names and
+     * the values are the extension values in text format
      *
-     * @param o the JCardProp object
+     * @return jCardExtensions array converted into a map
      */
     @JsonIgnore
     public Map<String,String> getJCardExtensionsAsMap() {
