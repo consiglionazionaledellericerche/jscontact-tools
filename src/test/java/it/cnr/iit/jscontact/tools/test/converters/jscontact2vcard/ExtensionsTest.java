@@ -32,14 +32,18 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"extension:myext\":\"extvalue\"" +
+                "\"extension:myext1\":\"extvalue\"," +
+                "\"extension:myext2\": { \"extprop\":\"extvalue\" }" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         System.out.println("MARIO " + vcard.getExtendedProperties());
-        assertEquals("testExtendedJSContact - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testExtendedJSContact - 1", 2, vcard.getExtendedProperties().size());
         assertEquals("testExtendedJSContact - 2", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testExtendedJSContact - 3", "extension:myext", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact - 3", "extension:myext1", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
         assertEquals("testExtendedJSContact - 4", "data:application/json;&quot;extvalue&quot;", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testExtendedJSContact - 2", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(1).getPropertyName());
+        assertEquals("testExtendedJSContact - 3", "extension:myext2", vcard.getExtendedProperties().get(1).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact - 4", "data:application/json;base64,eyJleHRwcm9wIjoiZXh0dmFsdWUifQ==", vcard.getExtendedProperties().get(1).getValue());
     }
 
 
