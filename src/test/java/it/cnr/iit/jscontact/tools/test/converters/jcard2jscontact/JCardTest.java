@@ -15,11 +15,10 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
+import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
-import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -101,7 +100,7 @@ public class JCardTest extends JCard2JSContactTest {
     @Test(expected = CardException.class)
     public void testJCardInvalid9() throws CardException {
 
-        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {\"pref\":\"0\"}, \"text\", \"test\"]]]";
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {\"pref\": 0}, \"text\", \"test\"]]]";
         jCard2JSContact.convert(jcard);
     }
 
@@ -120,18 +119,14 @@ public class JCardTest extends JCard2JSContactTest {
     public void testExtendedJCard() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"], [\"myext\", {}, \"text\", \"extvalue\"]]]";
-        JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
-                .config(VCard2JSContactConfig.builder()
-                        .extensionsPrefix("extension:")
-                        .build()
-                )
-                .build();
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testExtendedJCard - 1", jsCard);
         assertTrue("testExtendedJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertEquals("testExtendedJCard - 3", "test", jsCard.getFullName());
-        assertEquals("testExtendedJCard - 4", 1, jsCard.getExtensions().size());
-        assertEquals("testExtendedJCard - 5", "extvalue", jsCard.getExtensions().get("extension:myext"));
+        assertEquals("testExtendedJCard - 4", 1, jsCard.getJCardExtensions().length);
+        assertEquals("testExtendedJCard - 5", "myext", jsCard.getJCardExtensions()[0].getName());
+        assertEquals("testExtendedJCard - 6", VCardDataType.TEXT, jsCard.getJCardExtensions()[0].getType());
+        assertEquals("testExtendedJCard - 7", "extvalue", jsCard.getJCardExtensions()[0].getValue());
     }
 
 

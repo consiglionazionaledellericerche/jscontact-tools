@@ -15,10 +15,13 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
+import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.ChannelType;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
+import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -98,10 +101,13 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
                 "[\"gender\", {}, \"text\", [\"M\",\"boy\"]] " +
                 "]]";
 
+        JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().convertGenderToSpeakToAs(false).build()).build();
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertTrue("testSpeakToAsWithGender2 - 1",jsCard.getSpeakToAs().isMale());
-        assertNull("testSpeakToAsWithGender2 - 2", jsCard.getSpeakToAs().getPronouns());
-        assertEquals("testSpeakToAsWithGender2 - 3", "boy", jsCard.getExtensions().get("ietf.org:rfc6350:GENDER"));
+        assertEquals("testSpeakToAsWithGender2 - 1", 1, jsCard.getJCardExtensions().length);
+        assertEquals("testSpeakToAsWithGender2 - 2", "gender", jsCard.getJCardExtensions()[0].getName());
+        assertEquals("testSpeakToAsWithGender2 - 3", 0, jsCard.getJCardExtensions()[0].getParameters().size());
+        assertEquals("testSpeakToAsWithGender2 - 4", VCardDataType.TEXT, jsCard.getJCardExtensions()[0].getType());
+        assertEquals("testSpeakToAsWithGender2 - 5", "M;boy", jsCard.getJCardExtensions()[0].getValue());
 
     }
 

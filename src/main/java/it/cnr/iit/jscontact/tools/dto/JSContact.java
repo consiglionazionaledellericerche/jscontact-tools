@@ -16,15 +16,22 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import it.cnr.iit.jscontact.tools.constraints.GroupKeyConstraint;
+import it.cnr.iit.jscontact.tools.dto.deserializers.JCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.JCardPropsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -55,6 +62,11 @@ public abstract class JSContact extends ValidableObject implements Serializable 
     @Valid
     @GroupKeyConstraint(message = "invalid group key in Map<String,PropertyGroup>")
     Map<String,PropertyGroup> propertyGroups;
+
+    @JsonProperty("ietf.org:rfc0000:props")
+    @JsonSerialize(using = JCardPropsSerializer.class)
+    @JsonDeserialize(using = JCardPropsDeserializer.class)
+    JCardProp[] jCardExtensions;
 
     /**
      * Adds a property JSONPointer to the members of a group identfied by a group id.
@@ -97,6 +109,12 @@ public abstract class JSContact extends ValidableObject implements Serializable 
         addPropertyGroup(key, null, propertyJSONPointer);
     }
 
+    /**
+     * Deserialize a single JSContact object or an array of JSContact objects
+     *
+     * @param json the single JSContact object or the array of JSContact objects in JSON
+     * @return an array of JSContact objects
+     */
     public static JSContact[] toJSContacts(String json) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -110,7 +128,12 @@ public abstract class JSContact extends ValidableObject implements Serializable 
         }
     }
 
-
+    /**
+     * Serialize an array of JSContact objects
+     *
+     * @param jsContacts the array of JSContact objects
+     * @return the array of JSContact objects in JSON
+     */
     public static String toJson(JSContact[] jsContacts) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -118,4 +141,32 @@ public abstract class JSContact extends ValidableObject implements Serializable 
 
     }
 
+    /**
+     * Adds a JCardProp object to this object.
+     *
+     * @param o the JCardProp object
+     */
+    public void addJCardProp(JCardProp o) {
+
+        jCardExtensions = ArrayUtils.add(jCardExtensions, o);
+    }
+
+
+    /**
+     * Adds a JCardProp object to this object.
+     *
+     * @param o the JCardProp object
+     */
+    @JsonIgnore
+    public Map<String,String> getJCardExtensionsAsMap() {
+
+        Map<String,String> map = new HashMap<>();
+        if (this.getJCardExtensions() == null)
+            return map;
+
+        for (JCardProp jCardExtension : this.getJCardExtensions())
+            map.put(jCardExtension.getName(),jCardExtension.getValue().toString());
+
+        return map;
+    }
 }

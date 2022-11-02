@@ -15,27 +15,8 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class UnmatchedTest extends VCard2JSContactTest {
 
-    @Test
-    public void testUnmatchedParameter() throws CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:John Q. Public, Esq.\n" +
-                "N;SORT-AS=\"Public,John\":Public;John;Quinlan;Mr.;Esq.\n" +
-                "END:VCARD";
-
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testUnmatchedParameter - 1", 1, jsCard.getExtensions().size());
-        assertEquals("testUnmatchedParameter - 2", "Public,John", jsCard.getExtensions().get("ietf.org:rfc6350:N:SORT-AS"));
-
-    }
 
 }

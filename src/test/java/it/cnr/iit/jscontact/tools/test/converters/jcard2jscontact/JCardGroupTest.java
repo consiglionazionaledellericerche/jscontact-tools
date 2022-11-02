@@ -167,9 +167,9 @@ public class JCardGroupTest extends JCard2JSContactTest {
                 "[\"kind\", {}, \"text\", \"group\"], " +
                 "[\"fn\", {}, \"text\", \"Funky distribution list\"], " +
                 "[\"member\", {}, \"uri\", \"mailto:subscriber1@example.com\"], " +
-                "[\"member\", {\"pref\":\"2\"}, \"uri\", \"xmpp:subscriber2@example.com\"], " +
+                "[\"member\", {\"pref\":2}, \"uri\", \"xmpp:subscriber2@example.com\"], " +
                 "[\"member\", {}, \"uri\", \"sip:subscriber3@example.com\"], " +
-                "[\"member\", {\"pref\":\"1\"}, \"uri\", \"tel:+1-418-555-5555\"] " +
+                "[\"member\", {\"pref\":1}, \"uri\", \"tel:+1-418-555-5555\"] " +
                 "]]";
 
         List<JSContact> jsContacts = jCard2JSContact.convert(jcard);

@@ -31,8 +31,6 @@ import lombok.Data;
 public class VCard2JSContactConfig {
 
     @Builder.Default
-    private String extensionsPrefix = "extension:";
-    @Builder.Default
     private String customTimeZonesPrefix = "tz";
     @Builder.Default
     private boolean setCardMustBeValidated = true;

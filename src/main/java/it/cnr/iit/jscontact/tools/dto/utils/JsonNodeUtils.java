@@ -53,4 +53,23 @@ public class JsonNodeUtils {
             array[i] = node.get(i).asText();
         return array;
     }
+
+    /**
+     * Converts a Jackson JsonNode object into a Java object.
+     * @param node the JsonNode object
+     * @return the object
+     */
+    public static Object getValue(JsonNode node) {
+
+        if (node.isBoolean())
+            return node.asBoolean();
+        else if (node.isInt())
+            return node.asInt();
+        else if (node.isDouble())
+            return node.asDouble();
+        else if (node.isTextual())
+            return node.asText();
+
+        return null;
+    }
 }

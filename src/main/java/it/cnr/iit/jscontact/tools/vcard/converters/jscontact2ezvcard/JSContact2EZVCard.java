@@ -1291,10 +1291,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static ClientPidMap getCliendPidMap(String key, String value) {
+    private static ClientPidMap getCliendPidMap(String pid, String uri) {
 
-        Integer pid = Integer.parseInt(key.replace(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)+"/",StringUtils.EMPTY));
-        return new ClientPidMap(pid, value);
+        return new ClientPidMap(Integer.parseInt(pid), uri);
     }
 
 
@@ -1309,57 +1308,35 @@ public class JSContact2EZVCard extends AbstractConverter {
         return className.toUpperCase();
     }
 
-    private static String[] getPropertyNamePlusIndex(String extension, String parameterName) {
-        String propertyPlusIndex = extension
-                                   .replace(UNMATCHED_PROPERTY_PREFIX,StringUtils.EMPTY)
-                                   .replace(":" + parameterName,StringUtils.EMPTY);
-        return propertyPlusIndex.split(":");
-    }
 
-    private static String getPropertyNameFromExtension(String extension, String parameterName) {
-        return getPropertyNamePlusIndex(extension, parameterName)[0];
-    }
+    private void fillVCardExtensions(VCard vcard, Card jsCard) {
 
-    private static Integer getPropertyIndexFromExtension(String extension, String parameterName) {
-        String[] items = getPropertyNamePlusIndex(extension, parameterName);
-        return (items.length == 2) ? Integer.parseInt(items[1]) : null;
-    }
-
-    private void fillVCardUnmatchedParameter(VCard vcard, String extension, String parameterName, String value) {
-
-        String selectedPropertyName = getPropertyNameFromExtension(extension, parameterName);
-        Integer index = getPropertyIndexFromExtension(extension, parameterName);
-        for (VCardProperty property : vcard.getProperties()) {
-            String propertyName = getPropertyNameFromClassName(property.getClass().getSimpleName());
-            if (selectedPropertyName.equals(propertyName))
-                    vcard.getProperties(property.getClass()).get((index==null) ? 0 : index).setParameter(parameterName, value);
-        }
-    }
-
-    private void fillExtensionsOld(VCard vcard, Card jsCard) {
-
-        if (jsCard.getExtensions() == null)
+        if (jsCard.getJCardExtensions() == null)
             return;
 
-        for (Map.Entry<String,Object> extension : jsCard.getExtensions().entrySet()) {
-            if (extension.getKey().startsWith(getUnmatchedPropertyName(VCARD_CLIENTPIDMAP_TAG)))
-                vcard.addClientPidMap(getCliendPidMap(extension.getKey(), ((String) extension.getValue())));
-            else if ((extension.getKey().startsWith(getUnmatchedPropertyName(VCARD_XML_TAG))))
+        for (JCardProp jCardProp : jsCard.getJCardExtensions()) {
+
+            if (jCardProp.getName().equalsIgnoreCase(VCARD_CLIENTPIDMAP_TAG)) {
+                String pid = ((String) jCardProp.getValue()).split(",")[0];
+                String uri = ((String) jCardProp.getValue()).split(",")[1];
+                ClientPidMap pidmap = getCliendPidMap(pid, uri);
+                pidmap.setParameters(jCardProp.getVCardParameters());
+                vcard.addClientPidMap(pidmap);
+            }
+            else if (jCardProp.getName().equalsIgnoreCase(VCARD_XML_TAG)) {
                 try {
-                    vcard.getXmls().add(new Xml(((String)extension.getValue())));
+                    Xml xml = new Xml(((String) jCardProp.getValue()));
+                    xml.setParameters(jCardProp.getVCardParameters());
+                    vcard.getXmls().add(xml);
                 } catch (Exception e) {
                     throw new InternalErrorException(e.getMessage());
                 }
-            else if (extension.getKey().equals(getUnmatchedParamName("N", "SORT-AS")))
-                vcard.getStructuredName().setParameter("SORT-AS", ((String)extension.getValue()));
-            else if (extension.getKey().equals(getUnmatchedParamName("ANNIVERSARY", "CALSCALE")))
-                vcard.getAnniversary().setParameter("CALSCALE", ((String)extension.getValue()));
-            else if (extension.getKey().equals(getUnmatchedParamName("BDAY", "CALSCALE")))
-                vcard.getBirthday().setParameter("CALSCALE", ((String)extension.getValue()));
-            else if (extension.getKey().equals(getUnmatchedParamName("DEATHDATE", "CALSCALE")))
-                vcard.getDeathdate().setParameter("CALSCALE", ((String)extension.getValue()));
-            else if (extension.getKey().startsWith(UNMATCHED_PROPERTY_PREFIX) && extension.getKey().endsWith(":PID"))
-                fillVCardUnmatchedParameter(vcard,extension.getKey(),"PID", ((String)extension.getValue()));
+            }
+            else {
+                RawProperty property = new RawProperty(jCardProp.getName().toUpperCase(), jCardProp.getValue().toString(), jCardProp.getType());
+                property.setParameters(jCardProp.getVCardParameters());
+                vcard.addProperty(property);
+            }
         }
     }
 
@@ -1447,14 +1424,14 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private void fillExtensions(VCard vcard, Card jsCard) {
+    private void fillJSContactExtensions(VCard vcard, Card jsCard) {
 
         Map<String,Object> allExtensionsMap = new HashMap<String,Object>();
         jsCard.buildAllExtensionsMap(allExtensionsMap,"");
 
         for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
             try {
-                RawProperty property = new RawProperty("X-RFC0000-JSPROP", X_RFC0000_JSPROP_Utils.toValue(entry.getValue()), VCardDataType.URI);
+                RawProperty property = new RawProperty("X-RFC0000-JSPROP", X_RFC0000_JSPROP_Utils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.URI);
                 property.setParameter("X-RFC0000-JSPATH", entry.getKey());
                 vcard.addProperty(property);
             } catch (Exception e) {}
@@ -1515,8 +1492,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillNotes(vCard, jsCard);
         fillRelations(vCard, jsCard);
         fillRFCXXXXProperties(vCard, jsCard);
-        fillExtensionsOld(vCard, jsCard);
-        fillExtensions(vCard,jsCard);
+        fillVCardExtensions(vCard, jsCard);
+        fillJSContactExtensions(vCard,jsCard);
 
         return vCard;
     }
