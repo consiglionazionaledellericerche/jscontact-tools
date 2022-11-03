@@ -1381,7 +1381,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     else {
                         String[] pathItems = path.split("/");
                         extensionName = pathItems[pathItems.length-1];
-                        jsContact.addExtension(Arrays.asList(pathItems),extensionName, value);
+                        List list = Arrays.asList(pathItems);
+                        jsContact.addExtension(list.subList(0, pathItems.length-1),extensionName, value);
                     }
                 }
             }

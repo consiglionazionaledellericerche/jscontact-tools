@@ -135,13 +135,13 @@ public abstract class AbstractExtensibleJSContactType {
                     int index = Integer.parseInt(pathItems.get(1));
                     AbstractExtensibleJSContactType[] subarray = (AbstractExtensibleJSContactType[]) field.get(this);
                     if (subarray != null)
-                        subarray[index].addExtension(pathItems.subList(2, pathItems.size() - 1), extension, value);
+                        subarray[index].addExtension(pathItems.subList(2, pathItems.size()), extension, value);
                 }
                 else if (Map.class.isAssignableFrom(field.getType())) {
                     try {
                         Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
                         if (submap != null)
-                            submap.get(pathItems.get(1)).addExtension(pathItems.subList(2, pathItems.size() - 1), extension, value);
+                            submap.get(pathItems.get(1)).addExtension(pathItems.subList(2, pathItems.size()), extension, value);
                     } catch(Exception e) {
                         try {
                             Map<String, AbstractExtensibleJSContactType[]> submap2 = (Map<String, AbstractExtensibleJSContactType[]>) field.get(this);
@@ -149,14 +149,14 @@ public abstract class AbstractExtensibleJSContactType {
                                     AbstractExtensibleJSContactType[] subarray2 = submap2.get(pathItems.get(1));
                                     int index = Integer.parseInt(pathItems.get(2));
                                     if (subarray2 != null)
-                                        subarray2[index].addExtension(pathItems.subList(3, pathItems.size() - 1), extension, value);
+                                        subarray2[index].addExtension(pathItems.subList(3, pathItems.size()), extension, value);
                             }
                         } catch (Exception e2) {}
                     }
                 } else {
                     try {
                         AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
-                        o.addExtension(pathItems.subList(1,pathItems.size()-1),extension, value);
+                        o.addExtension(pathItems.subList(1,pathItems.size()),extension, value);
                     } catch (Exception e) {}
                 }
 

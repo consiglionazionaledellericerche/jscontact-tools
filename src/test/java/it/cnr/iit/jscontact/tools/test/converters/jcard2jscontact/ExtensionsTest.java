@@ -19,12 +19,12 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
-import java.io.IOException;
+import static org.junit.Assert.assertEquals;
 
 public class ExtensionsTest extends JCard2JSContactTest {
 
-//    @Test
-    public void testExtendedJSContact1() throws IOException, CardException {
+    @Test
+    public void testExtendedJSContact1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -32,10 +32,13 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"extension:myext2\"},\"uri\",\"data:application/json;base64,eyJleHRwcm9wIjoiZXh0dmFsdWUifQ==\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
+        assertEquals("testExtendedJSContact1 - 2", "extvalue", jsCard.getExtensions().get("extension:myext1"));
+        assertEquals("testExtendedJSContact1 - 3", "{extprop=extvalue}", jsCard.getExtensions().get("extension:myext2").toString());
     }
 
-//    @Test
-    public void textExtendedJSContact2() throws IOException, CardException {
+    @Test
+    public void textExtendedJSContact2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
@@ -52,6 +55,16 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"ext1\"},\"uri\",\"data:application/json;10\"]"+
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        assertEquals("testExtendedJSContact1 - 1", 1, jsCard.getExtensions().size());
+        assertEquals("testExtendedJSContact1 - 2", 10, jsCard.getExtensions().get("ext1"));
+        assertEquals("testExtendedJSContact1 - 3", 1, jsCard.getNickNames().get("NICK-1").getExtensions().size());
+        assertEquals("testExtendedJSContact1 - 4", "text", jsCard.getNickNames().get("NICK-1").getExtensions().get("ext3"));
+        assertEquals("testExtendedJSContact1 - 5", 1, jsCard.getPreferredContactLanguages().get("jp")[0].getExtensions().size());
+        assertEquals("testExtendedJSContact1 - 6", "[1, 2]", jsCard.getPreferredContactLanguages().get("jp")[0].getExtensions().get("ext6").toString());
+        assertEquals("testExtendedJSContact1 - 7", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
+        assertEquals("testExtendedJSContact1 - 8", "{prop=10}", jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").toString());
+        assertEquals("testExtendedJSContact1 - 9", 1, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().size());
+        assertEquals("testExtendedJSContact1 - 10", true, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().get("ext4"));
 
     }
 

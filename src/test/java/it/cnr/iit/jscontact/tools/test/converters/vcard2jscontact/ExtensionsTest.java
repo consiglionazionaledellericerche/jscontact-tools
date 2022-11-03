@@ -16,19 +16,15 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
-
-import java.io.IOException;
-
 
 import static org.junit.Assert.assertEquals;
 
 public class ExtensionsTest extends VCard2JSContactTest {
 
     @Test
-    public void testExtendedJSContact1() throws IOException, CardException {
+    public void testExtendedJSContact1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -43,7 +39,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void textExtendedJSContact2() throws IOException, CardException {
+    public void textExtendedJSContact2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -61,7 +57,6 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "X-RFC0000-JSPROP;X-RFC0000-JSPATH=ext1;VALUE=uri:data:application/json;10\n" +
                 "END:VCARD";
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        System.out.println(PrettyPrintSerializer.print(jsCard));
         assertEquals("testExtendedJSContact1 - 1", 1, jsCard.getExtensions().size());
         assertEquals("testExtendedJSContact1 - 2", 10, jsCard.getExtensions().get("ext1"));
         assertEquals("testExtendedJSContact1 - 3", 1, jsCard.getNickNames().get("NICK-1").getExtensions().size());
@@ -70,6 +65,8 @@ public class ExtensionsTest extends VCard2JSContactTest {
         assertEquals("testExtendedJSContact1 - 6", "[1, 2]", jsCard.getPreferredContactLanguages().get("jp")[0].getExtensions().get("ext6").toString());
         assertEquals("testExtendedJSContact1 - 7", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
         assertEquals("testExtendedJSContact1 - 8", "{prop=10}", jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").toString());
+        assertEquals("testExtendedJSContact1 - 9", 1, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().size());
+        assertEquals("testExtendedJSContact1 - 10", true, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().get("ext4"));
 
     }
 
