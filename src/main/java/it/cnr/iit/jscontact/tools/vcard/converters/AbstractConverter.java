@@ -21,6 +21,9 @@ public abstract class AbstractConverter {
 
     protected static final String PROP_ID_PARAM = "PROP-ID";
 
+    protected static final String X_RFC0000_JSPROP = "X-RFC0000-JSPROP";
+    protected static final String X_RFC0000_JSPATH = "X-RFC0000-JSPATH";
+
     protected static final Map<String,String> fakeExtensionsMapping = new HashMap<String, String>() {{
         put("contact-uri","links");
         put("created","created");
@@ -28,6 +31,7 @@ public abstract class AbstractConverter {
         put("grammatical-gender","speakToAs/grammaticalGender");
         put("pronouns","speakToAs/pronouns");
         put("contact-channel-pref","preferredContactChannels");
+        put("x-rfc0000-jsprop","preferredContactChannels");
     }};
 
 

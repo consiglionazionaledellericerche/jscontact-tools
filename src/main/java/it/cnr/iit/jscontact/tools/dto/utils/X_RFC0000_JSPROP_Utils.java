@@ -35,18 +35,19 @@ public class X_RFC0000_JSPROP_Utils {
             return mapper.readValue(Base64Utils.decode(val),Object.class);
         } else {
             String val = s.replace("data:application/json;","");
-            try {
-                return Boolean.parseBoolean(val);
-            } catch (Exception e) {}
-            try {
-                return Integer.parseInt(val);
-            } catch (Exception e) {}
-            try {
-                return Float.parseFloat(val);
-            } catch (Exception e) {}
-            try {
-                return val.replaceAll("%%22","");
-            } catch (Exception e) {}
+            if (val.charAt(0) == '%')
+                return val.replaceAll("%22", "");
+            else {
+                try {
+                    return Integer.parseInt(val);
+                } catch (Exception e) { }
+                try {
+                    return Float.parseFloat(val);
+                } catch (Exception e) { }
+                try {
+                    return Boolean.parseBoolean(val);
+                } catch (Exception e) { }
+            }
         }
 
         return null;

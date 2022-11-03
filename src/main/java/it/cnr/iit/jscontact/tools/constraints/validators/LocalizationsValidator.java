@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.LocalizationsConstraint;
@@ -41,7 +40,6 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
             return true;
 
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode root = objectMapper.valueToTree(card);
 
         for (String language : card.getLocalizations().keySet()) {
             ParseStatus parseStatus = new ParseStatus();
@@ -56,9 +54,9 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
             for(Map.Entry<String,JsonNode> localization : localizationsPerlanguage.entrySet()) {
 
-                JsonPointer jsonPointer;
+                JsonNode node = null;
                 try {
-                    jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute(localization.getKey()));
+                    node = JsonPointerUtils.getPointedJsonNode(card, localization.getKey());
                 } catch (Exception e) {
                     context.buildConstraintViolationWithTemplate("invalid JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
                     return false;
@@ -66,7 +64,6 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
                 try {
                     JsonNode localizedNode = localization.getValue();
-                    JsonNode node = root.at(jsonPointer);
                     if (node.getNodeType() != localizedNode.getNodeType()) {
                         context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
                         return false;

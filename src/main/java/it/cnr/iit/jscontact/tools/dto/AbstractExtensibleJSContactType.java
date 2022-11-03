@@ -17,12 +17,12 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,7 +37,6 @@ import java.util.Map;
 @NoArgsConstructor
 public abstract class AbstractExtensibleJSContactType {
 
-    @JsonPropertyOrder(alphabetic = true)
     Map<String,Object> extensions;
 
     @JsonAnyGetter
@@ -118,4 +117,53 @@ public abstract class AbstractExtensibleJSContactType {
         }
     }
 
+
+
+    public void addExtension(List<String> pathItems, String extension, Object value) {
+
+        if (pathItems.isEmpty()) {
+            addExtension(extension,value);
+            return;
+        }
+
+        try {
+            for (Field field : this.getClass().getDeclaredFields()) {
+                if (!pathItems.get(0).equals(field.getName()))
+                    continue;
+
+                if (field.getType().isArray()) {
+                    int index = Integer.parseInt(pathItems.get(1));
+                    AbstractExtensibleJSContactType[] subarray = (AbstractExtensibleJSContactType[]) field.get(this);
+                    if (subarray != null)
+                        subarray[index].addExtension(pathItems.subList(2, pathItems.size() - 1), extension, value);
+                }
+                else if (Map.class.isAssignableFrom(field.getType())) {
+                    try {
+                        Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
+                        if (submap != null)
+                            submap.get(pathItems.get(1)).addExtension(pathItems.subList(2, pathItems.size() - 1), extension, value);
+                    } catch(Exception e) {
+                        try {
+                            Map<String, AbstractExtensibleJSContactType[]> submap2 = (Map<String, AbstractExtensibleJSContactType[]>) field.get(this);
+                            if (submap2 != null) {
+                                    AbstractExtensibleJSContactType[] subarray2 = submap2.get(pathItems.get(1));
+                                    int index = Integer.parseInt(pathItems.get(2));
+                                    if (subarray2 != null)
+                                        subarray2[index].addExtension(pathItems.subList(3, pathItems.size() - 1), extension, value);
+                            }
+                        } catch (Exception e2) {}
+                    }
+                } else {
+                    try {
+                        AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
+                        o.addExtension(pathItems.subList(1,pathItems.size()-1),extension, value);
+                    } catch (Exception e) {}
+                }
+
+            }
+        } catch(Exception e) {
+
+
+        }
+    }
 }

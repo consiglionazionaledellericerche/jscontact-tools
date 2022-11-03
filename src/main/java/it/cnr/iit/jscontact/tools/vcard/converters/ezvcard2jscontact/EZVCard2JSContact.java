@@ -15,13 +15,14 @@
  */
 package it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.ValidationWarnings;
 import ezvcard.parameter.RelatedType;
-import ezvcard.parameter.VCardParameter;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.*;
 import ezvcard.property.Organization;
@@ -1348,19 +1349,45 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private void fillVCardExtensions(VCard vcard, Card jsCard) {
+    private void fillVCardExtensions(VCard vcard, JSContact jsContact) {
 
         for (RawProperty extension : vcard.getExtendedProperties()) {
             if (!fakeExtensionsMapping.containsKey(extension.getPropertyName()) &&
                     !fakeExtensionsMapping.containsKey(extension.getPropertyName().toLowerCase())) {
-                jsCard.addJCardProp(JCardProp.builder()
+                jsContact.addJCardProp(JCardProp.builder()
                                              .name(extension.getPropertyName())
                                              .parameters(getJCardPropParameters(extension.getParameters()))                                            .type(extension.getDataType())
                                              .value(extension.getValue())
                                              .build());
                 if (extension.getGroup() != null)
-                    jsCard.addPropertyGroup(extension.getGroup(),extension.getPropertyName());
+                    jsContact.addPropertyGroup(extension.getGroup(),extension.getPropertyName());
             }
+        }
+    }
+
+    private void fillJSContactExtensions(VCard vcard, JSContact jsContact) throws CardException {
+
+        String path = null;
+        Object value = null;
+        String extensionName = null;
+        try {
+            for (RawProperty extension : vcard.getExtendedProperties()) {
+                if (extension.getPropertyName().equalsIgnoreCase(X_RFC0000_JSPROP)) {
+                    path = extension.getParameter(X_RFC0000_JSPATH);
+                    value = X_RFC0000_JSPROP_Utils.toJsonValue(extension.getValue());
+                    if (!path.contains("/")) {
+                        jsContact.addExtension(path,value);
+                    }
+                    else {
+                        String[] pathItems = path.split("/");
+                        extensionName = pathItems[pathItems.length-1];
+                        jsContact.addExtension(Arrays.asList(pathItems),extensionName, value);
+                    }
+                }
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new CardException(String.format("Unable to convert X-RFC0000-PROP property with path: %s", path));
         }
     }
 
@@ -1435,6 +1462,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (vCard.getMembers() != null && vCard.getMembers().size() != 0) {
             jsCardGroup = CardGroup.builder().uid(uid).build();
             fillMembers(vCard, jsCardGroup);
+            fillVCardExtensions(vCard, jsCardGroup);
+            fillJSContactExtensions(vCard, jsCardGroup);
             jsCardGroup.setUid(uid);
             if (containsCardProperties(vCard)) {
                 jsCardGroup.setCard(Card.builder().uid(uid).build());
@@ -1479,6 +1508,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             jsCard.setCustomTimeZones(customTimeZones);
         fillUnmatchedElments(vCard, jsCard);
         fillVCardExtensions(vCard, jsCard);
+        fillJSContactExtensions(vCard, jsCard);
 
         if (jsCardGroup != null)
             return jsCardGroup;
