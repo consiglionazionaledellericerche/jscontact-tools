@@ -1,7 +1,6 @@
 package it.cnr.iit.jscontact.tools.vcard.converters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;

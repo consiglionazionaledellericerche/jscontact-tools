@@ -29,6 +29,6 @@ public enum ResourceType {
     SOUND,
     KEY,
     FREEBUSY,
-    CALENDAR;
+    CALENDAR
 }
 

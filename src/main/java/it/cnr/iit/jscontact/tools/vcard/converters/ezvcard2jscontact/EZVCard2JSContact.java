@@ -15,9 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;

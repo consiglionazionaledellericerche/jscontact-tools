@@ -15,7 +15,7 @@ public class X_RFC0000_JSPROP_Utils {
         if (o instanceof String)
             return String.format("data:application/json;%%22%s%%22", o);
         else if (o instanceof Boolean || o instanceof Integer)
-            return String.format("data:application/json;%s", o.toString());
+            return String.format("data:application/json;%s", o);
         else {
             return String.format("data:application/json;base64,%s", Base64Utils.encode(mapper.writeValueAsString(o)));
         }
