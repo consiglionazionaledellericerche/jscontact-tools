@@ -26,6 +26,8 @@ import java.util.Map;
 
 public class NotNullAnyValidator implements ConstraintValidator<NotNullAnyConstraint, Object> {
 
+    private static ObjectMapper mapper = new ObjectMapper();
+
     private String[] fieldNames;
 
     public void initialize(NotNullAnyConstraint constraintAnnotation) {
@@ -37,15 +39,13 @@ public class NotNullAnyValidator implements ConstraintValidator<NotNullAnyConstr
         if (object == null)
             return true;
 
-        ObjectMapper oMapper = new ObjectMapper();
-
         try {
 
             for (String fieldName:fieldNames){
                 Object property = PropertyUtils.getProperty(object, fieldName);
                 if (property!=null) {
                     try {
-                        Map<String, Object> map = oMapper.convertValue(property, Map.class);
+                        Map<String, Object> map = mapper.convertValue(property, Map.class);
                         if (!map.isEmpty())
                             return true;
                     } catch(IllegalArgumentException e) {

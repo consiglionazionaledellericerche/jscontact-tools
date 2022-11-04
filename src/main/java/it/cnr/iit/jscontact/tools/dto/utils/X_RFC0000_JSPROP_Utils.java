@@ -37,15 +37,14 @@ public class X_RFC0000_JSPROP_Utils {
             String val = s.replace("data:application/json;","");
             if (val.charAt(0) == '%')
                 return val.replaceAll("%22", "");
+            else if (val.equals("true") || val.equals("false"))
+                return Boolean.parseBoolean(val);
             else {
                 try {
                     return Integer.parseInt(val);
                 } catch (Exception e) { }
                 try {
                     return Float.parseFloat(val);
-                } catch (Exception e) { }
-                try {
-                    return Boolean.parseBoolean(val);
                 } catch (Exception e) { }
             }
         }

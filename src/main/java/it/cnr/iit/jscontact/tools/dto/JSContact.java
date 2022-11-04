@@ -54,6 +54,8 @@ import java.util.Map;
 @SuperBuilder
 public abstract class JSContact extends ValidableObject implements Serializable {
 
+    protected static ObjectMapper mapper = new ObjectMapper();
+
     @NotNull(message = "uid is missing in JSContact")
     @NonNull
     String uid;
@@ -118,14 +120,13 @@ public abstract class JSContact extends ValidableObject implements Serializable 
      */
     public static JSContact[] toJSContacts(String json) throws JsonProcessingException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(JSContact.class, new JSContactListDeserializer());
-        objectMapper.registerModule(module);
+        mapper.registerModule(module);
         try {
-            return objectMapper.readValue(json, JSContact[].class);
+            return mapper.readValue(json, JSContact[].class);
         } catch(Exception e) {
-            return new JSContact[]{objectMapper.readValue(json, JSContact.class)};
+            return new JSContact[]{mapper.readValue(json, JSContact.class)};
         }
     }
 
@@ -137,9 +138,7 @@ public abstract class JSContact extends ValidableObject implements Serializable 
      */
     public static String toJson(JSContact[] jsContacts) throws JsonProcessingException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(jsContacts);
-
+        return mapper.writeValueAsString(jsContacts);
     }
 
     /**

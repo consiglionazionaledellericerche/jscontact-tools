@@ -76,10 +76,9 @@ Here in the following a test assessing a successful creation of a cloned Card in
     @Test
     public void testClone1() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), Charset.forName("UTF-8"));
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
-        assertTrue("testClone1", Objects.deepEquals(jsCard, jsCard.clone()));
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
+        Card jsCard = Card.toCard(json);
+        assertTrue("testClone1", jsCard.equals(jsCard.clone()));
 
     }
 
@@ -142,7 +141,7 @@ JSContact serialization/deserializaion is performed through Jackson library anno
 ```
 
         Card jsCard = Card.builder.build();
-        String serialized = objectMapper.writeValueAsString(jsCard);
+        String serialized = mapper.writeValueAsString(jsCard);
 
 ```
 
@@ -160,8 +159,8 @@ To pretty print serialized JSContact objects, use the following:
 ```
 
         String json = "{"uid": \"c642b718-7c89-49f4-9497-d9fb279bb437\"}";
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        ObjectMapper mapper = new ObjectMapper();
+        Card jsCard = mapper.readValue(json, Card.class);
 
 ```
 

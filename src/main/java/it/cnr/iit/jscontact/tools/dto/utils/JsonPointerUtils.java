@@ -12,7 +12,7 @@ import it.cnr.iit.jscontact.tools.dto.JSContact;
  */
 public class JsonPointerUtils {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Converts a relative JSONPointer expression in an absolute JSONPointer expression so that it can be processed by Jackson library
@@ -29,7 +29,7 @@ public class JsonPointerUtils {
 
     public static JsonNode getPointedJsonNode(JSContact jsContact, String jsonPointerExpr) {
 
-        JsonNode root = objectMapper.valueToTree(jsContact);
+        JsonNode root = mapper.valueToTree(jsContact);
 
         JsonPointer jsonPointer =  JsonPointer.compile(toAbsolute(jsonPointerExpr));
         return root.at(jsonPointer);

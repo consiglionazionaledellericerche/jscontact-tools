@@ -679,8 +679,7 @@ public class Card extends JSContact implements Serializable {
         if (localizationsPerLanguage == null)
             return null;
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode root = objectMapper.valueToTree(this);
+        JsonNode root = mapper.valueToTree(this);
 
         for (Map.Entry<String,JsonNode> localization : localizationsPerLanguage.entrySet()) {
             JsonPointer jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute(localization.getKey()));
@@ -696,7 +695,7 @@ public class Card extends JSContact implements Serializable {
             }
         }
 
-        Card localizedCard = objectMapper.convertValue(root, Card.class);
+        Card localizedCard = mapper.convertValue(root, Card.class);
         localizedCard.setLocale(language);
         localizedCard.setLocalizations(null);
 
@@ -731,15 +730,13 @@ public class Card extends JSContact implements Serializable {
 
     public static Card toCard(String json) throws JsonProcessingException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, Card.class);
+        return mapper.readValue(json, Card.class);
 
     }
 
     public static String toJson(Card jsCard) throws JsonProcessingException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(jsCard);
+        return mapper.writeValueAsString(jsCard);
 
     }
 }

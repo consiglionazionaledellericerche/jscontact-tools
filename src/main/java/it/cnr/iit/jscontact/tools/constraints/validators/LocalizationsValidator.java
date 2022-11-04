@@ -30,16 +30,15 @@ import java.util.Map;
 
 public class LocalizationsValidator implements ConstraintValidator<LocalizationsConstraint, Card> {
 
+    private static ObjectMapper mapper = new ObjectMapper();
+
     public void initialize(LocalizationsConstraint constraintAnnotation) {
     }
-
 
     public boolean isValid(Card card, ConstraintValidatorContext context) {
 
         if (card.getLocalizations() == null)
             return true;
-
-        ObjectMapper objectMapper = new ObjectMapper();
 
         for (String language : card.getLocalizations().keySet()) {
             ParseStatus parseStatus = new ParseStatus();
@@ -79,7 +78,7 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
                             context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
                             return false;
                         }
-                        objectMapper.convertValue(localizedNode, Class.forName(ClassUtils.getDtoPackageName()+"."+nodeClassName));
+                        mapper.convertValue(localizedNode, Class.forName(ClassUtils.getDtoPackageName()+"."+nodeClassName));
                     }
                 } catch (Exception e) {
                     context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();

@@ -33,7 +33,5 @@ public abstract class AbstractConverter {
         put("x-rfc0000-jsprop","preferredContactChannels");
     }};
 
-
     protected static final ObjectMapper mapper = new ObjectMapper();
-
 }
