@@ -16,8 +16,16 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.dto.deserializers.JCardParamsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.JCardParamsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Abstract class mapping the vCard 4.0 related properties that can be grouped as defined in section 3.3 of [RFC6350].
@@ -27,6 +35,7 @@ import lombok.experimental.SuperBuilder;
  */
 @ToString
 @SuperBuilder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class AbstractJSContactType extends AbstractExtensibleJSContactType {
@@ -40,5 +49,25 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     @Getter
     @Setter
     String propId;
+
+    @JsonProperty("ietf.org:rfc0000:params")
+    @JsonSerialize(using = JCardParamsSerializer.class)
+    @JsonDeserialize(using = JCardParamsDeserializer.class)
+    Map<String,JCardParam> jCardParams;
+
+
+    /**
+     * Adds a JCardParam object to this object.
+     *
+     * @param id the link resource identifier
+     * @param jCardParam the JCardParam object
+     */
+    public void addLinkResource(String id, JCardParam jCardParam) {
+
+        if (jCardParams == null)
+            jCardParams = new HashMap<>();
+
+        jCardParams.putIfAbsent(id, jCardParam);
+    }
 
 }

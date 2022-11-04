@@ -40,4 +40,41 @@ public class UnmatchedTest extends JSContact2VCardTest {
         assertEquals("testUnmatchedProperty - 1", 1, vcard.getXmls().size());
     }
 
+    public void testUnmatchedParameter() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":\"test\"," +
+                "\"name\" : { " +
+                    "\"@type\" : \"Name\", " +
+                    "\"components\" : [ { " +
+                            "\"@type\" : \"NameComponent\", " +
+                            "\"type\" : \"prefix\", " +
+                            "\"value\" : \"Mr.\" " +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\", " +
+                            "\"type\" : \"personal\", " +
+                            "\"value\" : \"John\" " +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\", " +
+                            "\"type\" : \"surname\", " +
+                            "\"value\" : \"Public\" " +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\", " +
+                            "\"type\" : \"additional\", " +
+                            "\"value\" : \"Quinlan\" " +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\", " +
+                            "\"type\" : \"suffix\", " +
+                            "\"value\" : \"Esq.\" " +
+                    "} ], " +
+                    "\"ietf.org:rfc0000:params\" : { " +
+                        "\"sort-as\" : [ \"Public\", \"John\" ] " +
+                    "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testUnmatchedParameter - 1", "Public,John", vcard.getStructuredName().getSortAs());
+    }
 }

@@ -238,14 +238,13 @@ The conversion is executed according to the following rules:
 
 3. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
 
-4. An unmatched property is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350`. The following unmatched properties are considered:    
+4. An unmatched property is converted into an entry of the topmost Card/CardGroup `ietf.org:rfc0000:props` map. The following unmatched properties are considered:    
     CLIENTPIDMAP
     XML
 
-5. An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350:<vCard Property Name>`. The following unmatched parameters are considered:
+5. An unmatched parameter is converted into an entry of an object `ietf.org:rfc0000:params` map. The following unmatched parameters are considered:
     PID
-    SORT-AS (only for vCard N property)
-    CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
+    SORT-AS
  
 6. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
 
@@ -380,14 +379,13 @@ All the methods take in input a list of JSContact top most objects and can raise
 
 1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
  
-2. A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
+2. An entry of the topmost Card/CardGroup `ietf.org:rfc0000:props` map is converted into the related vCard property  . The following properties are considered:
     CLIENTPIDMAP
     XML
  
-3. A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>:<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
+3. An entry of an object `ietf.org:rfc0000:params` map is converted into a vCard parameter. The following parameters are considered:
     PID
-    SORT-AS (only for vCard N property)
-    CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
+    SORT-AS
 
 4. Default values for the configuration properties are:
 
