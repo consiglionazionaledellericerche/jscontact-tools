@@ -270,55 +270,55 @@ The conversion is executed according to the following rules:
 
 10. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
 
-11. BDAY (BIRTHDATE)
-12. DEATHDAY (DEATHDATE)
-13. ANNIVERSARY
+    1. BDAY (BIRTHDATE)
+    2. DEATHDAY (DEATHDATE)
+    3. ANNIVERSARY
 
-14. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
+11. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
 
-15. HOBBY
-16. INTEREST
-17. EXPERTISE
+    1. HOBBY
+    2. INTEREST
+    3. EXPERTISE
 
-18. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
+12. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
 
     1. PHOTO
-    3. SOUND
-    2. LOGO
+    2. SOUND
+    3. LOGO
 
-19. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
+13. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
 
     1. CALURI
     2. FBURL
 
-20. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
+14. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
 
     1. URL
     2. CONTACT-URI
 
-21. Regardless of their positions inside the vCard, properties mapped as DrectoryResource objects appear in the following order:
+15. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the following order:
 
-    4. SOURCE
-    8. ORG-DIRECTORY
+    1. SOURCE
+    2. ORG-DIRECTORY
 
-22. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
+16. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
     1. TITLE
     2. ROLE
 
-23. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
+17. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
 
-24. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
+18. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
 
-25. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
+19. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
-26. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
+20. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-27. JSContact UTCDateTime type is mapped to Java Calendar.
+21. JSContact UTCDateTime type is mapped to Java Calendar.
 
-28. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
+22. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
 
-29. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
+23. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
 
 ### Conversion Profiles from vCard to JSContact
 
