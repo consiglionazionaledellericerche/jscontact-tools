@@ -25,7 +25,6 @@ import ezvcard.property.*;
 import ezvcard.property.Organization;
 import ezvcard.property.Title;
 import ezvcard.util.GeoUri;
-import ezvcard.util.PartialDate;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
@@ -788,16 +787,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         try {
             if (date.getDate() != null)
-                return AnniversaryDate.builder().date(date.getCalendar()).build();
+                return AnniversaryDate.builder().date(Timestamp.builder().utc(date.getCalendar()).build()).build();
             if (date.getPartialDate() != null) {
-                PartialDate pd;
-                if (date.getPartialDate().hasTimeComponent())
-                    pd = PartialDate.builder().year(date.getPartialDate().getYear())
+                    PartialDate pd = PartialDate.builder().year(date.getPartialDate().getYear())
                                                           .month(date.getPartialDate().getMonth())
-                                                          .date(date.getPartialDate().getDate())
+                                                          .day(date.getPartialDate().getDate())
+                                                          .calendarScale((date.getCalscale()!=null) ? date.getCalscale().getValue() : null)
                                                           .build();
-                else
-                    pd = date.getPartialDate();
                 return AnniversaryDate.builder().partialDate(pd).build();
             }
             if (date.getText() != null)

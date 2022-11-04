@@ -1,7 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
-import ezvcard.util.PartialDate;
 import ezvcard.util.VCardDateFormat;
+import it.cnr.iit.jscontact.tools.dto.PartialDate;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.*;
@@ -122,21 +122,6 @@ public class DateUtils {
     }
 
     /**
-     * Converts a text representing a JSContact partial date into a Ezvcard partial date text format.
-     * @param jsContactPartialDateText the JSContact partial date text format
-     * @return the Ezvcard partial date text format
-     */
-    public static String toVCardPartialDateText(String jsContactPartialDateText) {
-
-        String year = jsContactPartialDateText.substring(0,4);
-        String month = jsContactPartialDateText.substring(5,7);
-        String day = jsContactPartialDateText.substring(9);
-        return String.format("%s%s%s", (year.equals("0000") ? "--" : year),
-                                       (month.equals("00") ? "-" : month),
-                                       (day.equals("00") ? "-" : day));
-    }
-
-    /**
      * Converts an Ezvcard partial date into a JSContact partial date text format.
      * @param partialDate the partial date as an Ezvcard PartialDate object
      * @return the Ezvcard partial date in text format
@@ -145,7 +130,7 @@ public class DateUtils {
 
         String year = (partialDate.getYear() != null) ? String.format("%04d",partialDate.getYear()) : "0000";
         String month = (partialDate.getMonth() != null) ? String.format("%02d",partialDate.getMonth()) : "00";
-        String day = (partialDate.getDate() != null) ? String.format("%02d",partialDate.getDate()) : "00";
+        String day = (partialDate.getDay() != null) ? String.format("%02d",partialDate.getDay()) : "00";
         return String.format("%s-%s-%s", year, month, day);
     }
 

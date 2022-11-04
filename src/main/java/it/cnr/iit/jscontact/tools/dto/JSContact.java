@@ -66,6 +66,7 @@ public abstract class JSContact extends ValidableObject implements Serializable 
     @JsonProperty("ietf.org:rfc0000:props")
     @JsonSerialize(using = JCardPropsSerializer.class)
     @JsonDeserialize(using = JCardPropsDeserializer.class)
+    @Valid
     JCardProp[] jCardExtensions;
 
     /**

@@ -24,6 +24,7 @@ import it.cnr.iit.jscontact.tools.dto.serializers.JCardParamsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +54,7 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     @JsonProperty("ietf.org:rfc0000:params")
     @JsonSerialize(using = JCardParamsSerializer.class)
     @JsonDeserialize(using = JCardParamsDeserializer.class)
+    @Valid
     Map<String,JCardParam> jCardParams;
 
 

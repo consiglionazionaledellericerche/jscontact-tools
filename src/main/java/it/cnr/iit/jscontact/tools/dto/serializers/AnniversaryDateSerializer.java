@@ -38,8 +38,8 @@ public class AnniversaryDateSerializer extends JsonSerializer<AnniversaryDate> {
             throws IOException {
 
         if (anniversaryDate.getDate()!=null)
-            jgen.writeString(DateUtils.toString(anniversaryDate.getDate()));
+            jgen.writeObject(anniversaryDate.getDate());
         else if (anniversaryDate.getPartialDate()!=null)
-            jgen.writeString(DateUtils.toJSContactPartialDateText(anniversaryDate.getPartialDate()));
+            jgen.writeObject(anniversaryDate.getPartialDate());
     }
 }

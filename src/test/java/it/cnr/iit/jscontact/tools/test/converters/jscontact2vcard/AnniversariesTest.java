@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
 import ezvcard.util.GeoUri;
+import ezvcard.util.PartialDate;
 import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -36,9 +37,12 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "\"fullName\":\"test\"," +
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
-                                    "\"@type\":\"Anniversary\"," +
+                                   "\"@type\":\"Anniversary\"," +
                                    "\"type\":\"birth\", " +
-                                   "\"date\":\"1953-10-15T23:10:00Z\"" +
+                                   "\"date\":{" +
+                                        "\"@type\":\"Timestamp\"," +
+                                        "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                                    "}" +
                                "}" +
                         "}" +
                         "}";
@@ -58,7 +62,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
@@ -81,9 +88,12 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "\"fullName\":\"test\"," +
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
-                                    "\"@type\":\"Anniversary\"," +
+                                   "\"@type\":\"Anniversary\"," +
                                    "\"type\":\"death\", " +
-                                   "\"date\":\"1953-10-15T23:10:00Z\"" +
+                                    "\"date\":{" +
+                                        "\"@type\":\"Timestamp\"," +
+                                        "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                                    "}" +
                                "}" +
                         "}" +
                         "}";
@@ -103,7 +113,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
@@ -127,7 +140,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Los Angeles CA USA\"" +
                         "}" +
@@ -135,7 +151,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
@@ -162,7 +181,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Los Angeles CA USA\"" +
                         "}" +
@@ -170,7 +192,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
@@ -178,7 +203,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"label\":\"marriage date\"," +
-                        "\"date\":\"1986-02-01T19:00:00Z\"" +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1986-02-01T19:00:00Z\"" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
@@ -204,7 +232,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                               "\"@type\":\"Address\"," +
                               "\"coordinates\":\"geo:34.15876,-118.45728\"" +
@@ -213,7 +244,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
@@ -222,7 +256,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"label\":\"marriage date\"," +
-                        "\"date\":\"1986-02-01T19:00:00Z\"" +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1986-02-01T19:00:00Z\"" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
@@ -248,7 +285,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
                             "\"locality\":\"Los Angeles\"," +
@@ -259,7 +299,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
@@ -268,7 +311,10 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"label\":\"marriage date\"," +
-                        "\"date\":\"1986-02-01T19:00:00Z\"" +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1986-02-01T19:00:00Z\"" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
@@ -282,5 +328,63 @@ public class AnniversariesTest extends JSContact2VCardTest {
         assertEquals("testAnniversaries8 - 7", "ANNIVERSARY-2", vcard.getDeathdate().getParameter(PROP_ID_PARAM));
         assertEquals("testAnniversaries8 - 8", "ANNIVERSARY-3", vcard.getAnniversary().getParameter(PROP_ID_PARAM));
     }
+
+
+    @Test
+    public void testAnniversaries9() throws IOException, CardException {
+
+        String jsCard = "{ " +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
+                "\"fullName\":\"test\"," +
+                "\"anniversaries\": { \"ANNIVERSARY-1\": " +
+                    "{" +
+                        "\"@type\":\"Anniversary\"," +
+                        "\"type\":\"birth\", " +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
+                        "\"place\":{ " +
+                            "\"@type\":\"Address\"," +
+                            "\"locality\":\"Los Angeles\"," +
+                            "\"region\":\"CA\"," +
+                            "\"country\":\"USA\"" +
+                        "}" +
+                    "}," +
+                    "\"ANNIVERSARY-2\": {" +
+                        "\"@type\":\"Anniversary\"," +
+                        "\"type\":\"death\", " +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
+                        "\"place\":{ " +
+                            "\"@type\":\"Address\"," +
+                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                        "}" +
+                    "}," +
+                    "\"ANNIVERSARY-3\": {" +
+                        "\"@type\":\"Anniversary\"," +
+                        "\"label\":\"marriage date\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"PartialDate\"," +
+                            "\"year\":1986, " +
+                            "\"month\":2 " +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        assertEquals("testAnniversaries9 - 1", 0, vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
+        assertEquals("testAnniversaries9 - 2", "Los Angeles\nCA\nUSA", vcard.getBirthplace().getText());
+        assertEquals("testAnniversaries9 - 3", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")));
+        assertEquals("testAnniversaries9 - 4", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getDeathplace().getText());
+        assertEquals("testAnniversaries9 - 5", PartialDate.builder().year(1986).month(2).build(), vcard.getAnniversary().getPartialDate());
+        assertEquals("testAnniversaries9 - 6", "ANNIVERSARY-1", vcard.getBirthday().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversaries9 - 7", "ANNIVERSARY-2", vcard.getDeathdate().getParameter(PROP_ID_PARAM));
+        assertEquals("testAnniversaries9 - 8", "ANNIVERSARY-3", vcard.getAnniversary().getParameter(PROP_ID_PARAM));
+    }
+
 
 }

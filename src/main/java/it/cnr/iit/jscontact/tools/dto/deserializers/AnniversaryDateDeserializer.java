@@ -19,7 +19,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
+import it.cnr.iit.jscontact.tools.dto.PartialDate;
+import it.cnr.iit.jscontact.tools.dto.Timestamp;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -32,11 +35,16 @@ import java.io.IOException;
 @NoArgsConstructor
 public class AnniversaryDateDeserializer extends JsonDeserializer<AnniversaryDate> {
 
+    private static ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public AnniversaryDate deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        return AnniversaryDate.parse(node.asText());
+        if (node.get("@type").asText().equals("Timestamp")) {
+            return AnniversaryDate.builder().date(mapper.treeToValue(node, Timestamp.class)).build();
+        } else {
+            return AnniversaryDate.builder().partialDate(mapper.treeToValue(node, PartialDate.class)).build();
+        }
     }
 }

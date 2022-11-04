@@ -5,6 +5,7 @@ import ezvcard.parameter.VCardParameters;
 import it.cnr.iit.jscontact.tools.dto.utils.VCardUtils;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -19,6 +20,7 @@ import java.util.Map;
 @Data
 public class JCardProp {
 
+    @NotNull(message = "name is missing in JCardProp")
     @NonNull
     String name;
 
@@ -27,9 +29,9 @@ public class JCardProp {
 
     VCardDataType type;
 
+    @NotNull(message = "value is missing in JCardProp")
     @NonNull
     Object value;
-
 
     /**
      * Adds a parameter to this object.

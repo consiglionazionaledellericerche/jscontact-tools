@@ -38,7 +38,10 @@ public class AnniversariesTest extends RoundtripTest {
                                "{" +
                                     "\"@type\":\"Anniversary\"," +
                                    "\"type\":\"birth\", " +
-                                   "\"date\":\"1953-10-15T23:10:00Z\"" +
+                                    "\"date\":{" +
+                                        "\"@type\":\"Timestamp\"," +
+                                        "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                                    "}" +
                                "}" +
                         "}" +
                         "}";
@@ -58,7 +61,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
@@ -83,7 +89,10 @@ public class AnniversariesTest extends RoundtripTest {
                                "{" +
                                     "\"@type\":\"Anniversary\"," +
                                    "\"type\":\"death\", " +
-                                   "\"date\":\"1953-10-15T23:10:00Z\"" +
+                                "\"date\":{" +
+                                    "\"@type\":\"Timestamp\"," +
+                                    "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                                "}" +
                                "}" +
                         "}" +
                         "}";
@@ -104,7 +113,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
@@ -128,7 +140,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Los Angeles CA USA\"" +
                         "}" +
@@ -136,7 +151,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
@@ -160,7 +178,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Los Angeles CA USA\"" +
                         "}" +
@@ -168,7 +189,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
@@ -176,7 +200,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"label\":\"marriage date\"," +
-                        "\"date\":\"1986-02-01T19:00:00Z\"" +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1986-02-01T19:00:00Z\"" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
@@ -197,7 +224,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                               "\"@type\":\"Address\"," +
                               "\"coordinates\":\"geo:34.15876,-118.45728\"" +
@@ -206,7 +236,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
@@ -215,7 +248,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"label\":\"marriage date\"," +
-                        "\"date\":\"1986-02-01T19:00:00Z\"" +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1986-02-01T19:00:00Z\"" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
@@ -236,7 +272,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "{" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"birth\", " +
-                        "\"date\":\"1953-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
                             "\"locality\":\"Los Angeles\"," +
@@ -247,7 +286,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"type\":\"death\", " +
-                        "\"date\":\"1993-10-15T23:10:00Z\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
                             "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
@@ -256,7 +298,10 @@ public class AnniversariesTest extends RoundtripTest {
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
                         "\"label\":\"marriage date\"," +
-                        "\"date\":\"1986-02-01T19:00:00Z\"" +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1986-02-01T19:00:00Z\"" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
@@ -264,6 +309,56 @@ public class AnniversariesTest extends RoundtripTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testAnniversaries8 - 1", jscard2, Card.toCard(jscard));
+    }
+
+    @Test
+    public void testAnniversaries9() throws IOException, CardException {
+
+        String jscard = "{ " +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
+                "\"fullName\":\"test\"," +
+                "\"anniversaries\": { " +
+                    "\"ANNIVERSARY-1\": {" +
+                        "\"@type\":\"Anniversary\"," +
+                        "\"type\":\"birth\", " +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}," +
+                        "\"place\":{ " +
+                            "\"@type\":\"Address\"," +
+                            "\"locality\":\"Los Angeles\"," +
+                            "\"region\":\"CA\"," +
+                            "\"country\":\"USA\"" +
+                        "}" +
+                    "}," +
+                    "\"ANNIVERSARY-2\": {" +
+                        "\"@type\":\"Anniversary\"," +
+                        "\"type\":\"death\", " +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1993-10-15T23:10:00Z\"" +
+                        "}," +
+                        "\"place\":{ " +
+                            "\"@type\":\"Address\"," +
+                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                        "}" +
+                    "}," +
+                    "\"ANNIVERSARY-3\": {" +
+                        "\"@type\":\"Anniversary\"," +
+                        "\"label\":\"marriage date\"," +
+                        "\"date\":{" +
+                            "\"@type\":\"PartialDate\"," +
+                            "\"year\":1986, " +
+                            "\"month\":2 " +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries9 - 1", jscard2, Card.toCard(jscard));
     }
 
 }

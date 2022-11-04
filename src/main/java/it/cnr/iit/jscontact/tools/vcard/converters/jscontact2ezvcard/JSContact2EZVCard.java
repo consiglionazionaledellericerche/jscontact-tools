@@ -9,6 +9,7 @@ import ezvcard.VCardVersion;
 import ezvcard.parameter.*;
 import ezvcard.property.*;
 import ezvcard.util.*;
+import ezvcard.util.PartialDate;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
@@ -667,11 +668,15 @@ public class JSContact2EZVCard extends AbstractConverter {
         try {
             if (anniversary.getDate().getDate()!=null) {
                 Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class, boolean.class);
-                return constructor.newInstance(anniversary.getDate().getDate(), true);
+                return constructor.newInstance(anniversary.getDate().getDate().getUtc(), true);
             }
             if (anniversary.getDate().getPartialDate()!=null) {
                 Constructor<T> constructor = classs.getDeclaredConstructor(PartialDate.class);
-                return constructor.newInstance(anniversary.getDate().getPartialDate());
+                T property = constructor.newInstance(anniversary.getDate().getPartialDate().toVCardPartialDate());
+                try {
+                    property.setCalscale(Calscale.get(anniversary.getDate().getPartialDate().getCalendarScale()));
+                } catch(Exception e) {}
+                return property;
             }
         } catch (Exception e) {
             throw new InternalErrorException(e.getMessage());
