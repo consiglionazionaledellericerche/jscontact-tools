@@ -306,19 +306,21 @@ The conversion is executed according to the following rules:
     1. TITLE
     2. ROLE
 
-17. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
+17. The order of conversion of the instances of HOBBY, INTEREST, EXPERTISE and ORG-DIRECTORY properties is based on the values of the INDEX parameter
 
-18. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
+18. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
 
-19. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
+19. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
 
-20. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
+20. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
-21. JSContact UTCDateTime type is mapped to Java Calendar.
+21. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-22. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
+22. JSContact UTCDateTime type is mapped to Java Calendar.
 
-23. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
+23. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
+
+24. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
 
 ### Conversion Profiles from vCard to JSContact
 
