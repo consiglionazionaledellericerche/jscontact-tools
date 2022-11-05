@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.TitleEnum;
 import it.cnr.iit.jscontact.tools.dto.TitleType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class TitleTypeDeserializer extends JsonDeserializer<TitleType> {
         try {
             return TitleType.builder().rfcValue(TitleEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return TitleType.builder().extValue(value).build();
+            return TitleType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

@@ -48,7 +48,7 @@ public class KindTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testExtKind - 1", "x-value", jsCard.getKind().getExtValue());
+        assertEquals("testExtKind - 1", "x-value", jsCard.getKind().getExtValue().toString());
 
     }
 

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.DirectoryResourceEnum;
 import it.cnr.iit.jscontact.tools.dto.DirectoryResourceType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class DirectoryResourceTypeDeserializer extends JsonDeserializer<Director
         try {
             return DirectoryResourceType.builder().rfcValue(DirectoryResourceEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return DirectoryResourceType.builder().extValue(value).build();
+            return DirectoryResourceType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

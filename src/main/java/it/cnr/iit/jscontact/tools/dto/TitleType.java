@@ -75,5 +75,5 @@ public class TitleType extends ExtensibleEnumType<TitleEnum> implements Serializ
      *
      * @return a custom kind of contact card
      */
-    private static TitleType ext(String extValue) { return TitleType.builder().extValue(extValue).build(); }
+    private static TitleType ext(String extValue) { return TitleType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

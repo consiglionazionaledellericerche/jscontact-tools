@@ -34,7 +34,7 @@ public class ContactChannelsKeyDeserializer extends KeyDeserializer {
         try {
             channelType = ChannelType.builder().rfcValue(ChannelEnum.getEnum(key)).build();
         } catch (IllegalArgumentException e) {
-            channelType = ChannelType.builder().extValue(key).build();
+            channelType = ChannelType.builder().extValue(V_Extension.toV_Extension(key)).build();
         }
         return channelType;
     }

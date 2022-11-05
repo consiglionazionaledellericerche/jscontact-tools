@@ -145,7 +145,7 @@ public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implement
      * @param extValue the custom phone feature in text format
      * @return a custom phone feature
      */
-    public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(extValue).build(); }
+    public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
     /**
      * Returns the list of enum values corresponding to those whose type is known in a given collection of phone features.

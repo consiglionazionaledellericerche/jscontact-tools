@@ -144,5 +144,5 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      *
      * @return a custom kind of contact card
      */
-    private static KindType ext(String extValue) { return KindType.builder().extValue(extValue).build(); }
+    private static KindType ext(String extValue) { return KindType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

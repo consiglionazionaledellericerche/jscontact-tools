@@ -59,5 +59,5 @@ public class LinkResourceType extends ExtensibleEnumType<LinkResourceEnum> imple
      *
      * @return a custom link resource type
      */
-    private static LinkResourceType ext(String extValue) { return LinkResourceType.builder().extValue(extValue).build(); }
+    private static LinkResourceType ext(String extValue) { return LinkResourceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

@@ -45,7 +45,7 @@ public class KindTest extends JCard2JSContactTest {
                 "]]";
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testExtKind - 1", "x-value", jsCard.getKind().getExtValue());
+        assertEquals("testExtKind - 1", "x-value", jsCard.getKind().getExtValue().toString());
 
     }
 

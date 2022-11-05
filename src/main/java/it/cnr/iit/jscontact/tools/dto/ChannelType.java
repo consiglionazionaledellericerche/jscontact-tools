@@ -104,7 +104,7 @@ public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Seri
      *
      * @return a custom contact channel type
      */
-    public static ChannelType ext(String extValue) { return ChannelType.builder().extValue(extValue).build(); }
+    public static ChannelType ext(String extValue) { return ChannelType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
     @Override
     public int compareTo(ChannelType o) {
@@ -114,6 +114,6 @@ public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Seri
 
     @Override
     public String toString() {
-        return (this.isRfcValue()) ? this.getRfcValue().toString() : this.getExtValue();
+        return (this.isRfcValue()) ? this.getRfcValue().toString() : this.getExtValue().toString();
     }
 }

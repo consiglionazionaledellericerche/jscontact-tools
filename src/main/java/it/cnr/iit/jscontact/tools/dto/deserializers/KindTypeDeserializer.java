@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.KindEnum;
 import it.cnr.iit.jscontact.tools.dto.KindType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class KindTypeDeserializer extends JsonDeserializer<KindType> {
         try {
             return KindType.builder().rfcValue(KindEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return KindType.builder().extValue(value).build();
+            return KindType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

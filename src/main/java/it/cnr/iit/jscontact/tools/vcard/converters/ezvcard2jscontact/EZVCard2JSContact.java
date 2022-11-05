@@ -1421,7 +1421,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         try {
             return KindType.builder().rfcValue(KindEnum.getEnum(getValue(kind))).build();
         } catch (IllegalArgumentException e) {
-            return KindType.builder().extValue(getValue(kind)).build();
+            return KindType.builder().extValue(V_Extension.toV_Extension(getValue(kind))).build();
         }
     }
 

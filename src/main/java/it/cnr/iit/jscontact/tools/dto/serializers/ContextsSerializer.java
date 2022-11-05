@@ -39,7 +39,7 @@ public class ContextsSerializer extends JsonSerializer<Map<Context,Boolean>> {
 
         jgen.writeStartObject();
         for (Map.Entry<Context,Boolean> entry : contexts.entrySet())
-            jgen.writeBooleanField((entry.getKey().getRfcValue()!=null) ? entry.getKey().getRfcValue().getValue() : entry.getKey().getExtValue(), entry.getValue());
+            jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());
         jgen.writeEndObject();
 
     }

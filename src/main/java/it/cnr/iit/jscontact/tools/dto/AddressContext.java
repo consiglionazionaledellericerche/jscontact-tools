@@ -106,7 +106,7 @@ public class AddressContext extends ExtensibleEnumType<AddressContextEnum> imple
      * @param extValue the custom address context in text format
      * @return a custom address context
      */
-    public static AddressContext ext(String extValue) { return AddressContext.builder().extValue(extValue).build(); }
+    public static AddressContext ext(String extValue) { return AddressContext.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
     /**
      * Returns the list of enum values corresponding to those whose type is known in a given collection of address contexts.

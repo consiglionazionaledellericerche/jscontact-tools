@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.LinkResourceEnum;
 import it.cnr.iit.jscontact.tools.dto.LinkResourceType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class LinkResourceTypeDeserializer extends JsonDeserializer<LinkResourceT
         try {
             return LinkResourceType.builder().rfcValue(LinkResourceEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return LinkResourceType.builder().extValue(value).build();
+            return LinkResourceType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

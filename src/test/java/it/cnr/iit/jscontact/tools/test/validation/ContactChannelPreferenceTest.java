@@ -128,7 +128,7 @@ public class ContactChannelPreferenceTest extends AbstractTest {
     @Test
     public void testInvalidContactChannelPreference5() {
 
-        Map<ChannelType, ContactChannelPreference[]> map = new HashMap<ChannelType, ContactChannelPreference[]>(){{put(ChannelType.ext("ext"), new ContactChannelPreference[] { ContactChannelPreference.builder().context(Context.work(), Boolean.TRUE).pref(101).build()});}};
+        Map<ChannelType, ContactChannelPreference[]> map = new HashMap<ChannelType, ContactChannelPreference[]>(){{put(ChannelType.ext("example.com:ext"), new ContactChannelPreference[] { ContactChannelPreference.builder().context(Context.work(), Boolean.TRUE).pref(101).build()});}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredContactChannels(map)

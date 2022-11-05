@@ -39,7 +39,7 @@ public class PhoneFeaturesSerializer extends JsonSerializer<Map<PhoneFeature,Boo
 
         jgen.writeStartObject();
         for (Map.Entry<PhoneFeature,Boolean> entry : contexts.entrySet())
-            jgen.writeBooleanField((entry.getKey().getRfcValue()!=null) ? entry.getKey().getRfcValue().getValue() : entry.getKey().getExtValue(), entry.getValue());
+            jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());
         jgen.writeEndObject();
 
     }

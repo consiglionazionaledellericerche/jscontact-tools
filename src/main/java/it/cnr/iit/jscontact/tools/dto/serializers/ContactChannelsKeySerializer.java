@@ -17,13 +17,11 @@ package it.cnr.iit.jscontact.tools.dto.serializers;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import it.cnr.iit.jscontact.tools.dto.ChannelType;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 /**
  * Custom JSON serializer for the "preferredContactChannels" map.
@@ -33,16 +31,12 @@ import java.io.StringWriter;
 @NoArgsConstructor
 public class ContactChannelsKeySerializer extends JsonSerializer<ChannelType> {
 
-    private final ObjectMapper mapper = new ObjectMapper();
-
     @Override
     public void serialize(ChannelType value,
                           JsonGenerator gen,
                           SerializerProvider serializers)
             throws IOException {
 
-        StringWriter writer = new StringWriter();
-        mapper.writeValue(writer, (value.getRfcValue()!=null) ? value.getRfcValue().getValue() : value.getExtValue());
-        gen.writeFieldName(writer.toString());
+        gen.writeFieldName(value.toJson());
     }
 }

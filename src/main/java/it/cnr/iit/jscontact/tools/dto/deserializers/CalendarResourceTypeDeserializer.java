@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.CalendarResourceEnum;
 import it.cnr.iit.jscontact.tools.dto.CalendarResourceType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class CalendarResourceTypeDeserializer extends JsonDeserializer<CalendarR
         try {
             return CalendarResourceType.builder().rfcValue(CalendarResourceEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return CalendarResourceType.builder().extValue(value).build();
+            return CalendarResourceType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

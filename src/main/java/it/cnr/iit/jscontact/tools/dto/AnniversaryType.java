@@ -75,5 +75,5 @@ public class AnniversaryType extends ExtensibleEnumType<AnniversaryEnum> impleme
      *
      * @return a custom anniverary type
      */
-    private static AnniversaryType ext(String extValue) { return AnniversaryType.builder().extValue(extValue).build(); }
+    private static AnniversaryType ext(String extValue) { return AnniversaryType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

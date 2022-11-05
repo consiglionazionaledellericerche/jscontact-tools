@@ -171,7 +171,7 @@ public class NameComponent extends AbstractJSContactType implements Serializable
     public static NameComponent ext(String extValue, String value) {
         return NameComponent.builder()
                 .value(value)
-                .type(NameComponentType.builder().extValue(extValue).build())
+                .type(NameComponentType.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
     }
 

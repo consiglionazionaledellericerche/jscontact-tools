@@ -80,7 +80,7 @@ public class Context extends ExtensibleEnumType<ContextEnum> implements Serializ
      * @param extValue the custom context in text format
      * @return a custom context
      */
-    public static Context ext(String extValue) { return Context.builder().extValue(extValue).build(); }
+    public static Context ext(String extValue) { return Context.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
     /**
      * Returns the list of enum values corresponding to those whose type is known in a given collection of contexts.

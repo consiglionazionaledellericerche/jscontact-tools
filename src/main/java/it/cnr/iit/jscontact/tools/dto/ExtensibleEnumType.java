@@ -23,7 +23,7 @@ import java.io.Serializable;
 public abstract class ExtensibleEnumType<T extends IsExtensibleEnum> implements Serializable {
 
     T rfcValue;
-    String extValue;
+    V_Extension extValue;
 
     @Override
     public boolean equals(Object obj) {
@@ -71,7 +71,7 @@ public abstract class ExtensibleEnumType<T extends IsExtensibleEnum> implements 
 
     @JsonValue
     public String toJson() {
-        return (isRfcValue()) ? getRfcValue().getValue() : getExtValue();
+        return (isRfcValue()) ? getRfcValue().getValue() : getExtValue().toString();
     }
 
 }

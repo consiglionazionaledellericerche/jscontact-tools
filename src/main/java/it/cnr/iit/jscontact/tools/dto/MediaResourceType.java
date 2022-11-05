@@ -89,5 +89,5 @@ public class MediaResourceType extends ExtensibleEnumType<MediaResourceEnum> imp
      *
      * @return a custom media resource type
      */
-    private static MediaResourceType ext(String extValue) { return MediaResourceType.builder().extValue(extValue).build(); }
+    private static MediaResourceType ext(String extValue) { return MediaResourceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

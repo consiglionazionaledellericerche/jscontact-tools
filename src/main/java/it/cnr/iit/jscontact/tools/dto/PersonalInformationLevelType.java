@@ -89,5 +89,5 @@ public class PersonalInformationLevelType extends ExtensibleEnumType<PersonalInf
      *
      * @return a custom personal information level
      */
-    public static PersonalInformationLevelType ext(String extValue) { return PersonalInformationLevelType.builder().extValue(extValue).build(); }
+    public static PersonalInformationLevelType ext(String extValue) { return PersonalInformationLevelType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

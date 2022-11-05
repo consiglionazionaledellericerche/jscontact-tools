@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.MediaResourceEnum;
 import it.cnr.iit.jscontact.tools.dto.MediaResourceType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class MediaResourceTypeDeserializer extends JsonDeserializer<MediaResourc
         try {
             return MediaResourceType.builder().rfcValue(MediaResourceEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return MediaResourceType.builder().extValue(value).build();
+            return MediaResourceType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

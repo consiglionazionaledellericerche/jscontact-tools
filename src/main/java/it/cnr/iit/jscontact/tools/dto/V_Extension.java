@@ -1,0 +1,39 @@
+package it.cnr.iit.jscontact.tools.dto;
+
+import lombok.*;
+
+import javax.validation.constraints.NotNull;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class V_Extension {
+
+    @NonNull
+    @NotNull
+    private String v_prefix;
+
+    @NonNull
+    @NotNull
+    private String v_value;
+
+    public static V_Extension toV_Extension(String extValue) {
+        if (extValue == null) return null;
+
+        if (extValue.toLowerCase().startsWith("x-"))
+            return V_Extension.builder().v_prefix("ietf.org").v_value(extValue.toLowerCase()).build();
+
+        String[] items = extValue.split(":");
+        if (items.length != 2) return null;
+        return V_Extension.builder().v_prefix(items[0]).v_value(items[1]).build();
+    }
+
+    @Override
+    public String toString() {
+        if (v_prefix.startsWith("ietf.org"))
+            return v_value;
+        return v_prefix + ":" + v_value;
+    }
+
+}

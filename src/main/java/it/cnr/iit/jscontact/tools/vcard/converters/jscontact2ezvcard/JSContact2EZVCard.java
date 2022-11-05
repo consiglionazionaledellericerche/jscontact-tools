@@ -104,7 +104,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             return null;
 
         if (kind.getExtValue() != null)
-            return new Kind(kind.getExtValue());
+            return new Kind(kind.getExtValue().toString());
 
         return new Kind(kind.getRfcValue().getValue());
     }
@@ -703,7 +703,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (pi.getLevel().isRfcValue())
             e.setLevel(ExpertiseLevel.get(PersonalInformationLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
         else
-            e.setParameter("LEVEL", pi.getLevel().getExtValue().toUpperCase());
+            e.setParameter("LEVEL", pi.getLevel().getExtValue().toString().toUpperCase());
         return e;
     }
 
@@ -715,7 +715,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (pi.getLevel().isRfcValue())
             h.setLevel(HobbyLevel.get(pi.getLevel().getRfcValue().name()));
         else
-            h.setParameter("LEVEL", pi.getLevel().getExtValue().toUpperCase());
+            h.setParameter("LEVEL", pi.getLevel().getExtValue().toString().toUpperCase());
         return h;
     }
 
@@ -727,7 +727,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (pi.getLevel().isRfcValue())
             i.setLevel(InterestLevel.get(pi.getLevel().getRfcValue().name()));
         else
-            i.setParameter("LEVEL", pi.getLevel().getExtValue().toUpperCase());
+            i.setParameter("LEVEL", pi.getLevel().getExtValue().toString().toUpperCase());
         return i;
     }
 
@@ -1429,7 +1429,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (entry.getKey().isRfcValue())
                     value = ChannelEnum.toVCardChannelType(entry.getKey().getRfcValue());
                 else
-                    value = entry.getKey().getExtValue().toUpperCase();
+                    value = entry.getKey().getExtValue().toString().toUpperCase();
                 if (entry.getValue().length == 0) {
                     RawProperty raw = new RawProperty(propertyName, value);
                     raw.setDataType(VCardDataType.TEXT);

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.PersonalInformationEnum;
 import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class PersonalInformationTypeDeserializer extends JsonDeserializer<Person
         try {
             return PersonalInformationType.builder().rfcValue(PersonalInformationEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return PersonalInformationType.builder().extValue(value).build();
+            return PersonalInformationType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

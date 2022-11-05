@@ -75,5 +75,5 @@ public class CalendarResourceType extends ExtensibleEnumType<CalendarResourceEnu
      *
      * @return a custom calendar resource type
      */
-    private static CalendarResourceType ext(String extValue) { return CalendarResourceType.builder().extValue(extValue).build(); }
+    private static CalendarResourceType ext(String extValue) { return CalendarResourceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

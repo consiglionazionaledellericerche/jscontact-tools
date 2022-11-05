@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.RelationEnum;
 import it.cnr.iit.jscontact.tools.dto.RelationType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class RelationDeserializer extends JsonDeserializer<Map<RelationType,Bool
             try {
                 relationType = RelationType.builder().rfcValue(RelationEnum.getEnum(type)).build();
             } catch (IllegalArgumentException e) {
-                relationType = RelationType.builder().extValue(type).build();
+                relationType = RelationType.builder().extValue(V_Extension.toV_Extension(type)).build();
             }
             relation.put(relationType,value);
         }

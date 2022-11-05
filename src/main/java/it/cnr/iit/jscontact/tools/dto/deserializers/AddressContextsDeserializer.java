@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.AddressContext;
 import it.cnr.iit.jscontact.tools.dto.AddressContextEnum;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class AddressContextsDeserializer extends JsonDeserializer<Map<AddressCon
             try {
                 context = AddressContext.builder().rfcValue(AddressContextEnum.getEnum(type)).build();
             } catch (IllegalArgumentException e) {
-                context = AddressContext.builder().extValue(type).build();
+                context = AddressContext.builder().extValue(V_Extension.toV_Extension(type)).build();
             }
             contexts.put(context,value);
         }

@@ -247,7 +247,7 @@ public class StreetComponent extends AbstractJSContactType implements Serializab
     public static StreetComponent ext(String extValue, String value) {
         return StreetComponent.builder()
                 .value(value)
-                .type(StreetComponentType.builder().extValue(extValue).build())
+                .type(StreetComponentType.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
     }
 
