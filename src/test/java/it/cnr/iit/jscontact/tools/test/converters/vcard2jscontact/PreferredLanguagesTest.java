@@ -13,21 +13,19 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
+package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PreferredContactLanguagesTest extends RoundtripTest {
+public class PreferredLanguagesTest extends VCard2JSContactTest {
 
     @Test
-    public void testPreferredContactLanguages1() throws CardException {
+    public void testPreferredLanguages1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -37,14 +35,15 @@ public class PreferredContactLanguagesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
-        pruneVCard(vcard2);
-        assertEquals("testPreferredContactLanguages1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertNotNull("testPreferredLanguages1 - 1", jsCard.getPreferredLanguages());
+        assertEquals("testPreferredLanguages1 - 2", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testPreferredLanguages1 - 3", 1, (int) jsCard.getPreferredLanguages().get("jp")[0].getPref());
+        assertEquals("testPreferredLanguages1 - 4", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
     }
 
 
     @Test
-    public void testPreferredContactLanguages2() throws CardException {
+    public void testPreferredLanguages2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -55,9 +54,13 @@ public class PreferredContactLanguagesTest extends RoundtripTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
-        pruneVCard(vcard2);
-        assertEquals("testPreferredContactLanguages2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertNotNull("testPreferredLanguages2 - 1", jsCard.getPreferredLanguages());
+        assertEquals("testPreferredLanguages2 - 2", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testPreferredLanguages2 - 3", 1, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
+        assertSame("testPreferredLanguages2 - 4",jsCard.getPreferredLanguages().get("en")[0].getContexts().get(Context.work()), Boolean.TRUE);
+        assertEquals("testPreferredLanguages2 - 5", 2, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
+        assertSame("testPreferredLanguages2 - 6",jsCard.getPreferredLanguages().get("fr")[0].getContexts().get(Context.work()), Boolean.TRUE);
+        assertSame("testPreferredLanguages2 - 7",jsCard.getPreferredLanguages().get("fr")[1].getContexts().get(Context.private_()), Boolean.TRUE);
     }
 
 

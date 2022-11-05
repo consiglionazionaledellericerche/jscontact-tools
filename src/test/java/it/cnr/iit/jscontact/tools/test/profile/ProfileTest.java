@@ -55,9 +55,9 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testRDAPProfile - 10", jsCard.getName().getComponents()[3].isSuffix());
         assertEquals("testRDAPProfile - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
-        assertEquals("testRDAPProfile - 12", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
-        assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testRDAPProfile - 12", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
+        assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testRDAPProfile - 15", "Example", jsCard.getOrganizations().get("org").getName());
         assertEquals("testRDAPProfile - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
         assertEquals("testRDAPProfile - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());

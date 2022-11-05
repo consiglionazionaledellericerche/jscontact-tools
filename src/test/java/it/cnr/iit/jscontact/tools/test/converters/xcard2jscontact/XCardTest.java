@@ -51,9 +51,9 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isOtherAnniversary());
         assertEquals("testCompleteXCard1 - 16", "marriage date", jsCard.getAnniversaries().get("ANNIVERSARY-2").getLabel());
         assertTrue("testCompleteXCard1 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
-        assertEquals("testCompleteXCard1 - 18", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testCompleteXCard1 - 19", 1, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
-        assertEquals("testCompleteXCard1 - 20", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testCompleteXCard1 - 18", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testCompleteXCard1 - 19", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
+        assertEquals("testCompleteXCard1 - 20", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testCompleteXCard1 - 21", "Viagenie", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteXCard1 - 22", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteXCard1 - 23", "Simon Perreault\n                    2875 boul. Laurier, suite D2-630\n                    Quebec, QC, Canada\n                    G1V 2M2", jsCard.getAddresses().get("ADR-1").getFullAddress());

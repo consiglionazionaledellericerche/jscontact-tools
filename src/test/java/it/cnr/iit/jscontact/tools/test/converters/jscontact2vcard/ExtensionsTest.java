@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -59,9 +60,9 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "}," +
                 "\"locale\":\"en\"," +
                 "\"ext1\": 10," +
-                "\"preferredContactLanguages\":{" +
-                    "\"jp\":[{\"@type\":\"ContactLanguage\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
-                    "\"en\":[{\"@type\":\"ContactLanguage\",\"pref\":2}]" +
+                "\"preferredLanguages\":{" +
+                    "\"jp\":[{\"@type\":\"LanguagePreference\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
+                    "\"en\":[{\"@type\":\"LanguagePreference\",\"pref\":2}]" +
                 "}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
@@ -77,6 +78,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        System.out.println(Ezvcard.write(vcard).go());
         assertEquals("testExtendedJSContact2 - 1", 6, vcard.getExtendedProperties().size());
         assertEquals("testExtendedJSContact2 - 2", "LOCALE", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testExtendedJSContact2 - 3", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(1).getPropertyName());
@@ -91,14 +93,14 @@ public class ExtensionsTest extends JSContact2VCardTest {
         assertEquals("testExtendedJSContact2 - 12", "addresses/ADR-1/ext2", vcard.getExtendedProperties().get(3).getParameter("X-RFC0000-JSPATH"));
         assertEquals("testExtendedJSContact2 - 13", VCardDataType.URI, vcard.getExtendedProperties().get(3).getDataType());
         assertEquals("testExtendedJSContact2 - 14", "data:application/json;base64,eyJwcm9wIjoxMH0=", vcard.getExtendedProperties().get(3).getValue());
-        assertEquals("testExtendedJSContact2 - 15", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(4).getPropertyName());
-        assertEquals("testExtendedJSContact2 - 16", "preferredContactLanguages/jp/0/ext6", vcard.getExtendedProperties().get(4).getParameter("X-RFC0000-JSPATH"));
-        assertEquals("testExtendedJSContact2 - 17", VCardDataType.URI, vcard.getExtendedProperties().get(4).getDataType());
-        assertEquals("testExtendedJSContact2 - 18", "data:application/json;base64,WyIxIiwiMiJd", vcard.getExtendedProperties().get(4).getValue());
-        assertEquals("testExtendedJSContact2 - 19", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(5).getPropertyName());
-        assertEquals("testExtendedJSContact2 - 20", "ext1", vcard.getExtendedProperties().get(5).getParameter("X-RFC0000-JSPATH"));
-        assertEquals("testExtendedJSContact2 - 21", VCardDataType.URI, vcard.getExtendedProperties().get(5).getDataType());
-        assertEquals("testExtendedJSContact2 - 22", "data:application/json;10", vcard.getExtendedProperties().get(5).getValue());
+        assertEquals("testExtendedJSContact2 - 15", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(5).getPropertyName());
+        assertEquals("testExtendedJSContact2 - 16", "preferredLanguages/jp/0/ext6", vcard.getExtendedProperties().get(5).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact2 - 17", VCardDataType.URI, vcard.getExtendedProperties().get(5).getDataType());
+        assertEquals("testExtendedJSContact2 - 18", "data:application/json;base64,WyIxIiwiMiJd", vcard.getExtendedProperties().get(5).getValue());
+        assertEquals("testExtendedJSContact2 - 19", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(4).getPropertyName());
+        assertEquals("testExtendedJSContact2 - 20", "ext1", vcard.getExtendedProperties().get(4).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact2 - 21", VCardDataType.URI, vcard.getExtendedProperties().get(4).getDataType());
+        assertEquals("testExtendedJSContact2 - 22", "data:application/json;10", vcard.getExtendedProperties().get(4).getValue());
 
     }
 

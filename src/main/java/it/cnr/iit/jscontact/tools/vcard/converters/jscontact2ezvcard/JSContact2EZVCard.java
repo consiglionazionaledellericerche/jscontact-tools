@@ -756,7 +756,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         //TODO: extension
     }
 
-    private static Language getLanguage(String lang, ContactLanguage cl) {
+    private static Language getLanguage(String lang, LanguagePreference cl) {
 
         Language language = new Language(lang);
         String vCardTypeValue = getVCardType(cl);
@@ -766,13 +766,13 @@ public class JSContact2EZVCard extends AbstractConverter {
         return language;
     }
 
-    private static void fillContactLanguages(VCard vcard, Card jsCard) {
+    private static void fillPreferredLanguages(VCard vcard, Card jsCard) {
 
-        if (jsCard.getPreferredContactLanguages() == null)
+        if (jsCard.getPreferredLanguages() == null)
             return;
 
-        for (Map.Entry<String,ContactLanguage[]> clArray : jsCard.getPreferredContactLanguages().entrySet()) {
-            for(ContactLanguage cl : clArray.getValue())
+        for (Map.Entry<String, LanguagePreference[]> clArray : jsCard.getPreferredLanguages().entrySet()) {
+            for(LanguagePreference cl : clArray.getValue())
                 vcard.addLanguage(getLanguage(clArray.getKey(), cl));
         }
     }
@@ -1503,7 +1503,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillAddresses(vCard, jsCard);
         fillAnniversaries(vCard, jsCard);
         fillPersonalInfos(vCard, jsCard);
-        fillContactLanguages(vCard, jsCard);
+        fillPreferredLanguages(vCard, jsCard);
         fillPhones(vCard, jsCard);
         fillEmails(vCard, jsCard);
         fillSchedulingAddresses(vCard,jsCard);

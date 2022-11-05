@@ -104,9 +104,9 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard1 - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testCompleteVCard1 - 10", jsCard.getName().getComponents()[3].isSuffix());
         assertEquals("testCompleteVCard1 - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
-        assertEquals("testCompleteVCard1 - 12", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testCompleteVCard1 - 13", 1, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
-        assertEquals("testCompleteVCard1 - 14", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testCompleteVCard1 - 12", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testCompleteVCard1 - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
+        assertEquals("testCompleteVCard1 - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testCompleteVCard1 - 15", "Example", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteVCard1 - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
         assertEquals("testCompleteVCard1 - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());
@@ -162,9 +162,9 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard2 - 6", "事務局長", jsCard.getTitles().get("TITLE-1").getTitle());
         assertEquals("testCompleteVCard2 - 8", "Secretary General", jsCard.getLocalization("en", "titles/TITLE-1").get("title").asText());
         assertTrue("testCompleteVCard2 - 9", jsCard.getKind().isIndividual());
-        assertEquals("testCompleteVCard2 - 10", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testCompleteVCard2 - 11", 1, (int) jsCard.getPreferredContactLanguages().get("jp")[0].getPref());
-        assertEquals("testCompleteVCard2 - 12", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testCompleteVCard2 - 10", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testCompleteVCard2 - 11", 1, (int) jsCard.getPreferredLanguages().get("jp")[0].getPref());
+        assertEquals("testCompleteVCard2 - 12", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertTrue("testCompleteVCard2 - 13", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 
@@ -214,9 +214,9 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
         assertTrue("testCompleteVCard4 - 18", jsCard.getSpeakToAs().isMale());
 
-        assertEquals("testCompleteVCard4 - 19", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testCompleteVCard4 - 20", 1, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
-        assertEquals("testCompleteVCard4 - 21", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testCompleteVCard4 - 19", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testCompleteVCard4 - 20", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
+        assertEquals("testCompleteVCard4 - 21", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testCompleteVCard4 - 22", "Viagenie", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteVCard4 - 23", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteVCard4 - 24", "Suite D2-630\n2875 Laurier\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("ADR-1").getFullAddress());

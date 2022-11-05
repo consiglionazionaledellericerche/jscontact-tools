@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.PreferredContactLanguagesValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.PreferredLanguagesValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -26,11 +26,11 @@ import java.lang.annotation.Target;
 
 @Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {PreferredContactLanguagesValidator.class})
+@Constraint(validatedBy = {PreferredLanguagesValidator.class})
 @Documented
-public @interface PreferredContactLanguagesConstraint {
+public @interface PreferredLanguagesConstraint {
 
-    String message() default "invalid preferredContactLanguages in JSContact";
+    String message() default "invalid preferredLanguages in JSContact";
 
     Class<?>[] groups() default { };
 

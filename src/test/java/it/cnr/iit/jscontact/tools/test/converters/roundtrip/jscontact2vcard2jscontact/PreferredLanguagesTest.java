@@ -25,42 +25,42 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class PreferredContactLanguagesTest extends RoundtripTest {
+public class PreferredLanguagesTest extends RoundtripTest {
 
     @Test
-    public void testPreferredContactLanguages1() throws IOException, CardException {
+    public void testPreferredLanguages1() throws IOException, CardException {
 
         String jscard = "{" +
                         "\"@type\":\"Card\"," +
                         "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
                          "\"fullName\":\"test\"," +
-                         "\"preferredContactLanguages\":{" +
-                               "\"jp\":[{\"@type\":\"ContactLanguage\",\"pref\":1}]," +
-                               "\"en\":[{\"@type\":\"ContactLanguage\",\"pref\":2}]" +
+                         "\"preferredLanguages\":{" +
+                               "\"jp\":[{\"@type\":\"LanguagePreference\",\"pref\":1}]," +
+                               "\"en\":[{\"@type\":\"LanguagePreference\",\"pref\":2}]" +
                          "}" +
                          "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testPreferredContactLanguages1 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testPreferredLanguages1 - 1", jscard2, Card.toCard(jscard));
     }
 
     @Test
-    public void testPreferredContactLanguages2() throws IOException, CardException {
+    public void testPreferredLanguages2() throws IOException, CardException {
 
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
                 "\"fullName\":\"test\"," +
-                "\"preferredContactLanguages\":{" +
-                    "\"en\":[{\"@type\":\"ContactLanguage\",\"contexts\": {\"work\": true }, \"pref\":1}]," +
-                    "\"fr\":[{\"@type\":\"ContactLanguage\",\"contexts\": {\"work\": true }, \"pref\":2},{\"@type\":\"ContactLanguage\",\"contexts\": {\"private\": true }}]" +
+                "\"preferredLanguages\":{" +
+                    "\"en\":[{\"@type\":\"LanguagePreference\",\"contexts\": {\"work\": true }, \"pref\":1}]," +
+                    "\"fr\":[{\"@type\":\"LanguagePreference\",\"contexts\": {\"work\": true }, \"pref\":2},{\"@type\":\"LanguagePreference\",\"contexts\": {\"private\": true }}]" +
                 "}" +
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testPreferredContactLanguages2 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testPreferredLanguages2 - 1", jscard2, Card.toCard(jscard));
     }
 
 }

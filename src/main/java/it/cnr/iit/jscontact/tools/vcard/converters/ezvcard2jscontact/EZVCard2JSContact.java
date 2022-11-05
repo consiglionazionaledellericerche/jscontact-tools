@@ -937,30 +937,30 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static void fillContactLanguages(VCard vcard, Card jsCard) {
+    private static void fillPreferredLanguages(VCard vcard, Card jsCard) {
 
         for (Language lang : vcard.getLanguages()) {
             String vcardType = VCardUtils.getVCardParameterValue(lang.getParameters(), "TYPE");
             if (vcardType!=null || lang.getPref()!=null)
-                jsCard.addContactLanguage(getValue(lang),
-                                            ContactLanguage.builder()
+                jsCard.addLanguagePreference(getValue(lang),
+                                            LanguagePreference.builder()
                                                            .group(lang.getGroup())
                                                            .contexts(getContexts(vcardType))
                                                             .pref(lang.getPref())
                                                            .build()
                                             );
             else
-                jsCard.addContactLanguage(getValue(lang),null);
+                jsCard.addLanguagePreference(getValue(lang),null);
         }
 
-        if (jsCard.getPreferredContactLanguages() == null)
+        if (jsCard.getPreferredLanguages() == null)
             return;
 
-        for (Map.Entry<String,ContactLanguage[]> entry : jsCard.getPreferredContactLanguages().entrySet()) {
+        for (Map.Entry<String, LanguagePreference[]> entry : jsCard.getPreferredLanguages().entrySet()) {
             int i = 0;
-            for (ContactLanguage language : entry.getValue()) {
+            for (LanguagePreference language : entry.getValue()) {
                 if (language.getGroup() != null)
-                    jsCard.addPropertyGroup(language.getGroup(), "preferredContactLanguages/" + entry.getKey() + "/" + i);
+                    jsCard.addPropertyGroup(language.getGroup(), "preferredLanguages/" + entry.getKey() + "/" + i);
                 i++;
             }
         }
@@ -1477,7 +1477,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fillAddresses(vCard, jsCard);
         fillAnniversaries(vCard, jsCard);
         fillPersonalInfos(vCard, jsCard);
-        fillContactLanguages(vCard, jsCard);
+        fillPreferredLanguages(vCard, jsCard);
         fillPhones(vCard, jsCard);
         fillEmails(vCard, jsCard);
         fillSchedulingAddresses(vCard,jsCard);

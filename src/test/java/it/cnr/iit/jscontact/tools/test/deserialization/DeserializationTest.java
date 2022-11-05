@@ -85,9 +85,9 @@ public class DeserializationTest {
                 "}," +
                 "\"locale\":\"en\"," +
                 "\"ext1\": 10," +
-                "\"preferredContactLanguages\":{" +
-                    "\"jp\":[{\"@type\":\"ContactLanguage\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
-                    "\"en\":[{\"@type\":\"ContactLanguage\",\"pref\":2}]" +
+                "\"preferredLanguages\":{" +
+                    "\"jp\":[{\"@type\":\"LanguagePreference\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
+                    "\"en\":[{\"@type\":\"LanguagePreference\",\"pref\":2}]" +
                 "}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
@@ -114,7 +114,7 @@ public class DeserializationTest {
         assertTrue("testDeserialization5 - 6", allExtensionsMap.keySet().contains("addresses/ADR-1/street/0/ext4"));
         assertTrue("testDeserialization5 - 7", allExtensionsMap.keySet().contains("nickNames/NICK-1/ext3"));
         assertTrue("testDeserialization5 - 8", allExtensionsMap.keySet().contains("addresses/ADR-1/ext2"));
-        assertTrue("testDeserialization5 - 9", allExtensionsMap.keySet().contains("preferredContactLanguages/jp/0/ext6"));
+        assertTrue("testDeserialization5 - 9", allExtensionsMap.keySet().contains("preferredLanguages/jp/0/ext6"));
         assertTrue("testDeserialization5 - 10", allExtensionsMap.keySet().contains("ext1"));
 
     }

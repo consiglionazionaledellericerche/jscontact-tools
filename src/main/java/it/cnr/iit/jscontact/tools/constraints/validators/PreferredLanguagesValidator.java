@@ -15,9 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.PreferredContactLanguagesConstraint;
+import it.cnr.iit.jscontact.tools.constraints.PreferredLanguagesConstraint;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
-import it.cnr.iit.jscontact.tools.dto.ContactLanguage;
+import it.cnr.iit.jscontact.tools.dto.LanguagePreference;
 import it.cnr.iit.jscontact.tools.dto.utils.ConstraintViolationUtils;
 import sun.util.locale.LanguageTag;
 import sun.util.locale.ParseStatus;
@@ -29,33 +29,33 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class PreferredContactLanguagesValidator implements ConstraintValidator<PreferredContactLanguagesConstraint, Map<String, ContactLanguage[]>> {
+public class PreferredLanguagesValidator implements ConstraintValidator<PreferredLanguagesConstraint, Map<String, LanguagePreference[]>> {
 
-    public void initialize(PreferredContactLanguagesConstraint constraintAnnotation) {
+    public void initialize(PreferredLanguagesConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(Map<String, ContactLanguage[]> clMap, ConstraintValidatorContext context) {
+    public boolean isValid(Map<String, LanguagePreference[]> clMap, ConstraintValidatorContext context) {
 
         if (clMap == null)
             return true;
 
-        for(Map.Entry<String, ContactLanguage[]> entry : clMap.entrySet()) {
+        for(Map.Entry<String, LanguagePreference[]> entry : clMap.entrySet()) {
 
             ParseStatus parseStatus = new ParseStatus();
             LanguageTag.parse(entry.getKey(), parseStatus);
             if (parseStatus.getErrorMessage() != null) {
-                context.buildConstraintViolationWithTemplate("invalid language tag in preferredContactLanguages").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate("invalid language tag in preferredLanguages").addConstraintViolation();
                 return false;
             }
 
             if (entry.getValue() == null) {
-                context.buildConstraintViolationWithTemplate("null ContactLanguage in preferredContactLanguages").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate("null LanguagePreference in preferredLanguages").addConstraintViolation();
                 return false;
             }
 
-            for (ContactLanguage cl : entry.getValue()) {
+            for (LanguagePreference cl : entry.getValue()) {
 
-                Set<ConstraintViolation<ContactLanguage>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
+                Set<ConstraintViolation<LanguagePreference>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
                 if (constraintViolations.size() > 0) {
                     context.buildConstraintViolationWithTemplate(ConstraintViolationUtils.getMessage(constraintViolations)).addConstraintViolation();
                     return false;

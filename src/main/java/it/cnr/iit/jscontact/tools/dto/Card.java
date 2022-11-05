@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
@@ -52,7 +51,7 @@ import java.util.*;
 @JsonPropertyOrder({
         "@type","uid","prodId","created","updated","kind","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
-        "emails","onlineServices","phones","preferredContactChannels","preferredContactLanguages",
+        "emails","onlineServices","phones","preferredContactChannels","preferredLanguages",
         "calendars","schedulingAddresses",
         "addresses",
         "cryptoKeys","directories","links","media",
@@ -150,8 +149,8 @@ public class Card extends JSContact implements Serializable {
     Map<ChannelType,ContactChannelPreference[]> preferredContactChannels;
 
     @JsonPropertyOrder(alphabetic = true)
-    @PreferredContactLanguagesConstraint
-    Map<String, ContactLanguage[]> preferredContactLanguages;
+    @PreferredLanguagesConstraint
+    Map<String, LanguagePreference[]> preferredLanguages;
 
 
     /*
@@ -437,26 +436,26 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds a contact language to this object.
+     * Adds a language preference to this object.
      *
      * @param id the contact language identifier
-     * @param contactLanguage the object representing the contact language
+     * @param languagePreference the object representing the contact language
      */
-    public void addContactLanguage(String id, ContactLanguage contactLanguage) {
+    public void addLanguagePreference(String id, LanguagePreference languagePreference) {
 
-        if (preferredContactLanguages == null)
-            preferredContactLanguages = new HashMap<>();
+        if (preferredLanguages == null)
+            preferredLanguages = new HashMap<>();
 
-        ContactLanguage[] languagesPerId = preferredContactLanguages.get(id);
-        ContactLanguage[] languages;
-        if (contactLanguage == null)
-            languages = new ContactLanguage[]{};
+        LanguagePreference[] languagesPerId = preferredLanguages.get(id);
+        LanguagePreference[] languages;
+        if (languagePreference == null)
+            languages = new LanguagePreference[]{};
         else
-            languages = new ContactLanguage[] {contactLanguage};
+            languages = new LanguagePreference[] {languagePreference};
         if (languagesPerId == null)
-            preferredContactLanguages.put(id, languages);
+            preferredLanguages.put(id, languages);
         else
-            preferredContactLanguages.put(id, ArrayUtils.addAll(languagesPerId, languages));
+            preferredLanguages.put(id, ArrayUtils.addAll(languagesPerId, languages));
     }
 
     /**
