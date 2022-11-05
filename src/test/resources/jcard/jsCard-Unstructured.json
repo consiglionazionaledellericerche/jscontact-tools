@@ -1,7 +1,7 @@
 {
   "@type": "Card",
   "uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
-  "language": "en",
+  "locale": "en",
   "fullName": "Taiwan Fixed Network CO.,LTD.",
   "kind": "org",
   "addresses": {
