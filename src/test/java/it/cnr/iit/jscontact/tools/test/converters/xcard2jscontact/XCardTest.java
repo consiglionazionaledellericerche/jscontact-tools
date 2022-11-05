@@ -37,7 +37,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard1 - 1", "Simon Perreault", jsCard.getFullName());
         assertNull("testCompleteXCard1 - 2", jsCard.getKind());
         assertEquals("testCompleteXCard1 - 3", 4, jsCard.getName().getComponents().length);
-        assertTrue("testCompleteXCard1 - 4", jsCard.getName().getComponents()[0].isPersonal());
+        assertTrue("testCompleteXCard1 - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testCompleteXCard1 - 5", "Simon", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteXCard1 - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testCompleteXCard1 - 7", "Perreault", jsCard.getName().getComponents()[1].getValue());
@@ -100,7 +100,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard2 - 3", 3, jsCard.getName().getComponents().length);
         assertTrue("testCompleteXCard2 - 4", jsCard.getName().getComponents()[0].isPrefix());
         assertEquals("testCompleteXCard2 - 5", "Mr.", jsCard.getName().getComponents()[0].getValue());
-        assertTrue("testCompleteXCard2 - 6", jsCard.getName().getComponents()[1].isPersonal());
+        assertTrue("testCompleteXCard2 - 6", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testCompleteXCard2 - 7", "Forrest", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testCompleteXCard2 - 8", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testCompleteXCard2 - 9", "Gump", jsCard.getName().getComponents()[2].getValue());

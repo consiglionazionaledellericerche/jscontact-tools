@@ -138,7 +138,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 1", "Joe User", jsCard.getFullName());
         assertTrue("testCompleteJCard1 - 2", jsCard.getKind().isIndividual());
         assertEquals("testCompleteJCard1 - 3", 4, jsCard.getName().getComponents().length);
-        assertTrue("testCompleteJCard1 - 4", jsCard.getName().getComponents()[0].isPersonal());
+        assertTrue("testCompleteJCard1 - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testCompleteJCard1 - 5", "Joe", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteJCard1 - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testCompleteJCard1 - 7", "User", jsCard.getName().getComponents()[1].getValue());
@@ -238,7 +238,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 1", "Simon Perreault", jsCard.getFullName());
         assertNull("testCompleteJCard4 - 2", jsCard.getKind());
         assertEquals("testCompleteJCard4 - 3", 4, jsCard.getName().getComponents().length);
-        assertTrue("testCompleteJCard4 - 4", jsCard.getName().getComponents()[0].isPersonal());
+        assertTrue("testCompleteJCard4 - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testCompleteJCard4 - 5", "Simon", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteJCard4 - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testCompleteJCard4 - 7", "Perreault", jsCard.getName().getComponents()[1].getValue());
@@ -301,7 +301,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard5 - 3", 3, jsCard.getName().getComponents().length);
         assertTrue("testCompleteJCard5 - 4", jsCard.getName().getComponents()[0].isPrefix());
         assertEquals("testCompleteJCard5 - 5", "Mr.", jsCard.getName().getComponents()[0].getValue());
-        assertTrue("testCompleteJCard5 - 6", jsCard.getName().getComponents()[1].isPersonal());
+        assertTrue("testCompleteJCard5 - 6", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testCompleteJCard5 - 7", "Forrest", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testCompleteJCard5 - 8", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testCompleteJCard5 - 9", "Gump", jsCard.getName().getComponents()[2].getValue());

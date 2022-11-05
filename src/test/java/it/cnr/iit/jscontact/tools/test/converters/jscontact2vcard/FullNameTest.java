@@ -60,9 +60,9 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"name\":{ " +
                     "\"components\":[ " +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"personal\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"additional\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"middle\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                     "] " +
                 "} " +
@@ -117,14 +117,14 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"locale\": \"jp\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"value\":\"正仁\", \"type\": \"personal\" }," +
+                        "{ \"value\":\"正仁\", \"type\": \"given\" }," +
                         "{ \"value\":\"大久保\", \"type\": \"surname\" }" +
                     "] " +
                 "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
                         "\"name/components\":[ " +
-                        "{ \"value\":\"Masahito\", \"type\": \"personal\" }," +
+                        "{ \"value\":\"Masahito\", \"type\": \"given\" }," +
                         "{ \"value\":\"Okubo\", \"type\": \"surname\" }" +
                         "]" +
                     "}" +

@@ -168,9 +168,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         String separator = getNameComponent(name, NameComponentEnum.SEPARATOR);
         StringJoiner joiner = new StringJoiner((separator!=null) ? separator : StringUtils.SPACE);
         addNameComponent(joiner, name, NameComponentEnum.PREFIX);
-        addNameComponent(joiner, name, NameComponentEnum.PERSONAL);
+        addNameComponent(joiner, name, NameComponentEnum.GIVEN);
         addNameComponent(joiner, name, NameComponentEnum.SURNAME);
-        addNameComponent(joiner, name, NameComponentEnum.ADDITIONAL);
+        addNameComponent(joiner, name, NameComponentEnum.MIDDLE);
         addNameComponent(joiner, name, NameComponentEnum.SUFFIX);
         return new FormattedName(joiner.toString());
     }
@@ -244,13 +244,13 @@ public class JSContact2EZVCard extends AbstractConverter {
                 case PREFIX:
                     name.getPrefixes().add(component.getValue());
                     break;
-                case PERSONAL:
+                case GIVEN:
                     name.setGiven(component.getValue());
                     break;
                 case SURNAME:
                     name.setFamily(component.getValue());
                     break;
-                case ADDITIONAL:
+                case MIDDLE:
                     name.getAdditionalNames().add(component.getValue());
                     break;
                 case SUFFIX:

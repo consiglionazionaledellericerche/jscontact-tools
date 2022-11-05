@@ -71,12 +71,12 @@ public class NameComponent extends AbstractJSContactType implements Serializable
     @JsonIgnore
     public boolean isPrefix() { return isRfc(NameComponentEnum.PREFIX); }
     /**
-     * Tests if this is a personal name.
+     * Tests if this is a given name.
      *
-     * @return true if this is a personal name, false otherwise
+     * @return true if this is a given name, false otherwise
      */
     @JsonIgnore
-    public boolean isPersonal() { return isRfc(NameComponentEnum.PERSONAL); }
+    public boolean isGiven() { return isRfc(NameComponentEnum.GIVEN); }
     /**
      * Tests if this is the surname.
      *
@@ -85,12 +85,12 @@ public class NameComponent extends AbstractJSContactType implements Serializable
     @JsonIgnore
     public boolean isSurname() { return isRfc(NameComponentEnum.SURNAME); }
     /**
-     * Tests if this is an additional name.
+     * Tests if this is a middle name.
      *
-     * @return true if this is an additional name, false otherwise
+     * @return true if this is a middle name, false otherwise
      */
     @JsonIgnore
-    public boolean isAdditional() { return isRfc(NameComponentEnum.ADDITIONAL); }
+    public boolean isMiddle() { return isRfc(NameComponentEnum.MIDDLE); }
     /**
      * Tests if this is a suffix.
      *
@@ -127,12 +127,12 @@ public class NameComponent extends AbstractJSContactType implements Serializable
      */
     public static NameComponent prefix(String value) {return rfc(NameComponentEnum.PREFIX, value);}
     /**
-     * Returns a personal name component of a name.
+     * Returns a given name component of a name.
      *
-     * @param value the personal name
-     * @return the personal name  component
+     * @param value the given name
+     * @return the given name  component
      */
-    public static NameComponent personal(String value) {return rfc(NameComponentEnum.PERSONAL, value);}
+    public static NameComponent given(String value) {return rfc(NameComponentEnum.GIVEN, value);}
     /**
      * Returns a surname component of a name.
      *
@@ -143,10 +143,10 @@ public class NameComponent extends AbstractJSContactType implements Serializable
     /**
      * Returns an additional name component of a name.
      *
-     * @param value the additional name
-     * @return the additional name  component
+     * @param value the middle name
+     * @return the middle name  component
      */
-    public static NameComponent additional(String value) {return rfc(NameComponentEnum.ADDITIONAL, value);}
+    public static NameComponent middle(String value) {return rfc(NameComponentEnum.MIDDLE, value);}
     /**
      * Returns a suffix name component of a name.
      *

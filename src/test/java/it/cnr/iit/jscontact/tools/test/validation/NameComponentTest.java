@@ -35,14 +35,14 @@ public class NameComponentTest {
 
         // value missing
         NameComponent.builder()
-                .type(NameComponentType.personal())
+                .type(NameComponentType.given())
                 .build();
     }
 
     public void testValidNameComponentBuild() {
 
         NameComponent.builder()
-                .type(NameComponentType.personal())
+                .type(NameComponentType.given())
                 .value("Mario")
                 .build();
     }

@@ -62,7 +62,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
                             "\"value\" : \"Public\" " +
                         "}, {" +
                             "\"@type\" : \"NameComponent\", " +
-                            "\"type\" : \"additional\", " +
+                            "\"type\" : \"middle\", " +
                             "\"value\" : \"Quinlan\" " +
                         "}, {" +
                             "\"@type\" : \"NameComponent\", " +

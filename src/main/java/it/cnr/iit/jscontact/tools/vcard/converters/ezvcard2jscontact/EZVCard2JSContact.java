@@ -629,11 +629,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 for (String px : sn.getPrefixes())
                     components = Name.addComponent(components, NameComponent.prefix(px));
                 if (sn.getGiven() != null)
-                    components = Name.addComponent(components,NameComponent.personal(sn.getGiven()));
+                    components = Name.addComponent(components,NameComponent.given(sn.getGiven()));
                 if (sn.getFamily() != null)
                     components = Name.addComponent(components,NameComponent.surname(sn.getFamily()));
                 for (String an : sn.getAdditionalNames())
-                    components = Name.addComponent(components,NameComponent.additional(an));
+                    components = Name.addComponent(components,NameComponent.middle(an));
                 for (String sx : sn.getSuffixes())
                     components = Name.addComponent(components,NameComponent.suffix(sx));
                 jsCard.setName(Name.builder().group(sn.getGroup()).components(components).jCardParams(VCardUtils.getVCardUnmatchedParameters(sn,Arrays.asList(new String[]{"SORT-AS","PID"}))).build());

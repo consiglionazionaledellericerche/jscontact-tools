@@ -47,11 +47,11 @@ public class NameComponentType extends ExtensibleEnumType<NameComponentEnum> imp
      */
     public static NameComponentType prefix() { return rfc(NameComponentEnum.PREFIX);}
     /**
-     * Returns a "personal" name component type.
+     * Returns a "given" name component type.
      *
-     * @return a "personal" name component type
+     * @return a "given" name component type
      */
-    public static NameComponentType personal() { return rfc(NameComponentEnum.PERSONAL);}
+    public static NameComponentType given() { return rfc(NameComponentEnum.GIVEN);}
     /**
      * Returns a "surname" name component type.
      *
@@ -59,11 +59,11 @@ public class NameComponentType extends ExtensibleEnumType<NameComponentEnum> imp
      */
     public static NameComponentType surname() { return rfc(NameComponentEnum.SURNAME);}
     /**
-     * Returns an "additional" name component type.
+     * Returns an "middle" name component type.
      *
-     * @return an "additional" name component type
+     * @return an "middle" name component type
      */
-    public static NameComponentType additional() { return rfc(NameComponentEnum.ADDITIONAL);}
+    public static NameComponentType middle() { return rfc(NameComponentEnum.MIDDLE);}
     /**
      * Returns a "separator" name component type.
      *

@@ -31,8 +31,8 @@ import lombok.AllArgsConstructor;
 public enum NameComponentEnum implements IsExtensibleEnum {
 
     SURNAME("surname"),
-    PERSONAL("personal"),
-    ADDITIONAL("additional"),
+    GIVEN("given"),
+    MIDDLE("middle"),
     PREFIX("prefix"),
     SUFFIX("suffix"),
     SEPARATOR("separator");
