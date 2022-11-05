@@ -11,8 +11,6 @@ public class RoundtripTest {
     protected final JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                                                                                                             .setAutoAddrLabel(false)
                                                                                                             .setPropIdParam(false)
-                                                                                                            .convertCoordinatesToGEOParam(false)
-                                                                                                            .convertTimezoneToTZParam(false)
                                                                                                              .convertTimezoneToOffset(true)
                                                                                                              .build())
                                                                                .build();

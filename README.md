@@ -306,11 +306,11 @@ The conversion is executed according to the following rules:
     1. TITLE
     2. ROLE
 
-17. The order of conversion of the instances of HOBBY, INTEREST, EXPERTISE and ORG-DIRECTORY properties is based on the values of the INDEX parameter
+17. The order of conversion of the HOBBY, INTEREST, EXPERTISE and ORG-DIRECTORY elements is based on the values of the INDEX parameter
 
 18. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
 
-19. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
+19. The order of conversion of the ADR elements is based on the values of ALTID parameter.
 
 20. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
@@ -353,9 +353,6 @@ Additional setting rules are shown in the following code:
 
 ```
 
-
-
-
 <a name="jscontact-conversion"></a>
 ## JSContact Conversion
 
@@ -393,23 +390,19 @@ All the methods take in input a list of JSContact top most objects and can raise
     - `setCardMustBeValidated = true`
     - `setAutoAddrLabel = true`
     - `setPropIdParam = true`
-    - `convertTimezoneToTZParam = true`
-    - `convertCoordinatesToGEOParam = true`
     - `convertTimezoneToOffset = true`
 
-5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property based on the value of the mapping configuration parameter `convertTimezoneToTZParam` either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
+5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
 
-6. The "cooridnates" property can be mapped to either a GEO parameter or the GEO property based on the value of the mapping configuration parameter `convertCoordinatesToGEOParam`.
+6. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
-7. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
+7. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-8. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-9. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+9. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL parameter can results from the newline-delimited concatenation of the non-empty "Address" members or.
 
-10. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL parameter can results from the newline-delimited concatenation of the non-empty "Address" members or.
-
-11. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration parameter `setPropIdParam`.
+10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration parameter `setPropIdParam`.
 
 ### Conversion examples
 

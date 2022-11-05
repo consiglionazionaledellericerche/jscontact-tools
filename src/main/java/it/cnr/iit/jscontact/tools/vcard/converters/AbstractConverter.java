@@ -16,7 +16,10 @@ public abstract class AbstractConverter {
     protected static final String VCARD_GENDER_TAG = "GENDER";
     protected static final String VCARD_CLIENTPIDMAP_TAG = "CLIENTPIDMAP";
     protected static final String VCARD_XML_TAG = "XML";
-    protected static final String DEFAULT_CALSCALE = "gregorian";
+
+    protected static final String VCARD_TZ_TAG = "TZ";
+
+    protected static final String VCARD_GEO_TAG = "GEO";
 
     protected static final String PROP_ID_PARAM = "PROP-ID";
 

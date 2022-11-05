@@ -19,7 +19,9 @@
      ["title", {}, "text", "Research Scientist"],
      ["role", {}, "text", "Project Lead"],
      ["adr",
-       { "type":"work" },
+       { "type":"work",
+         "altid": "1"
+       },
        "text",
        [
          "",
@@ -32,9 +34,10 @@
        ]
      ],
      ["geo", {
-       "type":"work"
+       "type":"work",
+       "altid": "1"
      }, "uri", "geo:46.772673,-71.282945"],
-     ["tz", {},
+     ["tz", {"altid": "1"},
        "utc-offset", "-05:00"],
      ["tel",
        {

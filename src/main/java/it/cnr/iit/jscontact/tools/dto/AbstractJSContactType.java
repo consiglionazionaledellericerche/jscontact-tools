@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -34,7 +35,8 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-3.3">RFC6350</a>
  * @author Mario Loffredo
  */
-@ToString
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor

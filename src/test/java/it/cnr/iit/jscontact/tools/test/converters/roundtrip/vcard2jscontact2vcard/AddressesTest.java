@@ -156,8 +156,8 @@ public class AddressesTest extends RoundtripTest {
                 "VERSION:4.0\n" +
                 "FN:test\n" +
                 "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
-                "ADR;CC=US;ALTID=1:;;12345 Elm St;Reston;VA;20190;USA\n" +
-                "TZ;ALTID=1:America/New_York\n" +
+                "ADR;CC=US:;;12345 Elm St;Reston;VA;20190;USA\n" +
+                "TZ:America/New_York\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
@@ -203,8 +203,6 @@ public class AddressesTest extends RoundtripTest {
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                         .setAutoAddrLabel(false)
                         .setPropIdParam(false)
-                        .convertCoordinatesToGEOParam(false)
-                        .convertTimezoneToTZParam(false)
                         .build())
                 .build();
 

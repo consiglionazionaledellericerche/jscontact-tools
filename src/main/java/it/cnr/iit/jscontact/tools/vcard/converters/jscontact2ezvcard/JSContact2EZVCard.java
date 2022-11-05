@@ -453,7 +453,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return offset += String.format("%02d00", Integer.parseInt(timezone.substring(8)));
     }
 
-    private String getTimezone(String timeZone)   {
+    private String getTimezoneAsText(String timeZone)   {
 
       if (timeZone == null)
           return null;
@@ -464,7 +464,23 @@ public class JSContact2EZVCard extends AbstractConverter {
           return timeZone;
     }
 
-    private GeoUri getGeo(String coordinates) {
+    private Timezone getTimezone(String timeZone)   {
+
+        if (timeZone == null)
+            return null;
+
+        if (config.isConvertTimezoneToOffset()) {
+            try {
+                return new Timezone(UtcOffset.parse(getOffsetFromTimezone(timeZone)));
+            } catch (Exception e) {}
+        }
+
+        return new Timezone(timeZone);
+    }
+
+
+
+    private GeoUri getGeoUri(String coordinates) {
 
         if (coordinates == null)
             return null;
@@ -493,9 +509,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                     if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
                         addr.setTimezone(timeZone.getStandard().get(0).getOffsetFrom());
                 } else
-                    addr.setTimezone(getTimezone(address.getTimeZone()));
+                    addr.setTimezone(getTimezoneAsText(address.getTimeZone()));
             }
-            addr.setGeo(getGeo(address.getCoordinates()));
+            addr.setGeo(getGeoUri(address.getCoordinates()));
             if (address.getCountryCode() != null)
                 addr.setParameter("CC", address.getCountryCode());
             if (!address.hasNoContext()) {
@@ -552,44 +568,6 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
-
-
-    private void adjustTzAndGeo(VCard vcard) {
-
-        if (!config.isConvertCoordinatesToGEOParam() || !config.isConvertTimezoneToTZParam()) {
-
-            int altid = 0;
-            for (ezvcard.property.Address addr : vcard.getAddresses()) {
-
-                if (addr.getTimezone() != null && !config.isConvertTimezoneToTZParam()) {
-
-                    Timezone timezone = null;
-                    try {
-                        timezone = new Timezone(UtcOffset.parse(addr.getTimezone()));
-                    } catch (Exception e) {
-                        timezone = new Timezone(addr.getTimezone());
-                    }
-                    String altidAsString = (addr.getAltId() != null) ? addr.getAltId() : ((vcard.getAddresses().size() > 1) ? "" + (++altid) : null);
-                    timezone.setAltId(altidAsString);
-                    vcard.addTimezone(timezone);
-                    addr.setAltId(altidAsString);
-                    addr.setTimezone(null);
-                }
-
-                if (addr.getGeo() != null && !config.isConvertCoordinatesToGEOParam()) {
-
-                    Geo geo = new Geo(addr.getGeo());
-                    String altidAsString = (addr.getAltId() != null) ? addr.getAltId() : ((vcard.getAddresses().size() > 1) ? "" + (++altid) : null);
-                    geo.setAltId(altidAsString);
-                    vcard.addGeo(geo);
-                    addr.setAltId(altidAsString);
-                    addr.setGeo(null);
-                }
-
-            }
-        }
-    }
-
     private void fillAddresses(VCard vcard, Card jsCard) {
 
         if (jsCard.getAddresses() == null)
@@ -628,9 +606,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.addAddressAlt(addrs.toArray(new ezvcard.property.Address[0]));
             }
         }
-
-        adjustTzAndGeo(vcard);
-
     }
 
     private static <T extends PlaceProperty> T getPlaceProperty(Class<T> classs, Anniversary anniversary) {
@@ -1364,6 +1339,25 @@ public class JSContact2EZVCard extends AbstractConverter {
                 } catch (Exception e) {
                     throw new InternalErrorException(e.getMessage());
                 }
+            }
+            else if (jCardProp.getName().equalsIgnoreCase(VCARD_TZ_TAG)) {
+
+                Timezone tz = null;
+                TimeZone timeZone = null;
+                if (jsCard.getCustomTimeZones() != null)
+                    timeZone = jsCard.getCustomTimeZones().get((String) jCardProp.getValue());
+                if (timeZone != null) {
+                    if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
+                        tz = new Timezone(UtcOffset.parse((timeZone.getStandard().get(0).getOffsetFrom())));
+                } else
+                    tz = getTimezone((String) jCardProp.getValue());
+                tz.setParameters(jCardProp.getVCardParameters());
+                vcard.setTimezone(tz);
+            }
+            else if (jCardProp.getName().equalsIgnoreCase(VCARD_GEO_TAG)) {
+                Geo geo = new Geo(getGeoUri((String) jCardProp.getValue()));
+                geo.setParameters(jCardProp.getVCardParameters());
+                vcard.setGeo(geo);
             }
             else {
                 RawProperty property = new RawProperty(jCardProp.getName().toUpperCase(), jCardProp.getValue().toString(), jCardProp.getType());

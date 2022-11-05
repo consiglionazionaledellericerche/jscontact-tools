@@ -37,10 +37,6 @@ public class JSContact2VCardConfig {
     @Builder.Default
     private boolean setPropIdParam = true;
     @Builder.Default
-    private boolean convertTimezoneToTZParam = true;
-    @Builder.Default
-    private boolean convertCoordinatesToGEOParam = true;
-    @Builder.Default
     private boolean convertTimezoneToOffset = false;
 
 }

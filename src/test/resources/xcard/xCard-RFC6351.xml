@@ -30,6 +30,7 @@
         <adr>
             <parameters>
                 <type><text>work</text></type>
+                <altid><text>1</text></altid>
                 <label><text>Simon Perreault
                     2875 boul. Laurier, suite D2-630
                     Quebec, QC, Canada
@@ -69,14 +70,17 @@
             <text>simon.perreault@viagenie.ca</text>
         </email>
         <geo>
-            <parameters><type><text>work</text></type></parameters>
+            <parameters><type><text>work</text></type><altid><text>1</text></altid></parameters>
             <uri>geo:46.766336,-71.28955</uri>
         </geo>
         <key>
             <parameters><type><text>work</text></type></parameters>
             <uri>http://www.viagenie.ca/simon.perreault/simon.asc</uri>
         </key>
-        <tz><text>America/Montreal</text></tz>
+        <tz>
+            <parameters><altid><text>1</text></altid></parameters>
+            <text>America/Montreal</text>
+        </tz>
         <url>
             <parameters><type><text>home</text></type></parameters>
             <uri>http://nomis80.org</uri>

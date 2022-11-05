@@ -676,8 +676,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static it.cnr.iit.jscontact.tools.dto.Address getAddressAltrenative(List<it.cnr.iit.jscontact.tools.dto.Address> addresses, String altid) {
 
-        it.cnr.iit.jscontact.tools.dto.Address address = (it.cnr.iit.jscontact.tools.dto.Address) getAlternative(addresses, altid);
-        return (address != null) ? address : addresses.get(0);
+        return (it.cnr.iit.jscontact.tools.dto.Address) getAlternative(addresses, altid);
     }
 
     private String getTimezoneName(String vcardTzParam) {
@@ -744,24 +743,38 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (vcard.getTimezone() != null) {
             tz = getValue(vcard.getTimezone());
-            //update the timezone of first address
             it.cnr.iit.jscontact.tools.dto.Address address = getAddressAltrenative(addresses, vcard.getTimezone().getAltId());
-            address.setTimeZone(tz);
-            addresses.set(addresses.indexOf(address), address);
+            if (address != null) {
+                address.setTimeZone(tz);
+            } else {
+                jsCard.addJCardProp(JCardProp.builder()
+                        .name(VCARD_TZ_TAG.toLowerCase())
+                        .parameters(VCardUtils.getJCardPropParameters(vcard.getTimezone().getParameters()))
+                        .type(vcard.getTimezone().getParameters().getValue())
+                        .value(tz)
+                        .build());
+            }
         }
 
         if (vcard.getGeo() != null) {
             geo = getValue(vcard.getGeo().getGeoUri());
-            //update the coordinates of first address
             it.cnr.iit.jscontact.tools.dto.Address address = getAddressAltrenative(addresses, vcard.getGeo().getAltId());
-            address.setCoordinates(geo);
-            addresses.set(addresses.indexOf(address), address);
+            if (address != null) {
+                address.setCoordinates(geo);
+            } else {
+                jsCard.addJCardProp(JCardProp.builder()
+                        .name(VCARD_GEO_TAG.toLowerCase())
+                        .parameters(VCardUtils.getJCardPropParameters(vcard.getGeo().getParameters()))
+                        .type(vcard.getGeo().getParameters().getValue())
+                        .value(geo)
+                        .build());
+            }
         }
 
         if (addresses.size()==0)
             return;
 
-        Collections.sort(addresses); //sort based on preference
+        Collections.sort(addresses); //sort based on altid
 
         String id;
         String altId = null;
