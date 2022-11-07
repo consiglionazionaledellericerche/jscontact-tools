@@ -21,7 +21,15 @@ public abstract class AbstractConverter {
 
     protected static final String VCARD_GEO_TAG = "GEO";
 
-    protected static final String PROP_ID_PARAM = "PROP-ID";
+    protected static final String VCARD_PROP_ID_PARAM_TAG = "PROP-ID";
+
+    protected static final String VCARD_DERIVED_PARAM_TAG = "DERIVED";
+
+    protected static final String VCARD_INDEX_PARAM_TAG = "INDEX";
+
+    protected static final String VCARD_PID_PARAM_TAG = "PID";
+
+    protected static final String VCARD_SORT_AS_PARAM_TAG = "SORT-AS";
 
     protected static final String X_RFC0000_JSPROP = "X-RFC0000-JSPROP";
     protected static final String X_RFC0000_JSPATH = "X-RFC0000-JSPATH";

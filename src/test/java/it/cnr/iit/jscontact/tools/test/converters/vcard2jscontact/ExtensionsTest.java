@@ -50,11 +50,11 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "LANG;PREF=1:jp\n" +
                 "LANG;PREF=2:en\n" +
                 "LOCALE;VALUE=language-tag:en\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=addresses/ADR-1/street/0/ext4;VALUE=uri:data:application/json;true\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=nickNames/NICK-1/ext3;VALUE=uri:data:application/json;%22text%22\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=addresses/ADR-1/ext2;VALUE=uri:data:application/json;base64,eyJwcm9wIjoxMH0=\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=preferredLanguages/jp/0/ext6;VALUE=uri:data:application/json;base64,WyIxIiwiMiJd\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=ext1;VALUE=uri:data:application/json;10\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"addresses/ADR-1/street/0/ext4\";VALUE=uri:data:application/json;true\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"nickNames/NICK-1/ext3\";VALUE=uri:data:application/json;%22text%22\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"addresses/ADR-1/ext2\";VALUE=uri:data:application/json;base64,eyJwcm9wIjoxMH0=\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"preferredLanguages/jp/0/ext6\";VALUE=uri:data:application/json;base64,WyIxIiwiMiJd\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"ext1\";VALUE=uri:data:application/json;10\n" +
                 "END:VCARD";
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact1 - 1", 1, jsCard.getExtensions().size());

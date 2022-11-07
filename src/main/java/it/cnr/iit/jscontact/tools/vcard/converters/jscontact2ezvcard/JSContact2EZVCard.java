@@ -82,7 +82,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private void addPropId (VCardProperty property, String propId) {
 
         if (propId != null && config.isSetPropIdParam())
-           property.addParameter(PROP_ID_PARAM, propId);
+           property.addParameter(VCARD_PROP_ID_PARAM_TAG, propId);
     }
 
     private static void addGroup (VCardProperty property, String propertyJSONPointer, Card jsCard) {
@@ -199,6 +199,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 String separator = getNameComponent(jsCard.getName().getComponents(), NameComponentEnum.SEPARATOR);
                 if (sns.size() == 1) {
                     FormattedName fn = getFormattedName(sns.get(0), separator);
+                    fn.setParameter(VCARD_DERIVED_PARAM_TAG, "true");
                     fn.setLanguage(jsCard.getLocale());
                     vcard.setFormattedName(fn);
                 }
@@ -206,6 +207,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     List<FormattedName> fns = new ArrayList<>();
                     for (StructuredName sn : sns) {
                         FormattedName fn = getFormattedName(sn, separator);
+                        fn.setParameter(VCARD_DERIVED_PARAM_TAG, "true");
                         fn.setLanguage(sn.getLanguage());
                         fns.add(fn);
                     }
