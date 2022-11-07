@@ -1,8 +1,10 @@
 package it.cnr.iit.jscontact.tools.dto;
 
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 
 /**
  * Class mapping the vendor-extension values as defined in section 1.7 of [draft-ietf-calext-jscontact].
@@ -27,12 +29,12 @@ public class V_Extension {
 
         if (extValue == null) return null;
 
-        String[] items = extValue.split(":");
-        if (items.length != 2) //Unknown Extension
+        String[] items = extValue.toLowerCase().split(DelimiterUtils.COLON_DELIMITER);
+        if (items.length == 1) //Unknown Extension
             return V_Extension.builder().v_value(extValue.toLowerCase()).build();
 
         // Vendor Extension
-        return V_Extension.builder().v_prefix(items[0]).v_value(items[1]).build();
+        return V_Extension.builder().v_prefix(items[0]).v_value(String.join(DelimiterUtils.COLON_DELIMITER, Arrays.copyOfRange(items, 1, items.length))).build();
     }
 
     @Override
