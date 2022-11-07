@@ -539,7 +539,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (!config.isConvertGenderToSpeakToAs()) {
             jsCard.addJCardProp(JCardProp.builder()
-                                         .name(VCardUtils.VCARD_GENDER_TAG.toLowerCase())
+                                         .name(V_Extension.toV_Extension(VCardUtils.VCARD_GENDER_TAG.toLowerCase()))
                                          .parameters(VCardUtils.getJCardPropParameters(vCard.getGender().getParameters()))
                                          .type(VCardDataType.TEXT)
                                          .value(String.format("%s%s", vCard.getGender().getGender(), (vCard.getGender().getText()==null) ? "" : ";"+vCard.getGender().getText()))
@@ -728,7 +728,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 address.setTimeZone(tz);
             } else {
                 jsCard.addJCardProp(JCardProp.builder()
-                        .name(VCardUtils.VCARD_TZ_TAG.toLowerCase())
+                        .name(V_Extension.toV_Extension(VCardUtils.VCARD_TZ_TAG.toLowerCase()))
                         .parameters(VCardUtils.getJCardPropParameters(vcard.getTimezone().getParameters()))
                         .type(vcard.getTimezone().getParameters().getValue())
                         .value(tz)
@@ -743,7 +743,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 address.setCoordinates(geo);
             } else {
                 jsCard.addJCardProp(JCardProp.builder()
-                        .name(VCardUtils.VCARD_GEO_TAG.toLowerCase())
+                        .name(V_Extension.toV_Extension(VCardUtils.VCARD_GEO_TAG.toLowerCase()))
                         .parameters(VCardUtils.getJCardPropParameters(vcard.getGeo().getParameters()))
                         .type(vcard.getGeo().getParameters().getValue())
                         .value(geo)
@@ -1283,7 +1283,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (!fakeExtensionsMapping.containsKey(extension.getPropertyName()) &&
                     !fakeExtensionsMapping.containsKey(extension.getPropertyName().toLowerCase())) {
                 jsContact.addJCardProp(JCardProp.builder()
-                                             .name(extension.getPropertyName())
+                                             .name(V_Extension.toV_Extension(extension.getPropertyName()))
                                              .parameters(VCardUtils.getJCardPropParameters(extension.getParameters()))                                            .type(extension.getDataType())
                                              .value(extension.getValue())
                                              .build());
@@ -1323,7 +1323,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (vcard.getClientPidMaps()!=null) {
             for (ClientPidMap pidmap : vcard.getClientPidMaps())
                 jsCard.addJCardProp(JCardProp.builder()
-                                             .name(VCardUtils.VCARD_CLIENTPIDMAP_TAG.toLowerCase())
+                                             .name(V_Extension.toV_Extension(VCardUtils.VCARD_CLIENTPIDMAP_TAG.toLowerCase()))
                                              .parameters(VCardUtils.getJCardPropParameters(pidmap.getParameters()))
                                              .type(VCardDataType.TEXT)
                                              .value(String.format("%d,%s",pidmap.getPid(), pidmap.getUri()))
@@ -1333,7 +1333,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (vcard.getXmls()!=null) {
                 for (Xml xml : vcard.getXmls())
                     jsCard.addJCardProp(JCardProp.builder()
-                                                 .name(VCardUtils.VCARD_XML_TAG.toLowerCase())
+                                                 .name(V_Extension.toV_Extension(VCardUtils.VCARD_XML_TAG.toLowerCase()))
                                                  .parameters(VCardUtils.getJCardPropParameters(xml.getParameters()))
                                                  .type(VCardDataType.TEXT)
                                                  .value(xml.getValue().getTextContent())

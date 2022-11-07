@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.JCardProp;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import lombok.NoArgsConstructor;
 
@@ -62,7 +63,7 @@ public class JCardPropsDeserializer extends JsonDeserializer<JCardProp[]> {
                 return null;
             Map<String,String> parameters = new HashMap<>();
             list.add(JCardProp.builder()
-                              .name(subnode.get(0).asText())
+                              .name(V_Extension.toV_Extension(subnode.get(0).asText()))
                               .parameters(getParameters(subnode.get(1)))
                               .type((subnode.get(2).asText().equals("unknown")) ? null : VCardDataType.get(subnode.get(2).asText()))
                               .value(JsonNodeUtils.getValue(subnode.get(3)))

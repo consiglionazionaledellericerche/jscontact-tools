@@ -18,7 +18,6 @@ import java.util.Arrays;
 @AllArgsConstructor
 public class V_Extension {
 
-
     private String v_prefix;
 
     @NonNull
@@ -29,9 +28,9 @@ public class V_Extension {
 
         if (extValue == null) return null;
 
-        String[] items = extValue.toLowerCase().split(DelimiterUtils.COLON_DELIMITER);
+        String[] items = extValue.split(DelimiterUtils.COLON_DELIMITER);
         if (items.length == 1) //Unknown Extension
-            return V_Extension.builder().v_value(extValue.toLowerCase()).build();
+            return V_Extension.builder().v_value(extValue).build();
 
         // Vendor Extension
         return V_Extension.builder().v_prefix(items[0]).v_value(String.join(DelimiterUtils.COLON_DELIMITER, Arrays.copyOfRange(items, 1, items.length))).build();
@@ -42,6 +41,14 @@ public class V_Extension {
         if (v_prefix == null)
             return v_value;
         return v_prefix + ":" + v_value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
+        return this.toString().equalsIgnoreCase(obj.toString());
     }
 
 }

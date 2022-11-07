@@ -121,7 +121,7 @@ public abstract class JSContact extends ValidableObject implements Serializable 
             return map;
 
         for (JCardProp jCardExtension : this.getJCardExtensions())
-            map.put(jCardExtension.getName(),jCardExtension.getValue().toString());
+            map.put(jCardExtension.getName().toString(),jCardExtension.getValue().toString());
 
         return map;
     }

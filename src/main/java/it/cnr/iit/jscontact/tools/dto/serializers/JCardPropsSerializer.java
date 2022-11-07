@@ -46,7 +46,7 @@ public class JCardPropsSerializer extends JsonSerializer<JCardProp[]> {
         jgen.writeStartArray();
         for (JCardProp jCardProp : jCardProps) {
             jgen.writeStartArray();
-            jgen.writeString(jCardProp.getName());
+            jgen.writeString(jCardProp.getName().toString());
             jgen.writeStartObject();
             for(Map.Entry<String,Object> entry : jCardProp.getParameters().entrySet()) {
                 jgen.writeFieldName(entry.getKey().toLowerCase());

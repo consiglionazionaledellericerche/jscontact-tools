@@ -82,7 +82,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testExtendedVCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertEquals("testExtendedVCard - 3", "test", jsCard.getFullName());
         assertEquals("testExtendedJCard - 4", 1, jsCard.getJCardExtensions().length);
-        assertEquals("testExtendedJCard - 5", "myext", jsCard.getJCardExtensions()[0].getName());
+        assertEquals("testExtendedJCard - 5", "myext", jsCard.getJCardExtensions()[0].getName().toString());
         assertNull("testExtendedJCard - 6", jsCard.getJCardExtensions()[0].getType());
         assertEquals("testExtendedJCard - 7", "extvalue", jsCard.getJCardExtensions()[0].getValue());
     }
@@ -301,7 +301,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
         assertEquals("testCompleteVCard5 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
         assertEquals("testCompleteVCard5 - 45", 1, jsCard.getJCardExtensions().length);
-        assertEquals("testCompleteVCard5 - 46", "x-qq", jsCard.getJCardExtensions()[0].getName());
+        assertEquals("testCompleteVCard5 - 46", "x-qq", jsCard.getJCardExtensions()[0].getName().toString());
         assertEquals("testCompleteVCard5 - 47", 0, jsCard.getJCardExtensions()[0].getParameters().size());
         assertNull("testCompleteVCard5 - 48",  jsCard.getJCardExtensions()[0].getType());
         assertEquals("testCompleteVCard5 - 49", "21588891", jsCard.getJCardExtensions()[0].getValue());

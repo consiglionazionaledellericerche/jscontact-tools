@@ -1311,14 +1311,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (JCardProp jCardProp : jsCard.getJCardExtensions()) {
 
-            if (jCardProp.getName().equalsIgnoreCase(VCardUtils.VCARD_CLIENTPIDMAP_TAG)) {
+            if (jCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_CLIENTPIDMAP_TAG))) {
                 String pid = ((String) jCardProp.getValue()).split(",")[0];
                 String uri = ((String) jCardProp.getValue()).split(",")[1];
                 ClientPidMap pidmap = getCliendPidMap(pid, uri);
                 pidmap.setParameters(jCardProp.getVCardParameters());
                 vcard.addClientPidMap(pidmap);
             }
-            else if (jCardProp.getName().equalsIgnoreCase(VCardUtils.VCARD_XML_TAG)) {
+            else if (jCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_XML_TAG))) {
                 try {
                     Xml xml = new Xml(((String) jCardProp.getValue()));
                     xml.setParameters(jCardProp.getVCardParameters());
@@ -1327,7 +1327,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     throw new InternalErrorException(e.getMessage());
                 }
             }
-            else if (jCardProp.getName().equalsIgnoreCase(VCardUtils.VCARD_TZ_TAG)) {
+            else if (jCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_TZ_TAG))) {
 
                 Timezone tz = null;
                 TimeZone timeZone = null;
@@ -1341,13 +1341,13 @@ public class JSContact2EZVCard extends AbstractConverter {
                 tz.setParameters(jCardProp.getVCardParameters());
                 vcard.setTimezone(tz);
             }
-            else if (jCardProp.getName().equalsIgnoreCase(VCardUtils.VCARD_GEO_TAG)) {
+            else if (jCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_GEO_TAG))) {
                 Geo geo = new Geo(getGeoUri((String) jCardProp.getValue()));
                 geo.setParameters(jCardProp.getVCardParameters());
                 vcard.setGeo(geo);
             }
             else {
-                RawProperty property = new RawProperty(jCardProp.getName().toUpperCase(), jCardProp.getValue().toString(), jCardProp.getType());
+                RawProperty property = new RawProperty(jCardProp.getName().toString().toUpperCase(), jCardProp.getValue().toString(), jCardProp.getType());
                 property.setParameters(jCardProp.getVCardParameters());
                 vcard.addProperty(property);
             }

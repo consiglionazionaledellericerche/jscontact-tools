@@ -22,7 +22,7 @@ public class JCardProp {
 
     @NotNull(message = "name is missing in JCardProp")
     @NonNull
-    String name;
+    V_Extension name;
 
     @Builder.Default
     Map<String,Object> parameters = new HashMap<>();
@@ -53,5 +53,7 @@ public class JCardProp {
     public VCardParameters getVCardParameters() {
         return VCardUtils.getVCardParameters(this.parameters);
     }
+
+
 
 }
