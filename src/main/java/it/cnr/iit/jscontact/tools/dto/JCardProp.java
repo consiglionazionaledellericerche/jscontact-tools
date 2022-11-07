@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * Class mapping the JCardProp type as defined in section 2.15.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the JCardProp type as defined in section 2.15.1 of [draft-ietf-calext-jscontact-vcard].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.15.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.15.1">draft-ietf-calext-jscontact-vcard</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor

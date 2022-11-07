@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the PropertyGroup type as defined in section 2.6.6 of [draft-ietf-calext-jscontact].
+ * Class mapping the PropertyGroup type as defined in section 2.x.x of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.6">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.x.x">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","label","members"})

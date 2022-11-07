@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Class mapping the TimeZone type as defined in section 4.7.2 of RFC8984].
+ * Class mapping the TimeZone type as defined in section 4.7.2 of [RFC8984].
  *
  * @see <a href="https://datatracker.ietf.org/doc/rfc8984#section-4.7.2">RFC8984</a>
  * @author Mario Loffredo

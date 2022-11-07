@@ -28,9 +28,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class mapping the keys of "features" map of the Phone type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the keys of "features" map of the Phone type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @Getter

@@ -30,9 +30,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract class mapping the vCard 4.0 related properties that can be grouped as defined in section 3.3 of [RFC6350].
+ * Abstract class mapping the vCard counterparts of JSContact extensions  as defined in section 2.15.1 of [draft-ietf-calext-jscontact-vcard].
+ * The class contains two other properties shared by all JSContact types.
  *
- * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-3.3">RFC6350</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.15.1">draft-ietf-calext-jscontact-vcard</a>
  * @author Mario Loffredo
  */
 

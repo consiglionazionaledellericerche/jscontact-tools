@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class mapping the JCard parameters as defined in section 2.15.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the JCard parameters as defined in section 2.15.2 of [draft-ietf-calext-jscontact-vcard].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.15.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.15.2">draft-ietf-calext-jscontact-vcard</a>
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames={"value","values"}, message = "at least one not null member is missing in JCardParam")

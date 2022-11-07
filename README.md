@@ -322,6 +322,9 @@ The conversion is executed according to the following rules:
 
 24. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
 
+25. The VCARD parameter DERIVED is ignored. 
+
+
 ### Conversion Profiles from vCard to JSContact
 
 By default, where a collection of objects is mapped to a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")

@@ -26,9 +26,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Abstract class mapping the vCard 4.0 related properties that can be grouped as defined in section 3.3 of [RFC6350].
+ * Abstract class mapping the vCard extensions in section 1.5.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-3.3">RFC6350</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.5.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @ToString

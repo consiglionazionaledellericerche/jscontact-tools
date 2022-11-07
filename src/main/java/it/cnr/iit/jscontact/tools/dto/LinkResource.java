@@ -33,9 +33,9 @@ import javax.validation.constraints.Pattern;
 
 
 /**
- * Class mapping the LinkResource type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the LinkResource type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @ResourceConstraint

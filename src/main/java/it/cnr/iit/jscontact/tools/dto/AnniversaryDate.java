@@ -11,9 +11,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * Class mapping the "date" property values of the Anniversary type as defined in section 2.6.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the "date" property values of the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @Builder

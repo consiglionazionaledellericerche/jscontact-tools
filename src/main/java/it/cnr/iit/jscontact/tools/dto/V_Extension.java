@@ -4,6 +4,12 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Class mapping the vendor-extension values as defined in section 1.7 of [draft-ietf-calext-jscontact].
+ *
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.7">draft-ietf-calext-jscontact</a>
+ * @author Mario Loffredo
+ */
 @Data
 @Builder
 @NoArgsConstructor
