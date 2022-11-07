@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -67,11 +68,17 @@ public abstract class AbstractExtensibleJSContactType {
     }
 
 
+    private String getSafeJsonPointerFieldName(String fieldName) {
+
+        return fieldName.replaceAll(DelimiterUtils.SLASH_DELIMITER,DelimiterUtils.SLASH_DELIMITER_IN_JSON_POINTER);
+
+    }
+
     public void buildAllExtensionsMap(Map<String,Object> map, String jsonPointer) {
 
         if (extensions != null) {
             for (Map.Entry<String,Object> extension : extensions.entrySet())
-                map.put(String.format("%s%s", jsonPointer, extension.getKey()), extension.getValue());
+                map.put(String.format("%s%s", jsonPointer, getSafeJsonPointerFieldName(extension.getKey())), extension.getValue());
         }
 
         for (Field field : this.getClass().getDeclaredFields()) {
@@ -83,7 +90,7 @@ public abstract class AbstractExtensibleJSContactType {
                     if (subarray != null) {
                         int i = 0;
                         for (AbstractExtensibleJSContactType o : subarray)
-                            o.buildAllExtensionsMap(map, String.format("%s%s/%d/", jsonPointer, field.getName(), i++));
+                            o.buildAllExtensionsMap(map, String.format("%s%s/%d/", jsonPointer, getSafeJsonPointerFieldName(field.getName()), i++));
                     }
                 } catch(Exception e) {}
             } else if (Map.class.isAssignableFrom(field.getType())) {
@@ -91,7 +98,7 @@ public abstract class AbstractExtensibleJSContactType {
                     Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
                     if (submap != null) {
                         for (Map.Entry<String, AbstractExtensibleJSContactType> entry : submap.entrySet())
-                            entry.getValue().buildAllExtensionsMap(map, String.format("%s%s/%s/", jsonPointer, field.getName(), entry.getKey()));
+                            entry.getValue().buildAllExtensionsMap(map, String.format("%s%s/%s/", jsonPointer, getSafeJsonPointerFieldName(field.getName()), entry.getKey()));
                     }
                 } catch(Exception e) {
                     try {
@@ -102,7 +109,7 @@ public abstract class AbstractExtensibleJSContactType {
                                 if (subarray2 != null) {
                                     int i = 0;
                                     for (AbstractExtensibleJSContactType o : subarray2)
-                                        o.buildAllExtensionsMap(map, String.format("%s%s/%s/%d/", jsonPointer, field.getName(), entry2.getKey(), i++));
+                                        o.buildAllExtensionsMap(map, String.format("%s%s/%s/%d/", jsonPointer, getSafeJsonPointerFieldName(field.getName()), entry2.getKey(), i++));
                                 }
                             }
                         }
@@ -111,7 +118,7 @@ public abstract class AbstractExtensibleJSContactType {
             } else {
                 try {
                     AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
-                    o.buildAllExtensionsMap(map, String.format("%s%s/", jsonPointer, field.getName()));
+                    o.buildAllExtensionsMap(map, String.format("%s%s/", jsonPointer, getSafeJsonPointerFieldName(field.getName())));
                 } catch (Exception e) {}
             }
         }

@@ -11,4 +11,8 @@ public class DelimiterUtils {
     public static final String NEWLINE_DELIMITER = "\n";
     public static final String SPACE_DELIMITER = " ";
     public static final String COLON_DELIMITER = ":";
+
+    public static final String SLASH_DELIMITER = "/";
+
+    public static final String SLASH_DELIMITER_IN_JSON_POINTER = "~1";
 }
