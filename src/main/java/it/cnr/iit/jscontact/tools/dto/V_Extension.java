@@ -24,10 +24,8 @@ public class V_Extension {
     private String v_value;
 
     public static V_Extension toV_Extension(String extValue) {
-        if (extValue == null) return null;
 
-        if (extValue.toLowerCase().startsWith("x-")) //Unknown Extension
-            return V_Extension.builder().v_value(extValue.toLowerCase()).build();
+        if (extValue == null) return null;
 
         String[] items = extValue.split(":");
         if (items.length != 2) //Unknown Extension
