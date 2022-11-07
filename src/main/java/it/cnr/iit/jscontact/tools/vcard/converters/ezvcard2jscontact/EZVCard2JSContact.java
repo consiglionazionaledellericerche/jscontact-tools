@@ -708,7 +708,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String vcardType = VCardUtils.getVCardParameterValue(addr.getParameters(), "TYPE");
             tz = getTimezoneName(addr.getTimezone());
             geo = getGeoUri(addr.getGeo());
-            String cc = addr.getParameter("CC");
+            String cc = addr.getParameter(VCARD_CC_PARAM_TAG);
 
             List<StreetComponent> streetDetailPairs = new ArrayList<>();
             if (StringUtils.isNotEmpty(addr.getPoBox()))

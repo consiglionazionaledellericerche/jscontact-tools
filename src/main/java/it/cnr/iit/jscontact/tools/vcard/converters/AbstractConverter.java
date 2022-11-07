@@ -29,6 +29,10 @@ public abstract class AbstractConverter {
 
     protected static final String VCARD_PID_PARAM_TAG = "PID";
 
+    protected static final String VCARD_LEVEL_PARAM_TAG = "LEVEL";
+
+    protected static final String VCARD_CC_PARAM_TAG = "CC";
+
     protected static final String VCARD_SORT_AS_PARAM_TAG = "SORT-AS";
 
     protected static final String X_RFC0000_JSPROP = "X-RFC0000-JSPROP";
