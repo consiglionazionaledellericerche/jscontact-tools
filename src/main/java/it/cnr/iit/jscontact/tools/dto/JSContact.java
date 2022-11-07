@@ -19,7 +19,6 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -60,57 +59,12 @@ public abstract class JSContact extends ValidableObject implements Serializable 
     @NonNull
     String uid;
 
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @GroupKeyConstraint(message = "invalid group key in Map<String,PropertyGroup>")
-    Map<String,PropertyGroup> propertyGroups;
-
     @JsonProperty("ietf.org:rfc0000:props")
     @JsonSerialize(using = JCardPropsSerializer.class)
     @JsonDeserialize(using = JCardPropsDeserializer.class)
     @Valid
     JCardProp[] jCardExtensions;
 
-    /**
-     * Adds a property JSONPointer to the members of a group identfied by a group id.
-     *
-     * @param key the group key
-     * @param label the group label
-     * @param propertyJSONPointer the JSONPointer of the property included in the group
-     */
-    public void addPropertyGroup(String key, String label, String propertyJSONPointer) {
-
-        if (propertyGroups == null)
-            propertyGroups = new HashMap<>();
-
-        PropertyGroup propertyGroupPerKey = propertyGroups.get(key);
-        if (propertyGroupPerKey == null) {
-            propertyGroups.put(key, PropertyGroup.builder()
-                    .members(new HashMap<String, Boolean>() {{
-                        put(propertyJSONPointer, Boolean.TRUE);
-                    }})
-                    .label(label)
-                    .build());
-        }
-        else {
-            Map<String, Boolean> map = propertyGroupPerKey.getMembers();
-            map.put(propertyJSONPointer, Boolean.TRUE);
-            propertyGroups.replace(key, PropertyGroup.builder()
-                    .members(map)
-                    .label(label)
-                    .build());
-        }
-    }
-
-    /**
-     * Adds a property JSONPointer to the members of a group identfied by a group id.
-     *
-     * @param key the group key
-     * @param propertyJSONPointer the JSONPointer of the property included in the group
-     */
-    public void addPropertyGroup(String key, String propertyJSONPointer) {
-        addPropertyGroup(key, null, propertyJSONPointer);
-    }
 
     /**
      * Deserialize a single JSContact object or an array of JSContact objects

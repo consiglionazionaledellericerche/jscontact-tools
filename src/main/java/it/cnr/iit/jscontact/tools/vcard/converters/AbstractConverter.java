@@ -35,8 +35,10 @@ public abstract class AbstractConverter {
 
     protected static final String VCARD_SORT_AS_PARAM_TAG = "SORT-AS";
 
-    protected static final String X_RFC0000_JSPROP = "X-RFC0000-JSPROP";
-    protected static final String X_RFC0000_JSPATH = "X-RFC0000-JSPATH";
+    public static final String VCARD_GROUP_PARAM_TAG = "GROUP";
+
+    protected static final String VCARD_X_RFC0000_JSPROP_TAG = "X-RFC0000-JSPROP";
+    protected static final String VCARD_X_RFC0000_JSPATH_PARAM_TAG = "X-RFC0000-JSPATH";
 
     protected static final Map<String,String> fakeExtensionsMapping = new HashMap<String, String>() {{
         put("contact-uri","links");

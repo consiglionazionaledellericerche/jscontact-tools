@@ -42,15 +42,10 @@ public class PropertyGroupTest extends JSContact2VCardTest {
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
                         "\"postcode\":\"20190\"," +
-                        "\"countryCode\":\"US\"" +
-                    "}" +
-                "}," +
-                "\"propertyGroups\": {" +
-                    "\"CONTACT\": {" +
-                        "\"@type\":\"PropertyGroup\"," +
-                        "\"members\": {" +
-                            "\"addresses/ADR-1\": true" +
-                        "}" +
+                        "\"countryCode\":\"US\"," +
+                        "\"ietf.org:rfc0000:params\" : { " +
+                            "\"group\" : \"CONTACT\"" +
+                       "}" +
                     "}" +
                 "}" +
                 "}";

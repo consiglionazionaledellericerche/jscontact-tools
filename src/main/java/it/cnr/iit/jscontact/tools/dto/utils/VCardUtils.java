@@ -6,6 +6,7 @@ import ezvcard.property.RawProperty;
 import ezvcard.property.VCardProperty;
 import it.cnr.iit.jscontact.tools.dto.AbstractJSContactType;
 import it.cnr.iit.jscontact.tools.dto.JCardParam;
+import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 
 import java.util.*;
 
@@ -93,6 +94,8 @@ public class VCardUtils {
     public static Map<String, JCardParam> getVCardUnmatchedParameters(VCardProperty property, List<String> unmatchedParameterNames) {
 
         Map<String,JCardParam> jCardParams = new HashMap<>();
+        if (property.getGroup()!=null)
+            jCardParams.put("group", JCardParam.builder().value(property.getGroup()).build());
         for(String parameterName : property.getParameters().keySet()) {
             if (unmatchedParameterNames.contains(parameterName) || parameterName.startsWith("X-")) {
                 String parameterValue = property.getParameter(parameterName);
@@ -115,7 +118,9 @@ public class VCardUtils {
 
         if (unmatchedParams != null) {
             for(Map.Entry<String,JCardParam> jCardParam : unmatchedParams.entrySet()) {
-                if (jCardParam.getValue().getValues()!=null)
+                if (jCardParam.getKey().equalsIgnoreCase(AbstractConverter.VCARD_GROUP_PARAM_TAG))
+                    property.setGroup(jCardParam.getValue().getValue());
+                else if (jCardParam.getValue().getValues()!=null)
                     property.addParameter(jCardParam.getKey().toUpperCase(),String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jCardParam.getValue().getValues()));
                 else
                     property.addParameter(jCardParam.getKey().toUpperCase(),jCardParam.getValue().getValue());

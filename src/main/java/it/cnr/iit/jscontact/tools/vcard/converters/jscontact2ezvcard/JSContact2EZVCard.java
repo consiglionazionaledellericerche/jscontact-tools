@@ -85,19 +85,6 @@ public class JSContact2EZVCard extends AbstractConverter {
            property.addParameter(VCARD_PROP_ID_PARAM_TAG, propId);
     }
 
-    private static void addGroup (VCardProperty property, String propertyJSONPointer, Card jsCard) {
-
-        if (jsCard.getPropertyGroups() == null)
-            return;
-
-        for (Map.Entry<String,PropertyGroup> entry : jsCard.getPropertyGroups().entrySet()) {
-
-            if (entry.getValue().getMembers().containsKey(propertyJSONPointer))
-                property.setGroup(entry.getKey());
-        }
-    }
-
-
     private static Kind getKind(KindType kind) {
 
         if (kind == null)
@@ -584,14 +571,12 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
                 ezvcard.property.Address addr = getAddress(address, jsCard.getCustomTimeZones(), jsCard.getLocale());
-                addGroup(addr, "addresses/"+entry.getKey(), jsCard);
                 addPropId(addr, entry.getKey());
                 vcard.addAddress(addr);
             }
             else {
                 List<ezvcard.property.Address> addrs = new ArrayList<>();
                 ezvcard.property.Address addr = getAddress(address, jsCard.getCustomTimeZones(), jsCard.getLocale());
-                addGroup(addr, "addresses/"+entry.getKey(), jsCard);
                 addPropId(addr, entry.getKey());
                 addrs.add(addr);
 
@@ -1460,8 +1445,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
             try {
-                RawProperty property = new RawProperty(X_RFC0000_JSPROP, X_RFC0000_JSPROP_Utils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.URI);
-                property.setParameter(X_RFC0000_JSPATH, entry.getKey());
+                RawProperty property = new RawProperty(VCARD_X_RFC0000_JSPROP_TAG, X_RFC0000_JSPROP_Utils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.URI);
+                property.setParameter(VCARD_X_RFC0000_JSPATH_PARAM_TAG, entry.getKey());
                 vcard.addProperty(property);
             } catch (Exception e) {}
         }

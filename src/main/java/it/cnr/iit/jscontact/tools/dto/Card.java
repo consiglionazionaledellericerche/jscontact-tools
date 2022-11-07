@@ -56,7 +56,7 @@ import java.util.*;
         "addresses",
         "cryptoKeys","directories","links","media",
         "localizations",
-        "anniversaries","personalInfo","notes","keywords","propertyGroups","ietf.org:rfc0000:props"})
+        "anniversaries","personalInfo","notes","keywords","ietf.org:rfc0000:props"})
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
 @LocalizationsConstraint

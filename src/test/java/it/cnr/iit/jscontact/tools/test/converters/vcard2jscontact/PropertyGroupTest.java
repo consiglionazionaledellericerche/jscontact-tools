@@ -36,8 +36,7 @@ public class PropertyGroupTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testPropertyGroup1 - 1", 1, jsCard.getPropertyGroups().size());
-        assertNotNull("testPropertyGroup1 - 2", jsCard.getPropertyGroups().get("CONTACT").getMembers().get("addresses/ADR-1"));
+        assertNotNull("testPropertyGroup1 - 2", jsCard.getAddresses().get("ADR-1").getJCardParams().get("group"));
 
     }
 

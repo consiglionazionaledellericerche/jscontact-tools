@@ -47,11 +47,6 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     @JsonIgnore
     @Getter
     @Setter
-    String group;
-
-    @JsonIgnore
-    @Getter
-    @Setter
     String propId;
 
     @JsonProperty("ietf.org:rfc0000:params")

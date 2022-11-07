@@ -38,7 +38,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","uid","members","card","propertyGroups","ietf.org:rfc0000:props"})
+@JsonPropertyOrder({"@type","uid","members","card","ietf.org:rfc0000:props"})
 @CardGroupKindConstraint
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
