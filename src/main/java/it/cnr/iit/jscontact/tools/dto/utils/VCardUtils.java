@@ -6,7 +6,6 @@ import ezvcard.property.RawProperty;
 import ezvcard.property.VCardProperty;
 import it.cnr.iit.jscontact.tools.dto.AbstractJSContactType;
 import it.cnr.iit.jscontact.tools.dto.JCardParam;
-import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 
 import java.util.*;
 
@@ -16,6 +15,22 @@ import java.util.*;
  * @author Mario Loffredo
  */
 public class VCardUtils {
+
+    public static final String VCARD_GENDER_TAG = "GENDER";
+    public static final String VCARD_CLIENTPIDMAP_TAG = "CLIENTPIDMAP";
+    public static final String VCARD_XML_TAG = "XML";
+    public static final String VCARD_TZ_TAG = "TZ";
+    public static final String VCARD_GEO_TAG = "GEO";
+    public static final String VCARD_PROP_ID_PARAM_TAG = "PROP-ID";
+    public static final String VCARD_DERIVED_PARAM_TAG = "DERIVED";
+    public static final String VCARD_INDEX_PARAM_TAG = "INDEX";
+    public static final String VCARD_PID_PARAM_TAG = "PID";
+    public static final String VCARD_LEVEL_PARAM_TAG = "LEVEL";
+    public static final String VCARD_CC_PARAM_TAG = "CC";
+    public static final String VCARD_SORT_AS_PARAM_TAG = "SORT-AS";
+    public static final String VCARD_GROUP_PARAM_TAG = "GROUP";
+    public static final String VCARD_X_RFC0000_JSPROP_TAG = "X-RFC0000-JSPROP";
+    public static final String VCARD_X_RFC0000_JSPATH_PARAM_TAG = "X-RFC0000-JSPATH";
 
     /**
      * Gets the VCardParameter value of a given VCardParameter object identified by the parameter name in the Ezvcard VCardParameters object.
@@ -118,7 +133,7 @@ public class VCardUtils {
 
         if (unmatchedParams != null) {
             for(Map.Entry<String,JCardParam> jCardParam : unmatchedParams.entrySet()) {
-                if (jCardParam.getKey().equalsIgnoreCase(AbstractConverter.VCARD_GROUP_PARAM_TAG))
+                if (jCardParam.getKey().equalsIgnoreCase(VCARD_GROUP_PARAM_TAG))
                     property.setGroup(jCardParam.getValue().getValue());
                 else if (jCardParam.getValue().getValues()!=null)
                     property.addParameter(jCardParam.getKey().toUpperCase(),String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jCardParam.getValue().getValues()));

@@ -82,7 +82,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private void addPropId (VCardProperty property, String propId) {
 
         if (propId != null && config.isSetPropIdParam())
-           property.addParameter(VCARD_PROP_ID_PARAM_TAG, propId);
+           property.addParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG, propId);
     }
 
     private static Kind getKind(KindType kind) {
@@ -186,7 +186,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 String separator = getNameComponent(jsCard.getName().getComponents(), NameComponentEnum.SEPARATOR);
                 if (sns.size() == 1) {
                     FormattedName fn = getFormattedName(sns.get(0), separator);
-                    fn.setParameter(VCARD_DERIVED_PARAM_TAG, "true");
+                    fn.setParameter(VCardUtils.VCARD_DERIVED_PARAM_TAG, "true");
                     fn.setLanguage(jsCard.getLocale());
                     vcard.setFormattedName(fn);
                 }
@@ -194,7 +194,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     List<FormattedName> fns = new ArrayList<>();
                     for (StructuredName sn : sns) {
                         FormattedName fn = getFormattedName(sn, separator);
-                        fn.setParameter(VCARD_DERIVED_PARAM_TAG, "true");
+                        fn.setParameter(VCardUtils.VCARD_DERIVED_PARAM_TAG, "true");
                         fn.setLanguage(sn.getLanguage());
                         fns.add(fn);
                     }
@@ -690,7 +690,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (pi.getLevel().isRfcValue())
             e.setLevel(ExpertiseLevel.get(PersonalInformationLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
         else
-            e.setParameter(VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
+            e.setParameter(VCardUtils.VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
         return e;
     }
 
@@ -702,7 +702,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (pi.getLevel().isRfcValue())
             h.setLevel(HobbyLevel.get(pi.getLevel().getRfcValue().name()));
         else
-            h.setParameter(VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
+            h.setParameter(VCardUtils.VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
         return h;
     }
 
@@ -714,7 +714,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (pi.getLevel().isRfcValue())
             i.setLevel(InterestLevel.get(pi.getLevel().getRfcValue().name()));
         else
-            i.setParameter(VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
+            i.setParameter(VCardUtils.VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
         return i;
     }
 
@@ -1311,14 +1311,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (JCardProp jCardProp : jsCard.getJCardExtensions()) {
 
-            if (jCardProp.getName().equalsIgnoreCase(VCARD_CLIENTPIDMAP_TAG)) {
+            if (jCardProp.getName().equalsIgnoreCase(VCardUtils.VCARD_CLIENTPIDMAP_TAG)) {
                 String pid = ((String) jCardProp.getValue()).split(",")[0];
                 String uri = ((String) jCardProp.getValue()).split(",")[1];
                 ClientPidMap pidmap = getCliendPidMap(pid, uri);
                 pidmap.setParameters(jCardProp.getVCardParameters());
                 vcard.addClientPidMap(pidmap);
             }
-            else if (jCardProp.getName().equalsIgnoreCase(VCARD_XML_TAG)) {
+            else if (jCardProp.getName().equalsIgnoreCase(VCardUtils.VCARD_XML_TAG)) {
                 try {
                     Xml xml = new Xml(((String) jCardProp.getValue()));
                     xml.setParameters(jCardProp.getVCardParameters());
@@ -1327,7 +1327,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     throw new InternalErrorException(e.getMessage());
                 }
             }
-            else if (jCardProp.getName().equalsIgnoreCase(VCARD_TZ_TAG)) {
+            else if (jCardProp.getName().equalsIgnoreCase(VCardUtils.VCARD_TZ_TAG)) {
 
                 Timezone tz = null;
                 TimeZone timeZone = null;
@@ -1341,7 +1341,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 tz.setParameters(jCardProp.getVCardParameters());
                 vcard.setTimezone(tz);
             }
-            else if (jCardProp.getName().equalsIgnoreCase(VCARD_GEO_TAG)) {
+            else if (jCardProp.getName().equalsIgnoreCase(VCardUtils.VCARD_GEO_TAG)) {
                 Geo geo = new Geo(getGeoUri((String) jCardProp.getValue()));
                 geo.setParameters(jCardProp.getVCardParameters());
                 vcard.setGeo(geo);
@@ -1445,8 +1445,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
             try {
-                RawProperty property = new RawProperty(VCARD_X_RFC0000_JSPROP_TAG, X_RFC0000_JSPROP_Utils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.URI);
-                property.setParameter(VCARD_X_RFC0000_JSPATH_PARAM_TAG, entry.getKey());
+                RawProperty property = new RawProperty(VCardUtils.VCARD_X_RFC0000_JSPROP_TAG, X_RFC0000_JSPROP_Utils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.URI);
+                property.setParameter(VCardUtils.VCARD_X_RFC0000_JSPATH_PARAM_TAG, entry.getKey());
                 vcard.addProperty(property);
             } catch (Exception e) {}
         }

@@ -13,33 +13,6 @@ import java.util.Map;
  */
 public abstract class AbstractConverter {
 
-    protected static final String VCARD_GENDER_TAG = "GENDER";
-    protected static final String VCARD_CLIENTPIDMAP_TAG = "CLIENTPIDMAP";
-    protected static final String VCARD_XML_TAG = "XML";
-
-    protected static final String VCARD_TZ_TAG = "TZ";
-
-    protected static final String VCARD_GEO_TAG = "GEO";
-
-    protected static final String VCARD_PROP_ID_PARAM_TAG = "PROP-ID";
-
-    protected static final String VCARD_DERIVED_PARAM_TAG = "DERIVED";
-
-    protected static final String VCARD_INDEX_PARAM_TAG = "INDEX";
-
-    protected static final String VCARD_PID_PARAM_TAG = "PID";
-
-    protected static final String VCARD_LEVEL_PARAM_TAG = "LEVEL";
-
-    protected static final String VCARD_CC_PARAM_TAG = "CC";
-
-    protected static final String VCARD_SORT_AS_PARAM_TAG = "SORT-AS";
-
-    public static final String VCARD_GROUP_PARAM_TAG = "GROUP";
-
-    protected static final String VCARD_X_RFC0000_JSPROP_TAG = "X-RFC0000-JSPROP";
-    protected static final String VCARD_X_RFC0000_JSPATH_PARAM_TAG = "X-RFC0000-JSPATH";
-
     protected static final Map<String,String> fakeExtensionsMapping = new HashMap<String, String>() {{
         put("contact-uri","links");
         put("created","created");
