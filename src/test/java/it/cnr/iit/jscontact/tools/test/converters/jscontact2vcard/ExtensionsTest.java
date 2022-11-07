@@ -78,7 +78,6 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(Ezvcard.write(vcard).go());
         assertEquals("testExtendedJSContact2 - 1", 6, vcard.getExtendedProperties().size());
         assertEquals("testExtendedJSContact2 - 2", "LOCALE", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testExtendedJSContact2 - 3", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(1).getPropertyName());
