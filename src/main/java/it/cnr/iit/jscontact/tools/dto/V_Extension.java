@@ -16,8 +16,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class V_Extension {
 
-    @NonNull
-    @NotNull
+
     private String v_prefix;
 
     @NonNull
@@ -27,17 +26,20 @@ public class V_Extension {
     public static V_Extension toV_Extension(String extValue) {
         if (extValue == null) return null;
 
-        if (extValue.toLowerCase().startsWith("x-"))
-            return V_Extension.builder().v_prefix("ietf.org").v_value(extValue.toLowerCase()).build();
+        if (extValue.toLowerCase().startsWith("x-")) //Unknown Extension
+            return V_Extension.builder().v_value(extValue.toLowerCase()).build();
 
         String[] items = extValue.split(":");
-        if (items.length != 2) return null;
+        if (items.length != 2) //Unknown Extension
+            return V_Extension.builder().v_value(extValue.toLowerCase()).build();
+
+        // Vendor Extension
         return V_Extension.builder().v_prefix(items[0]).v_value(items[1]).build();
     }
 
     @Override
     public String toString() {
-        if (v_prefix.startsWith("ietf.org"))
+        if (v_prefix == null)
             return v_value;
         return v_prefix + ":" + v_value;
     }
