@@ -618,7 +618,7 @@ Version 0.11.0 implements the following draft versions:
 
 ## Java
 
-Version 1.8 required.
+Version 9 required.
 
 ## Maven
 
