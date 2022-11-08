@@ -324,7 +324,6 @@ The conversion is executed according to the following rules:
 
 25. The VCARD parameter DERIVED is ignored. 
 
-
 ### Conversion Profiles from vCard to JSContact
 
 By default, where a collection of objects is mapped to a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
@@ -609,6 +608,11 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
+Version 0.11.0 implements the following draft versions:
+
+* draft-ietf-calext-jscontact-04
+* draft-ietf-calext-jscontact-vcard-03
+* draft-ietf-calext-vcard-jscontact-extensions-01
 
 # Build Instructions
 
