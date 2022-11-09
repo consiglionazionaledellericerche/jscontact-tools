@@ -209,8 +209,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard4 - 12", 2, jsCard.getAnniversaries().size());
         assertTrue("testCompleteVCard4 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
         assertTrue("testCompleteVCard4 - 14", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("0000-02-03"));
-        assertTrue("testCompleteVCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isOtherAnniversary());
-        assertEquals("testCompleteVCard4 - 16", "marriage date", jsCard.getAnniversaries().get("ANNIVERSARY-2").getLabel());
+        assertTrue("testCompleteVCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isMarriage());
         assertTrue("testCompleteVCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
         assertTrue("testCompleteVCard4 - 18", jsCard.getSpeakToAs().isMale());
 

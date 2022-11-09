@@ -70,6 +70,18 @@ public class ExtensionsTest extends VCard2JSContactTest {
 
     }
 
+    public void testExtendedJSContact3() throws CardException {
 
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "TEL;PROP-ID=PHONE-1;TYPE=home,voice;VALUE=uri:tel:+33-01-23-45-6\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=phones/PHONE-1/label;VALUE=uri:data:application/json;%22a label%22\n" +
+                "END:VCARD";
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
+        assertEquals("testExtendedJSContact1 - 2", "a label", jsCard.getPhones().get("PHONE-1").getLabel());
+    }
 
 }

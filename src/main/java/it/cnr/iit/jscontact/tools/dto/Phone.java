@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneFeaturesDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
@@ -34,7 +35,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Phone extends AbstractJSContactType implements IdMapValue, Serializable, HasContext {
+public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContext {
 
     @NotNull
     @Pattern(regexp = "Phone", message="invalid @type value in Phone")

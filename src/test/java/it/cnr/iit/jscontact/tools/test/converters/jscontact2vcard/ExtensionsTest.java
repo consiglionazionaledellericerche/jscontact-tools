@@ -18,12 +18,15 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
+import ezvcard.parameter.TelephoneType;
+import ezvcard.util.TelUri;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ExtensionsTest extends JSContact2VCardTest {
 
@@ -103,6 +106,21 @@ public class ExtensionsTest extends JSContact2VCardTest {
 
     }
 
+    @Test
+    public void textExtendedJSContact3() throws IOException, CardException {
 
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":\"test\"," +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"phone\":\"tel:+33-01-23-45-6\", \"label\":\"a label\"}}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testExtendedJSContact3 - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testExtendedJSContact3 - 3", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContact3 - 4", "phones/PHONE-1/label", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact3 - 5", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
+        assertEquals("testExtendedJSContact3 - 6", "data:application/json;%22a+label%22", vcard.getExtendedProperties().get(0).getValue());
+    }
 
 }

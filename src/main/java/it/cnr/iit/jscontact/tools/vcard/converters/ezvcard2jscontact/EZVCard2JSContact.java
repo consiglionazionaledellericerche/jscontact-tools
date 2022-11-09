@@ -822,8 +822,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
       if (vcard.getAnniversary() != null) {
           jsCard.addAnniversary(getId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + i, vcard.getAnniversary().getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG)),it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
+                                                                              .type(AnniversaryType.marriage())
                                                                               .date(getAnniversaryDate(vcard.getAnniversary()))
-                                                                              .label(Anniversary.ANNIVERSAY_MARRIAGE_LABEL)
                                                                               .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcard.getAnniversary(),Arrays.asList(new String[]{VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                                               .build()
                                    );

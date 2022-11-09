@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
@@ -48,7 +49,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends AbstractJSContactType implements IdMapValue, Serializable, HasContext {
+public class Resource extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContext {
 
     @NotNull(message = "uri is missing in Resource")
     @NonNull

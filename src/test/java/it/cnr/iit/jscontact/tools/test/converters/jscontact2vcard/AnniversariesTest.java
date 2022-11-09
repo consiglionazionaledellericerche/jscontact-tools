@@ -202,7 +202,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"label\":\"marriage date\"," +
+                        "\"type\":\"marriage\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -255,7 +255,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"label\":\"marriage date\"," +
+                        "\"type\":\"marriage\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -310,7 +310,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"label\":\"marriage date\"," +
+                        "\"type\":\"marriage\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -366,7 +366,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"label\":\"marriage date\"," +
+                        "\"type\":\"marriage\", " +
                         "\"date\":{" +
                             "\"@type\":\"PartialDate\"," +
                             "\"year\":1986, " +

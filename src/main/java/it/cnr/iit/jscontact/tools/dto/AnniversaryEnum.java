@@ -31,7 +31,9 @@ import lombok.AllArgsConstructor;
 public enum AnniversaryEnum implements IsExtensibleEnum {
 
     BIRTH("birth"),
-    DEATH("death");
+    DEATH("death"),
+
+    MARRIAGE("marriage");
 
     private final String value;
 

@@ -39,15 +39,13 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","date","place","label"})
+@JsonPropertyOrder({"@type","type","date","place"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Anniversary extends AbstractJSContactType implements IdMapValue, Serializable {
-
-    public static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
 
     @NotNull
     @Pattern(regexp = "Anniversary", message="invalid @type value in Anniversary")
@@ -66,8 +64,6 @@ public class Anniversary extends AbstractJSContactType implements IdMapValue, Se
 
     @Valid
     Address place;
-
-    String label;
 
     /**
      * Tests if this anniversary is a birthday. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
@@ -94,7 +90,7 @@ public class Anniversary extends AbstractJSContactType implements IdMapValue, Se
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isMarriage() { return type == null && label.equals(ANNIVERSAY_MARRIAGE_LABEL); }
+    public boolean isMarriage() { return type.isMarriage(); }
 
     /**
      * Tests if this is an undefined anniversary specified by the value of the "label" property.
@@ -102,9 +98,9 @@ public class Anniversary extends AbstractJSContactType implements IdMapValue, Se
      * @return true if this is an undefined anniversary, false otherwise
      */
     @JsonIgnore
-    public boolean isOtherAnniversary() { return type == null; }
+    public boolean isOtherAnniversary() { return type == null || type.isExtValue(); }
 
     private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String label) {
-        return Anniversary.builder().type(type).date(date).label(label).build();
+        return Anniversary.builder().type(type).date(date).build();
     }
 }
