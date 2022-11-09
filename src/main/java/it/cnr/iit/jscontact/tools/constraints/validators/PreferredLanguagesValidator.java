@@ -19,12 +19,12 @@ import it.cnr.iit.jscontact.tools.constraints.PreferredLanguagesConstraint;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.LanguagePreference;
 import it.cnr.iit.jscontact.tools.dto.utils.ConstraintViolationUtils;
-import sun.util.locale.LanguageTag;
-import sun.util.locale.ParseStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolation;
+import java.util.IllformedLocaleException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,9 +41,9 @@ public class PreferredLanguagesValidator implements ConstraintValidator<Preferre
 
         for(Map.Entry<String, LanguagePreference[]> entry : clMap.entrySet()) {
 
-            ParseStatus parseStatus = new ParseStatus();
-            LanguageTag.parse(entry.getKey(), parseStatus);
-            if (parseStatus.getErrorMessage() != null) {
+            try {
+                Locale locale = new Locale.Builder().setLanguageTag(entry.getKey()).build();
+            } catch (IllformedLocaleException e) {
                 context.buildConstraintViolationWithTemplate("invalid language tag in preferredLanguages").addConstraintViolation();
                 return false;
             }

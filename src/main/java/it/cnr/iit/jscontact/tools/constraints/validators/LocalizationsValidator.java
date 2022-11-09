@@ -21,11 +21,11 @@ import it.cnr.iit.jscontact.tools.constraints.LocalizationsConstraint;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
-import sun.util.locale.LanguageTag;
-import sun.util.locale.ParseStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.IllformedLocaleException;
+import java.util.Locale;
 import java.util.Map;
 
 public class LocalizationsValidator implements ConstraintValidator<LocalizationsConstraint, Card> {
@@ -41,9 +41,9 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
             return true;
 
         for (String language : card.getLocalizations().keySet()) {
-            ParseStatus parseStatus = new ParseStatus();
-            LanguageTag.parse(language, parseStatus);
-            if (parseStatus.getErrorMessage() != null) {
+            try {
+                Locale locale = new Locale.Builder().setLanguageTag(language).build();
+            } catch (IllformedLocaleException e) {
                 context.buildConstraintViolationWithTemplate("invalid language tag in localizations").addConstraintViolation();
                 return false;
             }
