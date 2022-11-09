@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class X_RFC0000_JSPROP_Utils {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public static String toX_RFC0000_JSPROPValue(Object o) throws JsonProcessingException {
 

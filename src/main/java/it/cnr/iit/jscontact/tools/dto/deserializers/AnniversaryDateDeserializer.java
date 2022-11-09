@@ -35,7 +35,7 @@ import java.io.IOException;
 @NoArgsConstructor
 public class AnniversaryDateDeserializer extends JsonDeserializer<AnniversaryDate> {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public AnniversaryDate deserialize(JsonParser jp, DeserializationContext ctxt)

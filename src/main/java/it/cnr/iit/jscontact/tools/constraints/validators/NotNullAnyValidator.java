@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class NotNullAnyValidator implements ConstraintValidator<NotNullAnyConstraint, Object> {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     private String[] fieldNames;
 

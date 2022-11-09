@@ -37,7 +37,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class JCardParamsDeserializer extends JsonDeserializer<Map<String, JCardParam>> {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public Map<String, JCardParam> deserialize(JsonParser jp, DeserializationContext ctxt)

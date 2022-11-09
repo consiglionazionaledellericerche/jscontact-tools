@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class LocalizationsValidator implements ConstraintValidator<LocalizationsConstraint, Card> {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public void initialize(LocalizationsConstraint constraintAnnotation) {
     }

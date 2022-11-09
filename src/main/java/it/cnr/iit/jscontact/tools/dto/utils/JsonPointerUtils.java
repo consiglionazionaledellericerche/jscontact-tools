@@ -12,7 +12,7 @@ import it.cnr.iit.jscontact.tools.dto.JSContact;
  */
 public class JsonPointerUtils {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Converts a relative JSONPointer expression in an absolute JSONPointer expression so that it can be processed by Jackson library

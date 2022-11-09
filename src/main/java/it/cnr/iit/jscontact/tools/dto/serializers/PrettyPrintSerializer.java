@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class PrettyPrintSerializer {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
     /**
      * Returns the formatted JSON text of a given object
      *
