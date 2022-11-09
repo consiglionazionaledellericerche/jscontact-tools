@@ -15,9 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -38,11 +36,6 @@ public class PropertyGroupTest extends JCard2JSContactTest {
                 "]]";
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        try {
-            System.out.println(PrettyPrintSerializer.print(jsCard));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
         assertNotNull("testPropertyGroup1 - 2", jsCard.getAddresses().get("ADR-1").getJCardParams().get("group"));
 
     }
