@@ -17,6 +17,8 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -76,6 +78,10 @@ public abstract class AbstractExtensibleJSContactType {
 
     public void buildAllExtensionsMap(Map<String,Object> map, String jsonPointer) {
 
+        //The label property must be considered, if any
+        if (this instanceof HasLabel && ((HasLabel) this).getLabel() != null )
+            map.put(String.format("%slabel", jsonPointer), ((HasLabel) this).getLabel());
+
         if (extensions != null) {
             for (Map.Entry<String,Object> extension : extensions.entrySet())
                 map.put(String.format("%s%s", jsonPointer, getSafeJsonPointerFieldName(extension.getKey())), extension.getValue());
@@ -129,7 +135,10 @@ public abstract class AbstractExtensibleJSContactType {
     public void addExtension(List<String> pathItems, String extension, Object value) {
 
         if (pathItems.isEmpty()) {
-            addExtension(extension,value);
+            if (extension.equals("label") && this instanceof HasLabel)
+                ((HasLabel) this).setLabel(value.toString());
+            else
+                addExtension(extension,value);
             return;
         }
 

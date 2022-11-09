@@ -47,7 +47,7 @@ import java.util.StringJoiner;
  */
 @JsonPropertyOrder({"@type","fullAddress","street","locality","region","country",
                      "postcode","countryCode","coordinates","timeZone","contexts",
-                     "pref","label"})
+                     "pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -92,8 +92,6 @@ public class Address extends AbstractJSContactType implements HasAltid, IdMapVal
     @Min(value=1, message = "invalid pref in Address - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Address - value must be less or equal than 100")
     Integer pref;
-
-    String label;
 
     @JsonIgnore
     String altid;
