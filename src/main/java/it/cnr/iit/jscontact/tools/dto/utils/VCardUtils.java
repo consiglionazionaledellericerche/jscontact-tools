@@ -31,6 +31,9 @@ public class VCardUtils {
     public static final String VCARD_GROUP_PARAM_TAG = "GROUP";
     public static final String VCARD_X_RFC0000_JSPROP_TAG = "X-RFC0000-JSPROP";
     public static final String VCARD_X_RFC0000_JSPATH_PARAM_TAG = "X-RFC0000-JSPATH";
+    public static final String VCARD_TYPE_PARAM_TAG = "TYPE";
+    public static final String VCARD_PREF_PARAM_TAG = "PREF";
+    public static final String VCARD_MEDIATYPE_PARAM_TAG = "MEDIATYPE";
 
     /**
      * Gets the VCardParameter value of a given VCardParameter object identified by the parameter name in the Ezvcard VCardParameters object.

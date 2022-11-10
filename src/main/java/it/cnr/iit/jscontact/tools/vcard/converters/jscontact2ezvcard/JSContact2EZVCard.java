@@ -747,7 +747,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Language language = new Language(lang);
         String vCardTypeValue = getVCardType(cl);
         if (vCardTypeValue!=null)
-            language.setParameter("TYPE", vCardTypeValue);
+            language.setParameter(VCardUtils.VCARD_TYPE_PARAM_TAG, vCardTypeValue);
         language.setPref(cl.getPref());
         return language;
     }
@@ -891,28 +891,15 @@ public class JSContact2EZVCard extends AbstractConverter {
         return impp;
     }
 
-    private List<CalendarRequestUri> getCalendarRequestUris(SchedulingAddress s) {
-
-        List<CalendarRequestUri> caladruris = new ArrayList<CalendarRequestUri>();
-        for (String sendTo : s.getSendTo().values()) {
-            CalendarRequestUri caladruri = new CalendarRequestUri(sendTo);
-            caladruri.setPref(s.getPref());
-            VCardUtils.addVCardUnmatchedParameters(caladruri,s);
-            addPropId(caladruri, s.getPropId());
-            caladruris.add(caladruri);
-        }
-        return (caladruris.size() == 0) ? null : caladruris;
-    }
-
     private static <T extends VCardProperty> void fillVCardProperty(T property, Resource resource) {
 
         if (resource.getMediaType()!=null)
-            property.setParameter("MEDIATYPE",resource.getMediaType());
+            property.setParameter(VCardUtils.VCARD_MEDIATYPE_PARAM_TAG,resource.getMediaType());
         if (resource.getPref() != null)
-            property.setParameter("PREF", resource.getPref().toString());
+            property.setParameter(VCardUtils.VCARD_PREF_PARAM_TAG, resource.getPref().toString());
         String vCardTypeValue = getVCardType(resource);
         if (vCardTypeValue!=null)
-            property.setParameter("TYPE", vCardTypeValue);
+            property.setParameter(VCardUtils.VCARD_TYPE_PARAM_TAG, vCardTypeValue);
     }
 
     private <T extends UriProperty> T getUriProperty(Class<T> classs, Resource resource) {
@@ -973,9 +960,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         for(Map.Entry<String, SchedulingAddress> entry : jsCard.getSchedulingAddresses().entrySet()) {
             SchedulingAddress s = entry.getValue();
             s.setPropId(entry.getKey());
-            List<CalendarRequestUri> caldruris = getCalendarRequestUris(s);
-            if (caldruris == null) continue;
-            vcard.getCalendarRequestUris().addAll(caldruris);
+            if (s.getType()==null || s.getType().isImip())
+                vcard.getCalendarRequestUris().add(getUriProperty(CalendarRequestUri.class, s));
+            //TODO: extension
         }
     }
 
@@ -1372,9 +1359,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 RawProperty raw = new RawProperty(propertyName, entry.getValue().getPronouns());
                 String vCardTypeValue = getVCardType(entry.getValue());
                 if (vCardTypeValue!=null)
-                    raw.setParameter("TYPE", vCardTypeValue);
+                    raw.setParameter(VCardUtils.VCARD_TYPE_PARAM_TAG, vCardTypeValue);
                 if (entry.getValue().getPref()!=null)
-                    raw.setParameter("PREF", entry.getValue().getPref().toString());
+                    raw.setParameter(VCardUtils.VCARD_PREF_PARAM_TAG, entry.getValue().getPref().toString());
                 raw.setDataType(VCardDataType.TEXT);
                 vCard.addProperty(raw);
 
@@ -1426,9 +1413,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                         RawProperty raw = new RawProperty(propertyName, value);
                         String vCardTypeValue = getVCardType(pref);
                         if (vCardTypeValue!=null)
-                            raw.setParameter("TYPE", vCardTypeValue);
+                            raw.setParameter(VCardUtils.VCARD_TYPE_PARAM_TAG, vCardTypeValue);
                         if (pref.getPref()!=null)
-                            raw.setParameter("PREF", pref.getPref().toString());
+                            raw.setParameter(VCardUtils.VCARD_PREF_PARAM_TAG, pref.getPref().toString());
                         raw.setDataType(VCardDataType.TEXT);
                         vCard.addProperty(raw);
                     }

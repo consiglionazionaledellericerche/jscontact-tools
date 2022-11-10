@@ -225,11 +225,12 @@ public class ResourceTest extends RoundtripTest {
                     "\"SCHEDULING-1\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
                         "\"pref\": 1," +
-                        "\"sendTo\": { \"imip\":\"mailto:janedoe@example.com\"}" +
+                        "\"type\": \"imip\"," +
+                        "\"uri\":\"mailto:janedoe@example.com\"" +
                     "}," +
                     "\"SCHEDULING-2\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
-                        "\"sendTo\": { \"imip\": \"http://example.com/calendar/jdoe\"}" +
+                        "\"uri\": \"http://example.com/calendar/jdoe\"" +
                     "}" +
                 "}" +
                 "}";

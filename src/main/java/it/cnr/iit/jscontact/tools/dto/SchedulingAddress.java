@@ -1,16 +1,17 @@
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.deserializers.SchedulingAddressTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Class mapping the SchedulingAddress type as defined in section 2.4.2 of [draft-ietf-calext-jscontact].
@@ -18,13 +19,13 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","sendTo","pref"})
+@JsonPropertyOrder({"@type","uri","type","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SchedulingAddress extends AbstractJSContactType implements IdMapValue, Serializable {
+public class SchedulingAddress extends Resource implements IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "SchedulingAddress", message="invalid @type value in SchedulingAddress")
@@ -32,29 +33,34 @@ public class SchedulingAddress extends AbstractJSContactType implements IdMapVal
     @Builder.Default
     String _type = "SchedulingAddress";
 
-    @NotNull
-    @Size(min=1)
-    @JsonProperty(required = true)
-    @JsonPropertyOrder(alphabetic = true)
-    Map<String,String> sendTo;
+    @JsonDeserialize(using = SchedulingAddressTypeDeserializer.class)
+    SchedulingAddressType type;
 
-    @Min(value=1, message = "invalid pref in SchedulingAddress - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in SchedulingAddress - value must be less or equal than 100")
-    Integer pref;
-
+    @JsonIgnore
+    private boolean isSchedulingAddress(SchedulingAddressType type) { return this.type.equals(type); }
 
     /**
-     * Adds a member to this object.
+     * Tests if this scheduling address is an imip.
      *
-     * @param key the key of the new entry in the "sendTo" map
-     * @param value the value of the new entry in the "sendTo" map
+     * @return true if this scheduling address is an imip, false otherwise
      */
-    public void addSendTo(String key, String value) {
+    @JsonIgnore
+    public boolean isImip() { return isSchedulingAddress(SchedulingAddressType.imip()); }
 
-        if(sendTo == null)
-            sendTo = new LinkedHashMap<>();
-
-        sendTo.putIfAbsent(key,value);
+    private static SchedulingAddress resource(SchedulingAddressType type, String uri) {
+        return SchedulingAddress.builder()
+                .uri(uri)
+                .type(type)
+                .build();
     }
+
+    /**
+     * Returns an imip
+     *
+     * @param uri imip uri
+     * @return the imip
+     */
+    public static SchedulingAddress imip(String uri) { return resource(SchedulingAddressType.imip(), uri);}
+
 
 }

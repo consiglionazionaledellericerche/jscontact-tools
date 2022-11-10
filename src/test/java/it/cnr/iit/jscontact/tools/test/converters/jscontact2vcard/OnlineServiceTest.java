@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
+import it.cnr.iit.jscontact.tools.dto.utils.VCardUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -44,7 +45,7 @@ public class OnlineServiceTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testOnlineService1 - 1", 1, vcard.getImpps().size());
         assertEquals("testOnlineService1 - 2", "alice@example.com", vcard.getImpps().get(0).getHandle());
-        assertEquals("testOnlineService1 - 3", "home", vcard.getImpps().get(0).getParameter("TYPE"));
+        assertEquals("testOnlineService1 - 3", "home", vcard.getImpps().get(0).getParameter(VCardUtils.VCARD_TYPE_PARAM_TAG));
         assertEquals("testOnlineService1 - 4", 1, (int) vcard.getImpps().get(0).getPref());
         assertEquals("testOnlineService1 - 5", "OS-1", vcard.getImpps().get(0).getParameter(PROP_ID_PARAM));
     }
