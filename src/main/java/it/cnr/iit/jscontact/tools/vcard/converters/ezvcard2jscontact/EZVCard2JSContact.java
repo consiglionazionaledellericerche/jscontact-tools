@@ -28,7 +28,6 @@ import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
-import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
@@ -98,7 +97,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     case PERSONAL_INFO:
                         VCard2JSContactIdsProfile.PersonalInfoId piId = (VCard2JSContactIdsProfile.PersonalInfoId) jsContactId.getId();
                         PersonalInformationEnum piType = (PersonalInformationEnum) args[0];
-                        if (piId.getType() == piType)
+                        if (piId.getPersonalInformationEnum() == piType)
                             ids.add(piId.getId());
                         break;
                     default:

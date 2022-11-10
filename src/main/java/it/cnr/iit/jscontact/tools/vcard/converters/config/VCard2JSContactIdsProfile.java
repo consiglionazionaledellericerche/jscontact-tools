@@ -80,10 +80,10 @@ public class VCard2JSContactIdsProfile {
     @AllArgsConstructor
     public static class PersonalInfoId {
 
-        PersonalInformationEnum type;
+        PersonalInformationEnum personalInformationEnum;
         String id;
 
-        private static PersonalInfoId personalInfoId(PersonalInformationEnum type, String id) { return PersonalInfoId.builder().type(type).id(id).build(); }
+        private static PersonalInfoId personalInfoId(PersonalInformationEnum type, String id) { return PersonalInfoId.builder().personalInformationEnum(type).id(id).build(); }
         public static PersonalInfoId hobbiesId(String id) { return personalInfoId(PersonalInformationEnum.HOBBY,id);}
         public static PersonalInfoId interestsId(String id) { return personalInfoId(PersonalInformationEnum.INTEREST,id);}
         public static PersonalInfoId expertisesId(String id) { return personalInfoId(PersonalInformationEnum.EXPERTISE,id);}
