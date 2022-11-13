@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.StreetComponentTypeDeserializer;
 
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -38,7 +39,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StreetComponent extends AbstractJSContactType implements Serializable {
+public class StreetComponent extends AbstractJSContactType implements HasType, Serializable {
 
     @NotNull
     @Pattern(regexp = "StreetComponent", message="invalid @type value in StreetComponent")

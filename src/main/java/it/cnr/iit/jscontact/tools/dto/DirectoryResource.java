@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.DirectoryResourceTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
@@ -44,7 +45,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DirectoryResource extends Resource implements HasIndex, Comparable<DirectoryResource> {
+public class DirectoryResource extends Resource implements HasType, HasIndex, Comparable<DirectoryResource> {
 
     @NotNull
     @Pattern(regexp = "DirectoryResource", message="invalid @type value in DirectoryResource")
@@ -57,6 +58,10 @@ public class DirectoryResource extends Resource implements HasIndex, Comparable<
 
     @JsonIgnore
     Integer index;
+
+    public void setExtType(String extValue) {
+        setType(DirectoryResourceType.ext(extValue));
+    }
 
     /**
      * Compares this resource with another based on the value of the "index" property.

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.SchedulingAddressTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,7 +26,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SchedulingAddress extends Resource implements IdMapValue, Serializable {
+public class SchedulingAddress extends Resource implements HasType, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "SchedulingAddress", message="invalid @type value in SchedulingAddress")

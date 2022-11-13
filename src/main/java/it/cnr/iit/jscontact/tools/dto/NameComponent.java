@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -41,7 +42,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NameComponent extends AbstractJSContactType implements Serializable {
+public class NameComponent extends AbstractJSContactType implements HasType, Serializable {
 
     @NotNull
     @Pattern(regexp = "NameComponent", message="invalid @type value in NameComponent")

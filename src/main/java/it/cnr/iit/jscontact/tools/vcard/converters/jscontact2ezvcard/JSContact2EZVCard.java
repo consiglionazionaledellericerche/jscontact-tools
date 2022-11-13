@@ -676,7 +676,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                         break;
                 }
             }
-            //TODO: extensions
         }
 
     }
@@ -686,7 +685,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Expertise e = new Expertise(pi.getValue());
         VCardUtils.addVCardUnmatchedParameters(e,pi);
         addPropId(e, pi.getPropId());
-        if (pi.getLevel().isRfcValue())
+        if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
             e.setLevel(ExpertiseLevel.get(PersonalInformationLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
         else
             e.setParameter(VCardUtils.VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
@@ -698,7 +697,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Hobby h = new Hobby(pi.getValue());
         VCardUtils.addVCardUnmatchedParameters(h,pi);
         addPropId(h, pi.getPropId());
-        if (pi.getLevel().isRfcValue())
+        if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
             h.setLevel(HobbyLevel.get(pi.getLevel().getRfcValue().name()));
         else
             h.setParameter(VCardUtils.VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
@@ -710,7 +709,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Interest i = new Interest(pi.getValue());
         VCardUtils.addVCardUnmatchedParameters(i,pi);
         addPropId(i, pi.getPropId());
-        if (pi.getLevel().isRfcValue())
+        if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
             i.setLevel(InterestLevel.get(pi.getLevel().getRfcValue().name()));
         else
             i.setParameter(VCardUtils.VCARD_LEVEL_PARAM_TAG, pi.getLevel().getExtValue().toString().toUpperCase());
@@ -725,7 +724,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,PersonalInformation> entry : jsCard.getPersonalInfo().entrySet()) {
             PersonalInformation pi = entry.getValue();
             pi.setPropId(entry.getKey());
-            if (pi.getType().isRfcValue()) {
+            if (pi.getType()!=null && pi.getType().isRfcValue()) {
                 switch (pi.getType().getRfcValue()) {
                     case EXPERTISE:
                         vcard.getExpertise().add(getExpertise(pi));
@@ -739,7 +738,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                 }
             }
         }
-        //TODO: extension
     }
 
     private static Language getLanguage(String lang, LanguagePreference cl) {
@@ -962,7 +960,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             s.setPropId(entry.getKey());
             if (s.getType()==null || s.getType().isImip())
                 vcard.getCalendarRequestUris().add(getUriProperty(CalendarRequestUri.class, s));
-            //TODO: extension
         }
     }
 
@@ -975,7 +972,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             CalendarResource resource = entry.getValue();
             resource.setPropId(entry.getKey());
-            if (resource.getType().isRfcValue()) {
+            if (resource.getType()!=null && resource.getType().isRfcValue()) {
                 switch (resource.getType().getRfcValue()) {
                     case FREEBUSY:
                         vcard.getFbUrls().add(getUriProperty(FreeBusyUrl.class, resource));
@@ -985,7 +982,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                         break;
                 }
             }
-            //TODO: extension
         }
     }
 
@@ -1016,7 +1012,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (resource.isGenericLink())
                 vcard.getUrls().add(getUriProperty(Url.class,resource));
             else {
-                if (resource.getType().isRfcValue()) {
+                if (resource.getType()!=null && resource.getType().isRfcValue()) {
                     switch (resource.getType().getRfcValue()) {
                         case CONTACT:
                             RawProperty rp = new RawProperty("CONTACT-URI", resource.getUri());
@@ -1027,7 +1023,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                             break;
                     }
                 }
-                //TODO: extension
             }
         }
     }
@@ -1041,7 +1036,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             MediaResource resource = entry.getValue();
             resource.setPropId(entry.getKey());
-            if (resource.getType().isRfcValue()) {
+            if (resource.getType()!=null && resource.getType().isRfcValue()) {
                 switch (resource.getType().getRfcValue()) {
                     case SOUND:
                         Sound sound = new Sound(resource.getUri(), getSoundType(resource.getMediaType()));
@@ -1060,7 +1055,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                         vcard.getPhotos().add(photo);
                 }
             }
-            //TODO: extension
         }
     }
 
@@ -1073,7 +1067,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             DirectoryResource resource = entry.getValue();
             resource.setPropId(entry.getKey());
-            if (resource.getType().isRfcValue()) {
+            if (resource.getType()!=null && resource.getType().isRfcValue()) {
                 switch (resource.getType().getRfcValue()) {
                     case ENTRY:
                         vcard.getSources().add(getUriProperty(Source.class, resource));
@@ -1083,7 +1077,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                         break;
                 }
             }
-            //TODO: extension
         }
     }
 

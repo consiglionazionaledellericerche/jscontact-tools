@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -47,6 +48,7 @@ public class Name extends AbstractJSContactType implements Serializable {
     @Builder.Default
     String _type = "Name";
 
+    @JSContactCollection(addMethod = "addComponent")
     @NotNull(message = "components is missing in Name")
     @NonNull
     @Valid

@@ -17,8 +17,12 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
+import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -27,6 +31,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Abstract class mapping the vCard extensions in section 1.5.2 of [draft-ietf-calext-jscontact].
@@ -39,6 +44,8 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class AbstractExtensibleJSContactType {
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     Map<String,Object> extensions;
 
@@ -76,10 +83,20 @@ public abstract class AbstractExtensibleJSContactType {
 
     }
 
+    private  static String removeLastChar(String s) {
+        return Optional.ofNullable(s)
+                .filter(str -> str.length() != 0)
+                .map(str -> str.substring(0, str.length() - 1))
+                .orElse(s);
+    }
     public void buildAllExtensionsMap(Map<String,Object> map, String jsonPointer) {
 
-        //The label property must be considered, if any
-        if (this instanceof HasLabel && ((HasLabel) this).getLabel() != null )
+        if (this instanceof HasType) { //The type property must be considered, if any
+            HasType o = (HasType) this;
+            if (o.getType()!=null && o.getType().isExtValue()) {
+                map.put(String.format("%s", removeLastChar(jsonPointer)), this);
+            }
+        } else if (this instanceof HasLabel && ((HasLabel) this).getLabel() != null ) //The label property must be considered, if any
             map.put(String.format("%slabel", jsonPointer), ((HasLabel) this).getLabel());
 
         if (extensions != null) {
@@ -130,7 +147,43 @@ public abstract class AbstractExtensibleJSContactType {
         }
     }
 
+    public static Object convertToJSContactType(Object value) {
 
+        try {
+            String json = mapper.writeValueAsString(value);
+            JsonNode root = mapper.readTree(json);
+            String JSContactTypeName = root.get("@type").asText();
+            return mapper.readValue(json, ClassUtils.forName(JSContactTypeName));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static void addObjectOnMap(Field field, Class classs, Object o, String key, Object value) {
+
+        if (field.isAnnotationPresent(JSContactCollection.class)) {
+            JSContactCollection annotation = field.getAnnotation(JSContactCollection.class);
+            try {
+                Object typedValue = convertToJSContactType(value);
+                classs.getDeclaredMethod(annotation.addMethod(), String.class, typedValue.getClass()).invoke(o, key, typedValue);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void addObjectOnArray(Field field, Object o, Object value) {
+
+        if (field.isAnnotationPresent(JSContactCollection.class)) {
+            JSContactCollection annotation = field.getAnnotation(JSContactCollection.class);
+            String methodName = annotation.addMethod();
+            try {
+                o.getClass().getDeclaredMethod(methodName).invoke(o,value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void addExtension(List<String> pathItems, String extension, Object value) {
 
@@ -150,13 +203,17 @@ public abstract class AbstractExtensibleJSContactType {
                 if (field.getType().isArray()) {
                     int index = Integer.parseInt(pathItems.get(1));
                     AbstractExtensibleJSContactType[] subarray = (AbstractExtensibleJSContactType[]) field.get(this);
-                    if (subarray != null)
+                    if (pathItems.size() == 1)
+                        addObjectOnArray(field, this, value);
+                    else if (subarray != null)
                         subarray[index].addExtension(pathItems.subList(2, pathItems.size()), extension, value);
                 }
                 else if (Map.class.isAssignableFrom(field.getType())) {
                     try {
                         Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
-                        if (submap != null)
+                        if (pathItems.size() == 1)
+                            addObjectOnMap(field, this.getClass(), this, extension, value);
+                        else if (submap != null)
                             submap.get(pathItems.get(1)).addExtension(pathItems.subList(2, pathItems.size()), extension, value);
                     } catch(Exception e) {
                         try {
@@ -164,7 +221,9 @@ public abstract class AbstractExtensibleJSContactType {
                             if (submap2 != null) {
                                     AbstractExtensibleJSContactType[] subarray2 = submap2.get(pathItems.get(1));
                                     int index = Integer.parseInt(pathItems.get(2));
-                                    if (subarray2 != null)
+                                    if (pathItems.size() == 2)
+                                        addObjectOnMap(field, this.getClass(), this, extension, value);
+                                    else if (subarray2 != null)
                                         subarray2[index].addExtension(pathItems.subList(3, pathItems.size()), extension, value);
                             }
                         } catch (Exception e2) {}
@@ -178,8 +237,7 @@ public abstract class AbstractExtensibleJSContactType {
 
             }
         } catch(Exception e) {
-
-
+            e.printStackTrace();
         }
     }
 }

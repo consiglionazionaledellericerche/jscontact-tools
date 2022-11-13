@@ -798,6 +798,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
     private static PersonalInformationLevelType getLevel(String vcardLevelParam) throws CardException {
+
         try {
             return PersonalInformationLevelType.builder().rfcValue(PersonalInformationLevelEnum.getEnum(vcardLevelParam)).build();
         } catch (IllegalArgumentException e) {
@@ -1230,9 +1231,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         channelType = ChannelType.ext(extension.getValue().toLowerCase());
                     }
                     if (contexts!=null || pref != null)
-                        jsCard.addContactChannel(channelType, ContactChannelPreference.builder().contexts(contexts).pref(pref).build());
+                        jsCard.addContactChannelPreference(channelType, ContactChannelPreference.builder().contexts(contexts).pref(pref).build());
                     else
-                        jsCard.addContactChannel(channelType, null);
+                        jsCard.addContactChannelPreference(channelType, null);
                 }
             }
         }

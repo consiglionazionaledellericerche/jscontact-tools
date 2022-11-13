@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
 import lombok.*;
@@ -45,7 +46,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Anniversary extends AbstractJSContactType implements IdMapValue, Serializable {
+public class Anniversary extends AbstractJSContactType implements HasType, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Anniversary", message="invalid @type value in Anniversary")

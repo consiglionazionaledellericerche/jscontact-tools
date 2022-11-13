@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
+import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
@@ -89,6 +90,7 @@ public class Card extends JSContact implements Serializable {
     @JsonDeserialize(using = KindTypeDeserializer.class)
     KindType kind;
 
+    @JSContactCollection(addMethod = "addRelation")
     @JsonPropertyOrder(alphabetic = true)
     @RelatedToConstraint
     Map<String,Relation> relatedTo;
@@ -105,16 +107,19 @@ public class Card extends JSContact implements Serializable {
 
     String fullName;
 
+    @JSContactCollection(addMethod = "addNickName")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,NickName>")
     Map<String,NickName> nickNames;
 
+    @JSContactCollection(addMethod = "addOrganization")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
     Map<String,Organization> organizations;
 
+    @JSContactCollection(addMethod = "addTitle")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
@@ -127,27 +132,32 @@ public class Card extends JSContact implements Serializable {
     /*
     Contact and Resource properties
      */
+    @JSContactCollection(addMethod = "addEmail")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     Map<String,EmailAddress> emails;
 
+    @JSContactCollection(addMethod = "addOnlineService")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,OnlineService>")
     Map<String,OnlineService> onlineServices;
 
+    @JSContactCollection(addMethod = "addPhone")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
     Map<String,Phone> phones;
 
+    @JSContactCollection(addMethod = "addContactChannelPreference")
     @JsonPropertyOrder(alphabetic = true)
     @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
     @JsonDeserialize(keyUsing = ContactChannelsKeyDeserializer.class)
     @PreferredContactChannelsConstraint
     Map<ChannelType,ContactChannelPreference[]> preferredContactChannels;
 
+    @JSContactCollection(addMethod = "addLanguagePreference")
     @JsonPropertyOrder(alphabetic = true)
     @PreferredLanguagesConstraint
     Map<String, LanguagePreference[]> preferredLanguages;
@@ -156,11 +166,13 @@ public class Card extends JSContact implements Serializable {
     /*
      Calendaring and Scheduling properties
      */
+    @JSContactCollection(addMethod = "addCalendar")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,CalendarResource>")
     Map<String,CalendarResource> calendars;
 
+    @JSContactCollection(addMethod = "addSchedulingAddress")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,SchedulingAddress>")
@@ -170,6 +182,7 @@ public class Card extends JSContact implements Serializable {
     /*
     Address and Location properties
      */
+    @JSContactCollection(addMethod = "addAddress")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
@@ -178,21 +191,25 @@ public class Card extends JSContact implements Serializable {
     /*
     Resource properties
      */
+    @JSContactCollection(addMethod = "addCryptoResource")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,CryptoResource>")
     Map<String,CryptoResource> cryptoKeys;
 
+    @JSContactCollection(addMethod = "addDirectoryResource")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,DirectoryResource>")
     Map<String,DirectoryResource> directories;
 
+    @JSContactCollection(addMethod = "addLinkResource")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,LinkResource>")
     Map<String,LinkResource> links;
 
+    @JSContactCollection(addMethod = "addMediaResource")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,MediaResource>")
@@ -209,11 +226,13 @@ public class Card extends JSContact implements Serializable {
     /*
     Additional properties
      */
+    @JSContactCollection(addMethod = "addAnniversary")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Anniversary>")
     Map<String,Anniversary> anniversaries;
 
+    @JSContactCollection(addMethod = "addPersonalInfo")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
@@ -464,7 +483,7 @@ public class Card extends JSContact implements Serializable {
      * @param id the contact channel preference identifier
      * @param contactChannelPreference the object representing the contact channel preference
      */
-    public void addContactChannel(ChannelType id, ContactChannelPreference contactChannelPreference) {
+    public void addContactChannelPreference(ChannelType id, ContactChannelPreference contactChannelPreference) {
 
         if (preferredContactChannels == null)
             preferredContactChannels = new HashMap<>();

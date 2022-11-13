@@ -78,7 +78,7 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
                             context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
                             return false;
                         }
-                        mapper.convertValue(localizedNode, Class.forName(ClassUtils.getDtoPackageName()+"."+nodeClassName));
+                        mapper.convertValue(localizedNode, ClassUtils.forName(nodeClassName));
                     }
                 } catch (Exception e) {
                     context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();

@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -57,19 +58,20 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"ext1\";VALUE=uri:data:application/json;10\n" +
                 "END:VCARD";
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testExtendedJSContact1 - 1", 1, jsCard.getExtensions().size());
-        assertEquals("testExtendedJSContact1 - 2", 10, jsCard.getExtensions().get("ext1"));
-        assertEquals("testExtendedJSContact1 - 3", 1, jsCard.getNickNames().get("NICK-1").getExtensions().size());
-        assertEquals("testExtendedJSContact1 - 4", "text", jsCard.getNickNames().get("NICK-1").getExtensions().get("ext3"));
-        assertEquals("testExtendedJSContact1 - 5", 1, jsCard.getPreferredLanguages().get("jp")[0].getExtensions().size());
-        assertEquals("testExtendedJSContact1 - 6", "[1, 2]", jsCard.getPreferredLanguages().get("jp")[0].getExtensions().get("ext6").toString());
-        assertEquals("testExtendedJSContact1 - 7", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
-        assertEquals("testExtendedJSContact1 - 8", "{prop=10}", jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").toString());
-        assertEquals("testExtendedJSContact1 - 9", 1, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().size());
-        assertEquals("testExtendedJSContact1 - 10", true, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().get("ext4"));
+        assertEquals("testExtendedJSContact2 - 1", 1, jsCard.getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 2", 10, jsCard.getExtensions().get("ext1"));
+        assertEquals("testExtendedJSContact2 - 3", 1, jsCard.getNickNames().get("NICK-1").getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 4", "text", jsCard.getNickNames().get("NICK-1").getExtensions().get("ext3"));
+        assertEquals("testExtendedJSContact2 - 5", 1, jsCard.getPreferredLanguages().get("jp")[0].getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 6", "[1, 2]", jsCard.getPreferredLanguages().get("jp")[0].getExtensions().get("ext6").toString());
+        assertEquals("testExtendedJSContact2 - 7", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 8", "{prop=10}", jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").toString());
+        assertEquals("testExtendedJSContact2 - 9", 1, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 10", true, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().get("ext4"));
 
     }
 
+    @Test
     public void testExtendedJSContact3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
@@ -80,8 +82,21 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
-        assertEquals("testExtendedJSContact1 - 2", "a label", jsCard.getPhones().get("PHONE-1").getLabel());
+        assertEquals("testExtendedJSContact3 - 1", "a label", jsCard.getPhones().get("PHONE-1").getLabel());
+    }
+
+    @Test
+    public void testExtendedJSContact4() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                 "X-RFC0000-JSPROP;X-RFC0000-JSPATH=anniversaries/ANNIVERSARY-1;VALUE=uri:data:application/json;base64,eyJAdHlwZSI6IkFubml2ZXJzYXJ5IiwidHlwZSI6ImV4YW1wbGUuY29tOmVuZ2FnZW1lbnQiLCJkYXRlIjp7IkB0eXBlIjoiVGltZXN0YW1wIiwidXRjIjoiMTk1My0xMC0xNVQyMzoxMDowMFoifX0=\n" +
+                "END:VCARD";
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testExtendedJSContact4 - 1", true, jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().isExtValue());
+        assertEquals("testExtendedJSContact4 - 2", V_Extension.toV_Extension("example.com:engagement"), jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().getExtValue());
     }
 
 }

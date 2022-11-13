@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.CalendarResourceTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,7 +46,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CalendarResource extends Resource {
+public class CalendarResource extends Resource implements HasType {
 
     @NotNull
     @Pattern(regexp = "CalendarResource", message="invalid @type value in CalendarResource")

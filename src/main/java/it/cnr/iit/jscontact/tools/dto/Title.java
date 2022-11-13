@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.TitleTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 
 import lombok.*;
@@ -26,7 +27,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Title extends AbstractJSContactType implements IdMapValue, Serializable {
+public class Title extends AbstractJSContactType implements HasType, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Title", message="invalid @type value in Title")

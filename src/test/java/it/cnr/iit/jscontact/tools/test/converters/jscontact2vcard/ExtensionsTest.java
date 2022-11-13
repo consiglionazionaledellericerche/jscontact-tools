@@ -18,15 +18,12 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
-import ezvcard.parameter.TelephoneType;
-import ezvcard.util.TelUri;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class ExtensionsTest extends JSContact2VCardTest {
 
@@ -121,6 +118,33 @@ public class ExtensionsTest extends JSContact2VCardTest {
         assertEquals("testExtendedJSContact3 - 4", "phones/PHONE-1/label", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
         assertEquals("testExtendedJSContact3 - 5", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
         assertEquals("testExtendedJSContact3 - 6", "data:application/json;%22a+label%22", vcard.getExtendedProperties().get(0).getValue());
+    }
+
+
+    @Test
+    public void textExtendedJSContact4() throws IOException, CardException {
+
+        String jsCard = "{ " +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
+                "\"fullName\":\"test\"," +
+                "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
+                "{" +
+                    "\"@type\":\"Anniversary\"," +
+                    "\"type\":\"example.com:engagement\", " +
+                        "\"date\":{" +
+                            "\"@type\":\"Timestamp\"," +
+                            "\"utc\":\"1953-10-15T23:10:00Z\"" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        assertEquals("testExtendedJSContact4 - 1", 1, vcard.getExtendedProperties().size());
+        assertEquals("testExtendedJSContact4 - 3", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContact4 - 4", "anniversaries/ANNIVERSARY-1", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact4 - 5", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
+        assertEquals("testExtendedJSContact4 - 6", "data:application/json;base64,eyJAdHlwZSI6IkFubml2ZXJzYXJ5IiwidHlwZSI6ImV4YW1wbGUuY29tOmVuZ2FnZW1lbnQiLCJkYXRlIjp7IkB0eXBlIjoiVGltZXN0YW1wIiwidXRjIjoiMTk1My0xMC0xNVQyMzoxMDowMFoifX0=", vcard.getExtendedProperties().get(0).getValue());
     }
 
 }

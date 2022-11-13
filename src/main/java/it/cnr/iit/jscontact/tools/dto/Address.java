@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
@@ -29,6 +30,7 @@ import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
@@ -64,6 +66,7 @@ public class Address extends AbstractJSContactType implements HasAltid, IdMapVal
 
     String fullAddress;
 
+    @JSContactCollection(addMethod = "addComponent")
     StreetComponent[] street;
 
     String locality;
@@ -231,6 +234,17 @@ public class Address extends AbstractJSContactType implements HasAltid, IdMapVal
 
         return StringUtils.compare(altid,o.getAltid());
 
+    }
+
+    /**
+     * Adds a street component to this object.
+     *
+     * @param sc the street component
+     * @param components the street components
+     * @return the street components in input plus the sc component
+     */
+    public static StreetComponent[] addComponent(StreetComponent[] components, StreetComponent sc) {
+        return ArrayUtils.add(components, sc);
     }
 
 }
