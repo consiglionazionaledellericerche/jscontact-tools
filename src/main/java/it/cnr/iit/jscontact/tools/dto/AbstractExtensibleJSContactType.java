@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
@@ -93,11 +94,31 @@ public abstract class AbstractExtensibleJSContactType {
 
         if (this instanceof HasType) { //The type property must be considered, if any
             HasType o = (HasType) this;
-            if (o.getType()!=null && o.getType().isExtValue()) {
+            if (o.getType()!=null && o.getType().isExtValue()) // extended value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
+            else if (o.getType()==null) // unspecified value for a type
+                map.put(String.format("%s", removeLastChar(jsonPointer)), this);
+        } else {
+
+            if (this instanceof HasLabel && ((HasLabel) this).getLabel() != null ) //The label property must be considered, if any
+                map.put(String.format("%slabel", jsonPointer), ((HasLabel) this).getLabel());
+
+            if (this instanceof HasContexts && ((HasContexts) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
+                for (Context context : ((HasContexts) this).getExtContexts())
+                    map.put(String.format("%scontexts/%s", jsonPointer,context.getExtValue().toString()), true);
             }
-        } else if (this instanceof HasLabel && ((HasLabel) this).getLabel() != null ) //The label property must be considered, if any
-            map.put(String.format("%slabel", jsonPointer), ((HasLabel) this).getLabel());
+
+            if (this instanceof Address && ((Address) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
+                for (AddressContext context : ((Address) this).getExtContexts())
+                    map.put(String.format("%scontexts/%s", jsonPointer,context.getExtValue().toString()), true);
+            }
+
+            if (this instanceof Phone && ((Phone) this).getExtPhoneFeatures() != null ) { //The extended contexts must be considered, if any
+                for (PhoneFeature feature : ((Phone) this).getExtPhoneFeatures())
+                    map.put(String.format("%sfeatures/%s", jsonPointer,feature.getExtValue().toString()), true);
+            }
+
+        }
 
         if (extensions != null) {
             for (Map.Entry<String,Object> extension : extensions.entrySet())
@@ -176,9 +197,9 @@ public abstract class AbstractExtensibleJSContactType {
 
         if (field.isAnnotationPresent(JSContactCollection.class)) {
             JSContactCollection annotation = field.getAnnotation(JSContactCollection.class);
-            String methodName = annotation.addMethod();
             try {
-                o.getClass().getDeclaredMethod(methodName).invoke(o,value);
+                Object typedValue = convertToJSContactType(value);
+                o.getClass().getDeclaredMethod(annotation.addMethod(),typedValue.getClass()).invoke(o,typedValue);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -187,26 +208,40 @@ public abstract class AbstractExtensibleJSContactType {
 
     public void addExtension(List<String> pathItems, String extension, Object value) {
 
-        if (pathItems.isEmpty()) {
-            if (extension.equals("label") && this instanceof HasLabel)
-                ((HasLabel) this).setLabel(value.toString());
-            else
-                addExtension(extension,value);
-            return;
-        }
-
         try {
+            if (pathItems.isEmpty()) {
+                if (this instanceof HasLabel && extension.equals("label"))
+                    ((HasLabel) this).setLabel(value.toString());
+                else
+                    addExtension(extension, value);
+                return;
+            } else if (pathItems.size() == 1) {
+                if (this instanceof Phone && pathItems.get(0).equals("features")) {
+                    ((Phone) this).addFeature(PhoneFeature.ext(extension));
+                    return;
+                }
+                else if (this instanceof Address && pathItems.get(0).equals("contexts")) {
+                    ((Address) this).addContext(AddressContext.ext(extension));
+                    return;
+                }
+                else if (this instanceof HasContexts && pathItems.get(0).equals("contexts")) {
+                    ((HasContexts) this).addContext(Context.ext(extension));
+                    return;
+                }
+            }
+
             for (Field field : this.getClass().getDeclaredFields()) {
                 if (!pathItems.get(0).equals(field.getName()))
                     continue;
 
                 if (field.getType().isArray()) {
-                    int index = Integer.parseInt(pathItems.get(1));
                     AbstractExtensibleJSContactType[] subarray = (AbstractExtensibleJSContactType[]) field.get(this);
                     if (pathItems.size() == 1)
                         addObjectOnArray(field, this, value);
-                    else if (subarray != null)
+                    else if (subarray != null) {
+                        int index = Integer.parseInt(pathItems.get(1));
                         subarray[index].addExtension(pathItems.subList(2, pathItems.size()), extension, value);
+                    }
                 }
                 else if (Map.class.isAssignableFrom(field.getType())) {
                     try {
@@ -220,11 +255,12 @@ public abstract class AbstractExtensibleJSContactType {
                             Map<String, AbstractExtensibleJSContactType[]> submap2 = (Map<String, AbstractExtensibleJSContactType[]>) field.get(this);
                             if (submap2 != null) {
                                     AbstractExtensibleJSContactType[] subarray2 = submap2.get(pathItems.get(1));
-                                    int index = Integer.parseInt(pathItems.get(2));
                                     if (pathItems.size() == 2)
                                         addObjectOnMap(field, this.getClass(), this, extension, value);
-                                    else if (subarray2 != null)
+                                    else if (subarray2 != null) {
+                                        int index = Integer.parseInt(pathItems.get(2));
                                         subarray2[index].addExtension(pathItems.subList(3, pathItems.size()), extension, value);
+                                    }
                             }
                         } catch (Exception e2) {}
                     }

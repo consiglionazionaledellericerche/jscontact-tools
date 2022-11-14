@@ -34,20 +34,27 @@ public abstract class ExtensibleEnumType<T extends IsExtensibleEnum> implements 
         if (getClass() != obj.getClass())
             return false;
         ExtensibleEnumType type = (ExtensibleEnumType) obj;
-        if (type.rfcValue != null )
-            return type.rfcValue == rfcValue;
+        if (isRfcValue()) {
+            if (!type.isRfcValue())
+                return false;
+            else
+                return type.rfcValue.equals(rfcValue);
+        }
 
-        return extValue != null && extValue.equals(type.extValue);
+        if (!type.isExtValue())
+            return false;
+        else
+            return extValue.equals(type.extValue);
     }
 
 
     @Override
     public int hashCode() {
 
-        if (rfcValue != null)
+        if (isRfcValue())
             return rfcValue.getValue().hashCode();
 
-        return extValue.hashCode();
+        return extValue.toString().hashCode();
     }
 
     /**

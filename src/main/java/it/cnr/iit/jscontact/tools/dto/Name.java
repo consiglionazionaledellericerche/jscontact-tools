@@ -66,4 +66,15 @@ public class Name extends AbstractJSContactType implements Serializable {
     public static NameComponent[] addComponent(NameComponent[] components, NameComponent nc) {
         return ArrayUtils.add(components, nc);
     }
+
+    /**
+     * Adds a name component to this object.
+     *
+     * @param nc the name component
+     */
+    public void addComponent(NameComponent nc) {
+        components = ArrayUtils.add(components, nc);
+    }
+
+
 }

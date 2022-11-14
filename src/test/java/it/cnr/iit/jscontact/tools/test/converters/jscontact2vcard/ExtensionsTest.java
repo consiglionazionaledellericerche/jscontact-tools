@@ -18,12 +18,15 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
+import ezvcard.parameter.TelephoneType;
+import ezvcard.util.TelUri;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class ExtensionsTest extends JSContact2VCardTest {
 
@@ -146,5 +149,58 @@ public class ExtensionsTest extends JSContact2VCardTest {
         assertEquals("testExtendedJSContact4 - 5", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
         assertEquals("testExtendedJSContact4 - 6", "data:application/json;base64,eyJAdHlwZSI6IkFubml2ZXJzYXJ5IiwidHlwZSI6ImV4YW1wbGUuY29tOmVuZ2FnZW1lbnQiLCJkYXRlIjp7IkB0eXBlIjoiVGltZXN0YW1wIiwidXRjIjoiMTk1My0xMC0xNVQyMzoxMDowMFoifX0=", vcard.getExtendedProperties().get(0).getValue());
     }
+
+
+    @Test
+    public void textExtendedJSContact5() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
+                "\"name\":{ " +
+                    "\"components\":[ " +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"given\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"extvalue\", \"type\": \"example.com:exttype\" }" +
+                    "] " +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testExtendedJSContact5 - 1", "Mr. John Q. Public, Esq.", vcard.getFormattedName().getValue());
+        assertNotNull("testExtendedJSContact5 - 2", vcard.getStructuredName());
+        assertEquals("testExtendedJSContact5 - 3", "Public", vcard.getStructuredName().getFamily());
+        assertEquals("testExtendedJSContact5 - 4", "John", vcard.getStructuredName().getGiven());
+        assertEquals("testExtendedJSContact5 - 5", 1, vcard.getExtendedProperties().size());
+        assertEquals("testExtendedJSContact5 - 6", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContact5 - 7", "name/components/2", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact5 - 8", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
+        assertEquals("testExtendedJSContact5 - 9", "data:application/json;base64,eyJAdHlwZSI6Ik5hbWVDb21wb25lbnQiLCJ0eXBlIjoiZXhhbXBsZS5jb206ZXh0dHlwZSIsInZhbHVlIjoiZXh0dmFsdWUifQ==", vcard.getExtendedProperties().get(0).getValue());
+    }
+
+
+    @Test
+    public void testExtendedJSContact6() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":\"test\"," +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"example.com:extcontext\": true},\"features\":{\"example.com:extfeature\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testExtendedJSContact6 - 1", 1, vcard.getTelephoneNumbers().size());
+        assertEquals("testExtendedJSContact6 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
+        assertEquals("testExtendedJSContact6 - 3", 2, vcard.getExtendedProperties().size());
+        assertEquals("testExtendedJSContact6 - 4", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(1).getPropertyName());
+        assertEquals("testExtendedJSContact5 - 5", "phones/PHONE-1/features/example.com:extfeature", vcard.getExtendedProperties().get(1).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact5 - 6", VCardDataType.URI, vcard.getExtendedProperties().get(1).getDataType());
+        assertEquals("testExtendedJSContact5 - 7", "data:application/json;true", vcard.getExtendedProperties().get(1).getValue());
+        assertEquals("testExtendedJSContact6 - 8", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContact5 - 9", "phones/PHONE-1/contexts/example.com:extcontext", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testExtendedJSContact5 - 10", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
+        assertEquals("testExtendedJSContact5 - 11", "data:application/json;true", vcard.getExtendedProperties().get(0).getValue());
+    }
+
 
 }

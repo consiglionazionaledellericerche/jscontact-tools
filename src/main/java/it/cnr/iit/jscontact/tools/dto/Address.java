@@ -38,6 +38,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -245,6 +246,45 @@ public class Address extends AbstractJSContactType implements HasAltid, IdMapVal
      */
     public static StreetComponent[] addComponent(StreetComponent[] components, StreetComponent sc) {
         return ArrayUtils.add(components, sc);
+    }
+
+    /**
+     * Adds a street component to this object.
+     *
+     * @param sc the street component
+     */
+    public void addComponent(StreetComponent sc) {
+        street = ArrayUtils.add(street, sc);
+    }
+
+    /**
+     * Adds a context to this object.
+     *
+     * @param context the context
+     */
+    public void addContext(AddressContext context) {
+        Map<AddressContext,Boolean> clone = new HashMap<>();
+        clone.putAll(getContexts());
+        clone.put(context,Boolean.TRUE);
+        setContexts(clone);
+    }
+
+    /**
+     * This method will be used to get the extended contexts in the "contexts" property.
+     *
+     * @return the extended contexts in the "contexts" property
+     */
+    @JsonIgnore
+    public AddressContext[] getExtContexts() {
+        if (getContexts() == null)
+            return null;
+        AddressContext[] extended = null;
+        for(AddressContext context : getContexts().keySet()){
+            if (context.isExtValue())
+                extended = ArrayUtils.add(extended, context);
+        }
+
+        return extended;
     }
 
 }

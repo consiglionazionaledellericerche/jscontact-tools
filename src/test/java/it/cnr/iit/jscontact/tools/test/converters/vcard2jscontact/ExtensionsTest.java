@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
+
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -97,6 +98,44 @@ public class ExtensionsTest extends VCard2JSContactTest {
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact4 - 1", true, jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().isExtValue());
         assertEquals("testExtendedJSContact4 - 2", V_Extension.toV_Extension("example.com:engagement"), jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().getExtValue());
+    }
+
+    @Test
+    public void testExtendedJSContact5() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:Mr. John Q. Public, Esq.\n" +
+                "N:Public;John;;;\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=name/components/2;VALUE=uri:data:application/json;base64,eyJAdHlwZSI6Ik5hbWVDb21wb25lbnQiLCJ0eXBlIjoiZXhhbXBsZS5jb206ZXh0dHlwZSIsInZhbHVlIjoiZXh0dmFsdWUifQ==\n" +
+                "END:VCARD";
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testExtendedJSContact5 - 1", true, jsCard.getName().getComponents()[0].isGiven());
+        assertEquals("testExtendedJSContact5 - 2", "John", jsCard.getName().getComponents()[0].getValue());
+        assertEquals("testExtendedJSContact5 - 3", true, jsCard.getName().getComponents()[1].isSurname());
+        assertEquals("testExtendedJSContact5 - 4", "Public", jsCard.getName().getComponents()[1].getValue());
+        assertEquals("testExtendedJSContact5 - 5", true, jsCard.getName().getComponents()[2].isExt());
+        assertEquals("testExtendedJSContact5 - 6", V_Extension.toV_Extension("example.com:exttype"), jsCard.getName().getComponents()[2].getType().getExtValue());
+        assertEquals("testExtendedJSContact5 - 7", "extvalue", jsCard.getName().getComponents()[2].getValue());
+    }
+
+
+    @Test
+    public void testExtendedJSContact6() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "TEL;VALUE=uri:tel:+33-01-23-45-6\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"phones/PHONE-1/features/example.com:extfeature\";VALUE=uri:data:application/json;true\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"phones/PHONE-1/contexts/example.com:extcontext\";VALUE=uri:data:application/json;true\n" +
+                "END:VCARD";
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testExtendedJSContact6 - 1", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
+        assertEquals("testExtendedJSContact6 - 2", true, jsCard.getPhones().get("PHONE-1").asExtContext("example.com:extcontext"));
+        assertEquals("testExtendedJSContact6 - 3", true, jsCard.getPhones().get("PHONE-1").asExt("example.com:extfeature"));
     }
 
 }
