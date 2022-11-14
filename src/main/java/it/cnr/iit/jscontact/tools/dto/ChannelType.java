@@ -102,6 +102,7 @@ public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Seri
     /**
      * Returns a custom contact channel type.
      *
+     * @param extValue the custom contact channel type in text format
      * @return a custom contact channel type
      */
     public static ChannelType ext(String extValue) { return ChannelType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }

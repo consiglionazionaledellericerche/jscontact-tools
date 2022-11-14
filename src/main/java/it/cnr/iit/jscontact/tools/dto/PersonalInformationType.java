@@ -87,6 +87,7 @@ public class PersonalInformationType extends ExtensibleEnumType<PersonalInformat
     /**
      * Returns a custom personal information type.
      *
+     * @param extValue the custom personal information type in text format
      * @return a custom personal information type
      */
     public static PersonalInformationType ext(String extValue) { return PersonalInformationType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }

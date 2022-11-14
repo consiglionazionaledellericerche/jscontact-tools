@@ -71,6 +71,7 @@ public abstract class JSContact extends ValidableObject implements Serializable 
      *
      * @param json the single JSContact object or the array of JSContact objects in JSON
      * @return an array of JSContact objects
+     * @throws JsonProcessingException never thrown
      */
     public static JSContact[] toJSContacts(String json) throws JsonProcessingException {
 
@@ -89,6 +90,7 @@ public abstract class JSContact extends ValidableObject implements Serializable 
      *
      * @param jsContacts the array of JSContact objects
      * @return the array of JSContact objects in JSON
+     * @throws JsonProcessingException never thrown
      */
     public static String toJson(JSContact[] jsContacts) throws JsonProcessingException {
 

@@ -73,6 +73,7 @@ public class DirectoryResourceType extends ExtensibleEnumType<DirectoryResourceE
     /**
      * Returns a custom directory resource type.
      *
+     * @param extValue a custom directory source type in text format
      * @return a custom directory resource type
      */
     public static DirectoryResourceType ext(String extValue) { return DirectoryResourceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
