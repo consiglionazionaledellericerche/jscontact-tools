@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 public class OnlineServiceTest extends VCard2JSContactTest {
 
     @Test
-    public void testOnlineServiceValid1() throws CardException {
+    public void testOnlineService1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -34,10 +34,10 @@ public class OnlineServiceTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testOnlineServiceValid1 - 1", 1, jsCard.getOnlineServices().size());
-        assertEquals("testOnlineServiceValid1 - 2", "xmpp:alice@example.com", jsCard.getOnlineServices().get("OS-1").getUri());
-        assertTrue("testOnlineServiceValid1 - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());
-        assertEquals("testOnlineServiceValid1 - 5", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
+        assertEquals("testOnlineService1 - 1", 1, jsCard.getOnlineServices().size());
+        assertEquals("testOnlineService1 - 2", "xmpp:alice@example.com", jsCard.getOnlineServices().get("OS-1").getUri());
+        assertTrue("testOnlineService1 - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());
+        assertEquals("testOnlineService1 - 5", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
     }
     
 }

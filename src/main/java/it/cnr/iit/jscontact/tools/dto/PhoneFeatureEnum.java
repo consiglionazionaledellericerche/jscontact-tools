@@ -18,7 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
@@ -27,13 +27,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum PhoneFeatureEnum implements IsExtensible,VCardTypeDerivedEnum {
+public enum PhoneFeatureEnum implements IsExtensibleEnum,VCardTypeDerivedEnum {
 
     VOICE("voice"),
     FAX("fax"),

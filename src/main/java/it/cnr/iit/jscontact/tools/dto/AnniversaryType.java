@@ -15,39 +15,79 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 /**
- * Enum class mapping the values of the "type" property of the Anniversary type as defined in section 2.6.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "type" property of the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@AllArgsConstructor
-public enum AnniversaryType {
+@Getter
+@Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
+public class AnniversaryType extends ExtensibleEnumType<AnniversaryEnum> implements Serializable {
 
-    BIRTH("birth"),
-    DEATH("death");
+    /**
+     * Tests if this anniverary type is "birth".
+     *
+     * @return true if this anniverary type is "birth", false otherwise
+     */
+    @JsonIgnore
+    public boolean isBirth() { return isRfc(AnniversaryEnum.BIRTH); }
 
-    private final String value;
+    /**
+     * Tests if this anniverary type is "death".
+     *
+     * @return true if this anniverary type is "death", false otherwise
+     */
+    @JsonIgnore
+    public boolean isDeath() { return isRfc(AnniversaryEnum.DEATH); }
 
-    @JsonValue
-    public String getValue() {
-        return value;
-    }
+    /**
+     * Tests if this anniverary type is "marriage".
+     *
+     * @return true if this anniverary type is "marriage", false otherwise
+     */
+    @JsonIgnore
+    public boolean isMarriage() { return isRfc(AnniversaryEnum.MARRIAGE); }
 
-    @JsonCreator
-    public static AnniversaryType getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(AnniversaryType.class, value);
-    }
+    private static AnniversaryType rfc(AnniversaryEnum rfcValue) { return AnniversaryType.builder().rfcValue(rfcValue).build(); }
 
-    @Override
-    public String toString() {
-        return value;
-    }
+    /**
+     * Returns a "birth" anniversary type.
+     *
+     * @return a "birth" anniversary type
+     */
+    public static AnniversaryType birth() { return rfc(AnniversaryEnum.BIRTH);}
 
+    /**
+     * Returns a "death" anniversary type.
+     *
+     * @return a "death" anniversary type
+     */
+    public static AnniversaryType death() { return rfc(AnniversaryEnum.DEATH);}
+
+    /**
+     * Returns a "marriage" anniversary type.
+     *
+     * @return a "marriage" anniversary type
+     */
+    public static AnniversaryType marriage() { return rfc(AnniversaryEnum.MARRIAGE);}
+
+    /**
+     * Returns a custom anniverary type.
+     *
+     * @return a custom anniverary type
+     */
+    private static AnniversaryType ext(String extValue) { return AnniversaryType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }
-

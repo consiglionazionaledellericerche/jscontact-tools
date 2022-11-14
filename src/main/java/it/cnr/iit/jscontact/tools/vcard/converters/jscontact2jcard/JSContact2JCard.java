@@ -17,7 +17,6 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2jcard;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.JSContact;
@@ -78,8 +77,7 @@ public class JSContact2JCard extends JSContact2EZVCard {
     public JsonNode convertToJsonNode(JSContact... jsContacts) throws CardException, JsonProcessingException {
 
         String json = convertToJson(jsContacts);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readTree(json);
+        return mapper.readTree(json);
     }
 
 

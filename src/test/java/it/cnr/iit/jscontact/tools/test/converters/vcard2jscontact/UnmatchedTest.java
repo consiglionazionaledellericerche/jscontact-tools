@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UnmatchedTest extends VCard2JSContactTest {
 
+
     @Test
     public void testUnmatchedParameter() throws CardException {
 
@@ -33,8 +34,8 @@ public class UnmatchedTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testUnmatchedParameter - 1", 1, jsCard.getExtensions().size());
-        assertEquals("testUnmatchedParameter - 2", "Public,John", jsCard.getExtensions().get("ietf.org:rfc6350:N:SORT-AS"));
+        assertEquals("testUnmatchedParameter - 1", 1, jsCard.getName().getJCardParams().size());
+        assertEquals("testUnmatchedParameter - 2", "Public,John", String.join(",",jsCard.getName().getJCardParams().get("sort-as").getValues()));
 
     }
 

@@ -15,9 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.Anniversary;
-import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
-import it.cnr.iit.jscontact.tools.dto.AnniversaryType;
+import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import org.junit.Test;
 
@@ -26,8 +24,15 @@ public class AnniversaryTest {
     public void testValidAnniversaryBuild1() {
 
         Anniversary.builder()
-                       .date(AnniversaryDate.builder().date(DateUtils.toCalendar("2020-01-01")).build())
+                       .date(AnniversaryDate.builder().date(Timestamp.builder().utc(DateUtils.toCalendar("2020-01-01")).build()).build())
                        .build();
+    }
+
+    public void testValidAnniversaryBuild2() {
+
+        Anniversary.builder()
+                .date(AnniversaryDate.builder().partialDate(PartialDate.builder().year(2020).month(1).day(1).build()).build())
+                .build();
     }
 
     @Test(expected = NullPointerException.class)
@@ -35,7 +40,7 @@ public class AnniversaryTest {
 
         // date missing
         Anniversary.builder()
-                .type(AnniversaryType.BIRTH)
+                .type(AnniversaryType.birth())
                 .build();
     }
 

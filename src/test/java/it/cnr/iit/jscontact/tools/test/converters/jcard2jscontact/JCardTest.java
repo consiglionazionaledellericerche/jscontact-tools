@@ -15,11 +15,10 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
+import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
-import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -101,37 +100,33 @@ public class JCardTest extends JCard2JSContactTest {
     @Test(expected = CardException.class)
     public void testJCardInvalid9() throws CardException {
 
-        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {\"pref\":\"0\"}, \"text\", \"test\"]]]";
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {\"pref\": 0}, \"text\", \"test\"]]]";
         jCard2JSContact.convert(jcard);
     }
 
     @Test
-    public void testJCardValid() throws CardException {
+    public void testJCard() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testJCardValid - 1", jsCard);
-        assertTrue("testJCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
-        assertEquals("testJCardValid - 3", "test", jsCard.getFullName());
+        assertNotNull("testJCard - 1", jsCard);
+        assertTrue("testJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertEquals("testJCard - 3", "test", jsCard.getFullName());
 
     }
 
     @Test
-    public void testExtendedJCardValid() throws CardException {
+    public void testExtendedJCard() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"], [\"myext\", {}, \"text\", \"extvalue\"]]]";
-        JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
-                .config(VCard2JSContactConfig.builder()
-                        .extensionsPrefix("extension:")
-                        .build()
-                )
-                .build();
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testExtendedJCardValid - 1", jsCard);
-        assertTrue("testExtendedJCardValid - 2", StringUtils.isNotEmpty(jsCard.getUid()));
-        assertEquals("testExtendedJCardValid - 3", "test", jsCard.getFullName());
-        assertEquals("testExtendedJCardValid - 4", 1, jsCard.getExtensions().size());
-        assertEquals("testExtendedJCardValid - 5", "extvalue", jsCard.getExtensions().get("extension:myext"));
+        assertNotNull("testExtendedJCard - 1", jsCard);
+        assertTrue("testExtendedJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertEquals("testExtendedJCard - 3", "test", jsCard.getFullName());
+        assertEquals("testExtendedJCard - 4", 1, jsCard.getJCardExtensions().length);
+        assertEquals("testExtendedJCard - 5", "myext", jsCard.getJCardExtensions()[0].getName().toString());
+        assertEquals("testExtendedJCard - 6", VCardDataType.TEXT, jsCard.getJCardExtensions()[0].getType());
+        assertEquals("testExtendedJCard - 7", "extvalue", jsCard.getJCardExtensions()[0].getValue());
     }
 
 
@@ -143,7 +138,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 1", "Joe User", jsCard.getFullName());
         assertTrue("testCompleteJCard1 - 2", jsCard.getKind().isIndividual());
         assertEquals("testCompleteJCard1 - 3", 4, jsCard.getName().getComponents().length);
-        assertTrue("testCompleteJCard1 - 4", jsCard.getName().getComponents()[0].isPersonal());
+        assertTrue("testCompleteJCard1 - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testCompleteJCard1 - 5", "Joe", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteJCard1 - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testCompleteJCard1 - 7", "User", jsCard.getName().getComponents()[1].getValue());
@@ -151,9 +146,9 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testCompleteJCard1 - 10", jsCard.getName().getComponents()[3].isSuffix());
         assertEquals("testCompleteJCard1 - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
-        assertEquals("testCompleteJCard1 - 12", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testCompleteJCard1 - 13", 1, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
-        assertEquals("testCompleteJCard1 - 14", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testCompleteJCard1 - 12", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testCompleteJCard1 - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
+        assertEquals("testCompleteJCard1 - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testCompleteJCard1 - 15", "Example", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteJCard1 - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
         assertEquals("testCompleteJCard1 - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());
@@ -183,15 +178,14 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asCell());
         assertTrue("testCompleteJCard1 - 43", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
-        assertEquals("testCompleteJCard1 - 45", 2, jsCard.getResources().size());
-        assertTrue("testCompleteJCard1 - 46", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testCompleteJCard1 - 47", "http://www.example.com/joe.user/joe.asc", jsCard.getResources().get("KEY-1").getResource());
-        assertNull("testCompleteJCard1 - 48", jsCard.getResources().get("KEY-1").getPref());
-        assertTrue("testCompleteJCard1 - 49", jsCard.getResources().get("KEY-1").asWork());
-        assertEquals("testCompleteJCard1 - 50", "http://example.org", jsCard.getResources().get("URI-1").getResource());
-        assertNull("testCompleteJCard1 - 51", jsCard.getResources().get("URI-1").getPref());
-        assertTrue("testCompleteJCard1 - 52", jsCard.getResources().get("URI-1").asPrivate());
-        assertTrue("testCompleteJCard1 - 53", jsCard.getResources().get("URI-1").isUri());
+        assertEquals("testCompleteJCard1 - 45", 1, jsCard.getCryptoKeys().size());
+        assertEquals("testCompleteJCard1 - 46", "http://www.example.com/joe.user/joe.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
+        assertNull("testCompleteJCard1 - 47", jsCard.getCryptoKeys().get("KEY-1").getPref());
+        assertTrue("testCompleteJCard1 - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
+        assertEquals("testCompleteJCard1 - 49", 1, jsCard.getLinks().size());
+        assertEquals("testCompleteJCard1 - 50", "http://example.org", jsCard.getLinks().get("LINK-1").getUri());
+        assertNull("testCompleteJCard1 - 51", jsCard.getLinks().get("LINK-1").getPref());
+        assertTrue("testCompleteJCard1 - 52", jsCard.getLinks().get("LINK-1").asPrivate());
         assertTrue("testCompleteJCard1 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }
@@ -208,9 +202,9 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard2 - 6", "事務局長", jsCard.getTitles().get("TITLE-1").getTitle());
         assertEquals("testCompleteJCard2 - 8", "Secretary General", jsCard.getLocalization("en", "titles/TITLE-1").get("title").asText());
         assertTrue("testCompleteJCard2 - 9", jsCard.getKind().isIndividual());
-        assertEquals("testCompleteJCard2 - 10", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testCompleteJCard2 - 11", 1, (int) jsCard.getPreferredContactLanguages().get("jp")[0].getPref());
-        assertEquals("testCompleteJCard2 - 12", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testCompleteJCard2 - 10", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testCompleteJCard2 - 11", 1, (int) jsCard.getPreferredLanguages().get("jp")[0].getPref());
+        assertEquals("testCompleteJCard2 - 12", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertTrue("testCompleteJCard2 - 13", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 
@@ -244,7 +238,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 1", "Simon Perreault", jsCard.getFullName());
         assertNull("testCompleteJCard4 - 2", jsCard.getKind());
         assertEquals("testCompleteJCard4 - 3", 4, jsCard.getName().getComponents().length);
-        assertTrue("testCompleteJCard4 - 4", jsCard.getName().getComponents()[0].isPersonal());
+        assertTrue("testCompleteJCard4 - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testCompleteJCard4 - 5", "Simon", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteJCard4 - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testCompleteJCard4 - 7", "Perreault", jsCard.getName().getComponents()[1].getValue());
@@ -255,12 +249,11 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 12", 2, jsCard.getAnniversaries().size());
         assertTrue("testCompleteJCard4 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
         assertTrue("testCompleteJCard4 - 14", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("0000-02-03"));
-        assertTrue("testCompleteJCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isOtherAnniversary());
-        assertEquals("testCompleteJCard4 - 16", "marriage date", jsCard.getAnniversaries().get("ANNIVERSARY-2").getLabel());
+        assertTrue("testCompleteJCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isMarriage());
         assertTrue("testCompleteJCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
-        assertEquals("testCompleteJCard4 - 18", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testCompleteJCard4 - 19", 1, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
-        assertEquals("testCompleteJCard4 - 20", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testCompleteJCard4 - 18", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testCompleteJCard4 - 19", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
+        assertEquals("testCompleteJCard4 - 20", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testCompleteJCard4 - 21", "Viagenie", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteJCard4 - 22", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteJCard4 - 23", "Suite D2-630\n2875 Laurier\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("ADR-1").getFullAddress());
@@ -287,13 +280,13 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 44", 1, jsCard.getEmails().size());
         assertTrue("testCompleteJCard4 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
         assertEquals("testCompleteJCard4 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getEmail());
-        assertEquals("testCompleteJCard4 - 47", 2, jsCard.getResources().size());
-        assertTrue("testCompleteJCard4 - 48", jsCard.getResources().get("KEY-1").asWork());
-        assertTrue("testCompleteJCard4 - 50", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testCompleteJCard4 - 51", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getResources().get("KEY-1").getResource());
-        assertTrue("testCompleteJCard4 - 52", jsCard.getResources().get("URI-1").asPrivate());
-        assertEquals("testCompleteJCard4 - 53", "http://nomis80.org", jsCard.getResources().get("URI-1").getResource());
-        assertTrue("testCompleteJCard4 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertEquals("testCompleteJCard4 - 47", 1, jsCard.getCryptoKeys().size());
+        assertTrue("testCompleteJCard4 - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
+        assertEquals("testCompleteJCard4 - 49", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
+        assertEquals("testCompleteJCard4 - 50", 1, jsCard.getLinks().size());
+        assertTrue("testCompleteJCard4 - 51", jsCard.getLinks().get("LINK-1").asPrivate());
+        assertEquals("testCompleteJCard4 - 52", "http://nomis80.org", jsCard.getLinks().get("LINK-1").getUri());
+        assertTrue("testCompleteJCard4 - 53", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 
 
@@ -307,14 +300,14 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard5 - 3", 3, jsCard.getName().getComponents().length);
         assertTrue("testCompleteJCard5 - 4", jsCard.getName().getComponents()[0].isPrefix());
         assertEquals("testCompleteJCard5 - 5", "Mr.", jsCard.getName().getComponents()[0].getValue());
-        assertTrue("testCompleteJCard5 - 6", jsCard.getName().getComponents()[1].isPersonal());
+        assertTrue("testCompleteJCard5 - 6", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testCompleteJCard5 - 7", "Forrest", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testCompleteJCard5 - 8", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testCompleteJCard5 - 9", "Gump", jsCard.getName().getComponents()[2].getValue());
         assertEquals("testCompleteJCard5 - 10", "Bubba Gump Shrimp Co.", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteJCard5 - 11", "Shrimp Man", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testCompleteJCard5 - 15", "http://www.example.com/dir_photos/my_photo.gif", jsCard.getPhotos().get("PHOTO-1").getHref());
-        assertEquals("testCompleteJCard5 - 16", "image/gif", jsCard.getPhotos().get("PHOTO-1").getMediaType());
+        assertEquals("testCompleteJCard5 - 15", "http://www.example.com/dir_photos/my_photo.gif", jsCard.getMedia().get("PHOTO-1").getUri());
+        assertEquals("testCompleteJCard5 - 16", "image/gif", jsCard.getMedia().get("PHOTO-1").getMediaType());
         assertEquals("testCompleteJCard5 - 17", 2, jsCard.getPhones().size());
         assertTrue("testCompleteJCard5 - 18", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteJCard5 - 19", jsCard.getPhones().get("PHONE-1").asWork());

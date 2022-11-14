@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.10.3</version>
+		  <version>0.11.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.10.3'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.11.0'
 ```
 
 # Features
@@ -76,10 +76,9 @@ Here in the following a test assessing a successful creation of a cloned Card in
     @Test
     public void testClone1() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), Charset.forName("UTF-8"));
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
-        assertTrue("testClone1", Objects.deepEquals(jsCard, jsCard.clone()));
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
+        Card jsCard = Card.toCard(json);
+        assertTrue("testClone1", jsCard.equals(jsCard.clone()));
 
     }
 
@@ -142,7 +141,7 @@ JSContact serialization/deserializaion is performed through Jackson library anno
 ```
 
         Card jsCard = Card.builder.build();
-        String serialized = objectMapper.writeValueAsString(jsCard);
+        String serialized = mapper.writeValueAsString(jsCard);
 
 ```
 
@@ -160,8 +159,8 @@ To pretty print serialized JSContact objects, use the following:
 ```
 
         String json = "{"uid": \"c642b718-7c89-49f4-9497-d9fb279bb437\"}";
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        ObjectMapper mapper = new ObjectMapper();
+        Card jsCard = mapper.readValue(json, Card.class);
 
 ```
 
@@ -175,11 +174,7 @@ Deserialization of a CardGroup object and the related cards is performed through
     public void testDeserialization4() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), Charset.forName("UTF-8"));
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(JSContact.class, new JSContactListDeserializer());
-        objectMapper.registerModule(module);
-        JSContact[] jsContacts = objectMapper.readValue(json, JSContact[].class);
+        JSContact[] jsContacts = JSContact.toJSContacts(json);
         for (JSContact jsContact : jsContacts)
             assertTrue("testDeserialization4", jsContact.isValid());
     }
@@ -236,17 +231,33 @@ All the methods return a list of JSContact top most objects and can raise a `Car
 
 The conversion is executed according to the following rules:
 
-1.  The conversion is based on the content of the [JSContact I-Ds](#drafts).
+1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
 
-2.  A card (i.e. vCard, xCard, jCard) is converted into a CardGroup object if it includes a MEMBER property, otherwise into a Card object.
+2. A card (i.e. vCard, xCard, jCard) is converted into a CardGroup object if it includes a MEMBER property, otherwise into a Card object.
 
-3.  The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
+3. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
 
-4.  An unmatched property is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350`. The following unmatched properties are considered:    
+4. An unmatched property is converted into an entry of the topmost Card/CardGroup `ietf.org:rfc0000:props` map. The following unmatched properties are considered:    
     CLIENTPIDMAP
     XML
 
-5.  The sex information of the GENDER property is mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing as in the following:
+5. An unmatched parameter is converted into an entry of an object `ietf.org:rfc0000:params` map. The following unmatched parameters are considered:
+    PID
+    SORT-AS
+ 
+6. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
+
+7. Default values for the configuration properties are:
+    
+    - `customTimeZonesPrefix = "tz"`
+    - `setCardMustBeValidated = true`
+    - `setAutoIdsProfile = true`
+    - `setPropIds = false`
+    - `setAutoFullAddress = true`
+    - `setVoiceAsDefaultPhoneFeature = true`
+    - `convertGenderToSpeakToAs = true` 
+
+8. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
 
     GENDER      SpeakToAs.grammaticalGender    
     M           male
@@ -254,71 +265,64 @@ The conversion is executed according to the following rules:
     O           animate
     N           neuter
     U           SpeakToAs = null
-    
-    The gender identity information is mapped to the Card property named `ietf.org:rfc6350:GENDER`
-    
-6.  An unmatched parameter is converted into a topmost Card/CardGroup property with prefix `ietf.org:rfc6350:<vCard Property Name>`. The following unmatched parameters are considered:
-    PID
-    SORT-AS (only for vCard N property)
-    CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
 
-7.  An extension property is converted into a topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix`.
-  
-8.  Validation is performed before conversion if the configuration property `cardToValidate` is set to `true`.
+9. Where a language is required to represent a localization and the language is not specified, `en` is used by default to set the mapping configuration parameter `defaultLanguage`.
 
-9.  Default values for the configuration properties are:
-    
-    -  `extensionsPrefix = "extension:"`
-    -  `customTimeZonesPrefix = "tz"`
-    -  `cardToValidate = true`
-    -  `applyAutoIdsProfile = true`
-
-10.  Where a language is required to represent a localization and the language is not specified, `en` is used by default.
-
-11.  Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
+10. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
 
     1. BDAY (BIRTHDATE)
     2. DEATHDAY (DEATHDATE)
     3. ANNIVERSARY
 
-12.  Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
+11. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
 
     1. HOBBY
     2. INTEREST
     3. EXPERTISE
 
-13. Regardless of their positions inside the vCard, properties mapped as online Resource objects appear in the following order:
+12. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
+
+    1. PHOTO
+    2. SOUND
+    3. LOGO
+
+13. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
+
+    1. CALURI
+    2. FBURL
+
+14. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
+
+    1. URL
+    2. CONTACT-URI
+
+15. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the following order:
 
     1. SOURCE
-    2. LOGO
-    3. SOUND
-    4. URL
-    5. KEY
-    6. FBURL
-    7. CALURI
-    8. ORG-DIRECTORY
-    9. CONTACT-URI
+    2. ORG-DIRECTORY
 
-14. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
+16. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
     1. TITLE
     2. ROLE
 
-15. If an ADR element doesn't include the LABEL parameter, the full address results from the newline-delimited concatenation of the non-empty address components.
+17. The order of conversion of the HOBBY, INTEREST, EXPERTISE and ORG-DIRECTORY elements is based on the values of the INDEX parameter
 
-16. If TZ and GEO properties contains the ALTID parameter, they are associated to the address with the same ALTID value. If the ALTID parameter is missing or inconsistent, they are associated to the first address included in the vCard.
+18. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
 
-17. Categories appear in the "categories" map according to the values of the PREF parameter of the CATEGORIES properties. 
+19. The order of conversion of the ADR elements is based on the values of ALTID parameter.
 
-18. Members appear n the "members" map according to the values of the PREF parameter of the MEMBER properties.
+20. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
-19. If no vCard tel-type value is specified, the "features" map of the "Phone" object includes the value "PhoneFeature.voice()" by default. 
+21. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-20. JSContact UTCDateTime type is mapped to Java Calendar.
+22. JSContact UTCDateTime type is mapped to Java Calendar.
 
-21. Media type information of `File` and `Resource` objects is automatically detected when the MEDIATYPE parameter is missing.
+23. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
 
-22. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `timeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
+24. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
+
+25. The VCARD parameter DERIVED is ignored. 
 
 ### Conversion Profiles from vCard to JSContact
 
@@ -326,11 +330,11 @@ By default, where a collection of objects is mapped to a map of <key,object> ent
 This setting schema can be modified by defining a different one assigning key values based on the positions of vCard elements.
 To do that, the following steps must be followed:
 
-1. set the `applyAutoIdsProfile` property of the `VCard2JSContactConfig` object to `false`
+1. set the `setAutoIdsProfile` property of the `VCard2JSContactConfig` object to `false`
 
-2. set the `applyPropIds` property of the `VCard2JSContactConfig` object to `false`
+2. set the `setUsePropIds` property of the `VCard2JSContactConfig` object to `false`
 
-3. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToApply` of `VCard2JSContactConfig` object property with it
+3. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToUse` of `VCard2JSContactConfig` object property with it
 
 
 ### RDAP Conversion Profile from jCard to JSContact
@@ -350,9 +354,6 @@ Additional setting rules are shown in the following code:
                                                                                     .build();                                                                                    
 
 ```
-
-
-
 
 <a name="jscontact-conversion"></a>
 ## JSContact Conversion
@@ -376,45 +377,34 @@ All the methods take in input a list of JSContact top most objects and can raise
 
 ### Conversion Rules from JSContact to vCard 
 
-1.  The conversion is based on the content of the [JSContact I-Ds](#drafts).
-
-2.  The following vCard extension properties are generated by converting the related unmatched JSContact properties:
-    `X-JSCONTACT-PREFERREDCONTACTMETHOD`
-        
-3.  A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>` is converted into the related vCard property  . The following properties are considered:
+1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
+ 
+2. An entry of the topmost Card/CardGroup `ietf.org:rfc0000:props` map is converted into the related vCard property  . The following properties are considered:
     CLIENTPIDMAP
     XML
-
-4.  The SpeakToAs object is mapped to GENDER property as in the following:
-
-    SpeakToAs.grammaticalGender     GENDER          
-    male                            M
-    female                          F
-    animate                         O
-    neuter                          N
-    inanimate                       N;inanimate          
-    null                            null
-    
-    If a SpeakToAs object includes only the "pronouns" property, it is mapped to the VCARD `PRONOUNS` extension property. 
-    
-5.  A topmost Card/CardGroup property with name `ietf.org:rfc6350:<vCard Property Name>:<vCard Parameter Name>` is converted into a vCard parameter. The following parameters are considered:
+ 
+3. An entry of an object `ietf.org:rfc0000:params` map is converted into a vCard parameter. The following parameters are considered:
     PID
-    SORT-AS (only for vCard N property)
-    CALSCALE (only for vCard ANNIVERSARY, BDAY and DEATHDATE properties)
+    SORT-AS
 
-6.  A topmost Card/CardGroup property with prefix defined by the configuration property `extensionsPrefix` is converted into a vCard extension.
+4. Default values for the configuration properties are:
 
-7.  The Card/CardGroup "titles" property is mapped to the vCard TITLE property.
-    
-8.  The "timeZone" property is always mapped to a TZ parameter either preserving the time zone name or the time zone offset extracted from the `timeZones` map.    
+    - `setCardMustBeValidated = true`
+    - `setAutoAddrLabel = true`
+    - `setPropIdParam = true`
+    - `convertTimezoneToOffset = true`
 
-9.  If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
+5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
 
-10. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+6. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
-11. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+7. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-12. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, the value of the LABEL parameter results from the newline-delimited concatenation of the non-empty "Address" members.
+8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+
+9. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL parameter can results from the newline-delimited concatenation of the non-empty "Address" members or.
+
+10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration parameter `setPropIdParam`.
 
 ### Conversion examples
 
@@ -423,7 +413,7 @@ Here in the following two examples of conversion between vCard and JSContact top
 ```
 
     @Test
-    public void testAddressesValid4() throws IOException, CardException {
+    public void testAddresses4() throws IOException, CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -433,16 +423,16 @@ Here in the following two examples of conversion between vCard and JSContact top
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testAddressesValid4 - 1", jsCard.getAddresses());
-        assertEquals("testAddressesValid4 - 2", 1, jsCard.getAddresses().size());
-        assertEquals("testAddressesValid4 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
-        assertEquals("testAddressesValid4 - 4", "USA", jsCard.getAddresses().get("ADR-1").getCountry());
-        assertEquals("testAddressesValid4 - 5", "20190", jsCard.getAddresses().get("ADR-1").getPostcode());
-        assertEquals("testAddressesValid4 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
-        assertEquals("testAddressesValid4 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
-        assertEquals("testAddressesValid4 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetDetails());
-        assertEquals("testAddressesValid4 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
-        assertEquals("testAddressesValid4 - 10", "geo:46.772673,-71.282945", jsCard.getAddresses().get("ADR-1").getCoordinates());
+        assertNotNull("testAddresses4 - 1", jsCard.getAddresses());
+        assertEquals("testAddresses4 - 2", 1, jsCard.getAddresses().size());
+        assertEquals("testAddresses4 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
+        assertEquals("testAddresses4 - 4", "USA", jsCard.getAddresses().get("ADR-1").getCountry());
+        assertEquals("testAddresses4 - 5", "20190", jsCard.getAddresses().get("ADR-1").getPostcode());
+        assertEquals("testAddresses4 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
+        assertEquals("testAddresses4 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
+        assertEquals("testAddresses4 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetDetails());
+        assertEquals("testAddresses4 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses4 - 10", "geo:46.772673,-71.282945", jsCard.getAddresses().get("ADR-1").getCoordinates());
 
     }
 
@@ -451,7 +441,7 @@ Here in the following two examples of conversion between vCard and JSContact top
 ```
 
     @Test
-    public void testJCardGroupValid1() throws IOException, CardException {
+    public void testJCardGroup1() throws IOException, CardException {
 
         String jcard="[" +
                 "[\"vcard\", [ " +
@@ -474,21 +464,21 @@ Here in the following two examples of conversion between vCard and JSContact top
                 "]";
 
         List<JSContact> jsContacts = jCard2JSContact.convert(jcard);
-        assertEquals("testJCardGroupValid1 - 1", 3, jsContacts.size());
-        assertTrue("testJCardGroupValid1 - 2",jsContacts.get(0) instanceof CardGroup);
+        assertEquals("testJCardGroup1 - 1", 3, jsContacts.size());
+        assertTrue("testJCardGroup1 - 2",jsContacts.get(0) instanceof CardGroup);
         CardGroup jsCardGroup = (CardGroup) jsContacts.get(0);
-        assertTrue("testJCardGroupValid1 - 3", jsCardGroup.getCard().getKind().isGroup());
-        assertTrue("testJCardGroupValid1 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertEquals("testJCardGroupValid1 - 5", "The Doe family", jsCardGroup.getCard().getFullName());
-        assertEquals("testJCardGroupValid1 - 6", 2, jsCardGroup.getMembers().size());
-        assertSame("testJCardGroupValid1 - 7", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
-        assertSame("testJCardGroupValid1 - 8", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
+        assertTrue("testJCardGroup1 - 3", jsCardGroup.getCard().getKind().isGroup());
+        assertTrue("testJCardGroup1 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertEquals("testJCardGroup1 - 5", "The Doe family", jsCardGroup.getCard().getFullName());
+        assertEquals("testJCardGroup1 - 6", 2, jsCardGroup.getMembers().size());
+        assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
+        assertSame("testJCardGroup1 - 8", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
         Card jsCard = (Card) jsContacts.get(1);
-        assertEquals("testJCardGroupValid1 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
-        assertEquals("testJCardGroupValid1 - 10", "John Doe", jsCard.getFullName());
+        assertEquals("testJCardGroup1 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
+        assertEquals("testJCardGroup1 - 10", "John Doe", jsCard.getFullName());
         jsCard = (Card) jsContacts.get(2);
-        assertEquals("testJCardGroupValid1 - 11", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
-        assertEquals("testJCardGroupValid1 - 12", "Jane Doe", jsCard.getFullName());
+        assertEquals("testJCardGroup1 - 11", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
+        assertEquals("testJCardGroup1 - 12", "Jane Doe", jsCard.getFullName());
         
     }
 
@@ -499,7 +489,7 @@ Here in the following two examples of conversion between JSContact top most obje
 ```
 
     @Test
-    public void testAddressesValid4() throws IOException, CardException {
+    public void testAddresses4() throws IOException, CardException {
 
         String jscard = "{" +
                 "\@type\": \"Card\","
@@ -508,7 +498,7 @@ Here in the following two examples of conversion between JSContact top most obje
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\@type\": \"Address\","
-                        "\"street\":[{\"type\":\"name\",\"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{"@type":"StreetComponent",\"type\":\"name\",\"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -520,16 +510,16 @@ Here in the following two examples of conversion between JSContact top most obje
                 "}";
                 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testAddressesValid4 - 1", 1, vcard.getAddresses().size());
-        assertEquals("testAddressesValid4 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
-        assertEquals("testAddressesValid4 - 3", "USA", vcard.getAddresses().get(0).getCountry());
-        assertEquals("testAddressesValid4 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
-        assertEquals("testAddressesValid4 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
-        assertEquals("testAddressesValid4 - 6", "VA", vcard.getAddresses().get(0).getRegion());
-        assertEquals("testAddressesValid4 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
-        assertEquals("testAddressesValid4 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
-        assertEquals("testAddressesValid4 - 9", vcard.getAddresses().get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));           
-        assertEquals("testAddressesValid4 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testAddresses4 - 1", 1, vcard.getAddresses().size());
+        assertEquals("testAddresses4 - 2", "US", vcard.getAddresses().get(0).getParameter("CC"));
+        assertEquals("testAddresses4 - 3", "USA", vcard.getAddresses().get(0).getCountry());
+        assertEquals("testAddresses4 - 4", "20190", vcard.getAddresses().get(0).getPostalCode());
+        assertEquals("testAddresses4 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
+        assertEquals("testAddresses4 - 6", "VA", vcard.getAddresses().get(0).getRegion());
+        assertEquals("testAddresses4 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
+        assertEquals("testAddresses4 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
+        assertEquals("testAddresses4 - 9", vcard.getAddresses().get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));           
+        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(PROP_ID_PARAM));
         
     }
 
@@ -538,7 +528,7 @@ Here in the following two examples of conversion between JSContact top most obje
 ```
 
     @Test
-    public void testCardGroupValid1() throws IOException, CardException {
+    public void testCardGroup1() throws IOException, CardException {
 
         String jsCards = "[" +
                          "{" +
@@ -568,17 +558,17 @@ Here in the following two examples of conversion between JSContact top most obje
                         "]";
 
         List<VCard> vcards = jsContact2VCard.convert(jsCards);
-        assertEquals("testCardGroupValid1 - 1", 3, vcards.size());
-        assertTrue("testCardGroupValid1 - 3", vcards.get(0).getKind().isGroup());
-        assertTrue("testCardGroupValid1 - 4",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
-        assertEquals("testCardGroupValid1 - 5", "The Doe family", vcards.get(0).getFormattedName().getValue());
-        assertEquals("testCardGroupValid1 - 6", 2, vcards.get(0).getMembers().size());
-        assertEquals("testCardGroupValid1 - 7", vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
-        assertEquals("testCardGroupValid1 - 8", vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
-        assertEquals("testCardGroupValid1 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", vcards.get(1).getUid().getValue());
-        assertEquals("testCardGroupValid1 - 10", "John Doe", vcards.get(1).getFormattedName().getValue());
-        assertEquals("testCardGroupValid1 - 11", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", vcards.get(2).getUid().getValue());
-        assertEquals("testCardGroupValid1 - 12", "Jane Doe", vcards.get(2).getFormattedName().getValue());
+        assertEquals("testCardGroup1 - 1", 3, vcards.size());
+        assertTrue("testCardGroup1 - 3", vcards.get(0).getKind().isGroup());
+        assertTrue("testCardGroup1 - 4",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
+        assertEquals("testCardGroup1 - 5", "The Doe family", vcards.get(0).getFormattedName().getValue());
+        assertEquals("testCardGroup1 - 6", 2, vcards.get(0).getMembers().size());
+        assertEquals("testCardGroup1 - 7", vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
+        assertEquals("testCardGroup1 - 8", vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
+        assertEquals("testCardGroup1 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", vcards.get(1).getUid().getValue());
+        assertEquals("testCardGroup1 - 10", "John Doe", vcards.get(1).getFormattedName().getValue());
+        assertEquals("testCardGroup1 - 11", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", vcards.get(2).getUid().getValue());
+        assertEquals("testCardGroup1 - 12", "Jane Doe", vcards.get(2).getFormattedName().getValue());
     }
 
 ```
@@ -618,12 +608,17 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
+Version 0.11.0 implements the following draft versions:
+
+* draft-ietf-calext-jscontact-04
+* draft-ietf-calext-jscontact-vcard-03
+* draft-ietf-calext-vcard-jscontact-extensions-01
 
 # Build Instructions
 
 ## Java
 
-Version 1.8 required.
+Version 9 required.
 
 ## Maven
 

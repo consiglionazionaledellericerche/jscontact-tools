@@ -19,9 +19,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.StreetComponentTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.StreetComponentTypeSerializer;
+
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -29,9 +29,9 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the StreetComponent type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the StreetComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","type","value"})
@@ -39,7 +39,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StreetComponent implements Serializable {
+public class StreetComponent extends AbstractJSContactType implements HasType, Serializable {
 
     @NotNull
     @Pattern(regexp = "StreetComponent", message="invalid @type value in StreetComponent")
@@ -49,7 +49,6 @@ public class StreetComponent implements Serializable {
 
     @NotNull
     @NonNull
-    @JsonSerialize(using = StreetComponentTypeSerializer.class)
     @JsonDeserialize(using = StreetComponentTypeDeserializer.class)
     StreetComponentType type;
 
@@ -249,7 +248,7 @@ public class StreetComponent implements Serializable {
     public static StreetComponent ext(String extValue, String value) {
         return StreetComponent.builder()
                 .value(value)
-                .type(StreetComponentType.builder().extValue(extValue).build())
+                .type(StreetComponentType.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
     }
 

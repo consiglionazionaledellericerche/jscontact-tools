@@ -139,4 +139,51 @@ public class TitlesTest extends JSContact2VCardTest {
         assertEquals("testTitles3 - 17", "TITLE-2", vcard.getTitles().get(3).getParameter(PROP_ID_PARAM));
     }
 
+
+    @Test
+    public void testTitlesAndRoles() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359g\"," +
+                "\"fullName\":\"test\"," +
+                "\"titles\": {" +
+                    "\"TITLE-1\" : {" +
+                        "\"@type\":\"Title\"," +
+                        "\"title\": \"Research Scientist\"" +
+                    "}," +
+                    "\"TITLE-2\" : {" +
+                        "\"@type\":\"Title\"," +
+                        "\"type\":\"role\"," +
+                        "\"title\": \"IETF Area Director\"" +
+                    "}" +
+                "}," +
+                "\"localizations\" : {" +
+                    "\"it\" : { " +
+                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" }, " +
+                        "\"titles/TITLE-2\": { \"@type\":\"Title\",\"type\":\"role\",\"title\": \"Direttore Area IETF\" } " +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testTitlesAndRoles - 1", 2, vcard.getTitles().size());
+        assertEquals("testTitlesAndRoles - 2", 2, vcard.getRoles().size());
+        assertEquals("testTitlesAndRoles - 3", "Research Scientist", vcard.getTitles().get(0).getValue());
+        assertNull("testTitlesAndRoles - 4", vcard.getTitles().get(0).getLanguage());
+        assertEquals("testTitlesAndRoles - 5", "1", vcard.getTitles().get(0).getAltId());
+        assertEquals("testTitlesAndRoles - 6", "Ricercatore", vcard.getTitles().get(1).getValue());
+        assertEquals("testTitlesAndRoles - 7", "it", vcard.getTitles().get(1).getLanguage());
+        assertEquals("testTitlesAndRoles - 8", "1", vcard.getTitles().get(1).getAltId());
+        assertEquals("testTitlesAndRoles - 9", "IETF Area Director", vcard.getRoles().get(0).getValue());
+        assertNull("testTitlesAndRoles - 10", vcard.getRoles().get(0).getLanguage());
+        assertEquals("testTitlesAndRoles - 11", "1", vcard.getRoles().get(0).getAltId());
+        assertEquals("testTitlesAndRoles - 12", "Direttore Area IETF", vcard.getRoles().get(1).getValue());
+        assertEquals("testTitlesAndRoles - 13", "it", vcard.getRoles().get(1).getLanguage());
+        assertEquals("testTitlesAndRoles - 14", "1", vcard.getRoles().get(1).getAltId());
+        assertEquals("testTitlesAndRoles - 15", "TITLE-1", vcard.getTitles().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitlesAndRoles - 16", "TITLE-1", vcard.getTitles().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitlesAndRoles - 17", "TITLE-2", vcard.getRoles().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testTitlesAndRoles - 18", "TITLE-2", vcard.getRoles().get(1).getParameter(PROP_ID_PARAM));
+    }
+
 }

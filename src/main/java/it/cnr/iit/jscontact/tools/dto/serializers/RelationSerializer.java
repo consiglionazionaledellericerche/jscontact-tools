@@ -39,7 +39,7 @@ public class RelationSerializer extends JsonSerializer<Map<RelationType,Boolean>
 
         jgen.writeStartObject();
         for (Map.Entry<RelationType,Boolean> entry : relation.entrySet())
-            jgen.writeBooleanField((entry.getKey().getRfcValue()!=null) ? entry.getKey().getRfcValue().getValue() : entry.getKey().getExtValue(), entry.getValue());
+            jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());
         jgen.writeEndObject();
 
     }

@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.OnlineServiceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
@@ -40,9 +40,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the OnlineService type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the OnlineService type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @OnlineServiceConstraint
@@ -52,7 +52,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OnlineService extends GroupableObject implements HasIndex, Comparable<OnlineService>, IdMapValue, Serializable, HasContext {
+public class OnlineService extends AbstractJSContactType implements HasIndex, Comparable<OnlineService>, IdMapValue, Serializable, HasContexts {
 
     @NotNull
     @Pattern(regexp = "OnlineService", message="invalid @type value in OnlineService")

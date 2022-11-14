@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
+
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -32,9 +33,10 @@ public class UnmatchedTest extends JCard2JSContactTest {
                 "]]";
 
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testUnmatchedParameter - 1", 1, jsCard.getExtensions().size());
-        assertEquals("testUnmatchedParameter - 2", "Public,John", jsCard.getExtensions().get("ietf.org:rfc6350:N:SORT-AS"));
+        assertEquals("testUnmatchedParameter - 1", 1, jsCard.getName().getJCardParams().size());
+        assertEquals("testUnmatchedParameter - 2", "Public,John", String.join(",",jsCard.getName().getJCardParams().get("sort-as").getValues()));
 
     }
+
 
 }

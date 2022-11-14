@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class PrettyPrintSerializer {
 
+    private static final ObjectMapper mapper = new ObjectMapper();
     /**
      * Returns the formatted JSON text of a given object
      *
@@ -19,7 +20,6 @@ public class PrettyPrintSerializer {
      */
     public static String print(Object o) throws JsonProcessingException {
 
-        ObjectMapper mapper = new ObjectMapper();
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
 
     }

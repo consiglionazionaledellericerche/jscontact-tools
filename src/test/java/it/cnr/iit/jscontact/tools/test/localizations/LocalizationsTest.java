@@ -1,6 +1,5 @@
 package it.cnr.iit.jscontact.tools.test.localizations;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
@@ -33,8 +32,8 @@ public class LocalizationsTest {
                 "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+
+        Card jsCard = Card.toCard(json);
         Card localizedCard = jsCard.getLocalizedVersion("jp");
 
         assertEquals("testLocalizations1 - 1", "jp", localizedCard.getLocale());
@@ -44,7 +43,6 @@ public class LocalizationsTest {
         assertEquals("testLocalizations1 - 5", "大阪市", localizedCard.getAddresses().get("ADR-2").getLocality());
     }
 
-    @Test (expected = IllegalArgumentException.class)
     public void testLocalizations2() throws IOException {
 
         String json = "{" +
@@ -62,14 +60,14 @@ public class LocalizationsTest {
                 "\"localizations\":{" +
                     "\"jp\": {" +
                         "\"addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"addresses/ADR-2\" : {\"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                        "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"title\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
-        Card localizedCard = jsCard.getLocalizedVersion("jp");
+        Card jsCard = Card.toCard(json);
+        assertFalse("testLocalizations2 - 1", jsCard.isValid());
+        assertEquals("testLocalizations2 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-2", jsCard.getValidationMessage().replace("\n", ""));
     }
 
     @Test
@@ -90,13 +88,12 @@ public class LocalizationsTest {
                 "\"localizations\":{" +
                     "\"jp\": {" +
                         "\"addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"addresses/ADR-2\" : {\"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                        "\"addresses/ADR-2\" : {\"@type\":\"Unknown\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertFalse("testLocalizations3 - 1", jsCard.isValid());
         assertEquals("testLocalizations3 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-2", jsCard.getValidationMessage().replace("\n", ""));
     }
@@ -107,25 +104,24 @@ public class LocalizationsTest {
         String json = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"addresses\":{" +
-                "\"ADR-1\": {" +
-                    "\"@type\":\"Address\"," +
-                    "\"locality\":\"Tokyo\"" +
-                "}," +
-                "\"ADR-2\": {" +
-                    "\"@type\":\"Address\"," +
-                    "\"locality\":\"Osaka\"" +
-                "}" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"locality\":\"Tokyo\"" +
+                    "}," +
+                    "\"ADR-2\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"locality\":\"Osaka\"" +
+                    "}" +
                 "}," +
                 "\"localizations\":{" +
                     "\"jp\": {" +
                         "\"addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"addresses/ADR-1\" : { \"@type\":\"Address\",\"unknown\": \"大阪市\"}" +
+                        "\"addresses/ADR-1\" : { \"@type\":\"Unknown\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertFalse("testLocalizations4 - 1", jsCard.isValid());
         assertEquals("testLocalizations4 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-1", jsCard.getValidationMessage().replace("\n", ""));
     }
@@ -164,8 +160,7 @@ public class LocalizationsTest {
                     "}" +
                 "}";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Card jsCard = objectMapper.readValue(json, Card.class);
+        Card jsCard = Card.toCard(json);
         assertTrue("testLocalizations5 - 1", jsCard.isValid());
     }
 

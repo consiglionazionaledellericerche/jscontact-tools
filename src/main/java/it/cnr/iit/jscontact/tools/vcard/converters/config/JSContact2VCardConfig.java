@@ -31,8 +31,12 @@ import lombok.Data;
 public class JSContact2VCardConfig {
 
     @Builder.Default
-    private String extensionsPrefix = "extension:";
+    private boolean setCardMustBeValidated = true;
     @Builder.Default
-    private boolean cardToValidate = true;
+    private boolean setAutoAddrLabel = true;
+    @Builder.Default
+    private boolean setPropIdParam = true;
+    @Builder.Default
+    private boolean convertTimezoneToOffset = false;
 
 }

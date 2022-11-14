@@ -19,9 +19,9 @@
     "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
     "fullName": "Joe User",
     "kind": "individual",
-    "preferredContactLanguages": {
-      "fr": [{ "@type": "ContactLanguage", "pref": 1 }],
-      "en": [{ "@type": "ContactLanguage", "pref": 2 }]
+    "preferredLanguages": {
+      "fr": [{ "@type": "LanguagePreference", "pref": 1 }],
+      "en": [{ "@type": "LanguagePreference", "pref": 2 }]
     },
     "organizations": {
       "ORG-1" :{
@@ -80,20 +80,20 @@
         "email": "joe.user@example.com"
       }
     },
-    "resources": {
+    "cryptoKeys": {
       "KEY-1": {
-        "@type" : "Resource",
-        "contexts": {"work": true},
-        "type": "uri",
-        "label": "key",
-        "resource": "http://www.example.com/joe.user/joe.asc"
-      },
-      "URI-1": {
-        "@type" : "Resource",
+        "@type": "CryptoResource",
+        "contexts": {
+          "work": true
+        },
+        "uri": "http://www.example.com/joe.user/joe.asc"
+      }
+    },
+    "links": {
+      "LINK-1": {
+        "@type" : "LinkResource",
         "contexts": {"private": true},
-        "type": "uri",
-        "label": "url",
-        "resource": "http://example.org"
+        "uri": "http://example.org"
       }
     }
   },
@@ -108,9 +108,9 @@
       }
     },
     "kind": "individual",
-    "preferredContactLanguages": {
-      "jp": [{ "@type": "ContactLanguage", "pref": 1 }],
-      "en": [{ "@type": "ContactLanguage", "pref": 2 }]
+    "preferredLanguages": {
+      "jp": [{ "@type": "LanguagePreference", "pref": 1 }],
+      "en": [{ "@type": "LanguagePreference", "pref": 2 }]
     },
     "localizations": {
       "en": {
@@ -144,7 +144,7 @@
     },
     "emails": {},
     "localizations": {
-       "zh-Hant-TW": {
+       "zh-TW": {
          "fullName": "台灣固網股份有限公司"
        }
     }

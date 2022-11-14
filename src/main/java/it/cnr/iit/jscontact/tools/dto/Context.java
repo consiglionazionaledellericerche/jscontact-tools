@@ -28,9 +28,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class mapping the keys of the "contexts" map as defined in section 1.5.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the keys of the "contexts" map as defined in section 1.6.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.5.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.6.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @Getter
@@ -38,9 +38,8 @@ import java.util.List;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class Context extends ExtensibleEnum<ContextEnum> implements Serializable {
+public class Context extends ExtensibleEnumType<ContextEnum> implements Serializable {
 
-    private boolean isRfc(ContextEnum value) { return isRfcValue() && rfcValue == value; }
     /**
      * Tests if this is a "private" context.
      *
@@ -55,13 +54,7 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
      */
     @JsonIgnore
     public boolean isWork() { return isRfc(ContextEnum.WORK); }
-    /**
-     * Tests if this is a custom context.
-     *
-     * @return true if this is a custom context, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
+
     /**
      * Returns a context whose enum value is pre-defined.
      *
@@ -87,7 +80,7 @@ public class Context extends ExtensibleEnum<ContextEnum> implements Serializable
      * @param extValue the custom context in text format
      * @return a custom context
      */
-    public static Context ext(String extValue) { return Context.builder().extValue(extValue).build(); }
+    public static Context ext(String extValue) { return Context.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
     /**
      * Returns the list of enum values corresponding to those whose type is known in a given collection of contexts.

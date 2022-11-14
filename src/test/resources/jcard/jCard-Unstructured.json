@@ -3,7 +3,7 @@
   [
     [ "version", {}, "text", "4.0" ],
     [ "fn",
-       { "altid": "1", "language": "zh-Hant-TW" },
+       { "altid": "1", "language": "zh-TW" },
        "text",
        "台灣固網股份有限公司"
     ],

@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
 import lombok.*;
@@ -33,20 +35,18 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the Anniversary type as defined in section 2.6.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","date","place","label"})
+@JsonPropertyOrder({"@type","type","date","place"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Anniversary extends GroupableObject implements IdMapValue, Serializable {
-
-    public static final String ANNIVERSAY_MARRIAGE_LABEL = "marriage date";
+public class Anniversary extends AbstractJSContactType implements HasType, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Anniversary", message="invalid @type value in Anniversary")
@@ -54,6 +54,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     @Builder.Default
     String _type = "Anniversary";
 
+    @JsonDeserialize(using = AnniversaryTypeDeserializer.class)
     AnniversaryType type;
 
     @NotNull(message = "date is missing in Anniversary")
@@ -65,8 +66,6 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
     @Valid
     Address place;
 
-    String label;
-
     /**
      * Tests if this anniversary is a birthday. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
      *
@@ -74,7 +73,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isBirth() { return type == AnniversaryType.BIRTH; }
+    public boolean isBirth() { return type.isBirth(); }
 
     /**
      * Tests if this anniversary is a date of death. See vCard 4.0 DEATHDATE property as defined in section 6.2.5 of [RFC6474].
@@ -83,7 +82,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
      */
     @JsonIgnore
-    public boolean isDeath() { return type == AnniversaryType.DEATH; }
+    public boolean isDeath() { return type.isDeath(); }
 
     /**
      * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
@@ -92,7 +91,7 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isMarriage() { return type == null && label.equals(ANNIVERSAY_MARRIAGE_LABEL); }
+    public boolean isMarriage() { return type.isMarriage(); }
 
     /**
      * Tests if this is an undefined anniversary specified by the value of the "label" property.
@@ -100,46 +99,9 @@ public class Anniversary extends GroupableObject implements IdMapValue, Serializ
      * @return true if this is an undefined anniversary, false otherwise
      */
     @JsonIgnore
-    public boolean isOtherAnniversary() { return type == null; }
+    public boolean isOtherAnniversary() { return type == null || type.isExtValue(); }
 
     private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String label) {
-        return Anniversary.builder().type(type).date(date).label(label).build();
+        return Anniversary.builder().type(type).date(date).build();
     }
-
-    /**
-     * Returns a birthday anniversary. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
-     *
-     * @param date the birthday in text format
-     * @return a birthday anniversary
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
-     */
-    public static Anniversary birth(String date) { return anniversary(AnniversaryType.BIRTH, AnniversaryDate.parse(date), null);}
-
-    /**
-     * Returns a date of death anniversary. See vCard 4.0 DEATHDATE property as defined in section 2.3 of [RFC6474].
-     *
-     * @param date the death date in text format
-     * @return a date of death anniversary
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
-     */
-    public static Anniversary death(String date) { return anniversary(AnniversaryType.DEATH, AnniversaryDate.parse(date), null);}
-
-    /**
-     * Returns a date of marriage, or equivalent, anniversary. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
-     *
-     * @param date the marriage date in text format
-     * @return a date of wedding anniversary
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
-     */
-    public static Anniversary marriage(String date) { return anniversary(null, AnniversaryDate.parse(date), ANNIVERSAY_MARRIAGE_LABEL);}
-
-    /**
-     * Returns an anniversary other than birthday, date of death, date of marriage.
-     *
-     * @param date the anniversary date in text format
-     * @param label a text specifying the anniversary
-     * @return an anniversary other than birthday, date of death, date of marriage
-     */
-    public static Anniversary otherAnniversary(String date, String label) { return anniversary(null, AnniversaryDate.parse(date), label);}
-
 }

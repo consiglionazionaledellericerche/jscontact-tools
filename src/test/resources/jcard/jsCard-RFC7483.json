@@ -3,9 +3,9 @@
   "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
   "fullName": "Joe User",
   "kind": "individual",
-  "preferredContactLanguages": {
-  "fr": [{ "@type": "ContactLanguage", "pref": 1 }],
-  "en": [{ "@type": "ContactLanguage", "pref": 2 }]
+  "preferredLanguages": {
+  "fr": [{ "@type": "LanguagePreference", "pref": 1 }],
+  "en": [{ "@type": "LanguagePreference", "pref": 2 }]
   },
   "organizations": { "ORG-1": { "@type": "Organization", "name": "Example" } },
   "titles": {"TITLE-1": { "@type": "Title", "title": "Research Scientist" },  "TITLE-2": { "@type": "Title", "title": "Project Lead" }},
@@ -52,22 +52,20 @@
       "email": "joe.user@example.com"
     }
   },
-  "resources": {
+  "cryptoKeys": {
     "KEY-1": {
-      "@type" : "Resource",
+      "@type": "CryptoResource",
       "contexts": {
         "work": true
       },
-      "type": "uri",
-      "label": "key",
-      "resource": "http://www.example.com/joe.user/joe.asc"
-    },
-    "URI-1": {
-      "@type" : "Resource",
+      "uri": "http://www.example.com/joe.user/joe.asc"
+    }
+  },
+  "links": {
+    "LINK-1": {
+      "@type" : "LinkResource",
       "contexts": {"private": true},
-      "type": "uri",
-      "label": "url",
-      "resource": "http://example.org"
+      "uri": "http://example.org"
     }
   }
 }

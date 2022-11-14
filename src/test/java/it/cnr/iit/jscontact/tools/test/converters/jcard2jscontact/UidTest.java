@@ -24,25 +24,25 @@ import static org.junit.Assert.*;
 public class UidTest extends JCard2JSContactTest {
 
     @Test
-    public void testUidValid1() throws CardException {
+    public void testUid1() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"] " +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testUidValid1 - 1", jsCard.getUid());
+        assertNotNull("testUid1 - 1", jsCard.getUid());
 
     }
 
     @Test
-    public void testUidValid2() throws CardException {
+    public void testUid2() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"uid\", {}, \"text\", \"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testUidValid2 - 1", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
+        assertEquals("testUid2 - 1", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
 
     }
 

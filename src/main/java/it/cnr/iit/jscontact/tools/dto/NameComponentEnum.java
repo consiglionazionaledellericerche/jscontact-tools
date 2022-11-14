@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensible;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
@@ -28,11 +28,11 @@ import lombok.AllArgsConstructor;
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum NameComponentEnum implements IsExtensible {
+public enum NameComponentEnum implements IsExtensibleEnum {
 
     SURNAME("surname"),
-    PERSONAL("personal"),
-    ADDITIONAL("additional"),
+    GIVEN("given"),
+    MIDDLE("middle"),
     PREFIX("prefix"),
     SUFFIX("suffix"),
     SEPARATOR("separator");

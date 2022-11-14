@@ -39,7 +39,7 @@ public class AddressContextsSerializer extends JsonSerializer<Map<AddressContext
 
         jgen.writeStartObject();
         for (Map.Entry<AddressContext,Boolean> entry : contexts.entrySet())
-            jgen.writeBooleanField((entry.getKey().getRfcValue()!=null) ? entry.getKey().getRfcValue().getValue() : entry.getKey().getExtValue(), entry.getValue());
+            jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());
         jgen.writeEndObject();
 
     }

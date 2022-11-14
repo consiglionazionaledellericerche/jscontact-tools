@@ -1,5 +1,6 @@
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -8,24 +9,27 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneFeaturesDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.PhoneFeaturesSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class mapping the Phone type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the Phone type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","phone","features","contexts","pref","label"})
@@ -34,7 +38,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Phone extends GroupableObject implements IdMapValue, Serializable, HasContext {
+public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
     @NotNull
     @Pattern(regexp = "Phone", message="invalid @type value in Phone")
@@ -66,7 +70,15 @@ public class Phone extends GroupableObject implements IdMapValue, Serializable, 
 
     String label;
 
-    private boolean asFeature(PhoneFeature feature) { return features != null && features.containsKey(feature); }
+    /**
+     * Tests if the pheature of this phone is undefined.
+     *
+     * @return true if the features map is empty, false otherwise
+     */
+    public boolean hasNoFeature() { return features == null || features.size() ==  0; }
+
+
+    private boolean asFeature(PhoneFeature feature) { return !hasNoFeature() && features.containsKey(feature); }
     /**
      * Tests if this phone number is for calling by voice.
      *
@@ -116,5 +128,36 @@ public class Phone extends GroupableObject implements IdMapValue, Serializable, 
      * @return true if this phone number supports a custom purpose, false otherwise
      */
     public boolean asExt(String extValue) { return asFeature(PhoneFeature.ext(extValue)); }
+
+    /**
+     * Adds a phone feature to this object.
+     *
+     * @param feature the phone feature
+     */
+    public void addFeature(PhoneFeature feature) {
+        Map<PhoneFeature,Boolean> clone = new HashMap<>();
+        clone.putAll(features);
+        clone.put(feature,Boolean.TRUE);
+        setFeatures(clone);
+    }
+
+
+    /**
+     * This method will be used to get the extended features in the "features" property.
+     *
+     * @return the extended features in the "features" property
+     */
+    @JsonIgnore
+    public PhoneFeature[] getExtPhoneFeatures() {
+        if (getFeatures() == null)
+            return null;
+        PhoneFeature[] extended = null;
+        for(PhoneFeature feature : getFeatures().keySet()) {
+            if (feature.isExtValue())
+                extended = ArrayUtils.add(extended, feature);
+        }
+
+        return extended;
+    }
 
 }

@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the PropertyGroup type as defined in section 2.6.6 of [draft-ietf-calext-jscontact].
+ * Class mapping the PropertyGroup type as defined in section 2.x.x of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.6">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.x.x">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","label","members"})
@@ -35,7 +35,6 @@ public class PropertyGroup implements Serializable {
 
     @NotNull(message = "members is missing in PropertyGroup")
     @NonNull
-    @JsonPropertyOrder(alphabetic = true)
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in PropertyGroup - Only Boolean.TRUE allowed")
     Map<String,Boolean> members;
 

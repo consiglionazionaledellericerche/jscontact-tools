@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.StreetComponentEnum;
 import it.cnr.iit.jscontact.tools.dto.StreetComponentType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class StreetComponentTypeDeserializer extends JsonDeserializer<StreetComp
         try {
             return StreetComponentType.builder().rfcValue(StreetComponentEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return StreetComponentType.builder().extValue(value).build();
+            return StreetComponentType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

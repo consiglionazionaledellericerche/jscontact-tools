@@ -31,18 +31,22 @@ import lombok.Data;
 public class VCard2JSContactConfig {
 
     @Builder.Default
-    private String extensionsPrefix = "extension:";
-    @Builder.Default
     private String customTimeZonesPrefix = "tz";
     @Builder.Default
-    private boolean cardToValidate = true;
+    private boolean setCardMustBeValidated = true;
     @Builder.Default
-    private boolean applyAutoIdsProfile = true;
+    private boolean setAutoIdsProfile = true;
     @Builder.Default
-    private boolean applyPropIds = false;
+    private boolean setUsePropIds = false;
+    @Builder.Default
+    private boolean setAutoFullAddress = true;
+    @Builder.Default
+    private boolean setVoiceAsDefaultPhoneFeature = true;
+    @Builder.Default
+    private boolean convertGenderToSpeakToAs = true; //ignored if GRAMMATICAL-GENDER is present
 
     private String defaultLanguage;
 
-    private VCard2JSContactIdsProfile idsProfileToApply;
+    private VCard2JSContactIdsProfile idsProfileToUse;
 
 }

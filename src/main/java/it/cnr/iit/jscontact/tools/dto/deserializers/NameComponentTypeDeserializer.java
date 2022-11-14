@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
 import it.cnr.iit.jscontact.tools.dto.NameComponentType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class NameComponentTypeDeserializer extends JsonDeserializer<NameComponen
         try {
             return NameComponentType.builder().rfcValue(NameComponentEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return NameComponentType.builder().extValue(value).build();
+            return NameComponentType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

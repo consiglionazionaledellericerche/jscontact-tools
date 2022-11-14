@@ -35,6 +35,7 @@ import java.util.List;
 @Builder
 public class JCardValidator extends EZVCardValidator {
 
+    private static ObjectMapper mapper = new ObjectMapper();
     /**
      * Validates a complete vCard v4.0 in JSON format, namely jCard [RFC7095].
      *
@@ -59,7 +60,6 @@ public class JCardValidator extends EZVCardValidator {
      */
     public void validate(JsonNode jCard) throws CardException, JsonProcessingException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        validate(objectMapper.writeValueAsString(jCard));
+        validate(mapper.writeValueAsString(jCard));
     }
 }

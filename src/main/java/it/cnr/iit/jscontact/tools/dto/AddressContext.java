@@ -28,9 +28,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class mapping the keys of "contexts" map of the Address type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the keys of "contexts" map of the Address type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @Getter
@@ -38,9 +38,8 @@ import java.util.List;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class AddressContext extends ExtensibleEnum<AddressContextEnum> implements Serializable {
+public class AddressContext extends ExtensibleEnumType<AddressContextEnum> implements Serializable {
 
-    private boolean isRfc(AddressContextEnum value) { return isRfcValue() && rfcValue == value; }
     /**
      * Tests if this is a "private" address context.
      *
@@ -69,13 +68,7 @@ public class AddressContext extends ExtensibleEnum<AddressContextEnum> implement
      */
     @JsonIgnore
     public boolean isBilling() { return isRfc(AddressContextEnum.BILLING); }
-    /**
-     * Tests if this is a custom address context.
-     *
-     * @return true if this is a custom address context, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
+
     /**
      * Returns an address context whose enum value is pre-defined.
      *
@@ -113,7 +106,7 @@ public class AddressContext extends ExtensibleEnum<AddressContextEnum> implement
      * @param extValue the custom address context in text format
      * @return a custom address context
      */
-    public static AddressContext ext(String extValue) { return AddressContext.builder().extValue(extValue).build(); }
+    public static AddressContext ext(String extValue) { return AddressContext.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
     /**
      * Returns the list of enum values corresponding to those whose type is known in a given collection of address contexts.

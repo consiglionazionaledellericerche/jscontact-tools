@@ -32,9 +32,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
-
-    private boolean isRfc(KindEnum value) { return isRfcValue() && rfcValue == value; }
+public class KindType extends ExtensibleEnumType<KindEnum> implements Serializable {
 
     /**
      * Tests if this kind of contact card is "individual". See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
@@ -90,13 +88,6 @@ public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
     @JsonIgnore
     public boolean isLocation() { return isRfc(KindEnum.LOCATION); }
 
-    /**
-     * Tests if this is a custom kind of contact card.
-     *
-     * @return true if this is a custom kind of contact card, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
 
     private static KindType rfc(KindEnum rfcValue) { return KindType.builder().rfcValue(rfcValue).build(); }
 
@@ -153,5 +144,5 @@ public class KindType extends ExtensibleEnum<KindEnum> implements Serializable {
      *
      * @return a custom kind of contact card
      */
-    private static KindType ext(String extValue) { return KindType.builder().extValue(extValue).build(); }
+    private static KindType ext(String extValue) { return KindType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

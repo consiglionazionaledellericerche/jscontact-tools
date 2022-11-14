@@ -28,9 +28,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class mapping the keys of "features" map of the Phone type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the keys of "features" map of the Phone type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @Getter
@@ -38,9 +38,8 @@ import java.util.List;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Serializable {
+public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implements Serializable {
 
-    private boolean isRfc(PhoneFeatureEnum value) { return isRfcValue() && rfcValue == value; }
     /**
      * Tests if this is a "voice" phone feature.
      *
@@ -90,13 +89,7 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
      */
     @JsonIgnore
     public boolean isTextphone() { return isRfc(PhoneFeatureEnum.TEXTPHONE); }
-    /**
-     * Tests if this is a custom phone feature.
-     *
-     * @return true if this is a custom phone feature, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExt() { return isExtValue(); }
+
     /**
      * Returns a phone feature whose enum value is pre-defined.
      *
@@ -152,7 +145,7 @@ public class PhoneFeature extends ExtensibleEnum<PhoneFeatureEnum> implements Se
      * @param extValue the custom phone feature in text format
      * @return a custom phone feature
      */
-    public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(extValue).build(); }
+    public static PhoneFeature ext(String extValue) { return PhoneFeature.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
     /**
      * Returns the list of enum values corresponding to those whose type is known in a given collection of phone features.

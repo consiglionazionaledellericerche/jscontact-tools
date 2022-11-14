@@ -33,7 +33,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class RelationType extends ExtensibleEnum<RelationEnum> implements Serializable {
+public class RelationType extends ExtensibleEnumType<RelationEnum> implements Serializable {
 
     private boolean isRfcRelation(RelationEnum value) { return rfcValue != null && rfcValue == value; }
     /**
@@ -319,6 +319,6 @@ public class RelationType extends ExtensibleEnum<RelationEnum> implements Serial
      * @param extValue the custom relation type
      * @return a custom relation type
      */
-    public static RelationType extRelation(String extValue) { return RelationType.builder().extValue(extValue).build(); }
+    public static RelationType extRelation(String extValue) { return RelationType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
 }

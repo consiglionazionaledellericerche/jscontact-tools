@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.ContextEnum;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class ContextsDeserializer extends JsonDeserializer<Map<Context,Boolean>>
             try {
                 context = Context.builder().rfcValue(ContextEnum.getEnum(type)).build();
             } catch (IllegalArgumentException e) {
-                context = Context.builder().extValue(type).build();
+                context = Context.builder().extValue(V_Extension.toV_Extension(type)).build();
             }
             contexts.put(context,value);
         }

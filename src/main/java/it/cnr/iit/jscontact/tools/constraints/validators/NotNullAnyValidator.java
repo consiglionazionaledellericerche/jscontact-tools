@@ -18,10 +18,15 @@ package it.cnr.iit.jscontact.tools.constraints.validators;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import org.apache.commons.beanutils.PropertyUtils;
 
+import java.util.Map;
+
 public class NotNullAnyValidator implements ConstraintValidator<NotNullAnyConstraint, Object> {
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     private String[] fieldNames;
 
@@ -38,8 +43,15 @@ public class NotNullAnyValidator implements ConstraintValidator<NotNullAnyConstr
 
             for (String fieldName:fieldNames){
                 Object property = PropertyUtils.getProperty(object, fieldName);
-
-                if (property!=null) return true;
+                if (property!=null) {
+                    try {
+                        Map<String, Object> map = mapper.convertValue(property, Map.class);
+                        if (!map.isEmpty())
+                            return true;
+                    } catch(IllegalArgumentException e) {
+                        return true;
+                    }
+                }
             }
 
             return false;

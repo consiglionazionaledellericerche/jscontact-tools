@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.NameComponentTypeSerializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -43,7 +42,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NameComponent extends GroupableObject implements Serializable {
+public class NameComponent extends AbstractJSContactType implements HasType, Serializable {
 
     @NotNull
     @Pattern(regexp = "NameComponent", message="invalid @type value in NameComponent")
@@ -53,7 +52,6 @@ public class NameComponent extends GroupableObject implements Serializable {
 
     @NotNull(message = "type is missing in NameComponent")
     @NonNull
-    @JsonSerialize(using = NameComponentTypeSerializer.class)
     @JsonDeserialize(using = NameComponentTypeDeserializer.class)
     NameComponentType type;
 
@@ -74,12 +72,12 @@ public class NameComponent extends GroupableObject implements Serializable {
     @JsonIgnore
     public boolean isPrefix() { return isRfc(NameComponentEnum.PREFIX); }
     /**
-     * Tests if this is a personal name.
+     * Tests if this is a given name.
      *
-     * @return true if this is a personal name, false otherwise
+     * @return true if this is a given name, false otherwise
      */
     @JsonIgnore
-    public boolean isPersonal() { return isRfc(NameComponentEnum.PERSONAL); }
+    public boolean isGiven() { return isRfc(NameComponentEnum.GIVEN); }
     /**
      * Tests if this is the surname.
      *
@@ -88,12 +86,12 @@ public class NameComponent extends GroupableObject implements Serializable {
     @JsonIgnore
     public boolean isSurname() { return isRfc(NameComponentEnum.SURNAME); }
     /**
-     * Tests if this is an additional name.
+     * Tests if this is a middle name.
      *
-     * @return true if this is an additional name, false otherwise
+     * @return true if this is a middle name, false otherwise
      */
     @JsonIgnore
-    public boolean isAdditional() { return isRfc(NameComponentEnum.ADDITIONAL); }
+    public boolean isMiddle() { return isRfc(NameComponentEnum.MIDDLE); }
     /**
      * Tests if this is a suffix.
      *
@@ -130,12 +128,12 @@ public class NameComponent extends GroupableObject implements Serializable {
      */
     public static NameComponent prefix(String value) {return rfc(NameComponentEnum.PREFIX, value);}
     /**
-     * Returns a personal name component of a name.
+     * Returns a given name component of a name.
      *
-     * @param value the personal name
-     * @return the personal name  component
+     * @param value the given name
+     * @return the given name  component
      */
-    public static NameComponent personal(String value) {return rfc(NameComponentEnum.PERSONAL, value);}
+    public static NameComponent given(String value) {return rfc(NameComponentEnum.GIVEN, value);}
     /**
      * Returns a surname component of a name.
      *
@@ -146,10 +144,10 @@ public class NameComponent extends GroupableObject implements Serializable {
     /**
      * Returns an additional name component of a name.
      *
-     * @param value the additional name
-     * @return the additional name  component
+     * @param value the middle name
+     * @return the middle name  component
      */
-    public static NameComponent additional(String value) {return rfc(NameComponentEnum.ADDITIONAL, value);}
+    public static NameComponent middle(String value) {return rfc(NameComponentEnum.MIDDLE, value);}
     /**
      * Returns a suffix name component of a name.
      *
@@ -174,7 +172,7 @@ public class NameComponent extends GroupableObject implements Serializable {
     public static NameComponent ext(String extValue, String value) {
         return NameComponent.builder()
                 .value(value)
-                .type(NameComponentType.builder().extValue(extValue).build())
+                .type(NameComponentType.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
     }
 

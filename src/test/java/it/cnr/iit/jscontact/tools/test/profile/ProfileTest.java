@@ -38,8 +38,8 @@ public class ProfileTest extends JCard2JSContactTest {
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                                                          .config(VCard2JSContactConfig.builder()
-                                                                                      .applyAutoIdsProfile(false)
-                                                                                      .idsProfileToApply(VCard2JSContactIdsProfile.RDAP_PROFILE)
+                                                                                      .setAutoIdsProfile(false)
+                                                                                      .idsProfileToUse(VCard2JSContactIdsProfile.RDAP_PROFILE)
                                                                                       .build())
                                                          .build();
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), StandardCharsets.UTF_8);
@@ -47,7 +47,7 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 1", "Joe User", jsCard.getFullName());
         assertTrue("testRDAPProfile - 2", jsCard.getKind().isIndividual());
         assertEquals("testRDAPProfile - 3", 4, jsCard.getName().getComponents().length);
-        assertTrue("testRDAPProfile - 4", jsCard.getName().getComponents()[0].isPersonal());
+        assertTrue("testRDAPProfile - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testRDAPProfile - 5", "Joe", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testRDAPProfile - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testRDAPProfile - 7", "User", jsCard.getName().getComponents()[1].getValue());
@@ -55,9 +55,9 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testRDAPProfile - 10", jsCard.getName().getComponents()[3].isSuffix());
         assertEquals("testRDAPProfile - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
-        assertEquals("testRDAPProfile - 12", 2, jsCard.getPreferredContactLanguages().size());
-        assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredContactLanguages().get("fr")[0].getPref());
-        assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredContactLanguages().get("en")[0].getPref());
+        assertEquals("testRDAPProfile - 12", 2, jsCard.getPreferredLanguages().size());
+        assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
+        assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testRDAPProfile - 15", "Example", jsCard.getOrganizations().get("org").getName());
         assertEquals("testRDAPProfile - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
         assertEquals("testRDAPProfile - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());
@@ -87,15 +87,15 @@ public class ProfileTest extends JCard2JSContactTest {
         assertTrue("testRDAPProfile - 42", jsCard.getPhones().get("fax").asCell());
         assertTrue("testRDAPProfile - 43", jsCard.getPhones().get("fax").asVideo());
         assertTrue("testRDAPProfile - 44", jsCard.getPhones().get("fax").asText());
-        assertEquals("testRDAPProfile - 45", 2, jsCard.getResources().size());
-        assertTrue("testRDAPProfile - 46", jsCard.getResources().get("KEY-1").isPublicKey());
-        assertEquals("testRDAPProfile - 47", "http://www.example.com/joe.user/joe.asc", jsCard.getResources().get("KEY-1").getResource());
-        assertNull("testRDAPProfile - 48", jsCard.getResources().get("KEY-1").getPref());
-        assertTrue("testRDAPProfile - 49", jsCard.getResources().get("KEY-1").asWork());
-        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getResources().get("URI-1").getResource());
-        assertNull("testRDAPProfile - 51", jsCard.getResources().get("URI-1").getPref());
-        assertTrue("testRDAPProfile - 52", jsCard.getResources().get("URI-1").asPrivate());
-        assertTrue("testRDAPProfile - 53", jsCard.getResources().get("URI-1").isUri());
+        assertEquals("testRDAPProfile - 45", 1, jsCard.getCryptoKeys().size());
+        assertEquals("testRDAPProfile - 46", "http://www.example.com/joe.user/joe.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
+        assertNull("testRDAPProfile - 47", jsCard.getCryptoKeys().get("KEY-1").getPref());
+        assertTrue("testRDAPProfile - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
+        assertEquals("testRDAPProfile - 45", 1, jsCard.getLinks().size());
+        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getLinks().get("LINK-1").getUri());
+        assertNull("testRDAPProfile - 51", jsCard.getLinks().get("LINK-1").getPref());
+        assertTrue("testRDAPProfile - 52", jsCard.getLinks().get("LINK-1").asPrivate());
+        assertTrue("testRDAPProfile - 53", jsCard.getLinks().get("LINK-1").isGenericLink());
         assertTrue("testRDAPProfile - 54", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }

@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -24,47 +23,38 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
-import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Resource type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the Resource type as defined in section 1.4.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.4.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @ResourceConstraint
-@JsonPropertyOrder({"@type","resource","type","mediaType","contexts","pref","label"})
+@JsonPropertyOrder({"@type","uri","type","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource extends GroupableObject implements HasIndex, Comparable<Resource>, IdMapValue, Serializable, HasContext {
+public class Resource extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
-    @NotNull
-    @Pattern(regexp = "Resource", message="invalid @type value in Resource")
-    @JsonProperty("@type")
-    @Builder.Default
-    String _type = "Resource";
-
-    @NotNull(message = "resource is missing in Resource")
+    @NotNull(message = "uri is missing in Resource")
     @NonNull
-    String resource;
-
-    ResourceType type;
+    @JsonProperty("uri")
+    String uri;
 
     String mediaType;
 
@@ -80,179 +70,5 @@ public class Resource extends GroupableObject implements HasIndex, Comparable<Re
     Integer pref;
 
     String label;
-
-    @JsonIgnore
-    Integer index;
-
-    /**
-     * Compares this resource with another based on the value of the "index" property.
-     *
-     * @param o the object this object must be compared with
-     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
-     */
-    @Override
-    public int compareTo(Resource o) {
-
-        return HasIndexUtils.compareTo(this, o);
-    }
-
-    /**
-     * Tests if this is resource is an uri.
-     *
-     * @return true if this resource is an uri, false otherwise
-     */
-    @JsonIgnore
-    public boolean isUri() { return type == ResourceType.URI; }
-
-    @JsonIgnore
-    private boolean isResource(ResourceType type) { return this.type == type; }
-
-    @JsonIgnore
-    private boolean isResource(ResourceType type, String label) { return this.type == type && this.label.equals(label);}
-
-    /**
-     * Tests if this resource maps a vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
-     *
-     * @return true if this resource maps a vCard 4.0 CALURI property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public boolean isCalendar() { return isResource(ResourceType.CALURI); }
-    /**
-     * Tests if this resource maps a vCard 4.0 CONTACT-URI property as defined in section 2.1 of [RFC8605].
-     *
-     * @return true if this resource maps a vCard 4.0 CONTACT-URI property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc8605#section-2.1">RFC6350</a>
-     */
-    @JsonIgnore
-    public boolean isContactUri() { return isResource(ResourceType.CONTACT_URI); }
-    /**
-     * Tests if this resource maps a vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
-     *
-     * @return true if this resource maps a vCard 4.0 FBURL property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.1">RFC6350</a>
-     */
-    @JsonIgnore
-    public boolean isFreeBusy() { return isResource(ResourceType.FBURL); }
-    /**
-     * Tests if this resource maps a vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
-     *
-     * @return true if this resource maps a vCard 4.0 KEY property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.8.1">RFC6350</a>
-     */
-    @JsonIgnore
-    public boolean isPublicKey() { return isResource(ResourceType.KEY); }
-    /**
-     * Tests if this resource maps a vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
-     *
-     * @return true if this resource maps a vCard 4.0 LOGO property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public boolean isLogo() { return isResource(ResourceType.LOGO); }
-    /**
-     * Tests if this resource maps a vCard 4.0 ORG-DIRECTORY property as defined in section 6.2.4 of [RFC6715].
-     *
-     * @return true if this resource maps a vCard 4.0 ORG-DIRECTORY property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6715.html#section-2.4">RFC6715</a>
-     */
-    @JsonIgnore
-    public boolean isDirectory() { return isResource(ResourceType.ORG_DIRECTORY); }
-    /**
-     * Tests if this resource maps a vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
-     *
-     * @return true if this resource maps a vCard 4.0 SOUND property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.5">RFC6350</a>
-     */
-    @JsonIgnore
-    public boolean isAudio() { return isResource(ResourceType.SOUND); }
-    /**
-     * Tests if this resource maps a vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
-     *
-     * @return true if this resource maps a vCard 4.0 SOURCE property, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.1.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public boolean isDirectorySource() { return isResource(ResourceType.SOURCE); }
-
-    private static Resource resource(ResourceType type, String resource) {
-        return Resource.builder()
-                       .resource(resource)
-                       .type(type)
-                       .build();
-    }
-    /**
-     * Returns a resource mapping a vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.3">RFC6350</a>
-     */
-    public static Resource caluri(String resource) { return resource(ResourceType.CALURI, resource);}
-    /**
-     * Returns a resource mapping a vCard 4.0 CONTACT-URI property as defined in section 2.1 of [RFC8605].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc8605#section-2.1">RFC6350</a>
-     */
-    public static Resource contactUri(String resource) { return resource(ResourceType.CONTACT_URI, resource);}
-    /**
-     * Returns a resource mapping a vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.9.1">RFC6350</a>
-     */
-    public static Resource fburl(String resource) { return resource(ResourceType.FBURL, resource);}
-
-    /**
-     * Returns a resource mapping a vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.8.1">RFC6350</a>
-     */
-    public static Resource key(String resource) { return resource(ResourceType.KEY, resource);}
-    /**
-     * Returns a resource mapping a vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.3">RFC6350</a>
-     */
-    public static Resource logo(String resource) { return resource(ResourceType.LOGO, resource);}
-    /**
-     * Returns a resource mapping a vCard 4.0 ORG-DIRECTORY property as defined in section 6.2.4 of [RFC6715].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6715.html#section-2.4">RFC6715</a>
-     */
-    public static Resource orgDirectory(String resource) { return resource(ResourceType.ORG_DIRECTORY, resource);}
-    /**
-     * Returns a resource mapping a vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.5">RFC6350</a>
-     */
-    public static Resource sound(String resource) { return resource(ResourceType.SOUND, resource);}
-    /**
-     * Returns a resource mapping a vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.1.3">RFC6350</a>
-     */
-    public static Resource source(String resource) { return resource(ResourceType.SOURCE, resource);}
-    /**
-     * Returns a resource mapping a vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
-     *
-     * @param resource resource identifier
-     * @return the resource
-     * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.7.8">RFC6350</a>
-     */
-    public static Resource url(String resource) { return resource(ResourceType.URI, resource);}
 
 }

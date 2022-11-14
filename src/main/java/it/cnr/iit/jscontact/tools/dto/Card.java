@@ -17,19 +17,20 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.JsonPointer;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
+import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
+import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.KindTypeSerializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -51,10 +52,12 @@ import java.util.*;
 @JsonPropertyOrder({
         "@type","uid","prodId","created","updated","kind","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
-        "emails","phones","onlineServices","resources","scheduling","photos","preferredContactMethod","preferredContactLanguages",
-        "addresses","localizations",
-        "anniversaries","personalInfo","notes","categpories","timeZones","propertyGroups",
-        "extensions"})
+        "emails","onlineServices","phones","preferredContactChannels","preferredLanguages",
+        "calendars","schedulingAddresses",
+        "addresses",
+        "cryptoKeys","directories","links","media",
+        "localizations",
+        "anniversaries","personalInfo","notes","keywords","ietf.org:rfc0000:props"})
 @TitleOrganizationConstraint
 @CardKindConstraint(groups = CardConstraintsGroup.class)
 @LocalizationsConstraint
@@ -65,7 +68,9 @@ import java.util.*;
 @SuperBuilder
 public class Card extends JSContact implements Serializable {
 
-    //Metadata properties
+    /*
+    Metadata properties
+     */
     @NotNull
     @Pattern(regexp = "Card", message="invalid @type value in Card")
     @JsonProperty("@type")
@@ -82,10 +87,10 @@ public class Card extends JSContact implements Serializable {
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar updated;
 
-    @JsonSerialize(using = KindTypeSerializer.class)
     @JsonDeserialize(using = KindTypeDeserializer.class)
     KindType kind;
 
+    @JSContactCollection(addMethod = "addRelation")
     @JsonPropertyOrder(alphabetic = true)
     @RelatedToConstraint
     Map<String,Relation> relatedTo;
@@ -93,19 +98,28 @@ public class Card extends JSContact implements Serializable {
     @LanguageTagConstraint
     String locale;
 
-    //Name and Organization properties
+
+    /*
+    Name and Organization properties
+     */
     @Valid
     Name name;
 
     String fullName;
 
-    String[] nickNames;
+    @JSContactCollection(addMethod = "addNickName")
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,NickName>")
+    Map<String,NickName> nickNames;
 
+    @JSContactCollection(addMethod = "addOrganization")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
     Map<String,Organization> organizations;
 
+    @JSContactCollection(addMethod = "addTitle")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
@@ -114,106 +128,123 @@ public class Card extends JSContact implements Serializable {
     @Valid
     SpeakToAs speakToAs;
 
-    //Contact and Resource properties
+
+    /*
+    Contact and Resource properties
+     */
+    @JSContactCollection(addMethod = "addEmail")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     Map<String,EmailAddress> emails;
 
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
-    Map<String,Phone> phones;
-
+    @JSContactCollection(addMethod = "addOnlineService")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,OnlineService>")
     Map<String,OnlineService> onlineServices;
 
+    @JSContactCollection(addMethod = "addPhone")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Resource>")
-    Map<String,Resource> resources;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
+    Map<String,Phone> phones;
 
+    @JSContactCollection(addMethod = "addContactChannelPreference")
+    @JsonPropertyOrder(alphabetic = true)
+    @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
+    @JsonDeserialize(keyUsing = ContactChannelsKeyDeserializer.class)
+    @PreferredContactChannelsConstraint
+    Map<ChannelType,ContactChannelPreference[]> preferredContactChannels;
+
+    @JSContactCollection(addMethod = "addLanguagePreference")
+    @JsonPropertyOrder(alphabetic = true)
+    @PreferredLanguagesConstraint
+    Map<String, LanguagePreference[]> preferredLanguages;
+
+
+    /*
+     Calendaring and Scheduling properties
+     */
+    @JSContactCollection(addMethod = "addCalendar")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Scheduling>")
-    Map<String,Scheduling> scheduling;
+    @IdMapConstraint(message = "invalid Id in Map<Id,CalendarResource>")
+    Map<String,CalendarResource> calendars;
 
+    @JSContactCollection(addMethod = "addSchedulingAddress")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,File>")
-    Map<String,File> photos;
+    @IdMapConstraint(message = "invalid Id in Map<Id,SchedulingAddress>")
+    Map<String, SchedulingAddress> schedulingAddresses;
 
-    PreferredContactMethodType preferredContactMethod;
 
-    @JsonPropertyOrder(alphabetic = true)
-    @PreferredContactLanguagesConstraint
-    Map<String, ContactLanguage[]> preferredContactLanguages;
-
-    //Address and Location properties
+    /*
+    Address and Location properties
+     */
+    @JSContactCollection(addMethod = "addAddress")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
     Map<String,Address> addresses;
 
+    /*
+    Resource properties
+     */
+    @JSContactCollection(addMethod = "addCryptoResource")
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,CryptoResource>")
+    Map<String,CryptoResource> cryptoKeys;
+
+    @JSContactCollection(addMethod = "addDirectoryResource")
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,DirectoryResource>")
+    Map<String,DirectoryResource> directories;
+
+    @JSContactCollection(addMethod = "addLinkResource")
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,LinkResource>")
+    Map<String,LinkResource> links;
+
+    @JSContactCollection(addMethod = "addMediaResource")
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,MediaResource>")
+    Map<String,MediaResource> media;
+
+
+    /*
+    Multilingual properties
+     */
     @JsonPropertyOrder(alphabetic = true)
     Map<String,Map<String,JsonNode>> localizations;
 
-    //Additional properties
+
+    /*
+    Additional properties
+     */
+    @JSContactCollection(addMethod = "addAnniversary")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Anniversary>")
     Map<String,Anniversary> anniversaries;
 
+    @JSContactCollection(addMethod = "addPersonalInfo")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
     Map<String,PersonalInformation> personalInfo;
 
-    String notes;
+    Note[] notes;
 
-    @JsonPropertyOrder(alphabetic = true)
-    @BooleanMapConstraint(message = "invalid Map<String,Boolean> categories in JSContact - Only Boolean.TRUE allowed")
-    Map<String,Boolean> categories;
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
+    Map<String,Boolean> keywords;
 
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    Map<String,TimeZone> timeZones;
-
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @GroupKeyConstraint(message = "invalid group key in Map<String,PropertyGroup>")
-    Map<String,PropertyGroup> propertyGroups;
-
-    @JsonPropertyOrder(alphabetic = true)
-    Map<String,String> extensions;
-
-    private boolean isContactByMethodPreferred(PreferredContactMethodType method) {return preferredContactMethod != null && preferredContactMethod == method; }
-
-    /**
-     * Tests if the preferred contact method is by emails.
-     *
-     * @return true if the preferred contact method is by emails, false otherwise
-     */
     @JsonIgnore
-    public boolean isContactByEmailsPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.EMAILS); }
-
-    /**
-     * Tests if the preferred contact method is by phones.
-     *
-     * @return true if the preferred contact method is by phones, false otherwise
-     */
-    @JsonIgnore
-    public boolean isContactByPhonesPreferred() {return isContactByMethodPreferred(PreferredContactMethodType.PHONES); }
-
-    /**
-     * Tests if the preferred contact method is by online service.
-     *
-     * @return true if the preferred contact method is by online service, false otherwise
-     */
-    @JsonIgnore
-    public boolean isContactByOnlinePreferred() {return isContactByMethodPreferred(PreferredContactMethodType.ONLINE); }
+    Map<String,TimeZone> customTimeZones;
 
 //Methods for adding items to a mutable collection
 
@@ -241,23 +272,32 @@ public class Card extends JSContact implements Serializable {
                         .build());
         }
         else {
-            Map<RelationType, Boolean> map = relationPerKey.getRelation();
-            map.put(relType, Boolean.TRUE);
-            relatedTo.replace(key, Relation.builder()
-                    .relation(map)
-                    .build());
+            if (relType == null)
+                relatedTo.put(key, Relation.builder().build());
+            else {
+                Map<RelationType, Boolean> map = new HashMap<>();
+                map.putAll(relationPerKey.getRelation());
+                map.put(relType, Boolean.TRUE);
+                relatedTo.replace(key, Relation.builder()
+                        .relation(map)
+                        .build());
+            }
         }
     }
 
     /**
      * Adds a nickname to this object.
      *
-     * @param nickName the nickname
+     * @param id the nickname identifier
+     * @param nickName the object representing the nickname
      */
-    public void addNickName(String nickName) {
-        nickNames = ArrayUtils.add(nickNames, nickName);
-    }
+    public void addNickName(String id, NickName nickName) {
 
+        if(nickNames == null)
+            nickNames = new HashMap<>();
+
+        nickNames.putIfAbsent(id,nickName);
+    }
     /**
      * Adds an organization to this object.
      *
@@ -301,17 +341,17 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds a calendar scheduling to this object.
+     * Adds a scheduling address to this object.
      *
-     * @param id the calendar scheduling identifier
-     * @param scheduling the object representing the calendar scheduling
+     * @param id the scheduling address identifier
+     * @param scheduling the object representing the scheduling address
      */
-    public void addScheduling(String id, Scheduling scheduling) {
+    public void addSchedulingAddress(String id, SchedulingAddress scheduling) {
 
-        if (this.scheduling == null)
-            this.scheduling = new HashMap<>();
+        if (this.schedulingAddresses == null)
+            this.schedulingAddresses = new HashMap<>();
 
-        this.scheduling.putIfAbsent(id, scheduling);
+        this.schedulingAddresses.putIfAbsent(id, scheduling);
     }
 
     /**
@@ -343,204 +383,122 @@ public class Card extends JSContact implements Serializable {
     }
 
     /**
-     * Adds a property JSONPointer to the members of a group identfied by a group id.
+     * Adds a directory resource to this object.
      *
-     * @param key the group key
-     * @param label the group label
-     * @param propertyJSONPointer the JSONPointer of the property included in the group
+     * @param id the directory resource identifier
+     * @param resource the object representing the directory resource
      */
-    public void addPropertyGroup(String key, String label, String propertyJSONPointer) {
+    public void addDirectoryResource(String id, DirectoryResource resource) {
 
-        if (propertyGroups == null)
-            propertyGroups = new HashMap<>();
+        if (directories == null)
+            directories = new HashMap<>();
 
-        PropertyGroup propertyGroupPerKey = propertyGroups.get(key);
-        if (propertyGroupPerKey == null) {
-            propertyGroups.put(key, PropertyGroup.builder()
-                    .members(new HashMap<String, Boolean>() {{
-                        put(propertyJSONPointer, Boolean.TRUE);
-                    }})
-                    .label(label)
-                    .build());
-        }
-        else {
-            Map<String, Boolean> map = propertyGroupPerKey.getMembers();
-            map.put(propertyJSONPointer, Boolean.TRUE);
-            propertyGroups.replace(key, PropertyGroup.builder()
-                    .members(map)
-                    .label(label)
-                    .build());
-        }
+        directories.putIfAbsent(id, resource);
     }
 
     /**
-     * Adds a property JSONPointer to the members of a group identfied by a group id.
+     * Adds a crypto resource to this object.
      *
-     * @param key the group key
-     * @param propertyJSONPointer the JSONPointer of the property included in the group
+     * @param id the crypto resource identifier
+     * @param resource the object representing the crypto resource
      */
-    public void addPropertyGroup(String key, String propertyJSONPointer) {
-        addPropertyGroup(key, null, propertyJSONPointer);
+    public void addCryptoResource(String id, CryptoResource resource) {
+
+        if (cryptoKeys == null)
+            cryptoKeys = new HashMap<>();
+
+        cryptoKeys.putIfAbsent(id, resource);
     }
 
 
     /**
-     * Adds a resource to this object.
+     * Adds a calendar resource to this object.
      *
-     * @param id the resource identifier
-     * @param resource the object representing the online resource
+     * @param id the calendar resource identifier
+     * @param resource the object representing the calendar resource
      */
-    public void addResource(String id, Resource resource) {
+    public void addCalendarResource(String id, CalendarResource resource) {
 
-        if (resources == null)
-            resources = new HashMap<>();
+        if (calendars == null)
+            calendars = new HashMap<>();
 
-        resources.putIfAbsent(id, resource);
-    }
-
-    @JsonIgnore
-    private Map<String,Resource> getResources(ResourceType type) {
-
-        Map<String,Resource> ols = new HashMap<>();
-        for (Map.Entry<String,Resource> ol : resources.entrySet()) {
-            if (ol.getValue().getType() == type)
-                ols.put(ol.getKey(), ol.getValue());
-        }
-        if (ols.size()==0)
-            return null;
-
-        return ols;
+        calendars.putIfAbsent(id, resource);
     }
 
     /**
-     * Returns all the resources associated to this object mapping the vCard 4.0 KEY property as defined in section 6.8.1 of [RFC6350].
+     * Adds a link resource to this object.
      *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.8.1">RFC6350</a>
+     * @param id the link resource identifier
+     * @param resource the object representing the link resource
      */
-    @JsonIgnore
-    public Map<String,Resource> getKeyResources() {
-        return getResources(ResourceType.KEY);
+    public void addLinkResource(String id, LinkResource resource) {
+
+        if (links == null)
+            links = new HashMap<>();
+
+        links.putIfAbsent(id, resource);
+    }
+
+
+    /**
+     * Adds a media resource to this object.
+     *
+     * @param id the media resource identifier
+     * @param resource the object representing the media resource
+     */
+    public void addMediaResource(String id, MediaResource resource) {
+
+        if (media == null)
+            media = new HashMap<>();
+
+        media.putIfAbsent(id, resource);
     }
 
     /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 URL property as defined in section 6.7.8 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.8">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getUrlResources() {
-        return getResources(ResourceType.URI);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 SOURCE property as defined in section 6.1.3 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getSourceResources() {
-        return getResources(ResourceType.SOURCE);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 LOGO property as defined in section 6.6.3 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.6.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getLogoResources() {
-        return getResources(ResourceType.LOGO);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 SOUND property as defined in section 6.7.5 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.7.5">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getSoundResources() {
-        return getResources(ResourceType.SOUND);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 FBURL property as defined in section 6.9.1 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.1">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getFburlResources() {
-        return getResources(ResourceType.FBURL);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 CALURI property as defined in section 6.9.3 of [RFC6350].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.9.3">RFC6350</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getCaluriResources() {
-        return getResources(ResourceType.CALURI);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 ORG-DIRECTORY property as defined in section 2.4 of [RFC6715].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6715.html#section-2.4">RFC6715</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getOrgDirectoryResources() {
-        return getResources(ResourceType.ORG_DIRECTORY);
-    }
-
-    /**
-     * Returns all the resources associated to this object corresponding to vCard 4.0 CONTACT-URI property as defined in section 21 of [RFC8605].
-     *
-     * @return all the resources found, null otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc8605#section-2.1">RFC8605</a>
-     */
-    @JsonIgnore
-    public Map<String,Resource> getContactUriResources() {
-        return getResources(ResourceType.CONTACT_URI);
-    }
-
-    /**
-     * Adds a photo to this object.
-     *
-     * @param id the photo identifier
-     * @param file the object representing the photo
-     */
-    public void addPhoto(String id, File file) {
-
-        if (photos == null)
-            photos = new HashMap<>();
-
-        photos.putIfAbsent(id, file);
-    }
-
-    /**
-     * Adds a contact language to this object.
+     * Adds a language preference to this object.
      *
      * @param id the contact language identifier
-     * @param contactLanguage the object representing the contact language
+     * @param languagePreference the object representing the contact language
      */
-    public void addContactLanguage(String id, ContactLanguage contactLanguage) {
+    public void addLanguagePreference(String id, LanguagePreference languagePreference) {
 
-        if (preferredContactLanguages == null)
-            preferredContactLanguages = new HashMap<>();
+        if (preferredLanguages == null)
+            preferredLanguages = new HashMap<>();
 
-        ContactLanguage[] languagesPerId = preferredContactLanguages.get(id);
-        if (languagesPerId == null)
-            preferredContactLanguages.put(id, new ContactLanguage[] {contactLanguage});
+        LanguagePreference[] languagesPerId = preferredLanguages.get(id);
+        LanguagePreference[] languages;
+        if (languagePreference == null)
+            languages = new LanguagePreference[]{};
         else
-            preferredContactLanguages.put(id, ArrayUtils.add(languagesPerId, contactLanguage));
+            languages = new LanguagePreference[] {languagePreference};
+        if (languagesPerId == null)
+            preferredLanguages.put(id, languages);
+        else
+            preferredLanguages.put(id, ArrayUtils.addAll(languagesPerId, languages));
+    }
+
+    /**
+     * Adds a contact channel preference to this object.
+     *
+     * @param id the contact channel preference identifier
+     * @param contactChannelPreference the object representing the contact channel preference
+     */
+    public void addContactChannelPreference(ChannelType id, ContactChannelPreference contactChannelPreference) {
+
+        if (preferredContactChannels == null)
+            preferredContactChannels = new HashMap<>();
+
+        ContactChannelPreference[] contactChannelsPerId = preferredContactChannels.get(id);
+
+        ContactChannelPreference[] channels;
+        if (contactChannelPreference == null)
+            channels = new ContactChannelPreference[]{};
+        else
+            channels = new ContactChannelPreference[] {contactChannelPreference};
+        if (contactChannelsPerId == null)
+            preferredContactChannels.put(id, channels);
+        else
+            preferredContactChannels.put(id, ArrayUtils.addAll(contactChannelsPerId, channels));
     }
 
     /**
@@ -588,62 +546,32 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a note to this object.
      *
-     * @param note the note
+     * @param note the note object
      */
-    public void addNote(String note) {
+    public void addNote(Note note) {
 
-        if (notes == null)
-            notes = note;
-        else
-            notes = String.format("%s%s%s", notes, DelimiterUtils.NEWLINE_DELIMITER, note);
+        notes = ArrayUtils.add(notes, note);
     }
 
-    private void addCategory(String category) {
+    private void addKeyword(String keyword) {
 
-        if(categories == null)
-            categories = new LinkedHashMap<>();
+        if(keywords == null)
+            keywords = new LinkedHashMap<>();
 
-        categories.putIfAbsent(category,Boolean.TRUE);
+        keywords.putIfAbsent(keyword,Boolean.TRUE);
     }
 
     /**
-     * Adds a collection of categories to this object.
+     * Adds a collection of keywords to this object.
      *
-     * @param categories the categories
+     * @param keywords the keywords
      */
-    public void addCategories(String[] categories) {
-        if (categories==null)
+    public void addKeywords(String[] keywords) {
+        if (keywords==null)
             return;
 
-        for (String category: categories)
-            addCategory(category);
-    }
-
-    @JsonAnyGetter
-    public Map<String, String> getExtensions() {
-        return extensions;
-    }
-
-    @JsonAnySetter
-    public void setExtension(String name, String value) {
-
-        if (extensions == null)
-            extensions = new HashMap<>();
-
-        extensions.putIfAbsent(name, value);
-    }
-
-    /**
-     * Adds an extension to this object.
-     *
-     * @param key the extension identifier
-     * @param value the extension as a text value
-     */
-    public void addExtension(String key, String value) {
-        if(extensions == null)
-            extensions = new HashMap<>();
-
-        extensions.putIfAbsent(key,value);
+        for (String keyword: keywords)
+            addKeyword(keyword);
     }
 
     /**
@@ -769,8 +697,7 @@ public class Card extends JSContact implements Serializable {
         if (localizationsPerLanguage == null)
             return null;
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode root = objectMapper.valueToTree(this);
+        JsonNode root = mapper.valueToTree(this);
 
         for (Map.Entry<String,JsonNode> localization : localizationsPerLanguage.entrySet()) {
             JsonPointer jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute(localization.getKey()));
@@ -786,7 +713,7 @@ public class Card extends JSContact implements Serializable {
             }
         }
 
-        Card localizedCard = objectMapper.convertValue(root, Card.class);
+        Card localizedCard = mapper.convertValue(root, Card.class);
         localizedCard.setLocale(language);
         localizedCard.setLocalizations(null);
 
@@ -818,4 +745,16 @@ public class Card extends JSContact implements Serializable {
         return SerializationUtils.clone(this);
     }
 
+
+    public static Card toCard(String json) throws JsonProcessingException {
+
+        return mapper.readValue(json, Card.class);
+
+    }
+
+    public static String toJson(Card jsCard) throws JsonProcessingException {
+
+        return mapper.writeValueAsString(jsCard);
+
+    }
 }

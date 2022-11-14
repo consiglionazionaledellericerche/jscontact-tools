@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
@@ -29,6 +30,7 @@ import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
@@ -36,25 +38,26 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
 /**
- * Class mapping the Address type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Address type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","fullAddress","street","locality","region","country",
                      "postcode","countryCode","coordinates","timeZone","contexts",
-                     "pref","label"})
+                     "pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of={"fullAddress"}, callSuper = false)
-public class Address extends GroupableObject implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
+@EqualsAndHashCode(of={"hash"}, callSuper = false)
+public class Address extends AbstractJSContactType implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
 
     @NotNull
     @Pattern(regexp = "Address", message="invalid @type value in Address")
@@ -64,6 +67,7 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     String fullAddress;
 
+    @JSContactCollection(addMethod = "addComponent")
     StreetComponent[] street;
 
     String locality;
@@ -93,8 +97,6 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
     @Max(value=100, message = "invalid pref in Address - value must be less or equal than 100")
     Integer pref;
 
-    String label;
-
     @JsonIgnore
     String altid;
 
@@ -103,6 +105,9 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
     @JsonIgnore
     Boolean isDefaultLanguage;
+
+    @JsonIgnore
+    String hash;
 
     private boolean asContext(AddressContext context) { return contexts != null && contexts.containsKey(context); }
     /**
@@ -230,6 +235,56 @@ public class Address extends GroupableObject implements HasAltid, IdMapValue, Se
 
         return StringUtils.compare(altid,o.getAltid());
 
+    }
+
+    /**
+     * Adds a street component to this object.
+     *
+     * @param sc the street component
+     * @param components the street components
+     * @return the street components in input plus the sc component
+     */
+    public static StreetComponent[] addComponent(StreetComponent[] components, StreetComponent sc) {
+        return ArrayUtils.add(components, sc);
+    }
+
+    /**
+     * Adds a street component to this object.
+     *
+     * @param sc the street component
+     */
+    public void addComponent(StreetComponent sc) {
+        street = ArrayUtils.add(street, sc);
+    }
+
+    /**
+     * Adds a context to this object.
+     *
+     * @param context the context
+     */
+    public void addContext(AddressContext context) {
+        Map<AddressContext,Boolean> clone = new HashMap<>();
+        clone.putAll(getContexts());
+        clone.put(context,Boolean.TRUE);
+        setContexts(clone);
+    }
+
+    /**
+     * This method will be used to get the extended contexts in the "contexts" property.
+     *
+     * @return the extended contexts in the "contexts" property
+     */
+    @JsonIgnore
+    public AddressContext[] getExtContexts() {
+        if (getContexts() == null)
+            return null;
+        AddressContext[] extended = null;
+        for(AddressContext context : getContexts().keySet()){
+            if (context.isExtValue())
+                extended = ArrayUtils.add(extended, context);
+        }
+
+        return extended;
     }
 
 }

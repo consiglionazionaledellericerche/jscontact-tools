@@ -7,8 +7,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasContext;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +31,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailAddress extends GroupableObject implements IdMapValue, Serializable, HasContext {
+public class EmailAddress extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
     @NotNull
     @Pattern(regexp = "EmailAddress", message="invalid @type value in EmailAddress")
@@ -40,7 +41,7 @@ public class EmailAddress extends GroupableObject implements IdMapValue, Seriali
 
     @NotNull(message = "email is missing in EmailAddress")
     @NonNull
-    @Email(message = "invalid email in Email")
+    @Email(message = "invalid email in EmailAddress")
     String email;
 
     @JsonSerialize(using = ContextsSerializer.class)
@@ -50,8 +51,8 @@ public class EmailAddress extends GroupableObject implements IdMapValue, Seriali
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in Email - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in Email - value must be less or equal than 100")
+    @Min(value=1, message = "invalid pref in EmailAddress - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in EmailAddress - value must be less or equal than 100")
     Integer pref;
 
     String label;

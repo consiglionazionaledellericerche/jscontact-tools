@@ -32,11 +32,8 @@ public class ResourceValidator implements ConstraintValidator<ResourceConstraint
         if (resource == null)
             return true;
 
-        if (!resource.isUri())
-            return true;
-
         try {
-            URI.create(resource.getResource());
+            URI.create(resource.getUri());
             return true;
         } catch(Exception e) {
             return false;

@@ -15,10 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.Context;
-import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.Resource;
-import it.cnr.iit.jscontact.tools.dto.ResourceType;
+import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -30,44 +27,44 @@ import static org.junit.Assert.*;
 public class ResourceTest extends AbstractTest {
 
     @Test
-    public void testValidResource() {
+    public void testValidLinkResource() {
 
-        Resource resource = Resource.builder()
+        LinkResource resource = LinkResource.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .resource("mailto:mario.loffredo@iit.cnr.it")
-                .type(ResourceType.CONTACT_URI)
+                .uri("mailto:mario.loffredo@iit.cnr.it")
+                .type(LinkResourceType.contact())
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .resources(new HashMap<String,Resource>(){{ put("MAILTO-1", resource);}})
+                .links(new HashMap<String,LinkResource>(){{ put("CONTACT-1", resource);}})
                 .build();
 
-        assertTrue("testValidResource", jsCard.isValid());
+        assertTrue("testValidLinkResource", jsCard.isValid());
     }
 
 
     @Test(expected = java.lang.NullPointerException.class)
-    public void testInvalidResourceBuild() {
+    public void testInvalidLinkResourceBuild() {
 
         // value missing
-        Resource.builder()
+        LinkResource.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .type(ResourceType.URI)
+                .type(LinkResourceType.contact())
                 .build();
     }
 
     @Test
-    public void testInvalidResourceUri() {
+    public void testInvalidLinkResourceUri() {
 
-        Resource resource = Resource.builder()
+        LinkResource resource = LinkResource.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .type(ResourceType.URI)
-                .resource(" ")
+                .type(LinkResourceType.contact())
+                .uri(" ")
                 .label("url")
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .resources(new HashMap<String,Resource>(){{ put("URI-1", resource);}})
+                .links(new HashMap<String,LinkResource>(){{ put("CONTACT-1", resource);}})
                 .build();
 
         assertFalse("testInvalidResourceUri-1", jsCard.isValid());

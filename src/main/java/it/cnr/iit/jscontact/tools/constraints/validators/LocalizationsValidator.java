@@ -15,21 +15,22 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.LocalizationsConstraint;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
-import sun.util.locale.LanguageTag;
-import sun.util.locale.ParseStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.IllformedLocaleException;
+import java.util.Locale;
 import java.util.Map;
 
 public class LocalizationsValidator implements ConstraintValidator<LocalizationsConstraint, Card> {
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public void initialize(LocalizationsConstraint constraintAnnotation) {
     }
@@ -39,13 +40,10 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
         if (card.getLocalizations() == null)
             return true;
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode root = objectMapper.valueToTree(card);
-
         for (String language : card.getLocalizations().keySet()) {
-            ParseStatus parseStatus = new ParseStatus();
-            LanguageTag.parse(language, parseStatus);
-            if (parseStatus.getErrorMessage() != null) {
+            try {
+                Locale locale = new Locale.Builder().setLanguageTag(language).build();
+            } catch (IllformedLocaleException e) {
                 context.buildConstraintViolationWithTemplate("invalid language tag in localizations").addConstraintViolation();
                 return false;
             }
@@ -55,9 +53,9 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
             for(Map.Entry<String,JsonNode> localization : localizationsPerlanguage.entrySet()) {
 
-                JsonPointer jsonPointer;
+                JsonNode node = null;
                 try {
-                    jsonPointer = JsonPointer.compile(JsonPointerUtils.toAbsolute(localization.getKey()));
+                    node = JsonPointerUtils.getPointedJsonNode(card, localization.getKey());
                 } catch (Exception e) {
                     context.buildConstraintViolationWithTemplate("invalid JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
                     return false;
@@ -65,10 +63,22 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
                 try {
                     JsonNode localizedNode = localization.getValue();
-                    JsonNode node = root.at(jsonPointer);
+                    if (node.getNodeType() != localizedNode.getNodeType()) {
+                        context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
+                        return false;
+                    }
                     if (localizedNode.isObject()) {
-                        String className = node.get("@type").asText();
-                        Object o = objectMapper.convertValue(localizedNode, Class.forName(ClassUtils.getDtoPackageName()+"."+className));
+                        String nodeClassName = node.get("@type").asText();
+                        if (localizedNode.get("@type") == null) {
+                            context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
+                            return false;
+                        }
+                        String localizedNodeClassName = localizedNode.get("@type").asText();
+                        if (!nodeClassName.equals(localizedNodeClassName)) {
+                            context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
+                            return false;
+                        }
+                        mapper.convertValue(localizedNode, ClassUtils.forName(nodeClassName));
                     }
                 } catch (Exception e) {
                     context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();

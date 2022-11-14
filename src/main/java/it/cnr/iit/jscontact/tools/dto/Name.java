@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -28,9 +29,9 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the ContactLanguage type as defined in section 2.3.6 of [draft-ietf-calext-jscontact].
+ * Class mapping the Name type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.6">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","components","locale"})
@@ -39,7 +40,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Name extends GroupableObject implements Serializable {
+public class Name extends AbstractJSContactType implements Serializable {
 
     @NotNull
     @Pattern(regexp = "Name", message="invalid @type value in Name")
@@ -47,6 +48,7 @@ public class Name extends GroupableObject implements Serializable {
     @Builder.Default
     String _type = "Name";
 
+    @JSContactCollection(addMethod = "addComponent")
     @NotNull(message = "components is missing in Name")
     @NonNull
     @Valid
@@ -64,4 +66,15 @@ public class Name extends GroupableObject implements Serializable {
     public static NameComponent[] addComponent(NameComponent[] components, NameComponent nc) {
         return ArrayUtils.add(components, nc);
     }
+
+    /**
+     * Adds a name component to this object.
+     *
+     * @param nc the name component
+     */
+    public void addComponent(NameComponent nc) {
+        components = ArrayUtils.add(components, nc);
+    }
+
+
 }

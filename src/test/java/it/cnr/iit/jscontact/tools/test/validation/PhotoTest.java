@@ -15,8 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.File;
+import it.cnr.iit.jscontact.tools.dto.MediaResource;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.MediaResourceType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class PhotoTest extends AbstractTest {
     public void testInvalidPhotoBuild1() {
 
         // href missing
-        File.builder().build();
+        MediaResource.builder().build();
     }
 
 
@@ -38,19 +39,20 @@ public class PhotoTest extends AbstractTest {
     public void testInvalidPhotoBuild2() {
 
         // href missing
-        File.builder().pref(1).build();
+        MediaResource.builder().pref(1).build();
     }
 
     @Test
     public void testValidPhoto1() {
 
-        File photo = File.builder()
-                .href("http://www.photos.com/aphoto.png")
+        MediaResource photo = MediaResource.builder()
+                .uri("http://www.media.com/aphoto.png")
                 .pref(1)
+                .type(MediaResourceType.photo())
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
+                .media(new HashMap<String, MediaResource>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertTrue("testValidPhoto1", jsCard.isValid());
@@ -60,17 +62,18 @@ public class PhotoTest extends AbstractTest {
     public void testInvalidPhoto1() {
 
         // invalid pref - lower than min value
-        File photo = File.builder()
-                         .href("http://www.photos.com/aphoto.png")
+        MediaResource photo = MediaResource.builder()
+                         .uri("http://www.media.com/aphoto.png")
                          .pref(0)
+                         .type(MediaResourceType.photo())
                          .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
+                .media(new HashMap<String, MediaResource>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertFalse("testInvalidPhoto1-1", jsCard.isValid());
-        assertEquals("testInvalidPhoto1-2", "invalid pref in File - value must be greater or equal than 1", jsCard.getValidationMessage());
+        assertEquals("testInvalidPhoto1-2", "invalid pref in Resource - value must be greater or equal than 1", jsCard.getValidationMessage());
     }
 
 
@@ -78,34 +81,18 @@ public class PhotoTest extends AbstractTest {
     public void testInvalidPhoto2() {
 
         // invalid pref - lower than min value
-        File photo = File.builder()
-                .href("http://www.photos.com/aphoto.png")
+        MediaResource photo = MediaResource.builder()
+                .uri("http://www.media.com/aphoto.png")
+                .type(MediaResourceType.photo())
                 .pref(101)
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
+                .media(new HashMap<String, MediaResource>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertFalse("testInvalidPhoto2-1", jsCard.isValid());
-        assertEquals("testInvalidPhoto2-2", "invalid pref in File - value must be less or equal than 100", jsCard.getValidationMessage());
-    }
-
-    @Test
-    public void testInvalidPhoto3() {
-
-        // invalid pref - lower than min value
-        File photo = File.builder()
-                .href("http://www.photos.com/aphoto.png")
-                .size(-100)
-                .build();
-        Card jsCard = Card.builder()
-                .uid(getUUID())
-                .photos(new HashMap<String, File>() {{ put("PHOTO-1", photo); }})
-                .build();
-
-        assertFalse("testInvalidPhoto3-1", jsCard.isValid());
-        assertEquals("testInvalidPhoto3-2", "invalid size in File - value must be greater or equal than 0", jsCard.getValidationMessage());
+        assertEquals("testInvalidPhoto2-2", "invalid pref in Resource - value must be less or equal than 100", jsCard.getValidationMessage());
     }
 
 }
