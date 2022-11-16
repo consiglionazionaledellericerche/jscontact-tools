@@ -54,6 +54,8 @@ public class LocalizedText extends AbstractJSContactType implements HasAltid, Ha
 
     Map<Context,Boolean> contexts;
 
+    String[] sortAs;
+
     /**
      * Adds a localization to the "localizations" map.
      *

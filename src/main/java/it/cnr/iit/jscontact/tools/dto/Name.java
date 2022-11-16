@@ -34,7 +34,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","components","locale"})
+@JsonPropertyOrder({"@type","components","locale","sortAs"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -55,6 +55,8 @@ public class Name extends AbstractJSContactType implements Serializable {
     NameComponent[] components;
 
     String locale;
+
+    String[] sortAs;
 
     /**
      * Adds a name component to this object.

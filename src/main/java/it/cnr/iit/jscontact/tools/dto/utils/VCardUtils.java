@@ -27,7 +27,6 @@ public class VCardUtils {
     public static final String VCARD_PID_PARAM_TAG = "PID";
     public static final String VCARD_LEVEL_PARAM_TAG = "LEVEL";
     public static final String VCARD_CC_PARAM_TAG = "CC";
-    public static final String VCARD_SORT_AS_PARAM_TAG = "SORT-AS";
     public static final String VCARD_GROUP_PARAM_TAG = "GROUP";
     public static final String VCARD_X_RFC0000_JSPROP_TAG = "X-RFC0000-JSPROP";
     public static final String VCARD_X_RFC0000_JSPATH_PARAM_TAG = "X-RFC0000-JSPATH";

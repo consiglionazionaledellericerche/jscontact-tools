@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -29,7 +30,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ORG;ALTID=1:ABC, Inc.;North American Division;Marketing\n" +
+                "ORG;ALTID=1;SORT-AS=\"ABC\":ABC, Inc.;North American Division;Marketing\n" +
                 "ORG;ALTID=1;LANGUAGE=it:ABC, Spa.;Divisione Nord America;Marketing\n" +
                 "END:VCARD";
 
@@ -42,9 +43,10 @@ public class OrganizationsTest extends VCard2JSContactTest {
         assertNotNull("testOrganizationsWithAltid1 - 6", jsCard.getOrganizations().get("ORG-1").getUnits());
         assertEquals("testOrganizationsWithAltid1 - 7", 2, jsCard.getOrganizations().get("ORG-1").getUnits().length);
         assertEquals("testOrganizationsWithAltid1 - 8", "North American Division", jsCard.getOrganizations().get("ORG-1").getUnits()[0]);
-        assertEquals("testOrganizationsWithAltid1 - 9", "Divisione Nord America", jsCard.getLocalization("it", "organizations/ORG-1").get("units").get(0).asText());
-        assertEquals("testOrganizationsWithAltid1 - 10", "Marketing", jsCard.getOrganizations().get("ORG-1").getUnits()[1]);
-        assertEquals("testOrganizationsWithAltid1 - 11", "Marketing", jsCard.getLocalization("it", "organizations/ORG-1").get("units").get(1).asText());
+        assertEquals("testOrganizationsWithAltid1 - 9", "ABC", String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsCard.getOrganizations().get("ORG-1").getSortAs()));
+        assertEquals("testOrganizationsWithAltid1 - 10", "Divisione Nord America", jsCard.getLocalization("it", "organizations/ORG-1").get("units").get(0).asText());
+        assertEquals("testOrganizationsWithAltid1 - 11", "Marketing", jsCard.getOrganizations().get("ORG-1").getUnits()[1]);
+        assertEquals("testOrganizationsWithAltid1 - 12", "Marketing", jsCard.getLocalization("it", "organizations/ORG-1").get("units").get(1).asText());
     }
 
     @Test

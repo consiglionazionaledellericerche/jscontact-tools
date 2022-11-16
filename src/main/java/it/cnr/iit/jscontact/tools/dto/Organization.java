@@ -19,7 +19,7 @@ import java.io.Serializable;
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames={"name","units"}, message = "at least one not null member other than @type is missing in Organization")
-@JsonPropertyOrder({"@type","name","units"})
+@JsonPropertyOrder({"@type","name","units","sortAs"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -36,4 +36,6 @@ public class Organization extends AbstractJSContactType implements IdMapValue, S
     String name;
 
     String[] units;
+
+    String[] sortAs;
 }

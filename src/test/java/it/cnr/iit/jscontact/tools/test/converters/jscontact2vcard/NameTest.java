@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -39,7 +40,8 @@ public class NameTest extends JSContact2VCardTest {
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"middle\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
-                    "] " +
+                    "], " +
+                    "\"sortAs\": [ \"Public\",\"John\" ]" +
                 "}, " +
                 "\"nickNames\": { " +
                     "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +
@@ -57,9 +59,10 @@ public class NameTest extends JSContact2VCardTest {
         assertEquals("testName1 - 8", "Mr.", vcard.getStructuredName().getPrefixes().get(0));
         assertEquals("testName1 - 9", 1, vcard.getStructuredName().getSuffixes().size());
         assertEquals("testName1 - 10", "Esq.", vcard.getStructuredName().getSuffixes().get(0));
-        assertEquals("testName1 - 11", 2, vcard.getNicknames().size());
-        assertEquals("testName1 - 12", "Johnny", vcard.getNicknames().get(0).getValues().get(0));
-        assertEquals("testName1 - 13", "Joe", vcard.getNicknames().get(1).getValues().get(0));
+        assertEquals("testName1 - 11", "Public,John", String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,vcard.getStructuredName().getSortAs()));
+        assertEquals("testName1 - 12", 2, vcard.getNicknames().size());
+        assertEquals("testName1 - 13", "Johnny", vcard.getNicknames().get(0).getValues().get(0));
+        assertEquals("testName1 - 14", "Joe", vcard.getNicknames().get(1).getValues().get(0));
 
     }
 

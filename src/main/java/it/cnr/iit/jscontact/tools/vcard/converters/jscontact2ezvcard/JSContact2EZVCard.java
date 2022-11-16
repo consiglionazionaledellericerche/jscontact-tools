@@ -257,6 +257,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getLocalizationsPerPath("name") != null) {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLocale());
+            if (jsCard.getName().getSortAs()!=null)
+                sn.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsCard.getName().getSortAs()));
             VCardUtils.addVCardUnmatchedParameters(sn,jsCard.getName());
             sns.add(sn);
             for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("name").entrySet()) {
@@ -268,6 +270,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         else if (jsCard.getLocalizationsPerPath("name/components") != null) {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLocale());
+            if (jsCard.getName().getSortAs()!=null)
+                sn.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsCard.getName().getSortAs()));
             VCardUtils.addVCardUnmatchedParameters(sn,jsCard.getName());
             sns.add(sn);
             for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("name/components").entrySet()) {
@@ -278,6 +282,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
         else {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
+            if (jsCard.getName().getSortAs()!=null)
+                sn.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsCard.getName().getSortAs()));
             VCardUtils.addVCardUnmatchedParameters(sn,jsCard.getName());
             sns.add(sn);
         }
@@ -1171,24 +1177,36 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,Organization> entry : jsCard.getOrganizations().entrySet()) {
 
             if (jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name")==null)
-
-                vcard.getOrganizations().add(getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams()));
-
+                jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name")==null) {
+                ezvcard.property.Organization org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams());
+                if (entry.getValue().getSortAs()!=null)
+                    org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, entry.getValue().getSortAs()));
+                vcard.getOrganizations().add(org);
+            }
             else {
                 List<ezvcard.property.Organization> organizations = new ArrayList<>();
-                organizations.add(getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams()));
+                ezvcard.property.Organization org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams());
+                if (entry.getValue().getSortAs()!=null)
+                    org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, entry.getValue().getSortAs()));
+                organizations.add(org);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey());
                 if (localizations != null) {
-                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
-                        organizations.add(getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems((localization.getValue().get("name")!=null) ? localization.getValue().get("name").asText() : null, JsonNodeUtils.asTextArray(localization.getValue().get("units"))), localization.getKey(), entry.getKey(), null));
+                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
+                        org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems((localization.getValue().get("name") != null) ? localization.getValue().get("name").asText() : null, JsonNodeUtils.asTextArray(localization.getValue().get("units"))), localization.getKey(), entry.getKey(), null);
+                        if (localization.getValue().get("sortAs") != null)
+                            org.setSortAs(localization.getValue().get("sortAs").asText());
+                        organizations.add(org);
+                    }
                 }
                 localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
                         JsonNode units = jsCard.getLocalization(localization.getKey(),"organizations/"+entry.getKey()+"/units");
-                        organizations.add(getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems((localization.getValue().get("name")!=null) ? localization.getValue().get("name").asText() : null, JsonNodeUtils.asTextArray(units)), localization.getKey(), entry.getKey(), null));
+                        org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems((localization.getValue().get("name")!=null) ? localization.getValue().get("name").asText() : null, JsonNodeUtils.asTextArray(units)), localization.getKey(), entry.getKey(), null);
+                        if (localization.getValue().get("sortAs") != null)
+                            org.setSortAs(localization.getValue().get("sortAs").asText());
+                        organizations.add(org);
                     }
                 }
                 vcard.addOrganizationAlt(organizations.toArray(new ezvcard.property.Organization[0]));

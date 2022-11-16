@@ -586,7 +586,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     components = Name.addComponent(components,NameComponent.middle(an));
                 for (String sx : sn.getSuffixes())
                     components = Name.addComponent(components,NameComponent.suffix(sx));
-                jsCard.setName(Name.builder().components(components).jCardParams(VCardUtils.getVCardUnmatchedParameters(sn,Arrays.asList(new String[]{VCardUtils.VCARD_SORT_AS_PARAM_TAG, VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG}))).build());
+                jsCard.setName(Name.builder()
+                                   .components(components)
+                                   .sortAs((sn.getSortAs()!=null && !sn.getSortAs().isEmpty()) ? sn.getSortAs().toArray(new String[0]) : null)
+                                   .jCardParams(VCardUtils.getVCardUnmatchedParameters(sn,Arrays.asList(new String[]{ VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                   .build());
 
             }
         }
@@ -1110,18 +1114,19 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                              .language(org.getLanguage())
                                                              .altid(org.getAltId())
                                                              .preference(org.getPref())
-                                                             .jCardParams(VCardUtils.getVCardUnmatchedParameters(org,Arrays.asList(new String[]{VCardUtils.VCARD_SORT_AS_PARAM_TAG, VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                             .sortAs((org.getSortAs()!=null && !org.getSortAs().isEmpty()) ? org.getSortAs().toArray(new String[0]) : null)
+                                                             .jCardParams(VCardUtils.getVCardUnmatchedParameters(org,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                              .build()
                               );
         }
-        Collections.sort(organizations); //sort based on preference
+        Collections.sort(organizations); //sort based on altid
 
         int i = 1;
         for (LocalizedText organization : organizations) {
             String[] nameItems = organization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
             String id = getId(VCard2JSContactIdsProfile.IdType.ORGANIZATION, i, "ORG-" + (i ++), organization.getPropId());
             List<String> units = (nameItems.length > 1 ) ? Arrays.asList(nameItems).subList(1,nameItems.length) : null;
-            jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().name((!nameItems[0].isEmpty()) ? nameItems[0] : null).units((units!=null)? units.toArray(new String[0]) : null).jCardParams(organization.getJCardParams()).build());
+            jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().name((!nameItems[0].isEmpty()) ? nameItems[0] : null).units((units!=null)? units.toArray(new String[0]) : null).sortAs(organization.getSortAs()).jCardParams(organization.getJCardParams()).build());
             if (organization.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : organization.getLocalizations().entrySet()) {
                     String[] localizedNameItems =  localization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
@@ -1130,7 +1135,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 }
             }
         }
-
     }
 
     private static void fillNotes(VCard vcard, Card jsCard) {
