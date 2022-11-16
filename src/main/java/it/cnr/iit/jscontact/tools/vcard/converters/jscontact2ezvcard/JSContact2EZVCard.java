@@ -958,8 +958,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         for(Map.Entry<String, SchedulingAddress> entry : jsCard.getSchedulingAddresses().entrySet()) {
             SchedulingAddress s = entry.getValue();
             s.setPropId(entry.getKey());
-            if (s.getType()==null || s.getType().isImip())
-                vcard.getCalendarRequestUris().add(getUriProperty(CalendarRequestUri.class, s));
+           vcard.getCalendarRequestUris().add(getUriProperty(CalendarRequestUri.class, s));
         }
     }
 

@@ -225,7 +225,6 @@ public class ResourceTest extends RoundtripTest {
                     "\"SCHEDULING-1\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
                         "\"pref\": 1," +
-                        "\"type\": \"imip\"," +
                         "\"uri\":\"mailto:janedoe@example.com\"" +
                     "}," +
                     "\"SCHEDULING-2\": {" +

@@ -1046,7 +1046,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             Map<Context,Boolean> contexts = getContexts(vcardType);
             jsCard.addSchedulingAddress(getId(VCard2JSContactIdsProfile.IdType.SCHEDULING, i, "SCHEDULING-" + (i++), calendarRequestUri.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG)),
                      SchedulingAddress.builder()
-                             .type((calendarRequestUri.getValue().startsWith("mailto:")) ? SchedulingAddressType.imip() : null)
                              .propId(calendarRequestUri.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG))
                              .uri(calendarRequestUri.getValue())
                              .contexts(contexts)

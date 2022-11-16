@@ -242,7 +242,6 @@ public class ResourceTest extends JSContact2VCardTest {
                     "\"SCHEDULING-1\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
                         "\"pref\": 1," +
-                        "\"type\": \"imip\"," +
                         "\"uri\": \"mailto:janedoe@example.com\"" +
                     "}," +
                     "\"SCHEDULING-2\": {" +
