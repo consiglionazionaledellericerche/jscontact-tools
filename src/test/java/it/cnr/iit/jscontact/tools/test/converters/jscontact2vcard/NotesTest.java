@@ -15,7 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
+import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -33,7 +35,7 @@ public class NotesTest extends JSContact2VCardTest {
                     "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                     "\"fullName\":\"test\"," +
                     "\"notes\": [" +
-                          "{ \"@type\": \"Note\", \"note\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"} ," +
+                          "{ \"@type\": \"Note\", \"created\":\"2010-10-10T10:10:10Z\", \"note\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"} ," +
                           "{ \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\", \"language\":\"it\" } " +
                     "]" +
                     "}";
@@ -45,6 +47,11 @@ public class NotesTest extends JSContact2VCardTest {
         assertEquals("testNotes1 - 5", "Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven", vcard.getNotes().get(1).getValue());
         assertEquals("testNotes1 - 6", "it", vcard.getNotes().get(1).getLanguage());
         assertEquals("testNotes1 - 7", "1", vcard.getNotes().get(1).getAltId());
+        assertEquals("testNotes1 - 8", 1, vcard.getExtendedProperties().size());
+        assertEquals("testNotes1 - 9", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testNotes1 - 10", "notes/0/created", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testNotes1 - 11", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
+        assertEquals("testNotes1 - 12", "data:application/json;%222010-10-10T10%3A10%3A10Z%22", vcard.getExtendedProperties().get(0).getValue());
     }
     
 }

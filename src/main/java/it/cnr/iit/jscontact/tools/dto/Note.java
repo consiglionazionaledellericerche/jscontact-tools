@@ -3,12 +3,17 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Class mapping the Organization type as defined in section 2.8.3 of [draft-ietf-calext-jscontact].
@@ -35,4 +40,9 @@ public class Note extends AbstractJSContactType implements Serializable {
     String note;
 
     String language;
+
+    @JsonSerialize(using = UTCDateTimeSerializer.class)
+    @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
+    Calendar created;
+
 }

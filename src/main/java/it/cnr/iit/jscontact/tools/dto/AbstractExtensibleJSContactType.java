@@ -24,15 +24,13 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Abstract class mapping the vCard extensions in section 1.5.2 of [draft-ietf-calext-jscontact].
@@ -102,6 +100,9 @@ public abstract class AbstractExtensibleJSContactType {
 
             if (this instanceof HasLabel && ((HasLabel) this).getLabel() != null ) //The label property must be considered, if any
                 map.put(String.format("%slabel", jsonPointer), ((HasLabel) this).getLabel());
+
+            if (this instanceof Note && ((Note) this).getCreated() != null ) //The label property must be considered, if any
+                map.put(String.format("%screated", jsonPointer), ((Note) this).getCreated());
 
             if (this instanceof HasContexts && ((HasContexts) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
                 for (Context context : ((HasContexts) this).getExtContexts())
@@ -212,6 +213,8 @@ public abstract class AbstractExtensibleJSContactType {
             if (pathItems.isEmpty()) {
                 if (this instanceof HasLabel && extension.equals("label"))
                     ((HasLabel) this).setLabel(value.toString());
+                else if (this instanceof Note && extension.equals("created"))
+                    ((Note) this).setCreated((Calendar) value);
                 else
                     addExtension(extension, value);
                 return;

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 
 public class X_RFC0000_JSPROP_Utils {
 
@@ -35,6 +36,8 @@ public class X_RFC0000_JSPROP_Utils {
 
         if (o instanceof String)
             return String.format("data:application/json;%%22%s%%22", encodeValue((String) o));
+        else if (o instanceof Calendar)
+            return String.format("data:application/json;%%22%s%%22", encodeValue(DateUtils.toString((Calendar) o)));
         else if (o instanceof Boolean || o instanceof Integer)
             return String.format("data:application/json;%s", o);
         else {
@@ -67,7 +70,12 @@ public class X_RFC0000_JSPROP_Utils {
         } else {
             String val = s.replace("data:application/json;","");
             if (val.charAt(0) == '%') {
-                return decodeValue(removeQuotesEscape(val));
+                String value = decodeValue(removeQuotesEscape(val));
+                try {
+                       return DateUtils.toCalendar(value);
+                } catch (Exception e) {
+                    return value;
+                }
             }
             else if (val.equals("true") || val.equals("false"))
                 return Boolean.parseBoolean(val);

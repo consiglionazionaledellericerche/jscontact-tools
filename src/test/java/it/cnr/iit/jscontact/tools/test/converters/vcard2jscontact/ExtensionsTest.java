@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -136,6 +137,22 @@ public class ExtensionsTest extends VCard2JSContactTest {
         assertEquals("testExtendedJSContact6 - 1", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getPhone());
         assertEquals("testExtendedJSContact6 - 2", true, jsCard.getPhones().get("PHONE-1").asExtContext("example.com:extcontext"));
         assertEquals("testExtendedJSContact6 - 3", true, jsCard.getPhones().get("PHONE-1").asExt("example.com:extfeature"));
+    }
+
+
+    @Test
+    public void testExtendedJSContact7() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "NOTE;ALTID=1:This fax number is operational 0800 to 1715 EST, Mon-Fri\n" +
+                "NOTE;ALTID=1;LANGUAGE=it:Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=notes/0/created;VALUE=uri:data:application/json;%222010-10-10T10%3A10%3A10Z%22\n" +
+                "END:VCARD";
+
+        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testExtendedJSContact7 - 1", 0, jsCard.getNotes()[0].getCreated().compareTo(DateUtils.toCalendar("2010-10-10T10:10:10Z")));
     }
 
 }
