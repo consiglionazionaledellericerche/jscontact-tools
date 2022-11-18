@@ -35,7 +35,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "BDAY:19531015T231000Z\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -51,7 +51,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "BIRTHPLACE:Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -66,7 +66,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "DEATHDATE:19531015T231000Z\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries3 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -82,7 +82,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "DEATHPLACE:Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries4 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -100,7 +100,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "DEATHPLACE:Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries5 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -119,7 +119,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "ANNIVERSARY:1986-02-01T19:00:00Z\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries6 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -138,7 +138,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "ANNIVERSARY:19860201T190000Z\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAnniversaries7 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

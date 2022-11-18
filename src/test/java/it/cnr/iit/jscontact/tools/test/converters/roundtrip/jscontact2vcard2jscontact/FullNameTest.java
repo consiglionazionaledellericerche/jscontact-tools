@@ -37,8 +37,8 @@ public class FullNameTest extends RoundtripTest {
                 "\"fullName\":\"John Q. Public, Esq.\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testFullName1 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testFullName1 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -56,8 +56,8 @@ public class FullNameTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testFullName2 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testFullName2 - 1", jscard2, Card.toJSCard(jscard));
    }
 
 
@@ -84,7 +84,7 @@ public class FullNameTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testFullName3 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testFullName3 - 1", jscard2, Card.toJSCard(jscard));
     }
 }

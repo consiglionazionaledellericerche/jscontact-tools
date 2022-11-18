@@ -17,7 +17,6 @@ import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
-import it.cnr.iit.jscontact.tools.dto.deserializers.JSContactListDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
@@ -39,7 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class for converting a JSContact object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object.
+ * Utility class for converting a Card object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object.
  *
  * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
  * @author Mario Loffredo
@@ -125,12 +124,12 @@ public class JSContact2EZVCard extends AbstractConverter {
         return new Revision(update);
     }
 
-    private static void fillMembers(VCard vcard, CardGroup jsCardGroup) {
+    private static void fillMembers(VCard vcard, Card jsCard) {
 
-        if (jsCardGroup.getMembers() == null)
+        if (jsCard.getMembers() == null)
             return;
 
-        for (String key : jsCardGroup.getMembers().keySet())
+        for (String key : jsCard.getMembers().keySet())
             vcard.addMember(new Member(key));
 
     }
@@ -1472,37 +1471,27 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
     /**
-     * Converts a JSContact object into a basic vCard v4.0 [RFC6350].
+     * Converts a Card object into a basic vCard v4.0 [RFC6350].
      * JSContact objects are defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
-     * @param jsContact a JSContact object (Card or CardGroup)
+     * @param jsCard a Card object (Card or CardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    protected VCard convert(JSContact jsContact) {
+    protected VCard convert(Card jsCard) {
 
-        if (jsContact == null)
+        if (jsCard == null)
             return null;
 
         VCard vCard = new VCard(VCardVersion.V4_0);
-        vCard.setUid(getUid(jsContact.getUid()));
-        Card jsCard = null;
-        if (jsContact instanceof CardGroup) {
-            CardGroup jsCardGroup = (CardGroup) jsContact;
-            fillMembers(vCard, jsCardGroup);
-            if (jsCardGroup.getCard()!=null)
-                jsCard = jsCardGroup.getCard();
-        } else
-            jsCard = (Card) jsContact;
-
-        if (jsCard == null) return vCard;
-
+        vCard.setUid(getUid(jsCard.getUid()));
         vCard.setKind(getKind(jsCard.getKind()));
         vCard.setProductId(jsCard.getProdId());
         vCard.setRevision(getRevision(jsCard.getUpdated()));
+        fillMembers(vCard, jsCard);
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
         fillNickNames(vCard, jsCard);
@@ -1532,26 +1521,26 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
     /**
-     * Converts a list of JSContact objects into a list of vCard v4.0 instances [RFC6350].
+     * Converts a list of Card objects into a list of vCard v4.0 instances [RFC6350].
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
-     * @param jsContacts a list of JSContact objects
+     * @param jsCards a list of Card objects
      * @return a list of instances of the ez-vcard library VCard class
-     * @throws CardException if one of JSContact objects is not valid
+     * @throws CardException if one of Card objects is not valid
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    public List<VCard> convert(JSContact... jsContacts) throws CardException {
+    public List<VCard> convert(Card... jsCards) throws CardException {
 
         List<VCard> vCards = new ArrayList<>();
 
-        for (JSContact jsContact : jsContacts) {
+        for (Card jsCard : jsCards) {
             if (config.isSetCardMustBeValidated()) {
-                if (!jsContact.isValid())
-                    throw new CardException(jsContact.getValidationMessage());
+                if (!jsCard.isValid())
+                    throw new CardException(jsCard.getValidationMessage());
             }
-            vCards.add(convert(jsContact));
+            vCards.add(convert(jsCard));
         }
 
         return vCards;
@@ -1559,12 +1548,12 @@ public class JSContact2EZVCard extends AbstractConverter {
 
 
     /**
-     * Converts a JSON array of JSContact objects into a list of vCard v4.0 instances [RFC6350].
+     * Converts a JSON array of Card objects into a list of vCard v4.0 instances [RFC6350].
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
-     * @param json a JSON array of JSContact objects
+     * @param json a JSON array of Card objects
      * @return a list of instances of the ez-vcard library VCard class
-     * @throws CardException if one of JSContact objects is not valid
+     * @throws CardException if one of Card objects is not valid
      * @throws JsonProcessingException if json cannot be processed
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
@@ -1573,16 +1562,15 @@ public class JSContact2EZVCard extends AbstractConverter {
     public List<VCard> convert(String json) throws CardException, JsonProcessingException {
 
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(JSContact.class, new JSContactListDeserializer());
         mapper.registerModule(module);
         JsonNode jsonNode = mapper.readTree(json);
-        JSContact[] jsContacts;
+        Card[] jsCards;
         if (jsonNode.isArray())
-            jsContacts = mapper.treeToValue(jsonNode, JSContact[].class);
+            jsCards = mapper.treeToValue(jsonNode, Card[].class);
         else
-            jsContacts = new JSContact[] { mapper.treeToValue(jsonNode, JSContact.class)};
+            jsCards = new Card[] { mapper.treeToValue(jsonNode, Card.class)};
 
-        return convert(jsContacts);
+        return convert(jsCards);
     }
 
 }

@@ -39,7 +39,7 @@ public class AddressesTest extends RoundtripTest {
                 "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -54,7 +54,7 @@ public class AddressesTest extends RoundtripTest {
                 "ADR;CC=US;LABEL=54321 Oak St Reston USA:;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -70,7 +70,7 @@ public class AddressesTest extends RoundtripTest {
                 "ADR;CC=US:;;12345 Elm St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses3 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -86,7 +86,7 @@ public class AddressesTest extends RoundtripTest {
                 "GEO:geo:46.772673,-71.282945\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses4 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -103,7 +103,7 @@ public class AddressesTest extends RoundtripTest {
                 "TZ:-0500\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses5 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -120,7 +120,7 @@ public class AddressesTest extends RoundtripTest {
                 "TZ:America/New_York\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses6 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -142,7 +142,7 @@ public class AddressesTest extends RoundtripTest {
                         .build())
                 .build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses7 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -160,7 +160,7 @@ public class AddressesTest extends RoundtripTest {
                 "TZ:America/New_York\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses8 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -183,7 +183,7 @@ public class AddressesTest extends RoundtripTest {
                         .build())
                 .build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses9 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -206,7 +206,7 @@ public class AddressesTest extends RoundtripTest {
                         .build())
                 .build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses10 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -225,7 +225,7 @@ public class AddressesTest extends RoundtripTest {
                 "ADR;CC=IT;ALTID=1;LANGUAGE=it:;;Via Moruzzi,1;Pisa;;56124;Italy\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses11 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -245,7 +245,7 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses12 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -266,7 +266,7 @@ public class AddressesTest extends RoundtripTest {
                 "END:VCARD";
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("it").build()).build();
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testAddresses13 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

@@ -19,16 +19,19 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
-import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.JCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.JCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
 import lombok.*;
@@ -49,8 +52,9 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "@type","uid","prodId","created","updated","kind","relatedTo","locale",
+        "@type","uid","prodId","created","updated","kind","members","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
         "emails","onlineServices","phones","preferredContactChannels","preferredLanguages",
         "calendars","schedulingAddresses",
@@ -59,14 +63,16 @@ import java.util.*;
         "localizations",
         "anniversaries","personalInfo","notes","keywords","ietf.org:rfc0000:props"})
 @TitleOrganizationConstraint
-@CardKindConstraint(groups = CardConstraintsGroup.class)
 @LocalizationsConstraint
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString(callSuper = true)
+@EqualsAndHashCode(of={"uid"}, callSuper = false)
 @SuperBuilder
-public class Card extends JSContact implements Serializable {
+public class Card extends ValidableObject implements Serializable {
+
+    private static ObjectMapper mapper = new ObjectMapper();
 
     /*
     Metadata properties
@@ -76,6 +82,10 @@ public class Card extends JSContact implements Serializable {
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Card";
+
+    @NotNull(message = "uid is missing in Card")
+    @NonNull
+    String uid;
 
     String prodId;
 
@@ -89,6 +99,9 @@ public class Card extends JSContact implements Serializable {
 
     @JsonDeserialize(using = KindTypeDeserializer.class)
     KindType kind;
+
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in JSContact - Only Boolean.TRUE allowed")
+    Map<String,Boolean> members;
 
     @JSContactCollection(addMethod = "addRelation")
     @JsonPropertyOrder(alphabetic = true)
@@ -243,10 +256,30 @@ public class Card extends JSContact implements Serializable {
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> keywords;
 
+    @JsonProperty("ietf.org:rfc0000:props")
+    @JsonSerialize(using = JCardPropsSerializer.class)
+    @JsonDeserialize(using = JCardPropsDeserializer.class)
+    @Valid
+    JCardProp[] jCardExtensions;
+
     @JsonIgnore
     Map<String,TimeZone> customTimeZones;
 
 //Methods for adding items to a mutable collection
+
+
+    /**
+     * Adds a member to this object.
+     *
+     * @param member the uid value of the object representing a group member
+     */
+    public void addMember(String member) {
+
+        if(members == null)
+            members = new LinkedHashMap<>();
+
+        members.putIfAbsent(member,Boolean.TRUE);
+    }
 
     /**
      * Adds a relation between this object and another Card object.
@@ -746,7 +779,7 @@ public class Card extends JSContact implements Serializable {
     }
 
 
-    public static Card toCard(String json) throws JsonProcessingException {
+    public static Card toJSCard(String json) throws JsonProcessingException {
 
         return mapper.readValue(json, Card.class);
 
@@ -756,5 +789,66 @@ public class Card extends JSContact implements Serializable {
 
         return mapper.writeValueAsString(jsCard);
 
+    }
+
+    /**
+     * Deserialize a single Card object or an array of Card objects
+     *
+     * @param json the single Card object or the array of Card objects in JSON
+     * @return an array of Card objects
+     * @throws JsonProcessingException never thrown
+     */
+    public static Card[] toJSCards(String json) throws JsonProcessingException {
+
+        SimpleModule module = new SimpleModule();
+        mapper.registerModule(module);
+        try {
+            return mapper.readValue(json, Card[].class);
+        } catch(Exception e) {
+            return new Card[]{mapper.readValue(json, Card.class)};
+        }
+    }
+
+    /**
+     * Serialize an array of Card objects
+     *
+     * @param jsCards the array of Card objects
+     * @return the array of Card objects in JSON
+     * @throws JsonProcessingException never thrown
+     */
+    public static String toJson(Card[] jsCards) throws JsonProcessingException {
+
+        return mapper.writeValueAsString(jsCards);
+    }
+
+    /**
+     * Adds a JCardProp object to this object.
+     *
+     * @param o the JCardProp object
+     */
+    public void addJCardProp(JCardProp o) {
+
+        jCardExtensions = ArrayUtils.add(jCardExtensions, o);
+    }
+
+
+    /**
+     * Convert the jCardExtensions array into a map
+     * where the keys are the extnsion names and
+     * the values are the extension values in text format
+     *
+     * @return jCardExtensions array converted into a map
+     */
+    @JsonIgnore
+    public Map<String,String> getJCardExtensionsAsMap() {
+
+        Map<String,String> map = new HashMap<>();
+        if (this.getJCardExtensions() == null)
+            return map;
+
+        for (JCardProp jCardExtension : this.getJCardExtensions())
+            map.put(jCardExtension.getName().toString(),jCardExtension.getValue().toString());
+
+        return map;
     }
 }

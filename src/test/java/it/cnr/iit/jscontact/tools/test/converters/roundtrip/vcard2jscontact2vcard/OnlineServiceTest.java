@@ -35,7 +35,7 @@ public class OnlineServiceTest extends RoundtripTest {
                 "IMPP;TYPE=home;PREF=1:xmpp:alice@example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testOnlineService1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

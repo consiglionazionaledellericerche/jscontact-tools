@@ -47,7 +47,7 @@ public class AnniversariesTest extends RoundtripTest {
                         "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries1 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries1 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class AnniversariesTest extends RoundtripTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries2 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries2 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class AnniversariesTest extends RoundtripTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries3 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries3 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class AnniversariesTest extends RoundtripTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries4 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries4 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -164,7 +164,7 @@ public class AnniversariesTest extends RoundtripTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries5 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries5 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -210,7 +210,7 @@ public class AnniversariesTest extends RoundtripTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries6 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries6 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -258,7 +258,7 @@ public class AnniversariesTest extends RoundtripTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries7 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries7 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -308,7 +308,7 @@ public class AnniversariesTest extends RoundtripTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries8 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries8 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -358,7 +358,7 @@ public class AnniversariesTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries9 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testAnniversaries9 - 1", jscard2, Card.toJSCard(jscard));
     }
 
 }

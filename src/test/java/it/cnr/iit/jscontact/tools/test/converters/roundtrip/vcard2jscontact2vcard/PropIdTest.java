@@ -52,7 +52,7 @@ public class PropIdTest extends RoundtripTest {
                         .build())
                 .build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPropId1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -82,7 +82,7 @@ public class PropIdTest extends RoundtripTest {
                         .build())
                 .build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPropId2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

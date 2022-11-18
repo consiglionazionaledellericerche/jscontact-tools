@@ -35,7 +35,7 @@ public class NameTest extends RoundtripTest {
                 "N:Public;John;Quinlan;Mr.;Esq.\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testName1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -52,7 +52,7 @@ public class NameTest extends RoundtripTest {
                 "NICKNAME:Johnny\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testName2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -70,7 +70,7 @@ public class NameTest extends RoundtripTest {
                 "NICKNAME;PREF=1:Kid\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testName3 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -90,7 +90,7 @@ public class NameTest extends RoundtripTest {
                 "NICKNAME;PREF=1;LANGUAGE=it;ALTID=2:Ragazzo\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testName4 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

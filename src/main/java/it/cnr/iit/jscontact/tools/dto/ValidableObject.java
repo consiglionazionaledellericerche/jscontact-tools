@@ -43,7 +43,7 @@ public abstract class ValidableObject extends AbstractExtensibleJSContactType {
     private List<String> validationMessages;
 
     /**
-     * Tests if a JSContact top most object, namely Card and CardGroup, is valid.
+     * Tests if a JSContact Card is valid.
      *
      * @return true if the validation check ends successfully, false otherwise
      */

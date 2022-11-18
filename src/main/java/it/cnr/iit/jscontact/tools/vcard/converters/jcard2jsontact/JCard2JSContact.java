@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -42,18 +42,18 @@ public class JCard2JSContact extends EZVCard2JSContact {
     }
 
     /**
-     * Converts a complete vCard v4.0 in JSON format, namely jCard [RFC7095], into a list of JSContact objects
+     * Converts a complete vCard v4.0 in JSON format, namely jCard [RFC7095], into a list of Card objects
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
      * @param jCard a jCard as a JSON string
-     * @return a list of JSContact objects
+     * @return a list of Card objects
      * @throws CardException if the jCard is not v4.0 compliant
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    public List<JSContact> convert(String jCard) throws CardException {
+    public List<Card> convert(String jCard) throws CardException {
 
         List<VCard> vcards = Ezvcard.parseJson(jCard).all();
         if (vcards.size() == 0)
@@ -63,11 +63,11 @@ public class JCard2JSContact extends EZVCard2JSContact {
 
 
     /**
-     * Converts a complete vCard v4.0 in JSON format, namely jCard [RFC7095], into a list of JSContact objects.
+     * Converts a complete vCard v4.0 in JSON format, namely jCard [RFC7095], into a list of Card objects.
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      * @param jCard a jCard as an istance of Jackson library JsonNode class
-     * @return a list of JSContact objects
+     * @return a list of Card objects
      * @throws CardException if the jCard is not v4.0 compliant
      * @throws JsonProcessingException if the jCard cannot be serialized
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
@@ -75,7 +75,7 @@ public class JCard2JSContact extends EZVCard2JSContact {
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    public List<JSContact> convert(JsonNode jCard) throws CardException, JsonProcessingException {
+    public List<Card> convert(JsonNode jCard) throws CardException, JsonProcessingException {
 
         return convert(mapper.writeValueAsString(jCard));
     }

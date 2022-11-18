@@ -52,8 +52,8 @@ public class OrganizationsTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testOrganizations1 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testOrganizations1 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -85,8 +85,8 @@ public class OrganizationsTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testOrganizations2 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testOrganizations2 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -122,8 +122,8 @@ public class OrganizationsTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testOrganizations3 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testOrganizations3 - 1", jscard2, Card.toJSCard(jscard));
     }
 
 
@@ -150,8 +150,8 @@ public class OrganizationsTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testOrganizations5 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testOrganizations5 - 1", jscard2, Card.toJSCard(jscard));
     }
 
 }

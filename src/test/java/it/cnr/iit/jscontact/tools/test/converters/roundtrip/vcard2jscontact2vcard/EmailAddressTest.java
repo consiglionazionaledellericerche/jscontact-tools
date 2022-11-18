@@ -35,7 +35,7 @@ public class EmailAddressTest extends RoundtripTest {
                 "EMAIL;TYPE=work:jqpublic@xyz.example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testEmailAddress1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -51,7 +51,7 @@ public class EmailAddressTest extends RoundtripTest {
                 "EMAIL;TYPE=home;PREF=1:jane_doe@example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testEmailAddress2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

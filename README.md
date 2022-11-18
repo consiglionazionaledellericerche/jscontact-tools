@@ -67,7 +67,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 ### Cloning
 
 Creation can be achieved through cloning as well.
-Cloning can be only applied to Card and CardGroup.
+Cloning can be only applied to Card.
 
 Here in the following a test assessing a successful creation of a cloned Card instance.
  
@@ -89,8 +89,8 @@ Here in the following a test assessing a successful creation of a cloned Card in
 
 ### JSContact validation
 
-Even if topomost JSContact objects, namely **Card** and **CardGroup**, are correctly created by builders, they might need to be validated as they were obtained from an external producer through deserialization.
-Validation is performed on both Card and CardGroup objects by invoking the method `isValid`.
+Even if a JSContact **Card** is correctly created by builder, it might need to be validated as it were obtained from an external producer through deserialization.
+Validation is performed on Card by invoking the method `isValid`.
 This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-calext-jscontact], `false` otherwise.
 If the validation process doesn't end successfully, the list of error messages can be obtained by calling the `getValidationMessages` method.  
 Here in the following a method testing an unsuccessfully ended validation is shown.
@@ -164,23 +164,6 @@ To pretty print serialized JSContact objects, use the following:
 
 ```
 
-### Deserialization of a group of cards
-
-Deserialization of a CardGroup object and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. Card and CardGroup instances).
-
-```
-
-    @Test
-    public void testDeserialization4() throws IOException {
-
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), Charset.forName("UTF-8"));
-        JSContact[] jsContacts = JSContact.toJSContacts(json);
-        for (JSContact jsContact : jsContacts)
-            assertTrue("testDeserialization4", jsContact.isValid());
-    }
-
-```
-
 <a name="localization"></a>
 ## Localization
 
@@ -223,7 +206,7 @@ At present, the following converting methods are available:
 *   XCard2JSContact
     *   List<JSContact> convert(String xml)
 
-All the methods return a list of JSContact top most objects and can raise a `CardException`.
+All the methods return a list of JSContact Card objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
@@ -371,7 +354,7 @@ At present, the following converting methods are available:
 *   JSContact2XCard
     *   String convertToXml(JSContact... jsContact)
 
-All the methods take in input a list of JSContact top most objects and can raise a `CardException`.
+All the methods take in input a list of JSContact Card objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
@@ -408,7 +391,7 @@ All the methods take in input a list of JSContact top most objects and can raise
 
 ### Conversion examples
 
-Here in the following two examples of conversion between vCard and JSContact top most objects.
+Here in the following two examples of conversion between vCard and JSContact card object.
 
 ```
 
@@ -422,7 +405,7 @@ Here in the following two examples of conversion between vCard and JSContact top
                 "GEO:geo:46.772673,-71.282945\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testAddresses4 - 1", jsCard.getAddresses());
         assertEquals("testAddresses4 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses4 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -473,7 +456,7 @@ Here in the following two examples of conversion between vCard and JSContact top
         assertEquals("testJCardGroup1 - 6", 2, jsCardGroup.getMembers().size());
         assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
         assertSame("testJCardGroup1 - 8", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
-        Card jsCard = (Card) jsContacts.get(1);
+        Card jsCard = jsContacts.get(1);
         assertEquals("testJCardGroup1 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
         assertEquals("testJCardGroup1 - 10", "John Doe", jsCard.getFullName());
         jsCard = (Card) jsContacts.get(2);
@@ -484,7 +467,7 @@ Here in the following two examples of conversion between vCard and JSContact top
 
 ```
 
-Here in the following two examples of conversion between JSContact top most objects and a vCard.
+Here in the following two examples of conversion between JSContact Card and a vCard.
 
 ```
 

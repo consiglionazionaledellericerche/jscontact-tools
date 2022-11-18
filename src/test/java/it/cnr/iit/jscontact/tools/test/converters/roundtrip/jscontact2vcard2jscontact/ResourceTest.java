@@ -43,8 +43,8 @@ public class ResourceTest extends RoundtripTest {
                  "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource1 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testResource1 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testPhoto - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testPhoto - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource2 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testResource2 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -104,8 +104,8 @@ public class ResourceTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource3 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testResource3 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource4 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testResource4 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -146,7 +146,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource5 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testResource5 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource6 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testResource6 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -184,7 +184,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource7 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testResource7 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -211,7 +211,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource8 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testResource8 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -235,7 +235,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource9 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testResource9 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -262,7 +262,7 @@ public class ResourceTest extends RoundtripTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testResource10 - 1", jscard2, Card.toCard(jscard));
+        assertEquals("testResource10 - 1", jscard2, Card.toJSCard(jscard));
     }
 
 }

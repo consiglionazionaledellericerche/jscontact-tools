@@ -18,7 +18,6 @@ package it.cnr.iit.jscontact.tools.test.deserialization;
 
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -38,7 +37,7 @@ public class DeserializationTest {
     public void testDeserialization1() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testDeserialization1", jsCard.isValid());
 
     }
@@ -47,7 +46,7 @@ public class DeserializationTest {
     public void testDeserialization2() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json")), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testDeserialization2", jsCard.isValid());
 
     }
@@ -56,7 +55,7 @@ public class DeserializationTest {
     public void testDeserialization3() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json")), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testDeserialization3", jsCard.isValid());
 
     }
@@ -65,8 +64,8 @@ public class DeserializationTest {
     public void testDeserialization4() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json")), StandardCharsets.UTF_8);
-        JSContact[] jsContacts = JSContact.toJSContacts(json);
-        for (JSContact jsContact : jsContacts)
+        Card[] jsContacts = Card.toJSCards(json);
+        for (Card jsContact : jsContacts)
             assertTrue("testDeserialization4", jsContact.isValid());
     }
 
@@ -102,8 +101,8 @@ public class DeserializationTest {
                     "}" +
                 "}" +
                 "}";
-        JSContact[] jsContacts = JSContact.toJSContacts(jscard);
-        Card jsCard = ((Card) jsContacts[0]);
+        Card[] jsCards = Card.toJSCards(jscard);
+        Card jsCard = jsCards[0];
         assertEquals("testDeserialization5 - 1", 1, jsCard.getExtensions().size());
         assertEquals("testDeserialization5 - 2", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
         assertTrue("testDeserialization5 - 3", jsCard.getExtensions().get("ext1") instanceof Integer);
@@ -133,8 +132,8 @@ public class DeserializationTest {
                     "[\"x-foo2\", {\"pref\": 1}, \"integer\", 100 ] " +
                   "]" +
                 "}";
-        JSContact[] jsContacts = JSContact.toJSContacts(jscard);
-        Card jsCard = ((Card) jsContacts[0]);
+        Card[] jsCards = Card.toJSCards(jscard);
+        Card jsCard = jsCards[0];
         assertEquals("testDeserialization6 - 1", 2, jsCard.getJCardExtensions().length);
         assertEquals("testDeserialization6 - 2", "x-foo1", jsCard.getJCardExtensions()[0].getName().toString());
         assertEquals("testDeserialization6 - 3", 2, jsCard.getJCardExtensions()[0].getParameters().size());

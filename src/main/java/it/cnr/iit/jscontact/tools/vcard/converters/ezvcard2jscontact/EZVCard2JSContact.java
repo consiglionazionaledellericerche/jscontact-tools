@@ -568,7 +568,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillMembers(VCard vcard, CardGroup jsCardGroup) {
+    private static void fillMembers(VCard vcard, Card jsCard) {
 
         List<MemberWrapper> wrappers = new ArrayList<>();
         for (Member member : vcard.getMembers()) {
@@ -580,7 +580,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
         Collections.sort(wrappers); // sort based on preference
         for (MemberWrapper wrapper : wrappers)
-            jsCardGroup.addMember(wrapper.getValue());
+            jsCard.addMember(wrapper.getValue());
 
     }
 
@@ -1264,12 +1264,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private void fillVCardExtensions(VCard vcard, JSContact jsContact) {
+    private void fillVCardExtensions(VCard vcard, Card jsCard) {
 
         for (RawProperty extension : vcard.getExtendedProperties()) {
             if (!fakeExtensionsMapping.containsKey(extension.getPropertyName()) &&
                     !fakeExtensionsMapping.containsKey(extension.getPropertyName().toLowerCase())) {
-                jsContact.addJCardProp(JCardProp.builder()
+                jsCard.addJCardProp(JCardProp.builder()
                                              .name(V_Extension.toV_Extension(extension.getPropertyName()))
                                              .parameters(VCardUtils.getJCardPropParameters(extension.getParameters()))                                            .type(extension.getDataType())
                                              .value(extension.getValue())
@@ -1278,7 +1278,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private void fillJSContactExtensions(VCard vcard, JSContact jsContact) throws CardException {
+    private void fillJSContactExtensions(VCard vcard, Card jsCard) throws CardException {
 
         String path = null;
         Object value = null;
@@ -1289,13 +1289,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     path = extension.getParameter(VCardUtils.VCARD_X_RFC0000_JSPATH_PARAM_TAG);
                     value = X_RFC0000_JSPROP_Utils.toJsonValue(extension.getValue());
                     if (!path.contains(DelimiterUtils.SLASH_DELIMITER)) {
-                        jsContact.addExtension(path,value);
+                        jsCard.addExtension(path,value);
                     }
                     else {
                         String[] pathItems = path.split(DelimiterUtils.SLASH_DELIMITER);
                         extensionName = pathItems[pathItems.length-1];
                         List list = Arrays.asList(pathItems);
-                        jsContact.addExtension(list.subList(0, pathItems.length-1),extensionName.replaceAll(DelimiterUtils.SLASH_DELIMITER_IN_JSON_POINTER,DelimiterUtils.SLASH_DELIMITER), value);
+                        jsCard.addExtension(list.subList(0, pathItems.length-1),extensionName.replaceAll(DelimiterUtils.SLASH_DELIMITER_IN_JSON_POINTER,DelimiterUtils.SLASH_DELIMITER), value);
                     }
                 }
             }
@@ -1363,38 +1363,22 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return false;
     }
 
-    private JSContact convert(VCard vCard) throws CardException {
+    private Card convert(VCard vCard) throws CardException {
 
         Card jsCard;
-        CardGroup jsCardGroup = null;
         String uid;
         if (vCard.getUid()!=null)
             uid = vCard.getUid().getValue();
         else
             uid = UUID.randomUUID().toString();
 
-        if (vCard.getMembers() != null && vCard.getMembers().size() != 0) {
-            jsCardGroup = CardGroup.builder().uid(uid).build();
-            fillMembers(vCard, jsCardGroup);
-            fillVCardExtensions(vCard, jsCardGroup);
-            fillJSContactExtensions(vCard, jsCardGroup);
-            jsCardGroup.setUid(uid);
-            if (containsCardProperties(vCard)) {
-                jsCardGroup.setCard(Card.builder().uid(uid).build());
-                jsCard = jsCardGroup.getCard();
-            }
-            else
-                return jsCardGroup;
-        } else {
-            jsCard = Card.builder().uid(uid).build();
-        }
-
-        jsCard.setUid(uid);
+        jsCard = Card.builder().uid(uid).build();
         jsCard.setKind(getKind(vCard.getKind()));
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(getUpdated(vCard.getRevision()));
         jsCard.setLocale(config.getDefaultLanguage());
         fillSpeakToAsOrGender(vCard, jsCard);
+        fillMembers(vCard, jsCard);
         fillFormattedNames(vCard, jsCard);
         fillNames(vCard, jsCard);
         fillNickNames(vCard, jsCard);
@@ -1424,27 +1408,24 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fillVCardExtensions(vCard, jsCard);
         fillJSContactExtensions(vCard, jsCard);
 
-        if (jsCardGroup != null)
-            return jsCardGroup;
-        else
-            return jsCard;
+       return jsCard;
     }
 
     /**
-     * Converts a list of vCard v4.0 instances [RFC6350] into a list of JSContact objects.
+     * Converts a list of vCard v4.0 instances [RFC6350] into a list of Card objects.
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
      * @param vCards a list of instances of the ez-vcard library VCard class
-     * @return a list of JSContact objects
+     * @return a list of Card objects
      * @throws CardException if one of the vCard instances is not v4.0 compliant
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    public List<JSContact> convert(VCard... vCards) throws CardException {
+    public List<Card> convert(VCard... vCards) throws CardException {
 
-        List<JSContact> jsContacts = new ArrayList<>();
+        List<Card> jsCards = new ArrayList<>();
 
         for (VCard vCard : vCards) {
             if (config.isSetCardMustBeValidated()) {
@@ -1452,10 +1433,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 if (!warnings.isEmpty())
                     throw new CardException(warnings.toString());
             }
-            jsContacts.add(convert(vCard));
+            jsCards.add(convert(vCard));
         }
 
-        return jsContacts;
+        return jsCards;
     }
 
 }

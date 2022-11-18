@@ -43,7 +43,7 @@ public class ProfileTest extends JCard2JSContactTest {
                                                                                       .build())
                                                          .build();
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
+        Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testRDAPProfile - 1", "Joe User", jsCard.getFullName());
         assertTrue("testRDAPProfile - 2", jsCard.getKind().isIndividual());
         assertEquals("testRDAPProfile - 3", 4, jsCard.getName().getComponents().length);
