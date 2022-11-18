@@ -26,6 +26,8 @@ import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
+import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
+import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.JCardPropsDeserializer;
@@ -40,6 +42,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -70,7 +73,7 @@ import java.util.*;
 @ToString(callSuper = true)
 @EqualsAndHashCode(of={"uid"}, callSuper = false)
 @SuperBuilder
-public class Card extends ValidableObject implements Serializable {
+public class Card extends AbstractExtensibleJSContactType implements Serializable {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -264,6 +267,10 @@ public class Card extends ValidableObject implements Serializable {
 
     @JsonIgnore
     Map<String,TimeZone> customTimeZones;
+
+    @JsonIgnore
+    @Getter
+    private List<String> validationMessages;
 
 //Methods for adding items to a mutable collection
 
@@ -851,4 +858,44 @@ public class Card extends ValidableObject implements Serializable {
 
         return map;
     }
+
+
+    /**
+     * Tests if a JSContact Card is valid.
+     *
+     * @return true if the validation check ends successfully, false otherwise
+     */
+    @JsonIgnore
+    public boolean isValid() {
+
+        validationMessages = new ArrayList<>();
+
+        Set<ConstraintViolation<Card>> constraintViolations;
+        if (this instanceof Card)
+            constraintViolations = ValidatorBuilder.getValidator().validate(this, CardConstraintsGroup.class);
+        else
+            constraintViolations = ValidatorBuilder.getValidator().validate(this);
+        if (constraintViolations.size() > 0) {
+            for (ConstraintViolation<Card> constraintViolation : constraintViolations)
+                validationMessages.add(constraintViolation.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the error message when the validation check ends unsuccessfully.
+     *
+     * @return the validation message as a text
+     */
+    @JsonIgnore
+    public String getValidationMessage() {
+
+        if (validationMessages == null)
+            return null;
+
+        return String.join("\n", validationMessages);
+    }
+
 }
