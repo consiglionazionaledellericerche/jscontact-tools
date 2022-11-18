@@ -250,9 +250,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return (vcardPref != null) ? Integer.parseInt(vcardPref) : null;
     }
 
-
-
-
     private static String getAutoFulllAddress(ezvcard.property.Address addr) {
 
         StringJoiner joiner = new StringJoiner(DelimiterUtils.NEWLINE_DELIMITER);
@@ -267,8 +264,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return StringUtils.isNotEmpty(autoFullAddress) ? autoFullAddress : null;
     }
 
-
-
     private String getFulllAddress(String addressLabel, String autoFullAddress) {
 
         String fullAddress = addressLabel;
@@ -279,6 +274,20 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return fullAddress;
     }
 
+    private String getX_ABLabel(VCardProperty vcardProperty,List<RawProperty> vcardExtendedProperties) {
+
+        String group = vcardProperty.getGroup();
+
+        if (group == null)
+            return null;
+
+        for (RawProperty rawProperty : vcardExtendedProperties) {
+            if (rawProperty.getPropertyName().equalsIgnoreCase(VCardUtils.VCARD_X_ABLABEL_TAG) && rawProperty.getGroup().equals(group))
+                return rawProperty.getValue();
+        }
+
+        return null;
+    }
 
     private Resource getResource(VCardProperty property) {
 
@@ -300,11 +309,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .build();
     }
 
-    private void addMediaResource(VCardProperty property, Card jsCard, MediaResourceType type, int index) {
+    private void addMediaResource(VCardProperty vcardProperty, Card jsCard, MediaResourceType type, int index, List<RawProperty> vcardExtendedProperties) {
 
-        Resource resource = getResource(property);
+        Resource resource = getResource(vcardProperty);
 
-        jsCard.addMediaResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG),  ResourceType.valueOf(type.getRfcValue().name())),
+        jsCard.addMediaResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), vcardProperty.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG),  ResourceType.valueOf(type.getRfcValue().name())),
                                     MediaResource.builder()
                                      .type(type)
                                     .propId(resource.getPropId())
@@ -312,15 +321,16 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                     .contexts(resource.getContexts())
                                     .mediaType(resource.getMediaType())
                                     .pref(resource.getPref())
-                                    .jCardParams(VCardUtils.getVCardUnmatchedParameters(property,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                    .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
+                                    .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                     .build()
                            );
     }
 
-    private DirectoryResource getDirectoryResource(VCardProperty property, DirectoryResourceType type) {
+    private DirectoryResource getDirectoryResource(VCardProperty vcardProperty, DirectoryResourceType type, List<RawProperty> vcardExtendedProperties) {
 
-        String index = property.getParameter(VCardUtils.VCARD_INDEX_PARAM_TAG);
-        Resource resource = getResource(property);
+        String index = vcardProperty.getParameter(VCardUtils.VCARD_INDEX_PARAM_TAG);
+        Resource resource = getResource(vcardProperty);
         return   DirectoryResource.builder()
                 .type(type)
                 .propId(resource.getPropId())
@@ -329,14 +339,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .mediaType(resource.getMediaType())
                 .pref(resource.getPref())
                 .index((index!=null) ? Integer.parseInt(index) : null) //used only for DirectoryResource objects whose "type" is "directory"
-                .jCardParams(VCardUtils.getVCardUnmatchedParameters(property,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
+                .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                 .build();
     }
 
-    private void addDirectoryResource(VCardProperty property, Card jsCard, DirectoryResourceType type, int index) {
+    private void addDirectoryResource(VCardProperty property, Card jsCard, DirectoryResourceType type, int index, List<RawProperty> vcardExtendedProperties) {
 
         jsCard.addDirectoryResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG), type),
-                                    getDirectoryResource(property,type));
+                                    getDirectoryResource(property,type, vcardExtendedProperties));
     }
 
     private void addDirectoryResource(Card jsCard, DirectoryResource resource, int index) {
@@ -345,27 +356,28 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                    resource);
     }
 
-    private void addCryptoResource(VCardProperty property, Card jsCard, int index) {
+    private void addCryptoResource(VCardProperty vcardProperty, Card jsCard, int index, List<RawProperty> vcardExtendedProperties) {
 
-        Resource resource = getResource(property);
+        Resource resource = getResource(vcardProperty);
 
-        jsCard.addCryptoResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("KEY-%s",index), property.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG), ResourceType.KEY),
+        jsCard.addCryptoResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("KEY-%s",index), vcardProperty.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG), ResourceType.KEY),
                 CryptoResource.builder()
                         .propId(resource.getPropId())
                         .uri(resource.getUri())
                         .contexts(resource.getContexts())
                         .mediaType(resource.getMediaType())
                         .pref(resource.getPref())
-                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(property,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                        .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
+                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                         .build()
         );
     }
 
-    private void addCalendarResource(VCardProperty property, Card jsCard, CalendarResourceType type, int index) {
+    private void addCalendarResource(VCardProperty vcardProperty, Card jsCard, CalendarResourceType type, int index, List<RawProperty> vcardExtendedProperties) {
 
-        Resource resource = getResource(property);
+        Resource resource = getResource(vcardProperty);
 
-        jsCard.addCalendarResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG), ResourceType.valueOf(type.getRfcValue().name())),
+        jsCard.addCalendarResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), vcardProperty.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG), ResourceType.valueOf(type.getRfcValue().name())),
                 CalendarResource.builder()
                         .type(type)
                         .propId(resource.getPropId())
@@ -373,16 +385,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .contexts(resource.getContexts())
                         .mediaType(resource.getMediaType())
                         .pref(resource.getPref())
-                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(property,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                        .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
+                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                         .build()
         );
     }
 
-    private void addLinkResource(VCardProperty property, Card jsCard, LinkResourceType type, int index) {
+    private void addLinkResource(VCardProperty vcardProperty, Card jsCard, LinkResourceType type, int index, List<RawProperty> vcardExtendedProperties) {
 
-        Resource resource = getResource(property);
+        Resource resource = getResource(vcardProperty);
 
-        jsCard.addLinkResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",(type!=null) ? type.getRfcValue().name() : "LINK",index), property.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG), (type!=null) ? ResourceType.valueOf(type.getRfcValue().name()) : ResourceType.LINK),
+        jsCard.addLinkResource(getId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",(type!=null) ? type.getRfcValue().name() : "LINK",index), vcardProperty.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG), (type!=null) ? ResourceType.valueOf(type.getRfcValue().name()) : ResourceType.LINK),
                 LinkResource.builder()
                         .type(type)
                         .propId(resource.getPropId())
@@ -390,7 +403,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .contexts(resource.getContexts())
                         .mediaType(resource.getMediaType())
                         .pref(resource.getPref())
-                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(property,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                        .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
+                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                         .build()
         );
     }
@@ -927,6 +941,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                        .features((phoneFeatures == null) ? getDefaultPhoneFeatures() : phoneFeatures)
                                        .contexts(contexts)
                                        .pref(tel.getPref())
+                                       .label(getX_ABLabel(tel,vcard.getExtendedProperties()))
                                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(tel,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                        .build()
                               );
@@ -945,6 +960,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .email(emailAddress)
                         .contexts(getContexts(vcardType))
                         .pref(email.getPref())
+                        .label(getX_ABLabel(email,vcard.getExtendedProperties()))
                         .jCardParams(VCardUtils.getVCardUnmatchedParameters(email,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                         .build()
                 );
@@ -965,6 +981,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     .uri(getValue(impp))
                     .contexts(contexts)
                     .pref(impp.getPref())
+                    .label(getX_ABLabel(impp,vcard.getExtendedProperties()))
                     .jCardParams(VCardUtils.getVCardUnmatchedParameters(impp,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                     .build()
             );
@@ -976,14 +993,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (Photo photo : vcard.getPhotos())
-            addMediaResource(photo, jsCard, MediaResourceType.photo(), i++);
+            addMediaResource(photo, jsCard, MediaResourceType.photo(), i++, vcard.getExtendedProperties());
         i = 1;
         for (Sound sound : vcard.getSounds())
-            addMediaResource(sound, jsCard, MediaResourceType.sound(), i++);
+            addMediaResource(sound, jsCard, MediaResourceType.sound(), i++, vcard.getExtendedProperties());
 
         i = 1;
         for (Logo logo : vcard.getLogos())
-            addMediaResource(logo, jsCard, MediaResourceType.logo(), i++);
+            addMediaResource(logo, jsCard, MediaResourceType.logo(), i++, vcard.getExtendedProperties());
 
     }
 
@@ -991,7 +1008,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (Key key : vcard.getKeys())
-            addCryptoResource(key, jsCard, i++);
+            addCryptoResource(key, jsCard, i++, vcard.getExtendedProperties());
 
     }
 
@@ -999,11 +1016,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (Source source : vcard.getSources())
-            addDirectoryResource(source, jsCard, DirectoryResourceType.entry(), i++);
+            addDirectoryResource(source, jsCard, DirectoryResourceType.entry(), i++, vcard.getExtendedProperties());
 
         List<DirectoryResource> orgDirectories = new ArrayList<>();
         for (OrgDirectory od : vcard.getOrgDirectories()) {
-            orgDirectories.add(getDirectoryResource(od, DirectoryResourceType.directory()));
+            orgDirectories.add(getDirectoryResource(od, DirectoryResourceType.directory(), vcard.getExtendedProperties()));
         }
         if (orgDirectories.size() > 0) {
             Collections.sort(orgDirectories);  //sorted based on index
@@ -1017,11 +1034,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (CalendarUri calendarUri : vcard.getCalendarUris())
-            addCalendarResource(calendarUri, jsCard, CalendarResourceType.calendar(), i++);
+            addCalendarResource(calendarUri, jsCard, CalendarResourceType.calendar(), i++, vcard.getExtendedProperties());
 
         i = 1;
         for (FreeBusyUrl fburl : vcard.getFbUrls())
-            addCalendarResource(fburl, jsCard, CalendarResourceType.freeBusy(), i++);
+            addCalendarResource(fburl, jsCard, CalendarResourceType.freeBusy(), i++, vcard.getExtendedProperties());
 
     }
 
@@ -1030,14 +1047,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (Url url : vcard.getUrls())
-            addLinkResource(url, jsCard, null, i++);
+            addLinkResource(url, jsCard, null, i++, vcard.getExtendedProperties());
 
         List<RawProperty> contactUris = VCardUtils.getRawProperties(vcard, "CONTACT-URI");
         i = 1;
         for (RawProperty contactUri : contactUris) {
             UriProperty uriProperty = new UriProperty(getValue(contactUri));
             uriProperty.setParameters(contactUri.getParameters());
-            addLinkResource(uriProperty, jsCard, LinkResourceType.contact(), i++);
+            addLinkResource(uriProperty, jsCard, LinkResourceType.contact(), i++, vcard.getExtendedProperties());
         }
 
     }
@@ -1054,6 +1071,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                              .uri(calendarRequestUri.getValue())
                              .contexts(contexts)
                              .pref(calendarRequestUri.getPref())
+                             .label(getX_ABLabel(calendarRequestUri,vcard.getExtendedProperties()))
                              .jCardParams(VCardUtils.getVCardUnmatchedParameters(calendarRequestUri,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                              .build());
         }
@@ -1198,6 +1216,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String vcardType = extension.getParameter(VCardUtils.VCARD_TYPE_PARAM_TAG);
             Map<Context,Boolean> contexts = getContexts(vcardType);
             String jsonPointer = fakeExtensionsMapping.get(extension.getPropertyName().toLowerCase());
+
+            if (jsonPointer == null)
+                continue; //vcard extension already treated elsewhere
 
             if (extension.getPropertyName().equalsIgnoreCase("LOCALE"))
                 jsCard.setLocale(extension.getValue());

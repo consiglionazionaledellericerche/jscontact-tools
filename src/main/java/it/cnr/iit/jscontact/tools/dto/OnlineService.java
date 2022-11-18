@@ -26,6 +26,7 @@ import it.cnr.iit.jscontact.tools.constraints.OnlineServiceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
@@ -52,7 +53,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OnlineService extends AbstractJSContactType implements HasIndex, Comparable<OnlineService>, IdMapValue, Serializable, HasContexts {
+public class OnlineService extends AbstractJSContactType implements HasLabel, HasIndex, Comparable<OnlineService>, IdMapValue, Serializable, HasContexts {
 
     @NotNull
     @Pattern(regexp = "OnlineService", message="invalid @type value in OnlineService")

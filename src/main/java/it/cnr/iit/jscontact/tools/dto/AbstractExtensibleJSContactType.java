@@ -24,7 +24,6 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -97,9 +96,6 @@ public abstract class AbstractExtensibleJSContactType {
             else if (o.getType()==null) // unspecified value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
         } else {
-
-            if (this instanceof HasLabel && ((HasLabel) this).getLabel() != null ) //The label property must be considered, if any
-                map.put(String.format("%slabel", jsonPointer), ((HasLabel) this).getLabel());
 
             if (this instanceof Note && ((Note) this).getCreated() != null ) //The label property must be considered, if any
                 map.put(String.format("%screated", jsonPointer), ((Note) this).getCreated());
@@ -211,9 +207,7 @@ public abstract class AbstractExtensibleJSContactType {
 
         try {
             if (pathItems.isEmpty()) {
-                if (this instanceof HasLabel && extension.equals("label"))
-                    ((HasLabel) this).setLabel(value.toString());
-                else if (this instanceof Note && extension.equals("created"))
+                    if (this instanceof Note && extension.equals("created"))
                     ((Note) this).setCreated((Calendar) value);
                 else
                     addExtension(extension, value);

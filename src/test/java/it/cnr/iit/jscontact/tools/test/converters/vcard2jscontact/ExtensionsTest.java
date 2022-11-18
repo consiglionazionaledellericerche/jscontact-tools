@@ -79,12 +79,13 @@ public class ExtensionsTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "TEL;PROP-ID=PHONE-1;TYPE=home,voice;VALUE=uri:tel:+33-01-23-45-6\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=phones/PHONE-1/label;VALUE=uri:data:application/json;%22a label%22\n" +
+                "G-PHONE-1.TEL;PROP-ID=PHONE-1;TYPE=home,voice;VALUE=uri:tel:+33-01-23-45-6\n" +
+                "G-PHONE-1.X-ABLabel;VALUE=text:a label\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact3 - 1", "a label", jsCard.getPhones().get("PHONE-1").getLabel());
+        assertEquals("testExtendedJSContact3 - 2", "G-PHONE-1", jsCard.getPhones().get("PHONE-1").getJCardParams().get("group").getValue());
     }
 
     @Test

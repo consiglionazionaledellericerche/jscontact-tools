@@ -34,6 +34,8 @@ public class VCardUtils {
     public static final String VCARD_PREF_PARAM_TAG = "PREF";
     public static final String VCARD_MEDIATYPE_PARAM_TAG = "MEDIATYPE";
 
+    public static final String VCARD_X_ABLABEL_TAG = "X-ABLabel";
+
     /**
      * Gets the VCardParameter value of a given VCardParameter object identified by the parameter name in the Ezvcard VCardParameters object.
      *
