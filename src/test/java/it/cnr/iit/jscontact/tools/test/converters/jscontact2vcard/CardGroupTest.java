@@ -56,15 +56,15 @@ public class CardGroupTest extends JSContact2VCardTest {
 
         List<VCard> vcards = jsContact2VCard.convert(jsCards);
         assertEquals("testCardGroup1 - 1", 3, vcards.size());
-        assertTrue("testCardGroup1 - 3", vcards.get(0).getKind().isGroup());
-        assertTrue("testCardGroup1 - 4",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
-        assertEquals("testCardGroup1 - 5", "The Doe family", vcards.get(0).getFormattedName().getValue());
-        assertEquals("testCardGroup1 - 6", 2, vcards.get(0).getMembers().size());
-        assertEquals("testCardGroup1 - 7", vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
-        assertEquals("testCardGroup1 - 8", vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
-        assertEquals("testCardGroup1 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", vcards.get(1).getUid().getValue());
-        assertEquals("testCardGroup1 - 10", "John Doe", vcards.get(1).getFormattedName().getValue());
-        assertEquals("testCardGroup1 - 11", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", vcards.get(2).getUid().getValue());
-        assertEquals("testCardGroup1 - 12", "Jane Doe", vcards.get(2).getFormattedName().getValue());
+        assertTrue("testCardGroup1 - 2", vcards.get(0).getKind().isGroup());
+        assertTrue("testCardGroup1 - 3",StringUtils.isNotEmpty(vcards.get(0).getUid().getValue()));
+        assertEquals("testCardGroup1 - 4", "The Doe family", vcards.get(0).getFormattedName().getValue());
+        assertEquals("testCardGroup1 - 5", 2, vcards.get(0).getMembers().size());
+        assertEquals("testCardGroup1 - 6", vcards.get(0).getMembers().get(0).getUri().equals("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
+        assertEquals("testCardGroup1 - 7", vcards.get(0).getMembers().get(1).getUri().equals("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
+        assertEquals("testCardGroup1 - 8", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", vcards.get(1).getUid().getValue());
+        assertEquals("testCardGroup1 - 9", "John Doe", vcards.get(1).getFormattedName().getValue());
+        assertEquals("testCardGroup1 - 10", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", vcards.get(2).getUid().getValue());
+        assertEquals("testCardGroup1 - 11", "Jane Doe", vcards.get(2).getFormattedName().getValue());
     }
 }

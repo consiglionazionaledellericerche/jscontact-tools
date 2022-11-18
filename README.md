@@ -87,10 +87,10 @@ Here in the following a test assessing a successful creation of a cloned Card in
 <a name="validation"></a>
 ## Validation
 
-### JSContact validation
+### JSContact Card validation
 
 Even if a JSContact **Card** is correctly created by builder, it might need to be validated as it were obtained from an external producer through deserialization.
-Validation is performed on Card by invoking the method `isValid`.
+Validation is performed on JSContact Card by invoking the method `isValid`.
 This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-calext-jscontact], `false` otherwise.
 If the validation process doesn't end successfully, the list of error messages can be obtained by calling the `getValidationMessages` method.  
 Here in the following a method testing an unsuccessfully ended validation is shown.
@@ -134,7 +134,7 @@ All the methods can raise a `CardException`.
 <a name="serialization-deserialization"></a>
 ## Serialization/Deserialization
 
-JSContact serialization/deserializaion is performed through Jackson library annotations.
+JSContact Card serialization/deserializaion is performed through Jackson library annotations.
 
 ## Serialization
 
@@ -145,7 +145,7 @@ JSContact serialization/deserializaion is performed through Jackson library anno
 
 ```
 
-To pretty print serialized JSContact objects, use the following: 
+To pretty print serialized Card objects, use the following: 
 
 ```
 
@@ -197,20 +197,20 @@ At present, the following methods support localizations handling:
 At present, the following converting methods are available:
 
 *   EZVCard2JSContact
-    *   List<JSContact> convert(VCard... vcard)
+    *   List<Card> convert(VCard... vcard)
 *   VCard2JSContact
-    *   List<JSContact> convert(String vcf)
+    *   List<Card> convert(String vcf)
 *   JCard2JSContact
-    *   List<JSContact> convert(String json)
-    *   List<JSContact> convert(JsonNode jsonNode) 
+    *   List<Card> convert(String json)
+    *   List<Card> convert(JsonNode jsonNode) 
 *   XCard2JSContact
-    *   List<JSContact> convert(String xml)
+    *   List<Card> convert(String xml)
 
 All the methods return a list of JSContact Card objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
-### Conversion Rules from vCard to JSContact
+### Conversion Rules from vCard to JSContact Card
 
 The conversion is executed according to the following rules:
 
@@ -307,7 +307,7 @@ The conversion is executed according to the following rules:
 
 25. The VCARD parameter DERIVED is ignored. 
 
-### Conversion Profiles from vCard to JSContact
+### Conversion Profiles from vCard to JSContact Card
 
 By default, where a collection of objects is mapped to a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
 This setting schema can be modified by defining a different one assigning key values based on the positions of vCard elements.
@@ -320,7 +320,7 @@ To do that, the following steps must be followed:
 3. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToUse` of `VCard2JSContactConfig` object property with it
 
 
-### RDAP Conversion Profile from jCard to JSContact
+### RDAP Conversion Profile from jCard to JSContact Card
 
 A pre-defined conversion profile to convert a jCard instance inside an RDAP response [RFC9083](https://datatracker.ietf.org/doc/rfc9083/) is available.
 The values of the map keys used in such profile are defined in [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/).
@@ -339,26 +339,26 @@ Additional setting rules are shown in the following code:
 ```
 
 <a name="jscontact-conversion"></a>
-## JSContact Conversion
+## JSContact Card Conversion
 
 At present, the following converting methods are available:
 
 *   JSContact2EZVCard
-    *   List<VCard> convert(JSContact... jsContacts)
+    *   List<VCard> convert(Card... jsContacts)
     *   List<VCard> convert(String json)
 *   JSContact2VCard
-    *   String convertToText(JSContact... jsContact)
+    *   String convertToText(Card... jsContact)
 *   JSContact2JCard
-    *   String convertToJson(JSContact... jsContact)
-    *   JsonNode convertToJsonNode(JSContact... jsContact)
+    *   String convertToJson(Card... jsContact)
+    *   JsonNode convertToJsonNode(Card... jsContact)
 *   JSContact2XCard
-    *   String convertToXml(JSContact... jsContact)
+    *   String convertToXml(Card... jsContact)
 
 All the methods take in input a list of JSContact Card objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
-### Conversion Rules from JSContact to vCard 
+### Conversion Rules from JSContact Card to vCard 
 
 1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
  
@@ -391,7 +391,7 @@ All the methods take in input a list of JSContact Card objects and can raise a `
 
 ### Conversion examples
 
-Here in the following two examples of conversion between vCard and JSContact card object.
+Here in the following two examples of conversion between vCard and JSContact Card object.
 
 ```
 
@@ -446,22 +446,21 @@ Here in the following two examples of conversion between vCard and JSContact car
                 "]]" +
                 "]";
 
-        List<JSContact> jsContacts = jCard2JSContact.convert(jcard);
-        assertEquals("testJCardGroup1 - 1", 3, jsContacts.size());
-        assertTrue("testJCardGroup1 - 2",jsContacts.get(0) instanceof CardGroup);
-        CardGroup jsCardGroup = (CardGroup) jsContacts.get(0);
-        assertTrue("testJCardGroup1 - 3", jsCardGroup.getCard().getKind().isGroup());
-        assertTrue("testJCardGroup1 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertEquals("testJCardGroup1 - 5", "The Doe family", jsCardGroup.getCard().getFullName());
-        assertEquals("testJCardGroup1 - 6", 2, jsCardGroup.getMembers().size());
-        assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
-        assertSame("testJCardGroup1 - 8", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
-        Card jsCard = jsContacts.get(1);
-        assertEquals("testJCardGroup1 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
-        assertEquals("testJCardGroup1 - 10", "John Doe", jsCard.getFullName());
-        jsCard = (Card) jsContacts.get(2);
-        assertEquals("testJCardGroup1 - 11", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
-        assertEquals("testJCardGroup1 - 12", "Jane Doe", jsCard.getFullName());
+        List<Card> jsCards = jCard2JSContact.convert(jcard);
+        assertEquals("testJCardGroup1 - 1", 3, jsCards.size());
+        Card jsCardGroup = jsCards.get(0);
+        assertTrue("testJCardGroup1 - 2", jsCardGroup.getCard().getKind().isGroup());
+        assertTrue("testJCardGroup1 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertEquals("testJCardGroup1 - 4", "The Doe family", jsCardGroup.getCard().getFullName());
+        assertEquals("testJCardGroup1 - 5", 2, jsCardGroup.getMembers().size());
+        assertSame("testJCardGroup1 - 6", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
+        assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
+        Card jsCard = jsCards.get(1);
+        assertEquals("testJCardGroup1 - 8", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
+        assertEquals("testJCardGroup1 - 9", "John Doe", jsCard.getFullName());
+        jsCard = (Card) jsCards.get(2);
+        assertEquals("testJCardGroup1 - 10", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
+        assertEquals("testJCardGroup1 - 11", "Jane Doe", jsCard.getFullName());
         
     }
 
