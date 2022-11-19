@@ -745,13 +745,19 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (pi.getType()!=null && pi.getType().isRfcValue()) {
                 switch (pi.getType().getRfcValue()) {
                     case EXPERTISE:
-                        vcard.getExpertise().add(getExpertise(pi));
+                        Expertise e = getExpertise(pi);
+                        addX_ABLabel(pi,e,vcard);
+                        vcard.getExpertise().add(e);
                         break;
                     case HOBBY:
-                        vcard.getHobbies().add(getHobby(pi));
+                        Hobby h = getHobby(pi);
+                        addX_ABLabel(pi,h,vcard);
+                        vcard.getHobbies().add(h);
                         break;
                     case INTEREST:
-                        vcard.getInterests().add(getInterest(pi));
+                        Interest i = getInterest(pi);
+                        addX_ABLabel(pi,i,vcard);
+                        vcard.getInterests().add(i);
                         break;
                 }
             }

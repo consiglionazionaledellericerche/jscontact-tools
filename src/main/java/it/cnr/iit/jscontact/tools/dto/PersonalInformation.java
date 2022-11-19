@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationLevelTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
@@ -45,7 +46,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonalInformation extends AbstractJSContactType implements HasType, HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
+public class PersonalInformation extends AbstractJSContactType implements HasLabel, HasType, HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
 
     @NotNull
     @Pattern(regexp = "PersonalInformation", message="invalid @type value in PersonalInformation")

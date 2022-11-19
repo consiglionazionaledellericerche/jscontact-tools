@@ -837,6 +837,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                             .value(getValue(hobby))
                                             .level((hobby.getLevel() != null) ? getLevel(hobby.getLevel().getValue()) : null)
                                             .index(hobby.getIndex())
+                                            .label(getX_ABLabel(hobby,vcard.getExtendedProperties()))
                                             .jCardParams(VCardUtils.getVCardUnmatchedParameters(hobby,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                             .build()
                        );
@@ -857,6 +858,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                              .value(getValue(interest))
                                              .level((interest.getLevel() != null) ? getLevel(interest.getLevel().getValue()) : null)
                                              .index(interest.getIndex())
+                                             .label(getX_ABLabel(interest,vcard.getExtendedProperties()))
                                              .jCardParams(VCardUtils.getVCardUnmatchedParameters(interest,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                              .build()
                           );
@@ -876,6 +878,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                               .value(getValue(expertise))
                                               .level((expertise.getLevel() != null) ? getLevel(expertise.getLevel().getValue()) : null)
                                               .index(expertise.getIndex())
+                                              .label(getX_ABLabel(expertise,vcard.getExtendedProperties()))
                                               .jCardParams(VCardUtils.getVCardUnmatchedParameters(expertise,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                               .build()
                            );
