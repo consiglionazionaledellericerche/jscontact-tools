@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -34,10 +33,10 @@ public class NotesTest extends JSContact2VCardTest {
                     "\"@type\":\"Card\"," +
                     "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                     "\"fullName\":\"test\"," +
-                    "\"notes\": [" +
-                          "{ \"@type\": \"Note\", \"created\":\"2010-10-10T10:10:10Z\", \"note\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"} ," +
-                          "{ \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\", \"language\":\"it\" } " +
-                    "]" +
+                    "\"notes\": {" +
+                          "\"NOTE-1\" : { \"@type\": \"Note\", \"created\":\"2010-10-10T10:10:10Z\", \"note\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"} ," +
+                          "\"NOTE-2\" : { \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\", \"language\":\"it\" } " +
+                    "}" +
                     "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testNotes1 - 1", 2, vcard.getNotes().size());
@@ -49,7 +48,7 @@ public class NotesTest extends JSContact2VCardTest {
         assertEquals("testNotes1 - 7", "1", vcard.getNotes().get(1).getAltId());
         assertEquals("testNotes1 - 8", 1, vcard.getExtendedProperties().size());
         assertEquals("testNotes1 - 9", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testNotes1 - 10", "notes/0/created", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testNotes1 - 10", "notes/NOTE-1/created", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
         assertEquals("testNotes1 - 11", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
         assertEquals("testNotes1 - 12", "data:application/json;%222010-10-10T10%3A10%3A10Z%22", vcard.getExtendedProperties().get(0).getValue());
     }

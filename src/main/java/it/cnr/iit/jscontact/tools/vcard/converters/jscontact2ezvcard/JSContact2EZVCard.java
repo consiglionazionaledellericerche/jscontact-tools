@@ -1259,10 +1259,12 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         List<ezvcard.property.Note> notes = new ArrayList<>();
         boolean languageFound = false;
-        for (Note note : jsCard.getNotes()) {
+        for (Map.Entry<String,Note> entry : jsCard.getNotes().entrySet()) {
             if (!languageFound)
-                languageFound = StringUtils.isNotEmpty(note.getLanguage());
-            notes.add(getNote(note));
+                languageFound = StringUtils.isNotEmpty(entry.getValue().getLanguage());
+            ezvcard.property.Note note = getNote(entry.getValue());
+            addPropId(note, entry.getKey());
+            notes.add(note);
         }
         if (!languageFound)
             vcard.getNotes().addAll(notes);

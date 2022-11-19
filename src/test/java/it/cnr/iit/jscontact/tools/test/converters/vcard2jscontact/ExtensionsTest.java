@@ -149,11 +149,11 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "FN:test\n" +
                 "NOTE;ALTID=1:This fax number is operational 0800 to 1715 EST, Mon-Fri\n" +
                 "NOTE;ALTID=1;LANGUAGE=it:Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=notes/0/created;VALUE=uri:data:application/json;%222010-10-10T10%3A10%3A10Z%22\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=notes/NOTE-1/created;VALUE=uri:data:application/json;%222010-10-10T10%3A10%3A10Z%22\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testExtendedJSContact7 - 1", 0, jsCard.getNotes()[0].getCreated().compareTo(DateUtils.toCalendar("2010-10-10T10:10:10Z")));
+        assertEquals("testExtendedJSContact7 - 1", 0, jsCard.getNotes().get("NOTE-1").getCreated().compareTo(DateUtils.toCalendar("2010-10-10T10:10:10Z")));
     }
 
 }

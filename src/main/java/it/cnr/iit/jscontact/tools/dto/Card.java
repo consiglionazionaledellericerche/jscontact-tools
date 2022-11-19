@@ -254,7 +254,8 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
     Map<String,PersonalInformation> personalInfo;
 
-    Note[] notes;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Note>")
+    Map<String,Note> notes;
 
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> keywords;
@@ -586,11 +587,15 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     /**
      * Adds a note to this object.
      *
+     * @param id the note identifier
      * @param note the note object
      */
-    public void addNote(Note note) {
+    public void addNote(String id, Note note) {
 
-        notes = ArrayUtils.add(notes, note);
+        if(notes == null)
+            notes = new HashMap<>();
+
+        notes.putIfAbsent(id,note);
     }
 
     private void addKeyword(String keyword) {

@@ -1158,15 +1158,19 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillNotes(VCard vcard, Card jsCard) {
+    private void fillNotes(VCard vcard, Card jsCard) {
 
         List<LocalizedText> notes = new ArrayList<>();
-        for (ezvcard.property.Note note : vcard.getNotes())
-            jsCard.addNote(Note.builder()
-                               .note(note.getValue())
-                               .language(note.getLanguage())
-                               .jCardParams(VCardUtils.getVCardUnmatchedParameters(note,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
-                               .build());
+        int i = 1;
+        for (ezvcard.property.Note note : vcard.getNotes()) {
+            String propId = note.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG);
+            String id = getId(VCard2JSContactIdsProfile.IdType.NOTE, i, "NOTE-" + (i ++), propId);
+            jsCard.addNote(id, Note.builder()
+                    .note(note.getValue())
+                    .language(note.getLanguage())
+                    .jCardParams(VCardUtils.getVCardUnmatchedParameters(note, Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                    .build());
+        }
     }
 
     private static void fillCategories(VCard vcard, Card jsCard) {
