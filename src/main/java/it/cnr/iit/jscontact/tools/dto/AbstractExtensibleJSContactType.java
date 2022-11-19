@@ -97,8 +97,11 @@ public abstract class AbstractExtensibleJSContactType {
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
         } else {
 
-            if (this instanceof Note && ((Note) this).getCreated() != null ) //The label property must be considered, if any
+            if (this instanceof Note && ((Note) this).getCreated() != null )
                 map.put(String.format("%screated", jsonPointer), ((Note) this).getCreated());
+
+            if (this instanceof Note && ((Note) this).getAuthor() != null )
+                map.put(String.format("%sauthor", jsonPointer), ((Note) this).getAuthor());
 
             if (this instanceof HasContexts && ((HasContexts) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
                 for (Context context : ((HasContexts) this).getExtContexts())
@@ -207,8 +210,10 @@ public abstract class AbstractExtensibleJSContactType {
 
         try {
             if (pathItems.isEmpty()) {
-                    if (this instanceof Note && extension.equals("created"))
+                if (this instanceof Note && extension.equals("created"))
                     ((Note) this).setCreated((Calendar) value);
+                else if (this instanceof Note && extension.equals("author"))
+                    ((Note) this).setAuthor((String) value);
                 else
                     addExtension(extension, value);
                 return;

@@ -45,4 +45,6 @@ public class Note extends AbstractJSContactType implements Serializable {
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar created;
 
+    String author;
+
 }
