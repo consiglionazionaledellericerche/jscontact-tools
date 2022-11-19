@@ -73,7 +73,7 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 27", "Etc/GMT+5", jsCard.getAddresses().get("addr").getTimeZone());
         assertEquals("testRDAPProfile - 29", 1, jsCard.getEmails().size());
         assertTrue("testRDAPProfile - 30", jsCard.getEmails().get("email").asWork());
-        assertEquals("testRDAPProfile - 31", "joe.user@example.com", jsCard.getEmails().get("email").getEmail());
+        assertEquals("testRDAPProfile - 31", "joe.user@example.com", jsCard.getEmails().get("email").getAddress());
         assertEquals("testRDAPProfile - 32", 2, jsCard.getPhones().size());
         assertTrue("testRDAPProfile - 33", jsCard.getPhones().get("voice").asVoice());
         assertEquals("testRDAPProfile - 34", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("voice").getPhone());

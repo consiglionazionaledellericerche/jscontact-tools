@@ -164,7 +164,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 27", "Etc/GMT+5", jsCard.getAddresses().get("ADR-1").getTimeZone());
         assertEquals("testCompleteJCard1 - 29", 1, jsCard.getEmails().size());
         assertTrue("testCompleteJCard1 - 30", jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testCompleteJCard1 - 31", "joe.user@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteJCard1 - 31", "joe.user@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteJCard1 - 32", 2, jsCard.getPhones().size());
         assertTrue("testCompleteJCard1 - 33", jsCard.getPhones().get("PHONE-1").asVoice());
         assertEquals("testCompleteJCard1 - 34", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("PHONE-1").getPhone());
@@ -279,7 +279,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertNull("testCompleteJCard4 - 43", jsCard.getPhones().get("PHONE-2").getLabel());
         assertEquals("testCompleteJCard4 - 44", 1, jsCard.getEmails().size());
         assertTrue("testCompleteJCard4 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testCompleteJCard4 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteJCard4 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteJCard4 - 47", 1, jsCard.getCryptoKeys().size());
         assertTrue("testCompleteJCard4 - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
         assertEquals("testCompleteJCard4 - 49", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
@@ -336,7 +336,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard5 - 41", "30314", jsCard.getAddresses().get("ADR-2").getPostcode());
 
         assertEquals("testCompleteJCard5 - 42", 1, jsCard.getEmails().size());
-        assertEquals("testCompleteJCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteJCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteJCard5 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
         assertTrue("testCompleteJCard5 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
     }

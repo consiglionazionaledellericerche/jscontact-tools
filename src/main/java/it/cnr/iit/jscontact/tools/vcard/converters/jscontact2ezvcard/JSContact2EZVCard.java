@@ -819,7 +819,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private Email getEmail(EmailAddress emailAddress) {
 
-        Email email = new Email(emailAddress.getEmail());
+        Email email = new Email(emailAddress.getAddress());
         email.setPref(emailAddress.getPref());
         addPropId(email, emailAddress.getPropId());
         if (!emailAddress.hasNoContext()) {

@@ -41,8 +41,8 @@ public class EmailAddress extends AbstractJSContactType implements HasLabel, IdM
 
     @NotNull(message = "email is missing in EmailAddress")
     @NonNull
-    @Email(message = "invalid email in EmailAddress")
-    String email;
+    @Email(message = "invalid address in EmailAddress")
+    String address;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)

@@ -123,7 +123,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard1 - 28", "123 Maple Ave Suite 90001 Vancouver BC 1239", jsCard.getAddresses().get("ADR-1").getFullAddress());
         assertEquals("testCompleteVCard1 - 29", 1, jsCard.getEmails().size());
         assertTrue("testCompleteVCard1 - 30", jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testCompleteVCard1 - 31", "joe.user@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteVCard1 - 31", "joe.user@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteVCard1 - 32", 2, jsCard.getPhones().size());
         assertTrue("testCompleteVCard1 - 33", jsCard.getPhones().get("PHONE-1").asVoice());
         assertEquals("testCompleteVCard1 - 34", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("PHONE-1").getPhone());
@@ -240,7 +240,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard4 - 43", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getPhone());
         assertEquals("testCompleteVCard4 - 44", 1, jsCard.getEmails().size());
         assertTrue("testCompleteVCard4 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testCompleteVCard4 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteVCard4 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteVCard4 - 47", 1, jsCard.getCryptoKeys().size());
         assertTrue("testCompleteVCard4 - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
         assertEquals("testCompleteVCard4 - 49", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
@@ -297,7 +297,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard5 - 41", "30314", jsCard.getAddresses().get("ADR-2").getPostcode());
 
         assertEquals("testCompleteVCard5 - 42", 1, jsCard.getEmails().size());
-        assertEquals("testCompleteVCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteVCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteVCard5 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
         assertEquals("testCompleteVCard5 - 45", 1, jsCard.getJCardExtensions().length);
         assertEquals("testCompleteVCard5 - 46", "x-qq", jsCard.getJCardExtensions()[0].getName().toString());
@@ -366,15 +366,15 @@ public class VCardTest extends VCard2JSContactTest {
         assertNull("testCompleteVCard6 - 53", jsCard.getPhones().get("PHONE-9").getLabel());
         assertEquals("testCompleteVCard6 - 54", 5, jsCard.getEmails().size());
         assertTrue("testCompleteVCard6 - 55", jsCard.getEmails().get("EMAIL-1").asPrivate());
-        assertEquals("testCompleteVCard6 - 56", "home@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteVCard6 - 56", "home@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertTrue("testCompleteVCard6 - 58", jsCard.getEmails().get("EMAIL-2").asWork());
-        assertEquals("testCompleteVCard6 - 59", "work@example.com", jsCard.getEmails().get("EMAIL-2").getEmail());
+        assertEquals("testCompleteVCard6 - 59", "work@example.com", jsCard.getEmails().get("EMAIL-2").getAddress());
         assertTrue("testCompleteVCard6 - 60", jsCard.getEmails().get("EMAIL-3").hasNoContext());
-        assertEquals("testCompleteVCard6 - 61", "school@example.com", jsCard.getEmails().get("EMAIL-3").getEmail());
+        assertEquals("testCompleteVCard6 - 61", "school@example.com", jsCard.getEmails().get("EMAIL-3").getAddress());
         assertTrue("testCompleteVCard6 - 64", jsCard.getEmails().get("EMAIL-4").hasNoContext());
-        assertEquals("testCompleteVCard6 - 65", "other@example.com", jsCard.getEmails().get("EMAIL-4").getEmail());
+        assertEquals("testCompleteVCard6 - 65", "other@example.com", jsCard.getEmails().get("EMAIL-4").getAddress());
         assertTrue("testCompleteVCard6 - 67", jsCard.getEmails().get("EMAIL-5").hasNoContext());
-        assertEquals("testCompleteVCard6 - 68", "custom@example.com", jsCard.getEmails().get("EMAIL-5").getEmail());
+        assertEquals("testCompleteVCard6 - 68", "custom@example.com", jsCard.getEmails().get("EMAIL-5").getAddress());
         assertEquals("testCompleteVCard6 - 71", 2, jsCard.getOrganizations().size());
         assertEquals("testCompleteVCard6 - 72", "Organization1", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteVCard6 - 72-1", "Department1", jsCard.getOrganizations().get("ORG-1").getUnits()[0]);

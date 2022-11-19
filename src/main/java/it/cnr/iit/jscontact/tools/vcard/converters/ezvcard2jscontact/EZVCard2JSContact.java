@@ -957,7 +957,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (StringUtils.isNotEmpty(emailAddress)) {
                 String vcardType = VCardUtils.getVCardParameterValue(email.getParameters(), VCardUtils.VCARD_TYPE_PARAM_TAG);
                 jsCard.addEmail(getId(VCard2JSContactIdsProfile.IdType.EMAIL, i, "EMAIL-" + (i++), email.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG)), EmailAddress.builder()
-                        .email(emailAddress)
+                        .address(emailAddress)
                         .contexts(getContexts(vcardType))
                         .pref(email.getPref())
                         .label(getX_ABLabel(email,vcard.getExtendedProperties()))

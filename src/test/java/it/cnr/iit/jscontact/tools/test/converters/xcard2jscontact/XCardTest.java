@@ -77,7 +77,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertNull("testCompleteXCard1 - 43", jsCard.getPhones().get("PHONE-2").getLabel());
         assertEquals("testCompleteXCard1 - 44", 1, jsCard.getEmails().size());
         assertTrue("testCompleteXCard1 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testCompleteXCard1 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteXCard1 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteXCard1 - 47", 1, jsCard.getCryptoKeys().size());
         assertTrue("testCompleteXCard1 - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
         assertEquals("testCompleteXCard1 - 49", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
@@ -135,7 +135,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard2 - 41", "30314", jsCard.getAddresses().get("ADR-2").getPostcode());
 
         assertEquals("testCompleteXCard2 - 42", 1, jsCard.getEmails().size());
-        assertEquals("testCompleteXCard2 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteXCard2 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteXCard2 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
         assertTrue("testCompleteXCard2 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
     }
