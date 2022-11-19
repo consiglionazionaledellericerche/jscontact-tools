@@ -54,12 +54,12 @@ public class AnniversaryType extends ExtensibleEnumType<AnniversaryEnum> impleme
     public boolean isDeath() { return isRfc(AnniversaryEnum.DEATH); }
 
     /**
-     * Tests if this anniverary type is "marriage".
+     * Tests if this anniverary type is "wedding".
      *
-     * @return true if this anniverary type is "marriage", false otherwise
+     * @return true if this anniverary type is "wedding", false otherwise
      */
     @JsonIgnore
-    public boolean isMarriage() { return isRfc(AnniversaryEnum.MARRIAGE); }
+    public boolean isWedding() { return isRfc(AnniversaryEnum.WEDDING); }
 
     private static AnniversaryType rfc(AnniversaryEnum rfcValue) { return AnniversaryType.builder().rfcValue(rfcValue).build(); }
 
@@ -78,11 +78,11 @@ public class AnniversaryType extends ExtensibleEnumType<AnniversaryEnum> impleme
     public static AnniversaryType death() { return rfc(AnniversaryEnum.DEATH);}
 
     /**
-     * Returns a "marriage" anniversary type.
+     * Returns a "wedding" anniversary type.
      *
-     * @return a "marriage" anniversary type
+     * @return a "wedding" anniversary type
      */
-    public static AnniversaryType marriage() { return rfc(AnniversaryEnum.MARRIAGE);}
+    public static AnniversaryType wedding() { return rfc(AnniversaryEnum.WEDDING);}
 
     /**
      * Returns a custom anniverary type.

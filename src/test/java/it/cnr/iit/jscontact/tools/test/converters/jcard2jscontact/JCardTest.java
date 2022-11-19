@@ -249,7 +249,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 12", 2, jsCard.getAnniversaries().size());
         assertTrue("testCompleteJCard4 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
         assertTrue("testCompleteJCard4 - 14", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("0000-02-03"));
-        assertTrue("testCompleteJCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isMarriage());
+        assertTrue("testCompleteJCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isWedding());
         assertTrue("testCompleteJCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
         assertEquals("testCompleteJCard4 - 18", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testCompleteJCard4 - 19", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());

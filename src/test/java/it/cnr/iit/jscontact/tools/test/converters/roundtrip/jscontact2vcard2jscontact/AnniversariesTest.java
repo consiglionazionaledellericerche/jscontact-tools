@@ -199,7 +199,7 @@ public class AnniversariesTest extends RoundtripTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"marriage\", " +
+                        "\"type\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -247,7 +247,7 @@ public class AnniversariesTest extends RoundtripTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"marriage\", " +
+                        "\"type\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -297,7 +297,7 @@ public class AnniversariesTest extends RoundtripTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"marriage\", " +
+                        "\"type\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -347,7 +347,7 @@ public class AnniversariesTest extends RoundtripTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"marriage\", " +
+                        "\"type\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"PartialDate\"," +
                             "\"year\":1986, " +

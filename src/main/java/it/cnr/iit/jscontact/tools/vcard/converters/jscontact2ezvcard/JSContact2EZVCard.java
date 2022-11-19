@@ -687,7 +687,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         addPropId(vcard.getDeathdate(), entry.getKey());
                         vcard.setDeathplace(getPlaceProperty(Deathplace.class, anniversary));
                         break;
-                    case MARRIAGE:
+                    case WEDDING:
                         vcard.setAnniversary(getDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
                         VCardUtils.addVCardUnmatchedParameters(vcard.getAnniversary(),anniversary);
                         addPropId(vcard.getAnniversary(), entry.getKey());
