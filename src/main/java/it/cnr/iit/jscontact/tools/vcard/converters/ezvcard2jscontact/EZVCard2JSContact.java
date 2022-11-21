@@ -623,17 +623,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     .altid(nickname.getAltId())
                     .preference(nickname.getPref())
                     .contexts(contexts)
+                    .label(getX_ABLabel(nickname,vcard.getExtendedProperties()))
                     .jCardParams(VCardUtils.getVCardUnmatchedParameters(nickname,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                     .build());
         }
         int i = 1;
         for (LocalizedText nick : nicks) {
             String id = getId(VCard2JSContactIdsProfile.IdType.NICKNAME, i, "NICK-" + (i ++), nick.getPropId());
-            NickName nickName = NickName.builder().name(nick.getValue()).pref(nick.getPreference()).contexts(nick.getContexts()).jCardParams(nick.getJCardParams()).build();
+            NickName nickName = NickName.builder().name(nick.getValue()).pref(nick.getPreference()).contexts(nick.getContexts()).label(nick.getLabel()).jCardParams(nick.getJCardParams()).build();
             jsCard.addNickName(id, nickName);
             if (nick.getLocalizations() != null) {
                 for (Map.Entry<String, String> localization : nick.getLocalizations().entrySet()) {
-                    jsCard.addLocalization(localization.getKey(), "nickNames/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.NickName.builder().name(localization.getValue()).build(), JsonNode.class));
+                    jsCard.addLocalization(localization.getKey(), "nickNames/" + id, mapper.convertValue(NickName.builder().name(localization.getValue()).build(), JsonNode.class));
                 }
             }
         }
@@ -1240,7 +1241,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             }
             else if (extension.getPropertyName().equalsIgnoreCase("PRONOUNS")) {
                 String id = getId(VCard2JSContactIdsProfile.IdType.PRONOUNS, i,"PRONOUNS-" + (i++), extension.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG));
-                Pronouns pronouns = Pronouns.builder().pronouns(extension.getValue()).contexts(contexts).pref(pref).build();
+                Pronouns pronouns = Pronouns.builder().pronouns(extension.getValue()).contexts(contexts).pref(pref).label(getX_ABLabel(extension,vcard.getExtendedProperties())).build();
                 jsonPointer=String.format("%s/%s", jsonPointer, id);
                 if (language==null || config.getDefaultLanguage().equalsIgnoreCase(language)) {
                     if (jsCard.getSpeakToAs() != null) {

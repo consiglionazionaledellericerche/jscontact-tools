@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.dto;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasPreference;
 import it.cnr.iit.jscontact.tools.dto.utils.HasPreferenceUtils;
 import lombok.*;
@@ -38,7 +39,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"value"}, callSuper = false)
-public class LocalizedText extends AbstractJSContactType implements HasAltid, HasPreference, Comparable<LocalizedText>, Serializable {
+public class LocalizedText extends AbstractJSContactType implements HasLabel, HasAltid, HasPreference, Comparable<LocalizedText>, Serializable {
 
     @NotNull(message = "value is missing in LocalizedText")
     @NonNull
@@ -51,6 +52,8 @@ public class LocalizedText extends AbstractJSContactType implements HasAltid, Ha
     String altid;
 
     Integer preference;
+
+    String label;
 
     Map<Context,Boolean> contexts;
 

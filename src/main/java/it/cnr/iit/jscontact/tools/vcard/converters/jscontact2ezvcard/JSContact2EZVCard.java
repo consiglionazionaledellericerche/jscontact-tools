@@ -366,16 +366,22 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Map.Entry<String,NickName> entry : jsCard.getNickNames().entrySet()) {
             if (jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()) == null &&
-                    jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name")==null)
-                vcard.addNickname(getNickname(entry.getValue(), jsCard.getLocale(), entry.getKey()));
+                    jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name")==null) {
+                Nickname nickname = getNickname(entry.getValue(), jsCard.getLocale(), entry.getKey());
+                addX_ABLabel(entry.getValue(),nickname, vcard);
+                vcard.addNickname(nickname);
+            }
             else {
                 List<ezvcard.property.Nickname> nicknames = new ArrayList<>();
-                nicknames.add(getNickname(entry.getValue(), jsCard.getLocale(), entry.getKey()));
+                Nickname nickname = getNickname(entry.getValue(), jsCard.getLocale(), entry.getKey());
+                addX_ABLabel(entry.getValue(),nickname, vcard);
+                nicknames.add(nickname);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey());
                 if (localizations != null) {
-                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
+                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
                         nicknames.add(asNickname(localization.getValue(), localization.getKey(), entry.getKey()));
+                    }
                 }
                 localizations = jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name");
                 if (localizations != null) {
@@ -1381,7 +1387,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
     //TODO: replace XXXX with RFC number after draft-ietf-calext-vcard-jscontact-extensions
-    private static void fillRFCXXXXProperties(VCard vCard, Card jsCard) {
+    private void fillRFCXXXXProperties(VCard vCard, Card jsCard) {
 
         if (jsCard.getCreated() != null) {
             vCard.addExtendedProperty("CREATED", VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsCard.getCreated().getTime()), VCardDataType.TIMESTAMP);
@@ -1403,6 +1409,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (entry.getValue().getPref()!=null)
                     raw.setParameter(VCardUtils.VCARD_PREF_PARAM_TAG, entry.getValue().getPref().toString());
                 raw.setDataType(VCardDataType.TEXT);
+                addX_ABLabel(entry.getValue(), raw, vCard);
                 vCard.addProperty(raw);
 
                 jsonPointer = String.format("%s/%s", jsonPointer, entry.getKey());
