@@ -57,7 +57,7 @@ import java.util.*;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "@type","uid","prodId","created","updated","kind","members","relatedTo","locale",
+        "@type","@version","uid","prodId","created","updated","kind","members","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
         "emails","onlineServices","phones","preferredContactChannels","preferredLanguages",
         "calendars","schedulingAddresses",
@@ -85,6 +85,11 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Card";
+
+    @NotNull
+    @JsonProperty("@version")
+    @Builder.Default
+    String _version = "rfc0000";
 
     @NotNull(message = "uid is missing in Card")
     @NonNull
