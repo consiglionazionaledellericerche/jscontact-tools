@@ -114,7 +114,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"phone\":\"tel:+33-01-23-45-6\", \"label\":\"a label\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"number\":\"tel:+33-01-23-45-6\", \"label\":\"a label\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         System.out.print(Ezvcard.write(vcard).go());
@@ -189,7 +189,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"example.com:extcontext\": true},\"features\":{\"example.com:extfeature\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"example.com:extcontext\": true},\"features\":{\"example.com:extfeature\": true},\"number\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testExtendedJSContact6 - 1", 1, vcard.getTelephoneNumbers().size());

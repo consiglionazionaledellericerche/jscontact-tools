@@ -34,7 +34,7 @@ public class PhoneTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"number\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);
@@ -49,8 +49,8 @@ public class PhoneTest extends RoundtripTest {
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
                 "\"phones\":{ " +
-                      "\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"phone\":\"tel:+33-01-23-45-6\"}," +
-                      "\"PHONE-2\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"pref\":1,\"phone\":\"tel:+1-555-555-5555;ext=555\"}" +
+                      "\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"number\":\"tel:+33-01-23-45-6\"}," +
+                      "\"PHONE-2\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"pref\":1,\"number\":\"tel:+1-555-555-5555;ext=555\"}" +
                  "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -65,7 +65,7 @@ public class PhoneTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true},\"features\":{\"fax\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true},\"features\":{\"fax\": true},\"number\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);
@@ -79,7 +79,7 @@ public class PhoneTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true},\"features\":{\"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true},\"features\":{\"textphone\": true},\"number\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);
@@ -93,7 +93,7 @@ public class PhoneTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"voice\": true} ,\"phone\":\"tel:+33-01-23-45-6\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"voice\": true} ,\"number\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);
@@ -107,7 +107,7 @@ public class PhoneTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"textphone\": true},\"number\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);
@@ -121,7 +121,7 @@ public class PhoneTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"voice\": true, \"textphone\": true},\"phone\":\"tel:+33-01-23-45-6\"}}" +
+                "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"work\": true, \"private\":true},\"features\":{\"voice\": true, \"textphone\": true},\"number\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);

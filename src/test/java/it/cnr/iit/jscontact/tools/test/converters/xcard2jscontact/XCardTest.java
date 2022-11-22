@@ -66,11 +66,11 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard1 - 32", 2, jsCard.getPhones().size());
         assertTrue("testCompleteXCard1 - 33", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteXCard1 - 34", jsCard.getPhones().get("PHONE-1").asWork());
-        assertEquals("testCompleteXCard1 - 35", "tel:+1-418-656-9254;ext=102", jsCard.getPhones().get("PHONE-1").getPhone());
+        assertEquals("testCompleteXCard1 - 35", "tel:+1-418-656-9254;ext=102", jsCard.getPhones().get("PHONE-1").getNumber());
         assertNull("testCompleteXCard1 - 36", jsCard.getPhones().get("PHONE-1").getPref());
         assertTrue("testCompleteXCard1 - 37", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteXCard1 - 38", jsCard.getPhones().get("PHONE-2").asWork());
-        assertEquals("testCompleteXCard1 - 39", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getPhone());
+        assertEquals("testCompleteXCard1 - 39", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getNumber());
         assertTrue("testCompleteXCard1 - 40", jsCard.getPhones().get("PHONE-2").asCell());
         assertTrue("testCompleteXCard1 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteXCard1 - 42", jsCard.getPhones().get("PHONE-2").asText());
@@ -110,11 +110,11 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard2 - 17", 2, jsCard.getPhones().size());
         assertTrue("testCompleteXCard2 - 18", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteXCard2 - 19", jsCard.getPhones().get("PHONE-1").asWork());
-        assertEquals("testCompleteXCard2 - 20", "tel:+1-111-555-1212", jsCard.getPhones().get("PHONE-1").getPhone());
+        assertEquals("testCompleteXCard2 - 20", "tel:+1-111-555-1212", jsCard.getPhones().get("PHONE-1").getNumber());
         assertNull("testCompleteXCard2 - 21", jsCard.getPhones().get("PHONE-1").getLabel());
         assertTrue("testCompleteXCard2 - 22", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteXCard2 - 23", jsCard.getPhones().get("PHONE-2").asPrivate());
-        assertEquals("testCompleteXCard2 - 24", "tel:+1-404-555-1212", jsCard.getPhones().get("PHONE-2").getPhone());
+        assertEquals("testCompleteXCard2 - 24", "tel:+1-404-555-1212", jsCard.getPhones().get("PHONE-2").getNumber());
         assertNull("testCompleteXCard2 - 25", jsCard.getPhones().get("PHONE-2").getLabel());
 
         assertEquals("testCompleteXCard2 - 26", 2, jsCard.getAddresses().size());

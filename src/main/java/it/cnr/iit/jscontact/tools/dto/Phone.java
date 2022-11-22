@@ -32,7 +32,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","phone","features","contexts","pref","label"})
+@JsonPropertyOrder({"@type","number","features","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -46,9 +46,9 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
     @Builder.Default
     String _type = "Phone";
     
-    @NotNull(message = "phone is missing in Phone")
+    @NotNull(message = "number is missing in Phone")
     @NonNull
-    String phone;
+    String number;
 
     @JsonSerialize(using = PhoneFeaturesSerializer.class)
     @JsonDeserialize(using = PhoneFeaturesDeserializer.class)

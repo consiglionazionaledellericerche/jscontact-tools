@@ -795,9 +795,9 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Telephone tel;
         try {
-            tel = new Telephone(TelUri.parse(phone.getPhone()));
+            tel = new Telephone(TelUri.parse(phone.getNumber()));
         } catch(Exception e) {
-            tel = new Telephone(phone.getPhone());
+            tel = new Telephone(phone.getNumber());
         }
         tel.setPref(phone.getPref());
         addPropId(tel, phone.getPropId());

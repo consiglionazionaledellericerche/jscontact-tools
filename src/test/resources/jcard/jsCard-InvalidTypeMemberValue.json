@@ -40,7 +40,7 @@
         "text": true
       },
       "pref": 1,
-      "phone": "tel:+1-555-555-1234;ext=102"
+      "number": "tel:+1-555-555-1234;ext=102"
     }
   },
   "emails": {

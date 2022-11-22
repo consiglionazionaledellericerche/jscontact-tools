@@ -941,7 +941,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())));
             if (phoneFeatures != null) exclude = ArrayUtils.addAll(exclude, EnumUtils.toStrings(PhoneFeature.toEnumValues(phoneFeatures.keySet())));
             jsCard.addPhone(getId(VCard2JSContactIdsProfile.IdType.PHONE, i,"PHONE-" + (i++), tel.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG)), Phone.builder()
-                                       .phone(getValue(tel))
+                                       .number(getValue(tel))
                                        .features((phoneFeatures == null) ? getDefaultPhoneFeatures() : phoneFeatures)
                                        .contexts(contexts)
                                        .pref(tel.getPref())
