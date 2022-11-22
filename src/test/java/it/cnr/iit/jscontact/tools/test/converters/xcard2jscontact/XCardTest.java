@@ -104,7 +104,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard2 - 8", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testCompleteXCard2 - 9", "Gump", jsCard.getName().getComponents()[2].getValue());
         assertEquals("testCompleteXCard2 - 10", "Bubba Gump Shrimp Co.", jsCard.getOrganizations().get("ORG-1").getName());
-        assertEquals("testCompleteXCard2 - 11", "Shrimp Man", jsCard.getTitles().get("TITLE-1").getTitle());
+        assertEquals("testCompleteXCard2 - 11", "Shrimp Man", jsCard.getTitles().get("TITLE-1").getName());
         assertEquals("testCompleteXCard2 - 15", "http://www.example.com/dir_photos/my_photo.gif", jsCard.getMedia().get("PHOTO-1").getUri());
         assertEquals("testCompleteXCard2 - 16", "image/gif", jsCard.getMedia().get("PHOTO-1").getMediaType());
         assertEquals("testCompleteXCard2 - 17", 2, jsCard.getPhones().size());

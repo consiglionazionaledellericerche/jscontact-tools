@@ -6,7 +6,7 @@
 "titles": {
   "TITLE-1": {
     "@type": "Title",
-    "title": "事務局長"
+    "name": "事務局長"
   }
 },
 "kind": "individual",
@@ -17,7 +17,7 @@
 "localizations": {
   "en": {
     "fullName": "Okubo Masahito",
-    "titles/TITLE-1": { "@type": "Title",  "title": "Secretary General" }
+    "titles/TITLE-1": { "@type": "Title",  "name": "Secretary General" }
   }
 }
 }

@@ -21,7 +21,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.5">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","title","type","organization"})
+@JsonPropertyOrder({"@type","name","type","organization"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -35,9 +35,9 @@ public class Title extends AbstractJSContactType implements HasType, IdMapValue,
     @Builder.Default
     String _type = "Title";
 
-    @NotNull(message = "title is missing in Title")
+    @NotNull(message = "name is missing in Title")
     @NonNull
-    String title;
+    String name;
 
     @JsonDeserialize(using = TitleTypeDeserializer.class)
     TitleType type;

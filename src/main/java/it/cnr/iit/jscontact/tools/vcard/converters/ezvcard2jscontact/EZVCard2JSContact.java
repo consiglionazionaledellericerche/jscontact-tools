@@ -1085,10 +1085,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         for (LocalizedText localizedString : localizedStrings) {
             String id = getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i ++), localizedString.getPropId());
-            jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().title(localizedString.getValue()).type(type).jCardParams(localizedString.getJCardParams()).build());
+            jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().name(localizedString.getValue()).type(type).jCardParams(localizedString.getJCardParams()).build());
             if (localizedString.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : localizedString.getLocalizations().entrySet())
-                    jsCard.addLocalization(localization.getKey(), "titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().title(localization.getValue()).type(type).build(), JsonNode.class));
+                    jsCard.addLocalization(localization.getKey(), "titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().name(localization.getValue()).type(type).build(), JsonNode.class));
             }
         }
     }

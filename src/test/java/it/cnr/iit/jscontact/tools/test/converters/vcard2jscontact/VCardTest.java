@@ -108,8 +108,8 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard1 - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
         assertEquals("testCompleteVCard1 - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testCompleteVCard1 - 15", "Example", jsCard.getOrganizations().get("ORG-1").getName());
-        assertEquals("testCompleteVCard1 - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testCompleteVCard1 - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());
+        assertEquals("testCompleteVCard1 - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testCompleteVCard1 - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getName());
         assertEquals("testCompleteVCard1 - 18", 2, jsCard.getAddresses().size());
         assertEquals("testCompleteVCard1 - 19", "Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("ADR-2").getFullAddress());
         assertEquals("testCompleteVCard1 - 20", "Suite 1234", jsCard.getAddresses().get("ADR-2").getStreetExtensions());
@@ -159,8 +159,8 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard2 - 3", "Okubo Masahito", jsCard.getLocalizations().get("en").get("fullName").asText());
         assertTrue("testCompleteVCard2 - 4", jsCard.getKind().isIndividual());
         assertEquals("testCompleteVCard2 - 5", 1, jsCard.getTitles().size());
-        assertEquals("testCompleteVCard2 - 6", "事務局長", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testCompleteVCard2 - 8", "Secretary General", jsCard.getLocalization("en", "titles/TITLE-1").get("title").asText());
+        assertEquals("testCompleteVCard2 - 6", "事務局長", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testCompleteVCard2 - 8", "Secretary General", jsCard.getLocalization("en", "titles/TITLE-1").get("name").asText());
         assertTrue("testCompleteVCard2 - 9", jsCard.getKind().isIndividual());
         assertEquals("testCompleteVCard2 - 10", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testCompleteVCard2 - 11", 1, (int) jsCard.getPreferredLanguages().get("jp")[0].getPref());
@@ -266,7 +266,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard5 - 8", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testCompleteVCard5 - 9", "Gump", jsCard.getName().getComponents()[2].getValue());
         assertEquals("testCompleteVCard5 - 10", "Bubba Gump Shrimp Co.", jsCard.getOrganizations().get("ORG-1").getName());
-        assertEquals("testCompleteVCard5 - 11", "Shrimp Man", jsCard.getTitles().get("TITLE-1").getTitle());
+        assertEquals("testCompleteVCard5 - 11", "Shrimp Man", jsCard.getTitles().get("TITLE-1").getName());
         assertEquals("testCompleteVCard5 - 15", "http://www.example.com/dir_photos/my_photo.gif", jsCard.getMedia().get("PHOTO-1").getUri());
         assertEquals("testCompleteVCard5 - 16", "image/gif", jsCard.getMedia().get("PHOTO-1").getMediaType());
         assertEquals("testCompleteVCard5 - 17", 2, jsCard.getPhones().size());
@@ -381,8 +381,8 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 73", "Organization2", jsCard.getOrganizations().get("ORG-2").getName());
         assertEquals("testCompleteVCard6 - 73", "Department2", jsCard.getOrganizations().get("ORG-2").getUnits()[0]);
         assertEquals("testCompleteVCard6 - 74", 2, jsCard.getTitles().size());
-        assertEquals("testCompleteVCard6 - 75", "Title1", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testCompleteVCard6 - 76", "Title2", jsCard.getTitles().get("TITLE-2").getTitle());
+        assertEquals("testCompleteVCard6 - 75", "Title1", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testCompleteVCard6 - 76", "Title2", jsCard.getTitles().get("TITLE-2").getName());
         assertEquals("testCompleteVCard6 - 77", 1, jsCard.getKeywords().size());
         assertTrue("testCompleteVCard6 - 78", jsCard.getKeywords().containsKey("Tag"));
         assertNotNull("testCompleteVCard6 - 79", jsCard.getNotes());

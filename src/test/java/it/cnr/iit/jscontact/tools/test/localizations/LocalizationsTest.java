@@ -60,7 +60,7 @@ public class LocalizationsTest {
                 "\"localizations\":{" +
                     "\"jp\": {" +
                         "\"addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"title\": \"大阪市\"}" +
+                        "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"name\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";

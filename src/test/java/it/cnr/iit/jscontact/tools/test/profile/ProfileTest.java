@@ -59,8 +59,8 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
         assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testRDAPProfile - 15", "Example", jsCard.getOrganizations().get("org").getName());
-        assertEquals("testRDAPProfile - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testRDAPProfile - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());
+        assertEquals("testRDAPProfile - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testRDAPProfile - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getName());
         assertEquals("testRDAPProfile - 18", 1, jsCard.getAddresses().size());
         assertEquals("testRDAPProfile - 19", "Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("addr").getFullAddress());
         assertEquals("testRDAPProfile - 20", "Suite 1234", jsCard.getAddresses().get("addr").getStreetExtensions());
