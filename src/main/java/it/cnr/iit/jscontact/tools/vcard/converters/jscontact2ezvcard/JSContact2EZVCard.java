@@ -987,6 +987,21 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
+    private CalendarRequestUri getCaladruri(SchedulingAddress s) {
+
+        CalendarRequestUri caladruri = new CalendarRequestUri(s.getUri());
+        caladruri.setPref(s.getPref());
+        addPropId(caladruri, s.getPropId());
+        if (!s.hasNoContext()) {
+            String vCardTypeValue = getVCardType(s);
+            if (vCardTypeValue!=null)
+                caladruri.setParameter(VCardUtils.VCARD_TYPE_PARAM_TAG, vCardTypeValue);
+        }
+        VCardUtils.addVCardUnmatchedParameters(caladruri,s);
+        return caladruri;
+    }
+
+
     private void fillSchedulingAddresses(VCard vcard, Card jsCard) {
 
         if (jsCard.getSchedulingAddresses() == null)
@@ -995,7 +1010,10 @@ public class JSContact2EZVCard extends AbstractConverter {
         for(Map.Entry<String, SchedulingAddress> entry : jsCard.getSchedulingAddresses().entrySet()) {
             SchedulingAddress s = entry.getValue();
             s.setPropId(entry.getKey());
-           vcard.getCalendarRequestUris().add(getUriProperty(CalendarRequestUri.class, s, vcard));
+            CalendarRequestUri vcardCaladruri = getCaladruri(s);
+            VCardUtils.addVCardUnmatchedParameters(vcardCaladruri,s);
+            addX_ABLabel(s,vcardCaladruri,vcard);
+            vcard.getCalendarRequestUris().add(vcardCaladruri);
         }
     }
 
