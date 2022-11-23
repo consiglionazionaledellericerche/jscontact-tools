@@ -1293,9 +1293,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         String extensionName = null;
         try {
             for (RawProperty extension : vcard.getExtendedProperties()) {
-                if (extension.getPropertyName().equalsIgnoreCase(VCardUtils.VCARD_X_RFC0000_JSPROP_TAG)) {
-                    path = extension.getParameter(VCardUtils.VCARD_X_RFC0000_JSPATH_PARAM_TAG);
-                    value = X_RFC0000_JSPROP_Utils.toJsonValue(extension.getValue());
+                if (extension.getPropertyName().equalsIgnoreCase(VCardUtils.VCARD_JSCONTACT_PROP_TAG)) {
+                    path = extension.getParameter(VCardUtils.VCARD_JSCONTACT_PATH_PARAM_TAG);
+                    value = JSContactPropUtils.toJsonValue(extension.getValue());
                     if (!path.contains(DelimiterUtils.SLASH_DELIMITER)) {
                         jsCard.addExtension(path,value);
                     }

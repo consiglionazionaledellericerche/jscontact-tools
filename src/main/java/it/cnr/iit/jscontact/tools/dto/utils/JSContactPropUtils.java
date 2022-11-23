@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Calendar;
 
-public class X_RFC0000_JSPROP_Utils {
+public class JSContactPropUtils {
 
 
     private static final ObjectMapper mapper = new ObjectMapper();

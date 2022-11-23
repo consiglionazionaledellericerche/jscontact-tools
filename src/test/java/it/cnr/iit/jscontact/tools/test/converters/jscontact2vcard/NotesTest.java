@@ -47,8 +47,8 @@ public class NotesTest extends JSContact2VCardTest {
         assertEquals("testNotes1 - 6", "it", vcard.getNotes().get(1).getLanguage());
         assertEquals("testNotes1 - 7", "1", vcard.getNotes().get(1).getAltId());
         assertEquals("testNotes1 - 8", 1, vcard.getExtendedProperties().size());
-        assertEquals("testNotes1 - 9", "X-RFC0000-JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testNotes1 - 10", "notes/NOTE-1/created", vcard.getExtendedProperties().get(0).getParameter("X-RFC0000-JSPATH"));
+        assertEquals("testNotes1 - 9", "JSCONTACT-PROP", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testNotes1 - 10", "notes/NOTE-1/created", vcard.getExtendedProperties().get(0).getParameter("JSCONTACT-PATH"));
         assertEquals("testNotes1 - 11", VCardDataType.TEXT, vcard.getExtendedProperties().get(0).getDataType());
         assertEquals("testNotes1 - 12", "\"2010-10-10T10:10:10Z\"", vcard.getExtendedProperties().get(0).getValue());
     }

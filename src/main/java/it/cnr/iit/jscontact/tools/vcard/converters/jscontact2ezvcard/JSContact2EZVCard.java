@@ -23,7 +23,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.VCardUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.X_RFC0000_JSPROP_Utils;
+import it.cnr.iit.jscontact.tools.dto.utils.JSContactPropUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
@@ -1478,8 +1478,8 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
             try {
-                RawProperty property = new RawProperty(VCardUtils.VCARD_X_RFC0000_JSPROP_TAG, X_RFC0000_JSPROP_Utils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.TEXT);
-                property.setParameter(VCardUtils.VCARD_X_RFC0000_JSPATH_PARAM_TAG, entry.getKey());
+                RawProperty property = new RawProperty(VCardUtils.VCARD_JSCONTACT_PROP_TAG, JSContactPropUtils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.TEXT);
+                property.setParameter(VCardUtils.VCARD_JSCONTACT_PATH_PARAM_TAG, entry.getKey());
                 vcard.addProperty(property);
             } catch (Exception e) {}
         }

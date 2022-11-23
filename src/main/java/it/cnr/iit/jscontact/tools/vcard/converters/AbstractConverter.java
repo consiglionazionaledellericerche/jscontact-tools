@@ -20,7 +20,7 @@ public abstract class AbstractConverter {
         put("grammatical-gender","speakToAs/grammaticalGender");
         put("pronouns","speakToAs/pronouns");
         put("contact-channel-pref","preferredContactChannels");
-        put("x-rfc0000-jsprop",null);
+        put("jscontact-prop",null);
         put("x-ablabel",null);
     }};
 
