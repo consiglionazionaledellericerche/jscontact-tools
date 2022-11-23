@@ -29,7 +29,7 @@ public class VCardUtils {
     public static final String VCARD_CC_PARAM_TAG = "CC";
     public static final String VCARD_GROUP_PARAM_TAG = "GROUP";
     public static final String VCARD_JSCONTACT_PROP_TAG = "JSCONTACT-PROP";
-    public static final String VCARD_JSCONTACT_PATH_PARAM_TAG = "JSCONTACT-PATH";
+    public static final String VCARD_JSPTR_PARAM_TAG = "JSPTR";
     public static final String VCARD_TYPE_PARAM_TAG = "TYPE";
     public static final String VCARD_PREF_PARAM_TAG = "PREF";
     public static final String VCARD_MEDIATYPE_PARAM_TAG = "MEDIATYPE";

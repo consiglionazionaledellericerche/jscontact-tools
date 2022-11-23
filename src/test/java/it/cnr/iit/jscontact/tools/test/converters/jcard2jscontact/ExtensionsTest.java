@@ -28,8 +28,8 @@ public class ExtensionsTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"jscontact-prop\",{\"jscontact-path\":\"extension:myext1\"},\"text\",\"\\\"extvalue\\\"\"]," +
-                "[\"jscontact-prop\",{\"jscontact-path\":\"extension:myext2\"},\"text\",\"{\\\"extprop\\\":\\\"extvalue\\\"}\"]" +
+                "[\"jscontact-prop\",{\"jsptr\":\"extension:myext1\"},\"text\",\"\\\"extvalue\\\"\"]," +
+                "[\"jscontact-prop\",{\"jsptr\":\"extension:myext2\"},\"text\",\"{\\\"extprop\\\":\\\"extvalue\\\"}\"]" +
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
@@ -48,11 +48,11 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"lang\",{\"pref\":\"1\"},\"language-tag\",\"jp\"],"+
                 "[\"lang\",{\"pref\":\"2\"},\"language-tag\",\"en\"],"+
                 "[\"locale\",{},\"language-tag\",\"en\"],"+
-                "[\"jscontact-prop\",{\"jscontact-path\":\"addresses/ADR-1/street/0/ext4\"},\"text\",\"true\"],"+
-                "[\"jscontact-prop\",{\"jscontact-path\":\"nickNames/NICK-1/ext3\"},\"text\",\"\\\"text\\\"\"],"+
-                "[\"jscontact-prop\",{\"jscontact-path\":\"addresses/ADR-1/ext2\"},\"text\",\"{\\\"prop\\\":10}\"],"+
-                "[\"jscontact-prop\",{\"jscontact-path\":\"preferredLanguages/jp/0/ext6\"},\"text\",\"[\\\"1\\\",\\\"2\\\"]\"],"+
-                "[\"jscontact-prop\",{\"jscontact-path\":\"ext1\"},\"text\",\"10\"]"+
+                "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/street/0/ext4\"},\"text\",\"true\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"nickNames/NICK-1/ext3\"},\"text\",\"\\\"text\\\"\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/ext2\"},\"text\",\"{\\\"prop\\\":10}\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"preferredLanguages/jp/0/ext6\"},\"text\",\"[\\\"1\\\",\\\"2\\\"]\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"ext1\"},\"text\",\"10\"]"+
                 "]]";
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         assertEquals("testExtendedJSContact2 - 1", 1, jsCard.getExtensions().size());
