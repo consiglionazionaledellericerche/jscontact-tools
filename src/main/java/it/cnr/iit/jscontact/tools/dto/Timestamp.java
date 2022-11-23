@@ -11,9 +11,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Map;
 
 /**
  * Class mapping the Timestamp type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].

@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.Card;

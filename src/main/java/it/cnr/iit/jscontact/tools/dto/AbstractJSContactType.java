@@ -57,10 +57,10 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     /**
      * Adds a VCardParam object to this object.
      *
-     * @param id the link resource identifier
+     * @param id the VCardParam identifier
      * @param vCardParam the VCardParam object
      */
-    public void addLinkResource(String id, VCardParam vCardParam) {
+    public void addVCardParam(String id, VCardParam vCardParam) {
 
         if (vCardParams == null)
             vCardParams = new HashMap<>();

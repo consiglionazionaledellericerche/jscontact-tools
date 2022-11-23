@@ -1,6 +1,5 @@
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 /**
  * Class mapping the "date" property values of the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].

@@ -21,7 +21,6 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 

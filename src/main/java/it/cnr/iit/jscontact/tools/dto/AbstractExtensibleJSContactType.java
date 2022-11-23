@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;

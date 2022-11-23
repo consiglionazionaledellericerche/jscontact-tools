@@ -16,7 +16,6 @@
 package it.cnr.iit.jscontact.tools.test.serialization;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;

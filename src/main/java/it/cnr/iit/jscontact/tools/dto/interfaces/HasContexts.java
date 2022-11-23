@@ -1,9 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.cnr.iit.jscontact.tools.dto.AddressContext;
 import it.cnr.iit.jscontact.tools.dto.Context;
-import it.cnr.iit.jscontact.tools.dto.PhoneFeature;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.HashMap;
