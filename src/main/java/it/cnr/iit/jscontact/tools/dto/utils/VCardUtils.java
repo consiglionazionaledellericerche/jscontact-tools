@@ -23,6 +23,9 @@ public class VCardUtils {
     public static final String VCARD_GEO_TAG = "GEO";
     public static final String VCARD_PROP_ID_PARAM_TAG = "PROP-ID";
     public static final String VCARD_DERIVED_PARAM_TAG = "DERIVED";
+    public static final String VCARD_AUTHOR_PARAM_TAG = "AUTHOR";
+    public static final String VCARD_AUTHOR_NAME_PARAM_TAG = "AUTHOR-NAME";
+    public static final String VCARD_CREATED_PARAM_TAG = "CREATED";
     public static final String VCARD_INDEX_PARAM_TAG = "INDEX";
     public static final String VCARD_PID_PARAM_TAG = "PID";
     public static final String VCARD_LEVEL_PARAM_TAG = "LEVEL";

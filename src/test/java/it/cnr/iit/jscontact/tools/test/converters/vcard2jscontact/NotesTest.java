@@ -15,6 +15,8 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
+import ezvcard.util.VCardDateFormat;
+import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
@@ -29,15 +31,17 @@ public class NotesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "NOTE;ALTID=1:This fax number is operational 0800 to 1715 EST, Mon-Fri\n" +
+                "NOTE;AUTHOR-NAME=John Public;CREATED=\"2010-10-10T10:10:10Z\";ALTID=1:This fax number is operational 0800 to 1715 EST, Mon-Fri\n" +
                 "NOTE;ALTID=1;LANGUAGE=it:Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testNotesWithAltid1 - 1", jsCard.getNotes());
         assertEquals("testNotesWithAltid1 - 2", "This fax number is operational 0800 to 1715 EST, Mon-Fri", jsCard.getNotes().get("NOTE-1").getNote());
-        assertEquals("testNotesWithAltid1 - 3", "Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven", jsCard.getNotes().get("NOTE-2").getNote());
-        assertEquals("testNotesWithAltid1 - 4", "it", jsCard.getNotes().get("NOTE-2").getLanguage());
+        assertEquals("testNotesWithAltid1 - 3", "John Public", jsCard.getNotes().get("NOTE-1").getAuthor().getName());
+        assertEquals("testNotesWithAltid1 - 4", 0, jsCard.getNotes().get("NOTE-1").getCreated().compareTo(DateUtils.toCalendar("2010-10-10T10:10:10Z")));
+        assertEquals("testNotesWithAltid1 - 5", "Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven", jsCard.getNotes().get("NOTE-2").getNote());
+        assertEquals("testNotesWithAltid1 - 6", "it", jsCard.getNotes().get("NOTE-2").getLanguage());
     }
 
     @Test

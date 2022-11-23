@@ -20,10 +20,7 @@ import it.cnr.iit.jscontact.tools.dto.Title;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
-import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.VCardUtils;
-import it.cnr.iit.jscontact.tools.dto.utils.JSContactPropUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.*;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
@@ -1271,6 +1268,12 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         ezvcard.property.Note note = new ezvcard.property.Note(jsNote.getNote());
         note.setLanguage(jsNote.getLanguage());
+        if (jsNote.getAuthor()!=null && jsNote.getAuthor().getUri()!=null)
+            note.setParameter(VCardUtils.VCARD_AUTHOR_PARAM_TAG, jsNote.getAuthor().getUri());
+        if (jsNote.getAuthor()!=null && jsNote.getAuthor().getName()!=null)
+            note.setParameter(VCardUtils.VCARD_AUTHOR_NAME_PARAM_TAG, jsNote.getAuthor().getName());
+        if (jsNote.getCreated()!=null)
+            note.setParameter(VCardUtils.VCARD_CREATED_PARAM_TAG, DateUtils.toString(jsNote.getCreated()));
         VCardUtils.addVCardUnmatchedParameters(note, jsNote);
         return note;
     }

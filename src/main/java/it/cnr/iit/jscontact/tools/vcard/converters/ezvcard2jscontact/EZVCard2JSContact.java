@@ -1161,14 +1161,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private void fillNotes(VCard vcard, Card jsCard) {
 
-        List<LocalizedText> notes = new ArrayList<>();
         int i = 1;
         for (ezvcard.property.Note note : vcard.getNotes()) {
             String propId = note.getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG);
+            String authorUri = note.getParameter(VCardUtils.VCARD_AUTHOR_PARAM_TAG);
+            String authorName = note.getParameter(VCardUtils.VCARD_AUTHOR_NAME_PARAM_TAG);
+            String created = note.getParameter(VCardUtils.VCARD_CREATED_PARAM_TAG);
             String id = getId(VCard2JSContactIdsProfile.IdType.NOTE, i, "NOTE-" + (i ++), propId);
             jsCard.addNote(id, Note.builder()
                     .note(note.getValue())
                     .language(note.getLanguage())
+                    .author((authorName!=null || authorUri!=null) ?  Author.builder().name(authorName).uri(authorUri).build() : null)
+                    .created((created!=null) ? DateUtils.toCalendar(created) : null)
                     .vCardParams(VCardUtils.getVCardUnmatchedParameters(note, Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                     .build());
         }

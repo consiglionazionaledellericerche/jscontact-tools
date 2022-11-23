@@ -140,20 +140,4 @@ public class ExtensionsTest extends VCard2JSContactTest {
         assertEquals("testExtendedJSContact6 - 3", true, jsCard.getPhones().get("PHONE-1").asExt("example.com:extfeature"));
     }
 
-
-    @Test
-    public void testExtendedJSContact7() throws CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "NOTE;ALTID=1:This fax number is operational 0800 to 1715 EST, Mon-Fri\n" +
-                "NOTE;ALTID=1;LANGUAGE=it:Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven\n" +
-                "JSCONTACT-PROP;JSPTR=notes/NOTE-1/created;VALUE=TEXT:\"2010-10-10T10:10:10Z\"\n" +
-                "END:VCARD";
-
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testExtendedJSContact7 - 1", 0, jsCard.getNotes().get("NOTE-1").getCreated().compareTo(DateUtils.toCalendar("2010-10-10T10:10:10Z")));
-    }
-
 }
