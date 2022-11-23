@@ -32,8 +32,8 @@ public class ExtensionsTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"extension:myext1\";VALUE=uri:data:application/json;%22extvalue%22\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"extension:myext2\";VALUE=uri:data:application/json;base64,eyJleHRwcm9wIjoiZXh0dmFsdWUifQ==\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"extension:myext1\";VALUE=TEXT:\"extvalue\"\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"extension:myext2\";VALUE=TEXT:{\"extprop\":\"extvalue\"}\n" +
                 "END:VCARD";
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
@@ -53,11 +53,11 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "LANG;PREF=1:jp\n" +
                 "LANG;PREF=2:en\n" +
                 "LOCALE;VALUE=language-tag:en\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"addresses/ADR-1/street/0/ext4\";VALUE=uri:data:application/json;true\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"nickNames/NICK-1/ext3\";VALUE=uri:data:application/json;%22text%22\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"addresses/ADR-1/ext2\";VALUE=uri:data:application/json;base64,eyJwcm9wIjoxMH0=\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"preferredLanguages/jp/0/ext6\";VALUE=uri:data:application/json;base64,WyIxIiwiMiJd\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"ext1\";VALUE=uri:data:application/json;10\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"addresses/ADR-1/street/0/ext4\";VALUE=TEXT:true\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"nickNames/NICK-1/ext3\";VALUE=TEXT:\"text\"\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"addresses/ADR-1/ext2\";VALUE=TEXT:{\"prop\":10}\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"preferredLanguages/jp/0/ext6\";VALUE=TEXT:[\"1\",\"2\"]\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"ext1\";VALUE=TEXT:10\n" +
                 "END:VCARD";
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact2 - 1", 1, jsCard.getExtensions().size());
@@ -94,7 +94,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                 "X-RFC0000-JSPROP;X-RFC0000-JSPATH=anniversaries/ANNIVERSARY-1;VALUE=uri:data:application/json;base64,eyJAdHlwZSI6IkFubml2ZXJzYXJ5IiwidHlwZSI6ImV4YW1wbGUuY29tOmVuZ2FnZW1lbnQiLCJkYXRlIjp7IkB0eXBlIjoiVGltZXN0YW1wIiwidXRjIjoiMTk1My0xMC0xNVQyMzoxMDowMFoifX0=\n" +
+                 "X-RFC0000-JSPROP;X-RFC0000-JSPATH=anniversaries/ANNIVERSARY-1;VALUE=TEXT:{\"@type\":\"Anniversary\",\"type\":\"example.com:engagement\",\"date\":{\"@type\":\"Timestamp\",\"utc\":\"1953-10-15T23:10:00Z\"}}\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
@@ -109,7 +109,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "FN:Mr. John Q. Public, Esq.\n" +
                 "N:Public;John;;;\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=name/components/2;VALUE=uri:data:application/json;base64,eyJAdHlwZSI6Ik5hbWVDb21wb25lbnQiLCJ0eXBlIjoiZXhhbXBsZS5jb206ZXh0dHlwZSIsInZhbHVlIjoiZXh0dmFsdWUifQ==\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=name/components/2;VALUE=TEXT:{\"@type\":\"NameComponent\",\"type\":\"example.com:exttype\",\"value\":\"extvalue\"}\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
@@ -130,8 +130,8 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "FN:test\n" +
                 "TEL;VALUE=uri:tel:+33-01-23-45-6\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"phones/PHONE-1/features/example.com:extfeature\";VALUE=uri:data:application/json;true\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"phones/PHONE-1/contexts/example.com:extcontext\";VALUE=uri:data:application/json;true\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"phones/PHONE-1/features/example.com:extfeature\";VALUE=TEXT:true\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=\"phones/PHONE-1/contexts/example.com:extcontext\";VALUE=TEXT:true\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
@@ -149,7 +149,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "FN:test\n" +
                 "NOTE;ALTID=1:This fax number is operational 0800 to 1715 EST, Mon-Fri\n" +
                 "NOTE;ALTID=1;LANGUAGE=it:Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven\n" +
-                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=notes/NOTE-1/created;VALUE=uri:data:application/json;%222010-10-10T10%3A10%3A10Z%22\n" +
+                "X-RFC0000-JSPROP;X-RFC0000-JSPATH=notes/NOTE-1/created;VALUE=TEXT:\"2010-10-10T10:10:10Z\"\n" +
                 "END:VCARD";
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);

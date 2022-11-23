@@ -1478,7 +1478,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
             try {
-                RawProperty property = new RawProperty(VCardUtils.VCARD_X_RFC0000_JSPROP_TAG, X_RFC0000_JSPROP_Utils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.URI);
+                RawProperty property = new RawProperty(VCardUtils.VCARD_X_RFC0000_JSPROP_TAG, X_RFC0000_JSPROP_Utils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.TEXT);
                 property.setParameter(VCardUtils.VCARD_X_RFC0000_JSPATH_PARAM_TAG, entry.getKey());
                 vcard.addProperty(property);
             } catch (Exception e) {}
