@@ -22,7 +22,7 @@ import java.util.Calendar;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@NotNullAnyConstraint(fieldNames={"year","month","day"}, message = "at least one not null member is missing in JCardParam")
+@NotNullAnyConstraint(fieldNames={"year","month","day"}, message = "at least one not null member is missing in VCardParam")
 @JsonPropertyOrder({"@type","year","month","day","calscale"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder

@@ -104,11 +104,11 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().convertGenderToSpeakToAs(false).build()).build();
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testSpeakToAsWithGender2 - 1", 1, jsCard.getJCardExtensions().length);
-        assertEquals("testSpeakToAsWithGender2 - 2", "gender", jsCard.getJCardExtensions()[0].getName().toString());
-        assertEquals("testSpeakToAsWithGender2 - 3", 0, jsCard.getJCardExtensions()[0].getParameters().size());
-        assertEquals("testSpeakToAsWithGender2 - 4", VCardDataType.TEXT, jsCard.getJCardExtensions()[0].getType());
-        assertEquals("testSpeakToAsWithGender2 - 5", "M;boy", jsCard.getJCardExtensions()[0].getValue());
+        assertEquals("testSpeakToAsWithGender2 - 1", 1, jsCard.getVCardProps().length);
+        assertEquals("testSpeakToAsWithGender2 - 2", "gender", jsCard.getVCardProps()[0].getName().toString());
+        assertEquals("testSpeakToAsWithGender2 - 3", 0, jsCard.getVCardProps()[0].getParameters().size());
+        assertEquals("testSpeakToAsWithGender2 - 4", VCardDataType.TEXT, jsCard.getVCardProps()[0].getType());
+        assertEquals("testSpeakToAsWithGender2 - 5", "M;boy", jsCard.getVCardProps()[0].getValue());
     }
 
     public void testSpeakTo1() throws CardException {

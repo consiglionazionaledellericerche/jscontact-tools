@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * Class mapping the JCardProp type as defined in section 2.15.1 of [draft-ietf-calext-jscontact-vcard].
+ * Class mapping the VCardProp type as defined in section 2.15.1 of [draft-ietf-calext-jscontact-vcard].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.15.1">draft-ietf-calext-jscontact-vcard</a>
  * @author Mario Loffredo
@@ -18,9 +18,9 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 @Data
-public class JCardProp {
+public class VCardProp {
 
-    @NotNull(message = "name is missing in JCardProp")
+    @NotNull(message = "name is missing in VCardProp")
     @NonNull
     V_Extension name;
 
@@ -29,7 +29,7 @@ public class JCardProp {
 
     VCardDataType type;
 
-    @NotNull(message = "value is missing in JCardProp")
+    @NotNull(message = "value is missing in VCardProp")
     @NonNull
     Object value;
 

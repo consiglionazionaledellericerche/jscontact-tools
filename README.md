@@ -220,11 +220,11 @@ The conversion is executed according to the following rules:
 
 3. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
 
-4. An unmatched property is converted into an entry of the topmost Card/CardGroup `ietf.org:rfc0000:props` map. The following unmatched properties are considered:    
+4. An unmatched property is converted into an entry of the topmost Card/CardGroup `vCardProps` map. The following unmatched properties are considered:    
     CLIENTPIDMAP
     XML
 
-5. An unmatched parameter is converted into an entry of an object `ietf.org:rfc0000:params` map. The following unmatched parameters are considered:
+5. An unmatched parameter is converted into an entry of an object `vCardParams` map. The following unmatched parameters are considered:
     PID
     SORT-AS
  
@@ -362,11 +362,11 @@ All the methods take in input a list of JSContact Card objects and can raise a `
 
 1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
  
-2. An entry of the topmost Card/CardGroup `ietf.org:rfc0000:props` map is converted into the related vCard property  . The following properties are considered:
+2. An entry of the topmost Card/CardGroup `vCardProps` map is converted into the related vCard property  . The following properties are considered:
     CLIENTPIDMAP
     XML
  
-3. An entry of an object `ietf.org:rfc0000:params` map is converted into a vCard parameter. The following parameters are considered:
+3. An entry of an object `vCardParams` map is converted into a vCard parameter. The following parameters are considered:
     PID
     SORT-AS
 

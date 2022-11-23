@@ -1119,7 +1119,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private <E extends TextProperty > E getTextProperty(E property, String language, String propId, Map<String,JCardParam> unmatchedParams) {
+    private <E extends TextProperty > E getTextProperty(E property, String language, String propId, Map<String, VCardParam> unmatchedParams) {
 
         if (language != null) property.getParameters().setLanguage(language);
         VCardUtils.addVCardUnmatchedParameters(property,unmatchedParams);
@@ -1127,7 +1127,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return property;
     }
 
-    private <E extends TextListProperty> E getTextListProperty(E property, List<String> textList, String language, String propId, Map<String,JCardParam> unmatchedParams) {
+    private <E extends TextListProperty> E getTextListProperty(E property, List<String> textList, String language, String propId, Map<String, VCardParam> unmatchedParams) {
 
         property.getValues().addAll(textList);
         VCardUtils.addVCardUnmatchedParameters(property,unmatchedParams);
@@ -1147,18 +1147,18 @@ public class JSContact2EZVCard extends AbstractConverter {
                 jsCard.getLocalizationsPerPath("titles/"+entry.getKey()+"/title")==null)
 
                 if (entry.getValue().getType() == null || entry.getValue().getType().isTitle())
-                    vcard.addTitle(getTextProperty(new ezvcard.property.Title(entry.getValue().getName()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams()));
+                    vcard.addTitle(getTextProperty(new ezvcard.property.Title(entry.getValue().getName()), jsCard.getLocale(), entry.getKey(), entry.getValue().getVCardParams()));
                 else
-                    vcard.addRole(getTextProperty(new ezvcard.property.Role(entry.getValue().getName()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams()));
+                    vcard.addRole(getTextProperty(new ezvcard.property.Role(entry.getValue().getName()), jsCard.getLocale(), entry.getKey(), entry.getValue().getVCardParams()));
 
             else {
                 List<ezvcard.property.Title> titles = new ArrayList<>();
                 List<ezvcard.property.Role> roles = new ArrayList<>();
 
                 if (entry.getValue().getType() == null || entry.getValue().getType().isTitle())
-                    titles.add(getTextProperty(new ezvcard.property.Title(entry.getValue().getName()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams()));
+                    titles.add(getTextProperty(new ezvcard.property.Title(entry.getValue().getName()), jsCard.getLocale(), entry.getKey(), entry.getValue().getVCardParams()));
                 else
-                    roles.add(getTextProperty(new ezvcard.property.Role(entry.getValue().getName()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams()));
+                    roles.add(getTextProperty(new ezvcard.property.Role(entry.getValue().getName()), jsCard.getLocale(), entry.getKey(), entry.getValue().getVCardParams()));
 
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("titles/"+entry.getKey());
@@ -1212,14 +1212,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name")==null) {
-                ezvcard.property.Organization org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams());
+                ezvcard.property.Organization org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getVCardParams());
                 if (entry.getValue().getSortAs()!=null)
                     org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, entry.getValue().getSortAs()));
                 vcard.getOrganizations().add(org);
             }
             else {
                 List<ezvcard.property.Organization> organizations = new ArrayList<>();
-                ezvcard.property.Organization org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getJCardParams());
+                ezvcard.property.Organization org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getVCardParams());
                 if (entry.getValue().getSortAs()!=null)
                     org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, entry.getValue().getSortAs()));
                 organizations.add(org);
@@ -1338,49 +1338,49 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private void fillVCardExtensions(VCard vcard, Card jsCard) {
 
-        if (jsCard.getJCardExtensions() == null)
+        if (jsCard.getVCardProps() == null)
             return;
 
-        for (JCardProp jCardProp : jsCard.getJCardExtensions()) {
+        for (VCardProp vCardProp : jsCard.getVCardProps()) {
 
-            if (jCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_CLIENTPIDMAP_TAG))) {
-                String pid = ((String) jCardProp.getValue()).split(",")[0];
-                String uri = ((String) jCardProp.getValue()).split(",")[1];
+            if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_CLIENTPIDMAP_TAG))) {
+                String pid = ((String) vCardProp.getValue()).split(",")[0];
+                String uri = ((String) vCardProp.getValue()).split(",")[1];
                 ClientPidMap pidmap = getCliendPidMap(pid, uri);
-                pidmap.setParameters(jCardProp.getVCardParameters());
+                pidmap.setParameters(vCardProp.getVCardParameters());
                 vcard.addClientPidMap(pidmap);
             }
-            else if (jCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_XML_TAG))) {
+            else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_XML_TAG))) {
                 try {
-                    Xml xml = new Xml(((String) jCardProp.getValue()));
-                    xml.setParameters(jCardProp.getVCardParameters());
+                    Xml xml = new Xml(((String) vCardProp.getValue()));
+                    xml.setParameters(vCardProp.getVCardParameters());
                     vcard.getXmls().add(xml);
                 } catch (Exception e) {
                     throw new InternalErrorException(e.getMessage());
                 }
             }
-            else if (jCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_TZ_TAG))) {
+            else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_TZ_TAG))) {
 
                 Timezone tz = null;
                 TimeZone timeZone = null;
                 if (jsCard.getCustomTimeZones() != null)
-                    timeZone = jsCard.getCustomTimeZones().get((String) jCardProp.getValue());
+                    timeZone = jsCard.getCustomTimeZones().get((String) vCardProp.getValue());
                 if (timeZone != null) {
                     if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
                         tz = new Timezone(UtcOffset.parse((timeZone.getStandard().get(0).getOffsetFrom())));
                 } else
-                    tz = getTimezone((String) jCardProp.getValue());
-                tz.setParameters(jCardProp.getVCardParameters());
+                    tz = getTimezone((String) vCardProp.getValue());
+                tz.setParameters(vCardProp.getVCardParameters());
                 vcard.setTimezone(tz);
             }
-            else if (jCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_GEO_TAG))) {
-                Geo geo = new Geo(getGeoUri((String) jCardProp.getValue()));
-                geo.setParameters(jCardProp.getVCardParameters());
+            else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardUtils.VCARD_GEO_TAG))) {
+                Geo geo = new Geo(getGeoUri((String) vCardProp.getValue()));
+                geo.setParameters(vCardProp.getVCardParameters());
                 vcard.setGeo(geo);
             }
             else {
-                RawProperty property = new RawProperty(jCardProp.getName().toString().toUpperCase(), jCardProp.getValue().toString(), jCardProp.getType());
-                property.setParameters(jCardProp.getVCardParameters());
+                RawProperty property = new RawProperty(vCardProp.getName().toString().toUpperCase(), vCardProp.getValue().toString(), vCardProp.getType());
+                property.setParameters(vCardProp.getVCardParameters());
                 vcard.addProperty(property);
             }
         }

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import ezvcard.VCardDataType;
-import it.cnr.iit.jscontact.tools.dto.JCardProp;
+import it.cnr.iit.jscontact.tools.dto.VCardProp;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import lombok.NoArgsConstructor;
@@ -29,12 +29,12 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Custom JSON deserializer for the JCardProp array.
+ * Custom JSON deserializer for the VCardProp array.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class JCardPropsDeserializer extends JsonDeserializer<JCardProp[]> {
+public class VCardPropsDeserializer extends JsonDeserializer<VCardProp[]> {
 
     private static Map<String,Object> getParameters(JsonNode node) {
 
@@ -51,18 +51,18 @@ public class JCardPropsDeserializer extends JsonDeserializer<JCardProp[]> {
     }
 
     @Override
-    public JCardProp[] deserialize(JsonParser jp, DeserializationContext ctxt)
+    public VCardProp[] deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         if (node == null || !node.isArray())
             return null;
 
-        List<JCardProp> list = new ArrayList<>();
+        List<VCardProp> list = new ArrayList<>();
         for (JsonNode subnode : node) {
             if (subnode == null || !subnode.isArray())
                 return null;
             Map<String,String> parameters = new HashMap<>();
-            list.add(JCardProp.builder()
+            list.add(VCardProp.builder()
                               .name(V_Extension.toV_Extension(subnode.get(0).asText()))
                               .parameters(getParameters(subnode.get(1)))
                               .type((subnode.get(2).asText().equals("unknown")) ? null : VCardDataType.get(subnode.get(2).asText()))
@@ -70,6 +70,6 @@ public class JCardPropsDeserializer extends JsonDeserializer<JCardProp[]> {
                               .build());
         }
 
-        return list.toArray(new JCardProp[0]);
+        return list.toArray(new VCardProp[0]);
     }
 }

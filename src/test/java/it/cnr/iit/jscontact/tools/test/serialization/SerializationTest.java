@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.serialization;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
@@ -83,7 +84,7 @@ public class SerializationTest {
         Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
         jsCard.setUid("549e9dd2-ecb1-46af-8df1-09e98329d0ff");
         String serialized = Card.toJson(jsCard);
-        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"@version\":\"rfc0000\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"ietf.org:rfc0000:props\":[[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
+        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"@version\":\"rfc0000\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"vCardProps\":[[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
 
     }
 

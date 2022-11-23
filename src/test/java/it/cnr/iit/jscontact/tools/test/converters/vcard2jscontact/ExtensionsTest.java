@@ -85,7 +85,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
 
         Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact3 - 1", "a label", jsCard.getPhones().get("PHONE-1").getLabel());
-        assertEquals("testExtendedJSContact3 - 2", "G-PHONE-1", jsCard.getPhones().get("PHONE-1").getJCardParams().get("group").getValue());
+        assertEquals("testExtendedJSContact3 - 2", "G-PHONE-1", jsCard.getPhones().get("PHONE-1").getVCardParams().get("group").getValue());
     }
 
     @Test

@@ -32,7 +32,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\":\"test\"," +
-                "\"ietf.org:rfc0000:props\": [" +
+                "\"vCardProps\": [" +
                     "[ \"xml\", {}, \"text\", \"<note>This is a not in xml</note>\"]" +
                 "]" +
                 "}";
@@ -69,7 +69,7 @@ public class UnmatchedTest extends JSContact2VCardTest {
                             "\"type\" : \"suffix\", " +
                             "\"value\" : \"Esq.\" " +
                     "} ], " +
-                    "\"ietf.org:rfc0000:params\" : { " +
+                    "\"vCardParams\" : { " +
                         "\"sort-as\" : [ \"Public\", \"John\" ] " +
                     "}" +
                 "}";

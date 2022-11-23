@@ -322,7 +322,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                     .mediaType(resource.getMediaType())
                                     .pref(resource.getPref())
                                     .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
-                                    .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                    .vCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                     .build()
                            );
     }
@@ -340,7 +340,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .pref(resource.getPref())
                 .index((index!=null) ? Integer.parseInt(index) : null) //used only for DirectoryResource objects whose "type" is "directory"
                 .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
-                .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                .vCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                 .build();
     }
 
@@ -368,7 +368,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .mediaType(resource.getMediaType())
                         .pref(resource.getPref())
                         .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
-                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                        .vCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                         .build()
         );
     }
@@ -386,7 +386,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .mediaType(resource.getMediaType())
                         .pref(resource.getPref())
                         .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
-                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                        .vCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                         .build()
         );
     }
@@ -404,7 +404,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .mediaType(resource.getMediaType())
                         .pref(resource.getPref())
                         .label(getX_ABLabel(vcardProperty,vcardExtendedProperties))
-                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                        .vCardParams(VCardUtils.getVCardUnmatchedParameters(vcardProperty,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                         .build()
         );
     }
@@ -518,9 +518,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         if (!config.isConvertGenderToSpeakToAs()) {
-            jsCard.addJCardProp(JCardProp.builder()
+            jsCard.addVCardProp(VCardProp.builder()
                                          .name(V_Extension.toV_Extension(VCardUtils.VCARD_GENDER_TAG.toLowerCase()))
-                                         .parameters(VCardUtils.getJCardPropParameters(vCard.getGender().getParameters()))
+                                         .parameters(VCardUtils.getVCardPropParameters(vCard.getGender().getParameters()))
                                          .type(VCardDataType.TEXT)
                                          .value(String.format("%s%s", vCard.getGender().getGender(), (vCard.getGender().getText()==null) ? "" : ";"+vCard.getGender().getText()))
                                          .build());
@@ -555,7 +555,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                          .value(getValue(fn))
                                          .language(fn.getLanguage())
                                          .preference(isDefaultLanguage(fn.getLanguage(), jsCard.getLocale()) ? HIGHEST_PREFERENCE : fn.getPref())
-                                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(fn,Arrays.asList(new String[]{VCardUtils.VCARD_DERIVED_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                        .vCardParams(VCardUtils.getVCardUnmatchedParameters(fn,Arrays.asList(new String[]{VCardUtils.VCARD_DERIVED_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                          .build()
                          );
         }
@@ -603,7 +603,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 jsCard.setName(Name.builder()
                                    .components(components)
                                    .sortAs((sn.getSortAs()!=null && !sn.getSortAs().isEmpty()) ? sn.getSortAs().toArray(new String[0]) : null)
-                                   .jCardParams(VCardUtils.getVCardUnmatchedParameters(sn,Arrays.asList(new String[]{ VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                   .vCardParams(VCardUtils.getVCardUnmatchedParameters(sn,Arrays.asList(new String[]{ VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                    .build());
 
             }
@@ -624,13 +624,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     .preference(nickname.getPref())
                     .contexts(contexts)
                     .label(getX_ABLabel(nickname,vcard.getExtendedProperties()))
-                    .jCardParams(VCardUtils.getVCardUnmatchedParameters(nickname,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                    .vCardParams(VCardUtils.getVCardUnmatchedParameters(nickname,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                     .build());
         }
         int i = 1;
         for (LocalizedText nick : nicks) {
             String id = getId(VCard2JSContactIdsProfile.IdType.NICKNAME, i, "NICK-" + (i ++), nick.getPropId());
-            NickName nickName = NickName.builder().name(nick.getValue()).pref(nick.getPreference()).contexts(nick.getContexts()).label(nick.getLabel()).jCardParams(nick.getJCardParams()).build();
+            NickName nickName = NickName.builder().name(nick.getValue()).pref(nick.getPreference()).contexts(nick.getContexts()).label(nick.getLabel()).vCardParams(nick.getVCardParams()).build();
             jsCard.addNickName(id, nickName);
             if (nick.getLocalizations() != null) {
                 for (Map.Entry<String, String> localization : nick.getLocalizations().entrySet()) {
@@ -701,7 +701,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                                  .altid(addr.getAltId())
                                                                  .language(addr.getLanguage())
                                                                  .isDefaultLanguage(isDefaultLanguage(addr.getLanguage(), jsCard.getLocale()))
-                                                                 .jCardParams(VCardUtils.getVCardUnmatchedParameters(addr,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                                 .vCardParams(VCardUtils.getVCardUnmatchedParameters(addr,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                                  .build()
             );
         }
@@ -712,9 +712,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (address != null) {
                 address.setTimeZone(tz);
             } else {
-                jsCard.addJCardProp(JCardProp.builder()
+                jsCard.addVCardProp(VCardProp.builder()
                         .name(V_Extension.toV_Extension(VCardUtils.VCARD_TZ_TAG.toLowerCase()))
-                        .parameters(VCardUtils.getJCardPropParameters(vcard.getTimezone().getParameters()))
+                        .parameters(VCardUtils.getVCardPropParameters(vcard.getTimezone().getParameters()))
                         .type(vcard.getTimezone().getParameters().getValue())
                         .value(tz)
                         .build());
@@ -727,9 +727,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (address != null) {
                 address.setCoordinates(geo);
             } else {
-                jsCard.addJCardProp(JCardProp.builder()
+                jsCard.addVCardProp(VCardProp.builder()
                         .name(V_Extension.toV_Extension(VCardUtils.VCARD_GEO_TAG.toLowerCase()))
-                        .parameters(VCardUtils.getJCardPropParameters(vcard.getGeo().getParameters()))
+                        .parameters(VCardUtils.getVCardPropParameters(vcard.getGeo().getParameters()))
                         .type(vcard.getGeo().getParameters().getValue())
                         .value(geo)
                         .build());
@@ -790,7 +790,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                                              .type(AnniversaryType.birth())
                                                                              .date(getAnniversaryDate(vcard.getBirthday()))
                                                                              .place(getValue(vcard.getBirthplace()))
-                                                                             .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcard.getBirthday(),Arrays.asList(new String[]{VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                                             .vCardParams(VCardUtils.getVCardUnmatchedParameters(vcard.getBirthday(),Arrays.asList(new String[]{VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                                              .build()
                                   );
       }
@@ -800,7 +800,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                                              .type(AnniversaryType.death())
                                                                              .date(getAnniversaryDate(vcard.getDeathdate()))
                                                                              .place(getValue(vcard.getDeathplace()))
-                                                                             .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcard.getDeathdate(),Arrays.asList(new String[]{VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                                             .vCardParams(VCardUtils.getVCardUnmatchedParameters(vcard.getDeathdate(),Arrays.asList(new String[]{VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                                              .build()
                                   );
       }
@@ -809,7 +809,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
           jsCard.addAnniversary(getId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + i, vcard.getAnniversary().getParameter(VCardUtils.VCARD_PROP_ID_PARAM_TAG)),it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
                                                                               .type(AnniversaryType.wedding())
                                                                               .date(getAnniversaryDate(vcard.getAnniversary()))
-                                                                              .jCardParams(VCardUtils.getVCardUnmatchedParameters(vcard.getAnniversary(),Arrays.asList(new String[]{VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                                              .vCardParams(VCardUtils.getVCardUnmatchedParameters(vcard.getAnniversary(),Arrays.asList(new String[]{VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                                               .build()
                                    );
       }
@@ -839,7 +839,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                             .level((hobby.getLevel() != null) ? getLevel(hobby.getLevel().getValue()) : null)
                                             .index(hobby.getIndex())
                                             .label(getX_ABLabel(hobby,vcard.getExtendedProperties()))
-                                            .jCardParams(VCardUtils.getVCardUnmatchedParameters(hobby,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                            .vCardParams(VCardUtils.getVCardUnmatchedParameters(hobby,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                             .build()
                        );
         }
@@ -860,7 +860,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                              .level((interest.getLevel() != null) ? getLevel(interest.getLevel().getValue()) : null)
                                              .index(interest.getIndex())
                                              .label(getX_ABLabel(interest,vcard.getExtendedProperties()))
-                                             .jCardParams(VCardUtils.getVCardUnmatchedParameters(interest,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                             .vCardParams(VCardUtils.getVCardUnmatchedParameters(interest,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                              .build()
                           );
         }
@@ -880,7 +880,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                               .level((expertise.getLevel() != null) ? getLevel(expertise.getLevel().getValue()) : null)
                                               .index(expertise.getIndex())
                                               .label(getX_ABLabel(expertise,vcard.getExtendedProperties()))
-                                              .jCardParams(VCardUtils.getVCardUnmatchedParameters(expertise,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                              .vCardParams(VCardUtils.getVCardUnmatchedParameters(expertise,Arrays.asList(new String[]{VCardUtils.VCARD_INDEX_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                               .build()
                            );
         }
@@ -903,7 +903,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                             LanguagePreference.builder()
                                                            .contexts(getContexts(vcardType))
                                                             .pref(lang.getPref())
-                                                           .jCardParams(VCardUtils.getVCardUnmatchedParameters(lang,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                           .vCardParams(VCardUtils.getVCardUnmatchedParameters(lang,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                            .build()
                                             );
             else
@@ -946,7 +946,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                        .contexts(contexts)
                                        .pref(tel.getPref())
                                        .label(getX_ABLabel(tel,vcard.getExtendedProperties()))
-                                       .jCardParams(VCardUtils.getVCardUnmatchedParameters(tel,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                       .vCardParams(VCardUtils.getVCardUnmatchedParameters(tel,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                        .build()
                               );
         }
@@ -965,7 +965,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .contexts(getContexts(vcardType))
                         .pref(email.getPref())
                         .label(getX_ABLabel(email,vcard.getExtendedProperties()))
-                        .jCardParams(VCardUtils.getVCardUnmatchedParameters(email,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                        .vCardParams(VCardUtils.getVCardUnmatchedParameters(email,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                         .build()
                 );
             }
@@ -986,7 +986,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     .contexts(contexts)
                     .pref(impp.getPref())
                     .label(getX_ABLabel(impp,vcard.getExtendedProperties()))
-                    .jCardParams(VCardUtils.getVCardUnmatchedParameters(impp,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                    .vCardParams(VCardUtils.getVCardUnmatchedParameters(impp,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                     .build()
             );
         }
@@ -1076,7 +1076,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                              .contexts(contexts)
                              .pref(calendarRequestUri.getPref())
                              .label(getX_ABLabel(calendarRequestUri,vcard.getExtendedProperties()))
-                             .jCardParams(VCardUtils.getVCardUnmatchedParameters(calendarRequestUri,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                             .vCardParams(VCardUtils.getVCardUnmatchedParameters(calendarRequestUri,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                              .build());
         }
     }
@@ -1085,7 +1085,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         for (LocalizedText localizedString : localizedStrings) {
             String id = getId(VCard2JSContactIdsProfile.IdType.TITLE, i, "TITLE-" + (i ++), localizedString.getPropId());
-            jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().name(localizedString.getValue()).type(type).jCardParams(localizedString.getJCardParams()).build());
+            jsCard.addTitle(id, it.cnr.iit.jscontact.tools.dto.Title.builder().name(localizedString.getValue()).type(type).vCardParams(localizedString.getVCardParams()).build());
             if (localizedString.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : localizedString.getLocalizations().entrySet())
                     jsCard.addLocalization(localization.getKey(), "titles/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Title.builder().name(localization.getValue()).type(type).build(), JsonNode.class));
@@ -1102,7 +1102,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                      .language(title.getLanguage())
                                                      .altid(title.getAltId())
                                                      .preference(title.getPref())
-                                                     .jCardParams(VCardUtils.getVCardUnmatchedParameters(title,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                     .vCardParams(VCardUtils.getVCardUnmatchedParameters(title,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                      .build()
                               );
         Collections.sort(titles); //sort based on preference
@@ -1118,7 +1118,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                      .language(role.getLanguage())
                                                      .altid(role.getAltId())
                                                      .preference(role.getPref())
-                                                     .jCardParams(VCardUtils.getVCardUnmatchedParameters(role,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                     .vCardParams(VCardUtils.getVCardUnmatchedParameters(role,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                      .build()
                               );
         }
@@ -1137,7 +1137,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                                              .altid(org.getAltId())
                                                              .preference(org.getPref())
                                                              .sortAs((org.getSortAs()!=null && !org.getSortAs().isEmpty()) ? org.getSortAs().toArray(new String[0]) : null)
-                                                             .jCardParams(VCardUtils.getVCardUnmatchedParameters(org,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                                                             .vCardParams(VCardUtils.getVCardUnmatchedParameters(org,Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                                              .build()
                               );
         }
@@ -1148,7 +1148,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String[] nameItems = organization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
             String id = getId(VCard2JSContactIdsProfile.IdType.ORGANIZATION, i, "ORG-" + (i ++), organization.getPropId());
             List<String> units = (nameItems.length > 1 ) ? Arrays.asList(nameItems).subList(1,nameItems.length) : null;
-            jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().name((!nameItems[0].isEmpty()) ? nameItems[0] : null).units((units!=null)? units.toArray(new String[0]) : null).sortAs(organization.getSortAs()).jCardParams(organization.getJCardParams()).build());
+            jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().name((!nameItems[0].isEmpty()) ? nameItems[0] : null).units((units!=null)? units.toArray(new String[0]) : null).sortAs(organization.getSortAs()).vCardParams(organization.getVCardParams()).build());
             if (organization.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : organization.getLocalizations().entrySet()) {
                     String[] localizedNameItems =  localization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
@@ -1169,7 +1169,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             jsCard.addNote(id, Note.builder()
                     .note(note.getValue())
                     .language(note.getLanguage())
-                    .jCardParams(VCardUtils.getVCardUnmatchedParameters(note, Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
+                    .vCardParams(VCardUtils.getVCardUnmatchedParameters(note, Arrays.asList(new String[]{VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                     .build());
         }
     }
@@ -1277,9 +1277,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         for (RawProperty extension : vcard.getExtendedProperties()) {
             if (!fakeExtensionsMapping.containsKey(extension.getPropertyName()) &&
                     !fakeExtensionsMapping.containsKey(extension.getPropertyName().toLowerCase())) {
-                jsCard.addJCardProp(JCardProp.builder()
+                jsCard.addVCardProp(VCardProp.builder()
                                              .name(V_Extension.toV_Extension(extension.getPropertyName()))
-                                             .parameters(VCardUtils.getJCardPropParameters(extension.getParameters()))                                            .type(extension.getDataType())
+                                             .parameters(VCardUtils.getVCardPropParameters(extension.getParameters()))                                            .type(extension.getDataType())
                                              .value(extension.getValue())
                                              .build());
             }
@@ -1317,9 +1317,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (vcard.getClientPidMaps()!=null) {
             for (ClientPidMap pidmap : vcard.getClientPidMaps())
-                jsCard.addJCardProp(JCardProp.builder()
+                jsCard.addVCardProp(VCardProp.builder()
                                              .name(V_Extension.toV_Extension(VCardUtils.VCARD_CLIENTPIDMAP_TAG.toLowerCase()))
-                                             .parameters(VCardUtils.getJCardPropParameters(pidmap.getParameters()))
+                                             .parameters(VCardUtils.getVCardPropParameters(pidmap.getParameters()))
                                              .type(VCardDataType.TEXT)
                                              .value(String.format("%d,%s",pidmap.getPid(), pidmap.getUri()))
                                              .build());
@@ -1327,9 +1327,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (vcard.getXmls()!=null) {
                 for (Xml xml : vcard.getXmls())
-                    jsCard.addJCardProp(JCardProp.builder()
+                    jsCard.addVCardProp(VCardProp.builder()
                                                  .name(V_Extension.toV_Extension(VCardUtils.VCARD_XML_TAG.toLowerCase()))
-                                                 .parameters(VCardUtils.getJCardPropParameters(xml.getParameters()))
+                                                 .parameters(VCardUtils.getVCardPropParameters(xml.getParameters()))
                                                  .type(VCardDataType.TEXT)
                                                  .value(xml.getValue().getTextContent())
                                                  .build());

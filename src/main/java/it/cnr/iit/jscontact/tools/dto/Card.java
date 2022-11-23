@@ -30,10 +30,10 @@ import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.JCardPropsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.VCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.JCardPropsSerializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.VCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
 import lombok.*;
@@ -64,7 +64,7 @@ import java.util.*;
         "addresses",
         "cryptoKeys","directories","links","media",
         "localizations",
-        "anniversaries","personalInfo","notes","keywords","ietf.org:rfc0000:props"})
+        "anniversaries","personalInfo","notes","keywords","vCardProps"})
 @TitleOrganizationConstraint
 @LocalizationsConstraint
 @NoArgsConstructor
@@ -265,11 +265,11 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> keywords;
 
-    @JsonProperty("ietf.org:rfc0000:props")
-    @JsonSerialize(using = JCardPropsSerializer.class)
-    @JsonDeserialize(using = JCardPropsDeserializer.class)
+    @JsonProperty("vCardProps")
+    @JsonSerialize(using = VCardPropsSerializer.class)
+    @JsonDeserialize(using = VCardPropsDeserializer.class)
     @Valid
-    JCardProp[] jCardExtensions;
+    VCardProp[] vCardProps;
 
     @JsonIgnore
     Map<String,TimeZone> customTimeZones;
@@ -839,31 +839,31 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     }
 
     /**
-     * Adds a JCardProp object to this object.
+     * Adds a VCardProp object to this object.
      *
-     * @param o the JCardProp object
+     * @param o the VCardProp object
      */
-    public void addJCardProp(JCardProp o) {
+    public void addVCardProp(VCardProp o) {
 
-        jCardExtensions = ArrayUtils.add(jCardExtensions, o);
+        vCardProps = ArrayUtils.add(vCardProps, o);
     }
 
 
     /**
-     * Convert the jCardExtensions array into a map
+     * Convert the vCardProps array into a map
      * where the keys are the extnsion names and
      * the values are the extension values in text format
      *
-     * @return jCardExtensions array converted into a map
+     * @return vCardProps array converted into a map
      */
     @JsonIgnore
-    public Map<String,String> getJCardExtensionsAsMap() {
+    public Map<String,String> getVCardPropsAsMap() {
 
         Map<String,String> map = new HashMap<>();
-        if (this.getJCardExtensions() == null)
+        if (this.getVCardProps() == null)
             return map;
 
-        for (JCardProp jCardExtension : this.getJCardExtensions())
+        for (VCardProp jCardExtension : this.getVCardProps())
             map.put(jCardExtension.getName().toString(),jCardExtension.getValue().toString());
 
         return map;
