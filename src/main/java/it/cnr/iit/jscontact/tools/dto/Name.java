@@ -27,6 +27,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Class mapping the Name type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
@@ -56,7 +57,7 @@ public class Name extends AbstractJSContactType implements Serializable {
 
     String locale;
 
-    String[] sortAs;
+    Map<String,String> sortAs;
 
     /**
      * Adds a name component to this object.

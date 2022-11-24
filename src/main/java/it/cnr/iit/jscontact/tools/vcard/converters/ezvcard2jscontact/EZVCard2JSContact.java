@@ -584,6 +584,23 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     }
 
+
+    private static Map<String,String> getNameSortAs(List<String> vcardSortAs, StructuredName sn) {
+
+        if (vcardSortAs == null || vcardSortAs.isEmpty())
+            return null;
+
+        Map<String,String> sortAs = new HashMap<>();
+        NameComponentEnum[] nameComponentEnumValues = NameComponentEnum.values();
+        int i = 0;
+        for (String vcardSortAsItem : vcardSortAs) {
+            String[] vcardSortAsItemSubs = vcardSortAsItem.split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+            for (String vcardSortAsItemSub : vcardSortAsItemSubs)
+                sortAs.put(nameComponentEnumValues[i++].getValue(), vcardSortAsItemSub);
+        }
+        return sortAs;
+    }
+
     private static void fillNames(VCard vcard, Card jsCard) {
 
         List<StructuredName> sns = vcard.getStructuredNames();
@@ -602,7 +619,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     components = Name.addComponent(components,NameComponent.suffix(sx));
                 jsCard.setName(Name.builder()
                                    .components(components)
-                                   .sortAs((sn.getSortAs()!=null && !sn.getSortAs().isEmpty()) ? sn.getSortAs().toArray(new String[0]) : null)
+                                   .sortAs(getNameSortAs(sn.getSortAs(),sn))
                                    .vCardParams(VCardUtils.getVCardUnmatchedParameters(sn,Arrays.asList(new String[]{ VCardUtils.VCARD_PID_PARAM_TAG, VCardUtils.VCARD_GROUP_PARAM_TAG})))
                                    .build());
 

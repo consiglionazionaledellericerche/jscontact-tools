@@ -260,14 +260,21 @@ public class JSContact2EZVCard extends AbstractConverter {
         return name;
     }
 
+    private static String getNameSortAs(Map<String,String> jsContactSortAs) {
+
+        if (jsContactSortAs == null)
+            return null;
+
+        return String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsContactSortAs.values());
+    }
+
     private static List<StructuredName> getStructuredNames(Card jsCard) {
 
         List<StructuredName> sns = new ArrayList<>();
         if (jsCard.getLocalizationsPerPath("name") != null) {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLocale());
-            if (jsCard.getName().getSortAs()!=null)
-                sn.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsCard.getName().getSortAs()));
+            sn.setParameter(VCardUtils.VCARD_SORT_AS_PARAM_TAG, getNameSortAs(jsCard.getName().getSortAs())); // did this way because Ez-vcard allows to sort only for surname and given name
             VCardUtils.addVCardUnmatchedParameters(sn,jsCard.getName());
             sns.add(sn);
             for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("name").entrySet()) {
@@ -279,8 +286,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         else if (jsCard.getLocalizationsPerPath("name/components") != null) {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLocale());
-            if (jsCard.getName().getSortAs()!=null)
-                sn.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsCard.getName().getSortAs()));
+            sn.setParameter(VCardUtils.VCARD_SORT_AS_PARAM_TAG,getNameSortAs(jsCard.getName().getSortAs()));
             VCardUtils.addVCardUnmatchedParameters(sn,jsCard.getName());
             sns.add(sn);
             for (Map.Entry<String, JsonNode> localizations : jsCard.getLocalizationsPerPath("name/components").entrySet()) {
@@ -291,8 +297,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
         else {
             StructuredName sn = getStructuredName(jsCard.getName().getComponents());
-            if (jsCard.getName().getSortAs()!=null)
-                sn.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsCard.getName().getSortAs()));
+            sn.setParameter(VCardUtils.VCARD_SORT_AS_PARAM_TAG,getNameSortAs(jsCard.getName().getSortAs()));
             VCardUtils.addVCardUnmatchedParameters(sn,jsCard.getName());
             sns.add(sn);
         }

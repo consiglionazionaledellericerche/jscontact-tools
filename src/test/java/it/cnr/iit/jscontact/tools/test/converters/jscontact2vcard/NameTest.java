@@ -41,7 +41,7 @@ public class NameTest extends JSContact2VCardTest {
                         "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"middle\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
                     "], " +
-                    "\"sortAs\": [ \"Public\",\"John\" ]" +
+                    "\"sortAs\": { \"surname\":\"Public\",\"given\":\"John\" }" +
                 "}, " +
                 "\"nickNames\": { " +
                     "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +

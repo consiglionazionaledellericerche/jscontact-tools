@@ -36,6 +36,7 @@ public class VCardUtils {
     public static final String VCARD_TYPE_PARAM_TAG = "TYPE";
     public static final String VCARD_PREF_PARAM_TAG = "PREF";
     public static final String VCARD_MEDIATYPE_PARAM_TAG = "MEDIATYPE";
+    public static final String VCARD_SORT_AS_PARAM_TAG = "SORT-AS";
 
     public static final String VCARD_X_ABLABEL_TAG = "X-ABLabel";
 

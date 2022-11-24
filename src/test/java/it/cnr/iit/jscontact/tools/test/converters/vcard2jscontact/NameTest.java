@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
+import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
@@ -47,7 +47,8 @@ public class NameTest extends VCard2JSContactTest {
         assertEquals("testName1 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
         assertTrue("testName1 - 11",jsCard.getName().getComponents()[4].isSuffix());
         assertEquals("testName1 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
-        assertEquals("testName1 - 13", "Public,John", String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsCard.getName().getSortAs()));
+        assertEquals("testName1 - 13", "Public", jsCard.getName().getSortAs().get(NameComponentEnum.SURNAME.getValue()));
+        assertEquals("testName1 - 14", "John", jsCard.getName().getSortAs().get(NameComponentEnum.GIVEN.getValue()));
 
     }
 
