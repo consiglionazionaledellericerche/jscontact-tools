@@ -59,8 +59,8 @@ public class NameComponent extends AbstractJSContactType implements HasType, Ser
     @NonNull
     String value;
 
-    @Min(value = 1, message = "invalid nth in NameComponent - value must be greater or equal than 1")
-    Integer nth;
+    @Min(value = 1, message = "invalid rank in NameComponent - value must be greater or equal than 1")
+    Integer rank;
 
     private boolean isRfc(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);}
 
