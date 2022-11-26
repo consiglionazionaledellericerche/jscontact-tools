@@ -142,44 +142,33 @@ public class JSContact2EZVCard extends AbstractConverter {
         return null;
     }
 
-    private static void addNameComponent(StringJoiner joiner, NameComponent[] name, NameComponentEnum type) {
+    private static void addValuesToJoiner(StringJoiner joiner, NameComponent[] name, NameComponentEnum type) {
 
         String component = getNameComponent(name, type);
         joiner.add(component);
     }
 
-    private static void addNameComponent(StringJoiner joiner, List<String> values) {
+    private static void addValuesToJoiner(StringJoiner joiner, List<String> values) {
 
         if (values != null && values.size() != 0 )
             joiner.add(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, values));
     }
 
-    private static void addNameComponent(StringJoiner joiner, String value) {
+    private static void addValueToJoiner(StringJoiner joiner, String value) {
 
         if (value != null)
             joiner.add(value);
     }
 
-    private static FormattedName getFormattedName(NameComponent[] name) {
-
-        String separator = getNameComponent(name, NameComponentEnum.SEPARATOR);
-        StringJoiner joiner = new StringJoiner((separator!=null) ? separator : StringUtils.SPACE);
-        addNameComponent(joiner, name, NameComponentEnum.PREFIX);
-        addNameComponent(joiner, name, NameComponentEnum.GIVEN);
-        addNameComponent(joiner, name, NameComponentEnum.SURNAME);
-        addNameComponent(joiner, name, NameComponentEnum.MIDDLE);
-        addNameComponent(joiner, name, NameComponentEnum.SUFFIX);
-        return new FormattedName(joiner.toString());
-    }
 
     private static FormattedName getFormattedName(StructuredName sn, String separator) {
 
         StringJoiner joiner = new StringJoiner((separator!=null) ? separator : StringUtils.SPACE);
-        addNameComponent(joiner, sn.getPrefixes());
-        addNameComponent(joiner, sn.getGiven());
-        addNameComponent(joiner, sn.getFamily());
-        addNameComponent(joiner, sn.getAdditionalNames());
-        addNameComponent(joiner, sn.getSuffixes());
+        addValuesToJoiner(joiner, sn.getPrefixes());
+        addValueToJoiner(joiner, sn.getGiven());
+        addValueToJoiner(joiner, sn.getFamily());
+        addValuesToJoiner(joiner, sn.getAdditionalNames());
+        addValuesToJoiner(joiner, sn.getSuffixes());
         return new FormattedName(joiner.toString());
     }
 
@@ -233,29 +222,87 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
+    private static String getRanksString(List<String> ranksList) {
+
+        if (ranksList.isEmpty())
+            return StringUtils.EMPTY;
+
+        String result = "";
+        for (int i=0; i < ranksList.size(); i++) {
+            boolean notEmptyFound = false;
+            for (int j=i; j < ranksList.size(); j++) {
+                if (!ranksList.get(j).isEmpty()) {
+                    notEmptyFound = true;
+                    break;
+                }
+            }
+            if (!ranksList.get(i).isEmpty())
+            result = result + ((!ranksList.get(i).isEmpty()) ? ranksList.get(i) + DelimiterUtils.COMMA_ARRAY_DELIMITER : DelimiterUtils.COMMA_ARRAY_DELIMITER);
+            if (!notEmptyFound) break;
+        }
+
+        return (result.isEmpty()) ? StringUtils.EMPTY : result.substring(0, result.length() - 1);
+    }
+
+
     private static StructuredName getStructuredName(NameComponent[] nameComponents) {
 
         StructuredName name = new StructuredName();
+        List<String> surnames = new ArrayList<>();
+        List<String> givens = new ArrayList<>();
+        List<String> surnamesRanksList=new ArrayList<>();
+        List<String> givensRanksList=new ArrayList<>();
+        List<String> middlesRanksList=new ArrayList<>();
+        List<String> prefixesRanksList=new ArrayList<>();
+        List<String> suffixesRanksList=new ArrayList<>();
         for (NameComponent component : nameComponents) {
             if (component.getType().getRfcValue() == null)
                 continue;
             switch(component.getType().getRfcValue()) {
-                case PREFIX:
-                    name.getPrefixes().add(component.getValue());
+                case SURNAME:
+                    surnames.add(component.getValue());
+                    surnamesRanksList.add((component.getRank()!=null) ? component.getRank().toString() : StringUtils.EMPTY);
                     break;
                 case GIVEN:
-                    name.setGiven(component.getValue());
-                    break;
-                case SURNAME:
-                    name.setFamily(component.getValue());
+                    givens.add(component.getValue());
+                    givensRanksList.add((component.getRank()!=null) ? component.getRank().toString() : StringUtils.EMPTY);
                     break;
                 case MIDDLE:
                     name.getAdditionalNames().add(component.getValue());
+                    middlesRanksList.add((component.getRank()!=null) ? component.getRank().toString() : StringUtils.EMPTY);
+                    break;
+                case PREFIX:
+                    name.getPrefixes().add(component.getValue());
+                    prefixesRanksList.add((component.getRank()!=null) ? component.getRank().toString() : StringUtils.EMPTY);
                     break;
                 case SUFFIX:
                     name.getSuffixes().add(component.getValue());
+                    suffixesRanksList.add((component.getRank()!=null) ? component.getRank().toString() : StringUtils.EMPTY);
                     break;
             }
+        }
+        name.setFamily((surnames.size()>0) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,surnames) : null);
+        name.setGiven((givens.size()>0) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,givens) : null);
+        String surnamesRanks = getRanksString(surnamesRanksList);
+        String givensRanks = getRanksString(givensRanksList);
+        String middlesRanks = getRanksString(middlesRanksList);
+        String prefixesRanks = getRanksString(prefixesRanksList);
+        String suffixesRanks = getRanksString(suffixesRanksList);
+        if (!(suffixesRanks+givensRanks+middlesRanks+prefixesRanks+suffixesRanks).isEmpty()) {
+            StringJoiner joiner = new StringJoiner(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
+            addValueToJoiner(joiner,surnamesRanks);
+            if (!(givensRanks+middlesRanks+prefixesRanks+suffixesRanks).isEmpty()) {
+                addValueToJoiner(joiner, givensRanks);
+                if (!(middlesRanks+prefixesRanks+suffixesRanks).isEmpty()) {
+                    addValueToJoiner(joiner, middlesRanks);
+                    if (!(prefixesRanks+suffixesRanks).isEmpty()) {
+                        addValueToJoiner(joiner, prefixesRanks);
+                        if (!(prefixesRanks+suffixesRanks).isEmpty())
+                            addValueToJoiner(joiner, suffixesRanks);
+                    }
+                }
+            }
+            name.setParameter(VCardParamEnum.RANKS.getValue(), joiner.toString());
         }
 
         return name;
@@ -459,7 +506,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (!matcher.find())
             return timezone;
 
-        String offset = "";
+        String offset = StringUtils.EMPTY;
         char[] chars = timezone.toCharArray();
         if (chars[7] == '+')
             offset += "-";
@@ -1218,7 +1265,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static List<String> getOrganizationItems(String organization, String[] units) {
 
         List<String> organizationItems = new ArrayList<>();
-        organizationItems.add((organization!=null) ? organization : "");
+        organizationItems.add((organization!=null) ? organization : StringUtils.EMPTY);
         if (units != null)
             organizationItems.addAll(Arrays.asList(units));
         return organizationItems;
@@ -1501,7 +1548,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private void fillJSContactExtensions(VCard vcard, Card jsCard) {
 
         Map<String,Object> allExtensionsMap = new HashMap<String,Object>();
-        jsCard.buildAllExtensionsMap(allExtensionsMap,"");
+        jsCard.buildAllExtensionsMap(allExtensionsMap,StringUtils.EMPTY);
 
         for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
             try {

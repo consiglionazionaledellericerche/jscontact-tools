@@ -1,5 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Utility class for supporting class loading of dto classes.
  *
@@ -14,7 +16,7 @@ public class ClassUtils {
     private static String getDtoPackageName() {
 
         String thisClassName = ClassUtils.class.getCanonicalName();
-        return thisClassName.replace(".utils.ClassUtils","");
+        return thisClassName.replace(".utils.ClassUtils", StringUtils.EMPTY);
     }
 
     public static Class forName(String className) throws ClassNotFoundException {

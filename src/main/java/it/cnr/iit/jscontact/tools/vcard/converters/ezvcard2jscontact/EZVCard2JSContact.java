@@ -523,7 +523,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                          .name(V_Extension.toV_Extension(VCardPropEnum.GENDER.getValue().toLowerCase()))
                                          .parameters(VCardUtils.getVCardPropParams(vCard.getGender().getParameters()))
                                          .type(VCardDataType.TEXT)
-                                         .value(String.format("%s%s", vCard.getGender().getGender(), (vCard.getGender().getText()==null) ? "" : ";"+vCard.getGender().getText()))
+                                         .value(String.format("%s%s", vCard.getGender().getGender(), (vCard.getGender().getText()==null) ? StringUtils.EMPTY : ";"+vCard.getGender().getText()))
                                          .build());
             return;
         }
@@ -602,28 +602,67 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return sortAs;
     }
 
-    private static void fillNames(VCard vcard, Card jsCard) {
+    private static Integer getRank(String[] ranks, int componentIndex, int subIndex) throws CardException {
+
+        if (ranks == null)
+            return null;
+
+        if (ranks.length > componentIndex)
+            return null;
+
+        if (ranks[componentIndex-1].trim().isEmpty())
+            return null;
+
+        String[] subranks = ranks[componentIndex-1].split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+        if (subranks.length > subIndex)
+            return null;
+
+        try {
+            if (subranks[subIndex - 1].trim().isEmpty())
+                return null;
+
+            return Integer.parseInt(subranks[subIndex - 1].trim());
+        } catch(Exception e) {
+            throw new CardException(String.format("Invalid value in RANKS parameter %s",String.join(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER,ranks)));
+        }
+    }
+
+    private static void fillNames(VCard vcard, Card jsCard) throws CardException {
 
         List<StructuredName> sns = vcard.getStructuredNames();
         if (sns.size() > 0) {
             NameComponent[] components = null;
             for (StructuredName sn : sns) {
+                String[] ranks = null;
+                int i;
+                if (sn.getParameter(VCardParamEnum.RANKS.getValue())!=null)
+                    ranks = sn.getParameter(VCardParamEnum.RANKS.getValue()).split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
+                i = 1;
                 for (String px : sn.getPrefixes())
-                    components = Name.addComponent(components, NameComponent.prefix(px));
-                if (sn.getGiven() != null)
-                    components = Name.addComponent(components,NameComponent.given(sn.getGiven()));
-                if (sn.getFamily() != null)
-                    components = Name.addComponent(components,NameComponent.surname(sn.getFamily()));
+                    components = Name.addComponent(components, NameComponent.prefix(px, getRank(ranks,4, i++)));
+                if (sn.getGiven() != null) {
+                    String[] names = sn.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                    i = 1;
+                    for (String name : names)
+                        components = Name.addComponent(components, NameComponent.given(name, getRank(ranks,2, i++)));
+                }
+                if (sn.getFamily() != null) {
+                    String[] surnames = sn.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                    i = 1;
+                    for (String surname : surnames)
+                        components = Name.addComponent(components, NameComponent.surname(surname, getRank(ranks,1, i++)));
+                }
+                i = 1;
                 for (String an : sn.getAdditionalNames())
-                    components = Name.addComponent(components,NameComponent.middle(an));
+                    components = Name.addComponent(components,NameComponent.middle(an, getRank(ranks,3, i++)));
+                i = 1;
                 for (String sx : sn.getSuffixes())
-                    components = Name.addComponent(components,NameComponent.suffix(sx));
+                    components = Name.addComponent(components,NameComponent.suffix(sx, getRank(ranks,5, i++)));
                 jsCard.setName(Name.builder()
                                    .components(components)
                                    .sortAs(getNameSortAs(sn.getSortAs(),sn))
                                    .vCardParams(VCardUtils.getVCardUnmatchedParams(sn, VCardParamEnum.PID, VCardParamEnum.GROUP))
                                    .build());
-
             }
         }
     }
