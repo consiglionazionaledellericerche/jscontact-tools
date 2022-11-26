@@ -22,6 +22,7 @@ public abstract class AbstractConverter {
         put("contact-channel-pref","preferredContactChannels");
         put("jscontact-prop",null);
         put("x-ablabel",null);
+        put("socialservice","onlineServices");
     }};
 
     protected static final ObjectMapper mapper = new ObjectMapper();

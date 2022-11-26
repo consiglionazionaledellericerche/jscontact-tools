@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.utils.VCardUtils;
+import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -59,15 +59,15 @@ public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
         assertEquals("testPreferredContactChannels - 1", 4, vcard.getExtendedProperties().size());
         assertEquals("testPreferredContactChannels - 2", "CONTACT-CHANNEL-PREF", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testPreferredContactChannels - 3", "EMAIL", vcard.getExtendedProperties().get(0).getValue());
-        assertEquals("testPreferredContactChannels - 4", "work", vcard.getExtendedProperties().get(0).getParameter(VCardUtils.VCARD_TYPE_PARAM_TAG));
-        assertEquals("testPreferredContactChannels - 4", "1", vcard.getExtendedProperties().get(0).getParameter(VCardUtils.VCARD_PREF_PARAM_TAG));
+        assertEquals("testPreferredContactChannels - 4", "work", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.TYPE.getValue()));
+        assertEquals("testPreferredContactChannels - 4", "1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PREF.getValue()));
         assertEquals("testPreferredContactChannels - 2", "CONTACT-CHANNEL-PREF", vcard.getExtendedProperties().get(1).getPropertyName());
         assertEquals("testPreferredContactChannels - 3", "EMAIL", vcard.getExtendedProperties().get(1).getValue());
-        assertEquals("testPreferredContactChannels - 4", "home", vcard.getExtendedProperties().get(1).getParameter(VCardUtils.VCARD_TYPE_PARAM_TAG));
-        assertEquals("testPreferredContactChannels - 4", "2", vcard.getExtendedProperties().get(1).getParameter(VCardUtils.VCARD_PREF_PARAM_TAG));
+        assertEquals("testPreferredContactChannels - 4", "home", vcard.getExtendedProperties().get(1).getParameter(VCardParamEnum.TYPE.getValue()));
+        assertEquals("testPreferredContactChannels - 4", "2", vcard.getExtendedProperties().get(1).getParameter(VCardParamEnum.PREF.getValue()));
         assertEquals("testPreferredContactChannels - 2", "CONTACT-CHANNEL-PREF", vcard.getExtendedProperties().get(2).getPropertyName());
         assertEquals("testPreferredContactChannels - 3", "TEL", vcard.getExtendedProperties().get(2).getValue());
-        assertEquals("testPreferredContactChannels - 4", "work", vcard.getExtendedProperties().get(2).getParameter(VCardUtils.VCARD_TYPE_PARAM_TAG));
+        assertEquals("testPreferredContactChannels - 4", "work", vcard.getExtendedProperties().get(2).getParameter(VCardParamEnum.TYPE.getValue()));
         assertEquals("testPreferredContactChannels - 2", "CONTACT-CHANNEL-PREF", vcard.getExtendedProperties().get(3).getPropertyName());
         assertEquals("testPreferredContactChannels - 3", "ADR", vcard.getExtendedProperties().get(3).getValue());
 

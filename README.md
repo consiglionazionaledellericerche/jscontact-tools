@@ -501,7 +501,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
         assertEquals("testAddresses4 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
         assertEquals("testAddresses4 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
         assertEquals("testAddresses4 - 9", vcard.getAddresses().get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));           
-        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
         
     }
 

@@ -19,6 +19,7 @@ import ezvcard.VCard;
 import ezvcard.parameter.ExpertiseLevel;
 import ezvcard.parameter.HobbyLevel;
 import ezvcard.parameter.InterestLevel;
+import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -90,12 +91,12 @@ public class PersonalInfoTest extends JSContact2VCardTest {
         assertSame("testPersonalInfo - 13", vcard.getInterests().get(0).getLevel(), InterestLevel.MEDIUM);
         assertEquals("testPersonalInfo - 14", "rock 'n' roll music", vcard.getInterests().get(1).getValue());
         assertSame("testPersonalInfo - 15", vcard.getInterests().get(1).getLevel(), InterestLevel.HIGH);
-        assertEquals("testPersonalInfo - 16", "PERSINFO-1", vcard.getExpertise().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testPersonalInfo - 17", "PERSINFO-2", vcard.getExpertise().get(1).getParameter(PROP_ID_PARAM));
-        assertEquals("testPersonalInfo - 18", "PERSINFO-3", vcard.getHobbies().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testPersonalInfo - 19", "PERSINFO-4", vcard.getHobbies().get(1).getParameter(PROP_ID_PARAM));
-        assertEquals("testPersonalInfo - 20", "PERSINFO-5", vcard.getInterests().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testPersonalInfo - 21", "PERSINFO-6", vcard.getInterests().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testPersonalInfo - 16", "PERSINFO-1", vcard.getExpertise().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testPersonalInfo - 17", "PERSINFO-2", vcard.getExpertise().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testPersonalInfo - 18", "PERSINFO-3", vcard.getHobbies().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testPersonalInfo - 19", "PERSINFO-4", vcard.getHobbies().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testPersonalInfo - 20", "PERSINFO-5", vcard.getInterests().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testPersonalInfo - 21", "PERSINFO-6", vcard.getInterests().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
 

@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
+import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -40,7 +41,7 @@ public class EmailAddressTest extends JSContact2VCardTest {
         assertEquals("testEmailAddress1 - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
         assertEquals("testEmailAddress1 - 3", 1, vcard.getEmails().get(0).getTypes().size());
         assertEquals("testEmailAddress1 - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
-        assertEquals("testEmailAddress1 - 5", "EMAIL-1", vcard.getEmails().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testEmailAddress1 - 5", "EMAIL-1", vcard.getEmails().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -65,8 +66,8 @@ public class EmailAddressTest extends JSContact2VCardTest {
         assertEquals("testEmailAddress2 - 6", 1, vcard.getEmails().get(1).getTypes().size());
         assertEquals("testEmailAddress2 - 7", "home", vcard.getEmails().get(1).getTypes().get(0).getValue());
         assertEquals("testEmailAddress2 - 8", 1, (int) vcard.getEmails().get(1).getPref());
-        assertEquals("testEmailAddress2 - 9", "EMAIL-1", vcard.getEmails().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testEmailAddress2 - 10", "EMAIL-2", vcard.getEmails().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testEmailAddress2 - 9", "EMAIL-1", vcard.getEmails().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testEmailAddress2 - 10", "EMAIL-2", vcard.getEmails().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
 }

@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.util.TelUri;
+import it.cnr.iit.jscontact.tools.dto.VCardPropEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.VCardUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -116,7 +117,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testExtendedJSContact3 - 1", "G-PHONE-1", vcard.getTelephoneNumbers().get(0).getGroup());
         assertEquals("testExtendedJSContact3 - 2", 1, vcard.getExtendedProperties().size());
-        assertEquals("testExtendedJSContact3 - 3", VCardUtils.VCARD_X_ABLABEL_TAG, vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContact3 - 3", VCardPropEnum.X_ABLABEL.getValue(), vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testExtendedJSContact3 - 4", VCardDataType.TEXT, vcard.getExtendedProperties().get(0).getDataType());
         assertEquals("testExtendedJSContact3 - 5", "a label", vcard.getExtendedProperties().get(0).getValue());
         assertEquals("testExtendedJSContact3 - 6", "G-PHONE-1", vcard.getExtendedProperties().get(0).getGroup());

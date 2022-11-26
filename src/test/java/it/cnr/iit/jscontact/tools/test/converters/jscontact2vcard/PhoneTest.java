@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.VCard;
 import ezvcard.parameter.TelephoneType;
 import ezvcard.util.TelUri;
+import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -42,7 +43,7 @@ public class PhoneTest extends JSContact2VCardTest {
         assertEquals("testPhone1 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
         assertTrue("testPhone1 - 3", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.HOME));
         assertTrue("testPhone1 - 4", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.VOICE));
-        assertEquals("testPhone1 - 5", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone1 - 5", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -66,8 +67,8 @@ public class PhoneTest extends JSContact2VCardTest {
         assertTrue("testPhone2 - 6", vcard.getTelephoneNumbers().get(1).getTypes().contains(TelephoneType.HOME));
         assertTrue("testPhone2 - 7", vcard.getTelephoneNumbers().get(1).getTypes().contains(TelephoneType.VOICE));
         assertEquals("testPhone2 - 8", 1, (int) vcard.getTelephoneNumbers().get(1).getPref());
-        assertEquals("testPhone2 - 9", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testPhone2 - 10", "PHONE-2", vcard.getTelephoneNumbers().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone2 - 9", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testPhone2 - 10", "PHONE-2", vcard.getTelephoneNumbers().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -84,7 +85,7 @@ public class PhoneTest extends JSContact2VCardTest {
         assertEquals("testPhone3 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
         assertTrue("testPhone3 - 3", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.WORK));
         assertTrue("testPhone3 - 4", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.FAX));
-        assertEquals("testPhone3 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone3 - 4", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -101,7 +102,7 @@ public class PhoneTest extends JSContact2VCardTest {
         assertEquals("testPhone4 - 2", vcard.getTelephoneNumbers().get(0).getUri(), TelUri.parse("tel:+33-01-23-45-6"));
         assertTrue("testPhone4 - 3", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.WORK));
         assertTrue("testPhone4 - 4", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.TEXTPHONE));
-        assertEquals("testPhone4 - 5", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone4 - 5", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -119,7 +120,7 @@ public class PhoneTest extends JSContact2VCardTest {
         assertTrue("testPhone5 - 3", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.HOME));
         assertTrue("testPhone5 - 4", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.WORK));
         assertTrue("testPhone5 - 5", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.VOICE));
-        assertEquals("testPhone5 - 6", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone5 - 6", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -137,7 +138,7 @@ public class PhoneTest extends JSContact2VCardTest {
         assertTrue("testPhone5 - 3", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.HOME));
         assertTrue("testPhone5 - 4", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.WORK));
         assertTrue("testPhone5 - 5", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.TEXTPHONE));
-        assertEquals("testPhone6 - 6", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone6 - 6", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -156,7 +157,7 @@ public class PhoneTest extends JSContact2VCardTest {
         assertTrue("testPhone5 - 4", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.WORK));
         assertTrue("testPhone5 - 5", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.VOICE));
         assertTrue("testPhone5 - 6", vcard.getTelephoneNumbers().get(0).getTypes().contains(TelephoneType.TEXTPHONE));
-        assertEquals("testPhone7 - 7", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhone7 - 7", "PHONE-1", vcard.getTelephoneNumbers().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
 }
