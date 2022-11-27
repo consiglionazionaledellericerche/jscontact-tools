@@ -15,7 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
+import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -123,7 +125,7 @@ public class NameTest extends JSContact2VCardTest {
 
 
     @Test
-    public void testFullName3() throws IOException, CardException {
+    public void testName3() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
@@ -145,30 +147,94 @@ public class NameTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testName2 - 1", "正仁 大久保", vcard.getFormattedNames().get(0).getValue());
-        assertEquals("testName2 - 2", "jp", vcard.getFormattedNames().get(0).getLanguage());
-        assertEquals("testName2 - 3", "1", vcard.getFormattedNames().get(0).getAltId());
-        assertEquals("testName2 - 4", "Masahito Okubo", vcard.getFormattedNames().get(1).getValue());
-        assertEquals("testName2 - 5", "en", vcard.getFormattedNames().get(1).getLanguage());
-        assertEquals("testName2 - 6", "1", vcard.getFormattedNames().get(1).getAltId());
+        assertEquals("testName3 - 1", "正仁 大久保", vcard.getFormattedNames().get(0).getValue());
+        assertEquals("testName3 - 2", "jp", vcard.getFormattedNames().get(0).getLanguage());
+        assertEquals("testName3 - 3", "1", vcard.getFormattedNames().get(0).getAltId());
+        assertEquals("testName3 - 4", "Masahito Okubo", vcard.getFormattedNames().get(1).getValue());
+        assertEquals("testName3 - 5", "en", vcard.getFormattedNames().get(1).getLanguage());
+        assertEquals("testName3 - 6", "1", vcard.getFormattedNames().get(1).getAltId());
 
-        assertNotNull("testName2 - 7", vcard.getStructuredNames());
-        assertEquals("testName2 - 8", "大久保", vcard.getStructuredNames().get(0).getFamily());
-        assertEquals("testName2 - 9", "正仁", vcard.getStructuredNames().get(0).getGiven());
-        assertEquals("testName2 - 11", 0, vcard.getStructuredNames().get(0).getAdditionalNames().size());
-        assertEquals("testName2 - 12", 0, vcard.getStructuredNames().get(0).getPrefixes().size());
-        assertEquals("testName2 - 13", 0, vcard.getStructuredNames().get(0).getSuffixes().size());
-        assertEquals("testName2 - 14", "jp", vcard.getStructuredNames().get(0).getLanguage());
-        assertEquals("testName2 - 15", "1", vcard.getStructuredNames().get(0).getAltId());
+        assertNotNull("testName3 - 7", vcard.getStructuredNames());
+        assertEquals("testName3 - 8", "大久保", vcard.getStructuredNames().get(0).getFamily());
+        assertEquals("testName3 - 9", "正仁", vcard.getStructuredNames().get(0).getGiven());
+        assertEquals("testName3 - 11", 0, vcard.getStructuredNames().get(0).getAdditionalNames().size());
+        assertEquals("testName3 - 12", 0, vcard.getStructuredNames().get(0).getPrefixes().size());
+        assertEquals("testName3 - 13", 0, vcard.getStructuredNames().get(0).getSuffixes().size());
+        assertEquals("testName3 - 14", "jp", vcard.getStructuredNames().get(0).getLanguage());
+        assertEquals("testName3 - 15", "1", vcard.getStructuredNames().get(0).getAltId());
 
-        assertEquals("testName2 - 16", "Okubo", vcard.getStructuredNames().get(1).getFamily());
-        assertEquals("testName2 - 17", "Masahito", vcard.getStructuredNames().get(1).getGiven());
-        assertEquals("testName2 - 18", 0, vcard.getStructuredNames().get(1).getAdditionalNames().size());
-        assertEquals("testName2 - 19", 0, vcard.getStructuredNames().get(1).getPrefixes().size());
-        assertEquals("testName2 - 20", 0, vcard.getStructuredNames().get(1).getSuffixes().size());
-        assertEquals("testName2 - 21", "en", vcard.getStructuredNames().get(1).getLanguage());
-        assertEquals("testName2 - 22", "1", vcard.getStructuredNames().get(1).getAltId());
+        assertEquals("testName3 - 16", "Okubo", vcard.getStructuredNames().get(1).getFamily());
+        assertEquals("testName3 - 17", "Masahito", vcard.getStructuredNames().get(1).getGiven());
+        assertEquals("testName3 - 18", 0, vcard.getStructuredNames().get(1).getAdditionalNames().size());
+        assertEquals("testName3 - 19", 0, vcard.getStructuredNames().get(1).getPrefixes().size());
+        assertEquals("testName3 - 20", 0, vcard.getStructuredNames().get(1).getSuffixes().size());
+        assertEquals("testName3 - 21", "en", vcard.getStructuredNames().get(1).getLanguage());
+        assertEquals("testName3 - 22", "1", vcard.getStructuredNames().get(1).getAltId());
     }
-    
+
+    @Test
+    public void testName4() throws IOException, CardException {
+
+
+        String jscard = "{" +
+                    "\"@type\" : \"Card\"," +
+                    "\"@version\" : \"rfc0000\"," +
+                    "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
+                    "\"name\" : { " +
+                        "\"@type\" : \"Name\", " +
+                        "\"components\" : [ { " +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"type\" : \"prefix\"," +
+                            "\"value\" : \"Dr.\"" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"type\" : \"given\"," +
+                            "\"value\" : \"John\"" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"type\" : \"surname\"," +
+                            "\"value\" : \"Stevenson\"" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"type\" : \"middle\"," +
+                            "\"value\" : \"Philip\"," +
+                            "\"rank\" : 2" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"type\" : \"middle\"," +
+                            "\"value\" : \"Paul\"," +
+                            "\"rank\" : 1" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"type\" : \"suffix\"," +
+                            "\"value\" : \"Jr.\"," +
+                            "\"rank\" : 3" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"type\" : \"suffix\"," +
+                            "\"value\" : \"M.D.\"," +
+                            "\"rank\" : 1" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"type\" : \"suffix\"," +
+                            "\"value\" : \"A.C.P.\"," +
+                            "\"rank\" : 2" +
+                        "} ]" +
+                    "}," +
+                    "\"fullName\" : \"John Paul Philip Stevenson\"" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testName4 - 1", "John Paul Philip Stevenson", vcard.getFormattedNames().get(0).getValue());
+        assertEquals("testName4 - 2", "Stevenson", vcard.getStructuredName().getFamily());
+        assertEquals("testName4 - 3", "John", vcard.getStructuredName().getGiven());
+        assertEquals("testName4 - 4", "Philip", vcard.getStructuredName().getAdditionalNames().get(0));
+        assertEquals("testName4 - 5", "Paul", vcard.getStructuredName().getAdditionalNames().get(1));
+        assertEquals("testName4 - 6", "Dr.", vcard.getStructuredName().getPrefixes().get(0));
+        assertEquals("testName4 - 7", "Jr.", vcard.getStructuredName().getSuffixes().get(0));
+        assertEquals("testName4 - 8", "M.D.", vcard.getStructuredName().getSuffixes().get(1));
+        assertEquals("testName4 - 9", "A.C.P.", vcard.getStructuredName().getSuffixes().get(2));
+        assertEquals("testName4 - 10", ";;2,1;;3,1,2", vcard.getStructuredName().getParameter(VCardParamEnum.RANKS.getValue()));
+    }
 
 }

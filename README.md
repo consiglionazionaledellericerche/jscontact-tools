@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.11.1</version>
+		  <version>0.12.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.11.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.12.0'
 ```
 
 # Features
@@ -31,8 +31,9 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 5. [vCard Conversion](#vcard-conversion)
 6. [JSContact Conversion](#jscontact-conversion)
 7. [Testing](#testing)
-8. [JSContact Compliance](#jscontact-compliance)
-9. [References](#references)
+8. [ez-vcard bugs](#ez-vcard-bugs)
+9. [JSContact Compliance](#jscontact-compliance)
+10. [References](#references)
 
 
 <a name="creation"></a>
@@ -49,7 +50,7 @@ Here in the following a successful creation of an EmailAddress instance is shown
         EmailAddress email = EmailAddress.builder()
                                         .context(Context.work(), Boolean.TRUE)
                                         .context(Context.private(), Boolean.TRUE)
-                                        .email("mario.loffredo@iit.cnr.it")
+                                        .address("mario.loffredo@iit.cnr.it")
                                         .build();
 
 ```
@@ -59,7 +60,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 
 ```
 
-        // email is missing
+        // address is missing in EmailAddress
         EmailAddress.builder().context(Context.work(),Boolean.TRUE).build();
 
 ```
@@ -561,6 +562,12 @@ Here in the following two examples of conversion between JSContact Card and a vC
 
 Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all the features provided.
 
+<a name="ez-vcard-bugs"></a>
+## ez-vcard bugs
+
+As opposed to what is stated in section 6.1.1 of [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), ez-vcard doesn't represent both family and given names including multiple text values separated by comma.
+In both cases, the text values subsequent to the first value are ignored.
+
 <a name="jscontact-compliance"></a>
 ## JSContact Compliance
 
@@ -590,11 +597,11 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.11.1 implements the following draft versions:
+Version 0.12.0 implements the following draft versions:
 
-* draft-ietf-calext-jscontact-04
-* draft-ietf-calext-jscontact-vcard-03
-* draft-ietf-calext-vcard-jscontact-extensions-01
+* draft-ietf-calext-jscontact-05
+* draft-ietf-calext-jscontact-vcard-04
+* draft-ietf-calext-vcard-jscontact-extensions-02
 
 # Build Instructions
 

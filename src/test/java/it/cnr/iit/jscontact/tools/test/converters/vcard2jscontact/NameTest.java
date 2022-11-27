@@ -20,8 +20,7 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class NameTest extends VCard2JSContactTest {
 
@@ -158,6 +157,31 @@ public class NameTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testName5 - 1", 8, jsCard.getName().getComponents().length);
+        assertEquals("testName5 - 2", "Dr.", jsCard.getName().getComponents()[0].getValue());
+        assertTrue("testName5 - 3",  jsCard.getName().getComponents()[0].isPrefix());
+        assertNull("testName5 - 4",  jsCard.getName().getComponents()[0].getRank());
+        assertEquals("testName5 - 5", "John", jsCard.getName().getComponents()[1].getValue());
+        assertTrue("testName5 - 6",  jsCard.getName().getComponents()[1].isGiven());
+        assertNull("testName5 - 7",  jsCard.getName().getComponents()[1].getRank());
+        assertEquals("testName5 - 8", "Stevenson", jsCard.getName().getComponents()[2].getValue());
+        assertTrue("testName5 - 9",  jsCard.getName().getComponents()[2].isSurname());
+        assertNull("testName5 - 10",  jsCard.getName().getComponents()[2].getRank());
+        assertEquals("testName5 - 11", "Philip", jsCard.getName().getComponents()[3].getValue());
+        assertTrue("testName5 - 12",  jsCard.getName().getComponents()[3].isMiddle());
+        assertEquals("testName5 - 13",  2, jsCard.getName().getComponents()[3].getRank().intValue());
+        assertEquals("testName5 - 14", "Paul", jsCard.getName().getComponents()[4].getValue());
+        assertTrue("testName5 - 15",  jsCard.getName().getComponents()[4].isMiddle());
+        assertEquals("testName5 - 16",  1, jsCard.getName().getComponents()[4].getRank().intValue());
+        assertEquals("testName5 - 17", "Jr.", jsCard.getName().getComponents()[5].getValue());
+        assertTrue("testName5 - 18",  jsCard.getName().getComponents()[5].isSuffix());
+        assertEquals("testName5 - 19",  3, jsCard.getName().getComponents()[5].getRank().intValue());
+        assertEquals("testName5 - 20", "M.D.", jsCard.getName().getComponents()[6].getValue());
+        assertTrue("testName5 - 21",  jsCard.getName().getComponents()[6].isSuffix());
+        assertEquals("testName5 - 22",  1, jsCard.getName().getComponents()[6].getRank().intValue());
+        assertEquals("testName5 - 23", "A.C.P.", jsCard.getName().getComponents()[7].getValue());
+        assertTrue("testName5 - 24",  jsCard.getName().getComponents()[7].isSuffix());
+        assertEquals("testName5 - 25",  2, jsCard.getName().getComponents()[7].getRank().intValue());
+
 
     }
 
