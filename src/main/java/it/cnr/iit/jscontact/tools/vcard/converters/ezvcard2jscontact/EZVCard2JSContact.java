@@ -505,7 +505,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static String getValue(TextListProperty property) {
 
-        return StringUtils.join(property.getValues(), DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
+        return StringUtils.join(property.getValues(), DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
     }
 
     private static String getValue(Impp property) {
@@ -607,14 +607,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (ranks == null)
             return null;
 
-        if (ranks.length > componentIndex)
+        if (componentIndex > ranks.length)
             return null;
 
         if (ranks[componentIndex-1].trim().isEmpty())
             return null;
 
         String[] subranks = ranks[componentIndex-1].split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-        if (subranks.length > subIndex)
+        if (subIndex > subranks.length)
             return null;
 
         try {
@@ -623,7 +623,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
             return Integer.parseInt(subranks[subIndex - 1].trim());
         } catch(Exception e) {
-            throw new CardException(String.format("Invalid value in RANKS parameter %s",String.join(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER,ranks)));
+            throw new CardException(String.format("Invalid value in RANKS parameter %s",String.join(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER,ranks)));
         }
     }
 
@@ -634,10 +634,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             NameComponent[] components = null;
             for (StructuredName sn : sns) {
                 String[] ranks = null;
-                int i;
                 if (sn.getParameter(VCardParamEnum.RANKS.getValue())!=null)
-                    ranks = sn.getParameter(VCardParamEnum.RANKS.getValue()).split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
-                i = 1;
+                    ranks = sn.getParameter(VCardParamEnum.RANKS.getValue()).split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
+                int i = 1;
                 for (String px : sn.getPrefixes())
                     components = Name.addComponent(components, NameComponent.prefix(px, getRank(ranks,4, i++)));
                 if (sn.getGiven() != null) {
@@ -650,7 +649,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     String[] surnames = sn.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
                     i = 1;
                     for (String surname : surnames)
-                        components = Name.addComponent(components, NameComponent.surname(surname, getRank(ranks,1, i++)));
+                        components = Name.addComponent(components, NameComponent.surname(surname, getRank(ranks, 1, i++)));
                 }
                 i = 1;
                 for (String an : sn.getAdditionalNames())
@@ -1202,13 +1201,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (LocalizedText organization : organizations) {
-            String[] nameItems = organization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
+            String[] nameItems = organization.getValue().split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
             String id = getId(VCard2JSContactIdsProfile.IdType.ORGANIZATION, i, "ORG-" + (i ++), organization.getPropId());
             List<String> units = (nameItems.length > 1 ) ? Arrays.asList(nameItems).subList(1,nameItems.length) : null;
             jsCard.addOrganization(id, it.cnr.iit.jscontact.tools.dto.Organization.builder().name((!nameItems[0].isEmpty()) ? nameItems[0] : null).units((units!=null)? units.toArray(new String[0]) : null).sortAs(organization.getSortAs()).vCardParams(organization.getVCardParams()).build());
             if (organization.getLocalizations()!=null) {
                 for (Map.Entry<String,String> localization : organization.getLocalizations().entrySet()) {
-                    String[] localizedNameItems =  localization.getValue().split(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
+                    String[] localizedNameItems =  localization.getValue().split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
                     List<String> localizedUnits = (localizedNameItems.length > 1 ) ? Arrays.asList(localizedNameItems).subList(1,localizedNameItems.length) : null;
                     jsCard.addLocalization(localization.getKey(), "organizations/" + id, mapper.convertValue(it.cnr.iit.jscontact.tools.dto.Organization.builder().name((!localizedNameItems[0].isEmpty()) ? localizedNameItems[0] : null).units((localizedUnits!=null)? localizedUnits.toArray(new String[0]) : null).build(), JsonNode.class));
                 }

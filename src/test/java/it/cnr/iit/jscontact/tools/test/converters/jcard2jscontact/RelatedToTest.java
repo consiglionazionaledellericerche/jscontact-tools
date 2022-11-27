@@ -42,7 +42,7 @@ public class RelatedToTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"related\", {}, \"uri\", \"urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testRelatedTo1 - 1", 1, jsCard.getRelatedTo().size());
         assertEquals("testRelatedTo1 - 2", 0, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
 
@@ -55,7 +55,7 @@ public class RelatedToTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"related\", {\"type\": \"friend\"}, \"uri\", \"urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testRelatedTo2 - 1", 1, jsCard.getRelatedTo().size());
         assertEquals("testRelatedTo2 - 2", 1, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
         assertTrue("testRelatedTo2 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").asFriend());
@@ -72,7 +72,7 @@ public class RelatedToTest extends JCard2JSContactTest {
                 "[\"related\", {\"type\": \"contact\"}, \"uri\", \"http://example.com/directory/jdoe.vcf\"], " +
                 "[\"related\", { }, \"text\", \"Please contact my assistant Jane Doe for any inquiries.\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testRelatedTo3 - 1", 3, jsCard.getRelatedTo().size());
         assertEquals("testRelatedTo3 - 2", 1, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
         assertTrue("testRelatedTo3 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").asFriend());

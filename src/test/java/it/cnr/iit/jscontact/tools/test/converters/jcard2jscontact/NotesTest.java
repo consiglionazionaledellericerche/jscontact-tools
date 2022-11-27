@@ -32,7 +32,7 @@ public class NotesTest extends JCard2JSContactTest {
                 "[\"note\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\"]" +
                 "]]";
 
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testNotesWithAltid1 - 1", jsCard.getNotes());
         assertEquals("testNotesWithAltid1 - 2", 2, jsCard.getNotes().size());
         assertEquals("testNotesWithAltid1 - 3", "This fax number is operational 0800 to 1715 EST, Mon-Fri", jsCard.getNotes().get("NOTE-1").getNote());
@@ -49,7 +49,7 @@ public class NotesTest extends JCard2JSContactTest {
                 "[\"note\", {\"language\" : \"it\", \"altid\": \"1\"}, \"text\", \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\"], " +
                 "[\"note\", {}, \"text\", \"This is another note\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testNotesWithAltid2 - 1", jsCard.getNotes());
         assertEquals("testNotesWithAltid2 - 2", 3, jsCard.getNotes().size());
         assertEquals("testNotesWithAltid2 - 3", "This fax number is operational 0800 to 1715 EST, Mon-Fri", jsCard.getNotes().get("NOTE-1").getNote());

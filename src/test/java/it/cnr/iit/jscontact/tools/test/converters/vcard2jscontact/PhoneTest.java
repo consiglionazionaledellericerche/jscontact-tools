@@ -32,7 +32,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=uri;TYPE=home:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone1 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone1 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone1 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
@@ -48,7 +48,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=uri;TYPE=voice,home;PREF=1:tel:+1-555-555-5555;ext=555\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone2 - 1", 2, jsCard.getPhones().size());
         assertEquals("testPhone2 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone3 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
@@ -69,7 +69,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=uri;TYPE=work,fax:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone3 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone3 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone3 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -87,7 +87,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=uri;TYPE=work,textphone:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone4 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone4 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone4 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -103,7 +103,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=uri;TYPE=home,work:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone5 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone5 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone5 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
@@ -122,7 +122,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=uri;TYPE=work,home,fax:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone6 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone6 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone6 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -142,7 +142,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=uri;TYPE=work,home,textphone:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone7 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone7 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone7 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -160,7 +160,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=uri;TYPE=work,home,voice,textphone:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone8 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone8 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone8 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -179,7 +179,7 @@ public class PhoneTest extends VCard2JSContactTest {
                 "TEL;VALUE=text;TYPE=home:+33 01 23 45 6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhone9 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone9 - 2", "+33 01 23 45 6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone9 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());

@@ -33,7 +33,7 @@ public class XCardTest extends XCard2JSContactTest {
     public void testCompleteXCard1() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("xcard/xCard-RFC6351.xml"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) xCard2JSContact.convert(vcard).get(0);
+        Card jsCard = xCard2JSContact.convert(vcard).get(0);
         assertEquals("testCompleteXCard1 - 1", "Simon Perreault", jsCard.getFullName());
         assertNull("testCompleteXCard1 - 2", jsCard.getKind());
         assertEquals("testCompleteXCard1 - 3", 4, jsCard.getName().getComponents().length);
@@ -93,7 +93,7 @@ public class XCardTest extends XCard2JSContactTest {
     public void testCompleteXCard2() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("xcard/xCard-Wikipedia.xml"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) xCard2JSContact.convert(vcard).get(0);
+        Card jsCard = xCard2JSContact.convert(vcard).get(0);
         assertEquals("testCompleteXCard2 - 1", "Forrest Gump", jsCard.getFullName());
         assertNull("testCompleteXCard2 - 2", jsCard.getKind());
         assertEquals("testCompleteXCard2 - 3", 3, jsCard.getName().getComponents().length);

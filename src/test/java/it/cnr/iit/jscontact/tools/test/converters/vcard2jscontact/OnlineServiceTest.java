@@ -33,7 +33,7 @@ public class OnlineServiceTest extends VCard2JSContactTest {
                 "IMPP;TYPE=home;PREF=1:xmpp:alice@example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testOnlineService1 - 1", 1, jsCard.getOnlineServices().size());
         assertEquals("testOnlineService1 - 2", "xmpp:alice@example.com", jsCard.getOnlineServices().get("OS-1").getUri());
         assertTrue("testOnlineService1 - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());

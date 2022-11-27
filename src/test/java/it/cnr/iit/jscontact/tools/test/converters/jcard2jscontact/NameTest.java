@@ -33,7 +33,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"John Q. Public, Esq.\"], " +
                 "[\"n\", {\"sort-as\":[\"Public\",\"John\"]}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName1 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName1 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -59,7 +59,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"n\", {}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]], " +
                 "[\"nickname\", {}, \"text\", \"Johnny\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName2 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName2 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName2 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -86,7 +86,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"nickname\", {}, \"text\", \"Johnny\"], " +
                 "[\"nickname\", {\"pref\":\"1\"}, \"text\", \"Kid\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName3 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName3 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName3 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -118,7 +118,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"nickname\", {\"altid\":\"1\",\"language\":\"it\"}, \"text\", \"Giovannino\"], " +
                 "[\"nickname\", {\"pref\":\"1\",\"altid\":\"2\",\"language\":\"it\"}, \"text\", \"Ragazzo\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName4 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName4 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName4 - 3",jsCard.getName().getComponents()[0].isPrefix());

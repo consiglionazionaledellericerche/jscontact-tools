@@ -34,7 +34,7 @@ public class KeywordsTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 String.format("[\"categories\", {}, \"text\", %s]", categories) +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testKeywords1 - 1", jsCard.getKeywords());
         assertEquals("testKeywords1 - 2", 4, jsCard.getKeywords().size());
         assertTrue("testKeywords1 - 3",jsCard.getKeywords().containsKey("INTERNET"));
@@ -54,7 +54,7 @@ public class KeywordsTest extends JCard2JSContactTest {
                 String.format("[\"categories\", {}, \"text\", %s],", categories) +
                 "[\"categories\", {}, \"text\", \"TRAVEL AGENT\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testKeywords2 - 1", jsCard.getKeywords());
         assertEquals("testKeywords2 - 2", 5, jsCard.getKeywords().size());
         assertTrue("testKeywords2 - 3",jsCard.getKeywords().containsKey("INTERNET"));
@@ -76,7 +76,7 @@ public class KeywordsTest extends JCard2JSContactTest {
                 String.format("[\"categories\", {}, \"text\", %s],", categories) +
                 "[\"categories\", {\"pref\" : \"1\"}, \"text\", \"TRAVEL AGENT\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testKeywords3 - 1", jsCard.getKeywords());
         assertEquals("testKeywords3 - 2", 5, jsCard.getKeywords().size());
         Set<String> keys = jsCard.getKeywords().keySet();

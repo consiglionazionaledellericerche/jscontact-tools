@@ -32,7 +32,7 @@ public class ProdidTest extends VCard2JSContactTest {
                 "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testProdid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", jsCard.getProdId());
     }
 

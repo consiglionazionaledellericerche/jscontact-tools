@@ -33,7 +33,7 @@ public class FullNameTest extends VCard2JSContactTest {
                 "FN:John Q. Public, Esq.\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testFullName1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
 
     }
@@ -49,7 +49,7 @@ public class FullNameTest extends VCard2JSContactTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("jp").build()).build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testFullName2 - 1", "大久保 正仁", jsCard.getFullName());
         assertEquals("testFullName2 - 2", "Okubo Masahito", jsCard.getLocalizations().get("en").get("fullName").asText());
 
@@ -67,7 +67,7 @@ public class FullNameTest extends VCard2JSContactTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testFullName3 - 1", "Okubo Masahito", jsCard.getFullName());
         assertEquals("testFullName3 - 2", "大久保 正仁", jsCard.getLocalizations().get("jp").get("fullName").asText());
 

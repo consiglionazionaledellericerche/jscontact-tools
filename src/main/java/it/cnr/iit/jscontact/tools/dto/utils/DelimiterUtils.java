@@ -7,7 +7,7 @@ package it.cnr.iit.jscontact.tools.dto.utils;
  */
 public class DelimiterUtils {
     public static final String COMMA_ARRAY_DELIMITER = ",";
-    public static final String SEMICOMMA_ARRAY_DELIMITER = ";";
+    public static final String SEMICOLON_ARRAY_DELIMITER = ";";
     public static final String NEWLINE_DELIMITER = "\n";
     public static final String SPACE_DELIMITER = " ";
     public static final String COLON_DELIMITER = ":";

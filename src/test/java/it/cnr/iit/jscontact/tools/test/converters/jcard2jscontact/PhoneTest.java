@@ -30,7 +30,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"tel\", {\"type\": \"home\"}, \"uri\", \"tel:+33-01-23-45-6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone1 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone1 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone1 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
@@ -45,7 +45,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"tel\", {\"type\": \"home\"}, \"uri\", \"tel:+33-01-23-45-6\"], " +
                 "[\"tel\", {\"type\": \"voice,home\", \"pref\": 1}, \"uri\", \"tel:+1-555-555-5555;ext=555\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone2 - 1", 2, jsCard.getPhones().size());
         assertEquals("testPhone2 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone3 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
@@ -64,7 +64,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"tel\", {\"type\": \"work,fax\"}, \"uri\", \"tel:+33-01-23-45-6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone3 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone3 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone3 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -80,7 +80,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"tel\", {\"type\": \"work,textphone\"}, \"uri\", \"tel:+33-01-23-45-6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone4 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone4 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone4 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -96,7 +96,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"tel\", {\"type\": \"home,work\"}, \"uri\", \"tel:+33-01-23-45-6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone5 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone5 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone5 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
@@ -112,7 +112,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"tel\", {\"type\": \"work,home\"}, \"uri\", \"tel:+33-01-23-45-6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone6 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone6 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone6 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -129,7 +129,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"tel\", {\"type\": \"work,home,textphone\"}, \"uri\", \"tel:+33-01-23-45-6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone7 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone7 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone7 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -145,7 +145,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"tel\", {\"type\": \"work,home,voice,textphone\"}, \"uri\", \"tel:+33-01-23-45-6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone8 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone8 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone8 - 3",jsCard.getPhones().get("PHONE-1").asWork());
@@ -162,7 +162,7 @@ public class PhoneTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"tel\", {\"type\": \"home\"}, \"text\", \"+33 01 23 45 6\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhone9 - 1", 1, jsCard.getPhones().size());
         assertEquals("testPhone9 - 2", "+33 01 23 45 6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone9 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());

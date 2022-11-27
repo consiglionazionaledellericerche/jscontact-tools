@@ -33,7 +33,7 @@ public class EmailAddressTest extends VCard2JSContactTest {
                 "EMAIL;TYPE=work:jqpublic@xyz.example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testEmailAddress1 - 1", 1, jsCard.getEmails().size());
         assertEquals("testEmailAddress1 - 2", 1, jsCard.getEmails().get("EMAIL-1").getContexts().size());
         assertTrue("testEmailAddress1 - 3",jsCard.getEmails().get("EMAIL-1").asWork());
@@ -50,7 +50,7 @@ public class EmailAddressTest extends VCard2JSContactTest {
                 "EMAIL;TYPE=home;PREF=1:jane_doe@example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testEmailAddress2 - 1", 2, jsCard.getEmails().size());
         assertEquals("testEmailAddress2 - 2", 1, jsCard.getEmails().get("EMAIL-1").getContexts().size());
         assertTrue("testEmailAddress2 - 3",jsCard.getEmails().get("EMAIL-1").asWork());

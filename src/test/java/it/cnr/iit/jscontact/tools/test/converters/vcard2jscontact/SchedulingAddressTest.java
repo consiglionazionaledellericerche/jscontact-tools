@@ -18,7 +18,7 @@ public class SchedulingAddressTest extends VCard2JSContactTest {
                 "CALADRURI:http://example.com/calendar/jdoe\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testSchedulingAddress - 1", 2, jsCard.getSchedulingAddresses().size());
         assertEquals("testSchedulingAddress - 2", "mailto:janedoe@example.com", jsCard.getSchedulingAddresses().get("SCHEDULING-1").getUri());
         assertEquals("testSchedulingAddress - 3", 1, (int) jsCard.getSchedulingAddresses().get("SCHEDULING-1").getPref());

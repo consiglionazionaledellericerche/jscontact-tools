@@ -211,7 +211,7 @@ public class AddressesTest extends RoundtripTest {
                     "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testAddresses7 - 1", jscard2, Card.toJSCard(jscard));
     }
 
@@ -240,7 +240,7 @@ public class AddressesTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testAddresses8 - 1", jscard2, Card.toJSCard(jscard));
     }
 
@@ -267,7 +267,7 @@ public class AddressesTest extends RoundtripTest {
                 "}" +
         "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testAddresses9 - 1", jscard2, Card.toJSCard(jscard));
     }
 
@@ -305,7 +305,7 @@ public class AddressesTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testAddresses10 - 1", jscard2, Card.toJSCard(jscard));
     }
 

@@ -68,17 +68,17 @@ public class JCardGroupTest extends JCard2JSContactTest {
 
         List<Card> jsCards = jCard2JSContact.convert(jcard);
         assertEquals("testJCardGroup1 - 1", 3, jsCards.size());
-        Card jsCardGroup = (Card) jsCards.get(0);
+        Card jsCardGroup = jsCards.get(0);
         assertTrue("testJCardGroup1 - 2", jsCardGroup.getKind().isGroup());
         assertTrue("testJCardGroup1 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
         assertEquals("testJCardGroup1 - 4", "The Doe family", jsCardGroup.getFullName());
         assertEquals("testJCardGroup1 - 5", 2, jsCardGroup.getMembers().size());
         assertSame("testJCardGroup1 - 6", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
         assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
-        Card jsCard = (Card) jsCards.get(1);
+        Card jsCard = jsCards.get(1);
         assertEquals("testJCardGroup1 - 8", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
         assertEquals("testJCardGroup1 - 9", "John Doe", jsCard.getFullName());
-        jsCard = (Card) jsCards.get(2);
+        jsCard = jsCards.get(2);
         assertEquals("testJCardGroup1 - 10", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
         assertEquals("testJCardGroup1 - 11", "Jane Doe", jsCard.getFullName());
 

@@ -33,7 +33,7 @@ public class KindTest extends VCard2JSContactTest {
                 "FN:test\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertTrue("testKind - 1",jsCard.getKind().isIndividual());
 
     }
@@ -47,7 +47,7 @@ public class KindTest extends VCard2JSContactTest {
                 "FN:test\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtKind - 1", "x-value", jsCard.getKind().getExtValue().toString());
 
     }

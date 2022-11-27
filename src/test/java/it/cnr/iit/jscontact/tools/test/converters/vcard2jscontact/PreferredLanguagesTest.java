@@ -34,7 +34,7 @@ public class PreferredLanguagesTest extends VCard2JSContactTest {
                 "LANG;PREF=2:en\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPreferredLanguages1 - 1", jsCard.getPreferredLanguages());
         assertEquals("testPreferredLanguages1 - 2", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testPreferredLanguages1 - 3", 1, (int) jsCard.getPreferredLanguages().get("jp")[0].getPref());
@@ -53,7 +53,7 @@ public class PreferredLanguagesTest extends VCard2JSContactTest {
                 "LANG;TYPE=home:fr\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPreferredLanguages2 - 1", jsCard.getPreferredLanguages());
         assertEquals("testPreferredLanguages2 - 2", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testPreferredLanguages2 - 3", 1, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());

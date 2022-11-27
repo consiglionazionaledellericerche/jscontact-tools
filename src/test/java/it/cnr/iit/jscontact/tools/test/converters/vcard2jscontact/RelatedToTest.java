@@ -45,7 +45,7 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "RELATED:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testRelatedTo1 - 1", 1, jsCard.getRelatedTo().size());
         assertEquals("testRelatedTo1 - 2", 0, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
 
@@ -60,7 +60,7 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "RELATED;TYPE=friend:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testRelatedTo2 - 1", 1, jsCard.getRelatedTo().size());
         assertEquals("testRelatedTo2 - 2", 1, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
         assertTrue("testRelatedTo2 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").asFriend());
@@ -79,7 +79,7 @@ public class RelatedToTest extends VCard2JSContactTest {
                 "RELATED:Please contact my assistant Jane Doe for any inquiries.\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testRelatedTo3 - 1", 3, jsCard.getRelatedTo().size());
         assertEquals("testRelatedTo3 - 2", 1, jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").getRelation().size());
         assertTrue("testRelatedTo3 - 3",jsCard.getRelatedTo().get("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6").asFriend());

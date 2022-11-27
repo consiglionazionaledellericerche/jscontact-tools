@@ -31,7 +31,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {\"altid\" : \"1\"}, \"text\", \"Research Scientist\"]," +
                 "[\"title\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Ricercatore\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testTitleWithAltid1 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid1 - 2", 1, jsCard.getTitles().size());
         assertEquals("testTitleWithAltid1 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
@@ -49,7 +49,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {}, \"text\", \"Research Scientist\"]," +
                 "[\"title\", {\"language\" : \"it\"}, \"text\", \"Ricercatore\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testTitleWithoutAltid - 1", jsCard.getTitles());
         assertEquals("testTitleWithoutAltid - 2", 2, jsCard.getTitles().size());
         assertEquals("testTitleWithoutAltid - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
@@ -66,7 +66,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Ricercatore\"]," +
                 "[\"title\", {\"pref\" : \"1\"}, \"text\", \"IETF Area Director\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testTitleWithAltid2 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid2 - 2", 2, jsCard.getTitles().size());
         assertEquals("testTitleWithAltid2 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-2").getName());
@@ -85,7 +85,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {\"pref\" : \"1\", \"altid\" : \"2\"}, \"text\", \"IETF Area Director\"]," +
                 "[\"title\", {\"pref\" : \"1\", \"language\" : \"it\", \"altid\" : \"2\"}, \"text\", \"Direttore Area IETF\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testTitleWithAltid3 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid3 - 2", 2, jsCard.getTitles().size());
         assertEquals("testTitleWithAltid3 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-2").getName());
@@ -105,7 +105,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {\"altid\" : \"1\"}, \"text\", \"Project Leader\"]," +
                 "[\"role\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Capo Progetto\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testRoleWithAltid1 - 1", jsCard.getTitles());
         assertEquals("testRoleWithAltid1 - 2", 1, jsCard.getTitles().size());
         assertEquals("testRoleWithAltid1 - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getName());
@@ -121,7 +121,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {}, \"text\", \"Project Leader\"]," +
                 "[\"role\", {\"language\" : \"it\"}, \"text\", \"Capo Progetto\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testRoleWithoutAltid - 1", jsCard.getTitles());
         assertEquals("testRoleWithoutAltid - 2", 2, jsCard.getTitles().size());
         assertEquals("testRoleWithoutAltid - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getName());
@@ -138,7 +138,7 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Capo Progetto\"], " +
                 "[\"role\", {\"pref\" : \"1\"}, \"text\", \"IETF Area Director\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testRoleWithAltid2 - 1", jsCard.getTitles());
         assertEquals("testRoleWithAltid2 - 2", 2, jsCard.getTitles().size());
         assertEquals("testRoleWithAltid2 - 3", "Project Leader", jsCard.getTitles().get("TITLE-2").getName());

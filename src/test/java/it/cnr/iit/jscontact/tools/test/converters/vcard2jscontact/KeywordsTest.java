@@ -32,7 +32,7 @@ public class KeywordsTest extends VCard2JSContactTest {
                 "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testKeywords1 - 1", jsCard.getKeywords());
         assertEquals("testKeywords1 - 2", 4, jsCard.getKeywords().size());
         assertTrue("testKeywords1 - 3",jsCard.getKeywords().containsKey("INTERNET"));
@@ -51,7 +51,7 @@ public class KeywordsTest extends VCard2JSContactTest {
                 "CATEGORIES:TRAVEL AGENT\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testKeywords2 - 1", jsCard.getKeywords());
         assertEquals("testKeywords2 - 2", 5, jsCard.getKeywords().size());
         assertTrue("testKeywords2 - 3",jsCard.getKeywords().containsKey("INTERNET"));

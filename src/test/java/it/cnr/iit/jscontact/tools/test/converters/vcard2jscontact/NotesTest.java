@@ -34,7 +34,7 @@ public class NotesTest extends VCard2JSContactTest {
                 "NOTE;ALTID=1;LANGUAGE=it:Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testNotesWithAltid1 - 1", jsCard.getNotes());
         assertEquals("testNotesWithAltid1 - 2", "This fax number is operational 0800 to 1715 EST, Mon-Fri", jsCard.getNotes().get("NOTE-1").getNote());
         assertEquals("testNotesWithAltid1 - 3", "John Public", jsCard.getNotes().get("NOTE-1").getAuthor().getName());
@@ -54,7 +54,7 @@ public class NotesTest extends VCard2JSContactTest {
                 "NOTE:This is another note\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testNotesWithAltid2 - 1", jsCard.getNotes());
         assertEquals("testNotesWithAltid2 - 2", 3, jsCard.getNotes().size());
         assertEquals("testNotesWithAltid2 - 3", "This fax number is operational 0800 to 1715 EST, Mon-Fri", jsCard.getNotes().get("NOTE-1").getNote());

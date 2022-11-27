@@ -34,7 +34,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "JSCONTACT-PROP;JSPTR=\"extension:myext1\";VALUE=TEXT:\"extvalue\"\n" +
                 "JSCONTACT-PROP;JSPTR=\"extension:myext2\";VALUE=TEXT:{\"extprop\":\"extvalue\"}\n" +
                 "END:VCARD";
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
         assertEquals("testExtendedJSContact1 - 2", "extvalue", jsCard.getExtensions().get("extension:myext1"));
         assertEquals("testExtendedJSContact1 - 3", "{extprop=extvalue}", jsCard.getExtensions().get("extension:myext2").toString());
@@ -58,7 +58,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "JSCONTACT-PROP;JSPTR=\"preferredLanguages/jp/0/ext6\";VALUE=TEXT:[\"1\",\"2\"]\n" +
                 "JSCONTACT-PROP;JSPTR=\"ext1\";VALUE=TEXT:10\n" +
                 "END:VCARD";
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact2 - 1", 1, jsCard.getExtensions().size());
         assertEquals("testExtendedJSContact2 - 2", 10, jsCard.getExtensions().get("ext1"));
         assertEquals("testExtendedJSContact2 - 3", 1, jsCard.getNickNames().get("NICK-1").getExtensions().size());
@@ -82,7 +82,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "G-PHONE-1.X-ABLabel;VALUE=text:a label\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact3 - 1", "a label", jsCard.getPhones().get("PHONE-1").getLabel());
         assertEquals("testExtendedJSContact3 - 2", "G-PHONE-1", jsCard.getPhones().get("PHONE-1").getVCardParams().get("group").getValue());
     }
@@ -96,7 +96,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                  "JSCONTACT-PROP;JSPTR=anniversaries/ANNIVERSARY-1;VALUE=TEXT:{\"@type\":\"Anniversary\",\"type\":\"example.com:engagement\",\"date\":{\"@type\":\"Timestamp\",\"utc\":\"1953-10-15T23:10:00Z\"}}\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact4 - 1", true, jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().isExtValue());
         assertEquals("testExtendedJSContact4 - 2", V_Extension.toV_Extension("example.com:engagement"), jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().getExtValue());
     }
@@ -111,7 +111,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "JSCONTACT-PROP;JSPTR=name/components/2;VALUE=TEXT:{\"@type\":\"NameComponent\",\"type\":\"example.com:exttype\",\"value\":\"extvalue\"}\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact5 - 1", true, jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testExtendedJSContact5 - 2", "John", jsCard.getName().getComponents()[0].getValue());
         assertEquals("testExtendedJSContact5 - 3", true, jsCard.getName().getComponents()[1].isSurname());
@@ -133,7 +133,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "JSCONTACT-PROP;JSPTR=\"phones/PHONE-1/contexts/example.com:extcontext\";VALUE=TEXT:true\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact6 - 1", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertEquals("testExtendedJSContact6 - 2", true, jsCard.getPhones().get("PHONE-1").asExtContext("example.com:extcontext"));
         assertEquals("testExtendedJSContact6 - 3", true, jsCard.getPhones().get("PHONE-1").asExt("example.com:extfeature"));

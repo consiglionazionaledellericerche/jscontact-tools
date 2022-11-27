@@ -32,7 +32,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
                 "[\"org\", {\"altid\" : \"1\",\"sort-as\":[\"ABC\"]}, \"text\", \"ABC, Inc.;North American Division;Marketing\"]," +
                 "[\"org\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"ABC, Spa.;Divisione Nord America;Marketing\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testOrganizationsWithAltid1 - 1", jsCard.getOrganizations());
         assertEquals("testOrganizationsWithAltid1 - 2", 1, jsCard.getOrganizations().size());
         assertEquals("testOrganizationsWithAltid1 - 3", "ABC, Inc.", jsCard.getOrganizations().get("ORG-1").getName());
@@ -55,7 +55,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
                 "[\"org\", {}, \"text\", \"ABC, Inc.;North American Division;Marketing\"]," +
                 "[\"org\", {\"language\" : \"it\"}, \"text\", \"ABC, Spa.;Divisione Nord America;Marketing\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testOrganizationsWithoutAltid1 - 1", jsCard.getOrganizations());
         assertEquals("testOrganizationsWithoutAltid1 - 2", 2, jsCard.getOrganizations().size());
         assertEquals("testOrganizationsWithoutAltid1 - 3", "ABC, Inc.", jsCard.getOrganizations().get("ORG-1").getName());
@@ -78,7 +78,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
                 "[\"org\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"ABC, Spa.;Divisione Nord America;Marketing\"], " +
                 "[\"org\", {\"pref\" : \"1\"}, \"text\", \"University of North America\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testOrganizationsWithAltid2 - 1", jsCard.getOrganizations());
         assertEquals("testOrganizationsWithAltid2 - 2", 2, jsCard.getOrganizations().size());
         assertEquals("testOrganizationsWithAltid2 - 3", "University of North America", jsCard.getOrganizations().get("ORG-1").getName());
@@ -103,7 +103,7 @@ public class OrganizationsTest extends JCard2JSContactTest {
                 "[\"org\", {\"language\" : \"it\"}, \"text\", \";Divisione Nord America;Marketing\"]" +
                 "]]";
 
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testOrganizationsWithoutAltid2 - 1", jsCard.getOrganizations());
         assertEquals("testOrganizationsWithoutAltid2 - 2", 2, jsCard.getOrganizations().size());
         assertTrue("testOrganizationsWithoutAltid2 - 3", jsCard.getOrganizations().get("ORG-1").getName() == null);

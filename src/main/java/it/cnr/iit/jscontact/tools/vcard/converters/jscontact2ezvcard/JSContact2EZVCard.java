@@ -289,7 +289,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         String prefixesRanks = getRanksString(prefixesRanksList);
         String suffixesRanks = getRanksString(suffixesRanksList);
         if (!(suffixesRanks+givensRanks+middlesRanks+prefixesRanks+suffixesRanks).isEmpty()) {
-            StringJoiner joiner = new StringJoiner(DelimiterUtils.SEMICOMMA_ARRAY_DELIMITER);
+            StringJoiner joiner = new StringJoiner(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
             addValueToJoiner(joiner,surnamesRanks);
             if (!(givensRanks+middlesRanks+prefixesRanks+suffixesRanks).isEmpty()) {
                 addValueToJoiner(joiner, givensRanks);

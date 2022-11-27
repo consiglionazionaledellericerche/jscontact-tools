@@ -37,7 +37,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "CREATED;VALUE=timestamp:20101010T101010Z\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testCreated - 1", 0, jsCard.getCreated().compareTo(DateUtils.toCalendar("2010-10-10T10:10:10Z")));
     }
 
@@ -53,7 +53,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "CONTACT-CHANNEL-PREF:ADR\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPreferredContactChannels - 1", 3, jsCard.getPreferredContactChannels().size());
         assertEquals("testPreferredContactChannels - 2", 2, jsCard.getPreferredContactChannels().get(ChannelType.emails()).length);
         assertEquals("testPreferredContactChannels - 3", 1, (int) jsCard.getPreferredContactChannels().get(ChannelType.emails())[0].getPref());
@@ -74,7 +74,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "LOCALE:it\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testLocale - 1", "it", jsCard.getLocale());
     }
 
@@ -87,7 +87,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "GENDER:M\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertTrue("testSpeakToAsWithGender1 - 1",jsCard.getSpeakToAs().isMale());
         assertNull("testSpeakToAsWithGender1 - 2", jsCard.getSpeakToAs().getPronouns());
         assertNull("testSpeakToAsWithGender1 - 3", jsCard.getExtensions());
@@ -103,7 +103,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().convertGenderToSpeakToAs(false).build()).build();
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testSpeakToAsWithGender2 - 1", 1, jsCard.getVCardProps().length);
         assertEquals("testSpeakToAsWithGender2 - 2", "gender", jsCard.getVCardProps()[0].getName().toString());
         assertEquals("testSpeakToAsWithGender2 - 3", 0, jsCard.getVCardProps()[0].getParameters().size());
@@ -119,7 +119,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "GRAMMATICAL-GENDER;VALUE=text:MALE\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertTrue("testSpeakToAs1 - 1",jsCard.getSpeakToAs().isMale());
         assertNull("testSpeakToAs1 - 2", jsCard.getSpeakToAs().getPronouns());
     }
@@ -132,7 +132,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "GRAMMATICAL-GENDER;VALUE=text:INANIMATE\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertTrue("testSpeakToAs2 - 1",jsCard.getSpeakToAs().isInanimate());
         assertNull("testSpeakToAs2 - 2", jsCard.getSpeakToAs().getPronouns());
     }
@@ -145,7 +145,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "PRONOUNS;VALUE=text:he/him\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testSpeakToAs3 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
         assertNull("testSpeakToAs3 - 2", jsCard.getSpeakToAs().getGrammaticalGender());
     }
@@ -159,7 +159,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
                 "PRONOUNS;VALUE=text:he/him\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testSpeakToAs4 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
         assertTrue("testSpeakToAs4 - 2", jsCard.getSpeakToAs().isMale());
     }

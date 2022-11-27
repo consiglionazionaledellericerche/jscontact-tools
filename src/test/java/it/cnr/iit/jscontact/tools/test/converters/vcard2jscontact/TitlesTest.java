@@ -33,7 +33,7 @@ public class TitlesTest extends VCard2JSContactTest {
                 "TITLE;ALTID=1;LANGUAGE=it:Ricercatore\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testTitleWithAltid1 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid1 - 2", 1, jsCard.getTitles().size());
         assertEquals("testTitleWithAltid1 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
@@ -53,7 +53,7 @@ public class TitlesTest extends VCard2JSContactTest {
                 "TITLE;LANGUAGE=it:Ricercatore\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testTitleWithoutAltid - 1", jsCard.getTitles());
         assertEquals("testTitleWithoutAltid - 2", 2, jsCard.getTitles().size());
         assertEquals("testTitleWithoutAltid - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
@@ -72,7 +72,7 @@ public class TitlesTest extends VCard2JSContactTest {
                 "TITLE;PREF=1:IETF Area Director\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testTitleWithAltid2 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid2 - 2", 2, jsCard.getTitles().size());
         assertEquals("testTitleWithAltid2 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-2").getName());
@@ -93,7 +93,7 @@ public class TitlesTest extends VCard2JSContactTest {
                 "TITLE;PREF=1;LANGUAGE=it;ALTID=2:Direttore Area IETF\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testTitleWithAltid3 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid3 - 2", 2, jsCard.getLocalizationsPerLanguage("it").size());
         assertEquals("testTitleWithAltid3 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-2").getName());
@@ -114,7 +114,7 @@ public class TitlesTest extends VCard2JSContactTest {
                 "ROLE;ALTID=1;LANGUAGE=it:Capo Progetto\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testRoleWithAltid1 - 1", jsCard.getTitles());
         assertEquals("testRoleWithAltid1 - 2", 1, jsCard.getTitles().size());
         assertEquals("testRoleWithAltid1 - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getName());
@@ -132,7 +132,7 @@ public class TitlesTest extends VCard2JSContactTest {
                 "ROLE;LANGUAGE=it:Capo Progetto\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testRoleWithoutAltid - 1", jsCard.getTitles());
         assertEquals("testRoleWithoutAltid - 2", 2, jsCard.getTitles().size());
         assertEquals("testRoleWithoutAltid - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getName());
@@ -150,7 +150,7 @@ public class TitlesTest extends VCard2JSContactTest {
                 "ROLE;PREF=1:IETF Area Director\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testRoleWithAltid2 - 1", jsCard.getTitles());
         assertEquals("testRoleWithAltid2 - 2", 2, jsCard.getTitles().size());
         assertEquals("testRoleWithAltid2 - 3", "Project Leader", jsCard.getTitles().get("TITLE-2").getName());

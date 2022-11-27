@@ -458,7 +458,7 @@ Here in the following two examples of conversion between vCard and JSContact Car
         Card jsCard = jsCards.get(1);
         assertEquals("testJCardGroup1 - 8", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
         assertEquals("testJCardGroup1 - 9", "John Doe", jsCard.getFullName());
-        jsCard = (Card) jsCards.get(2);
+        jsCard = jsCards.get(2);
         assertEquals("testJCardGroup1 - 10", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
         assertEquals("testJCardGroup1 - 11", "Jane Doe", jsCard.getFullName());
         

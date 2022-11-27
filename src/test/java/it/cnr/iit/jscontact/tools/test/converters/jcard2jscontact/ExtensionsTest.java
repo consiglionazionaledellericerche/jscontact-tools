@@ -31,7 +31,7 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"jscontact-prop\",{\"jsptr\":\"extension:myext1\"},\"text\",\"\\\"extvalue\\\"\"]," +
                 "[\"jscontact-prop\",{\"jsptr\":\"extension:myext2\"},\"text\",\"{\\\"extprop\\\":\\\"extvalue\\\"}\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
         assertEquals("testExtendedJSContact1 - 2", "extvalue", jsCard.getExtensions().get("extension:myext1"));
         assertEquals("testExtendedJSContact1 - 3", "{extprop=extvalue}", jsCard.getExtensions().get("extension:myext2").toString());
@@ -54,7 +54,7 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"jscontact-prop\",{\"jsptr\":\"preferredLanguages/jp/0/ext6\"},\"text\",\"[\\\"1\\\",\\\"2\\\"]\"],"+
                 "[\"jscontact-prop\",{\"jsptr\":\"ext1\"},\"text\",\"10\"]"+
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testExtendedJSContact2 - 1", 1, jsCard.getExtensions().size());
         assertEquals("testExtendedJSContact2 - 2", 10, jsCard.getExtensions().get("ext1"));
         assertEquals("testExtendedJSContact2 - 3", 1, jsCard.getNickNames().get("NICK-1").getExtensions().size());

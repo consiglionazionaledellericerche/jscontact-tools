@@ -32,7 +32,7 @@ public class FullNameTest extends JCard2JSContactTest {
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertTrue("testEmptyFullName - 1",jsCard.getFullName().isEmpty());
 
     }
@@ -43,7 +43,7 @@ public class FullNameTest extends JCard2JSContactTest {
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"John Q. Public, Esq.\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testFullName1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
 
     }
@@ -57,7 +57,7 @@ public class FullNameTest extends JCard2JSContactTest {
                 "]]";
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("jp").build()).build();
 
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testFullName2 - 1", "大久保 正仁", jsCard.getFullName());
         assertEquals("testFullName2 - 2", "Okubo Masahito", jsCard.getLocalizations().get("en").get("fullName").asText());
 
@@ -72,7 +72,7 @@ public class FullNameTest extends JCard2JSContactTest {
                 "]]";
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
 
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testFullName3 - 1", "Okubo Masahito", jsCard.getFullName());
         assertEquals("testFullName3 - 2", "大久保 正仁", jsCard.getLocalizations().get("jp").get("fullName").asText());
 

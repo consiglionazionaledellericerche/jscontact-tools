@@ -34,7 +34,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "ORG;ALTID=1;LANGUAGE=it:ABC, Spa.;Divisione Nord America;Marketing\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testOrganizationsWithAltid1 - 1", jsCard.getOrganizations());
         assertEquals("testOrganizationsWithAltid1 - 2", 1, jsCard.getOrganizations().size());
         assertEquals("testOrganizationsWithAltid1 - 3", "ABC, Inc.", jsCard.getOrganizations().get("ORG-1").getName());
@@ -59,7 +59,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "ORG;LANGUAGE=it:ABC, Spa.;Divisione Nord America;Marketing\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testOrganizationsWithoutAltid1 - 1", jsCard.getOrganizations());
         assertEquals("testOrganizationsWithoutAltid1 - 2", 2, jsCard.getOrganizations().size());
         assertEquals("testOrganizationsWithoutAltid1 - 3", "ABC, Inc.", jsCard.getOrganizations().get("ORG-1").getName());
@@ -83,7 +83,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "ORG;PREF=1:University of North America\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testOrganizationsWithAltid2 - 1", jsCard.getOrganizations());
         assertEquals("testOrganizationsWithAltid2 - 2", 2, jsCard.getOrganizations().size());
         assertEquals("testOrganizationsWithAltid2 - 3", "University of North America", jsCard.getOrganizations().get("ORG-1").getName());
@@ -108,7 +108,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "ORG;LANGUAGE=it:;Divisione Nord America;Marketing\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testOrganizationsWithoutAltid2 - 1", jsCard.getOrganizations());
         assertEquals("testOrganizationsWithoutAltid2 - 2", 2, jsCard.getOrganizations().size());
         assertTrue("testOrganizationsWithoutAltid2 - 3", jsCard.getOrganizations().get("ORG-1").getName() == null);

@@ -34,7 +34,7 @@ public class NameTest extends VCard2JSContactTest {
                 "N;SORT-AS=\"Public,John\":Public;John;Quinlan;Mr.;Esq.\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testName1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName1 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName1 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -63,7 +63,7 @@ public class NameTest extends VCard2JSContactTest {
                 "NICKNAME:Johnny\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testName2 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName2 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName2 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -92,7 +92,7 @@ public class NameTest extends VCard2JSContactTest {
                 "NICKNAME;PREF=1:Kid\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testName3 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName3 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName3 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -125,7 +125,7 @@ public class NameTest extends VCard2JSContactTest {
                 "NICKNAME;PREF=1;LANGUAGE=it;ALTID=2:Ragazzo\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testName4 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName4 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName4 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -145,5 +145,21 @@ public class NameTest extends VCard2JSContactTest {
         assertEquals("testName4 - 16", "Ragazzo", jsCard.getLocalization("it", "nickNames/NICK-2").get("name").asText());
 
     }
+
+    @Test //ez-vcard accepts only one family name and one given name
+         // RANKS conversion can't be tested for family names ang given names
+    public void testName5() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:John Paul Philip Stevenson\n" +
+                "N;RANKS=\";;2,1;;3,1,2\":Stevenson;John;Philip,Paul;Dr.;Jr.,M.D.,A.C.P.\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testName5 - 1", 8, jsCard.getName().getComponents().length);
+
+    }
+
 
 }
