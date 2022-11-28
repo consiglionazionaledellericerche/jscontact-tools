@@ -956,21 +956,32 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static Impp getImpp(OnlineService onlineService) {
 
-        Impp impp;
-        if (onlineService.getUri() == null) {
-            try {
-                impp = new Impp(onlineService.getService(), onlineService.getUsername());
-            }
-            catch (IllegalArgumentException e) {
-                return null;
-            }
-        } else
-            impp = new Impp(onlineService.getUri());
-
+        Impp impp = new Impp(onlineService.getUser());
         impp.setPref(onlineService.getPref());
+        if (!onlineService.hasNoContext()) {
+            List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(onlineService.getContexts().keySet()));
+            for (String vCardTypeValue : vCardTypeValues)
+                impp.getTypes().add(ImppType.get(vCardTypeValue));
+        }
         VCardUtils.addVCardUnmatchedParams(impp,onlineService);
 
         return impp;
+    }
+
+    private static RawProperty getSocialService(OnlineService onlineService) {
+
+        RawProperty raw = new RawProperty(VCardPropEnum.SOCIALSERVICE.getValue(), onlineService.getUser());
+        String vCardTypeValue = getVCardType(onlineService);
+        if (vCardTypeValue!=null)
+            raw.setParameter(VCardParamEnum.TYPE.getValue(), vCardTypeValue);
+        if (onlineService.getPref()!=null)
+            raw.setParameter(VCardParamEnum.PREF.getValue(), onlineService.getPref().toString());
+        if (onlineService.getService()!=null)
+            raw.setParameter(VCardParamEnum.SERVICE_TYPE.getValue(), onlineService.getService());
+        raw.setDataType((onlineService.getType().isUri()) ? VCardDataType.URI : VCardDataType.TEXT);
+        VCardUtils.addVCardUnmatchedParams(raw,onlineService);
+
+        return raw;
     }
 
     private static <T extends VCardProperty> void fillVCardProperty(T property, Resource resource) {
@@ -1023,17 +1034,23 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for(Map.Entry<String, OnlineService> entry : jsCard.getOnlineServices().entrySet()) {
             OnlineService onlineService = entry.getValue();
-            Impp impp = getImpp(onlineService);
-            if (impp == null) continue;
-            addPropId(impp, entry.getKey());
-            addX_ABLabel(onlineService, impp,vcard);
-            vcard.getImpps().add(impp);
-            if (!onlineService.hasNoContext()) {
-                List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(onlineService.getContexts().keySet()));
-                for (String vCardTypeValue : vCardTypeValues)
-                    impp.getTypes().add(ImppType.get(vCardTypeValue));
+            if (onlineService.getType()!=null && onlineService.getType().isRfcValue()) {
+                switch (onlineService.getType().getRfcValue()) {
+                    case IMPP:
+                        Impp impp = getImpp(onlineService);
+                        addPropId(impp, entry.getKey());
+                        addX_ABLabel(onlineService, impp,vcard);
+                        vcard.getImpps().add(impp);
+                        break;
+                    case URI:
+                    case USERNAME:
+                        RawProperty rawProperty = getSocialService(onlineService);
+                        addPropId(rawProperty, entry.getKey());
+                        addX_ABLabel(onlineService, rawProperty, vcard);
+                        vcard.addProperty(rawProperty);
+                        break;
+                }
             }
-
         }
     }
 

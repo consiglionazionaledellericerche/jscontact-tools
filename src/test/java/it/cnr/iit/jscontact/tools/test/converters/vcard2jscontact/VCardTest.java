@@ -400,13 +400,13 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 89", "https://d2ojpxxtu63wzl.cloudfront.net/static/aa915d1f29f19baf560e5491decdd30a_67c95da9133249fde8b0da7ceebc298bf680117e6f52054f7f5f7a95e8377238", jsCard.getMedia().get("PHOTO-3").getUri());
 
         assertEquals("testCompleteVCard6 - 90", 7, jsCard.getOnlineServices().size());
-        assertEquals("testCompleteVCard6 - 98", "xmpp:gtalk", jsCard.getOnlineServices().get("OS-1").getUri());
-        assertEquals("testCompleteVCard6 - 102", "skype:skype", jsCard.getOnlineServices().get("OS-2").getUri());
-        assertEquals("testCompleteVCard6 - 106", "ymsgr:yahoo", jsCard.getOnlineServices().get("OS-3").getUri());
-        assertEquals("testCompleteVCard6 - 110", "aim:aim", jsCard.getOnlineServices().get("OS-4").getUri());
-        assertEquals("testCompleteVCard6 - 114", "xmpp:jabber", jsCard.getOnlineServices().get("OS-5").getUri());
-        assertEquals("testCompleteVCard6 - 118", "other:other", jsCard.getOnlineServices().get("OS-6").getUri());
-        assertEquals("testCompleteVCard6 - 122", "customtype:custom", jsCard.getOnlineServices().get("OS-7").getUri());
+        assertEquals("testCompleteVCard6 - 98", "xmpp:gtalk", jsCard.getOnlineServices().get("OS-1").getUser());
+        assertEquals("testCompleteVCard6 - 102", "skype:skype", jsCard.getOnlineServices().get("OS-2").getUser());
+        assertEquals("testCompleteVCard6 - 106", "ymsgr:yahoo", jsCard.getOnlineServices().get("OS-3").getUser());
+        assertEquals("testCompleteVCard6 - 110", "aim:aim", jsCard.getOnlineServices().get("OS-4").getUser());
+        assertEquals("testCompleteVCard6 - 114", "xmpp:jabber", jsCard.getOnlineServices().get("OS-5").getUser());
+        assertEquals("testCompleteVCard6 - 118", "other:other", jsCard.getOnlineServices().get("OS-6").getUser());
+        assertEquals("testCompleteVCard6 - 122", "customtype:custom", jsCard.getOnlineServices().get("OS-7").getUser());
 
         assertEquals("testCompleteVCard6 - 124", 4, jsCard.getLinks().size());
         assertTrue("testCompleteVCard6 - 125", jsCard.getLinks().get("LINK-1").isGenericLink());

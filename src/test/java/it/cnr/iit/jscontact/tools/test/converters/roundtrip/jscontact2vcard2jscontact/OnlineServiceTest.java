@@ -37,9 +37,10 @@ public class OnlineServiceTest extends RoundtripTest {
                 "\"onlineServices\": {"+
                     "\"OS-1\": {" +
                         "\"@type\":\"OnlineService\"," +
+                        "\"type\": \"impp\", " +
                         "\"contexts\": {\"private\": true}," +
                         "\"pref\": 1, " +
-                        "\"uri\": \"xmpp:alice@example.com\"" +
+                        "\"user\": \"xmpp:alice@example.com\"" +
                     "}" +
                  "}" +
                 "}";

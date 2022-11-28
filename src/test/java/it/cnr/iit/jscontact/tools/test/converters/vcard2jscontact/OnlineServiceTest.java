@@ -35,9 +35,28 @@ public class OnlineServiceTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testOnlineService1 - 1", 1, jsCard.getOnlineServices().size());
-        assertEquals("testOnlineService1 - 2", "xmpp:alice@example.com", jsCard.getOnlineServices().get("OS-1").getUri());
+        assertEquals("testOnlineService1 - 2", "xmpp:alice@example.com", jsCard.getOnlineServices().get("OS-1").getUser());
         assertTrue("testOnlineService1 - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());
-        assertEquals("testOnlineService1 - 5", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
+        assertEquals("testOnlineService1 - 4", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
     }
-    
+
+    @Test
+    public void testOnlineService2() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "SOCIALSERVICE;SERVICE-TYPE=Twitter;TYPE=home;PREF=1:https://twitter.com/ietf\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testOnlineService2 - 1", 1, jsCard.getOnlineServices().size());
+        assertEquals("testOnlineService2 - 2", "https://twitter.com/ietf", jsCard.getOnlineServices().get("OS-1").getUser());
+        assertTrue("testOnlineService2 - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());
+        assertEquals("testOnlineService2 - 4", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
+        assertEquals("testOnlineService2 - 5", "Twitter", jsCard.getOnlineServices().get("OS-1").getService());
+        assertTrue("testOnlineService2 - 6", jsCard.getOnlineServices().get("OS-1").getType().isUri());
+    }
+
+
 }

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.OnlineServiceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.OnlineServiceTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
@@ -47,7 +48,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @OnlineServiceConstraint
-@JsonPropertyOrder({"@type","service","uri","username","contexts","pref","label"})
+@JsonPropertyOrder({"@type","type","service","uri","username","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -61,11 +62,16 @@ public class OnlineService extends AbstractJSContactType implements HasLabel, Ha
     @Builder.Default
     String _type = "OnlineService";
 
+    @NonNull
+    @NotNull
+    @JsonDeserialize(using = OnlineServiceTypeDeserializer.class)
+    OnlineServiceType type;
+
     String service;
 
-    String uri;
-
-    String username;
+    @NonNull
+    @NotNull
+    String user;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)

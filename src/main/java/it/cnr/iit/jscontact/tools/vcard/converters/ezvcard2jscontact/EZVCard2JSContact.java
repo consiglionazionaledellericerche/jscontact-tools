@@ -1038,7 +1038,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             vcardType = VCardUtils.getVCardParamValue(impp.getParameters(), VCardParamEnum.TYPE);
             contexts = getContexts(vcardType);
             jsCard.addOnlineService(getId(VCard2JSContactIdsProfile.IdType.ONLINE_SERVICE, i,"OS-" + (i++), impp.getParameter(VCardParamEnum.PROP_ID.getValue())), OnlineService.builder()
-                    .uri(getValue(impp))
+                    .user(getValue(impp))
+                    .type(OnlineServiceType.impp())
                     .contexts(contexts)
                     .pref(impp.getPref())
                     .label(getX_ABLabel(impp,vcard.getExtendedProperties()))
@@ -1327,6 +1328,21 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     else
                         jsCard.addContactChannelPreference(channelType, null);
                 }
+            }
+            else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.SOCIALSERVICE.getValue())) {
+                i = (jsCard.getOnlineServices() != null) ? jsCard.getOnlineServices().size() + 1 : 1;
+                vcardType = VCardUtils.getVCardParamValue(extension.getParameters(), VCardParamEnum.TYPE);
+                contexts = getContexts(vcardType);
+                jsCard.addOnlineService(getId(VCard2JSContactIdsProfile.IdType.ONLINE_SERVICE, i,"OS-" + (i++), extension.getParameter(VCardParamEnum.PROP_ID.getValue())), OnlineService.builder()
+                        .user(extension.getValue())
+                        .type((extension.getDataType() == null || extension.getDataType() == VCardDataType.URI) ? OnlineServiceType.uri() : OnlineServiceType.username())
+                        .service(extension.getParameter(VCardParamEnum.SERVICE_TYPE.getValue()))
+                        .contexts(contexts)
+                        .pref((extension.getParameter(VCardParamEnum.PREF.getValue())!=null) ? Integer.valueOf(extension.getParameter(VCardParamEnum.PREF.getValue())) : null )
+                        .label(getX_ABLabel(extension,vcard.getExtendedProperties()))
+                        .vCardParams(VCardUtils.getVCardUnmatchedParams(extension, VCardParamEnum.PID, VCardParamEnum.GROUP))
+                        .build()
+                );
             }
         }
     }

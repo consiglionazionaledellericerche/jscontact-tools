@@ -40,5 +40,5 @@ public class OnlineServiceTest extends RoundtripTest {
         pruneVCard(vcard2);
         assertEquals("testOnlineService1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
     }
-    
+
 }
