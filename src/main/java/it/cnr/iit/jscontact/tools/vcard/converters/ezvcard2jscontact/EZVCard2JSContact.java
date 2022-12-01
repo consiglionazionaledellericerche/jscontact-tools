@@ -1216,22 +1216,29 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+    private static Note getNote(ezvcard.property.Note vcardNote) {
+
+        String authorUri = vcardNote.getParameter(VCardParamEnum.AUTHOR.getValue());
+        String authorName = vcardNote.getParameter(VCardParamEnum.AUTHOR_NAME.getValue());
+        String created = vcardNote.getParameter(VCardParamEnum.CREATED.getValue());
+
+        return Note.builder()
+                .note(vcardNote.getValue())
+                .language(vcardNote.getLanguage())
+                .author((authorName!=null || authorUri!=null) ?  Author.builder().name(authorName).uri(authorUri).build() : null)
+                .created((created!=null) ? DateUtils.toCalendar(created) : null)
+                .vCardParams(VCardUtils.getVCardUnmatchedParams(vcardNote, VCardParamEnum.PID, VCardParamEnum.GROUP))
+                .build();
+
+    }
+
     private void fillNotes(VCard vcard, Card jsCard) {
 
         int i = 1;
-        for (ezvcard.property.Note note : vcard.getNotes()) {
-            String propId = note.getParameter(VCardParamEnum.PROP_ID.getValue());
-            String authorUri = note.getParameter(VCardParamEnum.AUTHOR.getValue());
-            String authorName = note.getParameter(VCardParamEnum.AUTHOR_NAME.getValue());
-            String created = note.getParameter(VCardParamEnum.CREATED.getValue());
+        for (ezvcard.property.Note vcardNote : vcard.getNotes()) {
+            String propId = vcardNote.getParameter(VCardParamEnum.PROP_ID.getValue());
             String id = getId(VCard2JSContactIdsProfile.IdType.NOTE, i, "NOTE-" + (i ++), propId);
-            jsCard.addNote(id, Note.builder()
-                    .note(note.getValue())
-                    .language(note.getLanguage())
-                    .author((authorName!=null || authorUri!=null) ?  Author.builder().name(authorName).uri(authorUri).build() : null)
-                    .created((created!=null) ? DateUtils.toCalendar(created) : null)
-                    .vCardParams(VCardUtils.getVCardUnmatchedParams(note, VCardParamEnum.PID, VCardParamEnum.GROUP))
-                    .build());
+            jsCard.addNote(id, getNote(vcardNote));
         }
     }
 
