@@ -612,6 +612,9 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static Pronouns asPronouns(JsonNode jsonNode) {
         return (Pronouns) asObject(jsonNode, Pronouns.class);
     }
+    private static Note asNote(JsonNode jsonNode) {
+        return (Note) asObject(jsonNode, Note.class);
+    }
 
     private static NameComponent[] asNameComponentArray(JsonNode arrayNode) {
 
@@ -1337,7 +1340,6 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static ezvcard.property.Note getNote(Note jsNote) {
 
         ezvcard.property.Note note = new ezvcard.property.Note(jsNote.getNote());
-        note.setLanguage(jsNote.getLanguage());
         if (jsNote.getAuthor()!=null && jsNote.getAuthor().getUri()!=null)
             note.setParameter(VCardParamEnum.AUTHOR.getValue(), jsNote.getAuthor().getUri());
         if (jsNote.getAuthor()!=null && jsNote.getAuthor().getName()!=null)
@@ -1354,19 +1356,39 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getNotes() == null)
             return;
 
-        List<ezvcard.property.Note> notes = new ArrayList<>();
-        boolean languageFound = false;
         for (Map.Entry<String,Note> entry : jsCard.getNotes().entrySet()) {
-            if (!languageFound)
-                languageFound = StringUtils.isNotEmpty(entry.getValue().getLanguage());
-            ezvcard.property.Note note = getNote(entry.getValue());
-            addPropId(note, entry.getKey());
-            notes.add(note);
+
+            if (jsCard.getLocalizationsPerPath("notes/"+entry.getKey()) == null &&
+                    jsCard.getLocalizationsPerPath("notes/"+entry.getKey()+"/note")==null) {
+                ezvcard.property.Note note = getNote(entry.getValue());
+                addPropId(note, entry.getKey());
+                vcard.addNote(note);
+            }
+            else {
+                List<ezvcard.property.Note> notes = new ArrayList<>();
+                ezvcard.property.Note note = getNote(entry.getValue());
+                addPropId(note, entry.getKey());
+                notes.add(note);
+
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("notes/"+entry.getKey());
+                if (localizations != null) {
+                    for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
+                        note = getNote(asNote(localization.getValue()));
+                        note.setLanguage(localization.getKey());
+                        notes.add(note);
+                    }
+                }
+                localizations = jsCard.getLocalizationsPerPath("notes/"+entry.getKey()+"/note");
+                if (localizations != null) {
+                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
+                        note = new ezvcard.property.Note(localization.getValue().asText());
+                        note.setLanguage(localization.getKey());
+                        notes.add(note);
+                    }
+                }
+                vcard.addNoteAlt(notes.toArray(new ezvcard.property.Note[0]));
+            }
         }
-        if (!languageFound)
-            vcard.getNotes().addAll(notes);
-        else
-            vcard.addNoteAlt(notes.toArray(new ezvcard.property.Note[0]));
     }
 
     private static Related getRelated(String uriOrText, List<RelationType> types) {

@@ -66,6 +66,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     public static final String CUSTOM_TIME_ZONE_RULE_START = "1900-01-01T00:00:00";
     private static final Integer HIGHEST_PREFERENCE = 0;
 
+    private VCardPropertiesComparator vCardPropertiesComparator;
+
     protected VCard2JSContactConfig config;
 
     private int customTimeZoneCounter = 0;
@@ -1224,21 +1226,32 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         return Note.builder()
                 .note(vcardNote.getValue())
-                .language(vcardNote.getLanguage())
                 .author((authorName!=null || authorUri!=null) ?  Author.builder().name(authorName).uri(authorUri).build() : null)
                 .created((created!=null) ? DateUtils.toCalendar(created) : null)
                 .vCardParams(VCardUtils.getVCardUnmatchedParams(vcardNote, VCardParamEnum.PID, VCardParamEnum.GROUP))
                 .build();
-
     }
 
     private void fillNotes(VCard vcard, Card jsCard) {
 
+        if (vcard.getNotes() == null || vcard.getNotes().isEmpty())
+            return;
+
+        List<ezvcard.property.Note> vcardNotes = vcard.getNotes();
+        Collections.sort(vcardNotes, vCardPropertiesComparator);
         int i = 1;
-        for (ezvcard.property.Note vcardNote : vcard.getNotes()) {
-            String propId = vcardNote.getParameter(VCardParamEnum.PROP_ID.getValue());
-            String id = getId(VCard2JSContactIdsProfile.IdType.NOTE, i, "NOTE-" + (i ++), propId);
-            jsCard.addNote(id, getNote(vcardNote));
+        String lastAltid = null;
+        String lastMapId = null;
+        for (ezvcard.property.Note vcardNote : vcardNotes) {
+            if (vcardNote.getAltId() == null || lastAltid == null || !vcardNote.getAltId().equals(lastAltid)) {
+                String propId = vcardNote.getParameter(VCardParamEnum.PROP_ID.getValue());
+                String id = getId(VCard2JSContactIdsProfile.IdType.NOTE, i, "NOTE-" + (i++), propId);
+                jsCard.addNote(id, getNote(vcardNote));
+                lastAltid = vcardNote.getAltId();
+                lastMapId = id;
+            } else {
+                jsCard.addLocalization(vcardNote.getLanguage(), "notes/" + lastMapId, mapper.convertValue(getNote(vcardNote), JsonNode.class));
+            }
         }
     }
 
@@ -1297,7 +1310,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 continue; //vcard extension already treated elsewhere
 
             if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.LOCALE.getValue()))
-                jsCard.setLocale(extension.getValue());
+                continue; // has already been set
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.CREATED.getValue()))
                 jsCard.setCreated(DateUtils.toCalendar(extension.getValue()));
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.GRAMMATICAL_GENDER.getValue())) {
@@ -1467,7 +1480,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.setKind(getKind(vCard.getKind()));
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(getUpdated(vCard.getRevision()));
-        jsCard.setLocale(config.getDefaultLanguage());
+        RawProperty locale = vCard.getExtendedProperty(VCardPropEnum.LOCALE.getValue());
+        jsCard.setLocale((locale!=null) ? locale.getValue() : config.getDefaultLanguage());
+        vCardPropertiesComparator = VCardPropertiesComparator.builder().defaultLanguage(jsCard.getLocale()).build();
         fillSpeakToAsOrGender(vCard, jsCard);
         fillMembers(vCard, jsCard);
         fillFormattedNames(vCard, jsCard);

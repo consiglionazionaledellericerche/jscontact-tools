@@ -23,7 +23,7 @@ import java.util.Calendar;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","note"})
+@JsonPropertyOrder({"@type","note","created","author"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -40,8 +40,6 @@ public class Note extends AbstractJSContactType implements IdMapValue, Serializa
     @NotNull(message = "note is missing in Note")
     @NonNull
     String note;
-
-    String language;
 
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
