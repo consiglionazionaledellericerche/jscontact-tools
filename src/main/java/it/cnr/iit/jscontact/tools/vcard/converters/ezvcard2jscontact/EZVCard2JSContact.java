@@ -64,7 +64,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static final String CUSTOM_TIME_ZONE_ID_PREFIX = "TZ";
     public static final String CUSTOM_TIME_ZONE_RULE_START = "1900-01-01T00:00:00";
-    private static final Integer HIGHEST_PREFERENCE = 0;
 
     private VCardPropertiesComparator vCardPropertiesComparator;
 
@@ -549,25 +548,21 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillFormattedNames(VCard vcard, Card jsCard) {
+    private void fillFormattedNames(VCard vcard, Card jsCard) {
+
+        if (vcard.getFormattedNames() == null || vcard.getFormattedNames().isEmpty())
+            return;
 
         List<FormattedName> fns = vcard.getFormattedNames();
-        List<LocalizedText> fullNames = new ArrayList<>();
+        Collections.sort(fns, vCardPropertiesComparator);
+        String lastAltid = null;
         for (FormattedName fn : fns) {
-            fullNames.add(LocalizedText.builder()
-                                         .value(getValue(fn))
-                                         .language(fn.getLanguage())
-                                         .preference(isDefaultLanguage(fn.getLanguage(), jsCard.getLocale()) ? HIGHEST_PREFERENCE : fn.getPref())
-                                        .vCardParams(VCardUtils.getVCardUnmatchedParams(fn, VCardParamEnum.DERIVED, VCardParamEnum.GROUP))
-                                         .build()
-                         );
-        }
-        Collections.sort(fullNames); // sort based on preference
-        for (LocalizedText ls : fullNames) {
-            if (fullNames.indexOf(ls) == 0)
-                jsCard.setFullName(ls.getValue());
-            else
-                jsCard.addLocalization(ls.getLanguage(), "fullName", JsonNodeUtils.textNode(ls.getValue()));
+            if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
+                jsCard.setFullName(fn.getValue());
+                lastAltid = fn.getAltId();
+            } else {
+                jsCard.addLocalization(fn.getLanguage(), "fullName", JsonNodeUtils.textNode(fn.getValue()));
+            }
         }
     }
 

@@ -43,8 +43,8 @@ public class FullNameTest extends VCard2JSContactTest {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
-                "FN;LANGUAGE=jp:大久保 正仁\n" +
-                "FN;LANGUAGE=en:Okubo Masahito\n" +
+                "FN;ALTID=1;LANGUAGE=jp:大久保 正仁\n" +
+                "FN;ALTID=1;LANGUAGE=en:Okubo Masahito\n" +
                 "END:VCARD";
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("jp").build()).build();
@@ -61,8 +61,8 @@ public class FullNameTest extends VCard2JSContactTest {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
-                "FN;LANGUAGE=jp:大久保 正仁\n" +
-                "FN;LANGUAGE=en:Okubo Masahito\n" +
+                "FN;ALTID=1;LANGUAGE=jp:大久保 正仁\n" +
+                "FN;ALTID=1;LANGUAGE=en:Okubo Masahito\n" +
                 "END:VCARD";
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
