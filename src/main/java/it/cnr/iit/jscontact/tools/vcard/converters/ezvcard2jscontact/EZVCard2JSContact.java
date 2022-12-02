@@ -663,31 +663,40 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+
+    private NickName getNickName(String name, ezvcard.property.Nickname vcardNickname, VCard vcard) {
+
+        return NickName.builder()
+                .name(name)
+                .pref(vcardNickname.getPref())
+                .contexts(getContexts(vcardNickname.getType()))
+                .label(getX_ABLabel(vcardNickname,vcard.getExtendedProperties()))
+                .vCardParams(VCardUtils.getVCardUnmatchedParams(vcardNickname, VCardParamEnum.PID, VCardParamEnum.GROUP))
+                .build();
+    }
+
+
     private void fillNickNames(VCard vcard, Card jsCard) {
 
-        List<Nickname> nicknames = vcard.getNicknames();
-        List<LocalizedText> nicks = new ArrayList<>();
-        for (Nickname nickname : nicknames) {
-            String vcardType = VCardUtils.getVCardParamValue(nickname.getParameters(), VCardParamEnum.TYPE);
-            Map<Context, Boolean> contexts = getContexts(vcardType);
-            addLocalizedText(nicks, LocalizedText.builder()
-                    .value(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,nickname.getValues()))
-                    .language(nickname.getLanguage())
-                    .altid(nickname.getAltId())
-                    .preference(nickname.getPref())
-                    .contexts(contexts)
-                    .label(getX_ABLabel(nickname,vcard.getExtendedProperties()))
-                    .vCardParams(VCardUtils.getVCardUnmatchedParams(nickname, VCardParamEnum.PID, VCardParamEnum.GROUP))
-                    .build());
-        }
+        if (vcard.getNicknames() == null || vcard.getNicknames().isEmpty())
+            return;
+
+        List<ezvcard.property.Nickname> vcardNickNames = vcard.getNicknames();
+        Collections.sort(vcardNickNames, vCardPropertiesComparator);
         int i = 1;
-        for (LocalizedText nick : nicks) {
-            String id = getId(VCard2JSContactIdsProfile.IdType.NICKNAME, i, "NICK-" + (i ++), nick.getPropId());
-            NickName nickName = NickName.builder().name(nick.getValue()).pref(nick.getPreference()).contexts(nick.getContexts()).label(nick.getLabel()).vCardParams(nick.getVCardParams()).build();
-            jsCard.addNickName(id, nickName);
-            if (nick.getLocalizations() != null) {
-                for (Map.Entry<String, String> localization : nick.getLocalizations().entrySet()) {
-                    jsCard.addLocalization(localization.getKey(), "nickNames/" + id, mapper.convertValue(NickName.builder().name(localization.getValue()).build(), JsonNode.class));
+        String lastAltid = null;
+        String lastMapId = null;
+        for (ezvcard.property.Nickname vcardNickName : vcardNickNames) {
+            for (String name : vcardNickName.getValues()) {
+                if (vcardNickName.getAltId() == null || lastAltid == null || !vcardNickName.getAltId().equals(lastAltid)) {
+                    String propId = vcardNickName.getParameter(VCardParamEnum.PROP_ID.getValue());
+                    String id = getId(VCard2JSContactIdsProfile.IdType.NICKNAME, i, "NICK-" + (i++), propId);
+                    jsCard.addNickName(id, getNickName(name, vcardNickName, vcard));
+                    lastAltid = vcardNickName.getAltId();
+                    lastMapId = id;
+                }
+                else {
+                    jsCard.addLocalization(vcardNickName.getLanguage(), "nickNames/" + lastMapId, mapper.convertValue(getNickName(name, vcardNickName, vcard), JsonNode.class));
                 }
             }
         }

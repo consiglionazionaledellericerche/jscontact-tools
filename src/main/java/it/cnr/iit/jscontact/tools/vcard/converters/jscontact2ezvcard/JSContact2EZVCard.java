@@ -367,47 +367,17 @@ public class JSContact2EZVCard extends AbstractConverter {
             vcard.setStructuredNameAlt(sns.toArray(new StructuredName[0]));
     }
 
-    private Nickname getNickname(NickName nickName, String language, String key) {
 
-        if (nickName == null)
-            return null;
+    private static ezvcard.property.Nickname getNickname(NickName jsNickName) {
 
-        Nickname nickname = new Nickname();
-        nickname.getValues().addAll(Arrays.asList(nickName.getName().split(DelimiterUtils.COMMA_ARRAY_DELIMITER)));
-        nickname.setPref(nickname.getPref());
-        nickname.setLanguage(language);
-        VCardUtils.addVCardUnmatchedParams(nickname,nickName);
-        if (!nickName.hasNoContext()) {
-            List<String> vCardTypeValues = toVCardTypeValues(ContextEnum.class, Context.toEnumValues(nickName.getContexts().keySet()));
-            nickname.setType(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, vCardTypeValues));
-        }
-        addPropId(nickname, key);
+        ezvcard.property.Nickname nickname = new ezvcard.property.Nickname();
+        nickname.getValues().add(jsNickName.getName());
+        nickname.setPref(jsNickName.getPref());
+        nickname.setType(getVCardType(jsNickName));
+        VCardUtils.addVCardUnmatchedParams(nickname, jsNickName);
         return nickname;
     }
 
-    private Nickname getNickname(String nickNames, String language, String key) {
-
-        if (nickNames == null)
-            return null;
-
-        Nickname nickname = new Nickname();
-        nickname.getValues().addAll(Arrays.asList(nickNames.split(DelimiterUtils.COMMA_ARRAY_DELIMITER)));
-        nickname.setLanguage(language);
-        addPropId(nickname, key);
-        return nickname;
-    }
-
-    private Nickname asNickname(JsonNode node, String language, String key) {
-
-        if (!node.isObject())
-            return null;
-
-        Nickname nickname = new Nickname();
-        nickname.getValues().addAll(Arrays.asList(node.get("name").asText().split(DelimiterUtils.COMMA_ARRAY_DELIMITER)));
-        nickname.setLanguage(language);
-        addPropId(nickname, key);
-        return nickname;
-    }
 
     private void fillNickNames(VCard vcard, Card jsCard) {
 
@@ -417,26 +387,34 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,NickName> entry : jsCard.getNickNames().entrySet()) {
             if (jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()) == null &&
                     jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name")==null) {
-                Nickname nickname = getNickname(entry.getValue(), jsCard.getLocale(), entry.getKey());
+                Nickname nickname = getNickname(entry.getValue());
+                addPropId(nickname, entry.getKey());
                 addX_ABLabel(entry.getValue(),nickname, vcard);
                 vcard.addNickname(nickname);
             }
             else {
                 List<ezvcard.property.Nickname> nicknames = new ArrayList<>();
-                Nickname nickname = getNickname(entry.getValue(), jsCard.getLocale(), entry.getKey());
+                Nickname nickname = getNickname(entry.getValue());
+                addPropId(nickname, entry.getKey());
                 addX_ABLabel(entry.getValue(),nickname, vcard);
                 nicknames.add(nickname);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
-                        nicknames.add(asNickname(localization.getValue(), localization.getKey(), entry.getKey()));
+                        nickname = getNickname(asNickName(localization.getValue()));
+                        nickname.setLanguage(localization.getKey());
+                        nicknames.add(nickname);
                     }
                 }
                 localizations = jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name");
                 if (localizations != null) {
-                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
-                        nicknames.add(getNickname(localization.getValue().asText(), localization.getKey(), entry.getKey()));
+                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
+                        nickname = new ezvcard.property.Nickname();
+                        nickname.getValues().add(localization.getValue().asText());
+                        nickname.setLanguage(localization.getKey());
+                        nicknames.add(nickname);
+                    }
                 }
                 vcard.addNicknameAlt(nicknames.toArray(new ezvcard.property.Nickname[0]));
             }
@@ -618,6 +596,10 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static Title asTitle(JsonNode jsonNode) {
         return (Title) asObject(jsonNode, Title.class);
+    }
+
+    private static NickName asNickName(JsonNode jsonNode) {
+        return (NickName) asObject(jsonNode, NickName.class);
     }
 
 
