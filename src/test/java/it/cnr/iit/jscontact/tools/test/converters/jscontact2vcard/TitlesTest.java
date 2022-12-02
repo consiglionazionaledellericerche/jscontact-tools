@@ -164,7 +164,6 @@ public class TitlesTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(Ezvcard.write(vcard).go());
         assertEquals("testTitlesAndRoles - 1", 2, vcard.getTitles().size());
         assertEquals("testTitlesAndRoles - 2", 2, vcard.getRoles().size());
         assertEquals("testTitlesAndRoles - 3", "Research Scientist", vcard.getTitles().get(0).getValue());
