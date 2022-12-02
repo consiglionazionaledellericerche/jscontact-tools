@@ -15,19 +15,19 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.CardGroupKindValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.MembersVsKindValueValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Target({ElementType.TYPE, java.lang.annotation.ElementType.ANNOTATION_TYPE})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {CardGroupKindValidator.class})
+@Constraint(validatedBy = {MembersVsKindValueValidator.class})
 @Documented
-public @interface CardGroupKindConstraint {
+public @interface MembersVsKindValueConstraint {
 
-    String message() default "invalid kind in CardGroup";
+    String message() default "not empty members requires kind=group";
 
     Class<?>[] groups() default { };
 

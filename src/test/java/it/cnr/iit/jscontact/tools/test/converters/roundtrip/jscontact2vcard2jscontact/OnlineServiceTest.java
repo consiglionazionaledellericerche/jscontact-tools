@@ -37,14 +37,15 @@ public class OnlineServiceTest extends RoundtripTest {
                 "\"onlineServices\": {"+
                     "\"OS-1\": {" +
                         "\"@type\":\"OnlineService\"," +
+                        "\"type\": \"impp\", " +
                         "\"contexts\": {\"private\": true}," +
                         "\"pref\": 1, " +
-                        "\"uri\": \"xmpp:alice@example.com\"" +
+                        "\"user\": \"xmpp:alice@example.com\"" +
                     "}" +
                  "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testOnlineService1 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testOnlineService1 - 1", jscard2, Card.toJSCard(jscard));
     }
 }

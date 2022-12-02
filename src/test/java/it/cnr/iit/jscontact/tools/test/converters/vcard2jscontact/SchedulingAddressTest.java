@@ -1,7 +1,6 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.SchedulingAddressType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -19,14 +18,12 @@ public class SchedulingAddressTest extends VCard2JSContactTest {
                 "CALADRURI:http://example.com/calendar/jdoe\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testSchedulingAddress - 1", 2, jsCard.getSchedulingAddresses().size());
         assertEquals("testSchedulingAddress - 2", "mailto:janedoe@example.com", jsCard.getSchedulingAddresses().get("SCHEDULING-1").getUri());
-        assertEquals("testSchedulingAddress - 3", SchedulingAddressType.imip(), jsCard.getSchedulingAddresses().get("SCHEDULING-1").getType());
-        assertEquals("testSchedulingAddress - 4", 1, (int) jsCard.getSchedulingAddresses().get("SCHEDULING-1").getPref());
-        assertEquals("testSchedulingAddress - 5", "http://example.com/calendar/jdoe", jsCard.getSchedulingAddresses().get("SCHEDULING-2").getUri());
-        assertNull("testSchedulingAddress - 6",  jsCard.getSchedulingAddresses().get("SCHEDULING-2").getType());
-        assertNull("testSchedulingAddress - 7", jsCard.getSchedulingAddresses().get("SCHEDULING-2").getPref());
+        assertEquals("testSchedulingAddress - 3", 1, (int) jsCard.getSchedulingAddresses().get("SCHEDULING-1").getPref());
+        assertEquals("testSchedulingAddress - 4", "http://example.com/calendar/jdoe", jsCard.getSchedulingAddresses().get("SCHEDULING-2").getUri());
+        assertNull("testSchedulingAddress - 6", jsCard.getSchedulingAddresses().get("SCHEDULING-2").getPref());
     }
 
 

@@ -41,7 +41,7 @@ public class PropIdTest extends VCard2JSContactTest {
                                                                 .build())
                                                         .build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPropId1 - 1", jsCard.getAddresses());
         assertEquals("testPropId1 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testPropId1 - 3", "US", jsCard.getAddresses().get("TEST").getCountryCode());
@@ -71,7 +71,7 @@ public class PropIdTest extends VCard2JSContactTest {
                         .build())
                 .build();
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPropId2 - 1", jsCard.getAddresses());
         assertEquals("testPropId2 - 2", 2, jsCard.getAddresses().size());
         assertEquals("testPropId2 - 3", "US", jsCard.getAddresses().get("TEST").getCountryCode());

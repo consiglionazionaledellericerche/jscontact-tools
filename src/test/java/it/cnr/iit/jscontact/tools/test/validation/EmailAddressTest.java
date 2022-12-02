@@ -54,7 +54,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testValidEmail1() {
 
         EmailAddress email = EmailAddress.builder()
-                .email("mario.loffredo@iit.cnr.it")
+                .address("mario.loffredo@iit.cnr.it")
                 .build();
         Map<String, EmailAddress> emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
         Card jsCard = Card.builder()
@@ -70,7 +70,7 @@ public class EmailAddressTest extends AbstractTest {
 
         EmailAddress email = EmailAddress.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .email("mario.loffredo@iit.cnr.it")
+                .address("mario.loffredo@iit.cnr.it")
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
@@ -85,7 +85,7 @@ public class EmailAddressTest extends AbstractTest {
 
         EmailAddress email = EmailAddress.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .email("mario.loffredo@iit.cnr.it")
+                .address("mario.loffredo@iit.cnr.it")
                 .pref(1)
                 .build();
         Card jsCard = Card.builder()
@@ -101,7 +101,7 @@ public class EmailAddressTest extends AbstractTest {
 
         //invalid email address
         EmailAddress email = EmailAddress.builder()
-                .email("mario.loffredo")
+                .address("mario.loffredo")
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
@@ -109,7 +109,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
 
         assertFalse("testInvalidEmail1-1", jsCard.isValid());
-        assertEquals("testInvalidEmail1-2", "invalid email in EmailAddress", jsCard.getValidationMessage());
+        assertEquals("testInvalidEmail1-2", "invalid address in EmailAddress", jsCard.getValidationMessage());
     }
 
 
@@ -119,7 +119,7 @@ public class EmailAddressTest extends AbstractTest {
         //invalid contexts
         EmailAddress email = EmailAddress.builder()
                 .context(Context.work(), Boolean.FALSE)
-                .email("mario.loffredo@iit.cnr.it")
+                .address("mario.loffredo@iit.cnr.it")
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
@@ -137,7 +137,7 @@ public class EmailAddressTest extends AbstractTest {
         //invalid pref
         EmailAddress email = EmailAddress.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .email("mario.loffredo@iit.cnr.it")
+                .address("mario.loffredo@iit.cnr.it")
                 .pref(0)
                 .build();
         Card jsCard = Card.builder()

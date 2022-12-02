@@ -1,7 +1,7 @@
 BEGIN:VCARD
 VERSION:4.0
-FN;LANGUAGE=jp:大久保 正仁
-FN;LANGUAGE=en:Okubo Masahito
+FN;LANGUAGE=jp;ALTID=1:大久保 正仁
+FN;LANGUAGE=en;ALTID=1:Okubo Masahito
 TITLE;LANGUAGE=jp;ALTID=1:事務局長
 TITLE;LANGUAGE=en;ALTID=1:Secretary General
 KIND:individual

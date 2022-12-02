@@ -15,39 +15,48 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "type" property of the SchedulingAddress type as defined in section 2.4.2 of [draft-ietf-calext-jscontact].
+ * Enum class mapping some of the VCard properties as defined in section 6 of [RFC6350] and section 3 of [draft-ietf-calext-vcard-jscontact-extensions] .
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-5">https://www.rfc-editor.org/rfc/rfc6350</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions">draft-ietf-calext-vcard-jscontact-extensions</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum SchedulingAddressEnum implements IsExtensibleEnum {
+public enum VCardPropEnum {
 
-    IMIP("imip");
+    TZ("TZ"),
+    GEO("GEO"),
+    XML("XML"),
+    SOCIALSERVICE("SOCIALSERVICE"),
+    PRONOUNS("PRONOUNS"),
+    CONTACT_CHANNEL_PREF("CONTACT-CHANNEL-PREF"),
+    LOCALE("LOCALE"),
+    CLIENTPIDMAP("CLIENTPIDMAP"),
+    CREATED("CREATED"),
+    GENDER("GENDER"),
+    GRAMMATICAL_GENDER("GRAMMATICAL-GENDER"),
+    JSCONTACT_PROP("JSCONTACT-PROP"),
+    X_ABLABEL("X-ABLabel");
 
     private final String value;
 
-    @JsonValue
     public String getValue() {
         return value;
     }
 
-    @JsonCreator
-    public static SchedulingAddressEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(SchedulingAddressEnum.class, value);
+    public static VCardPropEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(VCardPropEnum.class, value);
     }
 
     @Override
     public String toString() {
         return value;
     }
+
 
 }
 

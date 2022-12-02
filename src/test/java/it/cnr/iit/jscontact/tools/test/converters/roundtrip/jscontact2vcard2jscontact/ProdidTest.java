@@ -37,8 +37,8 @@ public class ProdidTest extends RoundtripTest {
                 "\"prodId\":\"-//ONLINE DIRECTORY//NONSGML Version 1//EN\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testProdid - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testProdid - 1", jscard2, Card.toJSCard(jscard));
     }
 
 

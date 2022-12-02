@@ -16,7 +16,7 @@ public class PhotoTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"photo\", {}, \"uri\", \"http://www.example.com/pub/photos/jqpublic.gif\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testPhoto - 1", 1, jsCard.getMedia().size());
         assertEquals("testPhoto - 2", "http://www.example.com/pub/photos/jqpublic.gif", jsCard.getMedia().get("PHOTO-1").getUri());
         assertNull("testPhoto - 3", jsCard.getMedia().get("PHOTO-1").getPref());

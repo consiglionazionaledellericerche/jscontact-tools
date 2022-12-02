@@ -34,7 +34,7 @@ public class UidTest extends RoundtripTest {
                 "FN:test\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testUid1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -50,7 +50,7 @@ public class UidTest extends RoundtripTest {
                 "UID:urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         assertEquals("testUid2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
 

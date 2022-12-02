@@ -22,6 +22,4 @@ public class JSContact2VCardTest {
 
     final JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder().build()).build();
 
-    protected static final String PROP_ID_PARAM = "PROP-ID";
-
 }

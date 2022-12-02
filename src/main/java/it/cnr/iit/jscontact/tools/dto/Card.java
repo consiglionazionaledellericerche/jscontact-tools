@@ -19,16 +19,21 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
+import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.VCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.VCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
 import lombok.*;
@@ -37,6 +42,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -49,24 +55,28 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "@type","uid","prodId","created","updated","kind","relatedTo","locale",
+        "@type","@version","uid","prodId","created","updated","kind","members","relatedTo","locale",
         "name","fullName","nickNames","organizations","titles","speakToAs",
         "emails","onlineServices","phones","preferredContactChannels","preferredLanguages",
         "calendars","schedulingAddresses",
         "addresses",
         "cryptoKeys","directories","links","media",
         "localizations",
-        "anniversaries","personalInfo","notes","keywords","ietf.org:rfc0000:props"})
+        "anniversaries","personalInfo","notes","keywords","vCardProps"})
 @TitleOrganizationConstraint
-@CardKindConstraint(groups = CardConstraintsGroup.class)
+@MembersVsKindValueConstraint
 @LocalizationsConstraint
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString(callSuper = true)
+@EqualsAndHashCode(of={"uid"}, callSuper = false)
 @SuperBuilder
-public class Card extends JSContact implements Serializable {
+public class Card extends AbstractExtensibleJSContactType implements Serializable {
+
+    private static ObjectMapper mapper = new ObjectMapper();
 
     /*
     Metadata properties
@@ -76,6 +86,15 @@ public class Card extends JSContact implements Serializable {
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Card";
+
+    @NotNull
+    @JsonProperty("@version")
+    @Builder.Default
+    String _version = "rfc0000";
+
+    @NotNull(message = "uid is missing in Card")
+    @NonNull
+    String uid;
 
     String prodId;
 
@@ -89,6 +108,9 @@ public class Card extends JSContact implements Serializable {
 
     @JsonDeserialize(using = KindTypeDeserializer.class)
     KindType kind;
+
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in JSContact - Only Boolean.TRUE allowed")
+    Map<String,Boolean> members;
 
     @JSContactCollection(addMethod = "addRelation")
     @JsonPropertyOrder(alphabetic = true)
@@ -238,15 +260,40 @@ public class Card extends JSContact implements Serializable {
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
     Map<String,PersonalInformation> personalInfo;
 
-    Note[] notes;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Note>")
+    Map<String,Note> notes;
 
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     Map<String,Boolean> keywords;
 
+    @JsonProperty("vCardProps")
+    @JsonSerialize(using = VCardPropsSerializer.class)
+    @JsonDeserialize(using = VCardPropsDeserializer.class)
+    @Valid
+    VCardProp[] vCardProps;
+
     @JsonIgnore
     Map<String,TimeZone> customTimeZones;
 
+    @JsonIgnore
+    @Getter
+    private List<String> validationMessages;
+
 //Methods for adding items to a mutable collection
+
+
+    /**
+     * Adds a member to this object.
+     *
+     * @param member the uid value of the object representing a group member
+     */
+    public void addMember(String member) {
+
+        if(members == null)
+            members = new LinkedHashMap<>();
+
+        members.putIfAbsent(member,Boolean.TRUE);
+    }
 
     /**
      * Adds a relation between this object and another Card object.
@@ -546,11 +593,15 @@ public class Card extends JSContact implements Serializable {
     /**
      * Adds a note to this object.
      *
+     * @param id the note identifier
      * @param note the note object
      */
-    public void addNote(Note note) {
+    public void addNote(String id, Note note) {
 
-        notes = ArrayUtils.add(notes, note);
+        if(notes == null)
+            notes = new HashMap<>();
+
+        notes.putIfAbsent(id,note);
     }
 
     private void addKeyword(String keyword) {
@@ -746,7 +797,7 @@ public class Card extends JSContact implements Serializable {
     }
 
 
-    public static Card toCard(String json) throws JsonProcessingException {
+    public static Card toJSCard(String json) throws JsonProcessingException {
 
         return mapper.readValue(json, Card.class);
 
@@ -757,4 +808,105 @@ public class Card extends JSContact implements Serializable {
         return mapper.writeValueAsString(jsCard);
 
     }
+
+    /**
+     * Deserialize a single Card object or an array of Card objects
+     *
+     * @param json the single Card object or the array of Card objects in JSON
+     * @return an array of Card objects
+     * @throws JsonProcessingException never thrown
+     */
+    public static Card[] toJSCards(String json) throws JsonProcessingException {
+
+        SimpleModule module = new SimpleModule();
+        mapper.registerModule(module);
+        try {
+            return mapper.readValue(json, Card[].class);
+        } catch(Exception e) {
+            return new Card[]{mapper.readValue(json, Card.class)};
+        }
+    }
+
+    /**
+     * Serialize an array of Card objects
+     *
+     * @param jsCards the array of Card objects
+     * @return the array of Card objects in JSON
+     * @throws JsonProcessingException never thrown
+     */
+    public static String toJson(Card[] jsCards) throws JsonProcessingException {
+
+        return mapper.writeValueAsString(jsCards);
+    }
+
+    /**
+     * Adds a VCardProp object to this object.
+     *
+     * @param o the VCardProp object
+     */
+    public void addVCardProp(VCardProp o) {
+
+        vCardProps = ArrayUtils.add(vCardProps, o);
+    }
+
+
+    /**
+     * Convert the vCardProps array into a map
+     * where the keys are the extnsion names and
+     * the values are the extension values in text format
+     *
+     * @return vCardProps array converted into a map
+     */
+    @JsonIgnore
+    public Map<String,String> getVCardPropsAsMap() {
+
+        Map<String,String> map = new HashMap<>();
+        if (this.getVCardProps() == null)
+            return map;
+
+        for (VCardProp jCardExtension : this.getVCardProps())
+            map.put(jCardExtension.getName().toString(),jCardExtension.getValue().toString());
+
+        return map;
+    }
+
+
+    /**
+     * Tests if a JSContact Card is valid.
+     *
+     * @return true if the validation check ends successfully, false otherwise
+     */
+    @JsonIgnore
+    public boolean isValid() {
+
+        validationMessages = new ArrayList<>();
+
+        Set<ConstraintViolation<Card>> constraintViolations;
+        if (this instanceof Card)
+            constraintViolations = ValidatorBuilder.getValidator().validate(this, CardConstraintsGroup.class);
+        else
+            constraintViolations = ValidatorBuilder.getValidator().validate(this);
+        if (constraintViolations.size() > 0) {
+            for (ConstraintViolation<Card> constraintViolation : constraintViolations)
+                validationMessages.add(constraintViolation.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the error message when the validation check ends unsuccessfully.
+     *
+     * @return the validation message as a text
+     */
+    @JsonIgnore
+    public String getValidationMessage() {
+
+        if (validationMessages == null)
+            return null;
+
+        return String.join("\n", validationMessages);
+    }
+
 }

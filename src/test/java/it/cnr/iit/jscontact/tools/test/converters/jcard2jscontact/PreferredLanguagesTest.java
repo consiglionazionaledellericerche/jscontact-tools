@@ -32,7 +32,7 @@ public class PreferredLanguagesTest extends JCard2JSContactTest {
                 "[ \"lang\", { \"pref\": \"1\" }, \"language-tag\", \"jp\" ], " +
                 "[ \"lang\", { \"pref\": \"2\" }, \"language-tag\", \"en\" ] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPreferredLanguages1 - 1", jsCard.getPreferredLanguages());
         assertEquals("testPreferredLanguages1 - 2", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testPreferredLanguages1 - 3", 1, (int) jsCard.getPreferredLanguages().get("jp")[0].getPref());
@@ -49,7 +49,7 @@ public class PreferredLanguagesTest extends JCard2JSContactTest {
                 "[ \"lang\", { \"type\": \"work\", \"pref\": \"2\" }, \"language-tag\", \"fr\" ], " +
                 "[ \"lang\", { \"type\": \"home\" }, \"language-tag\", \"fr\" ] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPreferredLanguages2 - 1", jsCard.getPreferredLanguages());
         assertEquals("testPreferredLanguages2 - 2", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testPreferredLanguages2 - 3", 1, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());

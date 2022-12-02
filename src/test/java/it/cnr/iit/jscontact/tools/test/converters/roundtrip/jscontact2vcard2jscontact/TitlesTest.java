@@ -37,18 +37,18 @@ public class TitlesTest extends RoundtripTest {
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": \"Research Scientist\"" +
+                        "\"name\": \"Research Scientist\"" +
                     "}" +
                 "}," +
                 "\"localizations\" : {" +
                    "\"it\" : { " +
-                      "\"titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
+                      "\"titles/TITLE-1\": { \"@type\":\"Title\",\"name\": \"Ricercatore\" } " +
                    "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testTitles1 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testTitles1 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -61,22 +61,22 @@ public class TitlesTest extends RoundtripTest {
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": \"Research Scientist\""  +
+                        "\"name\": \"Research Scientist\""  +
                     "}," +
                     "\"TITLE-2\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": \"IETF Area Director\"" +
+                        "\"name\": \"IETF Area Director\"" +
                     "}" +
                 "}," +
                 "\"localizations\" : {" +
                     "\"it\" : { " +
-                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" } " +
+                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"name\": \"Ricercatore\" } " +
                     "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testTitles2 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testTitles2 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -89,23 +89,23 @@ public class TitlesTest extends RoundtripTest {
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": \"Research Scientist\"" +
+                        "\"name\": \"Research Scientist\"" +
                     "}," +
                     "\"TITLE-2\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"title\": \"IETF Area Director\"" +
+                        "\"name\": \"IETF Area Director\"" +
                     "}" +
                 "}," +
                 "\"localizations\" : {" +
                     "\"it\" : { " +
-                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"title\": \"Ricercatore\" }, " +
-                        "\"titles/TITLE-2\": { \"@type\":\"Title\",\"title\": \"Direttore Area IETF\" } " +
+                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"name\": \"Ricercatore\" }, " +
+                        "\"titles/TITLE-2\": { \"@type\":\"Title\",\"name\": \"Direttore Area IETF\" } " +
                     "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testTitles3 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testTitles3 - 1", jscard2, Card.toJSCard(jscard));
     }
 
 }

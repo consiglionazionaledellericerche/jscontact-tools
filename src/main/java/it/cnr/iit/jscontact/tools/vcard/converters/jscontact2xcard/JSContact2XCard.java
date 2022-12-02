@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2xcard;
 
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard.JSContact2EZVCard;
@@ -26,7 +26,7 @@ import lombok.Builder;
 import java.util.List;
 
 /**
- * Utility class for converting a JSContact object into an xCard [RFC6351].
+ * Utility class for converting a Card object into an xCard [RFC6351].
  *
  * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
  * @author Mario Loffredo
@@ -40,18 +40,18 @@ public class JSContact2XCard extends JSContact2EZVCard {
     }
 
     /**
-     * Converts one or more JSContact objects into a complete vCard v4.0 in XML format, namely xCard [RFC6351].
+     * Converts one or more Card objects into a complete vCard v4.0 in XML format, namely xCard [RFC6351].
      *
-     * @param jsContacts a list of JSContact objects
+     * @param jsCards a list of Card objects
      * @return an xCard as an XML string
-     * @throws CardException if one of the JSContact objects is not valid
+     * @throws CardException if one of the Card objects is not valid
      * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    public String convertToXml(JSContact... jsContacts) throws CardException {
+    public String convertToXml(Card... jsCards) throws CardException {
 
-        List<VCard> vcards = convert(jsContacts);
+        List<VCard> vcards = convert(jsCards);
         return Ezvcard.writeXml(vcards).go();
     }
 

@@ -33,7 +33,7 @@ public class UpdatedTest extends VCard2JSContactTest {
                 "REV:19951031T222710Z\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testUpdated - 1", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("1995-10-31T22:27:10Z")));
 
     }

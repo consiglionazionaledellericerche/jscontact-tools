@@ -18,45 +18,37 @@ package it.cnr.iit.jscontact.tools.dto.serializers;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import it.cnr.iit.jscontact.tools.dto.JCardProp;
+import it.cnr.iit.jscontact.tools.dto.VCardParam;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.util.Map;
 
 /**
- * Custom JSON serializer for the JCardProp array.
+ * Custom JSON serializer for the "vCardParams" map.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class JCardPropsSerializer extends JsonSerializer<JCardProp[]> {
+public class VCardParamsSerializer extends JsonSerializer<Map<String, VCardParam>> {
 
     @Override
     public void serialize(
-            JCardProp[] jCardProps, JsonGenerator jgen, SerializerProvider provider)
+            Map<String, VCardParam> vCardParams, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-        if (jCardProps == null)
-            return;
-
-        if (jCardProps.length == 0)
-            return;
-
-        jgen.writeStartArray();
-        for (JCardProp jCardProp : jCardProps) {
-            jgen.writeStartArray();
-            jgen.writeString(jCardProp.getName().toString());
-            jgen.writeStartObject();
-            for(Map.Entry<String,Object> entry : jCardProp.getParameters().entrySet()) {
-                jgen.writeFieldName(entry.getKey().toLowerCase());
-                jgen.writeObject(entry.getValue());
+        jgen.writeStartObject();
+        for (Map.Entry<String, VCardParam> entry : vCardParams.entrySet()) {
+            if (entry.getValue().getValues()!=null) {
+                jgen.writeFieldName(entry.getKey());
+                jgen.writeStartArray();
+                for(String value : entry.getValue().getValues())
+                    jgen.writeString(value);
+                jgen.writeEndArray();
             }
-            jgen.writeEndObject();
-            jgen.writeString((jCardProp.getType() == null) ? "unknown" : jCardProp.getType().getName());
-            jgen.writeObject(jCardProp.getValue());
-            jgen.writeEndArray();
+            else
+                jgen.writeStringField(entry.getKey(), entry.getValue().getValue());
         }
-        jgen.writeEndArray();
+        jgen.writeEndObject();
     }
 }

@@ -8,7 +8,7 @@
   "en": [{ "@type": "LanguagePreference", "pref": 2 }]
   },
   "organizations": { "ORG-1": { "@type": "Organization", "name": "Example" } },
-  "titles": {"TITLE-1": { "@type": "Title", "title": "Research Scientist" },  "TITLE-2": { "@type": "Title", "title": "Project Lead" }},
+  "titles": {"TITLE-1": { "@type": "Title", "name": "Research Scientist" },  "TITLE-2": { "@type": "Title", "name": "Project Lead" }},
   "addresses": {
     "ADR-1" : {
       "@type": "Address",
@@ -40,7 +40,7 @@
         "text": true
       },
       "pref": 1,
-      "phone": "tel:+1-555-555-1234;ext=102"
+      "number": "tel:+1-555-555-1234;ext=102"
     }
   },
   "emails": {
@@ -49,7 +49,7 @@
       "contexts": {
         "work": true
       },
-      "email": "joe.user@example.com"
+      "address": "joe.user@example.com"
     }
   },
   "cryptoKeys": {

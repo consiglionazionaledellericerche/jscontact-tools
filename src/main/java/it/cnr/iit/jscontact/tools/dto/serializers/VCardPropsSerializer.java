@@ -18,37 +18,45 @@ package it.cnr.iit.jscontact.tools.dto.serializers;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import it.cnr.iit.jscontact.tools.dto.JCardParam;
+import it.cnr.iit.jscontact.tools.dto.VCardProp;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.util.Map;
 
 /**
- * Custom JSON serializer for the "ietf.org:rfc0000:params" map.
+ * Custom JSON serializer for the VCardProp array.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class JCardParamsSerializer extends JsonSerializer<Map<String, JCardParam>> {
+public class VCardPropsSerializer extends JsonSerializer<VCardProp[]> {
 
     @Override
     public void serialize(
-            Map<String, JCardParam> jCardParams, JsonGenerator jgen, SerializerProvider provider)
+            VCardProp[] vCardProps, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-        jgen.writeStartObject();
-        for (Map.Entry<String, JCardParam> entry : jCardParams.entrySet()) {
-            if (entry.getValue().getValues()!=null) {
-                jgen.writeFieldName(entry.getKey());
-                jgen.writeStartArray();
-                for(String value : entry.getValue().getValues())
-                    jgen.writeString(value);
-                jgen.writeEndArray();
+        if (vCardProps == null)
+            return;
+
+        if (vCardProps.length == 0)
+            return;
+
+        jgen.writeStartArray();
+        for (VCardProp vCardProp : vCardProps) {
+            jgen.writeStartArray();
+            jgen.writeString(vCardProp.getName().toString());
+            jgen.writeStartObject();
+            for(Map.Entry<String,Object> entry : vCardProp.getParameters().entrySet()) {
+                jgen.writeFieldName(entry.getKey().toLowerCase());
+                jgen.writeObject(entry.getValue());
             }
-            else
-                jgen.writeStringField(entry.getKey(), entry.getValue().getValue());
+            jgen.writeEndObject();
+            jgen.writeString((vCardProp.getType() == null) ? "unknown" : vCardProp.getType().getName());
+            jgen.writeObject(vCardProp.getValue());
+            jgen.writeEndArray();
         }
-        jgen.writeEndObject();
+        jgen.writeEndArray();
     }
 }

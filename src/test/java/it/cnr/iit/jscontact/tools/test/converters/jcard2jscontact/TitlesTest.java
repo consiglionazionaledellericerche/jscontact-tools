@@ -31,13 +31,13 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {\"altid\" : \"1\"}, \"text\", \"Research Scientist\"]," +
                 "[\"title\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Ricercatore\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testTitleWithAltid1 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid1 - 2", 1, jsCard.getTitles().size());
-        assertEquals("testTitleWithAltid1 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
+        assertEquals("testTitleWithAltid1 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
         assertTrue("testTitleWithAltid1 - 4", jsCard.getTitles().get("TITLE-1").getType().isTitle());
         assertEquals("testTitleWithAltid1 - 5", 1, jsCard.getLocalizationsPerLanguage("it").size());
-        assertEquals("testTitleWithAltid1 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("title").asText());
+        assertEquals("testTitleWithAltid1 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
         assertEquals("testTitleWithAltid1 - 7", "title", jsCard.getLocalization("it", "titles/TITLE-1").get("type").asText());
     }
 
@@ -49,11 +49,11 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {}, \"text\", \"Research Scientist\"]," +
                 "[\"title\", {\"language\" : \"it\"}, \"text\", \"Ricercatore\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testTitleWithoutAltid - 1", jsCard.getTitles());
         assertEquals("testTitleWithoutAltid - 2", 2, jsCard.getTitles().size());
-        assertEquals("testTitleWithoutAltid - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testTitleWithoutAltid - 4", "Ricercatore", jsCard.getTitles().get("TITLE-2").getTitle());
+        assertEquals("testTitleWithoutAltid - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testTitleWithoutAltid - 4", "Ricercatore", jsCard.getTitles().get("TITLE-2").getName());
         assertNull("testTitleWithoutAltid - 5", jsCard.getLocalizations());
     }
 
@@ -66,13 +66,13 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Ricercatore\"]," +
                 "[\"title\", {\"pref\" : \"1\"}, \"text\", \"IETF Area Director\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testTitleWithAltid2 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid2 - 2", 2, jsCard.getTitles().size());
-        assertEquals("testTitleWithAltid2 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-2").getTitle());
-        assertEquals("testTitleWithAltid2 - 4", "IETF Area Director", jsCard.getTitles().get("TITLE-1").getTitle());
+        assertEquals("testTitleWithAltid2 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-2").getName());
+        assertEquals("testTitleWithAltid2 - 4", "IETF Area Director", jsCard.getTitles().get("TITLE-1").getName());
         assertEquals("testTitleWithAltid2 - 5", 1, jsCard.getLocalizationsPerLanguage("it").size());
-        assertEquals("testTitleWithAltid2 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-2").get("title").asText());
+        assertEquals("testTitleWithAltid2 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-2").get("name").asText());
     }
 
     @Test
@@ -85,14 +85,14 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"title\", {\"pref\" : \"1\", \"altid\" : \"2\"}, \"text\", \"IETF Area Director\"]," +
                 "[\"title\", {\"pref\" : \"1\", \"language\" : \"it\", \"altid\" : \"2\"}, \"text\", \"Direttore Area IETF\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testTitleWithAltid3 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid3 - 2", 2, jsCard.getTitles().size());
-        assertEquals("testTitleWithAltid3 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-2").getTitle());
-        assertEquals("testTitleWithAltid3 - 4", "IETF Area Director", jsCard.getTitles().get("TITLE-1").getTitle());
+        assertEquals("testTitleWithAltid3 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testTitleWithAltid3 - 4", "IETF Area Director", jsCard.getTitles().get("TITLE-2").getName());
         assertEquals("testTitleWithAltid3 - 5", 2, jsCard.getLocalizationsPerLanguage("it").size());
-        assertEquals("testTitleWithAltid3 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-2").get("title").asText());
-        assertEquals("testTitleWithAltid3 - 7", "Direttore Area IETF", jsCard.getLocalization("it", "titles/TITLE-1").get("title").asText());
+        assertEquals("testTitleWithAltid3 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
+        assertEquals("testTitleWithAltid3 - 7", "Direttore Area IETF", jsCard.getLocalization("it", "titles/TITLE-2").get("name").asText());
     }
 
 
@@ -105,12 +105,12 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {\"altid\" : \"1\"}, \"text\", \"Project Leader\"]," +
                 "[\"role\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Capo Progetto\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testRoleWithAltid1 - 1", jsCard.getTitles());
         assertEquals("testRoleWithAltid1 - 2", 1, jsCard.getTitles().size());
-        assertEquals("testRoleWithAltid1 - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getTitle());
+        assertEquals("testRoleWithAltid1 - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getName());
         assertEquals("testRoleWithAltid1 - 4", 1, jsCard.getLocalizationsPerLanguage("it").size());
-        assertEquals("testRoleWithAltid1 - 5", "Capo Progetto", jsCard.getLocalization("it", "titles/TITLE-1").get("title").asText());
+        assertEquals("testRoleWithAltid1 - 5", "Capo Progetto", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
     }
 
     @Test
@@ -121,11 +121,11 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {}, \"text\", \"Project Leader\"]," +
                 "[\"role\", {\"language\" : \"it\"}, \"text\", \"Capo Progetto\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testRoleWithoutAltid - 1", jsCard.getTitles());
         assertEquals("testRoleWithoutAltid - 2", 2, jsCard.getTitles().size());
-        assertEquals("testRoleWithoutAltid - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testRoleWithoutAltid - 4", "Capo Progetto", jsCard.getTitles().get("TITLE-2").getTitle());
+        assertEquals("testRoleWithoutAltid - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testRoleWithoutAltid - 4", "Capo Progetto", jsCard.getTitles().get("TITLE-2").getName());
         assertNull("testRoleWithoutAltid - 5", jsCard.getLocalizations());
     }
 
@@ -138,13 +138,13 @@ public class TitlesTest extends JCard2JSContactTest {
                 "[\"role\", {\"language\" : \"it\", \"altid\" : \"1\"}, \"text\", \"Capo Progetto\"], " +
                 "[\"role\", {\"pref\" : \"1\"}, \"text\", \"IETF Area Director\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testRoleWithAltid2 - 1", jsCard.getTitles());
         assertEquals("testRoleWithAltid2 - 2", 2, jsCard.getTitles().size());
-        assertEquals("testRoleWithAltid2 - 3", "Project Leader", jsCard.getTitles().get("TITLE-2").getTitle());
-        assertEquals("testRoleWithAltid2 - 4", "IETF Area Director", jsCard.getTitles().get("TITLE-1").getTitle());
+        assertEquals("testRoleWithAltid2 - 3", "Project Leader", jsCard.getTitles().get("TITLE-2").getName());
+        assertEquals("testRoleWithAltid2 - 4", "IETF Area Director", jsCard.getTitles().get("TITLE-1").getName());
         assertEquals("testRoleWithAltid2 - 5", 1, jsCard.getLocalizationsPerLanguage("it").size());
-        assertEquals("testRoleWithAltid2 - 6", "Capo Progetto", jsCard.getLocalization("it", "titles/TITLE-2").get("title").asText());
+        assertEquals("testRoleWithAltid2 - 6", "Capo Progetto", jsCard.getLocalization("it", "titles/TITLE-2").get("name").asText());
 
     }
 

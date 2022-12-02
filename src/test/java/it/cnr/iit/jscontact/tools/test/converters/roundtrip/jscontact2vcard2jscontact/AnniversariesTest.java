@@ -46,8 +46,8 @@ public class AnniversariesTest extends RoundtripTest {
                         "}" +
                         "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries1 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries1 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -74,8 +74,8 @@ public class AnniversariesTest extends RoundtripTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries2 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries2 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -98,8 +98,8 @@ public class AnniversariesTest extends RoundtripTest {
                         "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries3 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries3 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -125,8 +125,8 @@ public class AnniversariesTest extends RoundtripTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries4 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries4 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -163,8 +163,8 @@ public class AnniversariesTest extends RoundtripTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries5 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries5 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -199,7 +199,7 @@ public class AnniversariesTest extends RoundtripTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"marriage\", " +
+                        "\"type\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -209,8 +209,8 @@ public class AnniversariesTest extends RoundtripTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries6 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries6 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -247,7 +247,7 @@ public class AnniversariesTest extends RoundtripTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"marriage\", " +
+                        "\"type\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -257,8 +257,8 @@ public class AnniversariesTest extends RoundtripTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries7 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries7 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -297,7 +297,7 @@ public class AnniversariesTest extends RoundtripTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"marriage\", " +
+                        "\"type\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -307,8 +307,8 @@ public class AnniversariesTest extends RoundtripTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries8 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries8 - 1", jscard2, Card.toJSCard(jscard));
     }
 
     @Test
@@ -347,7 +347,7 @@ public class AnniversariesTest extends RoundtripTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"marriage\", " +
+                        "\"type\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"PartialDate\"," +
                             "\"year\":1986, " +
@@ -357,8 +357,8 @@ public class AnniversariesTest extends RoundtripTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testAnniversaries9 - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testAnniversaries9 - 1", jscard2, Card.toJSCard(jscard));
     }
 
 }

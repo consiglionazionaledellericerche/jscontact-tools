@@ -35,7 +35,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=uri;TYPE=home:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));    }
@@ -50,7 +50,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=uri;TYPE=voice,home;PREF=1:tel:+1-555-555-5555;ext=555\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -65,7 +65,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=uri;TYPE=work,fax:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone3 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -81,7 +81,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=uri;TYPE=work,textphone:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone4 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -96,7 +96,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=uri;TYPE=home,work:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone5 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -112,7 +112,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=uri;TYPE=work,home,fax:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone6 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -129,7 +129,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=uri;TYPE=work,home,textphone:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone7 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -145,7 +145,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=uri;TYPE=work,home,voice,textphone:tel:+33-01-23-45-6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone8 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -161,7 +161,7 @@ public class PhoneTest extends RoundtripTest {
                 "TEL;VALUE=text;TYPE=home:+33 01 23 45 6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testPhone9 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

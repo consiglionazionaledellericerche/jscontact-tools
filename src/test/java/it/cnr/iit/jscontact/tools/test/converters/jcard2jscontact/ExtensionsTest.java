@@ -28,10 +28,10 @@ public class ExtensionsTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"extension:myext1\"},\"uri\",\"data:application/json;%22extvalue%22\"]," +
-                "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"extension:myext2\"},\"uri\",\"data:application/json;base64,eyJleHRwcm9wIjoiZXh0dmFsdWUifQ==\"]" +
+                "[\"jscontact-prop\",{\"jsptr\":\"extension:myext1\"},\"text\",\"\\\"extvalue\\\"\"]," +
+                "[\"jscontact-prop\",{\"jsptr\":\"extension:myext2\"},\"text\",\"{\\\"extprop\\\":\\\"extvalue\\\"}\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
         assertEquals("testExtendedJSContact1 - 2", "extvalue", jsCard.getExtensions().get("extension:myext1"));
         assertEquals("testExtendedJSContact1 - 3", "{extprop=extvalue}", jsCard.getExtensions().get("extension:myext2").toString());
@@ -48,13 +48,13 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"lang\",{\"pref\":\"1\"},\"language-tag\",\"jp\"],"+
                 "[\"lang\",{\"pref\":\"2\"},\"language-tag\",\"en\"],"+
                 "[\"locale\",{},\"language-tag\",\"en\"],"+
-                "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"addresses/ADR-1/street/0/ext4\"},\"uri\",\"data:application/json;true\"],"+
-                "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"nickNames/NICK-1/ext3\"},\"uri\",\"data:application/json;%22text%22\"],"+
-                "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"addresses/ADR-1/ext2\"},\"uri\",\"data:application/json;base64,eyJwcm9wIjoxMH0=\"],"+
-                "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"preferredLanguages/jp/0/ext6\"},\"uri\",\"data:application/json;base64,WyIxIiwiMiJd\"],"+
-                "[\"x-rfc0000-jsprop\",{\"x-rfc0000-jspath\":\"ext1\"},\"uri\",\"data:application/json;10\"]"+
+                "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/street/0/ext4\"},\"text\",\"true\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"nickNames/NICK-1/ext3\"},\"text\",\"\\\"text\\\"\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/ext2\"},\"text\",\"{\\\"prop\\\":10}\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"preferredLanguages/jp/0/ext6\"},\"text\",\"[\\\"1\\\",\\\"2\\\"]\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"ext1\"},\"text\",\"10\"]"+
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testExtendedJSContact2 - 1", 1, jsCard.getExtensions().size());
         assertEquals("testExtendedJSContact2 - 2", 10, jsCard.getExtensions().get("ext1"));
         assertEquals("testExtendedJSContact2 - 3", 1, jsCard.getNickNames().get("NICK-1").getExtensions().size());

@@ -15,17 +15,25 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
+import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.KindType;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
-import it.cnr.iit.jscontact.tools.dto.CardGroup;
 import org.junit.Test;
 
-public class CardGroupTest extends AbstractTest {
+import static org.junit.Assert.*;
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidCardGroupBuild() {
 
-        //uid missing
-        CardGroup.builder().build();
+public class KindTest extends AbstractTest {
+
+    @Test
+    public void testValidKindGroupWithoutMembers() {
+
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .kind(KindType.group())
+                .build();
+
+        assertTrue("testValidKindGroupWithoutMembers", jsCard.isValid());
     }
 
 }

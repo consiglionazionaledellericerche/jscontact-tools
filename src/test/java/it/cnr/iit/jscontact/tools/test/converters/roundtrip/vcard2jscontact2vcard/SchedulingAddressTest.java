@@ -21,7 +21,7 @@ public class SchedulingAddressTest extends RoundtripTest {
                 "CALADRURI:http://example.com/calendar/jdoe\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testSchedulingAddress - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

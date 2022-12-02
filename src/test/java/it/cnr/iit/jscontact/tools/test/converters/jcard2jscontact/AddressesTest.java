@@ -34,7 +34,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"adr\", {\"cc\": \"US\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses1 - 1", jsCard.getAddresses());
         assertEquals("testAddresses1 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses1 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -54,7 +54,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"adr\", {\"cc\": \"US\", \"label\":\"54321 Oak St Reston USA\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses2 - 1", jsCard.getAddresses());
         assertEquals("testAddresses2 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses2 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -75,7 +75,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"adr\", {\"cc\": \"US\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
                 "[\"adr\", {\"cc\": \"US\"}, \"text\", [\"\", \"\", \"12345 Elm St\", \"Reston\", \"VA\", \"20190\", \"USA\"]]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses3 - 1", jsCard.getAddresses());
         assertEquals("testAddresses3 - 2", 2, jsCard.getAddresses().size());
         assertEquals("testAddresses3 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -104,7 +104,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
                 "[\"geo\", {\"altid\":\"1\"}, \"uri\", \"geo:46.772673,-71.282945\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses4 - 1", jsCard.getAddresses());
         assertEquals("testAddresses4 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses4 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -126,7 +126,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
                 "[\"tz\", {\"altid\":\"1\"}, \"utc-offset\", \"-05:00\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses5 - 1", jsCard.getAddresses());
         assertEquals("testAddresses5 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses5 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -148,7 +148,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
                 "[\"tz\", {\"altid\":\"1\"}, \"utc-offset\", \"+05:00\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses6 - 1", jsCard.getAddresses());
         assertEquals("testAddresses6 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses6 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -169,7 +169,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
                 "[\"tz\", {\"altid\":\"1\"}, \"utc-offset\", \"+00:00\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses7 - 1", jsCard.getAddresses());
         assertEquals("testAddresses7 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses7 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -190,7 +190,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
                 "[\"tz\", {\"altid\":\"1\"}, \"utc-offset\", \"+05:30\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses8 - 1", jsCard.getAddresses());
         assertEquals("testAddresses8 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses8 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -218,7 +218,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"adr\", {\"cc\": \"US\",\"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
                 "[\"tz\", {\"altid\":\"1\"}, \"text\", \"America/New_York\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses9 - 1", jsCard.getAddresses());
         assertEquals("testAddresses9 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses9 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -239,7 +239,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"adr\", {\"cc\": \"US\", \"tz\": \"America/New_York\", \"geo\": \"geo:46.772673,-71.282945\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses10 - 1", jsCard.getAddresses());
         assertEquals("testAddresses10 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses10 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -263,7 +263,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"adr\", {\"cc\": \"US\", \"altid\": \"1\"}, \"text\", [\"\", \"\", \"12345 Elm St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
                 "[\"tz\", {\"altid\": \"1\"}, \"text\", \"America/New_York\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses11 - 1", jsCard.getAddresses());
         assertEquals("testAddresses11 - 2", 2, jsCard.getAddresses().size());
         assertEquals("testAddresses11 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -291,7 +291,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"adr\", {\"cc\": \"US\", \"tz\": \"-05:00\", \"geo\": \"geo:46.772673,-71.282945\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses12 - 1", jsCard.getAddresses());
         assertEquals("testAddresses12 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses12 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -319,7 +319,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "]]";
 
 
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses11 - 1", jsCard.getAddresses());
         assertEquals("testAddresses11 - 2", 2, jsCard.getAddresses().size());
         assertEquals("testAddresses11 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -352,7 +352,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "]]";
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("en").build()).build();
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses12 - 1", jsCard.getAddresses());
         assertEquals("testAddresses12 - 2", 2, jsCard.getAddresses().size());
         assertEquals("testAddresses12 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -385,7 +385,7 @@ public class AddressesTest extends JCard2JSContactTest {
                 "]]";
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().defaultLanguage("it").build()).build();
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses13 - 1", jsCard.getAddresses());
         assertEquals("testAddresses13 - 2", 2, jsCard.getAddresses().size());
         assertEquals("testAddresses13 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());

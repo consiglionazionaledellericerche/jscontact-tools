@@ -16,7 +16,6 @@
 package it.cnr.iit.jscontact.tools.test.serialization;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
@@ -35,10 +34,10 @@ public class SerializationTest {
     public void testSerialization1() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json"), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testSerialization1 - 1", jsCard.isValid());
         String serialized = Card.toJson(jsCard);
-        assertEquals("testSerialization1 - 2",jsCard, Card.toCard(serialized));
+        assertEquals("testSerialization1 - 2",jsCard, Card.toJSCard(serialized));
 
     }
 
@@ -46,10 +45,10 @@ public class SerializationTest {
     public void testSerialization2() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testSerialization2 - 1", jsCard.isValid());
         String serialized = Card.toJson(jsCard);
-        assertEquals("testSerialization2 - 2",jsCard, Card.toCard(serialized));
+        assertEquals("testSerialization2 - 2",jsCard, Card.toJSCard(serialized));
 
     }
 
@@ -57,10 +56,10 @@ public class SerializationTest {
     public void testSerialization3() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json"), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testSerialization3 - 1", jsCard.isValid());
         String serialized = Card.toJson(jsCard);
-        assertEquals("testSerialization3 - 2",jsCard, Card.toCard(serialized));
+        assertEquals("testSerialization3 - 2",jsCard, Card.toJSCard(serialized));
 
     }
 
@@ -68,11 +67,11 @@ public class SerializationTest {
     public void testSerialization4() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), StandardCharsets.UTF_8);
-        JSContact[] jsContacts = JSContact.toJSContacts(json);
-        for (JSContact jsContact : jsContacts)
-            assertTrue("testSerialization4 - 1", jsContact.isValid());
-        String serialized = JSContact.toJson(jsContacts);
-        assertArrayEquals("testSerialization4 - 2",jsContacts, JSContact.toJSContacts(serialized));
+        Card[] jsCards = Card.toJSCards(json);
+        for (Card jsCard : jsCards)
+            assertTrue("testSerialization4 - 1", jsCard.isValid());
+        String serialized = Card.toJson(jsCards);
+        assertArrayEquals("testSerialization4 - 2",jsCards, Card.toJSCards(serialized));
 
     }
 
@@ -81,10 +80,10 @@ public class SerializationTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"], [\"myext\", {}, \"text\", \"extvalue\"]]]";
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder().config(VCard2JSContactConfig.builder().build()).build();
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         jsCard.setUid("549e9dd2-ecb1-46af-8df1-09e98329d0ff");
         String serialized = Card.toJson(jsCard);
-        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"ietf.org:rfc0000:props\":[[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
+        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"@version\":\"rfc0000\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"vCardProps\":[[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
 
     }
 

@@ -19,44 +19,30 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cnr.iit.jscontact.tools.dto.JCardParam;
+import it.cnr.iit.jscontact.tools.dto.OnlineServiceEnum;
+import it.cnr.iit.jscontact.tools.dto.OnlineServiceType;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
- * Custom JSON deserializer for the "ietf.org:rfc0000:params" map.
+ * Custom JSON deserializer for the OnlineServiceType value.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class JCardParamsDeserializer extends JsonDeserializer<Map<String, JCardParam>> {
-
-    private static final ObjectMapper mapper = new ObjectMapper();
+public class OnlineServiceTypeDeserializer extends JsonDeserializer<OnlineServiceType> {
 
     @Override
-    public Map<String, JCardParam> deserialize(JsonParser jp, DeserializationContext ctxt)
+    public OnlineServiceType deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        Map<String, JCardParam> jCardParams = new HashMap<>();
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
-        while (iter.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iter.next();
-            String paramName = entry.getKey();
-            JCardParam jCardParam = null;
-            if (entry.getValue().isArray()) {
-                List<String> array = mapper.treeToValue(entry.getValue(), List.class);
-                jCardParam = JCardParam.builder().values(array.toArray(new String[0])).build();
-            }
-            else
-                jCardParam = JCardParam.builder().value(entry.getValue().asText()).build();
-            jCardParams.put(paramName,jCardParam);
+        String value = node.asText();
+        try {
+            return OnlineServiceType.builder().rfcValue(OnlineServiceEnum.getEnum(value)).build();
+        } catch (IllegalArgumentException e) {
+            return OnlineServiceType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
-        return jCardParams;
     }
 }

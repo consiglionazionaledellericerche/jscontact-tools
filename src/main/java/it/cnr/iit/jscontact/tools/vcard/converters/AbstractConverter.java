@@ -20,7 +20,9 @@ public abstract class AbstractConverter {
         put("grammatical-gender","speakToAs/grammaticalGender");
         put("pronouns","speakToAs/pronouns");
         put("contact-channel-pref","preferredContactChannels");
-        put("x-rfc0000-jsprop","preferredContactChannels");
+        put("jscontact-prop",null);
+        put("x-ablabel",null);
+        put("socialservice","onlineServices");
     }};
 
     protected static final ObjectMapper mapper = new ObjectMapper();

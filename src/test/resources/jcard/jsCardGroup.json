@@ -1,13 +1,9 @@
 [
   {
-    "@type": "CardGroup",
+    "@type": "Card",
     "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
-    "card": {
-      "@type": "Card",
-      "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
-      "fullName": "a group",
-      "kind": "group"
-    },
+    "fullName": "a group",
+    "kind": "group",
     "members": {
       "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8": true,
       "8626d863-8c3f-405c-a2cb-bbbb3e3b359f": true,
@@ -32,11 +28,11 @@
     "titles": {
       "TITLE-1": {
         "@type": "Title",
-        "title": "Research Scientist"
+        "name": "Research Scientist"
       },
       "TITLE-2": {
         "@type": "Title",
-        "title": "Project Lead"
+        "name": "Project Lead"
       }
     },
     "addresses": {
@@ -70,14 +66,14 @@
           "text": true
         },
         "pref": 1,
-        "phone": "tel:+1-555-555-1234;ext=102"
+        "number": "tel:+1-555-555-1234;ext=102"
       }
     },
     "emails": {
       "EMAIL-1": {
         "@type": "EmailAddress",
         "contexts": {"work": true},
-        "email": "joe.user@example.com"
+        "address": "joe.user@example.com"
       }
     },
     "cryptoKeys": {
@@ -104,7 +100,7 @@
     "titles": {
       "TITLE-1" : {
         "@type": "Title",
-        "title": "事務局長"
+        "name": "事務局長"
       }
     },
     "kind": "individual",
@@ -115,7 +111,7 @@
     "localizations": {
       "en": {
         "fullName": "Okubo Masahito",
-        "titles/TITLE-1": { "@type": "Title", "title": "Secretary General" }
+        "titles/TITLE-1": { "@type": "Title", "name": "Secretary General" }
       }
     }
   },
@@ -134,12 +130,12 @@
       "PHONE-1": {
         "@type": "Phone",
         "features": {"voice": true},
-        "phone": ""
+        "number": ""
       },
       "PHONE-2": {
         "@type": "Phone",
         "features": {"fax": true},
-        "phone": ""
+        "number": ""
       }
     },
     "emails": {},

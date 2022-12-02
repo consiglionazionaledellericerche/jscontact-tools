@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard.JSContact2EZVCard;
@@ -28,7 +28,7 @@ import lombok.Builder;
 import java.util.List;
 
 /**
- * Utility class for converting a JSContact object into a jCard [RFC7095].
+ * Utility class for converting a Card object into a jCard [RFC7095].
  *
  * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
  * @author Mario Loffredo
@@ -42,20 +42,20 @@ public class JSContact2JCard extends JSContact2EZVCard {
     }
 
     /**
-     * Converts a list of JSContact objects into a complete vCard v4.0 in JSON format, namely jCard [RFC7095]
+     * Converts a list of Card objects into a complete vCard v4.0 in JSON format, namely jCard [RFC7095]
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
-     * @param jsContacts a list of JSContact objects
+     * @param jsCards a list of Card objects
      * @return a jCard as a JSON string
-     * @throws CardException if one of the JSContact objects is not valid
+     * @throws CardException if one of the Card objects is not valid
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    public String convertToJson(JSContact... jsContacts) throws CardException {
+    public String convertToJson(Card... jsCards) throws CardException {
 
-        List<VCard> vcards = convert(jsContacts);
+        List<VCard> vcards = convert(jsCards);
         return Ezvcard.writeJson(vcards).go();
     }
 
@@ -65,18 +65,18 @@ public class JSContact2JCard extends JSContact2EZVCard {
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
-     * @param jsContacts a list of JSContact objects
+     * @param jsCards a list of Card objects
      * @return a jCard as an istance of Jackson library JsonNode class
-     * @throws CardException if one of the JSContact objects is not valid
+     * @throws CardException if one of the Card objects is not valid
      * @throws JsonProcessingException if the jCard cannot be deserialized
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
      * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    public JsonNode convertToJsonNode(JSContact... jsContacts) throws CardException, JsonProcessingException {
+    public JsonNode convertToJsonNode(Card... jsCards) throws CardException, JsonProcessingException {
 
-        String json = convertToJson(jsContacts);
+        String json = convertToJson(jsCards);
         return mapper.readTree(json);
     }
 

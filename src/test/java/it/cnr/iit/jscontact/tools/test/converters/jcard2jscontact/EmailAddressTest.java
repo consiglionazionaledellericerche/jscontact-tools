@@ -31,11 +31,11 @@ public class EmailAddressTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"email\", {\"type\": \"work\"}, \"text\", \"jqpublic@xyz.example.com\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testEmailAddress1 - 1", 1, jsCard.getEmails().size());
         assertEquals("testEmailAddress1 - 2", 1, jsCard.getEmails().get("EMAIL-1").getContexts().size());
         assertSame("testEmailAddress1 - 3", jsCard.getEmails().get("EMAIL-1").getContexts().get(Context.work()), Boolean.TRUE);
-        assertEquals("testEmailAddress1 - 4", "jqpublic@xyz.example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testEmailAddress1 - 4", "jqpublic@xyz.example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
 
     }
 
@@ -47,11 +47,11 @@ public class EmailAddressTest extends JCard2JSContactTest {
                 "[\"email\", {\"type\": \"work\"}, \"text\", \"jqpublic@xyz.example.com\"], " +
                 "[\"email\", {\"type\": \"home\", \"pref\": 1}, \"text\", \"jane_doe@example.com\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testEmailAddress2 - 1", 2, jsCard.getEmails().size());
         assertEquals("testEmailAddress2 - 2", 1, jsCard.getEmails().get("EMAIL-1").getContexts().size());
         assertSame("testEmailAddress2 - 3", jsCard.getEmails().get("EMAIL-1").getContexts().get(Context.work()), Boolean.TRUE);
-        assertEquals("testEmailAddress2 - 4", "jqpublic@xyz.example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testEmailAddress2 - 4", "jqpublic@xyz.example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testEmailAddress2 - 5", 1, jsCard.getEmails().get("EMAIL-2").getContexts().size());
         assertSame("testEmailAddress2 - 6", jsCard.getEmails().get("EMAIL-2").getContexts().get(Context.private_()), Boolean.TRUE);
         assertEquals("testEmailAddress2 - 7", 1, (int) jsCard.getEmails().get("EMAIL-2").getPref());

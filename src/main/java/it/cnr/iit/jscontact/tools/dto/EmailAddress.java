@@ -39,10 +39,10 @@ public class EmailAddress extends AbstractJSContactType implements HasLabel, IdM
     @Builder.Default
     String _type = "EmailAddress";
 
-    @NotNull(message = "email is missing in EmailAddress")
+    @NotNull(message = "address is missing in EmailAddress")
     @NonNull
-    @Email(message = "invalid email in EmailAddress")
-    String email;
+    @Email(message = "invalid address in EmailAddress")
+    String address;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)

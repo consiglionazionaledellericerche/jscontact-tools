@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.parameter.SoundType;
+import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -45,7 +46,7 @@ public class ResourceTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testResource1 - 1", 1, vcard.getSources().size());
         assertEquals("testResource1 - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", vcard.getSources().get(0).getValue());
-        assertEquals("testResource1 - 3", "ENTRY-1", vcard.getSources().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource1 - 3", "ENTRY-1", vcard.getSources().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -68,7 +69,7 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testPhoto - 1", 1, vcard.getPhotos().size());
         assertEquals("testPhoto - 2", "http://www.example.com/pub/photos/jqpublic.gif", vcard.getPhotos().get(0).getUrl());
         assertSame("testPhoto - 3", vcard.getPhotos().get(0).getContentType(), ImageType.GIF);
-        assertEquals("testPhoto - 4", "PHOTO-1", vcard.getPhotos().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testPhoto - 4", "PHOTO-1", vcard.getPhotos().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -89,7 +90,7 @@ public class ResourceTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testResource2 - 1", 1, vcard.getLogos().size());
         assertEquals("testResource2 - 2", "http://www.example.com/pub/logos/abccorp.jpg", vcard.getLogos().get(0).getUrl());
-        assertEquals("testResource2 - 3", "LOGO-1", vcard.getLogos().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource2 - 3", "LOGO-1", vcard.getLogos().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -111,7 +112,7 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource3 - 1", 1, vcard.getExtendedProperties().size());
         assertEquals("testResource3 - 2", "CONTACT-URI", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testResource3 - 2", "mailto:contact@example.com", vcard.getExtendedProperties().get(0).getValue());
-        assertEquals("testResource3 - 4", "CONTACT-1", vcard.getExtendedProperties().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource3 - 4", "CONTACT-1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -134,7 +135,7 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource4 - 1", 1, vcard.getSounds().size());
         assertEquals("testResource4 - 2", "android.resource:///com.my.android.sharesound/2130968609", vcard.getSounds().get(0).getUrl());
         assertSame("testResource4 - 3", vcard.getSounds().get(0).getContentType(), SoundType.MP3);
-        assertEquals("testResource4 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource4 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -156,7 +157,7 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource5 - 1", 1, vcard.getSounds().size());
         assertEquals("testResource5 - 2", "android.resource:///com.my.android.sharesound/2130968609", vcard.getSounds().get(0).getUrl());
         assertNull("testResource5 - 3", vcard.getSounds().get(0).getContentType());
-        assertEquals("testResource5 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource5 - 4", "SOUND-1", vcard.getSounds().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -176,7 +177,7 @@ public class ResourceTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testResource6 - 1", 1, vcard.getUrls().size());
         assertEquals("testResource6 - 2", "http://example.org/restaurant.french/~chezchic.htm", vcard.getUrls().get(0).getValue());
-        assertEquals("testResource6 - 3", "LINK-1", vcard.getUrls().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource6 - 3", "LINK-1", vcard.getUrls().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -196,7 +197,7 @@ public class ResourceTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testResource7 - 1", 1, vcard.getKeys().size());
         assertEquals("testResource7 - 2", "http://www.example.com/keys/jdoe.cer", vcard.getKeys().get(0).getUrl());
-        assertEquals("testResource7 - 3", "KEY-1", vcard.getKeys().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource7 - 3", "KEY-1", vcard.getKeys().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -227,8 +228,8 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource8 - 3", 1, (int) vcard.getFbUrls().get(0).getPref());
         assertEquals("testResource8 - 4", "ftp://example.com/busy/project-a.ifb", vcard.getFbUrls().get(1).getValue());
         assertEquals("testResource8 - 5", "text/calendar", vcard.getFbUrls().get(1).getMediaType());
-        assertEquals("testResource8 - 6", "FREEBUSY-1", vcard.getFbUrls().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testResource8 - 7", "FREEBUSY-2", vcard.getFbUrls().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource8 - 6", "FREEBUSY-1", vcard.getFbUrls().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testResource8 - 7", "FREEBUSY-2", vcard.getFbUrls().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -242,7 +243,6 @@ public class ResourceTest extends JSContact2VCardTest {
                     "\"SCHEDULING-1\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
                         "\"pref\": 1," +
-                        "\"type\": \"imip\"," +
                         "\"uri\": \"mailto:janedoe@example.com\"" +
                     "}," +
                     "\"SCHEDULING-2\": {" +
@@ -256,8 +256,8 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource9 - 2", "mailto:janedoe@example.com", vcard.getCalendarRequestUris().get(0).getValue());
         assertEquals("testResource9 - 3", 1, (int) vcard.getCalendarRequestUris().get(0).getPref());
         assertEquals("testResource9 - 4", "http://example.com/calendar/jdoe", vcard.getCalendarRequestUris().get(1).getValue());
-        assertEquals("testResource9 - 5", "SCHEDULING-1", vcard.getCalendarRequestUris().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testResource9 - 6", "SCHEDULING-2", vcard.getCalendarRequestUris().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource9 - 5", "SCHEDULING-1", vcard.getCalendarRequestUris().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testResource9 - 6", "SCHEDULING-2", vcard.getCalendarRequestUris().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -288,8 +288,8 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource10 - 3", 1, (int) vcard.getCalendarUris().get(0).getPref());
         assertEquals("testResource10 - 4", "ftp://ftp.example.com/calA.ics", vcard.getCalendarUris().get(1).getValue());
         assertEquals("testResource10 - 5", "text/calendar", vcard.getCalendarUris().get(1).getMediaType());
-        assertEquals("testResource10 - 6", "CALENDAR-1", vcard.getCalendarUris().get(0).getParameter(PROP_ID_PARAM));
-        assertEquals("testResource10 - 7", "CALENDAR-2", vcard.getCalendarUris().get(1).getParameter(PROP_ID_PARAM));
+        assertEquals("testResource10 - 6", "CALENDAR-1", vcard.getCalendarUris().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testResource10 - 7", "CALENDAR-2", vcard.getCalendarUris().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
 }

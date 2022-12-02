@@ -33,7 +33,7 @@ public enum AnniversaryEnum implements IsExtensibleEnum {
     BIRTH("birth"),
     DEATH("death"),
 
-    MARRIAGE("marriage");
+    WEDDING("wedding");
 
     private final String value;
 

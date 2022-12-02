@@ -35,7 +35,7 @@ public class RelatedToTest extends RoundtripTest {
                 "RELATED:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testRelatedTo1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -50,7 +50,7 @@ public class RelatedToTest extends RoundtripTest {
                 "RELATED;TYPE=friend:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testRelatedTo2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

@@ -3,7 +3,7 @@ package it.cnr.iit.jscontact.tools.dto.utils;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
+import it.cnr.iit.jscontact.tools.dto.Card;
 
 /**
  * Utility class for handling Jackson JSONPointer expressions.
@@ -27,9 +27,9 @@ public class JsonPointerUtils {
         return jsonPointer;
     }
 
-    public static JsonNode getPointedJsonNode(JSContact jsContact, String jsonPointerExpr) {
+    public static JsonNode getPointedJsonNode(Card jsCard, String jsonPointerExpr) {
 
-        JsonNode root = mapper.valueToTree(jsContact);
+        JsonNode root = mapper.valueToTree(jsCard);
 
         JsonPointer jsonPointer =  JsonPointer.compile(toAbsolute(jsonPointerExpr));
         return root.at(jsonPointer);

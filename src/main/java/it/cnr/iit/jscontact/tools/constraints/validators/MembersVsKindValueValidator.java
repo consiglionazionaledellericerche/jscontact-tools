@@ -15,21 +15,28 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.CardGroupKindConstraint;
-import it.cnr.iit.jscontact.tools.dto.CardGroup;
+import it.cnr.iit.jscontact.tools.constraints.MembersVsKindValueConstraint;
+import it.cnr.iit.jscontact.tools.constraints.TitleOrganizationConstraint;
+import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.Title;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class CardGroupKindValidator implements ConstraintValidator<CardGroupKindConstraint, CardGroup> {
+public class MembersVsKindValueValidator implements ConstraintValidator<MembersVsKindValueConstraint, Card> {
 
-    public void initialize(CardGroupKindConstraint constraintAnnotation) {
+    public void initialize(MembersVsKindValueConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(CardGroup group, ConstraintValidatorContext context) {
+    public boolean isValid(Card jsCard, ConstraintValidatorContext context) {
 
-        return group.getCard() == null || group.getCard().getKind() == null || group.getCard().getKind().isGroup();
+        if (jsCard.getMembers() == null)
+            return true;
 
+        if (jsCard.getMembers()!=null && !jsCard.getMembers().isEmpty())
+            return jsCard.getKind()!=null && jsCard.getKind().isGroup();
+
+        return true;
     }
 
 }

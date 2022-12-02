@@ -43,7 +43,7 @@ public class PropertyGroupTest extends JSContact2VCardTest {
                         "\"country\":\"USA\"," +
                         "\"postcode\":\"20190\"," +
                         "\"countryCode\":\"US\"," +
-                        "\"ietf.org:rfc0000:params\" : { " +
+                        "\"vCardParams\" : { " +
                             "\"group\" : \"CONTACT\"" +
                        "}" +
                     "}" +

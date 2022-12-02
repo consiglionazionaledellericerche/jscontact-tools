@@ -17,11 +17,10 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.JCardParamsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.JCardParamsSerializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.VCardParamsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.serializers.VCardParamsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -49,25 +48,24 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     @Setter
     String propId;
 
-    @JsonProperty("ietf.org:rfc0000:params")
-    @JsonSerialize(using = JCardParamsSerializer.class)
-    @JsonDeserialize(using = JCardParamsDeserializer.class)
+    @JsonSerialize(using = VCardParamsSerializer.class)
+    @JsonDeserialize(using = VCardParamsDeserializer.class)
     @Valid
-    Map<String,JCardParam> jCardParams;
+    Map<String, VCardParam> vCardParams;
 
 
     /**
-     * Adds a JCardParam object to this object.
+     * Adds a VCardParam object to this object.
      *
-     * @param id the link resource identifier
-     * @param jCardParam the JCardParam object
+     * @param id the VCardParam identifier
+     * @param vCardParam the VCardParam object
      */
-    public void addLinkResource(String id, JCardParam jCardParam) {
+    public void addVCardParam(String id, VCardParam vCardParam) {
 
-        if (jCardParams == null)
-            jCardParams = new HashMap<>();
+        if (vCardParams == null)
+            vCardParams = new HashMap<>();
 
-        jCardParams.putIfAbsent(id, jCardParam);
+        vCardParams.putIfAbsent(id, vCardParam);
     }
 
 }

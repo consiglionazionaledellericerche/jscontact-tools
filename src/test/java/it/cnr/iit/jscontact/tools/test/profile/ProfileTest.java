@@ -43,7 +43,7 @@ public class ProfileTest extends JCard2JSContactTest {
                                                                                       .build())
                                                          .build();
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
+        Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testRDAPProfile - 1", "Joe User", jsCard.getFullName());
         assertTrue("testRDAPProfile - 2", jsCard.getKind().isIndividual());
         assertEquals("testRDAPProfile - 3", 4, jsCard.getName().getComponents().length);
@@ -59,8 +59,8 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
         assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testRDAPProfile - 15", "Example", jsCard.getOrganizations().get("org").getName());
-        assertEquals("testRDAPProfile - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testRDAPProfile - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());
+        assertEquals("testRDAPProfile - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testRDAPProfile - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getName());
         assertEquals("testRDAPProfile - 18", 1, jsCard.getAddresses().size());
         assertEquals("testRDAPProfile - 19", "Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("addr").getFullAddress());
         assertEquals("testRDAPProfile - 20", "Suite 1234", jsCard.getAddresses().get("addr").getStreetExtensions());
@@ -73,15 +73,15 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 27", "Etc/GMT+5", jsCard.getAddresses().get("addr").getTimeZone());
         assertEquals("testRDAPProfile - 29", 1, jsCard.getEmails().size());
         assertTrue("testRDAPProfile - 30", jsCard.getEmails().get("email").asWork());
-        assertEquals("testRDAPProfile - 31", "joe.user@example.com", jsCard.getEmails().get("email").getEmail());
+        assertEquals("testRDAPProfile - 31", "joe.user@example.com", jsCard.getEmails().get("email").getAddress());
         assertEquals("testRDAPProfile - 32", 2, jsCard.getPhones().size());
         assertTrue("testRDAPProfile - 33", jsCard.getPhones().get("voice").asVoice());
-        assertEquals("testRDAPProfile - 34", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("voice").getPhone());
+        assertEquals("testRDAPProfile - 34", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("voice").getNumber());
         assertEquals("testRDAPProfile - 35", 1, (int) jsCard.getPhones().get("voice").getPref());
         assertTrue("testRDAPProfile - 36", jsCard.getPhones().get("voice").asWork());
         assertNull("testRDAPProfile - 37", jsCard.getPhones().get("voice").getLabel());
         assertTrue("testRDAPProfile - 38", jsCard.getPhones().get("fax").asVoice());
-        assertEquals("testRDAPProfile - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("fax").getPhone());
+        assertEquals("testRDAPProfile - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("fax").getNumber());
         assertNull("testRDAPProfile - 40", jsCard.getPhones().get("fax").getPref());
         assertTrue("testRDAPProfile - 41", jsCard.getPhones().get("fax").asWork());
         assertTrue("testRDAPProfile - 42", jsCard.getPhones().get("fax").asCell());

@@ -35,7 +35,7 @@ public class VCardTest extends RoundtripTest {
     public void testCompleteVCard1() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7483.vcf"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
@@ -48,7 +48,7 @@ public class VCardTest extends RoundtripTest {
     public void testCompleteVCard2() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Multilingual.vcf"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
@@ -60,7 +60,7 @@ public class VCardTest extends RoundtripTest {
     public void testCompleteVCard3() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Unstructured.vcf"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
@@ -73,7 +73,7 @@ public class VCardTest extends RoundtripTest {
     public void testCompleteVCard4() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7095.vcf"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
@@ -85,7 +85,7 @@ public class VCardTest extends RoundtripTest {
     public void testCompleteVCard5() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Wikipedia.vcf"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
@@ -98,7 +98,7 @@ public class VCardTest extends RoundtripTest {
     public void testCompleteVCard6() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("vcard/vCard-ezvcard-fullcontact.vcf"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);

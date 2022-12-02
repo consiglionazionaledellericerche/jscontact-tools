@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.jscontact2vcard2jscontact;
 
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
 import org.junit.Test;
@@ -33,14 +33,10 @@ public class CardGroupTest extends RoundtripTest {
 
         String jscards = "[" +
                          "{" +
-                            "\"@type\":\"CardGroup\"," +
+                            "\"@type\":\"Card\"," +
                              "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
-                             "\"card\": {" +
-                                "\"@type\":\"Card\"," +
-                                 "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
-                                 "\"kind\":\"group\"," +
-                                 "\"fullName\": \"The Doe family\"" +
-                             "}," +
+                             "\"kind\":\"group\"," +
+                             "\"fullName\": \"The Doe family\"," +
                              "\"members\": {" +
                                 "\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\":true," +
                                 "\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\":true" +
@@ -59,8 +55,8 @@ public class CardGroupTest extends RoundtripTest {
                         "]";
 
         List<VCard> vcards = jsContact2VCard.convert(jscards);
-        List<JSContact> jsContacts = vCard2JSContact.convert(vcards.toArray(new VCard[]{}));
-        JSContact[] jsContacts2 = JSContact.toJSContacts(jscards);
+        List<Card> jsContacts = vCard2JSContact.convert(vcards.toArray(new VCard[]{}));
+        Card[] jsContacts2 = Card.toJSCards(jscards);
         for (int i = 0; i < jsContacts2.length ; i++)
             assertEquals("testCardGroup1 - 1", jsContacts.get(i), jsContacts2[i]);
     }

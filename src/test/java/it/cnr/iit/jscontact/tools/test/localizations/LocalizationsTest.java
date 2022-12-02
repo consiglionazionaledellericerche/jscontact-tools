@@ -33,7 +33,7 @@ public class LocalizationsTest {
                 "}";
 
 
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         Card localizedCard = jsCard.getLocalizedVersion("jp");
 
         assertEquals("testLocalizations1 - 1", "jp", localizedCard.getLocale());
@@ -60,12 +60,12 @@ public class LocalizationsTest {
                 "\"localizations\":{" +
                     "\"jp\": {" +
                         "\"addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"title\": \"大阪市\"}" +
+                        "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"name\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
 
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertFalse("testLocalizations2 - 1", jsCard.isValid());
         assertEquals("testLocalizations2 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-2", jsCard.getValidationMessage().replace("\n", ""));
     }
@@ -93,7 +93,7 @@ public class LocalizationsTest {
                 "}" +
                 "}";
 
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertFalse("testLocalizations3 - 1", jsCard.isValid());
         assertEquals("testLocalizations3 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-2", jsCard.getValidationMessage().replace("\n", ""));
     }
@@ -121,7 +121,7 @@ public class LocalizationsTest {
                 "}" +
                 "}";
 
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertFalse("testLocalizations4 - 1", jsCard.isValid());
         assertEquals("testLocalizations4 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-1", jsCard.getValidationMessage().replace("\n", ""));
     }
@@ -160,7 +160,7 @@ public class LocalizationsTest {
                     "}" +
                 "}";
 
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testLocalizations5 - 1", jsCard.isValid());
     }
 

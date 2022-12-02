@@ -15,7 +15,7 @@ public class TypeMemberTest {
     public void testInvalidTypeMemberValue() throws IOException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-InvalidTypeMemberValue.json"), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertFalse("testInvalidTypeMemberValue-1", jsCard.isValid());
         assertEquals("testInvalidTypeMemberValue-2", "invalid @type value in Address", jsCard.getValidationMessage());
 

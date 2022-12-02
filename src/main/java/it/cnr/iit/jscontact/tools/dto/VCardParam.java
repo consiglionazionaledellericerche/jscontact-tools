@@ -1,25 +1,20 @@
 package it.cnr.iit.jscontact.tools.dto;
 
-import ezvcard.VCardDataType;
-import ezvcard.parameter.VCardParameters;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import lombok.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * Class mapping the JCard parameters as defined in section 2.15.2 of [draft-ietf-calext-jscontact-vcard].
+ * Class mapping the VCard parameters as defined in section 2.15.2 of [draft-ietf-calext-jscontact-vcard].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.15.2">draft-ietf-calext-jscontact-vcard</a>
  * @author Mario Loffredo
  */
-@NotNullAnyConstraint(fieldNames={"value","values"}, message = "at least one not null member is missing in JCardParam")
+@NotNullAnyConstraint(fieldNames={"value","values"}, message = "at least one not null member is missing in VCardParam")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class JCardParam {
+public class VCardParam {
 
     String value;
 

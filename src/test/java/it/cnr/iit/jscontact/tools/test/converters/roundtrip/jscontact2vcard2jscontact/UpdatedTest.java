@@ -37,8 +37,8 @@ public class UpdatedTest extends RoundtripTest {
                     "\"updated\":\"1995-10-31T22:27:10Z\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        Card jscard2 = (Card) vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testUpdated - 1", jscard2, Card.toCard(jscard));
+        Card jscard2 = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testUpdated - 1", jscard2, Card.toJSCard(jscard));
 
     }
 

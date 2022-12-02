@@ -14,12 +14,12 @@
     "PHONE-1": {
       "@type": "Phone",
       "features": {"voice": true},
-      "phone": ""
+      "number": ""
     },
     "PHONE-2": {
       "@type": "Phone",
       "features": {"fax": true},
-      "phone": ""
+      "number": ""
     }
   },
   "emails": {},

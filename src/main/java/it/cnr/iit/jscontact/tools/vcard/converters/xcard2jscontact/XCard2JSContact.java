@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.vcard.converters.xcard2jscontact;
 
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -40,18 +40,18 @@ public class XCard2JSContact extends EZVCard2JSContact {
     }
 
     /**
-     * Converts a complete vCard v4.0 in XML format, namely xCard [RFC6351], into a list of JSContact objects.
+     * Converts a complete vCard v4.0 in XML format, namely xCard [RFC6351], into a list of Card objects.
      * JSContact is defined in draft-ietf-calext-jscontact.
      * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
      *
      * @param xCard an xCard as an XML string
-     * @return the list of JSContact objects
+     * @return the list of Card objects
      * @throws CardException if the xCard is not v4.0 compliant
      * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
      */
-    public List<JSContact> convert(String xCard) throws CardException {
+    public List<Card> convert(String xCard) throws CardException {
 
         List<VCard> vcards = Ezvcard.parseXml(xCard).all();
         if (vcards.size() == 0)

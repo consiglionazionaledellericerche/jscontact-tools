@@ -19,28 +19,44 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.cnr.iit.jscontact.tools.dto.VCardParam;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Custom JSON deserializer for the SchedulingAddressType value.
+ * Custom JSON deserializer for the "vCardParams" map.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class SchedulingAddressTypeDeserializer extends JsonDeserializer<SchedulingAddressType> {
+public class VCardParamsDeserializer extends JsonDeserializer<Map<String, VCardParam>> {
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public SchedulingAddressType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public Map<String, VCardParam> deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        String value = node.asText();
-        try {
-            return SchedulingAddressType.builder().rfcValue(SchedulingAddressEnum.getEnum(value)).build();
-        } catch (IllegalArgumentException e) {
-            return SchedulingAddressType.builder().extValue(V_Extension.toV_Extension(value)).build();
+        Map<String, VCardParam> vCardParams = new HashMap<>();
+        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
+        while (iter.hasNext()) {
+            Map.Entry<String, JsonNode> entry = iter.next();
+            String paramName = entry.getKey();
+            VCardParam vCardParam = null;
+            if (entry.getValue().isArray()) {
+                List<String> array = mapper.treeToValue(entry.getValue(), List.class);
+                vCardParam = VCardParam.builder().values(array.toArray(new String[0])).build();
+            }
+            else
+                vCardParam = VCardParam.builder().value(entry.getValue().asText()).build();
+            vCardParams.put(paramName,vCardParam);
         }
+        return vCardParams;
     }
 }

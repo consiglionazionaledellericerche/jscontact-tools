@@ -1,5 +1,6 @@
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,7 +20,7 @@ import java.io.Serializable;
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames={"name","units"}, message = "at least one not null member other than @type is missing in Organization")
-@JsonPropertyOrder({"@type","name","units"})
+@JsonPropertyOrder({"@type","name","units","sortAs"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -36,4 +37,10 @@ public class Organization extends AbstractJSContactType implements IdMapValue, S
     String name;
 
     String[] units;
+
+    String[] sortAs;
+
+    @JsonIgnore
+    String group; // used only to search for an organization related to a title/role
+
 }

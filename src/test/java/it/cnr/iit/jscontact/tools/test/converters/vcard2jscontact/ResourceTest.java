@@ -33,7 +33,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "SOURCE:http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource1 - 1", 1, jsCard.getDirectories().size());
         assertEquals("testResource1 - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", jsCard.getDirectories().get("ENTRY-1").getUri());
         assertTrue("testResource1 - 3",jsCard.getDirectories().get("ENTRY-1").isEntry());
@@ -51,7 +51,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "LOGO:http://www.example.com/pub/logos/abccorp.jpg\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource2 - 1", 1, jsCard.getMedia().size());
         assertEquals("testResource2 - 2", "http://www.example.com/pub/logos/abccorp.jpg", jsCard.getMedia().get("LOGO-1").getUri());
         assertTrue("testResource2 - 3",jsCard.getMedia().get("LOGO-1").isLogo());
@@ -69,7 +69,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "CONTACT-URI;PREF=1:mailto:contact@example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource3 - 1", 1, jsCard.getLinks().size());
         assertEquals("testResource3 - 2", "mailto:contact@example.com", jsCard.getLinks().get("CONTACT-1").getUri());
         assertTrue("testResource3 - 3",jsCard.getLinks().get("CONTACT-1").isContact());
@@ -88,7 +88,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "ORG-DIRECTORY;INDEX=1:http://directory.mycompany.example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource4 - 1", 2, jsCard.getDirectories().size());
         assertEquals("testResource4 - 2", "http://directory.mycompany.example.com", jsCard.getDirectories().get("DIRECTORY-1").getUri());
         assertTrue("testResource4 - 3",jsCard.getDirectories().get("DIRECTORY-1").isDirectory());
@@ -112,7 +112,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "ORG-DIRECTORY;INDEX=1:http://directory.mycompany.example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource5 - 1", 2, jsCard.getDirectories().size());
         assertEquals("testResource5 - 2", "http://directory.mycompany.example.com", jsCard.getDirectories().get("DIRECTORY-1").getUri());
         assertTrue("testResource5 - 3",jsCard.getDirectories().get("DIRECTORY-1").isDirectory());
@@ -136,7 +136,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "SOUND:CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource6 - 1", 1, jsCard.getMedia().size());
         assertEquals("testResource6 - 2", "CID:JOHNQPUBLIC.part8.19960229T080000.xyzMail@example.com", jsCard.getMedia().get("SOUND-1").getUri());
         assertTrue("testResource6 - 3",jsCard.getMedia().get("SOUND-1").isSound());
@@ -154,7 +154,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "URL:http://example.org/restaurant.french/~chezchic.htm\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource7 - 1", 1, jsCard.getLinks().size());
         assertEquals("testResource7 - 2", "http://example.org/restaurant.french/~chezchic.htm", jsCard.getLinks().get("LINK-1").getUri());
         assertTrue("testResource7 - 3",jsCard.getLinks().get("LINK-1").isGenericLink());
@@ -172,7 +172,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "KEY:http://www.example.com/keys/jdoe.cer\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource8 - 1", 1, jsCard.getCryptoKeys().size());
         assertEquals("testResource8 - 2", "http://www.example.com/keys/jdoe.cer", jsCard.getCryptoKeys().get("KEY-1").getUri());
         assertNull("testResource8 - 3", jsCard.getCryptoKeys().get("KEY-1").getPref());
@@ -191,7 +191,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "FBURL;MEDIATYPE=text/calendar:ftp://example.com/busy/project-a.ifb\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource9 - 1", 2, jsCard.getCalendars().size());
         assertEquals("testResource9 - 2", "http://www.example.com/busy/janedoe", jsCard.getCalendars().get("FREEBUSY-1").getUri());
         assertTrue("testResource9 - 3",jsCard.getCalendars().get("FREEBUSY-1").isFreeBusy());
@@ -215,7 +215,7 @@ public class ResourceTest extends VCard2JSContactTest {
                 "CALURI;MEDIATYPE=text/calendar:ftp://ftp.example.com/calA.ics\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource10 - 1", 2, jsCard.getCalendars().size());
         assertEquals("testResource10 - 2", "http://cal.example.com/calA", jsCard.getCalendars().get("CALENDAR-1").getUri());
         assertTrue("testResource10 - 3",jsCard.getCalendars().get("CALENDAR-1").isCalendar());

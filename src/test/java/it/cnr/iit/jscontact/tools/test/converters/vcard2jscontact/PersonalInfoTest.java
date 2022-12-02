@@ -60,7 +60,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=high:reading\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPersonalInfo1 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo1 - 2", 1, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo1 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
@@ -79,7 +79,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=medium:sewing\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPersonalInfo2 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo2 - 2", 2, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo2 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
@@ -101,7 +101,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=medium;INDEX=2:sewing\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPersonalInfo3 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo3 - 2", 2, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo3 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
@@ -123,7 +123,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "HOBBY;LEVEL=medium;INDEX=1:sewing\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPersonalInfo4 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo4 - 2", 2, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo4 - 3", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
@@ -148,7 +148,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "INTEREST;LEVEL=high;INDEX=2:rock 'n' roll music\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPersonalInfo5 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo5 - 2", 4, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo5 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
@@ -178,7 +178,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "INTEREST;LEVEL=high;INDEX=1:rock 'n' roll music\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPersonalInfo6 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo6 - 2", 4, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo6 - 3", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
@@ -210,7 +210,7 @@ public class PersonalInfoTest extends VCard2JSContactTest {
                 "EXPERTISE;LEVEL=expert;INDEX=1:chemistry\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPersonalInfo7 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo7 - 2", 6, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo7 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());

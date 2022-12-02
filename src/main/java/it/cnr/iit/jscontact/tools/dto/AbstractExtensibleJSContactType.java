@@ -22,17 +22,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Abstract class mapping the vCard extensions in section 1.5.2 of [draft-ietf-calext-jscontact].
@@ -99,9 +95,6 @@ public abstract class AbstractExtensibleJSContactType {
             else if (o.getType()==null) // unspecified value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
         } else {
-
-            if (this instanceof HasLabel && ((HasLabel) this).getLabel() != null ) //The label property must be considered, if any
-                map.put(String.format("%slabel", jsonPointer), ((HasLabel) this).getLabel());
 
             if (this instanceof HasContexts && ((HasContexts) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
                 for (Context context : ((HasContexts) this).getExtContexts())
@@ -210,10 +203,7 @@ public abstract class AbstractExtensibleJSContactType {
 
         try {
             if (pathItems.isEmpty()) {
-                if (this instanceof HasLabel && extension.equals("label"))
-                    ((HasLabel) this).setLabel(value.toString());
-                else
-                    addExtension(extension, value);
+                addExtension(extension, value);
                 return;
             } else if (pathItems.size() == 1) {
                 if (this instanceof Phone && pathItems.get(0).equals("features")) {

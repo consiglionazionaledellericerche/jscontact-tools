@@ -53,7 +53,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"hobby\", {\"level\": \"high\"}, \"text\", \"reading\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPersonalInfo1 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo1 - 2", 1, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo1 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
@@ -70,7 +70,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"hobby\", {\"level\": \"high\"}, \"text\", \"reading\"], " +
                 "[\"hobby\", {\"level\": \"medium\"}, \"text\", \"sewing\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPersonalInfo2 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo2 - 2", 2, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo2 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
@@ -90,7 +90,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"hobby\", {\"level\": \"high\", \"index\": 1}, \"text\", \"reading\"], " +
                 "[\"hobby\", {\"level\": \"medium\", \"index\": 2}, \"text\", \"sewing\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPersonalInfo3 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo3 - 2", 2, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo3 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
@@ -110,7 +110,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"hobby\", {\"level\": \"high\", \"index\": 2}, \"text\", \"reading\"], " +
                 "[\"hobby\", {\"level\": \"medium\", \"index\": 1}, \"text\", \"sewing\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPersonalInfo4 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo4 - 2", 2, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo4 - 3", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
@@ -133,7 +133,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"interest\", {\"level\": \"medium\", \"index\": 1}, \"text\", \"r&b music\"], " +
                 "[\"interest\", {\"level\": \"high\", \"index\": 2}, \"text\", \"rock 'n' roll music\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPersonalInfo5 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo5 - 2", 4, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo5 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
@@ -161,7 +161,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"interest\", {\"level\": \"medium\", \"index\": 2}, \"text\", \"r&b music\"], " +
                 "[\"interest\", {\"level\": \"high\", \"index\": 1}, \"text\", \"rock 'n' roll music\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPersonalInfo6 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo6 - 2", 4, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo6 - 3", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
@@ -191,7 +191,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"expertise\", {\"level\": \"beginner\", \"index\": 2}, \"text\", \"chinese literature\"], " +
                 "[\"expertise\", {\"level\": \"expert\", \"index\": 1}, \"text\", \"chemistry\"]" +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPersonalInfo7 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo7 - 2", 6, jsCard.getPersonalInfo().size());
         assertTrue("testPersonalInfo7 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());

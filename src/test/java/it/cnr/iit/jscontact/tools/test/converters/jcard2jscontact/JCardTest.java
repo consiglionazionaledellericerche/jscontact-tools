@@ -108,7 +108,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testJCard() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testJCard - 1", jsCard);
         assertTrue("testJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertEquals("testJCard - 3", "test", jsCard.getFullName());
@@ -119,14 +119,14 @@ public class JCardTest extends JCard2JSContactTest {
     public void testExtendedJCard() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"], [\"myext\", {}, \"text\", \"extvalue\"]]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testExtendedJCard - 1", jsCard);
         assertTrue("testExtendedJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
         assertEquals("testExtendedJCard - 3", "test", jsCard.getFullName());
-        assertEquals("testExtendedJCard - 4", 1, jsCard.getJCardExtensions().length);
-        assertEquals("testExtendedJCard - 5", "myext", jsCard.getJCardExtensions()[0].getName().toString());
-        assertEquals("testExtendedJCard - 6", VCardDataType.TEXT, jsCard.getJCardExtensions()[0].getType());
-        assertEquals("testExtendedJCard - 7", "extvalue", jsCard.getJCardExtensions()[0].getValue());
+        assertEquals("testExtendedJCard - 4", 1, jsCard.getVCardProps().length);
+        assertEquals("testExtendedJCard - 5", "myext", jsCard.getVCardProps()[0].getName().toString());
+        assertEquals("testExtendedJCard - 6", VCardDataType.TEXT, jsCard.getVCardProps()[0].getType());
+        assertEquals("testExtendedJCard - 7", "extvalue", jsCard.getVCardProps()[0].getValue());
     }
 
 
@@ -134,7 +134,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard1() throws IOException, CardException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
+        Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testCompleteJCard1 - 1", "Joe User", jsCard.getFullName());
         assertTrue("testCompleteJCard1 - 2", jsCard.getKind().isIndividual());
         assertEquals("testCompleteJCard1 - 3", 4, jsCard.getName().getComponents().length);
@@ -150,8 +150,8 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
         assertEquals("testCompleteJCard1 - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testCompleteJCard1 - 15", "Example", jsCard.getOrganizations().get("ORG-1").getName());
-        assertEquals("testCompleteJCard1 - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testCompleteJCard1 - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getTitle());
+        assertEquals("testCompleteJCard1 - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testCompleteJCard1 - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getName());
         assertEquals("testCompleteJCard1 - 18", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteJCard1 - 19", "Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("ADR-1").getFullAddress());
         assertEquals("testCompleteJCard1 - 20", "Suite 1234", jsCard.getAddresses().get("ADR-1").getStreetExtensions());
@@ -164,15 +164,15 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 27", "Etc/GMT+5", jsCard.getAddresses().get("ADR-1").getTimeZone());
         assertEquals("testCompleteJCard1 - 29", 1, jsCard.getEmails().size());
         assertTrue("testCompleteJCard1 - 30", jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testCompleteJCard1 - 31", "joe.user@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteJCard1 - 31", "joe.user@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteJCard1 - 32", 2, jsCard.getPhones().size());
         assertTrue("testCompleteJCard1 - 33", jsCard.getPhones().get("PHONE-1").asVoice());
-        assertEquals("testCompleteJCard1 - 34", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("PHONE-1").getPhone());
+        assertEquals("testCompleteJCard1 - 34", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("PHONE-1").getNumber());
         assertEquals("testCompleteJCard1 - 35", 1, (int) jsCard.getPhones().get("PHONE-1").getPref());
         assertTrue("testCompleteJCard1 - 36", jsCard.getPhones().get("PHONE-1").asWork());
         assertNull("testCompleteJCard1 - 37", jsCard.getPhones().get("PHONE-1").getLabel());
         assertTrue("testCompleteJCard1 - 38", jsCard.getPhones().get("PHONE-2").asVoice());
-        assertEquals("testCompleteJCard1 - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("PHONE-2").getPhone());
+        assertEquals("testCompleteJCard1 - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("PHONE-2").getNumber());
         assertNull("testCompleteJCard1 - 40", jsCard.getPhones().get("PHONE-2").getPref());
         assertTrue("testCompleteJCard1 - 41", jsCard.getPhones().get("PHONE-2").asWork());
         assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asCell());
@@ -194,13 +194,13 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard2() throws IOException, CardException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Multilingual.json"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
+        Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testCompleteJCard2 - 1", "大久保 正仁", jsCard.getFullName());
         assertEquals("testCompleteJCard2 - 3", "Okubo Masahito", jsCard.getLocalizations().get("en").get("fullName").asText());
         assertTrue("testCompleteJCard2 - 4", jsCard.getKind().isIndividual());
         assertEquals("testCompleteJCard2 - 5", 1, jsCard.getTitles().size());
-        assertEquals("testCompleteJCard2 - 6", "事務局長", jsCard.getTitles().get("TITLE-1").getTitle());
-        assertEquals("testCompleteJCard2 - 8", "Secretary General", jsCard.getLocalization("en", "titles/TITLE-1").get("title").asText());
+        assertEquals("testCompleteJCard2 - 6", "事務局長", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testCompleteJCard2 - 8", "Secretary General", jsCard.getLocalization("en", "titles/TITLE-1").get("name").asText());
         assertTrue("testCompleteJCard2 - 9", jsCard.getKind().isIndividual());
         assertEquals("testCompleteJCard2 - 10", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testCompleteJCard2 - 11", 1, (int) jsCard.getPreferredLanguages().get("jp")[0].getPref());
@@ -212,7 +212,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard3() throws IOException, CardException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Unstructured.json"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
+        Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testCompleteJCard3 - 1", "台灣固網股份有限公司", jsCard.getFullName());
         assertEquals("testCompleteJCard3 - 3", "Taiwan Fixed Network CO.,LTD.", jsCard.getLocalizations().get("en").get("fullName").asText());
         assertTrue("testCompleteJCard3 - 4", jsCard.getKind().isOrg());
@@ -222,10 +222,10 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard3 - 10", 2, jsCard.getPhones().size());
         assertTrue("testCompleteJCard3 - 11", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteJCard3 - 12", jsCard.getPhones().get("PHONE-1").hasNoContext());
-        assertTrue("testCompleteJCard3 - 13", jsCard.getPhones().get("PHONE-1").getPhone().isEmpty());
+        assertTrue("testCompleteJCard3 - 13", jsCard.getPhones().get("PHONE-1").getNumber().isEmpty());
         assertTrue("testCompleteJCard3 - 14", jsCard.getPhones().get("PHONE-2").asFax());
         assertTrue("testCompleteJCard3 - 15", jsCard.getPhones().get("PHONE-2").hasNoContext());
-        assertTrue("testCompleteJCard3 - 16", jsCard.getPhones().get("PHONE-2").getPhone().isEmpty());
+        assertTrue("testCompleteJCard3 - 16", jsCard.getPhones().get("PHONE-2").getNumber().isEmpty());
         assertTrue("testCompleteJCard3 - 17", StringUtils.isNotEmpty(jsCard.getUid()));
     }
 
@@ -234,7 +234,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard4() throws IOException, CardException {
 
         String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7095.json"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) jCard2JSContact.convert(json).get(0);
+        Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testCompleteJCard4 - 1", "Simon Perreault", jsCard.getFullName());
         assertNull("testCompleteJCard4 - 2", jsCard.getKind());
         assertEquals("testCompleteJCard4 - 3", 4, jsCard.getName().getComponents().length);
@@ -249,7 +249,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 12", 2, jsCard.getAnniversaries().size());
         assertTrue("testCompleteJCard4 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
         assertTrue("testCompleteJCard4 - 14", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("0000-02-03"));
-        assertTrue("testCompleteJCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isMarriage());
+        assertTrue("testCompleteJCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isWedding());
         assertTrue("testCompleteJCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
         assertEquals("testCompleteJCard4 - 18", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testCompleteJCard4 - 19", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
@@ -268,18 +268,18 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 32", 2, jsCard.getPhones().size());
         assertTrue("testCompleteJCard4 - 33", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteJCard4 - 34", jsCard.getPhones().get("PHONE-1").asWork());
-        assertEquals("testCompleteJCard4 - 35", "tel:+1-418-656-9254;ext=102", jsCard.getPhones().get("PHONE-1").getPhone());
+        assertEquals("testCompleteJCard4 - 35", "tel:+1-418-656-9254;ext=102", jsCard.getPhones().get("PHONE-1").getNumber());
         assertEquals("testCompleteJCard4 - 36", 1, (int) jsCard.getPhones().get("PHONE-1").getPref());
         assertTrue("testCompleteJCard4 - 37", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteJCard4 - 38", jsCard.getPhones().get("PHONE-2").asWork());
-        assertEquals("testCompleteJCard4 - 39", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getPhone());
+        assertEquals("testCompleteJCard4 - 39", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getNumber());
         assertTrue("testCompleteJCard4 - 40", jsCard.getPhones().get("PHONE-2").asCell());
         assertTrue("testCompleteJCard4 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard4 - 42", jsCard.getPhones().get("PHONE-2").asText());
         assertNull("testCompleteJCard4 - 43", jsCard.getPhones().get("PHONE-2").getLabel());
         assertEquals("testCompleteJCard4 - 44", 1, jsCard.getEmails().size());
         assertTrue("testCompleteJCard4 - 45", jsCard.getEmails().get("EMAIL-1").asWork());
-        assertEquals("testCompleteJCard4 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteJCard4 - 46", "simon.perreault@viagenie.ca", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteJCard4 - 47", 1, jsCard.getCryptoKeys().size());
         assertTrue("testCompleteJCard4 - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
         assertEquals("testCompleteJCard4 - 49", "http://www.viagenie.ca/simon.perreault/simon.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
@@ -294,7 +294,7 @@ public class JCardTest extends JCard2JSContactTest {
     public void testCompleteJCard5() throws IOException, CardException {
 
         String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Wikipedia.json"), StandardCharsets.UTF_8);
-        Card jsCard = (Card) jCard2JSContact.convert(vcard).get(0);
+        Card jsCard = jCard2JSContact.convert(vcard).get(0);
         assertEquals("testCompleteJCard5 - 1", "Forrest Gump", jsCard.getFullName());
         assertNull("testCompleteJCard5 - 2", jsCard.getKind());
         assertEquals("testCompleteJCard5 - 3", 3, jsCard.getName().getComponents().length);
@@ -305,17 +305,17 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 8", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testCompleteJCard5 - 9", "Gump", jsCard.getName().getComponents()[2].getValue());
         assertEquals("testCompleteJCard5 - 10", "Bubba Gump Shrimp Co.", jsCard.getOrganizations().get("ORG-1").getName());
-        assertEquals("testCompleteJCard5 - 11", "Shrimp Man", jsCard.getTitles().get("TITLE-1").getTitle());
+        assertEquals("testCompleteJCard5 - 11", "Shrimp Man", jsCard.getTitles().get("TITLE-1").getName());
         assertEquals("testCompleteJCard5 - 15", "http://www.example.com/dir_photos/my_photo.gif", jsCard.getMedia().get("PHOTO-1").getUri());
         assertEquals("testCompleteJCard5 - 16", "image/gif", jsCard.getMedia().get("PHOTO-1").getMediaType());
         assertEquals("testCompleteJCard5 - 17", 2, jsCard.getPhones().size());
         assertTrue("testCompleteJCard5 - 18", jsCard.getPhones().get("PHONE-1").asVoice());
         assertTrue("testCompleteJCard5 - 19", jsCard.getPhones().get("PHONE-1").asWork());
-        assertEquals("testCompleteJCard5 - 20", "tel:+1-111-555-1212", jsCard.getPhones().get("PHONE-1").getPhone());
+        assertEquals("testCompleteJCard5 - 20", "tel:+1-111-555-1212", jsCard.getPhones().get("PHONE-1").getNumber());
         assertNull("testCompleteJCard5 - 21", jsCard.getPhones().get("PHONE-1").getLabel());
         assertTrue("testCompleteJCard5 - 22", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteJCard5 - 23", jsCard.getPhones().get("PHONE-2").asPrivate());
-        assertEquals("testCompleteJCard5 - 24", "tel:+1-404-555-1212", jsCard.getPhones().get("PHONE-2").getPhone());
+        assertEquals("testCompleteJCard5 - 24", "tel:+1-404-555-1212", jsCard.getPhones().get("PHONE-2").getNumber());
         assertNull("testCompleteJCard5 - 25", jsCard.getPhones().get("PHONE-2").getLabel());
 
         assertEquals("testCompleteJCard5 - 26", 2, jsCard.getAddresses().size());
@@ -336,7 +336,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard5 - 41", "30314", jsCard.getAddresses().get("ADR-2").getPostcode());
 
         assertEquals("testCompleteJCard5 - 42", 1, jsCard.getEmails().size());
-        assertEquals("testCompleteJCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getEmail());
+        assertEquals("testCompleteJCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteJCard5 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
         assertTrue("testCompleteJCard5 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
     }

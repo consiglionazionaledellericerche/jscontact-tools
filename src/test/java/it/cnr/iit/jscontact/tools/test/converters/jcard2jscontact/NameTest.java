@@ -16,6 +16,8 @@
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -29,9 +31,9 @@ public class NameTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"John Q. Public, Esq.\"], " +
-                "[\"n\", {}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]] " +
+                "[\"n\", {\"sort-as\":[\"Public\",\"John\"]}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName1 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName1 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -44,6 +46,8 @@ public class NameTest extends JCard2JSContactTest {
         assertEquals("testName1 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
         assertTrue("testName1 - 11",jsCard.getName().getComponents()[4].isSuffix());
         assertEquals("testName1 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
+        assertEquals("testName1 - 13", "Public", jsCard.getName().getSortAs().get(NameComponentEnum.SURNAME.getValue()));
+        assertEquals("testName1 - 14", "John", jsCard.getName().getSortAs().get(NameComponentEnum.GIVEN.getValue()));
 
     }
 
@@ -55,7 +59,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"n\", {}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]], " +
                 "[\"nickname\", {}, \"text\", \"Johnny\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName2 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName2 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName2 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -82,7 +86,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"nickname\", {}, \"text\", \"Johnny\"], " +
                 "[\"nickname\", {\"pref\":\"1\"}, \"text\", \"Kid\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName3 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName3 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName3 - 3",jsCard.getName().getComponents()[0].isPrefix());
@@ -114,7 +118,7 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"nickname\", {\"altid\":\"1\",\"language\":\"it\"}, \"text\", \"Giovannino\"], " +
                 "[\"nickname\", {\"pref\":\"1\",\"altid\":\"2\",\"language\":\"it\"}, \"text\", \"Ragazzo\"] " +
                 "]]";
-        Card jsCard = (Card) jCard2JSContact.convert(jcard).get(0);
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName4 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName4 - 2", 5, jsCard.getName().getComponents().length);
         assertTrue("testName4 - 3",jsCard.getName().getComponents()[0].isPrefix());

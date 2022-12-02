@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryDate;
-import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;

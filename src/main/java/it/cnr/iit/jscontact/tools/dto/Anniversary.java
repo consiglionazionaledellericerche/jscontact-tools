@@ -85,13 +85,13 @@ public class Anniversary extends AbstractJSContactType implements HasType, IdMap
     public boolean isDeath() { return type.isDeath(); }
 
     /**
-     * Tests if this anniversary is a date of marriage, or equivalent. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
+     * Tests if this anniversary is a date of wedding, or equivalent. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
      *
-     * @return true if this anniversary is a date of marriage, false otherwise
+     * @return true if this anniversary is a date of wedding, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isMarriage() { return type.isMarriage(); }
+    public boolean isWedding() { return type.isWedding(); }
 
     /**
      * Tests if this is an undefined anniversary specified by the value of the "label" property.

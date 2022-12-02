@@ -18,7 +18,7 @@ public class PhotoTest extends VCard2JSContactTest {
                 "PHOTO:http://www.example.com/pub/photos/jqpublic.gif\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPhoto - 1", 1, jsCard.getMedia().size());
         assertEquals("testPhoto - 2", "http://www.example.com/pub/photos/jqpublic.gif", jsCard.getMedia().get("PHOTO-1").getUri());
         assertNull("testPhoto - 3", jsCard.getMedia().get("PHOTO-1").getPref());

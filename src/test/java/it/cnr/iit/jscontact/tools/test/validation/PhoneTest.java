@@ -33,7 +33,7 @@ public class PhoneTest extends AbstractTest {
                 .context(Context.work(), Boolean.TRUE)
                 .context(Context.private_(), Boolean.TRUE)
                 .feature(PhoneFeature.voice(), Boolean.TRUE)
-                .phone("+39.050000001")
+                .number("+39.050000001")
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())

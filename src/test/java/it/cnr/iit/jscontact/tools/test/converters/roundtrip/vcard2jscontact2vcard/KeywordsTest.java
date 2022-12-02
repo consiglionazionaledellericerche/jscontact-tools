@@ -35,7 +35,7 @@ public class KeywordsTest extends RoundtripTest {
                 "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testKeywords1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
@@ -52,7 +52,7 @@ public class KeywordsTest extends RoundtripTest {
                 "CATEGORIES:TRAVEL AGENT\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         assertEquals("testKeywords2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));

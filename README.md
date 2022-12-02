@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.11.1</version>
+		  <version>0.12.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.11.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.12.0'
 ```
 
 # Features
@@ -31,8 +31,9 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 5. [vCard Conversion](#vcard-conversion)
 6. [JSContact Conversion](#jscontact-conversion)
 7. [Testing](#testing)
-8. [JSContact Compliance](#jscontact-compliance)
-9. [References](#references)
+8. [ez-vcard bugs](#ez-vcard-bugs)
+9. [JSContact Compliance](#jscontact-compliance)
+10. [References](#references)
 
 
 <a name="creation"></a>
@@ -49,7 +50,7 @@ Here in the following a successful creation of an EmailAddress instance is shown
         EmailAddress email = EmailAddress.builder()
                                         .context(Context.work(), Boolean.TRUE)
                                         .context(Context.private(), Boolean.TRUE)
-                                        .email("mario.loffredo@iit.cnr.it")
+                                        .address("mario.loffredo@iit.cnr.it")
                                         .build();
 
 ```
@@ -59,7 +60,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 
 ```
 
-        // email is missing
+        // address is missing in EmailAddress
         EmailAddress.builder().context(Context.work(),Boolean.TRUE).build();
 
 ```
@@ -67,7 +68,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 ### Cloning
 
 Creation can be achieved through cloning as well.
-Cloning can be only applied to Card and CardGroup.
+Cloning can be only applied to Card.
 
 Here in the following a test assessing a successful creation of a cloned Card instance.
  
@@ -87,10 +88,10 @@ Here in the following a test assessing a successful creation of a cloned Card in
 <a name="validation"></a>
 ## Validation
 
-### JSContact validation
+### JSContact Card validation
 
-Even if topomost JSContact objects, namely **Card** and **CardGroup**, are correctly created by builders, they might need to be validated as they were obtained from an external producer through deserialization.
-Validation is performed on both Card and CardGroup objects by invoking the method `isValid`.
+Even if a JSContact **Card** is correctly created by builder, it might need to be validated as it were obtained from an external producer through deserialization.
+Validation is performed on JSContact Card by invoking the method `isValid`.
 This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-calext-jscontact], `false` otherwise.
 If the validation process doesn't end successfully, the list of error messages can be obtained by calling the `getValidationMessages` method.  
 Here in the following a method testing an unsuccessfully ended validation is shown.
@@ -134,7 +135,7 @@ All the methods can raise a `CardException`.
 <a name="serialization-deserialization"></a>
 ## Serialization/Deserialization
 
-JSContact serialization/deserializaion is performed through Jackson library annotations.
+JSContact Card serialization/deserializaion is performed through Jackson library annotations.
 
 ## Serialization
 
@@ -145,7 +146,7 @@ JSContact serialization/deserializaion is performed through Jackson library anno
 
 ```
 
-To pretty print serialized JSContact objects, use the following: 
+To pretty print serialized Card objects, use the following: 
 
 ```
 
@@ -161,23 +162,6 @@ To pretty print serialized JSContact objects, use the following:
         String json = "{"uid": \"c642b718-7c89-49f4-9497-d9fb279bb437\"}";
         ObjectMapper mapper = new ObjectMapper();
         Card jsCard = mapper.readValue(json, Card.class);
-
-```
-
-### Deserialization of a group of cards
-
-Deserialization of a CardGroup object and the related cards is performed through a custom deserializer dealing with a list of polymorphic objects (i.e. Card and CardGroup instances).
-
-```
-
-    @Test
-    public void testDeserialization4() throws IOException {
-
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), Charset.forName("UTF-8"));
-        JSContact[] jsContacts = JSContact.toJSContacts(json);
-        for (JSContact jsContact : jsContacts)
-            assertTrue("testDeserialization4", jsContact.isValid());
-    }
 
 ```
 
@@ -214,20 +198,20 @@ At present, the following methods support localizations handling:
 At present, the following converting methods are available:
 
 *   EZVCard2JSContact
-    *   List<JSContact> convert(VCard... vcard)
+    *   List<Card> convert(VCard... vcard)
 *   VCard2JSContact
-    *   List<JSContact> convert(String vcf)
+    *   List<Card> convert(String vcf)
 *   JCard2JSContact
-    *   List<JSContact> convert(String json)
-    *   List<JSContact> convert(JsonNode jsonNode) 
+    *   List<Card> convert(String json)
+    *   List<Card> convert(JsonNode jsonNode) 
 *   XCard2JSContact
-    *   List<JSContact> convert(String xml)
+    *   List<Card> convert(String xml)
 
-All the methods return a list of JSContact top most objects and can raise a `CardException`.
+All the methods return a list of JSContact Card objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
-### Conversion Rules from vCard to JSContact
+### Conversion Rules from vCard to JSContact Card
 
 The conversion is executed according to the following rules:
 
@@ -237,11 +221,11 @@ The conversion is executed according to the following rules:
 
 3. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
 
-4. An unmatched property is converted into an entry of the topmost Card/CardGroup `ietf.org:rfc0000:props` map. The following unmatched properties are considered:    
+4. An unmatched property is converted into an entry of the topmost Card/CardGroup `vCardProps` map. The following unmatched properties are considered:    
     CLIENTPIDMAP
     XML
 
-5. An unmatched parameter is converted into an entry of an object `ietf.org:rfc0000:params` map. The following unmatched parameters are considered:
+5. An unmatched parameter is converted into an entry of an object `vCardParams` map. The following unmatched parameters are considered:
     PID
     SORT-AS
  
@@ -324,7 +308,7 @@ The conversion is executed according to the following rules:
 
 25. The VCARD parameter DERIVED is ignored. 
 
-### Conversion Profiles from vCard to JSContact
+### Conversion Profiles from vCard to JSContact Card
 
 By default, where a collection of objects is mapped to a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
 This setting schema can be modified by defining a different one assigning key values based on the positions of vCard elements.
@@ -337,7 +321,7 @@ To do that, the following steps must be followed:
 3. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToUse` of `VCard2JSContactConfig` object property with it
 
 
-### RDAP Conversion Profile from jCard to JSContact
+### RDAP Conversion Profile from jCard to JSContact Card
 
 A pre-defined conversion profile to convert a jCard instance inside an RDAP response [RFC9083](https://datatracker.ietf.org/doc/rfc9083/) is available.
 The values of the map keys used in such profile are defined in [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/).
@@ -356,34 +340,34 @@ Additional setting rules are shown in the following code:
 ```
 
 <a name="jscontact-conversion"></a>
-## JSContact Conversion
+## JSContact Card Conversion
 
 At present, the following converting methods are available:
 
 *   JSContact2EZVCard
-    *   List<VCard> convert(JSContact... jsContacts)
+    *   List<VCard> convert(Card... jsContacts)
     *   List<VCard> convert(String json)
 *   JSContact2VCard
-    *   String convertToText(JSContact... jsContact)
+    *   String convertToText(Card... jsContact)
 *   JSContact2JCard
-    *   String convertToJson(JSContact... jsContact)
-    *   JsonNode convertToJsonNode(JSContact... jsContact)
+    *   String convertToJson(Card... jsContact)
+    *   JsonNode convertToJsonNode(Card... jsContact)
 *   JSContact2XCard
-    *   String convertToXml(JSContact... jsContact)
+    *   String convertToXml(Card... jsContact)
 
-All the methods take in input a list of JSContact top most objects and can raise a `CardException`.
+All the methods take in input a list of JSContact Card objects and can raise a `CardException`.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
-### Conversion Rules from JSContact to vCard 
+### Conversion Rules from JSContact Card to vCard 
 
 1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
  
-2. An entry of the topmost Card/CardGroup `ietf.org:rfc0000:props` map is converted into the related vCard property  . The following properties are considered:
+2. An entry of the topmost Card/CardGroup `vCardProps` map is converted into the related vCard property  . The following properties are considered:
     CLIENTPIDMAP
     XML
  
-3. An entry of an object `ietf.org:rfc0000:params` map is converted into a vCard parameter. The following parameters are considered:
+3. An entry of an object `vCardParams` map is converted into a vCard parameter. The following parameters are considered:
     PID
     SORT-AS
 
@@ -408,7 +392,7 @@ All the methods take in input a list of JSContact top most objects and can raise
 
 ### Conversion examples
 
-Here in the following two examples of conversion between vCard and JSContact top most objects.
+Here in the following two examples of conversion between vCard and JSContact Card object.
 
 ```
 
@@ -422,7 +406,7 @@ Here in the following two examples of conversion between vCard and JSContact top
                 "GEO:geo:46.772673,-71.282945\n" +
                 "END:VCARD";
 
-        Card jsCard = (Card) vCard2JSContact.convert(vcard).get(0);
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testAddresses4 - 1", jsCard.getAddresses());
         assertEquals("testAddresses4 - 2", 1, jsCard.getAddresses().size());
         assertEquals("testAddresses4 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
@@ -463,28 +447,27 @@ Here in the following two examples of conversion between vCard and JSContact top
                 "]]" +
                 "]";
 
-        List<JSContact> jsContacts = jCard2JSContact.convert(jcard);
-        assertEquals("testJCardGroup1 - 1", 3, jsContacts.size());
-        assertTrue("testJCardGroup1 - 2",jsContacts.get(0) instanceof CardGroup);
-        CardGroup jsCardGroup = (CardGroup) jsContacts.get(0);
-        assertTrue("testJCardGroup1 - 3", jsCardGroup.getCard().getKind().isGroup());
-        assertTrue("testJCardGroup1 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertEquals("testJCardGroup1 - 5", "The Doe family", jsCardGroup.getCard().getFullName());
-        assertEquals("testJCardGroup1 - 6", 2, jsCardGroup.getMembers().size());
-        assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
-        assertSame("testJCardGroup1 - 8", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
-        Card jsCard = (Card) jsContacts.get(1);
-        assertEquals("testJCardGroup1 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
-        assertEquals("testJCardGroup1 - 10", "John Doe", jsCard.getFullName());
-        jsCard = (Card) jsContacts.get(2);
-        assertEquals("testJCardGroup1 - 11", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
-        assertEquals("testJCardGroup1 - 12", "Jane Doe", jsCard.getFullName());
+        List<Card> jsCards = jCard2JSContact.convert(jcard);
+        assertEquals("testJCardGroup1 - 1", 3, jsCards.size());
+        Card jsCardGroup = jsCards.get(0);
+        assertTrue("testJCardGroup1 - 2", jsCardGroup.getCard().getKind().isGroup());
+        assertTrue("testJCardGroup1 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertEquals("testJCardGroup1 - 4", "The Doe family", jsCardGroup.getCard().getFullName());
+        assertEquals("testJCardGroup1 - 5", 2, jsCardGroup.getMembers().size());
+        assertSame("testJCardGroup1 - 6", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
+        assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
+        Card jsCard = jsCards.get(1);
+        assertEquals("testJCardGroup1 - 8", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
+        assertEquals("testJCardGroup1 - 9", "John Doe", jsCard.getFullName());
+        jsCard = jsCards.get(2);
+        assertEquals("testJCardGroup1 - 10", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
+        assertEquals("testJCardGroup1 - 11", "Jane Doe", jsCard.getFullName());
         
     }
 
 ```
 
-Here in the following two examples of conversion between JSContact top most objects and a vCard.
+Here in the following two examples of conversion between JSContact Card and a vCard.
 
 ```
 
@@ -519,7 +502,7 @@ Here in the following two examples of conversion between JSContact top most obje
         assertEquals("testAddresses4 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
         assertEquals("testAddresses4 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
         assertEquals("testAddresses4 - 9", vcard.getAddresses().get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));           
-        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(PROP_ID_PARAM));
+        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
         
     }
 
@@ -579,6 +562,12 @@ Here in the following two examples of conversion between JSContact top most obje
 
 Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all the features provided.
 
+<a name="ez-vcard-bugs"></a>
+## ez-vcard bugs
+
+As opposed to what is stated in section 6.1.1 of [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), ez-vcard doesn't represent both family and given names including multiple text values separated by comma.
+In both cases, the text values subsequent to the first value are ignored.
+
 <a name="jscontact-compliance"></a>
 ## JSContact Compliance
 
@@ -608,17 +597,17 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.11.1 implements the following draft versions:
+Version 0.12.0 implements the following draft versions:
 
-* draft-ietf-calext-jscontact-04
-* draft-ietf-calext-jscontact-vcard-03
-* draft-ietf-calext-vcard-jscontact-extensions-01
+* draft-ietf-calext-jscontact-05
+* draft-ietf-calext-jscontact-vcard-04
+* draft-ietf-calext-vcard-jscontact-extensions-02
 
 # Build Instructions
 
 ## Java
 
-Version 9 required.
+Version 8 required.
 
 ## Maven
 

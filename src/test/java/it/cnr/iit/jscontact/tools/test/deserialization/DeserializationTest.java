@@ -18,7 +18,6 @@ package it.cnr.iit.jscontact.tools.test.deserialization;
 
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.JSContact;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -38,7 +37,7 @@ public class DeserializationTest {
     public void testDeserialization1() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testDeserialization1", jsCard.isValid());
 
     }
@@ -47,7 +46,7 @@ public class DeserializationTest {
     public void testDeserialization2() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json")), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testDeserialization2", jsCard.isValid());
 
     }
@@ -56,7 +55,7 @@ public class DeserializationTest {
     public void testDeserialization3() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json")), StandardCharsets.UTF_8);
-        Card jsCard = Card.toCard(json);
+        Card jsCard = Card.toJSCard(json);
         assertTrue("testDeserialization3", jsCard.isValid());
 
     }
@@ -65,8 +64,8 @@ public class DeserializationTest {
     public void testDeserialization4() throws IOException {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json")), StandardCharsets.UTF_8);
-        JSContact[] jsContacts = JSContact.toJSContacts(json);
-        for (JSContact jsContact : jsContacts)
+        Card[] jsContacts = Card.toJSCards(json);
+        for (Card jsContact : jsContacts)
             assertTrue("testDeserialization4", jsContact.isValid());
     }
 
@@ -102,8 +101,8 @@ public class DeserializationTest {
                     "}" +
                 "}" +
                 "}";
-        JSContact[] jsContacts = JSContact.toJSContacts(jscard);
-        Card jsCard = ((Card) jsContacts[0]);
+        Card[] jsCards = Card.toJSCards(jscard);
+        Card jsCard = jsCards[0];
         assertEquals("testDeserialization5 - 1", 1, jsCard.getExtensions().size());
         assertEquals("testDeserialization5 - 2", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
         assertTrue("testDeserialization5 - 3", jsCard.getExtensions().get("ext1") instanceof Integer);
@@ -128,25 +127,25 @@ public class DeserializationTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"fullName\":\"test\"," +
-                "\"ietf.org:rfc0000:props\": [ " +
+                "\"vCardProps\": [ " +
                     "[\"x-foo1\", {\"x-bar\":\"Hello\",\"group\":\"item1\"}, \"unknown\", \"World!\"], " +
                     "[\"x-foo2\", {\"pref\": 1}, \"integer\", 100 ] " +
                   "]" +
                 "}";
-        JSContact[] jsContacts = JSContact.toJSContacts(jscard);
-        Card jsCard = ((Card) jsContacts[0]);
-        assertEquals("testDeserialization6 - 1", 2, jsCard.getJCardExtensions().length);
-        assertEquals("testDeserialization6 - 2", "x-foo1", jsCard.getJCardExtensions()[0].getName().toString());
-        assertEquals("testDeserialization6 - 3", 2, jsCard.getJCardExtensions()[0].getParameters().size());
-        assertEquals("testDeserialization6 - 4", "Hello", jsCard.getJCardExtensions()[0].getParameters().get("x-bar"));
-        assertEquals("testDeserialization6 - 5", "item1", jsCard.getJCardExtensions()[0].getParameters().get("group"));
-        assertNull("testDeserialization6 - 6", jsCard.getJCardExtensions()[0].getType());
-        assertEquals("testDeserialization6 - 7", "World!", jsCard.getJCardExtensions()[0].getValue());
-        assertEquals("testDeserialization6 - 8", "x-foo2", jsCard.getJCardExtensions()[1].getName().toString());
-        assertEquals("testDeserialization6 - 9", 1, jsCard.getJCardExtensions()[1].getParameters().size());
-        assertEquals("testDeserialization6 - 10", 1, jsCard.getJCardExtensions()[1].getParameters().get("pref"));
-        assertEquals("testDeserialization6 - 11", VCardDataType.INTEGER, jsCard.getJCardExtensions()[1].getType());
-        assertEquals("testDeserialization6 - 12", 100, jsCard.getJCardExtensions()[1].getValue());
+        Card[] jsCards = Card.toJSCards(jscard);
+        Card jsCard = jsCards[0];
+        assertEquals("testDeserialization6 - 1", 2, jsCard.getVCardProps().length);
+        assertEquals("testDeserialization6 - 2", "x-foo1", jsCard.getVCardProps()[0].getName().toString());
+        assertEquals("testDeserialization6 - 3", 2, jsCard.getVCardProps()[0].getParameters().size());
+        assertEquals("testDeserialization6 - 4", "Hello", jsCard.getVCardProps()[0].getParameters().get("x-bar"));
+        assertEquals("testDeserialization6 - 5", "item1", jsCard.getVCardProps()[0].getParameters().get("group"));
+        assertNull("testDeserialization6 - 6", jsCard.getVCardProps()[0].getType());
+        assertEquals("testDeserialization6 - 7", "World!", jsCard.getVCardProps()[0].getValue());
+        assertEquals("testDeserialization6 - 8", "x-foo2", jsCard.getVCardProps()[1].getName().toString());
+        assertEquals("testDeserialization6 - 9", 1, jsCard.getVCardProps()[1].getParameters().size());
+        assertEquals("testDeserialization6 - 10", 1, jsCard.getVCardProps()[1].getParameters().get("pref"));
+        assertEquals("testDeserialization6 - 11", VCardDataType.INTEGER, jsCard.getVCardProps()[1].getType());
+        assertEquals("testDeserialization6 - 12", 100, jsCard.getVCardProps()[1].getValue());
 
     }
 }
