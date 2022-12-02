@@ -96,11 +96,11 @@ public class TitlesTest extends VCard2JSContactTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testTitleWithAltid3 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid3 - 2", 2, jsCard.getLocalizationsPerLanguage("it").size());
-        assertEquals("testTitleWithAltid3 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-2").getName());
-        assertEquals("testTitleWithAltid3 - 4", "IETF Area Director", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testTitleWithAltid3 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testTitleWithAltid3 - 4", "IETF Area Director", jsCard.getTitles().get("TITLE-2").getName());
         assertEquals("testTitleWithAltid3 - 5", 2, jsCard.getLocalizationsPerLanguage("it").size());
-        assertEquals("testTitleWithAltid3 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-2").get("name").asText());
-        assertEquals("testTitleWithAltid3 - 7", "Direttore Area IETF", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
+        assertEquals("testTitleWithAltid3 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
+        assertEquals("testTitleWithAltid3 - 7", "Direttore Area IETF", jsCard.getLocalization("it", "titles/TITLE-2").get("name").asText());
     }
 
 
