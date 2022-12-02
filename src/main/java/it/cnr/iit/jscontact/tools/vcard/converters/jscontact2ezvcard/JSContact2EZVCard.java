@@ -108,18 +108,12 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static Uid getUid(String uid) {
 
-        if (uid == null)
-            return null;
-
-        return new Uid(uid);
+        return (uid!=null) ? new Uid(uid) : null;
     }
 
     private static Revision getRevision(Calendar update) {
 
-        if (update == null)
-            return null;
-
-        return new Revision(update);
+        return (update!=null) ? new Revision(update) : null;
     }
 
     private static void fillMembers(VCard vcard, Card jsCard) {
@@ -140,12 +134,6 @@ public class JSContact2EZVCard extends AbstractConverter {
                 return component.getValue();
 
         return null;
-    }
-
-    private static void addValuesToJoiner(StringJoiner joiner, NameComponent[] name, NameComponentEnum type) {
-
-        String component = getNameComponent(name, type);
-        joiner.add(component);
     }
 
     private static void addValuesToJoiner(StringJoiner joiner, List<String> values) {
@@ -523,10 +511,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private GeoUri getGeoUri(String coordinates) {
 
-        if (coordinates == null)
-            return null;
-
-        return GeoUri.parse(coordinates);
+        return (coordinates!=null) ? GeoUri.parse(coordinates) : null;
     }
 
     private ezvcard.property.Address getAddress(Address address, Map<String, TimeZone> timeZones, String language) {
@@ -602,6 +587,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         return (NickName) asObject(jsonNode, NickName.class);
     }
 
+    private static Organization asOrganization(JsonNode jsonNode) {
+        return (Organization) asObject(jsonNode, Organization.class);
+    }
 
     private static NameComponent[] asNameComponentArray(JsonNode arrayNode) {
 
@@ -1194,16 +1182,6 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-
-    private <E extends TextListProperty> E getTextListProperty(E property, List<String> textList, String language, String propId, Map<String, VCardParam> unmatchedParams) {
-
-        property.getValues().addAll(textList);
-        VCardUtils.addVCardUnmatchedParams(property,unmatchedParams);
-        addPropId(property, propId);
-        if (language != null) property.getParameters().setLanguage(language);
-        return property;
-    }
-
     private static ezvcard.property.Title getTitle(Title jsTitle) {
 
         ezvcard.property.Title title = new ezvcard.property.Title(jsTitle.getName());
@@ -1304,14 +1282,21 @@ public class JSContact2EZVCard extends AbstractConverter {
         vcard.setCategories(jsCard.getKeywords().keySet().toArray(new String[jsCard.getKeywords().size()]));
     }
 
-    private static List<String> getOrganizationItems(String organization, String[] units) {
 
-        List<String> organizationItems = new ArrayList<>();
-        organizationItems.add((organization!=null) ? organization : StringUtils.EMPTY);
-        if (units != null)
-            organizationItems.addAll(Arrays.asList(units));
-        return organizationItems;
+    private static ezvcard.property.Organization getOrganization(Organization jsOrg) {
+
+        ezvcard.property.Organization org = new ezvcard.property.Organization();
+        org.getValues().add((jsOrg.getName()!=null) ? jsOrg.getName() : StringUtils.EMPTY);
+        if (jsOrg.getUnits()!=null)
+            org.getValues().addAll(Arrays.asList(jsOrg.getUnits()));
+        org.setPref(jsOrg.getPref());
+        org.setType(getVCardType(jsOrg));
+        if (jsOrg.getSortAs()!=null)
+            org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, jsOrg.getSortAs()));
+        VCardUtils.addVCardUnmatchedParams(org, jsOrg);
+        return org;
     }
+
 
     private void fillOrganizations(VCard vcard, Card jsCard) {
 
@@ -1322,34 +1307,35 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name")==null) {
-                ezvcard.property.Organization org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getVCardParams());
-                if (entry.getValue().getSortAs()!=null)
-                    org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, entry.getValue().getSortAs()));
+                ezvcard.property.Organization org = getOrganization(entry.getValue());
+                addPropId(org, entry.getKey());
+                addX_ABLabel(entry.getValue(), org, vcard);
                 vcard.getOrganizations().add(org);
             }
             else {
                 List<ezvcard.property.Organization> organizations = new ArrayList<>();
-                ezvcard.property.Organization org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems(entry.getValue().getName(), entry.getValue().getUnits()), jsCard.getLocale(), entry.getKey(), entry.getValue().getVCardParams());
-                if (entry.getValue().getSortAs()!=null)
-                    org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, entry.getValue().getSortAs()));
+                ezvcard.property.Organization org = getOrganization(entry.getValue());
+                addPropId(org, entry.getKey());
+                addX_ABLabel(entry.getValue(), org, vcard);
                 organizations.add(org);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
-                        org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems((localization.getValue().get("name") != null) ? localization.getValue().get("name").asText() : null, JsonNodeUtils.asTextArray(localization.getValue().get("units"))), localization.getKey(), entry.getKey(), null);
-                        if (localization.getValue().get("sortAs") != null)
-                            org.setSortAs(localization.getValue().get("sortAs").asText());
+                        org = getOrganization(asOrganization(localization.getValue()));
+                        org.setLanguage(localization.getKey());
                         organizations.add(org);
-                    }
+                   }
                 }
                 localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
                         JsonNode units = jsCard.getLocalization(localization.getKey(),"organizations/"+entry.getKey()+"/units");
-                        org = getTextListProperty(new ezvcard.property.Organization(), getOrganizationItems((localization.getValue().get("name")!=null) ? localization.getValue().get("name").asText() : null, JsonNodeUtils.asTextArray(units)), localization.getKey(), entry.getKey(), null);
-                        if (localization.getValue().get("sortAs") != null)
-                            org.setSortAs(localization.getValue().get("sortAs").asText());
+                        org = new ezvcard.property.Organization();
+                        org.getValues().add(localization.getValue().asText());
+                        if (units!=null)
+                            org.getValues().addAll(Arrays.asList(JsonNodeUtils.asTextArray(units)));
+                        org.setLanguage(localization.getKey());
                         organizations.add(org);
                     }
                 }
@@ -1463,6 +1449,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
+    @Deprecated
     private static String getPropertyNameFromClassName(String className) {
 
         for (Map.Entry<String,String> pair : ezclassesPerPropertiesMap.entrySet()) {

@@ -4,14 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
+import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Class mapping the Organization type as defined in section 2.2.4 of [draft-ietf-calext-jscontact].
@@ -26,7 +36,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Organization extends AbstractJSContactType implements IdMapValue, Serializable {
+public class Organization extends AbstractJSContactType implements HasLabel, HasContexts, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Organization", message="invalid @type value in Organization")
@@ -39,6 +49,19 @@ public class Organization extends AbstractJSContactType implements IdMapValue, S
     String[] units;
 
     String[] sortAs;
+
+    @JsonSerialize(using = ContextsSerializer.class)
+    @JsonDeserialize(using = ContextsDeserializer.class)
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Organization - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Singular(ignoreNullCollections = true)
+    Map<Context,Boolean> contexts;
+
+    @Min(value=1, message = "invalid pref in Organization - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in Organization - value must be less or equal than 100")
+    Integer pref;
+
+    String label;
 
     @JsonIgnore
     String group; // used only to search for an organization related to a title/role
