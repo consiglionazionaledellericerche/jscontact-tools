@@ -607,7 +607,7 @@ Version 0.12.0 implements the following draft versions:
 
 ## Java
 
-Version 9 required.
+Version 8 required.
 
 ## Maven
 
