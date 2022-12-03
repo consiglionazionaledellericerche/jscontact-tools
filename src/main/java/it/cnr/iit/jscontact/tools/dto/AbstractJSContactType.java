@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.VCardParamsDeserializer;
@@ -48,6 +49,7 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     @Setter
     String propId;
 
+    @JsonProperty("vCardParams")
     @JsonSerialize(using = VCardParamsSerializer.class)
     @JsonDeserialize(using = VCardParamsDeserializer.class)
     @Valid

@@ -108,8 +108,8 @@ public class AddressesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;CC=US;ALTID=1:;;54321 Oak St;Reston;VA;20190;USA\n" +
-                "GEO;ALTID=1:geo:46.772673,-71.282945\n" +
+                "GROUP1.ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "GROUP1.GEO:geo:46.772673,-71.282945\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -132,9 +132,9 @@ public class AddressesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;CC=US;ALTID=1:;;54321 Oak St;Reston;VA;20190;USA\n" +
-                "GEO;ALTID=1:geo:46.772673,-71.282945\n" +
-                "TZ;ALTID=1:-0500\n" +
+                "GROUP1.ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "GROUP1.GEO:geo:46.772673,-71.282945\n" +
+                "GROUP1.TZ:-0500\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -156,9 +156,9 @@ public class AddressesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;CC=US;ALTID=1:;;54321 Oak St;Reston;VA;20190;USA\n" +
-                "GEO;ALTID=1:geo:46.772673,-71.282945\n" +
-                "TZ;ALTID=1:America/New_York\n" +
+                "GROUP1.ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "GROUP1.GEO:geo:46.772673,-71.282945\n" +
+                "GROUP1.TZ:America/New_York\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -207,8 +207,8 @@ public class AddressesTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "FN:test\n" +
                 "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
-                "ADR;CC=US;ALTID=1:;;12345 Elm St;Reston;VA;20190;USA\n" +
-                "TZ;ALTID=1:America/New_York\n" +
+                "GROUP1.ADR;CC=US:;;12345 Elm St;Reston;VA;20190;USA\n" +
+                "GROUP1.TZ:America/New_York\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -262,9 +262,9 @@ public class AddressesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;CC=US;ALTID=1:;;54321 Oak St;Reston;VA;20190;USA\n" +
-                "GEO;ALTID=1:geo:46.772673,-71.282945\n" +
-                "TZ;ALTID=1:-0530\n" +
+                "GROUP1.ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "GROUP1.GEO:geo:46.772673,-71.282945\n" +
+                "GROUP1.TZ:-0530\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

@@ -20,7 +20,7 @@
      ["role", {}, "text", "Project Lead"],
      ["adr",
        { "type":"work",
-         "altid": "1"
+         "group": "group1"
        },
        "text",
        [
@@ -35,9 +35,9 @@
      ],
      ["geo", {
        "type":"work",
-       "altid": "1"
+       "group": "group1"
      }, "uri", "geo:46.772673,-71.282945"],
-     ["tz", {"altid": "1"},
+     ["tz", {"group": "group1"},
        "utc-offset", "-05:00"],
      ["tel",
        {

@@ -19,7 +19,7 @@
     ["lang", { "pref": "2" }, "language-tag", "en"],
     ["org", { "type": "work" }, "text", "Viagenie"],
     ["adr",
-      { "type": "work", "altid": "1"},
+      { "type": "work", "group": "group1"},
       "text",
       [
         "",
@@ -46,13 +46,13 @@
       "text",
       "simon.perreault@viagenie.ca"
     ],
-    ["geo", { "type": "work", "altid": "1" }, "uri", "geo:46.772673,-71.282945"],
+    ["geo", { "type": "work", "group": "group1" }, "uri", "geo:46.772673,-71.282945"],
     ["key",
       { "type": "work" },
       "uri",
       "http://www.viagenie.ca/simon.perreault/simon.asc"
     ],
-    ["tz", { "altid": "1" }, "utc-offset", "-05:00"],
+    ["tz", { "group": "group1" }, "utc-offset", "-05:00"],
     ["url", { "type": "home" }, "uri", "http://nomis80.org"]
   ]
 ]

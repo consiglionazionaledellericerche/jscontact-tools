@@ -227,11 +227,11 @@ The conversion is executed according to the following rules:
 
 5. An unmatched parameter is converted into an entry of an object `vCardParams` map. The following unmatched parameters are considered:
     PID
-    SORT-AS
+    GROUP
  
-6. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
+7. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
 
-7. Default values for the configuration properties are:
+8. Default values for the configuration properties are:
     
     - `customTimeZonesPrefix = "tz"`
     - `setCardMustBeValidated = true`
@@ -241,7 +241,7 @@ The conversion is executed according to the following rules:
     - `setVoiceAsDefaultPhoneFeature = true`
     - `convertGenderToSpeakToAs = true` 
 
-8. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
+9. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
 
     GENDER      SpeakToAs.grammaticalGender    
     M           male
@@ -250,51 +250,49 @@ The conversion is executed according to the following rules:
     N           neuter
     U           SpeakToAs = null
 
-9. Where a language is required to represent a localization and the language is not specified, `en` is used by default to set the mapping configuration parameter `defaultLanguage`.
+10. Where a language is required to represent a localization and the language is not specified, `en` is used by default to set the mapping configuration parameter `defaultLanguage`.
 
-10. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
+11. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
 
     1. BDAY (BIRTHDATE)
     2. DEATHDAY (DEATHDATE)
     3. ANNIVERSARY
 
-11. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
+12. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
 
     1. HOBBY
     2. INTEREST
     3. EXPERTISE
 
-12. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
+13. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
 
     1. PHOTO
     2. SOUND
     3. LOGO
 
-13. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
+14. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
 
     1. CALURI
     2. FBURL
 
-14. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
+15. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
 
     1. URL
     2. CONTACT-URI
 
-15. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the following order:
+16. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the following order:
 
     1. SOURCE
     2. ORG-DIRECTORY
 
-16. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
+17. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
     1. TITLE
     2. ROLE
 
-17. The order of conversion of the HOBBY, INTEREST, EXPERTISE and ORG-DIRECTORY elements is based on the values of the INDEX parameter
+18. The order of conversion of the HOBBY, INTEREST, EXPERTISE and ORG-DIRECTORY elements is based on the values of the INDEX parameter
 
-18. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
-
-19. The order of conversion of the ADR elements is based on the values of ALTID parameter.
+19. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
 
 20. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
 
@@ -307,6 +305,8 @@ The conversion is executed according to the following rules:
 24. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
 
 25. The VCARD parameter DERIVED is ignored. 
+
+26. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group construct.
 
 ### Conversion Profiles from vCard to JSContact Card
 
@@ -402,8 +402,8 @@ Here in the following two examples of conversion between vCard and JSContact Car
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
-                "GEO:geo:46.772673,-71.282945\n" +
+                "GROUP1.ADR;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "GROUP1.GEO:geo:46.772673,-71.282945\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

@@ -31,7 +31,6 @@ import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.*;
 import it.cnr.iit.jscontact.tools.dto.wrappers.CategoryWrapper;
@@ -72,16 +71,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private int customTimeZoneCounter = 0;
 
     private final Map<String, TimeZone> customTimeZones = new HashMap<>();
-
-    private static boolean isDefaultLanguage(String language, String defaultLanguage) {
-
-        if (StringUtils.isEmpty(language))
-            return false;
-
-        return defaultLanguage != null && StringUtils.equals(language, defaultLanguage);
-
-    }
-
 
     private List<String> getVCard2JSContactProfileIds(VCard2JSContactIdsProfile.IdType idType, Object... args) {
 
@@ -216,19 +205,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (config.isSetVoiceAsDefaultPhoneFeature())
             return new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.voice(), Boolean.TRUE);}};
-
-        return null;
-    }
-
-    private static HasAltid getAlternative(List<? extends HasAltid> list, String altid) {
-
-        if (altid == null)
-            return null;
-
-        for (HasAltid al : list) {
-            if (al.getAltid() != null && al.getAltid().equals(altid))
-                return al;
-        }
 
         return null;
     }
@@ -684,9 +660,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static it.cnr.iit.jscontact.tools.dto.Address getAddressAltrenative(List<it.cnr.iit.jscontact.tools.dto.Address> addresses, String altid) {
+    private static it.cnr.iit.jscontact.tools.dto.Address findJSCardAddressByGroup(List<it.cnr.iit.jscontact.tools.dto.Address> addresses, String group) {
 
-        return (it.cnr.iit.jscontact.tools.dto.Address) getAlternative(addresses, altid);
+            if (group == null)
+                return null;
+
+            for (Address address : addresses) {
+                if (address.getGroup()!=null && address.getGroup().equalsIgnoreCase(group))
+                    return address;
+            }
+
+            return null;
     }
 
     private String toJSCardTimezoneName(String vcardTzParam) {
@@ -701,53 +685,56 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return vcardTzParam;
     }
 
+    private Address toJSCardAddress(ezvcard.property.Address vcardAddr, VCard vcard) {
+
+        List<StreetComponent> streetDetailPairs = new ArrayList<>();
+        if (StringUtils.isNotEmpty(vcardAddr.getPoBox()))
+            streetDetailPairs.add(StreetComponent.postOfficeBox(vcardAddr.getPoBox()));
+        if (StringUtils.isNotEmpty(vcardAddr.getExtendedAddressFull()))
+            streetDetailPairs.add(StreetComponent.extension(vcardAddr.getExtendedAddressFull()));
+        if (StringUtils.isNotEmpty(vcardAddr.getStreetAddressFull()))
+            streetDetailPairs.add(StreetComponent.name(vcardAddr.getStreetAddressFull()));
+
+        String autoFullAddress = toJSCardAutoFulllAddress(vcardAddr);
+        String vcardTypeParam = VCardUtils.getVCardParamValue(vcardAddr.getParameters(), VCardParamEnum.TYPE);
+
+        return it.cnr.iit.jscontact.tools.dto.Address.builder()
+                .hash(autoFullAddress)
+                .propId(vcardAddr.getParameter(VCardParamEnum.PROP_ID.getValue()))
+                .contexts(toJSCardAddressContexts(vcardTypeParam))
+                .fullAddress(toJSCardFulllAddress(vcardAddr.getLabel(),autoFullAddress))
+                .pref(vcardAddr.getPref())
+                .coordinates(getValue(vcardAddr.getGeo()))
+                .timeZone(toJSCardTimezoneName(vcardAddr.getTimezone()))
+                .countryCode(vcardAddr.getParameter(VCardParamEnum.CC.getValue()))
+                .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[streetDetailPairs.size()]) : null)
+                .locality(StringUtils.defaultIfEmpty(vcardAddr.getLocality(), null))
+                .region(StringUtils.defaultIfEmpty(vcardAddr.getRegion(), null))
+                .postcode(StringUtils.defaultIfEmpty(vcardAddr.getPostalCode(), null))
+                .country(StringUtils.defaultIfEmpty(vcardAddr.getCountry(), null))
+                .altid(vcardAddr.getAltId())
+                .group(vcardAddr.getGroup())
+                .language(vcardAddr.getLanguage())
+                .propId(vcardAddr.getParameter(VCardParamEnum.PROP_ID.getValue()))
+                .label(toJSCardLabel(vcardAddr,vcard.getExtendedProperties()))
+                .vCardParams(VCardUtils.getVCardUnmatchedParams(vcardAddr, VCardParamEnum.PID, VCardParamEnum.GROUP))
+                .build();
+    }
+
     private void fillJSCardAddresses(VCard vcard, Card jsCard) {
 
-        List<it.cnr.iit.jscontact.tools.dto.Address> addresses = new ArrayList<>();
+        if (vcard.getAddresses() == null || vcard.getAddresses().isEmpty())
+            return;
 
+        List<it.cnr.iit.jscontact.tools.dto.Address> addresses = new ArrayList<>();
         String tz;
         String geo;
-        for (ezvcard.property.Address addr : vcard.getAddresses()) {
-
-            String vcardType = VCardUtils.getVCardParamValue(addr.getParameters(), VCardParamEnum.TYPE);
-            tz = toJSCardTimezoneName(addr.getTimezone());
-            geo = getValue(addr.getGeo());
-            String cc = addr.getParameter(VCardParamEnum.CC.getValue());
-
-            List<StreetComponent> streetDetailPairs = new ArrayList<>();
-            if (StringUtils.isNotEmpty(addr.getPoBox()))
-                streetDetailPairs.add(StreetComponent.postOfficeBox(addr.getPoBox()));
-            if (StringUtils.isNotEmpty(addr.getExtendedAddressFull()))
-                streetDetailPairs.add(StreetComponent.extension(addr.getExtendedAddressFull()));
-            if (StringUtils.isNotEmpty(addr.getStreetAddressFull()))
-                streetDetailPairs.add(StreetComponent.name(addr.getStreetAddressFull()));
-
-            String autoFullAddress = toJSCardAutoFulllAddress(addr);
-            addresses.add(it.cnr.iit.jscontact.tools.dto.Address.builder()
-                                                                 .hash(autoFullAddress)
-                                                                 .propId(addr.getParameter(VCardParamEnum.PROP_ID.getValue()))
-                                                                 .contexts(toJSCardAddressContexts(vcardType))
-                                                                 .fullAddress(toJSCardFulllAddress(addr.getLabel(),autoFullAddress))
-                                                                 .pref(addr.getPref())
-                                                                 .coordinates(geo)
-                                                                 .timeZone(tz)
-                                                                 .countryCode(cc)
-                                                                 .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[streetDetailPairs.size()]) : null)
-                                                                 .locality(StringUtils.defaultIfEmpty(addr.getLocality(), null))
-                                                                 .region(StringUtils.defaultIfEmpty(addr.getRegion(), null))
-                                                                 .postcode(StringUtils.defaultIfEmpty(addr.getPostalCode(), null))
-                                                                 .country(StringUtils.defaultIfEmpty(addr.getCountry(), null))
-                                                                 .altid(addr.getAltId())
-                                                                 .language(addr.getLanguage())
-                                                                 .isDefaultLanguage(isDefaultLanguage(addr.getLanguage(), jsCard.getLocale()))
-                                                                 .vCardParams(VCardUtils.getVCardUnmatchedParams(addr, VCardParamEnum.PID, VCardParamEnum.GROUP))
-                                                                 .build()
-            );
-        }
+        for (ezvcard.property.Address addr : vcard.getAddresses())
+            addresses.add(toJSCardAddress(addr, vcard));
 
         if (vcard.getTimezone() != null) {
             tz = getValue(vcard.getTimezone());
-            it.cnr.iit.jscontact.tools.dto.Address address = getAddressAltrenative(addresses, vcard.getTimezone().getAltId());
+            it.cnr.iit.jscontact.tools.dto.Address address = findJSCardAddressByGroup(addresses, vcard.getTimezone().getGroup());
             if (address != null) {
                 address.setTimeZone(tz);
             } else {
@@ -762,7 +749,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (vcard.getGeo() != null) {
             geo = getValue(vcard.getGeo().getGeoUri());
-            it.cnr.iit.jscontact.tools.dto.Address address = getAddressAltrenative(addresses, vcard.getGeo().getAltId());
+            it.cnr.iit.jscontact.tools.dto.Address address = findJSCardAddressByGroup(addresses, vcard.getGeo().getGroup());
             if (address != null) {
                 address.setCoordinates(geo);
             } else {
@@ -775,27 +762,21 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             }
         }
 
-        if (addresses.size()==0)
-            return;
+        Collections.sort(addresses, JSCardAddressesComparator.builder().defaultLanguage(jsCard.getLocale()).build()); //sort based on altid
 
-        Collections.sort(addresses); //sort based on altid
-
-        String id;
-        String altId = null;
-        int i = 0;
-        for (Address address: addresses) {
-            if (altId!=null && address.getAltid()!=null && altId.equals(address.getAltid())) {
-                id = getJSCardId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + i, address.getPropId() );
-                jsCard.addLocalization(address.getLanguage(),"addresses/" + id,  mapper.convertValue(address, JsonNode.class));
-            }
-            else {
-                i++;
-                id = getJSCardId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + i, address.getPropId());
+        int i = 1;
+        String lastAltid = null;
+        String lastMapId = null;
+        for (Address address : addresses) {
+            if (address.getAltid() == null || lastAltid == null || !address.getAltid().equals(lastAltid)) {
+                String id = getJSCardId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + + (i++), address.getPropId() );
                 jsCard.addAddress(id, address);
-                altId = address.getAltid();
+                lastAltid = address.getAltid();
+                lastMapId = id;
+            } else {
+                jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId, mapper.convertValue(address, JsonNode.class));
             }
         }
-
     }
 
     private static  <T extends DateOrTimeProperty> AnniversaryDate toJSCardAnniversaryDate(T date) {
