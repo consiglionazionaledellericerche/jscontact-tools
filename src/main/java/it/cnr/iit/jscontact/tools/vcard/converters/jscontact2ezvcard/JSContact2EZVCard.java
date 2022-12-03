@@ -1306,7 +1306,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,Organization> entry : jsCard.getOrganizations().entrySet()) {
 
             if (jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name")==null) {
+                jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name")==null &&
+                jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/units")==null) {
                 ezvcard.property.Organization org = getOrganization(entry.getValue());
                 addPropId(org, entry.getKey());
                 addX_ABLabel(entry.getValue(), org, vcard);
@@ -1335,6 +1336,18 @@ public class JSContact2EZVCard extends AbstractConverter {
                         org.getValues().add(localization.getValue().asText());
                         if (units!=null)
                             org.getValues().addAll(Arrays.asList(JsonNodeUtils.asTextArray(units)));
+                        org.setLanguage(localization.getKey());
+                        organizations.add(org);
+                    }
+                }
+                localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/units"); // check for only org units localized
+                if (localizations != null) {
+                    for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
+                        if (jsCard.getLocalization(localization.getKey(),"organizations/"+entry.getKey()+"/name") != null)
+                            continue; //skip because already done
+                        org = new ezvcard.property.Organization();
+                        org.getValues().add(StringUtils.EMPTY);
+                        org.getValues().addAll(Arrays.asList(JsonNodeUtils.asTextArray(localization.getValue())));
                         org.setLanguage(localization.getKey());
                         organizations.add(org);
                     }
