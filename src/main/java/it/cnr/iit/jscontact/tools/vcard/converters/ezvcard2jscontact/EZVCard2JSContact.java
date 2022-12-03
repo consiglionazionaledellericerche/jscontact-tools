@@ -582,45 +582,57 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillJSCardNames(VCard vcard, Card jsCard) throws CardException {
+    private Name toJSCardName(StructuredName vcardName, VCard vcard) throws CardException {
 
-        List<StructuredName> sns = vcard.getStructuredNames();
-        if (sns.size() > 0) {
-            NameComponent[] components = null;
-            for (StructuredName sn : sns) {
-                String[] ranks = null;
-                if (sn.getParameter(VCardParamEnum.RANKS.getValue())!=null)
-                    ranks = sn.getParameter(VCardParamEnum.RANKS.getValue()).split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
-                int i = 1;
-                for (String px : sn.getPrefixes())
-                    components = Name.addComponent(components, NameComponent.prefix(px, toJSCardRank(ranks,4, i++)));
-                if (sn.getGiven() != null) {
-                    String[] names = sn.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-                    i = 1;
-                    for (String name : names)
-                        components = Name.addComponent(components, NameComponent.given(name, toJSCardRank(ranks,2, i++)));
-                }
-                if (sn.getFamily() != null) {
-                    String[] surnames = sn.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-                    i = 1;
-                    for (String surname : surnames)
-                        components = Name.addComponent(components, NameComponent.surname(surname, toJSCardRank(ranks, 1, i++)));
-                }
-                i = 1;
-                for (String an : sn.getAdditionalNames())
-                    components = Name.addComponent(components,NameComponent.middle(an, toJSCardRank(ranks,3, i++)));
-                i = 1;
-                for (String sx : sn.getSuffixes())
-                    components = Name.addComponent(components,NameComponent.suffix(sx, toJSCardRank(ranks,5, i++)));
-                jsCard.setName(Name.builder()
-                                   .components(components)
-                                   .sortAs(toJSCardNameSortAs(sn.getSortAs(),sn))
-                                   .vCardParams(VCardUtils.getVCardUnmatchedParams(sn, VCardParamEnum.PID, VCardParamEnum.GROUP))
-                                   .build());
-            }
+        NameComponent[] components = null;
+
+        String[] ranks = null;
+        if (vcardName.getParameter(VCardParamEnum.RANKS.getValue())!=null)
+            ranks = vcardName.getParameter(VCardParamEnum.RANKS.getValue()).split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
+        int i = 1;
+        for (String px : vcardName.getPrefixes())
+            components = Name.addComponent(components, NameComponent.prefix(px, toJSCardRank(ranks,4, i++)));
+        if (vcardName.getGiven() != null) {
+            String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+            i = 1;
+            for (String name : names)
+                components = Name.addComponent(components, NameComponent.given(name, toJSCardRank(ranks,2, i++)));
         }
+        if (vcardName.getFamily() != null) {
+            String[] surnames = vcardName.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+            i = 1;
+            for (String surname : surnames)
+                components = Name.addComponent(components, NameComponent.surname(surname, toJSCardRank(ranks, 1, i++)));
+        }
+        i = 1;
+        for (String an : vcardName.getAdditionalNames())
+            components = Name.addComponent(components,NameComponent.middle(an, toJSCardRank(ranks,3, i++)));
+        i = 1;
+        for (String sx : vcardName.getSuffixes())
+            components = Name.addComponent(components,NameComponent.suffix(sx, toJSCardRank(ranks,5, i++)));
+
+        return Name.builder()
+                .components(components)
+                .locale(vcardName.getLanguage())
+                .sortAs(toJSCardNameSortAs(vcardName.getSortAs(),vcardName))
+                .vCardParams(VCardUtils.getVCardUnmatchedParams(vcardName, VCardParamEnum.PID, VCardParamEnum.GROUP))
+                .label(toJSCardLabel(vcardName,vcard.getExtendedProperties()))
+                .build();
     }
 
+    private void fillJSCardNames(VCard vcard, Card jsCard) throws CardException {
+
+        if (vcard.getStructuredNames()==null || vcard.getStructuredNames().isEmpty())
+            return;
+
+        List<StructuredName> vcardNames = vcard.getStructuredNames();
+        Collections.sort(vcardNames, vCardPropertiesComparator);
+
+        jsCard.setName(toJSCardName(vcardNames.get(0), vcard)); //the first N property is the name, all the others name localization
+        for (int i = 1; i < vcardNames.size(); i++) {
+            jsCard.addLocalization(vcardNames.get(i).getLanguage(), "name", mapper.convertValue(toJSCardName(vcardNames.get(i), vcard), JsonNode.class));
+        }
+    }
 
     private NickName toJSCardNickName(String name, ezvcard.property.Nickname vcardNickname, VCard vcard) {
 

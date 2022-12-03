@@ -49,8 +49,8 @@ import java.util.StringJoiner;
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","fullAddress","street","locality","region","country",
-                     "postcode","countryCode","coordinates","timeZone","contexts",
-                     "pref"})
+                     "postcode","countryCode","coordinates","timeZone",
+                     "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
