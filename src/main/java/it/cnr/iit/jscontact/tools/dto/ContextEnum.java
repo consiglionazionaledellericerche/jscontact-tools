@@ -71,12 +71,12 @@ public enum ContextEnum implements IsExtensibleEnum, VCardTypeDerivedEnum {
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
      */
     @JsonIgnore
-    public static String toVCardType(ContextEnum context) {
+    public static String toVCardTypeParam(ContextEnum context) {
 
         if (context == null)
             return null;
 
-        return EnumUtils.toVCardType(context);
+        return EnumUtils.toVCardTypeParam(context);
     }
 
 }
