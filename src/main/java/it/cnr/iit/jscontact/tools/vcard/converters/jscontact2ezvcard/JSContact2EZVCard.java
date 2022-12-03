@@ -44,23 +44,6 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 public class JSContact2EZVCard extends AbstractConverter {
 
-    private static final Map<String,String> ezclassesPerPropertiesMap = new HashMap<String,String>() {{
-        put("Address", "ADR");
-        put("Birthday","BDAY");
-        put("CalendarUri","CALURI");
-        put("CalendarRequestUri","CALADRURI");
-        put("FormattedName", "FN");
-        put("FreeBusyUrl","FBURL");
-        put("Language","LANG");
-        put("Organization","ORG");
-        put("OrgDirectories","ORG-DIRECTORY");
-        put("ProductId","PRODID");
-        put("Revision","REV");
-        put("StructuredName", "N");
-        put("Telephone","TEL");
-        put("Timezone","TZ");
-    }};
-
     protected JSContact2VCardConfig config;
 
     private void addVCardX_ABLabel(HasLabel jsContactType, VCardProperty vcardProperty, VCard vcard) {
@@ -442,21 +425,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             } catch (Exception e) {
                 throw new InternalErrorException(e.getMessage());
 
-            }
-        }
-        return typeValues;
-    }
-
-    @Deprecated
-    private static <E extends Enum<E> & VCardTypeDerivedEnum> List toVCardTypeParmaValues(Class<E> enumType, String[] stringValues) {
-        List typeValues = new ArrayList();
-        for (String value : stringValues) {
-            try {
-                String typeItem = (String) enumType.getDeclaredMethod("toVCardTypeParam", String.class).invoke(null, value);
-                if (typeItem != null)
-                    typeValues.add(typeItem);
-            } catch (Exception e) {
-                throw new InternalErrorException(e.getMessage());
             }
         }
         return typeValues;
@@ -1461,20 +1429,6 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         return new ClientPidMap(Integer.parseInt(pid), uri);
     }
-
-
-    @Deprecated
-    private static String getPropertyNameFromClassName(String className) {
-
-        for (Map.Entry<String,String> pair : ezclassesPerPropertiesMap.entrySet()) {
-
-            if (pair.getKey().equals(className))
-                return pair.getValue();
-        }
-
-        return className.toUpperCase();
-    }
-
 
     private void fillVCardExtensions(VCard vcard, Card jsCard) {
 
