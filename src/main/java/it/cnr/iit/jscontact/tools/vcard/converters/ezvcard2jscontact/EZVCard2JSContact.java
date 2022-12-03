@@ -1108,7 +1108,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private static String getJSCardTitleOrganization(Map<String,it.cnr.iit.jscontact.tools.dto.Organization> jscardOrganizations, String vcardTitleGroup) {
+    private static String findJSCardOrganizationIdByGroup(Map<String,it.cnr.iit.jscontact.tools.dto.Organization> jscardOrganizations, String vcardTitleGroup) {
 
         if (vcardTitleGroup == null)
             return null;
@@ -1129,7 +1129,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return it.cnr.iit.jscontact.tools.dto.Title.builder()
                 .name(vcardTitle.getValue())
                 .type(TitleType.title())
-                .organization(getJSCardTitleOrganization(jsCard.getOrganizations(), vcardTitle.getGroup()))
+                .organization(findJSCardOrganizationIdByGroup(jsCard.getOrganizations(), vcardTitle.getGroup()))
                 .pref(vcardTitle.getPref())
                 .contexts(toJSCardContexts(vcardTitle.getType()))
                 .label(toJSCardLabel(vcardTitle,vcard.getExtendedProperties()))
@@ -1142,7 +1142,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return it.cnr.iit.jscontact.tools.dto.Title.builder()
                 .name(vcardRole.getValue())
                 .type(TitleType.role())
-                .organization(getJSCardTitleOrganization(jsCard.getOrganizations(), vcardRole.getGroup()))
+                .organization(findJSCardOrganizationIdByGroup(jsCard.getOrganizations(), vcardRole.getGroup()))
                 .pref(vcardRole.getPref())
                 .contexts(toJSCardContexts(vcardRole.getType()))
                 .label(toJSCardLabel(vcardRole,vcard.getExtendedProperties()))

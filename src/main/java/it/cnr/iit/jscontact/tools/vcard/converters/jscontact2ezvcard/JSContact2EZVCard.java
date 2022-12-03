@@ -1152,20 +1152,50 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static ezvcard.property.Title toVCardTitle(Title jsTitle) {
+    private static ezvcard.property.Organization findOrganizationByPropId(List<ezvcard.property.Organization> vcardOrganizations, String jsCardOrgId) {
+
+        if (vcardOrganizations == null || vcardOrganizations.isEmpty())
+            return null;
+
+        for (ezvcard.property.Organization vcardOrg : vcardOrganizations) {
+            String vcardPropid = vcardOrg.getParameter(VCardParamEnum.PROP_ID.getValue());
+            if (vcardPropid!=null && vcardPropid.equalsIgnoreCase(jsCardOrgId))
+                return vcardOrg;
+        }
+
+        return null;
+    }
+
+    private static ezvcard.property.Title toVCardTitle(Title jsTitle, VCard vcard) {
 
         ezvcard.property.Title title = new ezvcard.property.Title(jsTitle.getName());
         title.setPref(jsTitle.getPref());
         title.setType(toVCardTypeParam(jsTitle));
+        if (jsTitle.getOrganization()!=null) {
+            ezvcard.property.Organization vcardOrg = findOrganizationByPropId(vcard.getOrganizations(), jsTitle.getOrganization());
+            if (vcardOrg!=null) {
+                if (vcardOrg.getGroup()==null)
+                    vcardOrg.setGroup("G-" + jsTitle.getOrganization());
+                title.setGroup(vcardOrg.getGroup());
+            }
+        }
         VCardUtils.addVCardUnmatchedParams(title, jsTitle);
         return title;
     }
 
-    private static ezvcard.property.Role toVCardRole(Title jsTitle) {
+    private static ezvcard.property.Role toVCardRole(Title jsTitle, VCard vcard) {
 
         ezvcard.property.Role role = new ezvcard.property.Role(jsTitle.getName());
         role.setPref(jsTitle.getPref());
         role.setType(toVCardTypeParam(jsTitle));
+        if (jsTitle.getOrganization()!=null) {
+            ezvcard.property.Organization vcardOrg = findOrganizationByPropId(vcard.getOrganizations(), jsTitle.getOrganization());
+            if (vcardOrg!=null) {
+                if (vcardOrg.getGroup()==null)
+                    vcardOrg.setGroup("G-" + jsTitle.getOrganization());
+                role.setGroup(vcardOrg.getGroup());
+            }
+        }
         VCardUtils.addVCardUnmatchedParams(role, jsTitle);
         return role;
     }
@@ -1179,14 +1209,14 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,Title> entry : jsCard.getTitles().entrySet()) {
 
             if (jsCard.getLocalizationsPerPath("titles/" + entry.getKey()) == null &&
-                    jsCard.getLocalizationsPerPath("titles/" + entry.getKey() + "/title") == null) {
+                jsCard.getLocalizationsPerPath("titles/" + entry.getKey() + "/name") == null) {
                 if (entry.getValue().getType() == null || entry.getValue().getType().isTitle()) {
-                    ezvcard.property.Title title = toVCardTitle(entry.getValue());
+                    ezvcard.property.Title title = toVCardTitle(entry.getValue(), vcard);
                     addVCardPropIdParam(title, entry.getKey());
                     addVCardX_ABLabel(entry.getValue(), title, vcard);
                     vcard.addTitle(title);
                 } else {
-                    ezvcard.property.Role role = toVCardRole(entry.getValue());
+                    ezvcard.property.Role role = toVCardRole(entry.getValue(), vcard);
                     addVCardPropIdParam(role, entry.getKey());
                     addVCardX_ABLabel(entry.getValue(), role, vcard);
                     vcard.addRole(role);
@@ -1197,12 +1227,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                 List<ezvcard.property.Role> roles = new ArrayList<>();
 
                 if (entry.getValue().getType() == null || entry.getValue().getType().isTitle()) {
-                    ezvcard.property.Title title = toVCardTitle(entry.getValue());
+                    ezvcard.property.Title title = toVCardTitle(entry.getValue(), vcard);
                     addVCardPropIdParam(title, entry.getKey());
                     addVCardX_ABLabel(entry.getValue(), title, vcard);
                     titles.add(title);
                 } else {
-                    ezvcard.property.Role role = toVCardRole(entry.getValue());
+                    ezvcard.property.Role role = toVCardRole(entry.getValue(), vcard);
                     addVCardPropIdParam(role, entry.getKey());
                     addVCardX_ABLabel(entry.getValue(), role, vcard);
                     roles.add(role);
@@ -1212,12 +1242,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
                         if (jsCard.getTitles().get(entry.getKey()).getType() == null || jsCard.getTitles().get(entry.getKey()).getType().isTitle()) {
-                            ezvcard.property.Title title = toVCardTitle(asJSCardTitle(localization.getValue()));
+                            ezvcard.property.Title title = toVCardTitle(asJSCardTitle(localization.getValue()), vcard);
                             title.setLanguage(localization.getKey());
                             titles.add(title);
                         }
                         else {
-                            ezvcard.property.Role role = toVCardRole(asJSCardTitle(localization.getValue()));
+                            ezvcard.property.Role role = toVCardRole(asJSCardTitle(localization.getValue()), vcard);
                             role.setLanguage(localization.getKey());
                             roles.add(role);
                         }
