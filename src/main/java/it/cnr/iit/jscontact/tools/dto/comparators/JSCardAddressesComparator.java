@@ -1,4 +1,4 @@
-package it.cnr.iit.jscontact.tools.dto.utils;
+package it.cnr.iit.jscontact.tools.dto.comparators;
 
 import it.cnr.iit.jscontact.tools.dto.Address;
 import lombok.AllArgsConstructor;

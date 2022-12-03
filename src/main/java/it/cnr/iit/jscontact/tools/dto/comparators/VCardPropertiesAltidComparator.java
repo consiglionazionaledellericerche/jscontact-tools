@@ -1,16 +1,15 @@
-package it.cnr.iit.jscontact.tools.dto.utils;
+package it.cnr.iit.jscontact.tools.dto.comparators;
 
 import ezvcard.property.VCardProperty;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Setter;
 
 import java.util.Comparator;
 
 @Builder
 @AllArgsConstructor
-public class VCardPropertiesComparator implements Comparator<VCardProperty> {
+public class VCardPropertiesAltidComparator implements Comparator<VCardProperty> {
 
     private String defaultLanguage;
 

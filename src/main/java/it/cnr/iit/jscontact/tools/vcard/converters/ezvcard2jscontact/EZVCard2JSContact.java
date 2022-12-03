@@ -31,10 +31,11 @@ import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
+import it.cnr.iit.jscontact.tools.dto.comparators.JSCardAddressesComparator;
+import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesAltidComparator;
+import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesPrefComparator;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.*;
-import it.cnr.iit.jscontact.tools.dto.wrappers.CategoryWrapper;
-import it.cnr.iit.jscontact.tools.dto.wrappers.MemberWrapper;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
@@ -64,7 +65,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private static final String CUSTOM_TIME_ZONE_ID_PREFIX = "TZ";
     public static final String CUSTOM_TIME_ZONE_RULE_START = "1900-01-01T00:00:00";
 
-    private VCardPropertiesComparator vCardPropertiesComparator;
+    private VCardPropertiesAltidComparator vCardPropertiesAltidComparator;
+    private VCardPropertiesPrefComparator vCardPropertiesPrefComparator;
 
     protected VCard2JSContactConfig config;
 
@@ -512,7 +514,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<FormattedName> fns = vcard.getFormattedNames();
-        Collections.sort(fns, vCardPropertiesComparator);
+        Collections.sort(fns, vCardPropertiesAltidComparator);
         String lastAltid = null;
         for (FormattedName fn : fns) {
             if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
@@ -524,20 +526,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillJSCardMembers(VCard vcard, Card jsCard) {
+    private void fillJSCardMembers(VCard vcard, Card jsCard) {
 
-        List<MemberWrapper> wrappers = new ArrayList<>();
-        for (Member member : vcard.getMembers()) {
-            wrappers.add(MemberWrapper.builder()
-                                      .value(getValue(member))
-                                      .preference(member.getPref())
-                                      .build()
-                        );
-        }
-        Collections.sort(wrappers); // sort based on preference
-        for (MemberWrapper wrapper : wrappers)
-            jsCard.addMember(wrapper.getValue());
-
+        List<Member> members = vcard.getMembers();
+        Collections.sort(members,vCardPropertiesPrefComparator);
+        for (Member member : members)
+            jsCard.addMember(member.getValue());
     }
 
 
@@ -626,7 +620,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<StructuredName> vcardNames = vcard.getStructuredNames();
-        Collections.sort(vcardNames, vCardPropertiesComparator);
+        Collections.sort(vcardNames, vCardPropertiesAltidComparator);
 
         jsCard.setName(toJSCardName(vcardNames.get(0), vcard)); //the first N property is the name, all the others name localization
         for (int i = 1; i < vcardNames.size(); i++) {
@@ -652,7 +646,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Nickname> vcardNickNames = vcard.getNicknames();
-        Collections.sort(vcardNickNames, vCardPropertiesComparator);
+        Collections.sort(vcardNickNames, vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1163,7 +1157,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Title> titles = vcard.getTitles();
-        Collections.sort(titles,vCardPropertiesComparator);
+        Collections.sort(titles, vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1186,7 +1180,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Role> roles = vcard.getRoles();
-        Collections.sort(roles,vCardPropertiesComparator);
+        Collections.sort(roles, vCardPropertiesAltidComparator);
         int i = (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1234,7 +1228,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Organization> vcardOrgs = vcard.getOrganizations();
-        Collections.sort(vcardOrgs, vCardPropertiesComparator);
+        Collections.sort(vcardOrgs, vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1274,7 +1268,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Note> vcardNotes = vcard.getNotes();
-        Collections.sort(vcardNotes, vCardPropertiesComparator);
+        Collections.sort(vcardNotes, vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1291,18 +1285,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private static void fillJSCardKeywords(VCard vcard, Card jsCard) {
+    private void fillJSCardKeywords(VCard vcard, Card jsCard) {
 
-        List<CategoryWrapper> wrappers = new ArrayList<>();
-        for (Categories categories : vcard.getCategoriesList()) {
-            wrappers.add(CategoryWrapper.builder()
-                                        .values(categories.getValues())
-                                        .preference(categories.getPref())
-                                        .build()
-                        );
-        }
-        for (CategoryWrapper wrapper : wrappers)
-            jsCard.addKeywords(wrapper.getValues().toArray(new String[wrapper.getValues().size()]));
+        List<Categories> categoriesList = vcard.getCategoriesList();
+        Collections.sort(categoriesList, vCardPropertiesPrefComparator);
+        for (Categories categories : categoriesList)
+            jsCard.addKeywords(categories.getValues().toArray(new String[categories.getValues().size()]));
     }
 
     private static void fillJSCardRelations(VCard vcard, Card jsCard) {
@@ -1497,7 +1485,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.setUpdated(toJSCardUpdated(vCard.getRevision()));
         RawProperty locale = vCard.getExtendedProperty(VCardPropEnum.LOCALE.getValue());
         jsCard.setLocale((locale!=null) ? locale.getValue() : config.getDefaultLanguage());
-        vCardPropertiesComparator = VCardPropertiesComparator.builder().defaultLanguage(jsCard.getLocale()).build();
+        vCardPropertiesAltidComparator = VCardPropertiesAltidComparator.builder().defaultLanguage(jsCard.getLocale()).build();
+        vCardPropertiesPrefComparator = VCardPropertiesPrefComparator.builder().build();
         fillJSCardSpeakToAsOrGender(vCard, jsCard);
         fillJSCardMembers(vCard, jsCard);
         fillJSCardFullName(vCard, jsCard);
