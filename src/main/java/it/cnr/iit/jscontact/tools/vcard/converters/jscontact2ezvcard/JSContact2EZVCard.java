@@ -658,10 +658,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 Constructor<T> constructor = classs.getDeclaredConstructor(PartialDate.class);
                 T property = constructor.newInstance(anniversary.getDate().getPartialDate().toVCardPartialDate());
                 try {
-                    property.setCalscale(Calscale.get(anniversary.getDate().getPartialDate().getCalendarScale()));
-                } catch(Exception e) {
-                    throw new InternalErrorException(String.format("Internal Error: toVCardDateOrTimeProperty anniversary=%s message=%s", anniversary.toString(), e.getMessage()));
-                }
+                    if (anniversary.getDate().getPartialDate().getCalendarScale()!=null)
+                        property.setCalscale(Calscale.get(anniversary.getDate().getPartialDate().getCalendarScale()));
+                } catch(Exception e) {}
                 return property;
             }
         } catch (Exception e) {

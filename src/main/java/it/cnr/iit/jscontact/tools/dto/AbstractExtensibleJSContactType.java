@@ -111,7 +111,6 @@ public abstract class AbstractExtensibleJSContactType {
                 for (PhoneFeature feature : ((Phone) this).getExtPhoneFeatures())
                     map.put(String.format("%sfeatures/%s", jsonPointer,feature.getExtValue().toString()), true);
             }
-
         }
 
         if (extensions != null) {
@@ -120,7 +119,7 @@ public abstract class AbstractExtensibleJSContactType {
         }
 
         for (Field field : this.getClass().getDeclaredFields()) {
-            if (field.getDeclaringClass().isPrimitive())
+            if (field.getType().isPrimitive())
                 continue;
             else if (field.getType().isArray()) {
                 try {
@@ -130,9 +129,7 @@ public abstract class AbstractExtensibleJSContactType {
                         for (AbstractExtensibleJSContactType o : subarray)
                             o.buildAllExtensionsMap(map, String.format("%s%s/%d/", jsonPointer, getSafeJsonPointerFieldName(field.getName()), i++));
                     }
-                } catch(Exception e) {
-                    throw new InternalErrorException(String.format("Internal Error: buildAllExtensionsMap - field=%s message=%s",field.getName(), e.getMessage()));
-                }
+                } catch(Exception e) {}
             } else if (Map.class.isAssignableFrom(field.getType())) {
                 try {
                     Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
@@ -153,17 +150,13 @@ public abstract class AbstractExtensibleJSContactType {
                                 }
                             }
                         }
-                    } catch (Exception e2) {
-                        throw new InternalErrorException(String.format("Internal Error: buildAllExtensionsMap - field=%s message=%s",field.getName(), e.getMessage()));
-                    }
+                    } catch (Exception e2) {}
                 }
             } else {
                 try {
                     AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
                     o.buildAllExtensionsMap(map, String.format("%s%s/", jsonPointer, getSafeJsonPointerFieldName(field.getName())));
-                } catch (Exception e) {
-                    throw new InternalErrorException(String.format("Internal Error: buildAllExtensionsMap - field=%s message=%s",field.getName(), e.getMessage()));
-                }
+                } catch (Exception e) {}
             }
         }
     }
