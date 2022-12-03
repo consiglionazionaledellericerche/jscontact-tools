@@ -525,6 +525,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setExtendedAddress(address.getStreetExtensions());
             addr.setPoBox(address.getPostOfficeBox());
             addr.setPostalCode(address.getPostcode());
+            addr.setPref(address.getPref());
             if (address.getTimeZone() != null) {
                 TimeZone timeZone = null;
                 if (timeZones != null)
@@ -622,12 +623,14 @@ public class JSContact2EZVCard extends AbstractConverter {
                 jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
                 ezvcard.property.Address addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLocale());
                 addVCardPropIdParam(addr, entry.getKey());
+                addVCardX_ABLabel(entry.getValue(), addr, vcard);
                 vcard.addAddress(addr);
             }
             else {
                 List<ezvcard.property.Address> addrs = new ArrayList<>();
                 ezvcard.property.Address addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLocale());
                 addVCardPropIdParam(addr, entry.getKey());
+                addVCardX_ABLabel(entry.getValue(), addr, vcard);
                 addrs.add(addr);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey());
