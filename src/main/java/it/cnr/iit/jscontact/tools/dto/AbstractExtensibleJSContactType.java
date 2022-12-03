@@ -24,6 +24,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
+import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -129,7 +130,9 @@ public abstract class AbstractExtensibleJSContactType {
                         for (AbstractExtensibleJSContactType o : subarray)
                             o.buildAllExtensionsMap(map, String.format("%s%s/%d/", jsonPointer, getSafeJsonPointerFieldName(field.getName()), i++));
                     }
-                } catch(Exception e) {}
+                } catch(Exception e) {
+                    throw new InternalErrorException(String.format("Internal Error: buildAllExtensionsMap - field=%s message=%s",field.getName(), e.getMessage()));
+                }
             } else if (Map.class.isAssignableFrom(field.getType())) {
                 try {
                     Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
@@ -150,13 +153,17 @@ public abstract class AbstractExtensibleJSContactType {
                                 }
                             }
                         }
-                    } catch (Exception e2) {}
+                    } catch (Exception e2) {
+                        throw new InternalErrorException(String.format("Internal Error: buildAllExtensionsMap - field=%s message=%s",field.getName(), e.getMessage()));
+                    }
                 }
             } else {
                 try {
                     AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
                     o.buildAllExtensionsMap(map, String.format("%s%s/", jsonPointer, getSafeJsonPointerFieldName(field.getName())));
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    throw new InternalErrorException(String.format("Internal Error: buildAllExtensionsMap - field=%s message=%s",field.getName(), e.getMessage()));
+                }
             }
         }
     }
@@ -252,18 +259,22 @@ public abstract class AbstractExtensibleJSContactType {
                                         subarray2[index].addExtension(pathItems.subList(3, pathItems.size()), extension, value);
                                     }
                             }
-                        } catch (Exception e2) {}
+                        } catch (Exception e2) {
+                            throw new InternalErrorException(String.format("Internal Error: addExtension - field=%s message=%s",field.getName(), e.getMessage()));
+                        }
                     }
                 } else {
                     try {
                         AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
                         o.addExtension(pathItems.subList(1,pathItems.size()),extension, value);
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                        throw new InternalErrorException(String.format("Internal Error: addExtension - field=%s message=%s",field.getName(), e.getMessage()));
+                    }
                 }
 
             }
         } catch(Exception e) {
-            e.printStackTrace();
+            throw new InternalErrorException(String.format("Internal Error: addExtension - message=%s", e.getMessage()));
         }
     }
 }

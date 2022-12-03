@@ -1421,7 +1421,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 }
             }
         } catch(Exception e) {
-            e.printStackTrace();
             throw new CardException(String.format("Unable to convert X-RFC0000-PROP property with path: %s", path));
         }
     }

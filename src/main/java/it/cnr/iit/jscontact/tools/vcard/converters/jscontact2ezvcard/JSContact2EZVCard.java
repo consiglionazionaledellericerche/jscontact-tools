@@ -207,7 +207,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 }
             }
             if (!ranksList.get(i).isEmpty())
-            result = result + ((!ranksList.get(i).isEmpty()) ? ranksList.get(i) + DelimiterUtils.COMMA_ARRAY_DELIMITER : DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                result = result + ((!ranksList.get(i).isEmpty()) ? ranksList.get(i) + DelimiterUtils.COMMA_ARRAY_DELIMITER : DelimiterUtils.COMMA_ARRAY_DELIMITER);
             if (!notEmptyFound) break;
         }
 
@@ -659,11 +659,13 @@ public class JSContact2EZVCard extends AbstractConverter {
                 T property = constructor.newInstance(anniversary.getDate().getPartialDate().toVCardPartialDate());
                 try {
                     property.setCalscale(Calscale.get(anniversary.getDate().getPartialDate().getCalendarScale()));
-                } catch(Exception e) {}
+                } catch(Exception e) {
+                    throw new InternalErrorException(String.format("Internal Error: toVCardDateOrTimeProperty anniversary=%s message=%s", anniversary.toString(), e.getMessage()));
+                }
                 return property;
             }
         } catch (Exception e) {
-            throw new InternalErrorException(e.getMessage());
+            throw new InternalErrorException(String.format("Internal Error: toVCardDateOrTimeProperty anniversary=%s message=%s", anniversary.toString(), e.getMessage()));
         }
 
         return null;
@@ -982,7 +984,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for(Map.Entry<String, OnlineService> entry : jsCard.getOnlineServices().entrySet()) {
             OnlineService onlineService = entry.getValue();
-            if (onlineService.getType()!=null && onlineService.getType().isRfcValue()) {
+            if (onlineService.getType().isRfcValue()) {
                 switch (onlineService.getType().getRfcValue()) {
                     case IMPP:
                         Impp impp = toVCardImpp(onlineService);
