@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
@@ -68,7 +69,6 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations1 - 13", "it", vcard.getOrganizations().get(1).getLanguage());
         assertEquals("testOrganizations1 - 14", "1", vcard.getOrganizations().get(1).getAltId());
         assertEquals("testOrganizations1 - 15", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testOrganizations1 - 16", "ORG-1", vcard.getOrganizations().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
@@ -118,7 +118,6 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertNull("testOrganizations2 - 16", vcard.getOrganizations().get(2).getLanguage());
         assertNull("testOrganizations2 - 17", vcard.getOrganizations().get(2).getAltId());
         assertEquals("testOrganizations2 - 18", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testOrganizations2 - 19", "ORG-1", vcard.getOrganizations().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
         assertEquals("testOrganizations2 - 20", "ORG-2", vcard.getOrganizations().get(2).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
@@ -177,9 +176,7 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations3 - 20", "it", vcard.getOrganizations().get(3).getLanguage());
         assertEquals("testOrganizations3 - 21", "2", vcard.getOrganizations().get(3).getAltId());
         assertEquals("testOrganizations3 - 22", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testOrganizations3 - 23", "ORG-1", vcard.getOrganizations().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testOrganizations3 - 24", "ORG-2", vcard.getOrganizations().get(2).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testOrganizations3 - 25", "ORG-2", vcard.getOrganizations().get(3).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testOrganizations3 - 23", "ORG-2", vcard.getOrganizations().get(2).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
 
@@ -220,7 +217,43 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations5 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
         assertEquals("testOrganizations5 - 13", "1", vcard.getOrganizations().get(1).getAltId());
         assertEquals("testOrganizations5 - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testOrganizations5 - 15", "ORG-1", vcard.getOrganizations().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+    }
+
+    @Test
+    public void testOrganizations6() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":\"test\"," +
+                "\"organizations\": {" +
+                    "\"ORG-1\": {" +
+                        "\"@type\":\"Organization\"," +
+                        "\"units\":[ \"North American Division\", \"Marketing\" ]" +
+                    "}" +
+                "}," +
+                "\"localizations\": { " +
+                    "\"it\" : { " +
+                        "\"organizations/ORG-1/units\" : [ \"Divisione Nord America\", \"Marketing\" ]" +
+                    "}" +
+                "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testOrganizations6 - 1", 2, vcard.getOrganizations().size());
+        assertEquals("testOrganizations6 - 2", 3, vcard.getOrganizations().get(0).getValues().size());
+        assertTrue("testOrganizations6 - 3",  vcard.getOrganizations().get(0).getValues().get(0).isEmpty());
+        assertEquals("testOrganizations6 - 4", "North American Division", vcard.getOrganizations().get(0).getValues().get(1));
+        assertEquals("testOrganizations6 - 5", "Marketing", vcard.getOrganizations().get(0).getValues().get(2));
+        assertNull("testOrganizations6 - 6", vcard.getOrganizations().get(0).getLanguage());
+        assertEquals("testOrganizations6 - 7", "1", vcard.getOrganizations().get(0).getAltId());
+        assertEquals("testOrganizations6 - 8", 3, vcard.getOrganizations().get(1).getValues().size());
+        assertTrue("testOrganizations6 - 9", vcard.getOrganizations().get(1).getValues().get(0).isEmpty());
+        assertEquals("testOrganizations6 - 10", "Divisione Nord America", vcard.getOrganizations().get(1).getValues().get(1));
+        assertEquals("testOrganizations6 - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
+        assertEquals("testOrganizations6 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
+        assertEquals("testOrganizations6 - 13", "1", vcard.getOrganizations().get(1).getAltId());
+        assertEquals("testOrganizations6 - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
 }

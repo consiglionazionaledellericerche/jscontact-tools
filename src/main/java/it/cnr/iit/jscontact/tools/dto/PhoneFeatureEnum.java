@@ -71,7 +71,7 @@ public enum PhoneFeatureEnum implements IsExtensibleEnum,VCardTypeDerivedEnum {
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
      */
     @JsonIgnore
-    public static String toVCardType(PhoneFeatureEnum phoneFeature) {
+    public static String toVCardTypeParam(PhoneFeatureEnum phoneFeature) {
 
         if (phoneFeature == null)
             return null;

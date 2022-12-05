@@ -81,11 +81,11 @@ public class KeywordsTest extends JCard2JSContactTest {
         assertEquals("testKeywords3 - 2", 5, jsCard.getKeywords().size());
         Set<String> keys = jsCard.getKeywords().keySet();
         String[] array = keys.toArray(new String[0]);
-        assertEquals("testKeywords3 - 3", "INTERNET", array[0]);
-        assertEquals("testKeywords3 - 4", "IETF", array[1]);
-        assertEquals("testKeywords3 - 5", "INDUSTRY", array[2]);
-        assertEquals("testKeywords3 - 6", "INFORMATION TECHNOLOGY", array[3]);
-        assertEquals("testKeywords3 - 7", "TRAVEL AGENT", array[4]);
+        assertEquals("testKeywords3 - 7", "TRAVEL AGENT", array[0]);
+        assertEquals("testKeywords3 - 3", "INTERNET", array[1]);
+        assertEquals("testKeywords3 - 4", "IETF", array[2]);
+        assertEquals("testKeywords3 - 5", "INDUSTRY", array[3]);
+        assertEquals("testKeywords3 - 6", "INFORMATION TECHNOLOGY", array[4]);
 
     }
 

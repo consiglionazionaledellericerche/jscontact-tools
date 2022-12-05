@@ -101,8 +101,8 @@ public class AddressesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"geo\", {\"altid\":\"1\"}, \"uri\", \"geo:46.772673,-71.282945\"]" +
+                "[\"adr\", {\"cc\": \"US\", \"group\":\"group1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
+                "[\"geo\", {\"group\":\"group1\"}, \"uri\", \"geo:46.772673,-71.282945\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses4 - 1", jsCard.getAddresses());
@@ -123,8 +123,8 @@ public class AddressesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"tz\", {\"altid\":\"1\"}, \"utc-offset\", \"-05:00\"]" +
+                "[\"adr\", {\"cc\": \"US\", \"group\":\"group1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
+                "[\"tz\", {\"group\":\"group1\"}, \"utc-offset\", \"-05:00\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses5 - 1", jsCard.getAddresses());
@@ -145,8 +145,8 @@ public class AddressesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"tz\", {\"altid\":\"1\"}, \"utc-offset\", \"+05:00\"]" +
+                "[\"adr\", {\"cc\": \"US\", \"group\":\"group1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
+                "[\"tz\", {\"group\":\"group1\"}, \"utc-offset\", \"+05:00\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses6 - 1", jsCard.getAddresses());
@@ -166,8 +166,8 @@ public class AddressesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"tz\", {\"altid\":\"1\"}, \"utc-offset\", \"+00:00\"]" +
+                "[\"adr\", {\"cc\": \"US\", \"group\":\"group1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
+                "[\"tz\", {\"group\":\"group1\"}, \"utc-offset\", \"+00:00\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses7 - 1", jsCard.getAddresses());
@@ -187,8 +187,8 @@ public class AddressesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\", \"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"tz\", {\"altid\":\"1\"}, \"utc-offset\", \"+05:30\"]" +
+                "[\"adr\", {\"cc\": \"US\", \"group\":\"group1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
+                "[\"tz\", {\"group\":\"group1\"}, \"utc-offset\", \"+05:30\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses8 - 1", jsCard.getAddresses());
@@ -215,8 +215,8 @@ public class AddressesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\",\"altid\":\"1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"tz\", {\"altid\":\"1\"}, \"text\", \"America/New_York\"]" +
+                "[\"adr\", {\"cc\": \"US\",\"group\":\"group1\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
+                "[\"tz\", {\"group\":\"group1\"}, \"text\", \"America/New_York\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses9 - 1", jsCard.getAddresses());
@@ -260,8 +260,8 @@ public class AddressesTest extends JCard2JSContactTest {
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"adr\", {\"cc\": \"US\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"adr\", {\"cc\": \"US\", \"altid\": \"1\"}, \"text\", [\"\", \"\", \"12345 Elm St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
-                "[\"tz\", {\"altid\": \"1\"}, \"text\", \"America/New_York\"]" +
+                "[\"adr\", {\"cc\": \"US\", \"group\":\"group1\"}, \"text\", [\"\", \"\", \"12345 Elm St\", \"Reston\", \"VA\", \"20190\", \"USA\"]], " +
+                "[\"tz\", {\"group\":\"group1\"}, \"text\", \"America/New_York\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testAddresses11 - 1", jsCard.getAddresses());

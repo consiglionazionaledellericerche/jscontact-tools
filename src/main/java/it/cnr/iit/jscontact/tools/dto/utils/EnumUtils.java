@@ -69,7 +69,7 @@ public class EnumUtils {
      * @return the value of vCard 4.0 TYPE parameter
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
      */
-    public static <E extends Enum <E>> String toVCardType(E context) {
+    public static <E extends Enum <E>> String toVCardTypeParam(E context) {
 
         if (context == null)
             return null;

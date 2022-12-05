@@ -110,17 +110,15 @@ public class NameTest extends JSContact2VCardTest {
         assertEquals("testName2 - 10", "Esq.", vcard.getStructuredName().getSuffixes().get(0));
         assertEquals("testName2 - 11", 4, vcard.getNicknames().size());
         assertEquals("testName2 - 12", "Johnny", vcard.getNicknames().get(0).getValues().get(0));
-        assertEquals("testName2 - 13", "en", vcard.getNicknames().get(0).getLanguage());
-        assertEquals("testName2 - 14", "1", vcard.getNicknames().get(0).getAltId());
-        assertEquals("testName2 - 15", "Giovannino", vcard.getNicknames().get(1).getValues().get(0));
-        assertEquals("testName2 - 16", "it", vcard.getNicknames().get(1).getLanguage());
-        assertEquals("testName2 - 17", "1", vcard.getNicknames().get(1).getAltId());
-        assertEquals("testName2 - 18", "Joe", vcard.getNicknames().get(2).getValues().get(0));
-        assertEquals("testName2 - 19", "en", vcard.getNicknames().get(2).getLanguage());
-        assertEquals("testName2 - 20", "2", vcard.getNicknames().get(2).getAltId());
-        assertEquals("testName2 - 21", "Giò", vcard.getNicknames().get(3).getValues().get(0));
-        assertEquals("testName2 - 22", "it", vcard.getNicknames().get(3).getLanguage());
-        assertEquals("testName2 - 23", "2", vcard.getNicknames().get(3).getAltId());
+        assertEquals("testName2 - 13", "1", vcard.getNicknames().get(0).getAltId());
+        assertEquals("testName2 - 14", "Giovannino", vcard.getNicknames().get(1).getValues().get(0));
+        assertEquals("testName2 - 15", "it", vcard.getNicknames().get(1).getLanguage());
+        assertEquals("testName2 - 16", "1", vcard.getNicknames().get(1).getAltId());
+        assertEquals("testName2 - 17", "Joe", vcard.getNicknames().get(2).getValues().get(0));
+        assertEquals("testName2 - 18", "2", vcard.getNicknames().get(2).getAltId());
+        assertEquals("testName2 - 19", "Giò", vcard.getNicknames().get(3).getValues().get(0));
+        assertEquals("testName2 - 20", "it", vcard.getNicknames().get(3).getLanguage());
+        assertEquals("testName2 - 21", "2", vcard.getNicknames().get(3).getAltId());
     }
 
 

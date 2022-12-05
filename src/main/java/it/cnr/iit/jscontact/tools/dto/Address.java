@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasAltid;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
@@ -49,15 +49,15 @@ import java.util.StringJoiner;
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","fullAddress","street","locality","region","country",
-                     "postcode","countryCode","coordinates","timeZone","contexts",
-                     "pref"})
+                     "postcode","countryCode","coordinates","timeZone",
+                     "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
-public class Address extends AbstractJSContactType implements HasAltid, IdMapValue, Serializable, Comparable<Address> {
+public class Address extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Address", message="invalid @type value in Address")
@@ -97,6 +97,8 @@ public class Address extends AbstractJSContactType implements HasAltid, IdMapVal
     @Max(value=100, message = "invalid pref in Address - value must be less or equal than 100")
     Integer pref;
 
+    String label;
+
     @JsonIgnore
     String altid;
 
@@ -104,7 +106,7 @@ public class Address extends AbstractJSContactType implements HasAltid, IdMapVal
     String language;
 
     @JsonIgnore
-    Boolean isDefaultLanguage;
+    String group;
 
     @JsonIgnore
     String hash;
@@ -206,36 +208,6 @@ public class Address extends AbstractJSContactType implements HasAltid, IdMapVal
         return StringUtils.defaultIfEmpty(streetExtensions, null);
     }
 
-    /**
-     * Compares this address with another based on the value of the "altid" property.
-     *
-     * @param o the object this object must be compared with
-     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
-     */
-    @Override
-    public int compareTo(Address o) {
-
-        if (altid == null) {
-            if (o.getAltid() == null)
-                return 0;
-            else
-                return -1;
-        }
-        else {
-            if (o.getAltid() == null)
-                return 1;
-        }
-
-        if (altid.equals(o.getAltid())) {
-            if (isDefaultLanguage)
-                return -1;
-            else
-                return 0;
-        }
-
-        return StringUtils.compare(altid,o.getAltid());
-
-    }
 
     /**
      * Adds a street component to this object.

@@ -24,6 +24,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
+import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -110,7 +111,6 @@ public abstract class AbstractExtensibleJSContactType {
                 for (PhoneFeature feature : ((Phone) this).getExtPhoneFeatures())
                     map.put(String.format("%sfeatures/%s", jsonPointer,feature.getExtValue().toString()), true);
             }
-
         }
 
         if (extensions != null) {
@@ -119,7 +119,7 @@ public abstract class AbstractExtensibleJSContactType {
         }
 
         for (Field field : this.getClass().getDeclaredFields()) {
-            if (field.getDeclaringClass().isPrimitive())
+            if (field.getType().isPrimitive())
                 continue;
             else if (field.getType().isArray()) {
                 try {
@@ -252,18 +252,22 @@ public abstract class AbstractExtensibleJSContactType {
                                         subarray2[index].addExtension(pathItems.subList(3, pathItems.size()), extension, value);
                                     }
                             }
-                        } catch (Exception e2) {}
+                        } catch (Exception e2) {
+                            throw new InternalErrorException(String.format("Internal Error: addExtension - field=%s message=%s",field.getName(), e.getMessage()));
+                        }
                     }
                 } else {
                     try {
                         AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
                         o.addExtension(pathItems.subList(1,pathItems.size()),extension, value);
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                        throw new InternalErrorException(String.format("Internal Error: addExtension - field=%s message=%s",field.getName(), e.getMessage()));
+                    }
                 }
 
             }
         } catch(Exception e) {
-            e.printStackTrace();
+            throw new InternalErrorException(String.format("Internal Error: addExtension - message=%s", e.getMessage()));
         }
     }
 }

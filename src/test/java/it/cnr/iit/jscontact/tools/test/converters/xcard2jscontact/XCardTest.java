@@ -55,7 +55,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard1 - 20", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
         assertEquals("testCompleteXCard1 - 21", "Viagenie", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteXCard1 - 22", 1, jsCard.getAddresses().size());
-        assertEquals("testCompleteXCard1 - 23", "Simon Perreault\n                    2875 boul. Laurier, suite D2-630\n                    Quebec, QC, Canada\n                    G1V 2M2", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testCompleteXCard1 - 23", "Simon Perreault 2875 boul. Laurier, suite D2-630 Quebec, QC, Canada G1V 2M2", jsCard.getAddresses().get("ADR-1").getFullAddress());
         assertEquals("testCompleteXCard1 - 25", "2875 boul. Laurier, suite D2-630", jsCard.getAddresses().get("ADR-1").getStreetDetails());
         assertEquals("testCompleteXCard1 - 26", "Quebec", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testCompleteXCard1 - 27", "QC", jsCard.getAddresses().get("ADR-1").getRegion());

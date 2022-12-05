@@ -19,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -35,13 +37,13 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","components","locale","sortAs"})
+@JsonPropertyOrder({"@type","components","locale","label","sortAs"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Name extends AbstractJSContactType implements Serializable {
+public class Name extends AbstractJSContactType implements HasLabel, Serializable {
 
     @NotNull
     @Pattern(regexp = "Name", message="invalid @type value in Name")
@@ -56,6 +58,8 @@ public class Name extends AbstractJSContactType implements Serializable {
     NameComponent[] components;
 
     String locale;
+
+    String label;
 
     Map<String,String> sortAs;
 
