@@ -53,21 +53,29 @@ public class AddressContext extends ExtensibleEnumType<AddressContextEnum> imple
      * @return true if this is a "work" address context, false otherwise
      */
     @JsonIgnore
-    public boolean isWork() { return isRfc(AddressContextEnum.WORK); }
+    public boolean isWork() {
+        return isRfc(AddressContextEnum.WORK);
+    }
+
     /**
-     * Tests if this is a "postal" address context.
+     * Tests if this is a "delivery" address context.
      *
-     * @return true if this is a "postal" address context, false otherwise
+     * @return true if this is a "delivery" address context, false otherwise
      */
     @JsonIgnore
-    public boolean isPostal() { return isRfc(AddressContextEnum.POSTAL); }
+    public boolean isDelivery() {
+        return isRfc(AddressContextEnum.DELIVERY);
+    }
+
     /**
      * Tests if this is a "billing" address context.
      *
      * @return true if this is a "billing" address context, false otherwise
      */
     @JsonIgnore
-    public boolean isBilling() { return isRfc(AddressContextEnum.BILLING); }
+    public boolean isBilling() {
+        return isRfc(AddressContextEnum.BILLING);
+    }
 
     /**
      * Returns an address context whose enum value is pre-defined.
@@ -87,19 +95,27 @@ public class AddressContext extends ExtensibleEnumType<AddressContextEnum> imple
      *
      * @return a "work" address context
      */
-    public static AddressContext work() { return rfc(AddressContextEnum.WORK);}
+    public static AddressContext work() {
+        return rfc(AddressContextEnum.WORK);
+    }
+
     /**
-     * Returns a "postal" address context.
+     * Returns a "delivery" address context.
      *
-     * @return a "postal" address context
+     * @return a "delivery" address context
      */
-    public static AddressContext postal() { return rfc(AddressContextEnum.POSTAL);}
+    public static AddressContext delivery() {
+        return rfc(AddressContextEnum.DELIVERY);
+    }
+
     /**
      * Returns a "billing" address context.
      *
      * @return a "billing" address context
      */
-    public static AddressContext billing() { return rfc(AddressContextEnum.BILLING);}
+    public static AddressContext billing() {
+        return rfc(AddressContextEnum.BILLING);
+    }
     /**
      * Returns a custom address context.
      *

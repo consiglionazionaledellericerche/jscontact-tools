@@ -549,10 +549,10 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     }
 
     /**
-     * Adds a postal address to this object.
+     * Adds a delivery address to this object.
      *
-     * @param id the postal address identifier
-     * @param address the object representing the postal address
+     * @param id      the delivery address identifier
+     * @param address the object representing the delivery address
      */
     public void addAddress(String id, Address address) {
 
