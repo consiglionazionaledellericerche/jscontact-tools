@@ -16,9 +16,7 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.MembersVsKindValueConstraint;
-import it.cnr.iit.jscontact.tools.constraints.TitleOrganizationConstraint;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.Title;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

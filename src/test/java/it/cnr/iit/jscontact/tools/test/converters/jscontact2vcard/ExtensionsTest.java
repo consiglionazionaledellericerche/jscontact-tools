@@ -19,7 +19,6 @@ import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.util.TelUri;
 import it.cnr.iit.jscontact.tools.dto.VCardPropEnum;
-import it.cnr.iit.jscontact.tools.dto.utils.VCardUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 

@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import ezvcard.property.Interest;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import lombok.*;

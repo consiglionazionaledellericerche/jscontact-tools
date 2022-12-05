@@ -30,7 +30,6 @@ import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
-import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.comparators.JSCardAddressesComparator;
 import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesAltidComparator;
 import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesPrefComparator;
@@ -775,7 +774,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         String lastMapId = null;
         for (Address address : addresses) {
             if (address.getAltid() == null || lastAltid == null || !address.getAltid().equals(lastAltid)) {
-                String id = getJSCardId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + + (i++), address.getPropId() );
+                String id = getJSCardId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + (i++), address.getPropId() );
                 jsCard.addAddress(id, address);
                 lastAltid = address.getAltid();
                 lastMapId = id;
@@ -1199,24 +1198,45 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private it.cnr.iit.jscontact.tools.dto.Organization toJSCardOrganization(Organization vcardOrg, VCard vcard) {
 
-        List<String> units;
-        String name;
+        List<String> unitNameList=null;
+        List<String> unitSortAsList=null;
+        String name=null;
+        String orgSortAs=null;
         if (vcardOrg.getValues().size() > 1 ) {
             name = vcardOrg.getValues().get(0);
-            units = vcardOrg.getValues().subList(1,vcardOrg.getValues().size());
+            unitNameList = vcardOrg.getValues().subList(1,vcardOrg.getValues().size());
+            if (vcardOrg.getSortAs()!=null && !vcardOrg.getSortAs().isEmpty()) {
+                orgSortAs = vcardOrg.getSortAs().get(0);
+                unitSortAsList = vcardOrg.getSortAs().subList(1,vcardOrg.getSortAs().size());
+            }
         } else { // ezvcard put all the organization components separated by semicolon into vcardOrg.getValues().get(0) !!
-           String[] subItems = vcardOrg.getValues().get(0).split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
-           name =   subItems[0];
-           units =  Arrays.asList(subItems).subList(1,subItems.length);
+            String[] nameSubItems = vcardOrg.getValues().get(0).split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER);
+            name =   nameSubItems[0];
+            unitNameList =  Arrays.asList(nameSubItems).subList(1,nameSubItems.length);
+            if (vcardOrg.getSortAs()!=null && !vcardOrg.getSortAs().isEmpty()) {
+                String[] sortAsSubItems = vcardOrg.getSortAs().get(0).split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                orgSortAs = sortAsSubItems[0];
+                unitSortAsList = Arrays.asList(sortAsSubItems).subList(1,sortAsSubItems.length);
+            }
+        }
+
+        OrgUnit[] orgUnits = null;
+        if (unitNameList!=null && unitNameList.size()>0) {
+            orgUnits = new OrgUnit[unitNameList.size()];
+            for (int i=0; i < unitNameList.size(); i++) {
+                String sortAs = (unitSortAsList!=null && unitSortAsList.size()>0) ? unitSortAsList.get(i) : null;
+                orgUnits[i] = OrgUnit.builder().name(unitNameList.get(i)).sortAs(sortAs).build();
+            }
+
         }
 
         return it.cnr.iit.jscontact.tools.dto.Organization.builder()
                 .name((!name.isEmpty()) ? name : null)
-                .units((units!=null) ? units.toArray(new String[0]) : null)
+                .units(orgUnits)
                 .pref(vcardOrg.getPref())
                 .contexts(toJSCardContexts(vcardOrg.getType()))
                 .label(toJSCardLabel(vcardOrg,vcard.getExtendedProperties()))
-                .sortAs((vcardOrg.getSortAs()!=null && !vcardOrg.getSortAs().isEmpty()) ? vcardOrg.getSortAs().toArray(new String[0]) : null)
+                .sortAs(orgSortAs)
                 .vCardParams(VCardUtils.getVCardUnmatchedParams(vcardOrg, VCardParamEnum.PID, VCardParamEnum.GROUP))
                 .build();
     }

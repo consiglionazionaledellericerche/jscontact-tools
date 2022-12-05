@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
@@ -39,8 +38,11 @@ public class OrganizationsTest extends JSContact2VCardTest {
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
                         "\"name\": \"ABC, Inc.\", " +
-                        "\"units\":[ \"North American Division\", \"Marketing\" ]," +
-                        "\"sortAs\": [\"ABC\"]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]," +
+                        "\"sortAs\": \"ABC\"" +
                     "}" +
                 "}," +
                 "\"localizations\": { " +
@@ -48,7 +50,10 @@ public class OrganizationsTest extends JSContact2VCardTest {
                         "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"ABC, Spa.\"," +
-                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                            "\"units\": [" +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\"}" +
+                            "]" +
                         "}" +
                     "}" +
                 "}" +
@@ -60,7 +65,7 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations1 - 4", "North American Division", vcard.getOrganizations().get(0).getValues().get(1));
         assertEquals("testOrganizations1 - 5", "Marketing", vcard.getOrganizations().get(0).getValues().get(2));
         assertNull("testOrganizations1 - 6", vcard.getOrganizations().get(0).getLanguage());
-        assertEquals("testOrganizations1 - 7", "ABC", String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, vcard.getOrganizations().get(0).getSortAs()));
+        assertEquals("testOrganizations1 - 7", "ABC",  String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, vcard.getOrganizations().get(0).getSortAs()));
         assertEquals("testOrganizations1 - 8", "1", vcard.getOrganizations().get(0).getAltId());
         assertEquals("testOrganizations1 - 9", 3, vcard.getOrganizations().get(1).getValues().size());
         assertEquals("testOrganizations1 - 10", "ABC, Spa.", vcard.getOrganizations().get(1).getValues().get(0));
@@ -82,7 +87,10 @@ public class OrganizationsTest extends JSContact2VCardTest {
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
                         "\"name\":\"ABC, Inc.\"," +
-                        "\"units\": [ \"North American Division\",\"Marketing\" ]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}," +
                     "\"ORG-2\": {" +
                         "\"@type\":\"Organization\"," +
@@ -93,8 +101,11 @@ public class OrganizationsTest extends JSContact2VCardTest {
                     "\"it\" : { " +
                         "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
-                            "\"name\" :\"ABC, Spa.\"," +
-                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                            "\"name\":\"ABC, Spa.\"," +
+                            "\"units\": [ " +
+                                  "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                  "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                           "]" +
                         "}" +
                     "}" +
                 "}" +
@@ -132,7 +143,10 @@ public class OrganizationsTest extends JSContact2VCardTest {
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
                         "\"name\":\"ABC, Inc.\"," +
-                        "\"units\": [ \"North American Division\", \"Marketing\" ]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}," +
                     "\"ORG-2\": {" +
                         "\"@type\":\"Organization\"," +
@@ -144,7 +158,10 @@ public class OrganizationsTest extends JSContact2VCardTest {
                         "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"ABC, Spa.\"," +
-                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                            "\"units\": [ " +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                            "]" +
                         "}," +
                         "\"organizations/ORG-2\" : { " +
                             "\"@type\":\"Organization\"," +
@@ -190,14 +207,20 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "\"organizations\": {" +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
-                        "\"units\":[ \"North American Division\", \"Marketing\" ]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}" +
                 "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
                         "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
-                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                            "\"units\": [ " +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                            "]" +
                         "}" +
                     "}" +
                 "}" +
@@ -229,12 +252,18 @@ public class OrganizationsTest extends JSContact2VCardTest {
                 "\"organizations\": {" +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
-                        "\"units\":[ \"North American Division\", \"Marketing\" ]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}" +
                 "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                        "\"organizations/ORG-1/units\" : [ \"Divisione Nord America\", \"Marketing\" ]" +
+                        "\"organizations/ORG-1/units\" : [" +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}" +
                 "}" +
                 "}";

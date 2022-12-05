@@ -17,7 +17,6 @@ package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vca
 
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import ezvcard.property.FormattedName;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
