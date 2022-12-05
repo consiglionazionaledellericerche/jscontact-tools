@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;

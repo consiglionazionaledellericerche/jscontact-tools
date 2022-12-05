@@ -16,6 +16,7 @@ import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -30,7 +31,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames={"name","units"}, message = "at least one not null member other than @type is missing in Organization")
-@JsonPropertyOrder({"@type","name","units","sortAs"})
+@JsonPropertyOrder({"@type","name","units","sortAs","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -46,9 +47,10 @@ public class Organization extends AbstractJSContactType implements HasLabel, Has
 
     String name;
 
-    String[] units;
+    @Valid
+    OrgUnit[] units;
 
-    String[] sortAs;
+    String sortAs;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)

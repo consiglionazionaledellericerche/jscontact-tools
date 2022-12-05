@@ -17,7 +17,6 @@ package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
-import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 

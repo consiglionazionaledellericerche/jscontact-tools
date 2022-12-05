@@ -38,7 +38,10 @@ public class OrganizationsTest extends RoundtripTest {
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
                         "\"name\": \"ABC, Inc.\", " +
-                        "\"units\":[ \"North American Division\", \"Marketing\" ]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}" +
                 "}," +
                 "\"localizations\": { " +
@@ -46,7 +49,10 @@ public class OrganizationsTest extends RoundtripTest {
                         "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"ABC, Spa.\"," +
-                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                            "\"units\": [" +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\"}" +
+                            "]" +
                         "}" +
                     "}" +
                 "}" +
@@ -67,7 +73,10 @@ public class OrganizationsTest extends RoundtripTest {
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
                         "\"name\":\"ABC, Inc.\"," +
-                        "\"units\": [ \"North American Division\",\"Marketing\" ]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}," +
                     "\"ORG-2\": {" +
                         "\"@type\":\"Organization\"," +
@@ -79,7 +88,10 @@ public class OrganizationsTest extends RoundtripTest {
                         "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"ABC, Spa.\"," +
-                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                            "\"units\": [" +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\"}" +
+                            "]" +
                         "}" +
                     "}" +
                 "}" +
@@ -100,7 +112,10 @@ public class OrganizationsTest extends RoundtripTest {
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
                         "\"name\":\"ABC, Inc.\"," +
-                        "\"units\": [ \"North American Division\", \"Marketing\" ]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}," +
                     "\"ORG-2\": {" +
                         "\"@type\":\"Organization\"," +
@@ -112,7 +127,10 @@ public class OrganizationsTest extends RoundtripTest {
                         "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
                             "\"name\" :\"ABC, Spa.\"," +
-                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                            "\"units\": [" +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\"}" +
+                            "]" +
                         "}," +
                         "\"organizations/ORG-2\" : { " +
                             "\"@type\":\"Organization\"," +
@@ -137,14 +155,20 @@ public class OrganizationsTest extends RoundtripTest {
                 "\"organizations\": {" +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
-                        "\"units\":[ \"North American Division\", \"Marketing\" ]" +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
                     "}" +
                 "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
                         "\"organizations/ORG-1\" : { " +
                             "\"@type\":\"Organization\"," +
-                            "\"units\":[ \"Divisione Nord America\", \"Marketing\" ]" +
+                            "\"units\": [" +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\"}" +
+                            "]" +
                         "}" +
                     "}" +
                 "}" +

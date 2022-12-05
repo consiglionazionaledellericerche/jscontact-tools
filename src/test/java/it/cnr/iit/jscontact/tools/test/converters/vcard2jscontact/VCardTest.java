@@ -377,9 +377,9 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 68", "custom@example.com", jsCard.getEmails().get("EMAIL-5").getAddress());
         assertEquals("testCompleteVCard6 - 71", 2, jsCard.getOrganizations().size());
         assertEquals("testCompleteVCard6 - 72", "Organization1", jsCard.getOrganizations().get("ORG-1").getName());
-        assertEquals("testCompleteVCard6 - 72-1", "Department1", jsCard.getOrganizations().get("ORG-1").getUnits()[0]);
+        assertEquals("testCompleteVCard6 - 72-1", "Department1", jsCard.getOrganizations().get("ORG-1").getUnits()[0].getName());
         assertEquals("testCompleteVCard6 - 73", "Organization2", jsCard.getOrganizations().get("ORG-2").getName());
-        assertEquals("testCompleteVCard6 - 73", "Department2", jsCard.getOrganizations().get("ORG-2").getUnits()[0]);
+        assertEquals("testCompleteVCard6 - 73", "Department2", jsCard.getOrganizations().get("ORG-2").getUnits()[0].getName());
         assertEquals("testCompleteVCard6 - 74", 2, jsCard.getTitles().size());
         assertEquals("testCompleteVCard6 - 75", "Title1", jsCard.getTitles().get("TITLE-1").getName());
         assertEquals("testCompleteVCard6 - 76", "Title2", jsCard.getTitles().get("TITLE-2").getName());

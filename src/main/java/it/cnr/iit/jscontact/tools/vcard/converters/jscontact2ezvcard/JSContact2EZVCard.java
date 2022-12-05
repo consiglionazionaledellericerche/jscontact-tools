@@ -3,6 +3,7 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
@@ -17,7 +18,6 @@ import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.Title;
-import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
@@ -576,6 +576,26 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
 
     }
+
+    private static String[] asJSCardOrgUnitValuesArray(JsonNode arrayNode) {
+
+        if (!arrayNode.isArray())
+            return null;
+        List<String> ous = new ArrayList<>();
+        try {
+            for (JsonNode node : arrayNode) {
+                OrgUnit ou = (OrgUnit) asJSCardTypeObject(node, OrgUnit.class);
+                if (ou!=null)
+                    ous.add(ou.getName());
+            }
+            return (ous.size() > 0) ? ous.toArray(new String[0]) : null;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+
 
     private void fillVCardAddresses(VCard vcard, Card jsCard) {
 
@@ -1288,12 +1308,24 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         ezvcard.property.Organization org = new ezvcard.property.Organization();
         org.getValues().add((jsOrg.getName()!=null) ? jsOrg.getName() : StringUtils.EMPTY);
-        if (jsOrg.getUnits()!=null)
-            org.getValues().addAll(Arrays.asList(jsOrg.getUnits()));
+        List<String> unitSortAsList = new ArrayList<>();
+        List<String> unitNameList = new ArrayList<>();
+        if (jsOrg.getUnits()!=null) {
+            for (int i=0; i < jsOrg.getUnits().length; i++) {
+                unitNameList.add(jsOrg.getUnits()[i].getName());
+                if (jsOrg.getUnits()[i].getSortAs()!=null)
+                    unitSortAsList.add(jsOrg.getUnits()[i].getSortAs());
+            }
+            org.getValues().addAll(unitNameList);
+        }
         org.setPref(jsOrg.getPref());
         org.setType(toVCardTypeParam(jsOrg));
-        if (jsOrg.getSortAs()!=null)
-            org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER, jsOrg.getSortAs()));
+        if (jsOrg.getSortAs()!=null || !unitSortAsList.isEmpty()) {
+            List<String> sortAs = new ArrayList<>();
+            sortAs.add((jsOrg.getSortAs()!=null) ? jsOrg.getSortAs() : StringUtils.EMPTY);
+            sortAs.addAll(unitSortAsList);
+            org.setSortAs(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,sortAs));
+        }
         VCardUtils.addVCardUnmatchedParams(org, jsOrg);
         return org;
     }
@@ -1332,11 +1364,11 @@ public class JSContact2EZVCard extends AbstractConverter {
                 localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
-                        JsonNode units = jsCard.getLocalization(localization.getKey(),"organizations/"+entry.getKey()+"/units");
+                        ArrayNode units = (ArrayNode) jsCard.getLocalization(localization.getKey(),"organizations/"+entry.getKey()+"/units");
                         org = new ezvcard.property.Organization();
                         org.getValues().add(localization.getValue().asText());
                         if (units!=null)
-                            org.getValues().addAll(Arrays.asList(JsonNodeUtils.asTextArray(units)));
+                            org.getValues().addAll(Arrays.asList(asJSCardOrgUnitValuesArray(units)));
                         org.setLanguage(localization.getKey());
                         organizations.add(org);
                     }
@@ -1348,7 +1380,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                             continue; //skip because already done
                         org = new ezvcard.property.Organization();
                         org.getValues().add(StringUtils.EMPTY);
-                        org.getValues().addAll(Arrays.asList(JsonNodeUtils.asTextArray(localization.getValue())));
+                        org.getValues().addAll(Arrays.asList(asJSCardOrgUnitValuesArray(localization.getValue())));
                         org.setLanguage(localization.getKey());
                         organizations.add(org);
                     }
