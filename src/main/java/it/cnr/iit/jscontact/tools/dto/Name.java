@@ -25,6 +25,7 @@ import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -51,7 +52,7 @@ public class Name extends AbstractJSContactType implements HasLabel, Serializabl
     String _type = "Name";
 
     @JSContactCollection(addMethod = "addComponent")
-    @NotNull(message = "components is missing in Name")
+    @NotEmpty(message = "components is missing or empty in Name")
     @NonNull
     @Valid
     NameComponent[] components;
