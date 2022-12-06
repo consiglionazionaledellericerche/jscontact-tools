@@ -46,7 +46,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @OnlineServiceConstraint
-@JsonPropertyOrder({"@type", "type", "service", "uri", "username", "contexts", "pref", "label"})
+@JsonPropertyOrder({"@type", "service", "user", "type", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -60,26 +60,26 @@ public class OnlineService extends AbstractJSContactType implements HasLabel, Id
     @Builder.Default
     String _type = "OnlineService";
 
-    @NonNull
-    @NotNull
-    @JsonDeserialize(using = OnlineServiceTypeDeserializer.class)
-    OnlineServiceType type;
-
     String service;
 
     @NonNull
     @NotNull
     String user;
 
+    @NonNull
+    @NotNull
+    @JsonDeserialize(using = OnlineServiceTypeDeserializer.class)
+    OnlineServiceType type;
+
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in OnlineService - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
-    Map<Context,Boolean> contexts;
+    Map<Context, Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in OnlineService - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in OnlineService - value must be less or equal than 100")
+    @Min(value = 1, message = "invalid pref in OnlineService - value must be greater or equal than 1")
+    @Max(value = 100, message = "invalid pref in OnlineService - value must be less or equal than 100")
     Integer pref;
 
     String label;

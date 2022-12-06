@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 /**
- * Class mapping the vendor-extension values as defined in section 1.7 of [draft-ietf-calext-jscontact].
+ * Class mapping the vendor-extension values as defined in section 1.8 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.7">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.8">draft-ietf-calext-jscontact</a>
  */
 @Data
 @Builder

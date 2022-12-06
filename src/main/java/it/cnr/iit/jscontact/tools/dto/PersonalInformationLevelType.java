@@ -25,10 +25,10 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "level" property of the PersonalInformation type as defined in section 2.8.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "level" property of the PersonalInformation type as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.4">draft-ietf-calext-jscontact</a>
  */
 @Getter
 @Setter

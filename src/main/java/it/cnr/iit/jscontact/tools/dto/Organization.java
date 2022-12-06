@@ -30,8 +30,8 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@NotNullAnyConstraint(fieldNames={"name","units"}, message = "at least one not null member other than @type is missing in Organization")
-@JsonPropertyOrder({"@type","name","units","sortAs","contexts","pref","label"})
+@NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null member other than @type is missing in Organization")
+@JsonPropertyOrder({"@type", "name", "sortAs", "units", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -40,24 +40,24 @@ import java.util.Map;
 public class Organization extends AbstractJSContactType implements HasLabel, HasContexts, IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "Organization", message="invalid @type value in Organization")
+    @Pattern(regexp = "Organization", message = "invalid @type value in Organization")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Organization";
 
     String name;
 
+    String sortAs;
+
     @Valid
     OrgUnit[] units;
-
-    String sortAs;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Organization - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
-    Map<Context,Boolean> contexts;
+    Map<Context, Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Organization - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Organization - value must be less or equal than 100")

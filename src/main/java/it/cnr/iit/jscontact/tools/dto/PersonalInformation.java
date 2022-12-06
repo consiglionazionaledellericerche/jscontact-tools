@@ -33,12 +33,12 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the PersonalInformation type as defined in section 2.8.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the PersonalInformation type as defined in section 2.8.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.3">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type", "type", "value", "level", "label", "position"})
+@JsonPropertyOrder({"@type", "type", "value", "level", "position", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -62,10 +62,10 @@ public class PersonalInformation extends AbstractJSContactType implements HasLab
     @JsonDeserialize(using = PersonalInformationLevelTypeDeserializer.class)
     PersonalInformationLevelType level;
 
-    String label;
-
     @Min(value = 1, message = "invalid position in PersonalInformation - value must be greater or equal than 1")
     Integer position;
+
+    String label;
 
     /**
      * Tests if this personal information is a hobby.

@@ -31,12 +31,12 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Name type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Name type as defined in section 2.2.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type","components","locale","label","sortAs"})
+@JsonPropertyOrder({"@type", "components", "locale", "sortAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -58,14 +58,14 @@ public class Name extends AbstractJSContactType implements HasLabel, Serializabl
 
     String locale;
 
-    String label;
+    Map<String, String> sortAs;
 
-    Map<String,String> sortAs;
+    String label;
 
     /**
      * Adds a name component to this object.
      *
-     * @param nc the name component
+     * @param nc         the name component
      * @param components the name components
      * @return the name components in input plus the nc component
      */

@@ -61,6 +61,7 @@ public class Anniversary extends AbstractJSContactType implements HasType, IdMap
     @NonNull
     @JsonSerialize(using = AnniversaryDateSerializer.class)
     @JsonDeserialize(using = AnniversaryDateDeserializer.class)
+    @Valid
     AnniversaryDate date;
 
     @Valid
