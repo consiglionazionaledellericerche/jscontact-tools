@@ -30,7 +30,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null member other than @type is missing in Organization")
+@NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null between name and units is missing in Organization")
 @JsonPropertyOrder({"@type", "name", "sortAs", "units", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
