@@ -7,6 +7,8 @@ import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -26,15 +28,20 @@ import javax.validation.constraints.Pattern;
 public class PartialDate extends AbstractJSContactType {
 
     @NotNull
-    @Pattern(regexp = "PartialDate", message="invalid @type value in PartialDate")
+    @Pattern(regexp = "PartialDate", message = "invalid @type value in PartialDate")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "PartialDate";
 
+    @Min(value = 1, message = "invalid year in PartialDate - value must be greater or equal than 1")
     Integer year;
 
+    @Min(value = 1, message = "invalid month in PartialDate - value must be greater or equal than 1")
+    @Max(value = 12, message = "invalid month in PartialDate - value must be less or equal than 12")
     Integer month;
 
+    @Min(value = 1, message = "invalid day in PartialDate - value must be greater or equal than 1")
+    @Max(value = 31, message = "invalid day in PartialDate - value must be less or equal than 31")
     Integer day;
 
     String calendarScale;
