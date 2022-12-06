@@ -534,18 +534,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private static Map<String,String> toJSCardNameSortAs(List<String> vcardSortAs, StructuredName sn) {
+    private static Map<NameComponentType, String> toJSCardNameSortAs(List<String> vcardSortAs, StructuredName sn) {
 
         if (vcardSortAs == null || vcardSortAs.isEmpty())
             return null;
 
-        Map<String,String> sortAs = new HashMap<>();
+        Map<NameComponentType, String> sortAs = new HashMap<>();
         NameComponentEnum[] nameComponentEnumValues = NameComponentEnum.values();
         int i = 0;
         for (String vcardSortAsItem : vcardSortAs) {
             String[] vcardSortAsItemSubs = vcardSortAsItem.split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
             for (String vcardSortAsItemSub : vcardSortAsItemSubs)
-                sortAs.put(nameComponentEnumValues[i++].getValue(), vcardSortAsItemSub);
+                sortAs.put(NameComponentType.rfc(nameComponentEnumValues[i++]), vcardSortAsItemSub);
         }
         return sortAs;
     }

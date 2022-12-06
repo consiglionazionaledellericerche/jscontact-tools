@@ -19,9 +19,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.AddressContext;
-import it.cnr.iit.jscontact.tools.dto.AddressContextEnum;
-import it.cnr.iit.jscontact.tools.dto.V_Extension;
+import it.cnr.iit.jscontact.tools.dto.*;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -30,29 +28,29 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Custom JSON deserializer for the AddressContext map.
+ * Custom JSON deserializer for the Name sortAs map.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class AddressContextsDeserializer extends JsonDeserializer<Map<AddressContext,Boolean>> {
+public class NameSortAsDeserializer extends JsonDeserializer<Map<NameComponentType, String>> {
 
     @Override
-    public Map<AddressContext,Boolean> deserialize(JsonParser jp, DeserializationContext ctxt)
+    public Map<NameComponentType, String> deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        Map<AddressContext,Boolean> contexts = new HashMap<>();
+        Map<NameComponentType, String> sortAs = new HashMap<>();
         Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
         while (iter.hasNext()) {
             Map.Entry<String, JsonNode> entry = iter.next();
-            AddressContext context;
+            NameComponentType nct;
             try {
-                context = AddressContext.builder().rfcValue(AddressContextEnum.getEnum(entry.getKey())).build();
+                nct = NameComponentType.builder().rfcValue(NameComponentEnum.getEnum(entry.getKey())).build();
             } catch (IllegalArgumentException e) {
-                context = AddressContext.builder().extValue(V_Extension.toV_Extension(entry.getKey())).build();
+                nct = NameComponentType.builder().extValue(V_Extension.toV_Extension(entry.getKey())).build();
             }
-            contexts.put(context, entry.getValue().asBoolean());
+            sortAs.put(nct, entry.getValue().asText());
         }
-        return contexts;
+        return sortAs;
     }
 }

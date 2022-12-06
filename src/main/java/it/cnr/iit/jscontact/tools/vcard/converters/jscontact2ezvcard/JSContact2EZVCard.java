@@ -278,9 +278,23 @@ public class JSContact2EZVCard extends AbstractConverter {
         return name;
     }
 
-    private static String toVCardSortAsParam(Map<String,String> jsContactSortAs) {
+    private static String toVCardSortAsParam(Map<NameComponentType, String> jsContactSortAs) {
 
-        return (jsContactSortAs!=null) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,jsContactSortAs.values()) : null;
+        if (jsContactSortAs == null)
+            return null;
+
+        StringJoiner joiner = new StringJoiner(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+        if (jsContactSortAs.get(NameComponentType.surname()) != null)
+            joiner.add(jsContactSortAs.get(NameComponentType.surname()));
+        if (jsContactSortAs.get(NameComponentType.given()) != null)
+            joiner.add(jsContactSortAs.get(NameComponentType.given()));
+        if (jsContactSortAs.get(NameComponentType.middle()) != null)
+            joiner.add(jsContactSortAs.get(NameComponentType.middle()));
+        if (jsContactSortAs.get(NameComponentType.prefix()) != null)
+            joiner.add(jsContactSortAs.get(NameComponentType.prefix()));
+        if (jsContactSortAs.get(NameComponentType.suffix()) != null)
+            joiner.add(jsContactSortAs.get(NameComponentType.suffix()));
+        return joiner.toString();
     }
 
     private List<StructuredName> toVCardStructuredNames(Card jsCard, VCard vcard) {

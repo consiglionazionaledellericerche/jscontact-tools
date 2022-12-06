@@ -18,8 +18,12 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
+import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
+import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -59,7 +63,9 @@ public class Name extends AbstractJSContactType implements HasLabel, Serializabl
 
     String locale;
 
-    Map<String, String> sortAs;
+    @JsonSerialize(using = NameSortAsSerializer.class)
+    @JsonDeserialize(using = NameSortAsDeserializer.class)
+    Map<NameComponentType, String> sortAs;
 
     String label;
 
