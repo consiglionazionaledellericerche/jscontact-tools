@@ -63,11 +63,11 @@ public class OnlineService extends AbstractJSContactType implements HasLabel, Id
     String service;
 
     @NonNull
-    @NotNull
+    @NotNull(message = "user is missing in OnlineService")
     String user;
 
     @NonNull
-    @NotNull
+    @NotNull(message = "type is missing in OnlineService")
     @JsonDeserialize(using = OnlineServiceTypeDeserializer.class)
     OnlineServiceType type;
 

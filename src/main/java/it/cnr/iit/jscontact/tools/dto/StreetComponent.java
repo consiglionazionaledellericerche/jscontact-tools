@@ -47,12 +47,12 @@ public class StreetComponent extends AbstractJSContactType implements HasType, S
     @Builder.Default
     String _type = "StreetComponent";
 
-    @NotNull
+    @NotNull(message = "type is missing in StreetComponent")
     @NonNull
     @JsonDeserialize(using = StreetComponentTypeDeserializer.class)
     StreetComponentType type;
 
-    @NotNull
+    @NotNull(message = "value is missing in StreetComponent")
     @NonNull
     String value;
 

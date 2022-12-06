@@ -21,7 +21,7 @@ public class V_Extension {
     private String v_prefix;
 
     @NonNull
-    @NotNull
+    @NotNull(message = "v_value is missing in V_Extension")
     private String v_value;
 
     public static V_Extension toV_Extension(String extValue) {
