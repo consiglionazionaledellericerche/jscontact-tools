@@ -225,88 +225,100 @@ The conversion is executed according to the following rules:
     CLIENTPIDMAP
     XML
 
-5. An unmatched parameter is converted into an entry of an object `vCardParams` map. The following unmatched parameters are considered:
-    PID
-    GROUP
- 
-7. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
+5. An unmatched parameter is converted into an entry of an object `vCardParams` map. The following unmatched parameters
+   are considered:
+   PID
+   GROUP
 
-8. Default values for the configuration properties are:
-    
+6. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
+
+7. Default values for the configuration properties are:
+
     - `customTimeZonesPrefix = "tz"`
     - `setCardMustBeValidated = true`
     - `setAutoIdsProfile = true`
     - `setPropIds = false`
     - `setAutoFullAddress = true`
     - `setVoiceAsDefaultPhoneFeature = true`
-    - `convertGenderToSpeakToAs = true` 
+    - `convertGenderToSpeakToAs = true`
 
-9. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
+8. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and
+   if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
 
-    GENDER      SpeakToAs.grammaticalGender    
-    M           male
-    F           female
-    O           animate
-    N           neuter
-    U           SpeakToAs = null
+   GENDER SpeakToAs.grammaticalGender    
+   M male
+   F female
+   O animate
+   N neuter
+   U SpeakToAs = null
 
-10. Where a language is required to represent a localization and the language is not specified, `en` is used by default to set the mapping configuration parameter `defaultLanguage`.
+9. Where a language is required to represent a localization and the language is not specified, `en` is used by default
+   to set the mapping configuration parameter `defaultLanguage`.
 
-11. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following order:
+10. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following
+    order:
 
     1. BDAY (BIRTHDATE)
     2. DEATHDAY (DEATHDATE)
     3. ANNIVERSARY
 
-12. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following order:
+11. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following
+    order:
 
     1. HOBBY
     2. INTEREST
     3. EXPERTISE
 
-13. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following order:
+12. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following
+    order:
 
     1. PHOTO
     2. SOUND
     3. LOGO
 
-14. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the following order:
+13. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the
+    following order:
 
     1. CALURI
     2. FBURL
 
-15. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following order:
+14. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following
+    order:
 
     1. URL
     2. CONTACT-URI
 
-16. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the following order:
+15. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the
+    following order:
 
     1. SOURCE
     2. ORG-DIRECTORY
 
-17. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
+16. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
     1. TITLE
     2. ROLE
 
-18. The order of conversion of the HOBBY, INTEREST, EXPERTISE and ORG-DIRECTORY elements is based on the values of the INDEX parameter
+17. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration
+    parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty
+    address components.
 
-19. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty address components.
+18. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties.
 
-20. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties. 
+19. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-21. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
+20. JSContact UTCDateTime type is mapped to Java Calendar.
 
-22. JSContact UTCDateTime type is mapped to Java Calendar.
+21. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
 
-23. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
+22. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into
+    a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated
+    with an incremental positive integer (e.g. "\tz1")
 
-24. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated with an incremental positive integer (e.g. "\tz1") 
+23. The VCARD parameter DERIVED is ignored.
 
-25. The VCARD parameter DERIVED is ignored. 
-
-26. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group construct.
+24. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group
+    construct.
 
 ### Conversion Profiles from vCard to JSContact Card
 

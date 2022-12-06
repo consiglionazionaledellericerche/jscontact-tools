@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -25,11 +24,10 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationTypeDeser
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
-import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -40,16 +38,16 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","value","level","label"})
+@JsonPropertyOrder({"@type", "type", "value", "level", "label", "position"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonalInformation extends AbstractJSContactType implements HasLabel, HasType, HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
+public class PersonalInformation extends AbstractJSContactType implements HasLabel, HasType, IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "PersonalInformation", message="invalid @type value in PersonalInformation")
+    @Pattern(regexp = "PersonalInformation", message = "invalid @type value in PersonalInformation")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "PersonalInformation";
@@ -66,27 +64,18 @@ public class PersonalInformation extends AbstractJSContactType implements HasLab
 
     String label;
 
-    @JsonIgnore
-    Integer index;
-
-    /**
-     * Compares this personal information with another based on the value of the "index" property.
-     *
-     * @param o the object this object must be compared with
-     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
-     */
-    @Override
-    public int compareTo(PersonalInformation o) {
-
-        return HasIndexUtils.compareTo(this, o);
-    }
+    @Min(value = 1, message = "invalid position in PersonalInformation - value must be greater or equal than 1")
+    Integer position;
 
     /**
      * Tests if this personal information is a hobby.
      *
      * @return true if this personal information is a hobby, false otherwise
      */
-    public boolean asHobby() { return type.isHobby(); }
+    public boolean asHobby() {
+        return type.isHobby();
+    }
+
     /**
      * Tests if this personal information is an interest.
      *

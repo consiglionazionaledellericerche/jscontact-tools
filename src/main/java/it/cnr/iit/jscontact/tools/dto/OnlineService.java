@@ -26,11 +26,9 @@ import it.cnr.iit.jscontact.tools.constraints.OnlineServiceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.OnlineServiceTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
-import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -48,16 +46,16 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @OnlineServiceConstraint
-@JsonPropertyOrder({"@type","type","service","uri","username","contexts","pref","label"})
+@JsonPropertyOrder({"@type", "type", "service", "uri", "username", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OnlineService extends AbstractJSContactType implements HasLabel, HasIndex, Comparable<OnlineService>, IdMapValue, Serializable, HasContexts {
+public class OnlineService extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
     @NotNull
-    @Pattern(regexp = "OnlineService", message="invalid @type value in OnlineService")
+    @Pattern(regexp = "OnlineService", message = "invalid @type value in OnlineService")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "OnlineService";
@@ -86,18 +84,4 @@ public class OnlineService extends AbstractJSContactType implements HasLabel, Ha
 
     String label;
 
-    @JsonIgnore
-    Integer index;
-
-    /**
-     * Compares this online service with another based on the value of the "index" property.
-     *
-     * @param o the object this object must be compared with
-     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
-     */
-    @Override
-    public int compareTo(OnlineService o) {
-
-        return HasIndexUtils.compareTo(this, o);
-    }
 }

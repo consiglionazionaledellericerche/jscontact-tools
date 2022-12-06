@@ -90,16 +90,17 @@ public class ResourceTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource4 - 1", 2, jsCard.getDirectories().size());
-        assertEquals("testResource4 - 2", "http://directory.mycompany.example.com", jsCard.getDirectories().get("DIRECTORY-1").getUri());
-        assertTrue("testResource4 - 3",jsCard.getDirectories().get("DIRECTORY-1").isDirectory());
-        assertNull("testResource4 - 4", jsCard.getDirectories().get("DIRECTORY-1").getPref());
-        assertNull("testResource4 - 5", jsCard.getDirectories().get("DIRECTORY-1").getMediaType());
-        assertTrue("testResource4 - 6",jsCard.getDirectories().get("DIRECTORY-1").hasNoContext());
-        assertEquals("testResource4 - 7", "ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering", jsCard.getDirectories().get("DIRECTORY-2").getUri());
-        assertEquals("testResource4 - 8", 1, (int) jsCard.getDirectories().get("DIRECTORY-2").getPref());
-        assertNull("testResource4 - 9", jsCard.getDirectories().get("DIRECTORY-2").getMediaType());
-        assertTrue("testResource4 - 10",jsCard.getDirectories().get("DIRECTORY-2").isDirectory());
-        assertTrue("testResource4 - 11",jsCard.getDirectories().get("DIRECTORY-2").hasNoContext());
+        assertEquals("testResource4 - 2", "ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering", jsCard.getDirectories().get("DIRECTORY-1").getUri());
+        assertEquals("testResource4 - 3", 1, (int) jsCard.getDirectories().get("DIRECTORY-1").getPref());
+        assertNull("testResource4 - 4", jsCard.getDirectories().get("DIRECTORY-1").getMediaType());
+        assertTrue("testResource4 - 5", jsCard.getDirectories().get("DIRECTORY-1").isDirectory());
+        assertTrue("testResource4 - 6", jsCard.getDirectories().get("DIRECTORY-1").hasNoContext());
+        assertEquals("testResource4 - 7", "http://directory.mycompany.example.com", jsCard.getDirectories().get("DIRECTORY-2").getUri());
+        assertTrue("testResource4 - 8", jsCard.getDirectories().get("DIRECTORY-2").isDirectory());
+        assertNull("testResource4 - 9", jsCard.getDirectories().get("DIRECTORY-2").getPref());
+        assertNull("testResource4 - 10", jsCard.getDirectories().get("DIRECTORY-2").getMediaType());
+        assertTrue("testResource4 - 11", jsCard.getDirectories().get("DIRECTORY-2").hasNoContext());
+        assertEquals("testResource4 - 12", 1, (int) jsCard.getDirectories().get("DIRECTORY-2").getPosition());
     }
 
     @Test
@@ -114,16 +115,19 @@ public class ResourceTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testResource5 - 1", 2, jsCard.getDirectories().size());
-        assertEquals("testResource5 - 2", "http://directory.mycompany.example.com", jsCard.getDirectories().get("DIRECTORY-1").getUri());
-        assertTrue("testResource5 - 3",jsCard.getDirectories().get("DIRECTORY-1").isDirectory());
-        assertNull("testResource5 - 4", jsCard.getDirectories().get("DIRECTORY-1").getPref());
-        assertNull("testResource5 - 5", jsCard.getDirectories().get("DIRECTORY-1").getMediaType());
-        assertTrue("testResource5 - 6",jsCard.getDirectories().get("DIRECTORY-1").hasNoContext());
-        assertEquals("testResource5 - 7", "ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering", jsCard.getDirectories().get("DIRECTORY-2").getUri());
-        assertEquals("testResource5 - 8", 1, (int) jsCard.getDirectories().get("DIRECTORY-2").getPref());
-        assertNull("testResource5 - 9", jsCard.getDirectories().get("DIRECTORY-2").getMediaType());
-        assertTrue("testResource5 - 10",jsCard.getDirectories().get("DIRECTORY-2").hasNoContext());
-        assertTrue("testResource5 - 11",jsCard.getDirectories().get("DIRECTORY-2").isDirectory());
+        assertEquals("testResource5 - 2", "ldap://ldap.tech.example/o=Example%20Tech,ou=Engineering", jsCard.getDirectories().get("DIRECTORY-1").getUri());
+        assertEquals("testResource5 - 3", 1, (int) jsCard.getDirectories().get("DIRECTORY-1").getPref());
+        assertNull("testResource5 - 4", jsCard.getDirectories().get("DIRECTORY-1").getMediaType());
+        assertTrue("testResource5 - 5", jsCard.getDirectories().get("DIRECTORY-1").hasNoContext());
+        assertTrue("testResource5 - 6", jsCard.getDirectories().get("DIRECTORY-1").isDirectory());
+        assertEquals("testResource4 - 7", 2, (int) jsCard.getDirectories().get("DIRECTORY-1").getPosition());
+        assertEquals("testResource5 - 8", "http://directory.mycompany.example.com", jsCard.getDirectories().get("DIRECTORY-2").getUri());
+        assertTrue("testResource5 - 9", jsCard.getDirectories().get("DIRECTORY-2").isDirectory());
+        assertNull("testResource5 - 10", jsCard.getDirectories().get("DIRECTORY-2").getPref());
+        assertNull("testResource5 - 11", jsCard.getDirectories().get("DIRECTORY-2").getMediaType());
+        assertTrue("testResource5 - 12", jsCard.getDirectories().get("DIRECTORY-2").hasNoContext());
+        assertEquals("testResource4 - 13", 1, (int) jsCard.getDirectories().get("DIRECTORY-2").getPosition());
+
     }
 
 
