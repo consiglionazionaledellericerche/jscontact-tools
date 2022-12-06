@@ -46,6 +46,11 @@ public class PartialDate extends AbstractJSContactType {
 
     String calendarScale;
 
+    /**
+     * Returns the representation of this partial date according to the Ez-vcard PartialDate class.
+     *
+     * @return the conversion of this partial date into the Ez-vcard PartialDate class.
+     */
     public ezvcard.util.PartialDate toVCardPartialDate() {
         return ezvcard.util.PartialDate.builder().year(year).month(month).date(day).build();
     }
