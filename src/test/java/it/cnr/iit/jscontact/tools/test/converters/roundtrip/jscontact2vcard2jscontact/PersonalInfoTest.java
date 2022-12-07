@@ -31,48 +31,48 @@ public class PersonalInfoTest extends RoundtripTest {
     public void testPersonalInfo() throws IOException, CardException {
 
         String jscard="{" +
-                        "\"@type\":\"Card\"," +
-                       "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                       "\"fullName\":\"test\"," +
-                       "\"personalInfo\":{ " +
-                            "\"PERSINFO-1\": {" +
-                                "\"@type\":\"PersonalInformation\"," +
-                                "\"type\": \"expertise\"," +
-                                "\"value\": \"chemistry\"," +
-                                "\"level\": \"high\" " +
-                            "}," +
-                            "\"PERSINFO-2\": {" +
-                                "\"@type\":\"PersonalInformation\"," +
-                                "\"type\": \"expertise\"," +
-                                "\"value\": \"chinese literature\"," +
-                                "\"level\": \"low\"" +
-                            "}," +
-                            "\"PERSINFO-3\": {" +
-                                "\"@type\":\"PersonalInformation\"," +
-                                "\"type\": \"hobby\"," +
-                                "\"value\": \"reading\"," +
-                                "\"level\": \"high\"" +
-                            "}," +
-                            "\"PERSINFO-4\": {" +
-                                "\"@type\":\"PersonalInformation\"," +
-                                "\"type\": \"hobby\"," +
-                                "\"value\": \"sewing\"," +
-                                "\"level\": \"high\"" +
-                            "}," +
-                            "\"PERSINFO-5\": {" +
-                                "\"@type\":\"PersonalInformation\"," +
-                                "\"type\": \"interest\"," +
-                                "\"value\": \"r&b music\"," +
-                                "\"level\": \"medium\" " +
-                            "}," +
-                            "\"PERSINFO-6\": {" +
-                                "\"@type\":\"PersonalInformation\"," +
-                                "\"type\": \"interest\"," +
-                                "\"value\": \"rock 'n' roll music\"," +
-                                "\"level\": \"high\" " +
-                            "}" +
-                       "}" +
-                       "}";
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"fullName\":\"test\"," +
+                "\"personalInfo\":{ " +
+                "\"PERSINFO-1\": {" +
+                "\"@type\":\"PersonalInfo\"," +
+                "\"type\": \"expertise\"," +
+                "\"value\": \"chemistry\"," +
+                "\"level\": \"high\" " +
+                "}," +
+                "\"PERSINFO-2\": {" +
+                "\"@type\":\"PersonalInfo\"," +
+                "\"type\": \"expertise\"," +
+                "\"value\": \"chinese literature\"," +
+                "\"level\": \"low\"" +
+                "}," +
+                "\"PERSINFO-3\": {" +
+                "\"@type\":\"PersonalInfo\"," +
+                "\"type\": \"hobby\"," +
+                "\"value\": \"reading\"," +
+                "\"level\": \"high\"" +
+                "}," +
+                "\"PERSINFO-4\": {" +
+                "\"@type\":\"PersonalInfo\"," +
+                "\"type\": \"hobby\"," +
+                "\"value\": \"sewing\"," +
+                "\"level\": \"high\"" +
+                "}," +
+                "\"PERSINFO-5\": {" +
+                "\"@type\":\"PersonalInfo\"," +
+                "\"type\": \"interest\"," +
+                "\"value\": \"r&b music\"," +
+                "\"level\": \"medium\" " +
+                "}," +
+                "\"PERSINFO-6\": {" +
+                "\"@type\":\"PersonalInfo\"," +
+                "\"type\": \"interest\"," +
+                "\"value\": \"rock 'n' roll music\"," +
+                "\"level\": \"high\" " +
+                "}" +
+                "}" +
+                "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testPersonalInfo - 1", jscard2, Card.toJSCard(jscard));

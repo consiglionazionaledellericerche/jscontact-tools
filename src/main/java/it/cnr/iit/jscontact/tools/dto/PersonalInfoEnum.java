@@ -22,13 +22,13 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the PersonalInformation "type" memmber as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the PersonalInfo "type" memmber as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.4">draft-ietf-calext-jscontact</a>
  */
 @AllArgsConstructor
-public enum PersonalInformationEnum implements IsExtensibleEnum {
+public enum PersonalInfoEnum implements IsExtensibleEnum {
 
     EXPERTISE("expertise"),
     HOBBY("hobby"),
@@ -42,8 +42,8 @@ public enum PersonalInformationEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static PersonalInformationEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(PersonalInformationEnum.class, value);
+    public static PersonalInfoEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(PersonalInfoEnum.class, value);
     }
 
     @Override

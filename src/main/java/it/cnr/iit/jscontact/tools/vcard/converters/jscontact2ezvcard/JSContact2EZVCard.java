@@ -740,7 +740,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
-    private Expertise toVCardExpertise(PersonalInformation pi) {
+    private Expertise toVCardExpertise(PersonalInfo pi) {
 
         Expertise e = new Expertise(pi.getValue());
         VCardUtils.addVCardUnmatchedParams(e, pi);
@@ -749,13 +749,13 @@ public class JSContact2EZVCard extends AbstractConverter {
         e.setPref(pi.getPref());
         e.setType(toVCardTypeParam(pi));
         if (pi.getLevel() != null && pi.getLevel().isRfcValue())
-            e.setLevel(ExpertiseLevel.get(PersonalInformationLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
+            e.setLevel(ExpertiseLevel.get(PersonalInfoLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
         else
             e.setParameter(VCardParamEnum.LEVEL.getValue(), pi.getLevel().getExtValue().toString().toUpperCase());
         return e;
     }
 
-    private Hobby toVCardHobby(PersonalInformation pi) {
+    private Hobby toVCardHobby(PersonalInfo pi) {
 
         Hobby h = new Hobby(pi.getValue());
         VCardUtils.addVCardUnmatchedParams(h, pi);
@@ -770,7 +770,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return h;
     }
 
-    private Interest toVCardInterest(PersonalInformation pi) {
+    private Interest toVCardInterest(PersonalInfo pi) {
 
         Interest i = new Interest(pi.getValue());
         VCardUtils.addVCardUnmatchedParams(i, pi);
@@ -790,14 +790,14 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getPersonalInfo() == null)
             return;
 
-        for (Map.Entry<String,PersonalInformation> entry : jsCard.getPersonalInfo().entrySet()) {
-            PersonalInformation pi = entry.getValue();
+        for (Map.Entry<String, PersonalInfo> entry : jsCard.getPersonalInfo().entrySet()) {
+            PersonalInfo pi = entry.getValue();
             pi.setPropId(entry.getKey());
-            if (pi.getType()!=null && pi.getType().isRfcValue()) {
+            if (pi.getType() != null && pi.getType().isRfcValue()) {
                 switch (pi.getType().getRfcValue()) {
                     case EXPERTISE:
                         Expertise e = toVCardExpertise(pi);
-                        addVCardX_ABLabel(pi,e,vcard);
+                        addVCardX_ABLabel(pi, e, vcard);
                         vcard.getExpertise().add(e);
                         break;
                     case HOBBY:

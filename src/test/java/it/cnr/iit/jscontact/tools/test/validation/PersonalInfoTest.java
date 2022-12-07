@@ -15,26 +15,26 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.PersonalInformation;
-import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
+import it.cnr.iit.jscontact.tools.dto.PersonalInfo;
+import it.cnr.iit.jscontact.tools.dto.PersonalInfoType;
 import org.junit.Test;
 
-public class PersonalInformationTest {
+public class PersonalInfoTest {
 
-    public void testValidPersonalInformationBuild1() {
+    public void testValidPersonalInfoBuild1() {
 
         // type missing
-        PersonalInformation.builder()
-                       .value("Cycling")
-                       .build();
+        PersonalInfo.builder()
+                .value("Cycling")
+                .build();
     }
 
     @Test(expected = NullPointerException.class)
-    public void testInvalidPersonalInformationBuild1() {
+    public void testInvalidPersonalInfoBuild1() {
 
         // value missing
-        PersonalInformation.builder()
-                .type(PersonalInformationType.hobby())
+        PersonalInfo.builder()
+                .type(PersonalInfoType.hobby())
                 .build();
     }
 

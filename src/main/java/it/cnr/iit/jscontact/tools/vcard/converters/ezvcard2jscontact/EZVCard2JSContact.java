@@ -28,7 +28,6 @@ import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
-import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.comparators.JSCardAddressesComparator;
@@ -89,8 +88,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         break;
                     case PERSONAL_INFO:
                         VCard2JSContactIdsProfile.PersonalInfoId piId = (VCard2JSContactIdsProfile.PersonalInfoId) jsContactId.getId();
-                        PersonalInformationEnum piType = (PersonalInformationEnum) args[0];
-                        if (piId.getPersonalInformationEnum() == piType)
+                        PersonalInfoEnum piType = (PersonalInfoEnum) args[0];
+                        if (piId.getPersonalInfoEnum() == piType)
                             ids.add(piId.getId());
                         break;
                     default:
@@ -843,10 +842,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
       }
     }
 
-    private static PersonalInformationLevelType toJSCardLevel(String vcardLevelParam) throws CardException {
+    private static PersonalInfoLevelType toJSCardLevel(String vcardLevelParam) throws CardException {
 
         try {
-            return PersonalInformationLevelType.builder().rfcValue(PersonalInformationLevelEnum.getEnum(vcardLevelParam)).build();
+            return PersonalInfoLevelType.builder().rfcValue(PersonalInfoLevelEnum.getEnum(vcardLevelParam)).build();
         } catch (IllegalArgumentException e) {
             throw new CardException("Unknown LEVEL value " + vcardLevelParam);
         }
@@ -857,9 +856,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         int j = 0;
         int i = 1;
         for (Hobby hobby : vcard.getHobbies()) {
-            jsCard.addPersonalInfo(getJSCardId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "HOBBY-" + (i++), hobby.getParameter(VCardParamEnum.PROP_ID.getValue()), PersonalInformationEnum.HOBBY),
-                    PersonalInformation.builder()
-                            .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.HOBBY).build())
+            jsCard.addPersonalInfo(getJSCardId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "HOBBY-" + (i++), hobby.getParameter(VCardParamEnum.PROP_ID.getValue()), PersonalInfoEnum.HOBBY),
+                    PersonalInfo.builder()
+                            .type(PersonalInfoType.builder().rfcValue(PersonalInfoEnum.HOBBY).build())
                             .value(getValue(hobby))
                             .level((hobby.getLevel() != null) ? toJSCardLevel(hobby.getLevel().getValue()) : null)
                             .pref(hobby.getPref())
@@ -873,9 +872,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         i = 1;
         for (Interest interest : vcard.getInterests()) {
-            jsCard.addPersonalInfo(getJSCardId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "INTEREST-" + (i++), interest.getParameter(VCardParamEnum.PROP_ID.getValue()), PersonalInformationEnum.INTEREST),
-                    PersonalInformation.builder()
-                            .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.INTEREST).build())
+            jsCard.addPersonalInfo(getJSCardId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "INTEREST-" + (i++), interest.getParameter(VCardParamEnum.PROP_ID.getValue()), PersonalInfoEnum.INTEREST),
+                    PersonalInfo.builder()
+                            .type(PersonalInfoType.builder().rfcValue(PersonalInfoEnum.INTEREST).build())
                             .value(getValue(interest))
                             .level((interest.getLevel() != null) ? toJSCardLevel(interest.getLevel().getValue()) : null)
                             .pref(interest.getPref())
@@ -889,10 +888,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         i = 1;
         for (Expertise expertise : vcard.getExpertise()) {
-            jsCard.addPersonalInfo(getJSCardId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "EXPERTISE-" + (i++), expertise.getParameter(VCardParamEnum.PROP_ID.getValue()), PersonalInformationEnum.INTEREST),
-                    PersonalInformation.builder()
+            jsCard.addPersonalInfo(getJSCardId(VCard2JSContactIdsProfile.IdType.PERSONAL_INFO, j++, "EXPERTISE-" + (i++), expertise.getParameter(VCardParamEnum.PROP_ID.getValue()), PersonalInfoEnum.INTEREST),
+                    PersonalInfo.builder()
                             .propId(expertise.getParameter(VCardParamEnum.PROP_ID.getValue()))
-                            .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.EXPERTISE).build())
+                            .type(PersonalInfoType.builder().rfcValue(PersonalInfoEnum.EXPERTISE).build())
                             .value(getValue(expertise))
                             .level((expertise.getLevel() != null) ? toJSCardLevel(expertise.getLevel().getValue()) : null)
                             .pref(expertise.getPref())

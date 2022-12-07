@@ -303,8 +303,8 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JSContactCollection(addMethod = "addPersonalInfo")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
-    Map<String, PersonalInformation> personalInfo;
+    @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInfo>")
+    Map<String, PersonalInfo> personalInfo;
 
     @JsonProperty("vCardProps")
     @JsonSerialize(using = VCardPropsSerializer.class)
@@ -619,15 +619,15 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     /**
      * Adds personal information to this object.
      *
-     * @param id the personal information identifier
-     * @param personalInformation the object representing the personal information
+     * @param id           the personal information identifier
+     * @param personalInfo the object representing the personal information
      */
-    public void addPersonalInfo(String id, PersonalInformation personalInformation) {
+    public void addPersonalInfo(String id, PersonalInfo personalInfo) {
 
-        if(personalInfo == null)
-            personalInfo = new HashMap<>();
+        if (this.personalInfo == null)
+            this.personalInfo = new HashMap<>();
 
-        personalInfo.putIfAbsent(id,personalInformation);
+        this.personalInfo.putIfAbsent(id, personalInfo);
     }
 
     /**

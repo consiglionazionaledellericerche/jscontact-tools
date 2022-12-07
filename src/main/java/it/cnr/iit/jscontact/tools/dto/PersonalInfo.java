@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationLevelTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoLevelTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
@@ -40,7 +40,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the PersonalInformation type as defined in section 2.8.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the PersonalInfo type as defined in section 2.8.3 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.3">draft-ietf-calext-jscontact</a>
@@ -51,36 +51,36 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonalInformation extends AbstractJSContactType implements HasLabel, HasType, HasContexts, IdMapValue, Serializable {
+public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasType, HasContexts, IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "PersonalInformation", message = "invalid @type value in PersonalInformation")
+    @Pattern(regexp = "PersonalInfo", message = "invalid @type value in PersonalInfo")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "PersonalInformation";
+    String _type = "PersonalInfo";
 
-    @JsonDeserialize(using = PersonalInformationTypeDeserializer.class)
-    PersonalInformationType type;
+    @JsonDeserialize(using = PersonalInfoTypeDeserializer.class)
+    PersonalInfoType type;
 
-    @NotNull(message = "value is missing in PersonalInformation")
+    @NotNull(message = "value is missing in PersonalInfo")
     @NonNull
     String value;
 
-    @JsonDeserialize(using = PersonalInformationLevelTypeDeserializer.class)
-    PersonalInformationLevelType level;
+    @JsonDeserialize(using = PersonalInfoLevelTypeDeserializer.class)
+    PersonalInfoLevelType level;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in PersonalInformation - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in PersonalInfo - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context, Boolean> contexts;
 
-    @Min(value = 1, message = "invalid pref in PersonalInformation - value must be greater or equal than 1")
-    @Max(value = 100, message = "invalid pref in PersonalInformation - value must be less or equal than 100")
+    @Min(value = 1, message = "invalid pref in PersonalInfo - value must be greater or equal than 1")
+    @Max(value = 100, message = "invalid pref in PersonalInfo - value must be less or equal than 100")
     Integer pref;
 
-    @Min(value = 1, message = "invalid listAs in PersonalInformation - value must be greater or equal than 1")
+    @Min(value = 1, message = "invalid listAs in PersonalInfo - value must be greater or equal than 1")
     Integer listAs;
 
     String label;

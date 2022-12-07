@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "level" property of the PersonalInformation type as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "level" property of the PersonalInfo type as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.4">draft-ietf-calext-jscontact</a>
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class PersonalInformationLevelType extends ExtensibleEnumType<PersonalInformationLevelEnum> implements Serializable {
+public class PersonalInfoLevelType extends ExtensibleEnumType<PersonalInfoLevelEnum> implements Serializable {
 
     /**
      * Tests if this personal information level is "high".
@@ -43,7 +43,9 @@ public class PersonalInformationLevelType extends ExtensibleEnumType<PersonalInf
      * @return true if this personal information level is "high", false otherwise
      */
     @JsonIgnore
-    public boolean isHigh() { return isRfc(PersonalInformationLevelEnum.HIGH); }
+    public boolean isHigh() {
+        return isRfc(PersonalInfoLevelEnum.HIGH);
+    }
 
     /**
      * Tests if this personal information level is "medium".
@@ -51,7 +53,9 @@ public class PersonalInformationLevelType extends ExtensibleEnumType<PersonalInf
      * @return true if this personal information level is "medium", false otherwise
      */
     @JsonIgnore
-    public boolean isMedium() { return isRfc(PersonalInformationLevelEnum.MEDIUM); }
+    public boolean isMedium() {
+        return isRfc(PersonalInfoLevelEnum.MEDIUM);
+    }
 
     /**
      * Tests if this personal information level is "low".
@@ -59,30 +63,40 @@ public class PersonalInformationLevelType extends ExtensibleEnumType<PersonalInf
      * @return true if this personal information level is "low", false otherwise
      */
     @JsonIgnore
-    public boolean isLow() { return isRfc(PersonalInformationLevelEnum.LOW); }
+    public boolean isLow() {
+        return isRfc(PersonalInfoLevelEnum.LOW);
+    }
 
-    private static PersonalInformationLevelType rfc(PersonalInformationLevelEnum rfcValue) { return PersonalInformationLevelType.builder().rfcValue(rfcValue).build(); }
+    private static PersonalInfoLevelType rfc(PersonalInfoLevelEnum rfcValue) {
+        return PersonalInfoLevelType.builder().rfcValue(rfcValue).build();
+    }
 
     /**
      * Returns a "high" personal information level.
      *
      * @return a "high" personal information level
      */
-    public static PersonalInformationLevelType high() { return rfc(PersonalInformationLevelEnum.HIGH);}
+    public static PersonalInfoLevelType high() {
+        return rfc(PersonalInfoLevelEnum.HIGH);
+    }
 
     /**
      * Returns a "medium" personal information level.
      *
      * @return a "medium" personal information level
      */
-    public static PersonalInformationLevelType medium() { return rfc(PersonalInformationLevelEnum.MEDIUM);}
+    public static PersonalInfoLevelType medium() {
+        return rfc(PersonalInfoLevelEnum.MEDIUM);
+    }
 
     /**
      * Returns a "low" personal information level.
      *
      * @return a "low" personal information level
      */
-    public static PersonalInformationLevelType low() { return rfc(PersonalInformationLevelEnum.LOW);}
+    public static PersonalInfoLevelType low() {
+        return rfc(PersonalInfoLevelEnum.LOW);
+    }
 
     /**
      * Returns a custom personal information level.
@@ -90,5 +104,7 @@ public class PersonalInformationLevelType extends ExtensibleEnumType<PersonalInf
      * @param extValue the custom personal information level in text format
      * @return a custom personal information level
      */
-    public static PersonalInformationLevelType ext(String extValue) { return PersonalInformationLevelType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    public static PersonalInfoLevelType ext(String extValue) {
+        return PersonalInfoLevelType.builder().extValue(V_Extension.toV_Extension(extValue)).build();
+    }
 }
