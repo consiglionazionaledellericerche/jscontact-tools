@@ -740,10 +740,12 @@ public class JSContact2EZVCard extends AbstractConverter {
     private Expertise toVCardExpertise(PersonalInformation pi) {
 
         Expertise e = new Expertise(pi.getValue());
-        VCardUtils.addVCardUnmatchedParams(e,pi);
+        VCardUtils.addVCardUnmatchedParams(e, pi);
         addVCardPropIdParam(e, pi.getPropId());
         e.setIndex(pi.getListAs());
-        if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
+        e.setPref(pi.getPref());
+        e.setType(toVCardTypeParam(pi));
+        if (pi.getLevel() != null && pi.getLevel().isRfcValue())
             e.setLevel(ExpertiseLevel.get(PersonalInformationLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
         else
             e.setParameter(VCardParamEnum.LEVEL.getValue(), pi.getLevel().getExtValue().toString().toUpperCase());
@@ -753,10 +755,12 @@ public class JSContact2EZVCard extends AbstractConverter {
     private Hobby toVCardHobby(PersonalInformation pi) {
 
         Hobby h = new Hobby(pi.getValue());
-        VCardUtils.addVCardUnmatchedParams(h,pi);
+        VCardUtils.addVCardUnmatchedParams(h, pi);
         addVCardPropIdParam(h, pi.getPropId());
         h.setIndex(pi.getListAs());
-        if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
+        h.setPref(pi.getPref());
+        h.setType(toVCardTypeParam(pi));
+        if (pi.getLevel() != null && pi.getLevel().isRfcValue())
             h.setLevel(HobbyLevel.get(pi.getLevel().getRfcValue().name()));
         else
             h.setParameter(VCardParamEnum.LEVEL.getValue(), pi.getLevel().getExtValue().toString().toUpperCase());
@@ -766,10 +770,12 @@ public class JSContact2EZVCard extends AbstractConverter {
     private Interest toVCardInterest(PersonalInformation pi) {
 
         Interest i = new Interest(pi.getValue());
-        VCardUtils.addVCardUnmatchedParams(i,pi);
+        VCardUtils.addVCardUnmatchedParams(i, pi);
         addVCardPropIdParam(i, pi.getPropId());
         i.setIndex(pi.getListAs());
-        if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
+        i.setPref(pi.getPref());
+        i.setType(toVCardTypeParam(pi));
+        if (pi.getLevel() != null && pi.getLevel().isRfcValue())
             i.setLevel(InterestLevel.get(pi.getLevel().getRfcValue().name()));
         else
             i.setParameter(VCardParamEnum.LEVEL.getValue(), pi.getLevel().getExtValue().toString().toUpperCase());
