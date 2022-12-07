@@ -28,6 +28,7 @@ import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
+import it.cnr.iit.jscontact.tools.dto.Anniversary;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.comparators.JSCardAddressesComparator;
@@ -810,34 +811,36 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
       if (vcard.getBirthday() != null) {
-          jsCard.addAnniversary(getJSCardId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + (i ++), vcard.getBirthday().getParameter(VCardParamEnum.PROP_ID.getValue())), it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
-                          .type(AnniversaryType.birth())
-                          .date(toJSCardAnniversaryDate(vcard.getBirthday()))
-                          .place(getValue(vcard.getBirthplace()))
-                          .vCardParams(VCardUtils.getVCardParamsOtherThan(vcard.getBirthday(), VCardParamEnum.PROP_ID, VCardParamEnum.CALSCALE))
-                                                                             .build()
-                                  );
+          it.cnr.iit.jscontact.tools.dto.Anniversary anniversary = it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
+                  .type(AnniversaryType.birth())
+                  .date(toJSCardAnniversaryDate(vcard.getBirthday()))
+                  .place(getValue(vcard.getBirthplace()))
+                  .vCardParams(VCardUtils.getVCardParamsOtherThan(vcard.getBirthday(), VCardParamEnum.PROP_ID, VCardParamEnum.CALSCALE))
+                  .build();
+          anniversary.setLabel(toJSCardLabel(vcard.getBirthday(), vcard.getExtendedProperties()));
+          jsCard.addAnniversary(getJSCardId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + (i++), vcard.getBirthday().getParameter(VCardParamEnum.PROP_ID.getValue())), anniversary);
       }
 
       if (vcard.getDeathdate() != null) {
-          jsCard.addAnniversary(getJSCardId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + (i ++), vcard.getDeathdate().getParameter(VCardParamEnum.PROP_ID.getValue())), it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
-                          .type(AnniversaryType.death())
-                          .date(toJSCardAnniversaryDate(vcard.getDeathdate()))
-                          .place(getValue(vcard.getDeathplace()))
-                          .vCardParams(VCardUtils.getVCardParamsOtherThan(vcard.getDeathdate(), VCardParamEnum.PROP_ID, VCardParamEnum.CALSCALE))
-                                                                             .build()
-                                  );
+          it.cnr.iit.jscontact.tools.dto.Anniversary anniversary = it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
+                  .type(AnniversaryType.death())
+                  .date(toJSCardAnniversaryDate(vcard.getDeathdate()))
+                  .place(getValue(vcard.getDeathplace()))
+                  .vCardParams(VCardUtils.getVCardParamsOtherThan(vcard.getDeathdate(), VCardParamEnum.PROP_ID, VCardParamEnum.CALSCALE))
+                  .build();
+          anniversary.setLabel(toJSCardLabel(vcard.getDeathdate(), vcard.getExtendedProperties()));
+          jsCard.addAnniversary(getJSCardId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + (i++), vcard.getDeathdate().getParameter(VCardParamEnum.PROP_ID.getValue())), anniversary);
       }
 
       if (vcard.getAnniversary() != null) {
-          jsCard.addAnniversary(getJSCardId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + i, vcard.getAnniversary().getParameter(VCardParamEnum.PROP_ID.getValue())), it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
-                          .type(AnniversaryType.wedding())
-                          .date(toJSCardAnniversaryDate(vcard.getAnniversary()))
-                          .vCardParams(VCardUtils.getVCardParamsOtherThan(vcard.getAnniversary(), VCardParamEnum.PROP_ID, VCardParamEnum.CALSCALE))
-                                                                              .build()
-                                   );
+          it.cnr.iit.jscontact.tools.dto.Anniversary anniversary = it.cnr.iit.jscontact.tools.dto.Anniversary.builder()
+                  .type(AnniversaryType.wedding())
+                  .date(toJSCardAnniversaryDate(vcard.getAnniversary()))
+                  .vCardParams(VCardUtils.getVCardParamsOtherThan(vcard.getAnniversary(), VCardParamEnum.PROP_ID, VCardParamEnum.CALSCALE))
+                  .build();
+          anniversary.setLabel(toJSCardLabel(vcard.getAnniversary(), vcard.getExtendedProperties()));
+          jsCard.addAnniversary(getJSCardId(VCard2JSContactIdsProfile.IdType.ANNIVERSARY, i, "ANNIVERSARY-" + (i++), vcard.getAnniversary().getParameter(VCardParamEnum.PROP_ID.getValue())), anniversary);
       }
-
     }
 
     private static PersonalInformationLevelType toJSCardLevel(String vcardLevelParam) throws CardException {

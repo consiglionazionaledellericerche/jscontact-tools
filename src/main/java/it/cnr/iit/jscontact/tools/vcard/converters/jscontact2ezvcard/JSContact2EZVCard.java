@@ -718,18 +718,21 @@ public class JSContact2EZVCard extends AbstractConverter {
                         vcard.setBirthday(toVCardDateOrTimeProperty(Birthday.class, anniversary));
                         VCardUtils.addVCardUnmatchedParams(vcard.getBirthday(),anniversary);
                         addVCardPropIdParam(vcard.getBirthday(), entry.getKey());
+                        addVCardX_ABLabel(entry.getValue(), vcard.getBirthday(), vcard);
                         vcard.setBirthplace(toVCardPlaceProperty(Birthplace.class, anniversary));
                         break;
                     case DEATH:
                         vcard.setDeathdate(toVCardDateOrTimeProperty(Deathdate.class, anniversary));
                         VCardUtils.addVCardUnmatchedParams(vcard.getDeathdate(),anniversary);
                         addVCardPropIdParam(vcard.getDeathdate(), entry.getKey());
+                        addVCardX_ABLabel(entry.getValue(), vcard.getDeathdate(), vcard);
                         vcard.setDeathplace(toVCardPlaceProperty(Deathplace.class, anniversary));
                         break;
                     case WEDDING:
                         vcard.setAnniversary(toVCardDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
                         VCardUtils.addVCardUnmatchedParams(vcard.getAnniversary(),anniversary);
                         addVCardPropIdParam(vcard.getAnniversary(), entry.getKey());
+                        addVCardX_ABLabel(entry.getValue(), vcard.getAnniversary(), vcard);
                         break;
                 }
             }
