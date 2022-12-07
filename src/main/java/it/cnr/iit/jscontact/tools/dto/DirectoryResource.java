@@ -38,7 +38,7 @@ import javax.validation.constraints.Pattern;
  * @author Mario Loffredo
  */
 @ResourceConstraint
-@JsonPropertyOrder({"@type", "uri", "type", "mediaType", "contexts", "pref", "label", "position"})
+@JsonPropertyOrder({"@type", "uri", "type", "mediaType", "contexts", "pref", "listAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -55,8 +55,8 @@ public class DirectoryResource extends Resource implements HasType {
     @JsonDeserialize(using = DirectoryResourceTypeDeserializer.class)
     DirectoryResourceType type;
 
-    @Min(value = 1, message = "invalid position in DirectoryResource - value must be greater or equal than 1")
-    Integer position;
+    @Min(value = 1, message = "invalid listAs in DirectoryResource - value must be greater or equal than 1")
+    Integer listAs;
 
     @JsonIgnore
     private boolean isDirectoryResource(DirectoryResourceType type) {

@@ -38,7 +38,7 @@ import java.io.Serializable;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.3">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type", "type", "value", "level", "position", "label"})
+@JsonPropertyOrder({"@type", "type", "value", "level", "listAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -62,8 +62,8 @@ public class PersonalInformation extends AbstractJSContactType implements HasLab
     @JsonDeserialize(using = PersonalInformationLevelTypeDeserializer.class)
     PersonalInformationLevelType level;
 
-    @Min(value = 1, message = "invalid position in PersonalInformation - value must be greater or equal than 1")
-    Integer position;
+    @Min(value = 1, message = "invalid listAs in PersonalInformation - value must be greater or equal than 1")
+    Integer listAs;
 
     String label;
 

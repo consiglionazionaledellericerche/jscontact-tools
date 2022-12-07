@@ -742,7 +742,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Expertise e = new Expertise(pi.getValue());
         VCardUtils.addVCardUnmatchedParams(e,pi);
         addVCardPropIdParam(e, pi.getPropId());
-        e.setIndex(pi.getPosition());
+        e.setIndex(pi.getListAs());
         if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
             e.setLevel(ExpertiseLevel.get(PersonalInformationLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
         else
@@ -755,7 +755,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Hobby h = new Hobby(pi.getValue());
         VCardUtils.addVCardUnmatchedParams(h,pi);
         addVCardPropIdParam(h, pi.getPropId());
-        h.setIndex(pi.getPosition());
+        h.setIndex(pi.getListAs());
         if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
             h.setLevel(HobbyLevel.get(pi.getLevel().getRfcValue().name()));
         else
@@ -768,7 +768,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Interest i = new Interest(pi.getValue());
         VCardUtils.addVCardUnmatchedParams(i,pi);
         addVCardPropIdParam(i, pi.getPropId());
-        i.setIndex(pi.getPosition());
+        i.setIndex(pi.getListAs());
         if (pi.getLevel()!= null && pi.getLevel().isRfcValue())
             i.setLevel(InterestLevel.get(pi.getLevel().getRfcValue().name()));
         else
@@ -1184,7 +1184,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         break;
                     case DIRECTORY:
                         OrgDirectory od = toVCardUriProperty(OrgDirectory.class, resource, vcard);
-                        od.setIndex(resource.getPosition());
+                        od.setIndex(resource.getListAs());
                         vcard.getOrgDirectories().add(od);
                         break;
                 }

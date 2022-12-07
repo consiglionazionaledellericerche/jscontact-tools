@@ -302,7 +302,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .contexts(resource.getContexts())
                 .mediaType(resource.getMediaType())
                 .pref(resource.getPref())
-                .position((index != null) ? Integer.parseInt(index) : null) //used only for DirectoryResource objects whose "type" is "directory"
+                .listAs((index != null) ? Integer.parseInt(index) : null) //used only for DirectoryResource objects whose "type" is "directory"
                 .label(toJSCardLabel(vcardProperty,vcardExtendedProperties))
                 .vCardParams(VCardUtils.getVCardUnmatchedParams(vcardProperty, VCardParamEnum.PID, VCardParamEnum.INDEX, VCardParamEnum.GROUP))
                 .build();
@@ -859,7 +859,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                             .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.HOBBY).build())
                             .value(getValue(hobby))
                             .level((hobby.getLevel() != null) ? toJSCardLevel(hobby.getLevel().getValue()) : null)
-                            .position(hobby.getIndex())
+                            .listAs(hobby.getIndex())
                             .label(toJSCardLabel(hobby, vcard.getExtendedProperties()))
                             .vCardParams(VCardUtils.getVCardUnmatchedParams(hobby, VCardParamEnum.INDEX, VCardParamEnum.GROUP))
                             .build()
@@ -873,7 +873,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                             .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.INTEREST).build())
                             .value(getValue(interest))
                             .level((interest.getLevel() != null) ? toJSCardLevel(interest.getLevel().getValue()) : null)
-                            .position(interest.getIndex())
+                            .listAs(interest.getIndex())
                             .label(toJSCardLabel(interest, vcard.getExtendedProperties()))
                             .vCardParams(VCardUtils.getVCardUnmatchedParams(interest, VCardParamEnum.INDEX, VCardParamEnum.GROUP))
                             .build()
@@ -888,7 +888,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                             .type(PersonalInformationType.builder().rfcValue(PersonalInformationEnum.EXPERTISE).build())
                             .value(getValue(expertise))
                             .level((expertise.getLevel() != null) ? toJSCardLevel(expertise.getLevel().getValue()) : null)
-                            .position(expertise.getIndex())
+                            .listAs(expertise.getIndex())
                             .label(toJSCardLabel(expertise, vcard.getExtendedProperties()))
                             .vCardParams(VCardUtils.getVCardUnmatchedParams(expertise, VCardParamEnum.INDEX, VCardParamEnum.GROUP))
                             .build()
