@@ -41,7 +41,7 @@ import java.util.Map;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type", "components", "locale", "sortAs", "label"})
+@JsonPropertyOrder({"@type", "components", "sortAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -60,8 +60,6 @@ public class Name extends AbstractJSContactType implements HasLabel, Serializabl
     @NonNull
     @Valid
     NameComponent[] components;
-
-    String locale;
 
     @JsonSerialize(using = NameSortAsSerializer.class)
     @JsonDeserialize(using = NameSortAsDeserializer.class)

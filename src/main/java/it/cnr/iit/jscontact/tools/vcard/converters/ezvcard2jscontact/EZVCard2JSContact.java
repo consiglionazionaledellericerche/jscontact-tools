@@ -606,7 +606,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         return Name.builder()
                 .components(components)
-                .locale(vcardName.getLanguage())
                 .sortAs(toJSCardNameSortAs(vcardName.getSortAs(), vcardName))
                 .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardName, VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID))
                 .label(toJSCardLabel(vcardName,vcard.getExtendedProperties()))
