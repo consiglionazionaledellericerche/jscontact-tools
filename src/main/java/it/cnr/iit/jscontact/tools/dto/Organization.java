@@ -59,10 +59,6 @@ public class Organization extends AbstractJSContactType implements HasLabel, Has
     @Singular(ignoreNullCollections = true)
     Map<Context, Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in Organization - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in Organization - value must be less or equal than 100")
-    Integer pref;
-
     String label;
 
     @JsonIgnore

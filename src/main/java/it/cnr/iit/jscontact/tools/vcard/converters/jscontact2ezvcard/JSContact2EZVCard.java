@@ -746,8 +746,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         VCardUtils.addVCardUnmatchedParams(e, pi);
         addVCardPropIdParam(e, pi.getPropId());
         e.setIndex(pi.getListAs());
-        e.setPref(pi.getPref());
-        e.setType(toVCardTypeParam(pi));
+//        e.setPref(pi.getPref());
+//        e.setType(toVCardTypeParam(pi));
         if (pi.getLevel() != null && pi.getLevel().isRfcValue())
             e.setLevel(ExpertiseLevel.get(PersonalInfoLevelEnum.getVCardExpertiseLevel(pi.getLevel().getRfcValue())));
         else
@@ -761,8 +761,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         VCardUtils.addVCardUnmatchedParams(h, pi);
         addVCardPropIdParam(h, pi.getPropId());
         h.setIndex(pi.getListAs());
-        h.setPref(pi.getPref());
-        h.setType(toVCardTypeParam(pi));
+//        h.setPref(pi.getPref());
+//        h.setType(toVCardTypeParam(pi));
         if (pi.getLevel() != null && pi.getLevel().isRfcValue())
             h.setLevel(HobbyLevel.get(pi.getLevel().getRfcValue().name()));
         else
@@ -776,8 +776,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         VCardUtils.addVCardUnmatchedParams(i, pi);
         addVCardPropIdParam(i, pi.getPropId());
         i.setIndex(pi.getListAs());
-        i.setPref(pi.getPref());
-        i.setType(toVCardTypeParam(pi));
+//        i.setPref(pi.getPref());
+//        i.setType(toVCardTypeParam(pi));
         if (pi.getLevel() != null && pi.getLevel().isRfcValue())
             i.setLevel(InterestLevel.get(pi.getLevel().getRfcValue().name()));
         else
@@ -1346,7 +1346,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
             org.getValues().addAll(unitNameList);
         }
-        org.setPref(jsOrg.getPref());
+//        org.setPref(jsOrg.getPref());
         org.setType(toVCardTypeParam(jsOrg));
         if (jsOrg.getSortAs()!=null || !unitSortAsList.isEmpty()) {
             List<String> sortAs = new ArrayList<>();
