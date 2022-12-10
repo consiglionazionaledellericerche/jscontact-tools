@@ -25,17 +25,17 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the PersonalInformation type as defined in section 2.8.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "type" property of the PersonalInfo type as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.4">draft-ietf-calext-jscontact</a>
  */
 @Getter
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class PersonalInformationType extends ExtensibleEnumType<PersonalInformationEnum> implements Serializable {
+public class PersonalInfoType extends ExtensibleEnumType<PersonalInfoEnum> implements Serializable {
 
     /**
      * Tests if this personal information type is "hobby".
@@ -43,7 +43,9 @@ public class PersonalInformationType extends ExtensibleEnumType<PersonalInformat
      * @return true if this personal information type is "hobby", false otherwise
      */
     @JsonIgnore
-    public boolean isHobby() { return isRfc(PersonalInformationEnum.HOBBY); }
+    public boolean isHobby() {
+        return isRfc(PersonalInfoEnum.HOBBY);
+    }
 
     /**
      * Tests if this personal information type is "interest".
@@ -51,7 +53,9 @@ public class PersonalInformationType extends ExtensibleEnumType<PersonalInformat
      * @return true if this personal information type is "interest", false otherwise
      */
     @JsonIgnore
-    public boolean isInterest() { return isRfc(PersonalInformationEnum.INTEREST); }
+    public boolean isInterest() {
+        return isRfc(PersonalInfoEnum.INTEREST);
+    }
 
     /**
      * Tests if this personal information type is "expertise".
@@ -59,30 +63,40 @@ public class PersonalInformationType extends ExtensibleEnumType<PersonalInformat
      * @return true if this personal information type is "expertise", false otherwise
      */
     @JsonIgnore
-    public boolean isExpertise() { return isRfc(PersonalInformationEnum.EXPERTISE); }
+    public boolean isExpertise() {
+        return isRfc(PersonalInfoEnum.EXPERTISE);
+    }
 
-    private static PersonalInformationType rfc(PersonalInformationEnum rfcValue) { return PersonalInformationType.builder().rfcValue(rfcValue).build(); }
+    private static PersonalInfoType rfc(PersonalInfoEnum rfcValue) {
+        return PersonalInfoType.builder().rfcValue(rfcValue).build();
+    }
 
     /**
      * Returns a "hobby" personal information type.
      *
      * @return a "hobby" personal information type
      */
-    public static PersonalInformationType hobby() { return rfc(PersonalInformationEnum.HOBBY);}
+    public static PersonalInfoType hobby() {
+        return rfc(PersonalInfoEnum.HOBBY);
+    }
 
     /**
      * Returns a "interest" personal information type.
      *
      * @return a "interest" personal information type
      */
-    public static PersonalInformationType interest() { return rfc(PersonalInformationEnum.INTEREST);}
+    public static PersonalInfoType interest() {
+        return rfc(PersonalInfoEnum.INTEREST);
+    }
 
     /**
      * Returns a "expertise" personal information type.
      *
      * @return a "expertise" personal information type
      */
-    public static PersonalInformationType expertise() { return rfc(PersonalInformationEnum.EXPERTISE);}
+    public static PersonalInfoType expertise() {
+        return rfc(PersonalInfoEnum.EXPERTISE);
+    }
 
     /**
      * Returns a custom personal information type.
@@ -90,5 +104,7 @@ public class PersonalInformationType extends ExtensibleEnumType<PersonalInformat
      * @param extValue the custom personal information type in text format
      * @return a custom personal information type
      */
-    public static PersonalInformationType ext(String extValue) { return PersonalInformationType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    public static PersonalInfoType ext(String extValue) {
+        return PersonalInfoType.builder().extValue(V_Extension.toV_Extension(extValue)).build();
+    }
 }

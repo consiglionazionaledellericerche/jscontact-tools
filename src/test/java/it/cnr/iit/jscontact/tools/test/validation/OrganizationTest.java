@@ -21,6 +21,6 @@ public class OrganizationTest extends AbstractTest {
                 .organizations(organizations)
                 .build();
         assertFalse("testInvalidOrganization1-1", jsCard.isValid());
-        assertEquals("testInvalidOrganization1-2", "at least one not null member other than @type is missing in Organization", jsCard.getValidationMessage());
+        assertEquals("testInvalidOrganization1-2", "at least one not null between name and units is missing in Organization", jsCard.getValidationMessage());
     }
 }

@@ -16,7 +16,7 @@ public class JSContactPropUtils {
             return null;
 
         if (o instanceof String)
-            return String.format("\"%s\"", (String) o);
+            return String.format("\"%s\"", o);
         else if (o instanceof Calendar)
             return String.format("\"%s\"", DateUtils.toString((Calendar) o));
         else if (o instanceof Boolean || o instanceof Integer)

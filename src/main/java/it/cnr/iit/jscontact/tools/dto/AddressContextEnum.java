@@ -38,14 +38,13 @@ public enum AddressContextEnum implements IsExtensibleEnum, VCardTypeDerivedEnum
     PRIVATE("private"),
     WORK("work"),
     BILLING("billing"),
-    POSTAL("postal");
+    DELIVERY("delivery");
 
     private final String value;
 
     @Getter
     @JsonIgnore
-    private static final Map<String, AddressContextEnum> aliases = new HashMap<String, AddressContextEnum>()
-    {{
+    private static final Map<String, AddressContextEnum> aliases = new HashMap<String, AddressContextEnum>() {{
         put("home", PRIVATE);
     }};
 

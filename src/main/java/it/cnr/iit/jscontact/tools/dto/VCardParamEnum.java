@@ -35,13 +35,14 @@ public enum VCardParamEnum  {
     PID("PID"),
     LEVEL("LEVEL"),
     CC("CC"),
-    GROUP( "GROUP"),
+    GROUP("GROUP"),
     TYPE("TYPE"),
-    PREF( "PREF"),
+    PREF("PREF"),
+    CALSCALE("CALSCALE"),
     LANGUAGE("LANGUAGE"),
-    MEDIATYPE( "MEDIATYPE"),
-    SORT_AS( "SORT-AS"),
-    LABEL( "LABEL"),
+    MEDIATYPE("MEDIATYPE"),
+    SORT_AS("SORT-AS"),
+    LABEL("LABEL"),
     PROP_ID("PROP-ID"),
     DERIVED("DERIVED"),
     AUTHOR("AUTHOR"),
@@ -49,7 +50,8 @@ public enum VCardParamEnum  {
     CREATED("CREATED"),
     RANKS("RANKS"),
     JSPTR("JSPTR"),
-    SERVICE_TYPE( "SERVICE-TYPE");
+    SERVICE_TYPE("SERVICE-TYPE"),
+    VALUE("VALUE");
 
     private final String value;
 

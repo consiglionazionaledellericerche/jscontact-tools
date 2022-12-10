@@ -105,7 +105,7 @@ public class PersonalInfoTest extends JCard2JSContactTest {
     @Test
     public void testPersonalInfo4() throws CardException {
 
-        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+        String jcard = "[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"hobby\", {\"level\": \"high\", \"index\": 2}, \"text\", \"reading\"], " +
                 "[\"hobby\", {\"level\": \"medium\", \"index\": 1}, \"text\", \"sewing\"]" +
@@ -113,12 +113,14 @@ public class PersonalInfoTest extends JCard2JSContactTest {
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testPersonalInfo4 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo4 - 2", 2, jsCard.getPersonalInfo().size());
-        assertTrue("testPersonalInfo4 - 3", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
-        assertEquals("testPersonalInfo4 - 4", "reading", jsCard.getPersonalInfo().get("HOBBY-2").getValue());
-        assertTrue("testPersonalInfo4 - 5", jsCard.getPersonalInfo().get("HOBBY-2").ofHighLevel());
-        assertTrue("testPersonalInfo4 - 6", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
-        assertEquals("testPersonalInfo4 - 7", "sewing", jsCard.getPersonalInfo().get("HOBBY-1").getValue());
-        assertTrue("testPersonalInfo4 - 8", jsCard.getPersonalInfo().get("HOBBY-1").ofMediumLevel());
+        assertTrue("testPersonalInfo4 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
+        assertEquals("testPersonalInfo4 - 4", "reading", jsCard.getPersonalInfo().get("HOBBY-1").getValue());
+        assertTrue("testPersonalInfo4 - 5", jsCard.getPersonalInfo().get("HOBBY-1").ofHighLevel());
+        assertEquals("testPersonalInfo4 - 6", 2, (int) jsCard.getPersonalInfo().get("HOBBY-1").getListAs());
+        assertTrue("testPersonalInfo4 - 7", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
+        assertEquals("testPersonalInfo4 - 8", "sewing", jsCard.getPersonalInfo().get("HOBBY-2").getValue());
+        assertTrue("testPersonalInfo4 - 9", jsCard.getPersonalInfo().get("HOBBY-2").ofMediumLevel());
+        assertEquals("testPersonalInfo4 - 10", 1, (int) jsCard.getPersonalInfo().get("HOBBY-2").getListAs());
 
     }
 
@@ -139,22 +141,26 @@ public class PersonalInfoTest extends JCard2JSContactTest {
         assertTrue("testPersonalInfo5 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
         assertEquals("testPersonalInfo5 - 4", "reading", jsCard.getPersonalInfo().get("HOBBY-1").getValue());
         assertTrue("testPersonalInfo5 - 5", jsCard.getPersonalInfo().get("HOBBY-1").ofHighLevel());
-        assertTrue("testPersonalInfo5 - 6", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
-        assertEquals("testPersonalInfo5 - 7", "sewing", jsCard.getPersonalInfo().get("HOBBY-2").getValue());
-        assertTrue("testPersonalInfo5 - 8", jsCard.getPersonalInfo().get("HOBBY-2").ofMediumLevel());
-        assertTrue("testPersonalInfo5 - 9", jsCard.getPersonalInfo().get("INTEREST-1").asInterest());
-        assertEquals("testPersonalInfo5 - 10", "r&b music", jsCard.getPersonalInfo().get("INTEREST-1").getValue());
-        assertTrue("testPersonalInfo5 - 11", jsCard.getPersonalInfo().get("INTEREST-1").ofMediumLevel());
-        assertTrue("testPersonalInfo5 - 12", jsCard.getPersonalInfo().get("INTEREST-2").asInterest());
-        assertEquals("testPersonalInfo5 - 13", "rock 'n' roll music", jsCard.getPersonalInfo().get("INTEREST-2").getValue());
-        assertTrue("testPersonalInfo5 - 14", jsCard.getPersonalInfo().get("INTEREST-2").ofHighLevel());
+        assertEquals("testPersonalInfo5 - 6", 1, (int) jsCard.getPersonalInfo().get("HOBBY-1").getListAs());
+        assertTrue("testPersonalInfo5 - 7", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
+        assertEquals("testPersonalInfo5 - 8", "sewing", jsCard.getPersonalInfo().get("HOBBY-2").getValue());
+        assertTrue("testPersonalInfo5 - 9", jsCard.getPersonalInfo().get("HOBBY-2").ofMediumLevel());
+        assertEquals("testPersonalInfo5 - 10", 2, (int) jsCard.getPersonalInfo().get("HOBBY-2").getListAs());
+        assertTrue("testPersonalInfo5 - 11", jsCard.getPersonalInfo().get("INTEREST-1").asInterest());
+        assertEquals("testPersonalInfo5 - 12", "r&b music", jsCard.getPersonalInfo().get("INTEREST-1").getValue());
+        assertTrue("testPersonalInfo5 - 13", jsCard.getPersonalInfo().get("INTEREST-1").ofMediumLevel());
+        assertEquals("testPersonalInfo5 - 14", 1, (int) jsCard.getPersonalInfo().get("INTEREST-1").getListAs());
+        assertTrue("testPersonalInfo5 - 15", jsCard.getPersonalInfo().get("INTEREST-2").asInterest());
+        assertEquals("testPersonalInfo5 - 16", "rock 'n' roll music", jsCard.getPersonalInfo().get("INTEREST-2").getValue());
+        assertTrue("testPersonalInfo5 - 17", jsCard.getPersonalInfo().get("INTEREST-2").ofHighLevel());
+        assertEquals("testPersonalInfo5 - 18", 2, (int) jsCard.getPersonalInfo().get("INTEREST-2").getListAs());
 
     }
 
     @Test
     public void testPersonalInfo6() throws CardException {
 
-        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+        String jcard = "[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
                 "[\"hobby\", {\"level\": \"high\", \"index\": 2}, \"text\", \"reading\"], " +
                 "[\"hobby\", {\"level\": \"medium\", \"index\": 1}, \"text\", \"sewing\"], " +
@@ -162,20 +168,23 @@ public class PersonalInfoTest extends JCard2JSContactTest {
                 "[\"interest\", {\"level\": \"high\", \"index\": 1}, \"text\", \"rock 'n' roll music\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testPersonalInfo6 - 1", jsCard.getPersonalInfo());
         assertEquals("testPersonalInfo6 - 2", 4, jsCard.getPersonalInfo().size());
-        assertTrue("testPersonalInfo6 - 3", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
-        assertEquals("testPersonalInfo6 - 4", "reading", jsCard.getPersonalInfo().get("HOBBY-2").getValue());
-        assertTrue("testPersonalInfo6 - 5", jsCard.getPersonalInfo().get("HOBBY-2").ofHighLevel());
-        assertTrue("testPersonalInfo6 - 6", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
-        assertEquals("testPersonalInfo6 - 7", "sewing", jsCard.getPersonalInfo().get("HOBBY-1").getValue());
-        assertTrue("testPersonalInfo6 - 8", jsCard.getPersonalInfo().get("HOBBY-1").ofMediumLevel());
-        assertTrue("testPersonalInfo6 - 9", jsCard.getPersonalInfo().get("INTEREST-2").asInterest());
-        assertEquals("testPersonalInfo6 - 10", "r&b music", jsCard.getPersonalInfo().get("INTEREST-2").getValue());
-        assertTrue("testPersonalInfo6 - 11", jsCard.getPersonalInfo().get("INTEREST-2").ofMediumLevel());
-        assertTrue("testPersonalInfo6 - 12", jsCard.getPersonalInfo().get("INTEREST-1").asInterest());
-        assertEquals("testPersonalInfo6 - 13", "rock 'n' roll music", jsCard.getPersonalInfo().get("INTEREST-1").getValue());
-        assertTrue("testPersonalInfo6 - 14", jsCard.getPersonalInfo().get("INTEREST-1").ofHighLevel());
+        assertTrue("testPersonalInfo6 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
+        assertEquals("testPersonalInfo6 - 4", "reading", jsCard.getPersonalInfo().get("HOBBY-1").getValue());
+        assertTrue("testPersonalInfo6 - 5", jsCard.getPersonalInfo().get("HOBBY-1").ofHighLevel());
+        assertEquals("testPersonalInfo6 - 6", 2, (int) jsCard.getPersonalInfo().get("HOBBY-1").getListAs());
+        assertTrue("testPersonalInfo6 - 7", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
+        assertEquals("testPersonalInfo6 - 8", "sewing", jsCard.getPersonalInfo().get("HOBBY-2").getValue());
+        assertTrue("testPersonalInfo6 - 9", jsCard.getPersonalInfo().get("HOBBY-2").ofMediumLevel());
+        assertEquals("testPersonalInfo6 - 10", 1, (int) jsCard.getPersonalInfo().get("HOBBY-2").getListAs());
+        assertTrue("testPersonalInfo6 - 11", jsCard.getPersonalInfo().get("INTEREST-1").asInterest());
+        assertEquals("testPersonalInfo6 - 12", "r&b music", jsCard.getPersonalInfo().get("INTEREST-1").getValue());
+        assertTrue("testPersonalInfo6 - 13", jsCard.getPersonalInfo().get("INTEREST-1").ofMediumLevel());
+        assertEquals("testPersonalInfo6 - 14", 2, (int) jsCard.getPersonalInfo().get("INTEREST-1").getListAs());
+        assertTrue("testPersonalInfo6 - 15", jsCard.getPersonalInfo().get("INTEREST-2").asInterest());
+        assertEquals("testPersonalInfo6 - 16", "rock 'n' roll music", jsCard.getPersonalInfo().get("INTEREST-2").getValue());
+        assertTrue("testPersonalInfo6 - 17", jsCard.getPersonalInfo().get("INTEREST-2").ofHighLevel());
+        assertEquals("testPersonalInfo6 - 18", 1, (int) jsCard.getPersonalInfo().get("INTEREST-2").getListAs());
 
     }
 
@@ -197,21 +206,27 @@ public class PersonalInfoTest extends JCard2JSContactTest {
         assertTrue("testPersonalInfo7 - 3", jsCard.getPersonalInfo().get("HOBBY-1").asHobby());
         assertEquals("testPersonalInfo7 - 4", "reading", jsCard.getPersonalInfo().get("HOBBY-1").getValue());
         assertTrue("testPersonalInfo7 - 5", jsCard.getPersonalInfo().get("HOBBY-1").ofHighLevel());
-        assertTrue("testPersonalInfo7 - 6", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
-        assertEquals("testPersonalInfo7 - 7", "sewing", jsCard.getPersonalInfo().get("HOBBY-2").getValue());
-        assertTrue("testPersonalInfo7 - 8", jsCard.getPersonalInfo().get("HOBBY-2").ofMediumLevel());
-        assertTrue("testPersonalInfo7 - 9", jsCard.getPersonalInfo().get("INTEREST-1").asInterest());
-        assertEquals("testPersonalInfo7 - 10", "r&b music", jsCard.getPersonalInfo().get("INTEREST-1").getValue());
-        assertTrue("testPersonalInfo7 - 11", jsCard.getPersonalInfo().get("INTEREST-1").ofMediumLevel());
-        assertTrue("testPersonalInfo7 - 12", jsCard.getPersonalInfo().get("INTEREST-2").asInterest());
-        assertEquals("testPersonalInfo7 - 13", "rock 'n' roll music", jsCard.getPersonalInfo().get("INTEREST-2").getValue());
-        assertTrue("testPersonalInfo7 - 14", jsCard.getPersonalInfo().get("INTEREST-2").ofHighLevel());
-        assertTrue("testPersonalInfo7 - 15", jsCard.getPersonalInfo().get("EXPERTISE-1").asExpertise());
-        assertEquals("testPersonalInfo7 - 16", "chemistry", jsCard.getPersonalInfo().get("EXPERTISE-1").getValue());
-        assertTrue("testPersonalInfo7 - 17", jsCard.getPersonalInfo().get("EXPERTISE-1").ofHighLevel());
-        assertTrue("testPersonalInfo7 - 18", jsCard.getPersonalInfo().get("EXPERTISE-2").asExpertise());
-        assertEquals("testPersonalInfo7 - 19", "chinese literature", jsCard.getPersonalInfo().get("EXPERTISE-2").getValue());
-        assertTrue("testPersonalInfo7 - 20", jsCard.getPersonalInfo().get("EXPERTISE-2").ofLowLevel());
+        assertEquals("testPersonalInfo7 - 6", 1, (int) jsCard.getPersonalInfo().get("HOBBY-1").getListAs());
+        assertTrue("testPersonalInfo7 - 7", jsCard.getPersonalInfo().get("HOBBY-2").asHobby());
+        assertEquals("testPersonalInfo7 - 8", "sewing", jsCard.getPersonalInfo().get("HOBBY-2").getValue());
+        assertTrue("testPersonalInfo7 - 9", jsCard.getPersonalInfo().get("HOBBY-2").ofMediumLevel());
+        assertEquals("testPersonalInfo7 - 10", 2, (int) jsCard.getPersonalInfo().get("HOBBY-2").getListAs());
+        assertTrue("testPersonalInfo7 - 11", jsCard.getPersonalInfo().get("INTEREST-1").asInterest());
+        assertEquals("testPersonalInfo7 - 12", "r&b music", jsCard.getPersonalInfo().get("INTEREST-1").getValue());
+        assertTrue("testPersonalInfo7 - 13", jsCard.getPersonalInfo().get("INTEREST-1").ofMediumLevel());
+        assertEquals("testPersonalInfo7 - 14", 1, (int) jsCard.getPersonalInfo().get("INTEREST-1").getListAs());
+        assertTrue("testPersonalInfo7 - 15", jsCard.getPersonalInfo().get("INTEREST-2").asInterest());
+        assertEquals("testPersonalInfo7 - 16", "rock 'n' roll music", jsCard.getPersonalInfo().get("INTEREST-2").getValue());
+        assertTrue("testPersonalInfo7 - 17", jsCard.getPersonalInfo().get("INTEREST-2").ofHighLevel());
+        assertEquals("testPersonalInfo7 - 18", 2, (int) jsCard.getPersonalInfo().get("INTEREST-2").getListAs());
+        assertTrue("testPersonalInfo7 - 19", jsCard.getPersonalInfo().get("EXPERTISE-1").asExpertise());
+        assertEquals("testPersonalInfo7 - 20", "chinese literature", jsCard.getPersonalInfo().get("EXPERTISE-1").getValue());
+        assertTrue("testPersonalInfo7 - 21", jsCard.getPersonalInfo().get("EXPERTISE-1").ofLowLevel());
+        assertEquals("testPersonalInfo7 - 22", 2, (int) jsCard.getPersonalInfo().get("EXPERTISE-1").getListAs());
+        assertTrue("testPersonalInfo7 - 23", jsCard.getPersonalInfo().get("EXPERTISE-2").asExpertise());
+        assertEquals("testPersonalInfo7 - 24", "chemistry", jsCard.getPersonalInfo().get("EXPERTISE-2").getValue());
+        assertTrue("testPersonalInfo7 - 25", jsCard.getPersonalInfo().get("EXPERTISE-2").ofHighLevel());
+        assertEquals("testPersonalInfo7 - 26", 1, (int) jsCard.getPersonalInfo().get("EXPERTISE-2").getListAs());
 
     }
 

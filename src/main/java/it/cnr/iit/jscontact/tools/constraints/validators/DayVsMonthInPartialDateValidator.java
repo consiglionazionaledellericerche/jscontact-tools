@@ -13,30 +13,22 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.test.validation;
+package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.dto.PersonalInformation;
-import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
-import org.junit.Test;
+import it.cnr.iit.jscontact.tools.constraints.DayVsMonthInPartialDateConstraint;
+import it.cnr.iit.jscontact.tools.dto.PartialDate;
 
-public class PersonalInformationTest {
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-    public void testValidPersonalInformationBuild1() {
+public class DayVsMonthInPartialDateValidator implements ConstraintValidator<DayVsMonthInPartialDateConstraint, PartialDate> {
 
-        // type missing
-        PersonalInformation.builder()
-                       .value("Cycling")
-                       .build();
+    public void initialize(DayVsMonthInPartialDateConstraint constraintAnnotation) {
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidPersonalInformationBuild1() {
+    public boolean isValid(PartialDate partialDate, ConstraintValidatorContext context) {
 
-        // value missing
-        PersonalInformation.builder()
-                .type(PersonalInformationType.hobby())
-                .build();
+        return partialDate.getDay() == null || partialDate.getMonth() != null;
     }
-
 
 }

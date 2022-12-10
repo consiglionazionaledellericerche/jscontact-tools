@@ -19,40 +19,30 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.AddressContext;
-import it.cnr.iit.jscontact.tools.dto.AddressContextEnum;
+import it.cnr.iit.jscontact.tools.dto.PersonalInfoLevelEnum;
+import it.cnr.iit.jscontact.tools.dto.PersonalInfoLevelType;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
- * Custom JSON deserializer for the AddressContext map.
+ * Custom JSON deserializer for the PersonalInfoLevelType value.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class AddressContextsDeserializer extends JsonDeserializer<Map<AddressContext,Boolean>> {
+public class PersonalInfoLevelTypeDeserializer extends JsonDeserializer<PersonalInfoLevelType> {
 
     @Override
-    public Map<AddressContext,Boolean> deserialize(JsonParser jp, DeserializationContext ctxt)
+    public PersonalInfoLevelType deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        Map<AddressContext,Boolean> contexts = new HashMap<>();
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
-        while (iter.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iter.next();
-            AddressContext context;
-            try {
-                context = AddressContext.builder().rfcValue(AddressContextEnum.getEnum(entry.getKey())).build();
-            } catch (IllegalArgumentException e) {
-                context = AddressContext.builder().extValue(V_Extension.toV_Extension(entry.getKey())).build();
-            }
-            contexts.put(context, entry.getValue().asBoolean());
+        String value = node.asText();
+        try {
+            return PersonalInfoLevelType.builder().rfcValue(PersonalInfoLevelEnum.getEnum(value)).build();
+        } catch (IllegalArgumentException e) {
+            return PersonalInfoLevelType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
-        return contexts;
     }
 }

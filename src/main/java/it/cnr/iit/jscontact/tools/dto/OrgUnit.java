@@ -7,6 +7,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -31,7 +32,7 @@ public class OrgUnit extends AbstractJSContactType implements IdMapValue, Serial
     @Builder.Default
     String _type = "OrgUnit";
 
-    @NotNull
+    @NotEmpty(message = "name is missing or empty in OrgUnit")
     @NonNull
     String name;
 

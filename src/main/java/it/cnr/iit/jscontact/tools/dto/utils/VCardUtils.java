@@ -88,18 +88,18 @@ public class VCardUtils {
     /**
      * Gets the "vCardParams" map corresponding to the Ezvcard unmatched VCardParameters object of a VCard property.
      *
-     * @param property the VCard property
-     * @param unmatchedParameters the list of unmatched parameter names
+     * @param property          the VCard property
+     * @param matchedParameters the list of matched parameter names
      * @return the "vCardParams" map corresponding to the Ezvcard VCardParameters object, null if the map is empty
      */
-    public static Map<String, VCardParam> getVCardUnmatchedParams(VCardProperty property, VCardParamEnum... unmatchedParameters) {
+    public static Map<String, VCardParam> getVCardParamsOtherThan(VCardProperty property, VCardParamEnum... matchedParameters) {
 
         Map<String, VCardParam> vCardParams = new HashMap<>();
-        List<VCardParamEnum> unmatchedAsList = Arrays.asList(unmatchedParameters);
-        if (property.getGroup()!=null)
+        List<VCardParamEnum> matchedAsList = Arrays.asList(matchedParameters);
+        if (property.getGroup() != null)
             vCardParams.put("group", VCardParam.builder().value(property.getGroup()).build());
-        for(String parameterName : property.getParameters().keySet()) {
-            if (parameterName.startsWith("X-") || unmatchedAsList.contains(VCardParamEnum.getEnum(parameterName))) {
+        for (String parameterName : property.getParameters().keySet()) {
+            if (parameterName.startsWith("X-") || !matchedAsList.contains(VCardParamEnum.getEnum(parameterName))) {
                 String parameterValue = property.getParameter(parameterName);
                 if (parameterValue.split(DelimiterUtils.COMMA_ARRAY_DELIMITER).length > 0)
                     vCardParams.put(parameterName.toLowerCase(), VCardParam.builder().values(parameterValue.split(DelimiterUtils.COMMA_ARRAY_DELIMITER)).build());

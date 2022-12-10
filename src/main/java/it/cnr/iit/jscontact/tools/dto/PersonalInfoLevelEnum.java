@@ -26,13 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enum class mapping the values of the PersonalInformation "level" member as defined in section 2.8.2 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the PersonalInfo "level" member as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.4">draft-ietf-calext-jscontact</a>
  */
 @AllArgsConstructor
-public enum PersonalInformationLevelEnum implements IsExtensibleEnum {
+public enum PersonalInfoLevelEnum implements IsExtensibleEnum {
 
     HIGH("high"),
     MEDIUM("medium"),
@@ -41,11 +41,10 @@ public enum PersonalInformationLevelEnum implements IsExtensibleEnum {
     private final String value;
 
     @JsonIgnore
-    private static final Map<String, PersonalInformationLevelEnum> aliases = new HashMap<String, PersonalInformationLevelEnum>()
-    {{
-       put("beginner", LOW);
-       put("average", MEDIUM);
-       put("expert", HIGH);
+    private static final Map<String, PersonalInfoLevelEnum> aliases = new HashMap<String, PersonalInfoLevelEnum>() {{
+        put("beginner", LOW);
+        put("average", MEDIUM);
+        put("expert", HIGH);
     }};
 
     @JsonValue
@@ -54,7 +53,7 @@ public enum PersonalInformationLevelEnum implements IsExtensibleEnum {
     }
 
     @JsonIgnore
-    public static String getVCardExpertiseLevel(PersonalInformationLevelEnum level) {
+    public static String getVCardExpertiseLevel(PersonalInfoLevelEnum level) {
 
         for (String key : aliases.keySet())
             if (aliases.get(key).equals(level))
@@ -64,8 +63,8 @@ public enum PersonalInformationLevelEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static PersonalInformationLevelEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(PersonalInformationLevelEnum.class, value, aliases);
+    public static PersonalInfoLevelEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(PersonalInfoLevelEnum.class, value, aliases);
     }
 
     @Override

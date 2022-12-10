@@ -13,18 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto.interfaces;
+package it.cnr.iit.jscontact.tools.constraints;
 
-/**
- * This interface imposes that a class implementing it must include the "index" property.
- *
- * @author Mario Loffredo
- */
-public interface HasIndex {
-    /**
-     * Returns the value of the "index" property.
-     *
-     * @return the value of the "index" property
-     */
-    Integer getIndex();
+import it.cnr.iit.jscontact.tools.constraints.validators.DayVsMonthInPartialDateValidator;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
+
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {DayVsMonthInPartialDateValidator.class})
+@Documented
+public @interface DayVsMonthInPartialDateConstraint {
+
+    String message() default "amnot empty day requires a not empty month in PartialDate";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }
+

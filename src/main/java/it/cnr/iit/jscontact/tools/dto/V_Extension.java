@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 /**
- * Class mapping the vendor-extension values as defined in section 1.7 of [draft-ietf-calext-jscontact].
+ * Class mapping the vendor-extension values as defined in section 1.8 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.7">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.8">draft-ietf-calext-jscontact</a>
  */
 @Data
 @Builder
@@ -21,7 +21,7 @@ public class V_Extension {
     private String v_prefix;
 
     @NonNull
-    @NotNull
+    @NotNull(message = "v_value is missing in V_Extension")
     private String v_value;
 
     public static V_Extension toV_Extension(String extValue) {

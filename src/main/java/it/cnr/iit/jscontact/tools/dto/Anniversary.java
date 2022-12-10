@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
@@ -40,16 +41,16 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","date","place"})
+@JsonPropertyOrder({"@type", "type", "date", "place"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Anniversary extends AbstractJSContactType implements HasType, IdMapValue, Serializable {
+public class Anniversary extends AbstractJSContactType implements HasType, HasLabel, IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "Anniversary", message="invalid @type value in Anniversary")
+    @Pattern(regexp = "Anniversary", message = "invalid @type value in Anniversary")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Anniversary";
@@ -61,7 +62,10 @@ public class Anniversary extends AbstractJSContactType implements HasType, IdMap
     @NonNull
     @JsonSerialize(using = AnniversaryDateSerializer.class)
     @JsonDeserialize(using = AnniversaryDateDeserializer.class)
+    @Valid
     AnniversaryDate date;
+
+    String label;
 
     @Valid
     Address place;

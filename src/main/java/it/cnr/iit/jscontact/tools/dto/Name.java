@@ -18,25 +18,30 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
+import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
+import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Name type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Name type as defined in section 2.2.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type","components","locale","label","sortAs"})
+@JsonPropertyOrder({"@type", "components", "sortAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -51,21 +56,21 @@ public class Name extends AbstractJSContactType implements HasLabel, Serializabl
     String _type = "Name";
 
     @JSContactCollection(addMethod = "addComponent")
-    @NotNull(message = "components is missing in Name")
+    @NotEmpty(message = "components is missing or empty in Name")
     @NonNull
     @Valid
     NameComponent[] components;
 
-    String locale;
+    @JsonSerialize(using = NameSortAsSerializer.class)
+    @JsonDeserialize(using = NameSortAsDeserializer.class)
+    Map<NameComponentType, String> sortAs;
 
     String label;
-
-    Map<String,String> sortAs;
 
     /**
      * Adds a name component to this object.
      *
-     * @param nc the name component
+     * @param nc         the name component
      * @param components the name components
      * @return the name components in input plus the nc component
      */

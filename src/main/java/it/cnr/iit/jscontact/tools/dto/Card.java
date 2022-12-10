@@ -57,14 +57,15 @@ import java.util.*;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "@type","@version","uid","prodId","created","updated","kind","members","relatedTo","locale",
-        "name","fullName","nickNames","organizations","titles","speakToAs",
-        "emails","onlineServices","phones","preferredContactChannels","preferredLanguages",
-        "calendars","schedulingAddresses",
+        "@type", "@version", "created", "kind", "locale", "members", "prodId", "relatedTo", "uid", "updated",
+        "fullName", "name", "nickNames", "organizations", "speakToAs", "titles",
+        "emails", "onlineServices", "phones", "preferredContactChannels", "preferredLanguages",
+        "calendars", "schedulingAddresses",
         "addresses",
-        "cryptoKeys","directories","links","media",
+        "cryptoKeys", "directories", "links", "media",
         "localizations",
-        "anniversaries","personalInfo","notes","keywords","vCardProps"})
+        "anniversaries", "keywords", "personalInfo", "notes",
+        "vCardProps"})
 @TitleOrganizationConstraint
 @MembersVsKindValueConstraint
 @LocalizationsConstraint
@@ -72,7 +73,7 @@ import java.util.*;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@EqualsAndHashCode(of={"uid"}, callSuper = false)
+@EqualsAndHashCode(of = {"uid"}, callSuper = false)
 @SuperBuilder
 public class Card extends AbstractExtensibleJSContactType implements Serializable {
 
@@ -81,97 +82,118 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     /*
     Metadata properties
      */
+
+    // Section 2.1.1 of [draft-ietf-calext-jscontact]
     @NotNull
-    @Pattern(regexp = "Card", message="invalid @type value in Card")
+    @Pattern(regexp = "Card", message = "invalid @type value in Card")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Card";
 
+    // Section 2.1.2 of [draft-ietf-calext-jscontact]
     @NotNull
     @JsonProperty("@version")
     @Builder.Default
     String _version = "rfc0000";
 
-    @NotNull(message = "uid is missing in Card")
-    @NonNull
-    String uid;
-
-    String prodId;
-
+    // Section 2.1.3 of [draft-ietf-calext-jscontact]
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar created;
 
+    // Section 2.1.4 of [draft-ietf-calext-jscontact]
+    @JsonDeserialize(using = KindTypeDeserializer.class)
+    KindType kind;
+
+    // Section 2.1.5 of [draft-ietf-calext-jscontact]
+    @LanguageTagConstraint
+    String locale;
+
+    // Section 2.1.6 of [draft-ietf-calext-jscontact]
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in JSContact - Only Boolean.TRUE allowed")
+    Map<String, Boolean> members;
+
+    // Section 2.1.7 of [draft-ietf-calext-jscontact]
+    String prodId;
+
+    // Section 2.1.8 of [draft-ietf-calext-jscontact]
+    @JSContactCollection(addMethod = "addRelation")
+    @JsonPropertyOrder(alphabetic = true)
+    @RelatedToConstraint
+    Map<String, Relation> relatedTo;
+
+    // Section 2.1.9 of [draft-ietf-calext-jscontact]
+    @NotNull(message = "uid is missing in Card")
+    @NonNull
+    String uid;
+
+    // Section 2.1.10 of [draft-ietf-calext-jscontact]
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     Calendar updated;
 
-    @JsonDeserialize(using = KindTypeDeserializer.class)
-    KindType kind;
-
-    @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in JSContact - Only Boolean.TRUE allowed")
-    Map<String,Boolean> members;
-
-    @JSContactCollection(addMethod = "addRelation")
-    @JsonPropertyOrder(alphabetic = true)
-    @RelatedToConstraint
-    Map<String,Relation> relatedTo;
-
-    @LanguageTagConstraint
-    String locale;
-
-
     /*
     Name and Organization properties
      */
+
+    // Section 2.2.1 of [draft-ietf-calext-jscontact]
+    String fullName;
+
+    // Section 2.2.2 of [draft-ietf-calext-jscontact]
     @Valid
     Name name;
 
-    String fullName;
-
+    // Section 2.2.3 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addNickName")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,NickName>")
-    Map<String,NickName> nickNames;
+    Map<String, NickName> nickNames;
 
+    // Section 2.2.4 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addOrganization")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
-    Map<String,Organization> organizations;
+    Map<String, Organization> organizations;
 
+    // Section 2.2.5 of [draft-ietf-calext-jscontact]
+    @Valid
+    SpeakToAs speakToAs;
+
+    // Section 2.2.6 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addTitle")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
-    Map<String,Title> titles;
-
-    @Valid
-    SpeakToAs speakToAs;
-
+    Map<String, Title> titles;
 
     /*
     Contact and Resource properties
      */
+
+    // Section 2.3.1 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addEmail")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
-    Map<String,EmailAddress> emails;
+    Map<String, EmailAddress> emails;
 
+    // Section 2.3.2 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addOnlineService")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,OnlineService>")
     Map<String,OnlineService> onlineServices;
 
+    // Section 2.3.3 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addPhone")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
     Map<String,Phone> phones;
 
+    // Section 2.3.4 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addContactChannelPreference")
     @JsonPropertyOrder(alphabetic = true)
     @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
@@ -179,6 +201,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @PreferredContactChannelsConstraint
     Map<ChannelType,ContactChannelPreference[]> preferredContactChannels;
 
+    // Section 2.3.5 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addLanguagePreference")
     @JsonPropertyOrder(alphabetic = true)
     @PreferredLanguagesConstraint
@@ -188,12 +211,15 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     /*
      Calendaring and Scheduling properties
      */
+
+    // Section 2.4.1 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addCalendar")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,CalendarResource>")
-    Map<String,CalendarResource> calendars;
+    Map<String, CalendarResource> calendars;
 
+    // Section 2.4.2 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addSchedulingAddress")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -204,67 +230,81 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     /*
     Address and Location properties
      */
+
+    // Section 2.5.1 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addAddress")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
-    Map<String,Address> addresses;
+    Map<String, Address> addresses;
 
     /*
     Resource properties
      */
+
+    // Section 2.6.1 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addCryptoResource")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,CryptoResource>")
-    Map<String,CryptoResource> cryptoKeys;
+    Map<String, CryptoResource> cryptoKeys;
 
+    // Section 2.6.2 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addDirectoryResource")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,DirectoryResource>")
     Map<String,DirectoryResource> directories;
 
+    // Section 2.6.3 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addLinkResource")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,LinkResource>")
     Map<String,LinkResource> links;
 
+    // Section 2.6.4 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addMediaResource")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,MediaResource>")
-    Map<String,MediaResource> media;
+    Map<String, MediaResource> media;
 
 
     /*
     Multilingual properties
      */
+
+    // Section 2.7.1 of [draft-ietf-calext-jscontact]
     @JsonPropertyOrder(alphabetic = true)
-    Map<String,Map<String,JsonNode>> localizations;
+    Map<String, Map<String, JsonNode>> localizations;
 
 
     /*
     Additional properties
      */
+
+    // Section 2.8.1 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addAnniversary")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Anniversary>")
-    Map<String,Anniversary> anniversaries;
+    Map<String, Anniversary> anniversaries;
 
+    // Section 2.8.2 of [draft-ietf-calext-jscontact]
+    @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
+    Map<String, Boolean> keywords;
+
+    // Section 2.8.3 of [draft-ietf-calext-jscontact]
+    @IdMapConstraint(message = "invalid Id in Map<Id,Note>")
+    Map<String, Note> notes;
+
+    // Section 2.8.4 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addPersonalInfo")
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInformation>")
-    Map<String,PersonalInformation> personalInfo;
-
-    @IdMapConstraint(message = "invalid Id in Map<Id,Note>")
-    Map<String,Note> notes;
-
-    @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
-    Map<String,Boolean> keywords;
+    @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInfo>")
+    Map<String, PersonalInfo> personalInfo;
 
     @JsonProperty("vCardProps")
     @JsonSerialize(using = VCardPropsSerializer.class)
@@ -549,10 +589,10 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     }
 
     /**
-     * Adds a postal address to this object.
+     * Adds a delivery address to this object.
      *
-     * @param id the postal address identifier
-     * @param address the object representing the postal address
+     * @param id      the delivery address identifier
+     * @param address the object representing the delivery address
      */
     public void addAddress(String id, Address address) {
 
@@ -579,15 +619,15 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     /**
      * Adds personal information to this object.
      *
-     * @param id the personal information identifier
-     * @param personalInformation the object representing the personal information
+     * @param id           the personal information identifier
+     * @param personalInfo the object representing the personal information
      */
-    public void addPersonalInfo(String id, PersonalInformation personalInformation) {
+    public void addPersonalInfo(String id, PersonalInfo personalInfo) {
 
-        if(personalInfo == null)
-            personalInfo = new HashMap<>();
+        if (this.personalInfo == null)
+            this.personalInfo = new HashMap<>();
 
-        personalInfo.putIfAbsent(id,personalInformation);
+        this.personalInfo.putIfAbsent(id, personalInfo);
     }
 
     /**

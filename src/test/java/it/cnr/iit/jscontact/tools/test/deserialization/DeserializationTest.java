@@ -107,14 +107,14 @@ public class DeserializationTest {
         assertEquals("testDeserialization5 - 2", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
         assertTrue("testDeserialization5 - 3", jsCard.getExtensions().get("ext1") instanceof Integer);
         assertEquals("testDeserialization5 - 4", LinkedHashMap.class, jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").getClass());
-        Map<String,Object> allExtensionsMap = new HashMap<String,Object>();
-        jsCard.buildAllExtensionsMap(allExtensionsMap,"");
+        Map<String, Object> allExtensionsMap = new HashMap<String, Object>();
+        jsCard.buildAllExtensionsMap(allExtensionsMap, "");
         assertEquals("testDeserialization5 - 5", 5, allExtensionsMap.size());
-        assertTrue("testDeserialization5 - 6", allExtensionsMap.keySet().contains("addresses/ADR-1/street/0/ext4"));
-        assertTrue("testDeserialization5 - 7", allExtensionsMap.keySet().contains("nickNames/NICK-1/ext3"));
-        assertTrue("testDeserialization5 - 8", allExtensionsMap.keySet().contains("addresses/ADR-1/ext2"));
-        assertTrue("testDeserialization5 - 9", allExtensionsMap.keySet().contains("preferredLanguages/jp/0/ext6"));
-        assertTrue("testDeserialization5 - 10", allExtensionsMap.keySet().contains("ext1"));
+        assertTrue("testDeserialization5 - 6", allExtensionsMap.containsKey("addresses/ADR-1/street/0/ext4"));
+        assertTrue("testDeserialization5 - 7", allExtensionsMap.containsKey("nickNames/NICK-1/ext3"));
+        assertTrue("testDeserialization5 - 8", allExtensionsMap.containsKey("addresses/ADR-1/ext2"));
+        assertTrue("testDeserialization5 - 9", allExtensionsMap.containsKey("preferredLanguages/jp/0/ext6"));
+        assertTrue("testDeserialization5 - 10", allExtensionsMap.containsKey("ext1"));
 
     }
 

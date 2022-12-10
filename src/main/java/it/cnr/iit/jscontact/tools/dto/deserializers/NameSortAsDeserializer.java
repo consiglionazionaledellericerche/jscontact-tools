@@ -19,30 +19,38 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.PersonalInformationLevelEnum;
-import it.cnr.iit.jscontact.tools.dto.PersonalInformationLevelType;
-import it.cnr.iit.jscontact.tools.dto.V_Extension;
+import it.cnr.iit.jscontact.tools.dto.*;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
- * Custom JSON deserializer for the PersonalInformationLevelType value.
+ * Custom JSON deserializer for the Name sortAs map.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class PersonalInformationLevelTypeDeserializer extends JsonDeserializer<PersonalInformationLevelType> {
+public class NameSortAsDeserializer extends JsonDeserializer<Map<NameComponentType, String>> {
 
     @Override
-    public PersonalInformationLevelType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public Map<NameComponentType, String> deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        String value = node.asText();
-        try {
-            return PersonalInformationLevelType.builder().rfcValue(PersonalInformationLevelEnum.getEnum(value)).build();
-        } catch (IllegalArgumentException e) {
-            return PersonalInformationLevelType.builder().extValue(V_Extension.toV_Extension(value)).build();
+        Map<NameComponentType, String> sortAs = new HashMap<>();
+        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
+        while (iter.hasNext()) {
+            Map.Entry<String, JsonNode> entry = iter.next();
+            NameComponentType nct;
+            try {
+                nct = NameComponentType.builder().rfcValue(NameComponentEnum.getEnum(entry.getKey())).build();
+            } catch (IllegalArgumentException e) {
+                nct = NameComponentType.builder().extValue(V_Extension.toV_Extension(entry.getKey())).build();
+            }
+            sortAs.put(nct, entry.getValue().asText());
         }
+        return sortAs;
     }
 }

@@ -129,20 +129,28 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
      *
      * @return true if the context map includes the "billing" context, false otherwise
      */
-    public boolean asBilling() { return asContext(AddressContext.billing()); }
+    public boolean asBilling() {
+        return asContext(AddressContext.billing());
+    }
+
     /**
-     * Tests if this address is a postal address.
+     * Tests if this address is a delivery address.
      *
-     * @return true if the context map includes the "postal" context, false otherwise
+     * @return true if the context map includes the "delivery" context, false otherwise
      */
-    public boolean asPostal() { return asContext(AddressContext.postal()); }
+    public boolean asDelivery() {
+        return asContext(AddressContext.delivery());
+    }
+
     /**
      * Tests if this address is used in a custom context.
      *
      * @param extValue the custom context in text format
      * @return true if the context map includes the given custom context, false otherwise
      */
-    public boolean asExtContext(String extValue) { return asContext(AddressContext.ext(extValue)); }
+    public boolean asExtContext(String extValue) {
+        return asContext(AddressContext.ext(extValue));
+    }
     /**
      * Tests if the context of this address is undefined.
      *

@@ -31,12 +31,12 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the NameComponent type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the NameComponent type as defined in section 2.2.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type","type","value"})
+@JsonPropertyOrder({"@type", "value", "type", "rank"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -45,24 +45,26 @@ import java.io.Serializable;
 public class NameComponent extends AbstractJSContactType implements HasType, Serializable {
 
     @NotNull
-    @Pattern(regexp = "NameComponent", message="invalid @type value in NameComponent")
+    @Pattern(regexp = "NameComponent", message = "invalid @type value in NameComponent")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "NameComponent";
+
+    @NotNull(message = "value is missing in NameComponent")
+    @NonNull
+    String value;
 
     @NotNull(message = "type is missing in NameComponent")
     @NonNull
     @JsonDeserialize(using = NameComponentTypeDeserializer.class)
     NameComponentType type;
 
-    @NotNull(message = "value is missing in NameComponent")
-    @NonNull
-    String value;
-
     @Min(value = 1, message = "invalid rank in NameComponent - value must be greater or equal than 1")
     Integer rank;
 
-    private boolean isRfc(NameComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);}
+    private boolean isRfc(NameComponentEnum value) {
+        return (type.getRfcValue() != null && type.getRfcValue() == value);
+    }
 
     /**
      * Tests if this is a prefix.

@@ -1,5 +1,6 @@
 package it.cnr.iit.jscontact.tools.dto;
 
+import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
+@NotNullAnyConstraint(fieldNames = {"date", "partialDate"}, message = "at least one not null member is missing in AnniversaryDate")
 @Builder
 @Data
 @AllArgsConstructor

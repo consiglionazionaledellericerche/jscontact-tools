@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
+import it.cnr.iit.jscontact.tools.dto.NameComponentType;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -35,18 +35,18 @@ public class NameTest extends JCard2JSContactTest {
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testName1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
         assertEquals("testName1 - 2", 5, jsCard.getName().getComponents().length);
-        assertTrue("testName1 - 3",jsCard.getName().getComponents()[0].isPrefix());
+        assertTrue("testName1 - 3", jsCard.getName().getComponents()[0].isPrefix());
         assertEquals("testName1 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
-        assertTrue("testName1 - 5",jsCard.getName().getComponents()[1].isGiven());
+        assertTrue("testName1 - 5", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testName1 - 6", "John", jsCard.getName().getComponents()[1].getValue());
-        assertTrue("testName1 - 7",jsCard.getName().getComponents()[2].isSurname());
+        assertTrue("testName1 - 7", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testName1 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testName1 - 9",jsCard.getName().getComponents()[3].isMiddle());
+        assertTrue("testName1 - 9", jsCard.getName().getComponents()[3].isMiddle());
         assertEquals("testName1 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
-        assertTrue("testName1 - 11",jsCard.getName().getComponents()[4].isSuffix());
+        assertTrue("testName1 - 11", jsCard.getName().getComponents()[4].isSuffix());
         assertEquals("testName1 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
-        assertEquals("testName1 - 13", "Public", jsCard.getName().getSortAs().get(NameComponentEnum.SURNAME.getValue()));
-        assertEquals("testName1 - 14", "John", jsCard.getName().getSortAs().get(NameComponentEnum.GIVEN.getValue()));
+        assertEquals("testName1 - 13", "Public", jsCard.getName().getSortAs().get(NameComponentType.surname()));
+        assertEquals("testName1 - 14", "John", jsCard.getName().getSortAs().get(NameComponentType.given()));
 
     }
 

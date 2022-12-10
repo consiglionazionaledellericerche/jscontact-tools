@@ -19,30 +19,30 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.PersonalInformationEnum;
-import it.cnr.iit.jscontact.tools.dto.PersonalInformationType;
+import it.cnr.iit.jscontact.tools.dto.PersonalInfoEnum;
+import it.cnr.iit.jscontact.tools.dto.PersonalInfoType;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 /**
- * Custom JSON deserializer for the PersonalInformationLevelType value.
+ * Custom JSON deserializer for the PersonalInfoType value.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class PersonalInformationTypeDeserializer extends JsonDeserializer<PersonalInformationType> {
+public class PersonalInfoTypeDeserializer extends JsonDeserializer<PersonalInfoType> {
 
     @Override
-    public PersonalInformationType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public PersonalInfoType deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return PersonalInformationType.builder().rfcValue(PersonalInformationEnum.getEnum(value)).build();
+            return PersonalInfoType.builder().rfcValue(PersonalInfoEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return PersonalInformationType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return PersonalInfoType.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

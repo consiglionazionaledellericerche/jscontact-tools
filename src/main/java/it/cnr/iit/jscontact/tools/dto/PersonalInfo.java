@@ -15,78 +15,67 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationLevelTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInformationTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoLevelTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
-import it.cnr.iit.jscontact.tools.dto.utils.HasIndexUtils;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasIndex;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the PersonalInformation type as defined in section 2.8.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the PersonalInfo type as defined in section 2.8.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.3">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type","type","value","level","label"})
+@JsonPropertyOrder({"@type", "type", "value", "level", "listAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonalInformation extends AbstractJSContactType implements HasLabel, HasType, HasIndex, IdMapValue, Comparable<PersonalInformation>, Serializable {
+public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasType, IdMapValue, Serializable {
 
     @NotNull
-    @Pattern(regexp = "PersonalInformation", message="invalid @type value in PersonalInformation")
+    @Pattern(regexp = "PersonalInfo", message = "invalid @type value in PersonalInfo")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "PersonalInformation";
+    String _type = "PersonalInfo";
 
-    @JsonDeserialize(using = PersonalInformationTypeDeserializer.class)
-    PersonalInformationType type;
+    @JsonDeserialize(using = PersonalInfoTypeDeserializer.class)
+    PersonalInfoType type;
 
-    @NotNull(message = "value is missing in PersonalInformation")
+    @NotNull(message = "value is missing in PersonalInfo")
     @NonNull
     String value;
 
-    @JsonDeserialize(using = PersonalInformationLevelTypeDeserializer.class)
-    PersonalInformationLevelType level;
+    @JsonDeserialize(using = PersonalInfoLevelTypeDeserializer.class)
+    PersonalInfoLevelType level;
+
+    @Min(value = 1, message = "invalid listAs in PersonalInfo - value must be greater or equal than 1")
+    Integer listAs;
 
     String label;
-
-    @JsonIgnore
-    Integer index;
-
-    /**
-     * Compares this personal information with another based on the value of the "index" property.
-     *
-     * @param o the object this object must be compared with
-     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the given object.
-     */
-    @Override
-    public int compareTo(PersonalInformation o) {
-
-        return HasIndexUtils.compareTo(this, o);
-    }
 
     /**
      * Tests if this personal information is a hobby.
      *
      * @return true if this personal information is a hobby, false otherwise
      */
-    public boolean asHobby() { return type.isHobby(); }
+    public boolean asHobby() {
+        return type.isHobby();
+    }
+
     /**
      * Tests if this personal information is an interest.
      *
