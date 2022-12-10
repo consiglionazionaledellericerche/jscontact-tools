@@ -75,16 +75,23 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
      *
      * @return true if the features map is empty, false otherwise
      */
-    public boolean hasNoFeature() { return features == null || features.size() ==  0; }
+    public boolean hasNoFeature() {
+        return features != null && features.size() != 0;
+    }
 
 
-    private boolean asFeature(PhoneFeature feature) { return !hasNoFeature() && features.containsKey(feature); }
+    private boolean asFeature(PhoneFeature feature) {
+        return hasNoFeature() && features.containsKey(feature);
+    }
+
     /**
      * Tests if this phone number is for calling by voice.
      *
      * @return true if this phone number isfor calling by voice, false otherwise
      */
-    public boolean asVoice() { return asFeature(PhoneFeature.voice()); }
+    public boolean asVoice() {
+        return asFeature(PhoneFeature.voice());
+    }
     /**
      * Tests if this phone number is for sending a fax.
      *

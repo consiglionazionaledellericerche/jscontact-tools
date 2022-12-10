@@ -850,7 +850,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         List<String> vCardTypeValues = new ArrayList<>();
         if (!phone.hasNoContext())
             vCardTypeValues.addAll(toVCardTypeParmaValues(ContextEnum.class, Context.toEnumValues(phone.getContexts().keySet())));
-        if (!phone.hasNoFeature())
+        if (phone.hasNoFeature())
             vCardTypeValues.addAll(toVCardTypeParmaValues(PhoneFeatureEnum.class, PhoneFeature.toEnumValues(phone.getFeatures().keySet())));
 
         for (String vCardTypeValue : vCardTypeValues)

@@ -27,12 +27,10 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Class mapping the PersonalInfo type as defined in section 2.8.3 of [draft-ietf-calext-jscontact].
