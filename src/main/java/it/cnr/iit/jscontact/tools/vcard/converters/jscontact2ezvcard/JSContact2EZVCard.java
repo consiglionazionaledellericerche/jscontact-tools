@@ -447,7 +447,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static String toVCardOffsetValueFromTimezone(String timezone) {
 
-        Pattern pattern = Pattern.compile("Etc/GMT(\\+|\\-)\\d{1,2}");
+        Pattern pattern = Pattern.compile("Etc/GMT([+\\-])\\d{1,2}");
         Matcher matcher = pattern.matcher(timezone);
 
         if (!matcher.find())
