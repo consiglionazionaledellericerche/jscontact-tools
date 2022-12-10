@@ -28,10 +28,7 @@ public class DayVsMonthInPartialDateValidator implements ConstraintValidator<Day
 
     public boolean isValid(PartialDate partialDate, ConstraintValidatorContext context) {
 
-        if (partialDate.getDay() != null && partialDate.getMonth() == null)
-            return false;
-
-        return true;
+        return partialDate.getDay() == null || partialDate.getMonth() != null;
     }
 
 }
