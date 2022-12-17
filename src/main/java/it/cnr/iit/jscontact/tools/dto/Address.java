@@ -243,8 +243,7 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
      * @param context the context
      */
     public void addContext(AddressContext context) {
-        Map<AddressContext,Boolean> clone = new HashMap<>();
-        clone.putAll(getContexts());
+        Map<AddressContext, Boolean> clone = new HashMap<>(getContexts());
         clone.put(context,Boolean.TRUE);
         setContexts(clone);
     }

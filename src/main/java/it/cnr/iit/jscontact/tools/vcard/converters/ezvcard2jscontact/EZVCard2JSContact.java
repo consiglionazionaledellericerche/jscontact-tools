@@ -706,12 +706,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .hash(autoFullAddress)
                 .propId(vcardAddr.getParameter(VCardParamEnum.PROP_ID.getValue()))
                 .contexts(toJSCardAddressContexts(vcardTypeParam))
-                .fullAddress(toJSCardFulllAddress(vcardAddr.getLabel(),autoFullAddress))
+                .fullAddress(toJSCardFulllAddress(vcardAddr.getLabel(), autoFullAddress))
                 .pref(vcardAddr.getPref())
                 .coordinates(getValue(vcardAddr.getGeo()))
                 .timeZone(toJSCardTimezoneName(vcardAddr.getTimezone()))
                 .countryCode(vcardAddr.getParameter(VCardParamEnum.CC.getValue()))
-                .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[streetDetailPairs.size()]) : null)
+                .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[0]) : null)
                 .locality(StringUtils.defaultIfEmpty(vcardAddr.getLocality(), null))
                 .region(StringUtils.defaultIfEmpty(vcardAddr.getRegion(), null))
                 .postcode(StringUtils.defaultIfEmpty(vcardAddr.getPostalCode(), null))
@@ -1181,10 +1181,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private it.cnr.iit.jscontact.tools.dto.Organization toJSCardOrganization(Organization vcardOrg, VCard vcard) {
 
-        List<String> unitNameList=null;
-        List<String> unitSortAsList=null;
-        String name=null;
-        String orgSortAs=null;
+        List<String> unitNameList;
+        List<String> unitSortAsList = null;
+        String name;
+        String orgSortAs = null;
         if (vcardOrg.getValues().size() > 1 ) {
             name = vcardOrg.getValues().get(0);
             unitNameList = vcardOrg.getValues().subList(1,vcardOrg.getValues().size());
@@ -1293,7 +1293,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         List<Categories> categoriesList = vcard.getCategoriesList();
         Collections.sort(categoriesList, vCardPropertiesPrefComparator);
         for (Categories categories : categoriesList)
-            jsCard.addKeywords(categories.getValues().toArray(new String[categories.getValues().size()]));
+            jsCard.addKeywords(categories.getValues().toArray(new String[0]));
     }
 
     private static void fillJSCardRelations(VCard vcard, Card jsCard) {
@@ -1416,17 +1416,16 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillJSCardPropsFromJSCardExtensionsInVCard(VCard vcard, Card jsCard) throws CardException {
 
         String path = null;
-        Object value = null;
-        String extensionName = null;
+        Object value;
+        String extensionName;
         try {
             for (RawProperty extension : vcard.getExtendedProperties()) {
                 if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.JSCONTACT_PROP.getValue())) {
                     path = extension.getParameter(VCardParamEnum.JSPTR.getValue());
                     value = JSContactPropUtils.toJsonValue(extension.getValue());
                     if (!path.contains(DelimiterUtils.SLASH_DELIMITER)) {
-                        jsCard.addExtension(path,value);
-                    }
-                    else {
+                        jsCard.addExtension(path, value);
+                    } else {
                         String[] pathItems = path.split(DelimiterUtils.SLASH_DELIMITER);
                         extensionName = pathItems[pathItems.length-1];
                         List list = Arrays.asList(pathItems);

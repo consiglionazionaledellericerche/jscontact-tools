@@ -362,8 +362,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
             if (relType == null)
                 relatedTo.put(key, Relation.builder().build());
             else {
-                Map<RelationType, Boolean> map = new HashMap<>();
-                map.putAll(relationPerKey.getRelation());
+                Map<RelationType, Boolean> map = new HashMap<>(relationPerKey.getRelation());
                 map.put(relType, Boolean.TRUE);
                 relatedTo.replace(key, Relation.builder()
                         .relation(map)
@@ -823,7 +822,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
         if (localizations == null)
             return null;
 
-        return localizations.keySet().toArray(new String[localizations.size()]);
+        return localizations.keySet().toArray(new String[0]);
     }
 
     /**

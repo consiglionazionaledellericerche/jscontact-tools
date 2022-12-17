@@ -460,7 +460,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         else
             offset += "+";
 
-        return offset += String.format("%02d00", Integer.parseInt(timezone.substring(8)));
+        return offset + String.format("%02d00", Integer.parseInt(timezone.substring(8)));
     }
 
     private String toVCardTimezoneAsTextValue(String timeZone)   {
@@ -1328,7 +1328,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getKeywords() == null)
             return;
 
-        vcard.setCategories(jsCard.getKeywords().keySet().toArray(new String[jsCard.getKeywords().size()]));
+        vcard.setCategories(jsCard.getKeywords().keySet().toArray(new String[0]));
     }
 
 
