@@ -511,7 +511,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<FormattedName> fns = vcard.getFormattedNames();
-        Collections.sort(fns, vCardPropertiesAltidComparator);
+        fns.sort(vCardPropertiesAltidComparator);
         String lastAltid = null;
         for (FormattedName fn : fns) {
             if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
@@ -526,7 +526,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillJSCardMembers(VCard vcard, Card jsCard) {
 
         List<Member> members = vcard.getMembers();
-        Collections.sort(members,vCardPropertiesPrefComparator);
+        members.sort(vCardPropertiesPrefComparator);
         for (Member member : members)
             jsCard.addMember(member.getValue());
     }
@@ -616,7 +616,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<StructuredName> vcardNames = vcard.getStructuredNames();
-        Collections.sort(vcardNames, vCardPropertiesAltidComparator);
+        vcardNames.sort(vCardPropertiesAltidComparator);
 
         jsCard.setName(toJSCardName(vcardNames.get(0), vcard)); //the first N property is the name, all the others name localization
         for (int i = 1; i < vcardNames.size(); i++) {
@@ -642,7 +642,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Nickname> vcardNickNames = vcard.getNicknames();
-        Collections.sort(vcardNickNames, vCardPropertiesAltidComparator);
+        vcardNickNames.sort(vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -764,7 +764,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             }
         }
 
-        Collections.sort(addresses, JSCardAddressesComparator.builder().defaultLanguage(jsCard.getLocale()).build()); //sort based on altid
+        addresses.sort(JSCardAddressesComparator.builder().defaultLanguage(jsCard.getLocale()).build()); //sort based on altid
 
         int i = 1;
         String lastAltid = null;
@@ -1134,7 +1134,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Title> titles = vcard.getTitles();
-        Collections.sort(titles, vCardPropertiesAltidComparator);
+        titles.sort(vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1157,7 +1157,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Role> roles = vcard.getRoles();
-        Collections.sort(roles, vCardPropertiesAltidComparator);
+        roles.sort(vCardPropertiesAltidComparator);
         int i = (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1226,7 +1226,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Organization> vcardOrgs = vcard.getOrganizations();
-        Collections.sort(vcardOrgs, vCardPropertiesAltidComparator);
+        vcardOrgs.sort(vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1266,7 +1266,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Note> vcardNotes = vcard.getNotes();
-        Collections.sort(vcardNotes, vCardPropertiesAltidComparator);
+        vcardNotes.sort(vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1286,7 +1286,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillJSCardKeywords(VCard vcard, Card jsCard) {
 
         List<Categories> categoriesList = vcard.getCategoriesList();
-        Collections.sort(categoriesList, vCardPropertiesPrefComparator);
+        categoriesList.sort(vCardPropertiesPrefComparator);
         for (Categories categories : categoriesList)
             jsCard.addKeywords(categories.getValues().toArray(new String[0]));
     }
