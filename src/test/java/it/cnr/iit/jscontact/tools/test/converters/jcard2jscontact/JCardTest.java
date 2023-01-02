@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 
@@ -133,7 +134,7 @@ public class JCardTest extends JCard2JSContactTest {
     @Test
     public void testCompleteJCard1() throws IOException, CardException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json")), StandardCharsets.UTF_8);
         Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testCompleteJCard1 - 1", "Joe User", jsCard.getFullName());
         assertTrue("testCompleteJCard1 - 2", jsCard.getKind().isIndividual());
@@ -193,7 +194,7 @@ public class JCardTest extends JCard2JSContactTest {
     @Test
     public void testCompleteJCard2() throws IOException, CardException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Multilingual.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Multilingual.json")), StandardCharsets.UTF_8);
         Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testCompleteJCard2 - 1", "大久保 正仁", jsCard.getFullName());
         assertEquals("testCompleteJCard2 - 3", "Okubo Masahito", jsCard.getLocalizations().get("en").get("fullName").asText());
@@ -211,7 +212,7 @@ public class JCardTest extends JCard2JSContactTest {
     @Test
     public void testCompleteJCard3() throws IOException, CardException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Unstructured.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Unstructured.json")), StandardCharsets.UTF_8);
         Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testCompleteJCard3 - 1", "台灣固網股份有限公司", jsCard.getFullName());
         assertEquals("testCompleteJCard3 - 3", "Taiwan Fixed Network CO.,LTD.", jsCard.getLocalizations().get("en").get("fullName").asText());
@@ -233,7 +234,7 @@ public class JCardTest extends JCard2JSContactTest {
     @Test
     public void testCompleteJCard4() throws IOException, CardException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7095.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7095.json")), StandardCharsets.UTF_8);
         Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testCompleteJCard4 - 1", "Simon Perreault", jsCard.getFullName());
         assertNull("testCompleteJCard4 - 2", jsCard.getKind());
@@ -293,7 +294,7 @@ public class JCardTest extends JCard2JSContactTest {
     @Test
     public void testCompleteJCard5() throws IOException, CardException {
 
-        String vcard = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Wikipedia.json"), StandardCharsets.UTF_8);
+        String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-Wikipedia.json")), StandardCharsets.UTF_8);
         Card jsCard = jCard2JSContact.convert(vcard).get(0);
         assertEquals("testCompleteJCard5 - 1", "Forrest Gump", jsCard.getFullName());
         assertNull("testCompleteJCard5 - 2", jsCard.getKind());

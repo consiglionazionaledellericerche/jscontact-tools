@@ -44,7 +44,7 @@ public class GroupKeyValidator implements ConstraintValidator<GroupKeyConstraint
                 return false;
         }
 
-        Map ciMap = new CaseInsensitiveMap();
+        Map<String, PropertyGroup> ciMap = new CaseInsensitiveMap();
         ciMap.putAll(map);
         return ciMap.size() == map.size();
     }

@@ -27,6 +27,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 
@@ -37,12 +38,12 @@ public class ProfileTest extends JCard2JSContactTest {
     public void testRDAPProfile() throws IOException, CardException {
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
-                                                         .config(VCard2JSContactConfig.builder()
-                                                                                      .setAutoIdsProfile(false)
-                                                                                      .idsProfileToUse(VCard2JSContactIdsProfile.RDAP_PROFILE)
-                                                                                      .build())
-                                                         .build();
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json"), StandardCharsets.UTF_8);
+                .config(VCard2JSContactConfig.builder()
+                        .setAutoIdsProfile(false)
+                        .idsProfileToUse(VCard2JSContactIdsProfile.RDAP_PROFILE)
+                        .build())
+                .build();
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json")), StandardCharsets.UTF_8);
         Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testRDAPProfile - 1", "Joe User", jsCard.getFullName());
         assertTrue("testRDAPProfile - 2", jsCard.getKind().isIndividual());

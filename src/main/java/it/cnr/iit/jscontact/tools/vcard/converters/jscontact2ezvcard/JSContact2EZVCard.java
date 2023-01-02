@@ -431,7 +431,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static <E extends Enum<E> & VCardTypeDerivedEnum> List<String> toVCardTypeParmaValues(Class<E> enumType, Collection<E> enumValues) {
 
-        List typeValues = new ArrayList();
+        List<String> typeValues = new ArrayList();
         for (E value : enumValues) {
             try {
                 String typeItem = (String) enumType.getDeclaredMethod("toVCardTypeParam", enumType).invoke(null, value);
