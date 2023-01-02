@@ -43,25 +43,26 @@ public class LocalizationsTest {
         assertEquals("testLocalizations1 - 5", "大阪市", localizedCard.getAddresses().get("ADR-2").getLocality());
     }
 
+    @Test
     public void testLocalizations2() throws IOException {
 
         String json = "{" +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"addresses\":{" +
-                    "\"ADR-1\": {" +
-                        "\"@type\":\"Address\"," +
-                        "\"locality\":\"Tokyo\"" +
-                    "}," +
-                    "\"ADR-2\": {" +
-                        "\"@type\":\"Address\"," +
-                        "\"locality\":\"Osaka\"" +
-                    "}" +
+                "\"ADR-1\": {" +
+                "\"@type\":\"Address\"," +
+                "\"locality\":\"Tokyo\"" +
+                "}," +
+                "\"ADR-2\": {" +
+                "\"@type\":\"Address\"," +
+                "\"locality\":\"Osaka\"" +
+                "}" +
                 "}," +
                 "\"localizations\":{" +
-                    "\"jp\": {" +
-                        "\"addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"name\": \"大阪市\"}" +
-                    "}" +
+                "\"jp\": {" +
+                "\"addresses/ADR-1/locality\" : \"東京\"," +
+                "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"name\": \"大阪市\"}" +
+                "}" +
                 "}" +
                 "}";
 

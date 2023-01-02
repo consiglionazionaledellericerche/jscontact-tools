@@ -21,6 +21,7 @@ import org.junit.Test;
 
 public class PersonalInfoTest {
 
+    @Test
     public void testValidPersonalInfoBuild1() {
 
         // type missing
