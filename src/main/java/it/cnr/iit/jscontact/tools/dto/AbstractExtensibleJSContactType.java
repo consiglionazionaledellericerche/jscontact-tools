@@ -179,9 +179,9 @@ public abstract class AbstractExtensibleJSContactType {
             JSContactCollection annotation = field.getAnnotation(JSContactCollection.class);
             try {
                 Object typedValue = convertToJSContactType(value);
-                classs.getDeclaredMethod(annotation.addMethod(), String.class, typedValue.getClass()).invoke(o, key, typedValue);
+                classs.getDeclaredMethod(annotation.addMethod(), String.class, Objects.requireNonNull(typedValue).getClass()).invoke(o, key, typedValue);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new InternalErrorException(String.format("Internal Error: addObjectOnMap - message=%s", e.getMessage()));
             }
         }
     }
@@ -192,9 +192,9 @@ public abstract class AbstractExtensibleJSContactType {
             JSContactCollection annotation = field.getAnnotation(JSContactCollection.class);
             try {
                 Object typedValue = convertToJSContactType(value);
-                o.getClass().getDeclaredMethod(annotation.addMethod(),typedValue.getClass()).invoke(o,typedValue);
+                o.getClass().getDeclaredMethod(annotation.addMethod(), Objects.requireNonNull(typedValue).getClass()).invoke(o, typedValue);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new InternalErrorException(String.format("Internal Error: addObjectOnArray - message=%s", e.getMessage()));
             }
         }
     }
