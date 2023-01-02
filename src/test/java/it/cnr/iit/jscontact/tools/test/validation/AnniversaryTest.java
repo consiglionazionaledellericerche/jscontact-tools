@@ -21,13 +21,15 @@ import org.junit.Test;
 
 public class AnniversaryTest {
 
+    @Test
     public void testValidAnniversaryBuild1() {
 
         Anniversary.builder()
-                       .date(AnniversaryDate.builder().date(Timestamp.builder().utc(DateUtils.toCalendar("2020-01-01")).build()).build())
-                       .build();
+                .date(AnniversaryDate.builder().date(Timestamp.builder().utc(DateUtils.toCalendar("2020-01-01")).build()).build())
+                .build();
     }
 
+    @Test
     public void testValidAnniversaryBuild2() {
 
         Anniversary.builder()
