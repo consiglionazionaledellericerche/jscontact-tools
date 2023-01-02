@@ -26,7 +26,6 @@ import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
-import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
@@ -921,10 +920,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
         validationMessages = new ArrayList<>();
 
         Set<ConstraintViolation<Card>> constraintViolations;
-        if (this instanceof Card)
-            constraintViolations = ValidatorBuilder.getValidator().validate(this, CardConstraintsGroup.class);
-        else
-            constraintViolations = ValidatorBuilder.getValidator().validate(this);
+        constraintViolations = ValidatorBuilder.getValidator().validate(this);
         if (constraintViolations.size() > 0) {
             for (ConstraintViolation<Card> constraintViolation : constraintViolations)
                 validationMessages.add(constraintViolation.getMessage());
