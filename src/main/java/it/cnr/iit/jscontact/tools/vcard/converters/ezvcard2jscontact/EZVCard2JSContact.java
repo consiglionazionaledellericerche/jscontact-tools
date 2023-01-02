@@ -500,8 +500,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 jsCard.setSpeakToAs(SpeakToAs.animate());
             else if (vCard.getGender().isNone())
                 jsCard.setSpeakToAs(SpeakToAs.neuter());
-            else if (vCard.getGender().isUnknown())
-                return;
         } else {
             jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(GrammaticalGenderType.getEnum(vCard.getExtendedProperty(VCardPropEnum.GRAMMATICAL_GENDER.getValue()).getValue().toLowerCase())).build());
         }
@@ -922,9 +920,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             else
                 jsCard.addLanguagePreference(getValue(lang),null);
         }
-
-        if (jsCard.getPreferredLanguages() == null)
-            return;
     }
 
 
