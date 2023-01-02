@@ -22,6 +22,7 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ExtensionsTest extends VCard2JSContactTest {
 
@@ -97,7 +98,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testExtendedJSContact4 - 1", true, jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().isExtValue());
+        assertTrue("testExtendedJSContact4 - 1", jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().isExtValue());
         assertEquals("testExtendedJSContact4 - 2", V_Extension.toV_Extension("example.com:engagement"), jsCard.getAnniversaries().get("ANNIVERSARY-1").getType().getExtValue());
     }
 
@@ -112,11 +113,11 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testExtendedJSContact5 - 1", true, jsCard.getName().getComponents()[0].isGiven());
+        assertTrue("testExtendedJSContact5 - 1", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testExtendedJSContact5 - 2", "John", jsCard.getName().getComponents()[0].getValue());
-        assertEquals("testExtendedJSContact5 - 3", true, jsCard.getName().getComponents()[1].isSurname());
+        assertTrue("testExtendedJSContact5 - 3", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testExtendedJSContact5 - 4", "Public", jsCard.getName().getComponents()[1].getValue());
-        assertEquals("testExtendedJSContact5 - 5", true, jsCard.getName().getComponents()[2].isExt());
+        assertTrue("testExtendedJSContact5 - 5", jsCard.getName().getComponents()[2].isExt());
         assertEquals("testExtendedJSContact5 - 6", V_Extension.toV_Extension("example.com:exttype"), jsCard.getName().getComponents()[2].getType().getExtValue());
         assertEquals("testExtendedJSContact5 - 7", "extvalue", jsCard.getName().getComponents()[2].getValue());
     }
@@ -135,8 +136,8 @@ public class ExtensionsTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact6 - 1", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
-        assertEquals("testExtendedJSContact6 - 2", true, jsCard.getPhones().get("PHONE-1").asExtContext("example.com:extcontext"));
-        assertEquals("testExtendedJSContact6 - 3", true, jsCard.getPhones().get("PHONE-1").asExt("example.com:extfeature"));
+        assertTrue("testExtendedJSContact6 - 2", jsCard.getPhones().get("PHONE-1").asExtContext("example.com:extcontext"));
+        assertTrue("testExtendedJSContact6 - 3", jsCard.getPhones().get("PHONE-1").asExt("example.com:extfeature"));
     }
 
 }

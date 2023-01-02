@@ -47,7 +47,7 @@ public class MembersTest extends AbstractTest {
                 .members(new HashMap<String,Boolean>(){{ put(getUUID(), Boolean.TRUE);}})
                 .build();
 
-        assertTrue("testInvalidMembersWithoutKindGroup-1", !jsCard.isValid());
+        assertFalse("testInvalidMembersWithoutKindGroup-1", jsCard.isValid());
         assertEquals("testInvalidMembersWithoutKindGroup-2", "not empty members requires kind=group", jsCard.getValidationMessage());
 
     }
