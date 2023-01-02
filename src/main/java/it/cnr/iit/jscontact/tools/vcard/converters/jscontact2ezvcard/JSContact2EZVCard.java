@@ -429,7 +429,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner.toString();
     }
 
-    private static <E extends Enum<E> & VCardTypeDerivedEnum> List toVCardTypeParmaValues(Class<E> enumType, Collection<E> enumValues) {
+    private static <E extends Enum<E> & VCardTypeDerivedEnum> List<String> toVCardTypeParmaValues(Class<E> enumType, Collection<E> enumValues) {
 
         List typeValues = new ArrayList();
         for (E value : enumValues) {

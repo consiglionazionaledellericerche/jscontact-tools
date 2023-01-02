@@ -1423,7 +1423,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     } else {
                         String[] pathItems = path.split(DelimiterUtils.SLASH_DELIMITER);
                         extensionName = pathItems[pathItems.length-1];
-                        List list = Arrays.asList(pathItems);
+                        List<String> list = Arrays.asList(pathItems);
                         jsCard.addExtension(list.subList(0, pathItems.length-1),extensionName.replaceAll(DelimiterUtils.SLASH_DELIMITER_IN_JSON_POINTER,DelimiterUtils.SLASH_DELIMITER), value);
                     }
                 }
