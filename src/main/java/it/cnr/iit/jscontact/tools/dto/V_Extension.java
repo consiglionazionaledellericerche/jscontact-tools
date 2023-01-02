@@ -48,6 +48,9 @@ public class V_Extension {
         if (obj == null)
             return false;
 
+        if (!(obj instanceof V_Extension))
+            return false;
+
         return this.toString().equalsIgnoreCase(obj.toString());
     }
 
