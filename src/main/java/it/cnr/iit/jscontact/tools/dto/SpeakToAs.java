@@ -137,7 +137,7 @@ public class SpeakToAs extends AbstractJSContactType implements Serializable {
     public void addPronouns(String id, Pronouns pronouns) {
 
         if (this.pronouns == null)
-            this.pronouns = new HashMap<String, Pronouns>();
+            this.pronouns = new HashMap<>();
 
         this.pronouns.putIfAbsent(id, pronouns);
     }

@@ -1659,7 +1659,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private void fillVCardPropsFromJSCardExtensions(VCard vcard, Card jsCard) {
 
-        Map<String,Object> allExtensionsMap = new HashMap<String,Object>();
+        Map<String, Object> allExtensionsMap = new HashMap<>();
         jsCard.buildAllExtensionsMap(allExtensionsMap,StringUtils.EMPTY);
 
         for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
