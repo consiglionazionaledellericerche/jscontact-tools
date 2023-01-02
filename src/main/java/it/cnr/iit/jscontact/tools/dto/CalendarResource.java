@@ -71,7 +71,7 @@ public class CalendarResource extends Resource implements HasType {
     /**
      * Tests if this calendar resource is a free busy calendar.
      *
-     * @return true if this calendar resource is an free busy calendar, false otherwise
+     * @return true if this calendar resource is a free busy calendar, false otherwise
      */
     @JsonIgnore
     public boolean isFreeBusy() { return isCalendarResource(CalendarResourceType.freeBusy()); }
@@ -92,7 +92,7 @@ public class CalendarResource extends Resource implements HasType {
     public static CalendarResource calendar(String uri) { return resource(CalendarResourceType.calendar(), uri);}
 
     /**
-     * Returns an free busy calendar
+     * Returns a free busy calendar
      *
      * @param uri entry uri
      * @return the entry

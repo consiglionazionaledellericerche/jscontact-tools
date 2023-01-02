@@ -396,11 +396,16 @@ All the methods take in input a list of JSContact Card objects and can raise a `
 
 7. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
 
-8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room" and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room"
+   and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated
+   by the "separator" value if present, space otherwise.
 
-9. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL parameter can results from the newline-delimited concatenation of the non-empty "Address" members or.
+9. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full
+   address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL
+   parameter can result from the newline-delimited concatenation of the non-empty "Address" members or.
 
-10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration parameter `setPropIdParam`.
+10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration
+    parameter `setPropIdParam`.
 
 ### Conversion examples
 
@@ -577,8 +582,9 @@ Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all 
 <a name="ez-vcard-bugs"></a>
 ## ez-vcard bugs
 
-As opposed to what is stated in section 6.1.1 of [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), ez-vcard doesn't represent both family and given names including multiple text values separated by comma.
-In both cases, the text values subsequent to the first value are ignored.
+As opposed to what is stated in section 6.1.1 of [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), ez-vcard doesn't
+represent both family and given names including multiple text values separated by comma.
+In both cases, the text values after the first value are ignored.
 
 <a name="jscontact-compliance"></a>
 ## JSContact Compliance

@@ -81,9 +81,9 @@ public class PersonalInfoType extends ExtensibleEnumType<PersonalInfoEnum> imple
     }
 
     /**
-     * Returns a "interest" personal information type.
+     * Returns an "interest" personal information type.
      *
-     * @return a "interest" personal information type
+     * @return an "interest" personal information type
      */
     public static PersonalInfoType interest() {
         return rfc(PersonalInfoEnum.INTEREST);

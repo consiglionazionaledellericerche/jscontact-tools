@@ -59,9 +59,9 @@ public class NameComponentType extends ExtensibleEnumType<NameComponentEnum> imp
      */
     public static NameComponentType surname() { return rfc(NameComponentEnum.SURNAME);}
     /**
-     * Returns an "middle" name component type.
+     * Returns a "middle" name component type.
      *
-     * @return an "middle" name component type
+     * @return a "middle" name component type
      */
     public static NameComponentType middle() { return rfc(NameComponentEnum.MIDDLE);}
     /**

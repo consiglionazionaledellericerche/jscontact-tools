@@ -64,9 +64,9 @@ public class DirectoryResourceType extends ExtensibleEnumType<DirectoryResourceE
     public static DirectoryResourceType directory() { return rfc(DirectoryResourceEnum.DIRECTORY);}
 
     /**
-     * Returns a "entry" directory resource type.
+     * Returns an "entry" directory resource type.
      *
-     * @return a "entry" directory resource type
+     * @return an "entry" directory resource type
      */
     public static DirectoryResourceType entry() { return rfc(DirectoryResourceEnum.ENTRY);}
 
