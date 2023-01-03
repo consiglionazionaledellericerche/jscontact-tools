@@ -43,6 +43,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Relation extends AbstractJSContactType implements Serializable {
 
     @NotNull

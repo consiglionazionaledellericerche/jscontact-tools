@@ -27,6 +27,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class PartialDate extends AbstractJSContactType {
 
     @NotNull

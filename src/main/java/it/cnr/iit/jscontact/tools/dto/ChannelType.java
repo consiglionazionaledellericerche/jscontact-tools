@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
@@ -32,7 +31,6 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Serializable, Comparable<ChannelType> {

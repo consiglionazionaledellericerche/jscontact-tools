@@ -429,9 +429,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner.toString();
     }
 
-    private static <E extends Enum<E> & VCardTypeDerivedEnum> List toVCardTypeParmaValues(Class<E> enumType, Collection<E> enumValues) {
+    private static <E extends Enum<E> & VCardTypeDerivedEnum> List<String> toVCardTypeParmaValues(Class<E> enumType, Collection<E> enumValues) {
 
-        List typeValues = new ArrayList();
+        List<String> typeValues = new ArrayList();
         for (E value : enumValues) {
             try {
                 String typeItem = (String) enumType.getDeclaredMethod("toVCardTypeParam", enumType).invoke(null, value);
@@ -460,7 +460,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         else
             offset += "+";
 
-        return offset += String.format("%02d00", Integer.parseInt(timezone.substring(8)));
+        return offset + String.format("%02d00", Integer.parseInt(timezone.substring(8)));
     }
 
     private String toVCardTimezoneAsTextValue(String timeZone)   {
@@ -1328,7 +1328,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getKeywords() == null)
             return;
 
-        vcard.setCategories(jsCard.getKeywords().keySet().toArray(new String[jsCard.getKeywords().size()]));
+        vcard.setCategories(jsCard.getKeywords().keySet().toArray(new String[0]));
     }
 
 
@@ -1659,12 +1659,12 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private void fillVCardPropsFromJSCardExtensions(VCard vcard, Card jsCard) {
 
-        Map<String,Object> allExtensionsMap = new HashMap<String,Object>();
+        Map<String, Object> allExtensionsMap = new HashMap<>();
         jsCard.buildAllExtensionsMap(allExtensionsMap,StringUtils.EMPTY);
 
         for(Map.Entry<String,Object> entry : allExtensionsMap.entrySet()) {
             try {
-                RawProperty property = new RawProperty(VCardPropEnum.JSCONTACT_PROP.getValue(), JSContactPropUtils.toX_RFC0000_JSPROPValue(entry.getValue()), VCardDataType.TEXT);
+                RawProperty property = new RawProperty(VCardPropEnum.JSCONTACT_PROP.getValue(), JSContactPropUtils.toJSContactPropValue(entry.getValue()), VCardDataType.TEXT);
                 property.setParameter(VCardParamEnum.JSPTR.getValue(), entry.getKey());
                 vcard.addProperty(property);
             } catch (Exception e) {}

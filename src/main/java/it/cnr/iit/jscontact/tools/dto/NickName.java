@@ -30,6 +30,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class NickName extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
     @NotNull

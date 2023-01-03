@@ -10,7 +10,7 @@ public class JSContactPropUtils {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static String toX_RFC0000_JSPROPValue(Object o) throws JsonProcessingException {
+    public static String toJSContactPropValue(Object o) throws JsonProcessingException {
 
         if (o == null)
             return null;

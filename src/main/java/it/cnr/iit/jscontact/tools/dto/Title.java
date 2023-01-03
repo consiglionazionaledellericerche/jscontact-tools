@@ -36,6 +36,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Title extends AbstractJSContactType implements HasLabel, HasContexts, HasType, IdMapValue, Serializable {
 
     @NotNull

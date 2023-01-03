@@ -48,6 +48,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class ContactChannelPreference extends AbstractJSContactType implements Serializable, HasContexts {
 
     @NotNull

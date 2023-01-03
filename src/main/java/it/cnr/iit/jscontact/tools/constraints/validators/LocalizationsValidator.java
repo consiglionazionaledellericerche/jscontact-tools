@@ -53,7 +53,7 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
             for(Map.Entry<String,JsonNode> localization : localizationsPerlanguage.entrySet()) {
 
-                JsonNode node = null;
+                JsonNode node;
                 try {
                     node = JsonPointerUtils.getPointedJsonNode(card, localization.getKey());
                 } catch (Exception e) {

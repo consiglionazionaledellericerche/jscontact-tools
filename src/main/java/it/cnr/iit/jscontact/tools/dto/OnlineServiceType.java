@@ -64,16 +64,16 @@ public class OnlineServiceType extends ExtensibleEnumType<OnlineServiceEnum> imp
     private static OnlineServiceType rfc(OnlineServiceEnum rfcValue) { return OnlineServiceType.builder().rfcValue(rfcValue).build(); }
 
     /**
-     * Returns a "impp" online service type.
+     * Returns an "impp" online service type.
      *
-     * @return a "impp" online service type
+     * @return an "impp" online service type
      */
     public static OnlineServiceType impp() { return rfc(OnlineServiceEnum.IMPP);}
 
     /**
-     * Returns a "uri" online service type.
+     * Returns an "uri" online service type.
      *
-     * @return a "uri" online service type
+     * @return an "uri" online service type
      */
     public static OnlineServiceType uri() { return rfc(OnlineServiceEnum.URI);}
 

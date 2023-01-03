@@ -107,7 +107,7 @@ public class DeserializationTest {
         assertEquals("testDeserialization5 - 2", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
         assertTrue("testDeserialization5 - 3", jsCard.getExtensions().get("ext1") instanceof Integer);
         assertEquals("testDeserialization5 - 4", LinkedHashMap.class, jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").getClass());
-        Map<String, Object> allExtensionsMap = new HashMap<String, Object>();
+        Map<String, Object> allExtensionsMap = new HashMap<>();
         jsCard.buildAllExtensionsMap(allExtensionsMap, "");
         assertEquals("testDeserialization5 - 5", 5, allExtensionsMap.size());
         assertTrue("testDeserialization5 - 6", allExtensionsMap.containsKey("addresses/ADR-1/street/0/ext4"));

@@ -42,6 +42,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public abstract class AbstractJSContactType extends AbstractExtensibleJSContactType {
 
     @JsonIgnore

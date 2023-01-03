@@ -33,6 +33,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Pronouns extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
     @NotNull

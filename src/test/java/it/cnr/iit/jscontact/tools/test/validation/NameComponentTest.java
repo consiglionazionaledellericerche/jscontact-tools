@@ -39,6 +39,7 @@ public class NameComponentTest {
                 .build();
     }
 
+    @Test
     public void testValidNameComponentBuild() {
 
         NameComponent.builder()

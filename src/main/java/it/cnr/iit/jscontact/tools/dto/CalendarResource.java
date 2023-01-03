@@ -23,10 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.CalendarResourceTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
@@ -46,6 +43,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class CalendarResource extends Resource implements HasType {
 
     @NotNull
@@ -71,7 +69,7 @@ public class CalendarResource extends Resource implements HasType {
     /**
      * Tests if this calendar resource is a free busy calendar.
      *
-     * @return true if this calendar resource is an free busy calendar, false otherwise
+     * @return true if this calendar resource is a free busy calendar, false otherwise
      */
     @JsonIgnore
     public boolean isFreeBusy() { return isCalendarResource(CalendarResourceType.freeBusy()); }
@@ -92,7 +90,7 @@ public class CalendarResource extends Resource implements HasType {
     public static CalendarResource calendar(String uri) { return resource(CalendarResourceType.calendar(), uri);}
 
     /**
-     * Returns an free busy calendar
+     * Returns a free busy calendar
      *
      * @param uri entry uri
      * @return the entry

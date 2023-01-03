@@ -47,6 +47,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Anniversary extends AbstractJSContactType implements HasType, HasLabel, IdMapValue, Serializable {
 
     @NotNull

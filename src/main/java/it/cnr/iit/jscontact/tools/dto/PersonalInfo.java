@@ -44,6 +44,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasType, IdMapValue, Serializable {
 
     @NotNull

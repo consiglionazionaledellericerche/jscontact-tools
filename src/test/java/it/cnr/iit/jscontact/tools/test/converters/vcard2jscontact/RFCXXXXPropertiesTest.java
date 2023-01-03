@@ -111,6 +111,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
         assertEquals("testSpeakToAsWithGender2 - 5", "M;boy", jsCard.getVCardProps()[0].getValue());
     }
 
+    @Test
     public void testSpeakTo1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
@@ -124,6 +125,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
         assertNull("testSpeakToAs1 - 2", jsCard.getSpeakToAs().getPronouns());
     }
 
+    @Test
     public void testSpeakTo2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
@@ -137,6 +139,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
         assertNull("testSpeakToAs2 - 2", jsCard.getSpeakToAs().getPronouns());
     }
 
+    @Test
     public void testSpeakTo3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
@@ -150,6 +153,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
         assertNull("testSpeakToAs3 - 2", jsCard.getSpeakToAs().getGrammaticalGender());
     }
 
+    @Test
     public void testSpeakTo4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +

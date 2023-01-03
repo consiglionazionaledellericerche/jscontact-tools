@@ -13,31 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.test.validation;
+package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.dto.PersonalInfo;
-import it.cnr.iit.jscontact.tools.dto.PersonalInfoType;
-import org.junit.Test;
+import it.cnr.iit.jscontact.tools.constraints.validators.VersionValueValidator;
 
-public class PersonalInfoTest {
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
 
-    @Test
-    public void testValidPersonalInfoBuild1() {
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {VersionValueValidator.class})
+@Documented
+public @interface VersionValueConstraint {
 
-        // type missing
-        PersonalInfo.builder()
-                .value("Cycling")
-                .build();
-    }
+    String message() default "invalid @version value";
 
-    @Test(expected = NullPointerException.class)
-    public void testInvalidPersonalInfoBuild1() {
+    Class<?>[] groups() default {};
 
-        // value missing
-        PersonalInfo.builder()
-                .type(PersonalInfoType.hobby())
-                .build();
-    }
-
-
+    Class<? extends Payload>[] payload() default {};
 }
+

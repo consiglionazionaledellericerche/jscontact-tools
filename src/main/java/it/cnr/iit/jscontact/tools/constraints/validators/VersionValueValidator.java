@@ -15,38 +15,28 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.GroupKeyConstraint;
-import it.cnr.iit.jscontact.tools.dto.PropertyGroup;
-import org.apache.commons.collections.map.CaseInsensitiveMap;
+import it.cnr.iit.jscontact.tools.constraints.VersionValueConstraint;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GroupKeyValidator implements ConstraintValidator<GroupKeyConstraint, Map<String, PropertyGroup>> {
+public class VersionValueValidator implements ConstraintValidator<VersionValueConstraint, String> {
 
-    private static final Pattern KEY_PATTERN = Pattern.compile("[A-Za-z0-9\\-]+");
+    private static final Pattern VERSION_VALUE_PATTERN = Pattern.compile("[1-9][0-9]*\\.[0-9]+");
 
-    public void initialize(GroupKeyConstraint constraintAnnotation) {
+
+    public void initialize(VersionValueConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(Map<String,PropertyGroup> map, ConstraintValidatorContext context) {
+    public boolean isValid(String versionValue, ConstraintValidatorContext context) {
 
-        if (map == null)
-            return true;
+        Matcher matcher = VERSION_VALUE_PATTERN.matcher(versionValue);
+        if (!matcher.matches())
+            return false;
 
-        for (String id : map.keySet()){
-
-            Matcher matcher = KEY_PATTERN.matcher(id);
-            if (!matcher.matches())
-                return false;
-        }
-
-        Map<String, PropertyGroup> ciMap = new CaseInsensitiveMap();
-        ciMap.putAll(map);
-        return ciMap.size() == map.size();
+        return true;
     }
 
 }

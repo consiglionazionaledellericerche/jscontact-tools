@@ -30,6 +30,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class SchedulingAddress extends AbstractJSContactType implements HasLabel, IdMapValue, HasContexts, Serializable {
 
     @NotNull

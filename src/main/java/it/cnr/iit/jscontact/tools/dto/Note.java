@@ -37,6 +37,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Note extends AbstractJSContactType implements HasLabel, HasContexts, IdMapValue, Serializable {
 
     @NotNull

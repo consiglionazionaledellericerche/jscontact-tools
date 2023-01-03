@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.constraints.IdMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.Valid;
@@ -32,6 +29,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class SpeakToAs extends AbstractJSContactType implements Serializable {
 
     @NotNull
@@ -137,7 +135,7 @@ public class SpeakToAs extends AbstractJSContactType implements Serializable {
     public void addPronouns(String id, Pronouns pronouns) {
 
         if (this.pronouns == null)
-            this.pronouns = new HashMap<String, Pronouns>();
+            this.pronouns = new HashMap<>();
 
         this.pronouns.putIfAbsent(id, pronouns);
     }

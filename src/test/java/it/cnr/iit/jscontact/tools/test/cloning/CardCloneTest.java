@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class CardCloneTest {
 
@@ -33,7 +33,7 @@ public class CardCloneTest {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
         Card jsCard = Card.toJSCard(json);
-        assertTrue("testClone1", jsCard.equals(jsCard.clone()));
+        assertEquals("testClone1", jsCard, jsCard.clone());
 
     }
 
@@ -42,7 +42,7 @@ public class CardCloneTest {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json")), StandardCharsets.UTF_8);
         Card jsCard = Card.toJSCard(json);
-        assertTrue("testClone2", jsCard.equals(jsCard.clone()));
+        assertEquals("testClone2", jsCard, jsCard.clone());
 
     }
 
@@ -51,7 +51,7 @@ public class CardCloneTest {
 
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json")), StandardCharsets.UTF_8);
         Card jsCard = Card.toJSCard(json);
-        assertTrue("testClone3", jsCard.equals(jsCard.clone()));
+        assertEquals("testClone3", jsCard, jsCard.clone());
 
     }
 

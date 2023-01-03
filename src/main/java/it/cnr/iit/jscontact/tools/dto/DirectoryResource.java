@@ -44,6 +44,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class DirectoryResource extends Resource implements HasType {
 
     @NotNull

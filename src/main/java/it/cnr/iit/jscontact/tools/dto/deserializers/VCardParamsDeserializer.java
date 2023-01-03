@@ -48,7 +48,7 @@ public class VCardParamsDeserializer extends JsonDeserializer<Map<String, VCardP
         while (iter.hasNext()) {
             Map.Entry<String, JsonNode> entry = iter.next();
             String paramName = entry.getKey();
-            VCardParam vCardParam = null;
+            VCardParam vCardParam;
             if (entry.getValue().isArray()) {
                 List<String> array = mapper.treeToValue(entry.getValue(), List.class);
                 vCardParam = VCardParam.builder().values(array.toArray(new String[0])).build();

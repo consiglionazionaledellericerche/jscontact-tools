@@ -26,7 +26,6 @@ import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
-import it.cnr.iit.jscontact.tools.constraints.groups.CardConstraintsGroup;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
@@ -93,8 +92,9 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     // Section 2.1.2 of [draft-ietf-calext-jscontact]
     @NotNull
     @JsonProperty("@version")
+    @VersionValueConstraint
     @Builder.Default
-    String _version = "rfc0000";
+    String _version = "1.0";
 
     // Section 2.1.3 of [draft-ietf-calext-jscontact]
     @JsonSerialize(using = UTCDateTimeSerializer.class)
@@ -362,8 +362,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
             if (relType == null)
                 relatedTo.put(key, Relation.builder().build());
             else {
-                Map<RelationType, Boolean> map = new HashMap<>();
-                map.putAll(relationPerKey.getRelation());
+                Map<RelationType, Boolean> map = new HashMap<>(relationPerKey.getRelation());
                 map.put(relType, Boolean.TRUE);
                 relatedTo.replace(key, Relation.builder()
                         .relation(map)
@@ -823,7 +822,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
         if (localizations == null)
             return null;
 
-        return localizations.keySet().toArray(new String[localizations.size()]);
+        return localizations.keySet().toArray(new String[0]);
     }
 
     /**
@@ -922,10 +921,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
         validationMessages = new ArrayList<>();
 
         Set<ConstraintViolation<Card>> constraintViolations;
-        if (this instanceof Card)
-            constraintViolations = ValidatorBuilder.getValidator().validate(this, CardConstraintsGroup.class);
-        else
-            constraintViolations = ValidatorBuilder.getValidator().validate(this);
+        constraintViolations = ValidatorBuilder.getValidator().validate(this);
         if (constraintViolations.size() > 0) {
             for (ConstraintViolation<Card> constraintViolation : constraintViolations)
                 validationMessages.add(constraintViolation.getMessage());

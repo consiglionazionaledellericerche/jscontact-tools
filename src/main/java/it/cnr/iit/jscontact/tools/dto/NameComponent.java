@@ -42,6 +42,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class NameComponent extends AbstractJSContactType implements HasType, Serializable {
 
     @NotNull

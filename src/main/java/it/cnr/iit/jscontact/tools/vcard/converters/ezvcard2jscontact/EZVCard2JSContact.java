@@ -500,8 +500,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 jsCard.setSpeakToAs(SpeakToAs.animate());
             else if (vCard.getGender().isNone())
                 jsCard.setSpeakToAs(SpeakToAs.neuter());
-            else if (vCard.getGender().isUnknown())
-                return;
         } else {
             jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(GrammaticalGenderType.getEnum(vCard.getExtendedProperty(VCardPropEnum.GRAMMATICAL_GENDER.getValue()).getValue().toLowerCase())).build());
         }
@@ -513,7 +511,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<FormattedName> fns = vcard.getFormattedNames();
-        Collections.sort(fns, vCardPropertiesAltidComparator);
+        fns.sort(vCardPropertiesAltidComparator);
         String lastAltid = null;
         for (FormattedName fn : fns) {
             if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
@@ -528,7 +526,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillJSCardMembers(VCard vcard, Card jsCard) {
 
         List<Member> members = vcard.getMembers();
-        Collections.sort(members,vCardPropertiesPrefComparator);
+        members.sort(vCardPropertiesPrefComparator);
         for (Member member : members)
             jsCard.addMember(member.getValue());
     }
@@ -618,7 +616,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<StructuredName> vcardNames = vcard.getStructuredNames();
-        Collections.sort(vcardNames, vCardPropertiesAltidComparator);
+        vcardNames.sort(vCardPropertiesAltidComparator);
 
         jsCard.setName(toJSCardName(vcardNames.get(0), vcard)); //the first N property is the name, all the others name localization
         for (int i = 1; i < vcardNames.size(); i++) {
@@ -644,7 +642,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Nickname> vcardNickNames = vcard.getNicknames();
-        Collections.sort(vcardNickNames, vCardPropertiesAltidComparator);
+        vcardNickNames.sort(vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -706,12 +704,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .hash(autoFullAddress)
                 .propId(vcardAddr.getParameter(VCardParamEnum.PROP_ID.getValue()))
                 .contexts(toJSCardAddressContexts(vcardTypeParam))
-                .fullAddress(toJSCardFulllAddress(vcardAddr.getLabel(),autoFullAddress))
+                .fullAddress(toJSCardFulllAddress(vcardAddr.getLabel(), autoFullAddress))
                 .pref(vcardAddr.getPref())
                 .coordinates(getValue(vcardAddr.getGeo()))
                 .timeZone(toJSCardTimezoneName(vcardAddr.getTimezone()))
                 .countryCode(vcardAddr.getParameter(VCardParamEnum.CC.getValue()))
-                .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[streetDetailPairs.size()]) : null)
+                .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[0]) : null)
                 .locality(StringUtils.defaultIfEmpty(vcardAddr.getLocality(), null))
                 .region(StringUtils.defaultIfEmpty(vcardAddr.getRegion(), null))
                 .postcode(StringUtils.defaultIfEmpty(vcardAddr.getPostalCode(), null))
@@ -766,7 +764,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             }
         }
 
-        Collections.sort(addresses, JSCardAddressesComparator.builder().defaultLanguage(jsCard.getLocale()).build()); //sort based on altid
+        addresses.sort(JSCardAddressesComparator.builder().defaultLanguage(jsCard.getLocale()).build()); //sort based on altid
 
         int i = 1;
         String lastAltid = null;
@@ -922,9 +920,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             else
                 jsCard.addLanguagePreference(getValue(lang),null);
         }
-
-        if (jsCard.getPreferredLanguages() == null)
-            return;
     }
 
 
@@ -1139,7 +1134,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Title> titles = vcard.getTitles();
-        Collections.sort(titles, vCardPropertiesAltidComparator);
+        titles.sort(vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1162,7 +1157,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Role> roles = vcard.getRoles();
-        Collections.sort(roles, vCardPropertiesAltidComparator);
+        roles.sort(vCardPropertiesAltidComparator);
         int i = (jsCard.getTitles() != null) ? jsCard.getTitles().size() + 1 : 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1181,10 +1176,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private it.cnr.iit.jscontact.tools.dto.Organization toJSCardOrganization(Organization vcardOrg, VCard vcard) {
 
-        List<String> unitNameList=null;
-        List<String> unitSortAsList=null;
-        String name=null;
-        String orgSortAs=null;
+        List<String> unitNameList;
+        List<String> unitSortAsList = null;
+        String name;
+        String orgSortAs = null;
         if (vcardOrg.getValues().size() > 1 ) {
             name = vcardOrg.getValues().get(0);
             unitNameList = vcardOrg.getValues().subList(1,vcardOrg.getValues().size());
@@ -1231,7 +1226,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Organization> vcardOrgs = vcard.getOrganizations();
-        Collections.sort(vcardOrgs, vCardPropertiesAltidComparator);
+        vcardOrgs.sort(vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1271,7 +1266,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
 
         List<ezvcard.property.Note> vcardNotes = vcard.getNotes();
-        Collections.sort(vcardNotes, vCardPropertiesAltidComparator);
+        vcardNotes.sort(vCardPropertiesAltidComparator);
         int i = 1;
         String lastAltid = null;
         String lastMapId = null;
@@ -1291,9 +1286,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillJSCardKeywords(VCard vcard, Card jsCard) {
 
         List<Categories> categoriesList = vcard.getCategoriesList();
-        Collections.sort(categoriesList, vCardPropertiesPrefComparator);
+        categoriesList.sort(vCardPropertiesPrefComparator);
         for (Categories categories : categoriesList)
-            jsCard.addKeywords(categories.getValues().toArray(new String[categories.getValues().size()]));
+            jsCard.addKeywords(categories.getValues().toArray(new String[0]));
     }
 
     private static void fillJSCardRelations(VCard vcard, Card jsCard) {
@@ -1308,8 +1303,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    //TODO: replace XXXX with RFC number after draft-ietf-calext-vcard-jscontact-extensions
-    private void fillJSCardPropsFromVCardRFCXXXXProps(VCard vcard, Card jsCard) {
+    //Fill JSContact properties mapping the VCard properties defined in draft-ietf-calext-vcard-jscontact-extensions
+    private void fillJSCardPropsFromVCardJSContactExtensions(VCard vcard, Card jsCard) {
 
         int i = 1;
         for (RawProperty extension : vcard.getExtendedProperties()) {
@@ -1416,26 +1411,25 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillJSCardPropsFromJSCardExtensionsInVCard(VCard vcard, Card jsCard) throws CardException {
 
         String path = null;
-        Object value = null;
-        String extensionName = null;
+        Object value;
+        String extensionName;
         try {
             for (RawProperty extension : vcard.getExtendedProperties()) {
                 if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.JSCONTACT_PROP.getValue())) {
                     path = extension.getParameter(VCardParamEnum.JSPTR.getValue());
                     value = JSContactPropUtils.toJsonValue(extension.getValue());
                     if (!path.contains(DelimiterUtils.SLASH_DELIMITER)) {
-                        jsCard.addExtension(path,value);
-                    }
-                    else {
+                        jsCard.addExtension(path, value);
+                    } else {
                         String[] pathItems = path.split(DelimiterUtils.SLASH_DELIMITER);
                         extensionName = pathItems[pathItems.length-1];
-                        List list = Arrays.asList(pathItems);
+                        List<String> list = Arrays.asList(pathItems);
                         jsCard.addExtension(list.subList(0, pathItems.length-1),extensionName.replaceAll(DelimiterUtils.SLASH_DELIMITER_IN_JSON_POINTER,DelimiterUtils.SLASH_DELIMITER), value);
                     }
                 }
             }
         } catch(Exception e) {
-            throw new CardException(String.format("Unable to convert X-RFC0000-PROP property with path: %s", path));
+            throw new CardException(String.format("Unable to convert JSCONTACT-PROP property with path: %s", path));
         }
     }
 
@@ -1524,7 +1518,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fillJSCardKeywords(vCard, jsCard);
         fillJSCardNotes(vCard, jsCard);
         fillJSCardRelations(vCard, jsCard);
-        fillJSCardPropsFromVCardRFCXXXXProps(vCard,jsCard);
+        fillJSCardPropsFromVCardJSContactExtensions(vCard, jsCard);
         if (customTimeZones.size() > 0)
             jsCard.setCustomTimeZones(customTimeZones);
         fillVCardUnmatchedProps(vCard, jsCard);

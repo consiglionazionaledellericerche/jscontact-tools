@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +34,7 @@ public class SerializationTest {
     @Test
     public void testSerialization1() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-RFC7483.json")), StandardCharsets.UTF_8);
         Card jsCard = Card.toJSCard(json);
         assertTrue("testSerialization1 - 1", jsCard.isValid());
         String serialized = Card.toJson(jsCard);
@@ -44,7 +45,7 @@ public class SerializationTest {
     @Test
     public void testSerialization2() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Multilingual.json")), StandardCharsets.UTF_8);
         Card jsCard = Card.toJSCard(json);
         assertTrue("testSerialization2 - 1", jsCard.isValid());
         String serialized = Card.toJson(jsCard);
@@ -55,7 +56,7 @@ public class SerializationTest {
     @Test
     public void testSerialization3() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-Unstructured.json")), StandardCharsets.UTF_8);
         Card jsCard = Card.toJSCard(json);
         assertTrue("testSerialization3 - 1", jsCard.isValid());
         String serialized = Card.toJson(jsCard);
@@ -66,7 +67,7 @@ public class SerializationTest {
     @Test
     public void testSerialization4() throws IOException {
 
-        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json"), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCardGroup.json")), StandardCharsets.UTF_8);
         Card[] jsCards = Card.toJSCards(json);
         for (Card jsCard : jsCards)
             assertTrue("testSerialization4 - 1", jsCard.isValid());
@@ -83,7 +84,7 @@ public class SerializationTest {
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         jsCard.setUid("549e9dd2-ecb1-46af-8df1-09e98329d0ff");
         String serialized = Card.toJson(jsCard);
-        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"@version\":\"rfc0000\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"vCardProps\":[[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
+        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"@version\":\"1.0\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"vCardProps\":[[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
 
     }
 

@@ -38,6 +38,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
     @NotNull
@@ -142,8 +143,7 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
      * @param feature the phone feature
      */
     public void addFeature(PhoneFeature feature) {
-        Map<PhoneFeature,Boolean> clone = new HashMap<>();
-        clone.putAll(features);
+        Map<PhoneFeature, Boolean> clone = new HashMap<>(features);
         clone.put(feature,Boolean.TRUE);
         setFeatures(clone);
     }
