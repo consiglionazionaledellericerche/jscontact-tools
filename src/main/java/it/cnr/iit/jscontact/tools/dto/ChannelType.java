@@ -32,7 +32,6 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Serializable, Comparable<ChannelType> {
