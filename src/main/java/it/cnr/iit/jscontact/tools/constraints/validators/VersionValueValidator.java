@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class VersionValueValidator implements ConstraintValidator<VersionValueConstraint, String> {
 
-    private static final Pattern VERSION_VALUE_PATTERN = Pattern.compile("[1-9]+\\.[0-9]+");
+    private static final Pattern VERSION_VALUE_PATTERN = Pattern.compile("[1-9][0-9]*\\.[0-9]+");
 
 
     public void initialize(VersionValueConstraint constraintAnnotation) {
