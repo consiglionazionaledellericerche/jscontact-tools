@@ -93,7 +93,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @NotNull
     @JsonProperty("@version")
     @Builder.Default
-    String _version = "rfc0000";
+    String _version = "1.0";
 
     // Section 2.1.3 of [draft-ietf-calext-jscontact]
     @JsonSerialize(using = UTCDateTimeSerializer.class)
