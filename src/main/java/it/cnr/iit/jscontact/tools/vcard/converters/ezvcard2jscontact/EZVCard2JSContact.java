@@ -1303,8 +1303,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    //TODO: replace XXXX with RFC number after draft-ietf-calext-vcard-jscontact-extensions
-    private void fillJSCardPropsFromVCardRFCXXXXProps(VCard vcard, Card jsCard) {
+    //Fill JSContact properties mapping the VCard properties defined in draft-ietf-calext-vcard-jscontact-extensions
+    private void fillJSCardPropsFromVCardJSContactExtensions(VCard vcard, Card jsCard) {
 
         int i = 1;
         for (RawProperty extension : vcard.getExtendedProperties()) {
@@ -1429,7 +1429,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 }
             }
         } catch(Exception e) {
-            throw new CardException(String.format("Unable to convert X-RFC0000-PROP property with path: %s", path));
+            throw new CardException(String.format("Unable to convert JSCONTACT-PROP property with path: %s", path));
         }
     }
 
@@ -1518,7 +1518,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fillJSCardKeywords(vCard, jsCard);
         fillJSCardNotes(vCard, jsCard);
         fillJSCardRelations(vCard, jsCard);
-        fillJSCardPropsFromVCardRFCXXXXProps(vCard,jsCard);
+        fillJSCardPropsFromVCardJSContactExtensions(vCard, jsCard);
         if (customTimeZones.size() > 0)
             jsCard.setCustomTimeZones(customTimeZones);
         fillVCardUnmatchedProps(vCard, jsCard);
