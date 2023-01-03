@@ -39,6 +39,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class StreetComponent extends AbstractJSContactType implements HasType, Serializable {
 
     @NotNull

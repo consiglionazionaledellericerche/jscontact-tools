@@ -25,6 +25,7 @@ import java.util.Calendar;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Timestamp extends AbstractJSContactType {
 
     @NotNull
