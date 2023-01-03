@@ -92,6 +92,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     // Section 2.1.2 of [draft-ietf-calext-jscontact]
     @NotNull
     @JsonProperty("@version")
+    @VersionValueConstraint
     @Builder.Default
     String _version = "1.0";
 
