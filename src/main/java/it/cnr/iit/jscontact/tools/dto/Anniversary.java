@@ -56,6 +56,7 @@ public class Anniversary extends AbstractJSContactType implements HasType, HasLa
     @Builder.Default
     String _type = "Anniversary";
 
+    @NotNull(message = "type is missing in Anniversary")
     @JsonDeserialize(using = AnniversaryTypeDeserializer.class)
     AnniversaryType type;
 
@@ -104,7 +105,7 @@ public class Anniversary extends AbstractJSContactType implements HasType, HasLa
      * @return true if this is an undefined anniversary, false otherwise
      */
     @JsonIgnore
-    public boolean isOtherAnniversary() { return type == null || type.isExtValue(); }
+    public boolean isOtherAnniversary() { return type.isExtValue(); }
 
     private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String label) {
         return Anniversary.builder().type(type).date(date).build();
