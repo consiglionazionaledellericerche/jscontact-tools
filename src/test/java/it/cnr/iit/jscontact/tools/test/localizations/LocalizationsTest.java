@@ -138,8 +138,8 @@ public class LocalizationsTest {
                     "\"addresses\":{" +
                         "\"addr\": {" +
                             "\"@type\":\"Address\"," +
-                            "\"street\": [{\"@type\": \"StreetComponent\",\"type\": \"name\", \"value\": \"1 Street\"}, " +
-                                         "{\"@type\": \"StreetComponent\",\"type\": \"postOfficeBox\", \"value\":\"01001\"} " +
+                            "\"street\": [{\"@type\": \"StreetComponent\",\"kind\": \"name\", \"value\": \"1 Street\"}, " +
+                                         "{\"@type\": \"StreetComponent\",\"kind\": \"postOfficeBox\", \"value\":\"01001\"} " +
                                          "], " +
                             "\"locality\":\"Kyiv\"," +
                             "\"countryCode\":\"UA\"" +
@@ -151,8 +151,8 @@ public class LocalizationsTest {
                             "\"organizations/org\": { \"@type\": \"Organization\", \"name\": \"Моя Компания\" }, " +
                             "\"addresses/addr\":{" +
                                 "\"@type\":\"Address\"," +
-                                "\"street\": [{\"@type\": \"StreetComponent\",\"type\": \"name\",\"value\": \"1, Улица\"}, " +
-                                             "{\"@type\": \"StreetComponent\",\"type\": \"postOfficeBox\",\"value\":\"01001\"} " +
+                                "\"street\": [{\"@type\": \"StreetComponent\",\"kind\": \"name\",\"value\": \"1, Улица\"}, " +
+                                             "{\"@type\": \"StreetComponent\",\"kind\": \"postOfficeBox\",\"value\":\"01001\"} " +
                                              "], " +
                                 "\"locality\":\"Киев\"," +
                                 "\"countryCode\":\"UA\"" +

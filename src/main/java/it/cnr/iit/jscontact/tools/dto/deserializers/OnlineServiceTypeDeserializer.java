@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.OnlineServiceEnum;
-import it.cnr.iit.jscontact.tools.dto.OnlineServiceType;
+import it.cnr.iit.jscontact.tools.dto.OnlineServiceKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
@@ -32,17 +32,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class OnlineServiceTypeDeserializer extends JsonDeserializer<OnlineServiceType> {
+public class OnlineServiceTypeDeserializer extends JsonDeserializer<OnlineServiceKind> {
 
     @Override
-    public OnlineServiceType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public OnlineServiceKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return OnlineServiceType.builder().rfcValue(OnlineServiceEnum.getEnum(value)).build();
+            return OnlineServiceKind.builder().rfcValue(OnlineServiceEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return OnlineServiceType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return OnlineServiceKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

@@ -32,10 +32,10 @@ public class OnlineServiceValidator implements ConstraintValidator<OnlineService
         if (onlineService == null)
             return true;
 
-        if (onlineService.getType().isUsername())
+        if (onlineService.getKind().isUsername())
             return onlineService.getService() != null;
         else {
-            if (onlineService.getType().isUri()) {
+            if (onlineService.getKind().isUri()) {
                 try {
                     URI.create(onlineService.getUser());
                 } catch (Exception e) {

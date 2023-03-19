@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
-import it.cnr.iit.jscontact.tools.dto.NameComponentType;
+import it.cnr.iit.jscontact.tools.dto.NameComponentKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
@@ -32,17 +32,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class NameComponentTypeDeserializer extends JsonDeserializer<NameComponentType> {
+public class NameComponentTypeDeserializer extends JsonDeserializer<NameComponentKind> {
 
     @Override
-    public NameComponentType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public NameComponentKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return NameComponentType.builder().rfcValue(NameComponentEnum.getEnum(value)).build();
+            return NameComponentKind.builder().rfcValue(NameComponentEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return NameComponentType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return NameComponentKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.NameComponent;
-import it.cnr.iit.jscontact.tools.dto.NameComponentType;
+import it.cnr.iit.jscontact.tools.dto.NameComponentKind;
 import org.junit.Test;
 
 public class NameComponentTest {
@@ -35,7 +35,7 @@ public class NameComponentTest {
 
         // value missing
         NameComponent.builder()
-                .type(NameComponentType.given())
+                .kind(NameComponentKind.given())
                 .build();
     }
 
@@ -43,7 +43,7 @@ public class NameComponentTest {
     public void testValidNameComponentBuild() {
 
         NameComponent.builder()
-                .type(NameComponentType.given())
+                .kind(NameComponentKind.given())
                 .value("Mario")
                 .build();
     }

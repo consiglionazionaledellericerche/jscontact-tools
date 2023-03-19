@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the StreetComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the StreetComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -31,7 +31,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class StreetComponentType extends ExtensibleEnumType<StreetComponentEnum> implements Serializable {
+public class StreetComponentKind extends ExtensibleEnumType<StreetComponentEnum> implements Serializable {
 
     /**
      * Returns a street component type whose enum value is pre-defined.
@@ -39,72 +39,72 @@ public class StreetComponentType extends ExtensibleEnumType<StreetComponentEnum>
      * @param rfcValue a pre-defined street component type
      * @return a street component type
      */
-    public static StreetComponentType rfc(StreetComponentEnum rfcValue) { return StreetComponentType.builder().rfcValue(rfcValue).build();}
+    public static StreetComponentKind rfc(StreetComponentEnum rfcValue) { return StreetComponentKind.builder().rfcValue(rfcValue).build();}
     /**
      * Returns a "name" street component type.
      *
      * @return a "name" street component type
      */
-    public static StreetComponentType name() { return rfc(StreetComponentEnum.NAME);}
+    public static StreetComponentKind name() { return rfc(StreetComponentEnum.NAME);}
     /**
      * Returns a "number" street component type.
      *
      * @return a "number" street component type
      */
-    public static StreetComponentType number() { return rfc(StreetComponentEnum.NUMBER);}
+    public static StreetComponentKind number() { return rfc(StreetComponentEnum.NUMBER);}
     /**
      * Returns a "direction" street component type.
      *
      * @return a "direction" street component type
      */
-    public static StreetComponentType direction() { return rfc(StreetComponentEnum.DIRECTION);}
+    public static StreetComponentKind direction() { return rfc(StreetComponentEnum.DIRECTION);}
     /**
      * Returns a "building" street component type.
      *
      * @return a "building" street component type
      */
-    public static StreetComponentType building() { return rfc(StreetComponentEnum.BUILDING);}
+    public static StreetComponentKind building() { return rfc(StreetComponentEnum.BUILDING);}
     /**
      * Returns a "floor" street component type.
      *
      * @return a "floor" street component type
      */
-    public static StreetComponentType floor() { return rfc(StreetComponentEnum.FLOOR);}
+    public static StreetComponentKind floor() { return rfc(StreetComponentEnum.FLOOR);}
     /**
      * Returns an "apartment" street component type.
      *
      * @return an "apartment" street component type
      */
-    public static StreetComponentType apartment() { return rfc(StreetComponentEnum.APARTMENT);}
+    public static StreetComponentKind apartment() { return rfc(StreetComponentEnum.APARTMENT);}
     /**
      * Returns a "room" street component type.
      *
      * @return a "room" street component type
      */
-    public static StreetComponentType room() { return rfc(StreetComponentEnum.ROOM);}
+    public static StreetComponentKind room() { return rfc(StreetComponentEnum.ROOM);}
     /**
      * Returns an "extension" street component type.
      *
      * @return an "extension" street component type
      */
-    public static StreetComponentType extension() { return rfc(StreetComponentEnum.EXTENSION);}
+    public static StreetComponentKind extension() { return rfc(StreetComponentEnum.EXTENSION);}
     /**
      * Returns a "postOfficeBox" street component type.
      *
      * @return a "postOfficeBox" street component type
      */
-    public static StreetComponentType postOfficeBox() { return rfc(StreetComponentEnum.POST_OFFICE_BOX);}
+    public static StreetComponentKind postOfficeBox() { return rfc(StreetComponentEnum.POST_OFFICE_BOX);}
     /**
      * Returns a "separator" street component type.
      *
      * @return a "separator" street component type
      */
-    public static StreetComponentType separator() { return rfc(StreetComponentEnum.SEPARATOR);}
+    public static StreetComponentKind separator() { return rfc(StreetComponentEnum.SEPARATOR);}
     /**
      * Returns an "unknown" street component type.
      *
      * @return an "unknown" street component type
      */
-    public static StreetComponentType unknown() { return rfc(StreetComponentEnum.UNKNOWN);}
+    public static StreetComponentKind unknown() { return rfc(StreetComponentEnum.UNKNOWN);}
 
 }

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.StreetComponentEnum;
-import it.cnr.iit.jscontact.tools.dto.StreetComponentType;
+import it.cnr.iit.jscontact.tools.dto.StreetComponentKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
@@ -32,17 +32,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class StreetComponentTypeDeserializer extends JsonDeserializer<StreetComponentType> {
+public class StreetComponentTypeDeserializer extends JsonDeserializer<StreetComponentKind> {
 
     @Override
-    public StreetComponentType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public StreetComponentKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return StreetComponentType.builder().rfcValue(StreetComponentEnum.getEnum(value)).build();
+            return StreetComponentKind.builder().rfcValue(StreetComponentEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return StreetComponentType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return StreetComponentKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

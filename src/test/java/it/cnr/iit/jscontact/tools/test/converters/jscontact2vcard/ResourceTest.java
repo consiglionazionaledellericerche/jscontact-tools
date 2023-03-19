@@ -38,7 +38,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"directories\": {"+
                     "\"ENTRY-1\": {" +
                         "\"@type\":\"DirectoryResource\"," +
-                        "\"type\": \"entry\","+
+                        "\"kind\": \"entry\","+
                         "\"uri\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
                  "}" +
@@ -59,7 +59,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"media\": {"+
                     "\"PHOTO-1\": {" +
                         "\"@type\":\"MediaResource\"," +
-                        "\"type\":\"photo\"," +
+                        "\"kind\":\"photo\"," +
                         "\"mediaType\": \"image/gif\","+
                         "\"uri\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
                     "}" +
@@ -82,7 +82,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"media\": {"+
                     "\"LOGO-1\": {" +
                         "\"@type\":\"MediaResource\"," +
-                        "\"type\": \"logo\","+
+                        "\"kind\": \"logo\","+
                         "\"uri\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
                     "}" +
                 "}" +
@@ -103,7 +103,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"links\": {"+
                     "\"CONTACT-1\": {" +
                         "\"@type\":\"LinkResource\"," +
-                        "\"type\": \"contact\","+
+                        "\"kind\": \"contact\","+
                         "\"uri\": \"mailto:contact@example.com\"" +
                     "}" +
                 "}" +
@@ -125,7 +125,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"media\": {"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"MediaResource\"," +
-                        "\"type\": \"sound\","+
+                        "\"kind\": \"sound\","+
                         "\"mediaType\": \"audio/mp3\"," +
                         "\"uri\": \"android.resource:///com.my.android.sharesound/2130968609\"" +
                     "}" +
@@ -148,7 +148,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"media\":{"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"MediaResource\"," +
-                        "\"type\": \"sound\","+
+                        "\"kind\": \"sound\","+
                         "\"uri\": \"android.resource:///com.my.android.sharesound/2130968609\"" +
                     "}" +
                 "}" +
@@ -210,13 +210,13 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"calendars\": {"+
                     "\"FREEBUSY-1\": {" +
                         "\"@type\":\"CalendarResource\"," +
-                        "\"type\": \"freeBusy\","+
+                        "\"kind\": \"freeBusy\","+
                         "\"pref\": 1," +
                         "\"uri\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
                     "\"FREEBUSY-2\": {" +
                         "\"@type\":\"CalendarResource\"," +
-                        "\"type\": \"freeBusy\","+
+                        "\"kind\": \"freeBusy\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"uri\": \"ftp://example.com/busy/project-a.ifb\"" +
                     "}" +
@@ -270,13 +270,13 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"calendars\": {"+
                     "\"CALENDAR-1\": {" +
                         "\"@type\":\"CalendarResource\"," +
-                        "\"type\": \"calendar\","+
+                        "\"kind\": \"calendar\","+
                         "\"pref\": 1," +
                         "\"uri\": \"http://cal.example.com/calA\"" +
                     "}," +
                     "\"CALENDAR-2\": {" +
                         "\"@type\":\"CalendarResource\"," +
-                        "\"type\": \"calendar\","+
+                        "\"kind\": \"calendar\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"uri\": \"ftp://ftp.example.com/calA.ics\"" +
                     "}" +

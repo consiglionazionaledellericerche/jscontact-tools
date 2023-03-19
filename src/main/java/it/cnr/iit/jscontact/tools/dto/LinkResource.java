@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.LinkResourceTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -37,14 +37,14 @@ import javax.validation.constraints.Pattern;
  * @author Mario Loffredo
  */
 @ResourceConstraint
-@JsonPropertyOrder({"@type","uri","type","mediaType","contexts","pref","label"})
+@JsonPropertyOrder({"@type","uri","kind","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class LinkResource extends Resource implements HasType {
+public class LinkResource extends Resource implements HasKind {
 
     @NotNull
     @Pattern(regexp = "LinkResource", message="invalid @type value in LinkResource")
@@ -53,10 +53,10 @@ public class LinkResource extends Resource implements HasType {
     String _type = "LinkResource";
 
     @JsonDeserialize(using = LinkResourceTypeDeserializer.class)
-    LinkResourceType type;
+    LinkResourceKind kind;
 
     @JsonIgnore
-    private boolean isLinkResource(LinkResourceType type) { return this.type.equals(type); }
+    private boolean isLinkResource(LinkResourceKind type) { return this.kind.equals(type); }
 
     /**
      * Tests if this directory resource is a contact link.
@@ -64,7 +64,7 @@ public class LinkResource extends Resource implements HasType {
      * @return true if this directory resource is a contact link, false otherwise
      */
     @JsonIgnore
-    public boolean isContact() { return isLinkResource(LinkResourceType.contact()); }
+    public boolean isContact() { return isLinkResource(LinkResourceKind.contact()); }
 
     /**
      * Tests if this directory resource is a generic link.
@@ -72,12 +72,12 @@ public class LinkResource extends Resource implements HasType {
      * @return true if this directory resource is a generic link, false otherwise
      */
     @JsonIgnore
-    public boolean isGenericLink() { return type == null; }
+    public boolean isGenericLink() { return kind == null; }
 
-    private static LinkResource resource(LinkResourceType type, String uri) {
+    private static LinkResource resource(LinkResourceKind type, String uri) {
         return LinkResource.builder()
                        .uri(uri)
-                       .type(type)
+                       .kind(type)
                        .build();
     }
 
@@ -87,7 +87,7 @@ public class LinkResource extends Resource implements HasType {
      * @param uri contact link uri
      * @return the contact link
      */
-    public static LinkResource contact(String uri) { return resource(LinkResourceType.contact(), uri);}
+    public static LinkResource contact(String uri) { return resource(LinkResourceKind.contact(), uri);}
 
     /**
      * Returns an unspecified link

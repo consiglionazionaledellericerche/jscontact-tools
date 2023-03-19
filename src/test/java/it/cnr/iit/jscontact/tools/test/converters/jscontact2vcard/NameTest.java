@@ -36,11 +36,11 @@ public class NameTest extends JSContact2VCardTest {
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"given\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
                     "], " +
                     "\"sortAs\": { \"surname\":\"Public\",\"given\":\"John\" }" +
                 "}, " +
@@ -78,11 +78,11 @@ public class NameTest extends JSContact2VCardTest {
                 "\"locale\": \"en\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"given\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
                     "] " +
                 "}, " +
                 "\"nickNames\": { " +
@@ -130,15 +130,15 @@ public class NameTest extends JSContact2VCardTest {
                 "\"locale\": \"jp\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"正仁\", \"type\": \"given\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"大久保\", \"type\": \"surname\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"正仁\", \"kind\": \"given\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"大久保\", \"kind\": \"surname\" }" +
                     "] " +
                 "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
                         "\"name/components\":[ " +
-                            "{ \"@type\":\"NameComponent\", \"value\":\"Masahito\", \"type\": \"given\" }," +
-                            "{ \"@type\":\"NameComponent\", \"value\":\"Okubo\", \"type\": \"surname\" }" +
+                            "{ \"@type\":\"NameComponent\", \"value\":\"Masahito\", \"kind\": \"given\" }," +
+                            "{ \"@type\":\"NameComponent\", \"value\":\"Okubo\", \"kind\": \"surname\" }" +
                         "]" +
                     "}" +
                 "}" +
@@ -181,39 +181,39 @@ public class NameTest extends JSContact2VCardTest {
                 "\"@type\" : \"Name\", " +
                 "\"components\" : [ { " +
                 "\"@type\" : \"NameComponent\"," +
-                "\"type\" : \"prefix\"," +
+                "\"kind\" : \"prefix\"," +
                 "\"value\" : \"Dr.\"" +
                 "}, {" +
                 "\"@type\" : \"NameComponent\"," +
-                "\"type\" : \"given\"," +
+                "\"kind\" : \"given\"," +
                             "\"value\" : \"John\"" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"type\" : \"surname\"," +
+                            "\"kind\" : \"surname\"," +
                             "\"value\" : \"Stevenson\"" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"type\" : \"middle\"," +
+                            "\"kind\" : \"middle\"," +
                             "\"value\" : \"Philip\"," +
                             "\"rank\" : 2" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"type\" : \"middle\"," +
+                            "\"kind\" : \"middle\"," +
                             "\"value\" : \"Paul\"," +
                             "\"rank\" : 1" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"type\" : \"suffix\"," +
+                            "\"kind\" : \"suffix\"," +
                             "\"value\" : \"Jr.\"," +
                             "\"rank\" : 3" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"type\" : \"suffix\"," +
+                            "\"kind\" : \"suffix\"," +
                             "\"value\" : \"M.D.\"," +
                             "\"rank\" : 1" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"type\" : \"suffix\"," +
+                            "\"kind\" : \"suffix\"," +
                             "\"value\" : \"A.C.P.\"," +
                             "\"rank\" : 2" +
                         "} ]" +

@@ -498,7 +498,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\@type\": \"Address\","
-                        "\"street\":[{"@type":"StreetComponent",\"type\":\"name\",\"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{"@type":"StreetComponent",\"kind\":\"name\",\"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +

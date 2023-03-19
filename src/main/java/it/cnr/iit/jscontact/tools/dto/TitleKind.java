@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the "type" property as defined in section 2.2.6 of [draft-ietf-calext-jscontact].
+ * Class mapping the "kind" property as defined in section 2.2.6 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.6">draft-ietf-calext-jscontact</a>
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class TitleType extends ExtensibleEnumType<TitleEnum> implements Serializable {
+public class TitleKind extends ExtensibleEnumType<TitleEnum> implements Serializable {
 
     /**
      * Tests if this type of title is "title".
@@ -54,26 +54,26 @@ public class TitleType extends ExtensibleEnumType<TitleEnum> implements Serializ
     public boolean isRole() { return isRfc(TitleEnum.ROLE); }
 
 
-    private static TitleType rfc(TitleEnum rfcValue) { return TitleType.builder().rfcValue(rfcValue).build(); }
+    private static TitleKind rfc(TitleEnum rfcValue) { return TitleKind.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns a "title" type of title.
      *
      * @return a "title" type of title
      */
-    public static TitleType title() { return rfc(TitleEnum.TITLE);}
+    public static TitleKind title() { return rfc(TitleEnum.TITLE);}
 
     /**
      * Returns a "role" type of title.
      *
      * @return a "role" type of title
      */
-    public static TitleType role() { return rfc(TitleEnum.ROLE);}
+    public static TitleKind role() { return rfc(TitleEnum.ROLE);}
 
     /**
      * Returns a custom kind of contact card.
      *
      * @return a custom kind of contact card
      */
-    private static TitleType ext(String extValue) { return TitleType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    private static TitleKind ext(String extValue) { return TitleKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

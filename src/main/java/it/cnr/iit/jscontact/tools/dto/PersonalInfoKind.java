@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the PersonalInfo type as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the PersonalInfo type as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.4">draft-ietf-calext-jscontact</a>
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class PersonalInfoType extends ExtensibleEnumType<PersonalInfoEnum> implements Serializable {
+public class PersonalInfoKind extends ExtensibleEnumType<PersonalInfoEnum> implements Serializable {
 
     /**
      * Tests if this personal information type is "hobby".
@@ -67,8 +67,8 @@ public class PersonalInfoType extends ExtensibleEnumType<PersonalInfoEnum> imple
         return isRfc(PersonalInfoEnum.EXPERTISE);
     }
 
-    private static PersonalInfoType rfc(PersonalInfoEnum rfcValue) {
-        return PersonalInfoType.builder().rfcValue(rfcValue).build();
+    private static PersonalInfoKind rfc(PersonalInfoEnum rfcValue) {
+        return PersonalInfoKind.builder().rfcValue(rfcValue).build();
     }
 
     /**
@@ -76,7 +76,7 @@ public class PersonalInfoType extends ExtensibleEnumType<PersonalInfoEnum> imple
      *
      * @return a "hobby" personal information type
      */
-    public static PersonalInfoType hobby() {
+    public static PersonalInfoKind hobby() {
         return rfc(PersonalInfoEnum.HOBBY);
     }
 
@@ -85,7 +85,7 @@ public class PersonalInfoType extends ExtensibleEnumType<PersonalInfoEnum> imple
      *
      * @return an "interest" personal information type
      */
-    public static PersonalInfoType interest() {
+    public static PersonalInfoKind interest() {
         return rfc(PersonalInfoEnum.INTEREST);
     }
 
@@ -94,7 +94,7 @@ public class PersonalInfoType extends ExtensibleEnumType<PersonalInfoEnum> imple
      *
      * @return a "expertise" personal information type
      */
-    public static PersonalInfoType expertise() {
+    public static PersonalInfoKind expertise() {
         return rfc(PersonalInfoEnum.EXPERTISE);
     }
 
@@ -104,7 +104,7 @@ public class PersonalInfoType extends ExtensibleEnumType<PersonalInfoEnum> imple
      * @param extValue the custom personal information type in text format
      * @return a custom personal information type
      */
-    public static PersonalInfoType ext(String extValue) {
-        return PersonalInfoType.builder().extValue(V_Extension.toV_Extension(extValue)).build();
+    public static PersonalInfoKind ext(String extValue) {
+        return PersonalInfoKind.builder().extValue(V_Extension.toV_Extension(extValue)).build();
     }
 }

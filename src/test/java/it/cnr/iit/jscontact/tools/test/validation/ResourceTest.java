@@ -32,7 +32,7 @@ public class ResourceTest extends AbstractTest {
         LinkResource resource = LinkResource.builder()
                 .context(Context.work(), Boolean.TRUE)
                 .uri("mailto:mario.loffredo@iit.cnr.it")
-                .type(LinkResourceType.contact())
+                .kind(LinkResourceKind.contact())
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
@@ -49,7 +49,7 @@ public class ResourceTest extends AbstractTest {
         // value missing
         LinkResource.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .type(LinkResourceType.contact())
+                .kind(LinkResourceKind.contact())
                 .build();
     }
 
@@ -58,7 +58,7 @@ public class ResourceTest extends AbstractTest {
 
         LinkResource resource = LinkResource.builder()
                 .context(Context.work(), Boolean.TRUE)
-                .type(LinkResourceType.contact())
+                .kind(LinkResourceKind.contact())
                 .uri(" ")
                 .label("url")
                 .build();

@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the MediaResource type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the MediaResource type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class MediaResourceType extends ExtensibleEnumType<MediaResourceEnum> implements Serializable {
+public class MediaResourceKind extends ExtensibleEnumType<MediaResourceEnum> implements Serializable {
 
     /**
      * Tests if this media resource type is "photo".
@@ -61,33 +61,33 @@ public class MediaResourceType extends ExtensibleEnumType<MediaResourceEnum> imp
     @JsonIgnore
     public boolean isLogo() { return isRfc(MediaResourceEnum.LOGO); }
 
-    private static MediaResourceType rfc(MediaResourceEnum rfcValue) { return MediaResourceType.builder().rfcValue(rfcValue).build(); }
+    private static MediaResourceKind rfc(MediaResourceEnum rfcValue) { return MediaResourceKind.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns a "photo" media resource type.
      *
      * @return a "photo" media resource type
      */
-    public static MediaResourceType photo() { return rfc(MediaResourceEnum.PHOTO);}
+    public static MediaResourceKind photo() { return rfc(MediaResourceEnum.PHOTO);}
 
     /**
      * Returns a "sound" media resource type.
      *
      * @return a "sound" media resource type
      */
-    public static MediaResourceType sound() { return rfc(MediaResourceEnum.SOUND);}
+    public static MediaResourceKind sound() { return rfc(MediaResourceEnum.SOUND);}
 
     /**
      * Returns a "logo" media resource type.
      *
      * @return a "logo" media resource type
      */
-    public static MediaResourceType logo() { return rfc(MediaResourceEnum.LOGO);}
+    public static MediaResourceKind logo() { return rfc(MediaResourceEnum.LOGO);}
 
     /**
      * Returns a custom media resource type.
      *
      * @return a custom media resource type
      */
-    private static MediaResourceType ext(String extValue) { return MediaResourceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    private static MediaResourceKind ext(String extValue) { return MediaResourceKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

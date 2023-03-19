@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the CalendarResource type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the CalendarResource type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class CalendarResourceType extends ExtensibleEnumType<CalendarResourceEnum> implements Serializable {
+public class CalendarResourceKind extends ExtensibleEnumType<CalendarResourceEnum> implements Serializable {
 
     /**
      * Tests if this calendar resource type is "calendar".
@@ -54,26 +54,26 @@ public class CalendarResourceType extends ExtensibleEnumType<CalendarResourceEnu
     public boolean isFreeBusy() { return isRfc(CalendarResourceEnum.FREEBUSY); }
 
 
-    private static CalendarResourceType rfc(CalendarResourceEnum rfcValue) { return CalendarResourceType.builder().rfcValue(rfcValue).build(); }
+    private static CalendarResourceKind rfc(CalendarResourceEnum rfcValue) { return CalendarResourceKind.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns a "calendar" calendar resource type.
      *
      * @return a "calendar" calendar resource type
      */
-    public static CalendarResourceType calendar() { return rfc(CalendarResourceEnum.CALENDAR);}
+    public static CalendarResourceKind calendar() { return rfc(CalendarResourceEnum.CALENDAR);}
 
     /**
      * Returns a "freeBusy" calendar resource type.
      *
      * @return a "freeBusy" calendar resource type
      */
-    public static CalendarResourceType freeBusy() { return rfc(CalendarResourceEnum.FREEBUSY);}
+    public static CalendarResourceKind freeBusy() { return rfc(CalendarResourceEnum.FREEBUSY);}
 
     /**
      * Returns a custom calendar resource type.
      *
      * @return a custom calendar resource type
      */
-    private static CalendarResourceType ext(String extValue) { return CalendarResourceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    private static CalendarResourceKind ext(String extValue) { return CalendarResourceKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

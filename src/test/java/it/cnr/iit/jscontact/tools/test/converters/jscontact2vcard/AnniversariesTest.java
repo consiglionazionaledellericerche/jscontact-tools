@@ -39,7 +39,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                    "\"@type\":\"Anniversary\"," +
-                                   "\"type\":\"birth\", " +
+                                   "\"kind\":\"birth\", " +
                                    "\"date\":{" +
                                         "\"@type\":\"Timestamp\"," +
                                         "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -62,7 +62,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"birth\", " +
+                        "\"kind\":\"birth\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -90,7 +90,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                    "\"@type\":\"Anniversary\"," +
-                                   "\"type\":\"death\", " +
+                                   "\"kind\":\"death\", " +
                                     "\"date\":{" +
                                         "\"@type\":\"Timestamp\"," +
                                         "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -113,7 +113,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"death\", " +
+                        "\"kind\":\"death\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -140,7 +140,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"birth\", " +
+                        "\"kind\":\"birth\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -151,7 +151,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"death\", " +
+                        "\"kind\":\"death\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
@@ -181,7 +181,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"birth\", " +
+                        "\"kind\":\"birth\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -192,7 +192,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"death\", " +
+                        "\"kind\":\"death\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
@@ -203,7 +203,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"wedding\", " +
+                        "\"kind\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -232,7 +232,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"birth\", " +
+                        "\"kind\":\"birth\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -244,7 +244,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"death\", " +
+                        "\"kind\":\"death\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
@@ -256,7 +256,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"wedding\", " +
+                        "\"kind\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -285,7 +285,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "\"anniversaries\": { \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"birth\", " +
+                        "\"kind\":\"birth\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -299,7 +299,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"death\", " +
+                        "\"kind\":\"death\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
@@ -311,7 +311,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"wedding\", " +
+                        "\"kind\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1986-02-01T19:00:00Z\"" +
@@ -341,7 +341,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                 "\"anniversaries\": { \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"birth\", " +
+                        "\"kind\":\"birth\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -355,7 +355,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"death\", " +
+                        "\"kind\":\"death\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
@@ -367,7 +367,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
                         "\"@type\":\"Anniversary\"," +
-                        "\"type\":\"wedding\", " +
+                        "\"kind\":\"wedding\", " +
                         "\"date\":{" +
                             "\"@type\":\"PartialDate\"," +
                             "\"year\":1986, " +

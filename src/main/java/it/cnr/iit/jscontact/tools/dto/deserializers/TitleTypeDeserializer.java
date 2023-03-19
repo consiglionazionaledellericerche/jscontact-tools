@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.TitleEnum;
-import it.cnr.iit.jscontact.tools.dto.TitleType;
+import it.cnr.iit.jscontact.tools.dto.TitleKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
@@ -32,17 +32,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class TitleTypeDeserializer extends JsonDeserializer<TitleType> {
+public class TitleTypeDeserializer extends JsonDeserializer<TitleKind> {
 
     @Override
-    public TitleType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public TitleKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return TitleType.builder().rfcValue(TitleEnum.getEnum(value)).build();
+            return TitleKind.builder().rfcValue(TitleEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return TitleType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return TitleKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

@@ -164,7 +164,7 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
             return null;
 
         for (StreetComponent pair : street) {
-            if (!pair.isExt() && pair.getType().getRfcValue() == detail)
+            if (!pair.isExt() && pair.getKind().getRfcValue() == detail)
                 return pair.getValue();
         }
 

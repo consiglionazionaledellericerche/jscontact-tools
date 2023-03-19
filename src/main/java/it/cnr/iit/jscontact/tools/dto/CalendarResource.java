@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.CalendarResourceTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -37,14 +37,14 @@ import javax.validation.constraints.Pattern;
  * @author Mario Loffredo
  */
 @ResourceConstraint
-@JsonPropertyOrder({"@type","uri","type","mediaType","contexts","pref","label"})
+@JsonPropertyOrder({"@type","uri","kind","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CalendarResource extends Resource implements HasType {
+public class CalendarResource extends Resource implements HasKind {
 
     @NotNull
     @Pattern(regexp = "CalendarResource", message="invalid @type value in CalendarResource")
@@ -53,10 +53,10 @@ public class CalendarResource extends Resource implements HasType {
     String _type = "CalendarResource";
 
     @JsonDeserialize(using = CalendarResourceTypeDeserializer.class)
-    CalendarResourceType type;
+    CalendarResourceKind kind;
 
     @JsonIgnore
-    private boolean isCalendarResource(CalendarResourceType type) { return this.type.equals(type); }
+    private boolean isCalendarResource(CalendarResourceKind type) { return this.kind.equals(type); }
 
     /**
      * Tests if this calendar resource is a calendar.
@@ -64,7 +64,7 @@ public class CalendarResource extends Resource implements HasType {
      * @return true if this calendar resource is a calendar, false otherwise
      */
     @JsonIgnore
-    public boolean isCalendar() { return isCalendarResource(CalendarResourceType.calendar()); }
+    public boolean isCalendar() { return isCalendarResource(CalendarResourceKind.calendar()); }
 
     /**
      * Tests if this calendar resource is a free busy calendar.
@@ -72,12 +72,12 @@ public class CalendarResource extends Resource implements HasType {
      * @return true if this calendar resource is a free busy calendar, false otherwise
      */
     @JsonIgnore
-    public boolean isFreeBusy() { return isCalendarResource(CalendarResourceType.freeBusy()); }
+    public boolean isFreeBusy() { return isCalendarResource(CalendarResourceKind.freeBusy()); }
 
-    private static CalendarResource resource(CalendarResourceType type, String uri) {
+    private static CalendarResource resource(CalendarResourceKind type, String uri) {
         return CalendarResource.builder()
                        .uri(uri)
-                       .type(type)
+                       .kind(type)
                        .build();
     }
 
@@ -87,7 +87,7 @@ public class CalendarResource extends Resource implements HasType {
      * @param uri calendar uri
      * @return the calendar
      */
-    public static CalendarResource calendar(String uri) { return resource(CalendarResourceType.calendar(), uri);}
+    public static CalendarResource calendar(String uri) { return resource(CalendarResourceKind.calendar(), uri);}
 
     /**
      * Returns a free busy calendar
@@ -95,6 +95,6 @@ public class CalendarResource extends Resource implements HasType {
      * @param uri entry uri
      * @return the entry
      */
-    public static CalendarResource freeBusy(String uri) { return resource(CalendarResourceType.freeBusy(), uri);}
+    public static CalendarResource freeBusy(String uri) { return resource(CalendarResourceKind.freeBusy(), uri);}
 
 }

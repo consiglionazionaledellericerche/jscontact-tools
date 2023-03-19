@@ -39,37 +39,37 @@ public class PersonalInfoTest extends JSContact2VCardTest {
                 "\"personalInfo\":{ " +
                 "\"PERSINFO-1\": {" +
                 "\"@type\":\"PersonalInfo\"," +
-                "\"type\": \"expertise\"," +
+                "\"kind\": \"expertise\"," +
                 "\"value\": \"chemistry\"," +
                 "\"level\": \"high\" " +
                 "}," +
                 "\"PERSINFO-2\": {" +
                 "\"@type\":\"PersonalInfo\"," +
-                "\"type\": \"expertise\"," +
+                "\"kind\": \"expertise\"," +
                 "\"value\": \"chinese literature\"," +
                 "\"level\": \"low\"" +
                 "}," +
                 "\"PERSINFO-3\": {" +
                 "\"@type\":\"PersonalInfo\"," +
-                "\"type\": \"hobby\"," +
+                "\"kind\": \"hobby\"," +
                 "\"value\": \"reading\"," +
                 "\"level\": \"high\"" +
                 "}," +
                 "\"PERSINFO-4\": {" +
                 "\"@type\":\"PersonalInfo\"," +
-                "\"type\": \"hobby\"," +
+                "\"kind\": \"hobby\"," +
                 "\"value\": \"sewing\"," +
                 "\"level\": \"high\"" +
                 "}," +
                 "\"PERSINFO-5\": {" +
                 "\"@type\":\"PersonalInfo\"," +
-                "\"type\": \"interest\"," +
+                "\"kind\": \"interest\"," +
                 "\"value\": \"r&b music\"," +
                 "\"level\": \"medium\" " +
                 "}," +
                 "\"PERSINFO-6\": {" +
                 "\"@type\":\"PersonalInfo\"," +
-                "\"type\": \"interest\"," +
+                "\"kind\": \"interest\"," +
                 "\"value\": \"rock 'n' roll music\"," +
                 "\"level\": \"high\" " +
                 "}" +

@@ -38,7 +38,7 @@ public class OnlineServiceTest extends JSContact2VCardTest {
                 "\"onlineServices\": {"+
                     "\"OS-1\": {" +
                         "\"@type\":\"OnlineService\"," +
-                        "\"type\": \"impp\", " +
+                        "\"kind\": \"impp\", " +
                         "\"contexts\": {\"private\": true}," +
                         "\"pref\": 1, " +
                         "\"user\": \"xmpp:alice@example.com\"" +
@@ -63,7 +63,7 @@ public class OnlineServiceTest extends JSContact2VCardTest {
                 "\"onlineServices\": {"+
                     "\"OS-1\": {" +
                         "\"@type\":\"OnlineService\"," +
-                        "\"type\": \"uri\", " +
+                        "\"kind\": \"uri\", " +
                         "\"service\": \"Twitter\", " +
                         "\"contexts\": {\"private\": true}," +
                         "\"pref\": 1, " +
