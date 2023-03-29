@@ -1529,7 +1529,9 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (VCardProp vCardProp : jsCard.getVCardProps()) {
 
-            if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.CLIENTPIDMAP.getValue()))) {
+            if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.VERSION.getValue())))
+                vcard.setVersion(VCardVersion.valueOfByStr((String) vCardProp.getValue()));
+            else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.CLIENTPIDMAP.getValue()))) {
                 String pid = ((String) vCardProp.getValue()).split(",")[0];
                 String uri = ((String) vCardProp.getValue()).split(",")[1];
                 ClientPidMap pidmap = toVCardCliendPidMap(pid, uri);

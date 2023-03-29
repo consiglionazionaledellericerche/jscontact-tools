@@ -104,7 +104,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder().convertGenderToSpeakToAs(false).build()).build();
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testSpeakToAsWithGender2 - 1", 1, jsCard.getVCardProps().length);
+        assertEquals("testSpeakToAsWithGender2 - 1", 2, jsCard.getVCardProps().length); //including VERSION
         assertEquals("testSpeakToAsWithGender2 - 2", "gender", jsCard.getVCardProps()[0].getName().toString());
         assertEquals("testSpeakToAsWithGender2 - 3", 0, jsCard.getVCardProps()[0].getParameters().size());
         assertEquals("testSpeakToAsWithGender2 - 4", VCardDataType.TEXT, jsCard.getVCardProps()[0].getType());

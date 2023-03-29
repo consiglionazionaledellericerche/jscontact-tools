@@ -1435,6 +1435,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static void fillVCardUnmatchedProps(VCard vcard, Card jsCard) {
 
+        jsCard.addVCardProp(VCardProp.builder()
+                .name(V_Extension.toV_Extension(VCardPropEnum.VERSION.getValue().toLowerCase()))
+                .type(VCardDataType.TEXT)
+                .value(vcard.getVersion().getVersion())
+                .build());
+
         if (vcard.getClientPidMaps()!=null) {
             for (ClientPidMap pidmap : vcard.getClientPidMaps())
                 jsCard.addVCardProp(VCardProp.builder()
