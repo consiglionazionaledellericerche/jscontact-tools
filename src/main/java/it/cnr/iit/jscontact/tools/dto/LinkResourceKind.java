@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the LinkResource type as defined in section 2.6.43 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the LinkResource type as defined in section 2.6.43 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class LinkResourceType extends ExtensibleEnumType<LinkResourceEnum> implements Serializable {
+public class LinkResourceKind extends ExtensibleEnumType<LinkResourceEnum> implements Serializable {
 
     /**
      * Tests if this link resource type is "contact".
@@ -45,19 +45,19 @@ public class LinkResourceType extends ExtensibleEnumType<LinkResourceEnum> imple
     @JsonIgnore
     public boolean isContact() { return isRfc(LinkResourceEnum.CONTACT); }
 
-    private static LinkResourceType rfc(LinkResourceEnum rfcValue) { return LinkResourceType.builder().rfcValue(rfcValue).build(); }
+    private static LinkResourceKind rfc(LinkResourceEnum rfcValue) { return LinkResourceKind.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns a "contact" link resource type.
      *
      * @return a "contact" link resource type
      */
-    public static LinkResourceType contact() { return rfc(LinkResourceEnum.CONTACT);}
+    public static LinkResourceKind contact() { return rfc(LinkResourceEnum.CONTACT);}
 
     /**
      * Returns a custom link resource type.
      *
      * @return a custom link resource type
      */
-    private static LinkResourceType ext(String extValue) { return LinkResourceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    private static LinkResourceKind ext(String extValue) { return LinkResourceKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

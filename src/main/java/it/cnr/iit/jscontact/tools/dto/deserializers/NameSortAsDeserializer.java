@@ -33,21 +33,21 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class NameSortAsDeserializer extends JsonDeserializer<Map<NameComponentType, String>> {
+public class NameSortAsDeserializer extends JsonDeserializer<Map<NameComponentKind, String>> {
 
     @Override
-    public Map<NameComponentType, String> deserialize(JsonParser jp, DeserializationContext ctxt)
+    public Map<NameComponentKind, String> deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        Map<NameComponentType, String> sortAs = new HashMap<>();
+        Map<NameComponentKind, String> sortAs = new HashMap<>();
         Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
         while (iter.hasNext()) {
             Map.Entry<String, JsonNode> entry = iter.next();
-            NameComponentType nct;
+            NameComponentKind nct;
             try {
-                nct = NameComponentType.builder().rfcValue(NameComponentEnum.getEnum(entry.getKey())).build();
+                nct = NameComponentKind.builder().rfcValue(NameComponentEnum.getEnum(entry.getKey())).build();
             } catch (IllegalArgumentException e) {
-                nct = NameComponentType.builder().extValue(V_Extension.toV_Extension(entry.getKey())).build();
+                nct = NameComponentKind.builder().extValue(V_Extension.toV_Extension(entry.getKey())).build();
             }
             sortAs.put(nct, entry.getValue().asText());
         }

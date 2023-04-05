@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
 import lombok.*;
@@ -41,14 +41,14 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type", "type", "date", "place"})
+@JsonPropertyOrder({"@type", "kind", "date", "place"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Anniversary extends AbstractJSContactType implements HasType, HasLabel, IdMapValue, Serializable {
+public class Anniversary extends AbstractJSContactType implements HasKind, HasLabel, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Anniversary", message = "invalid @type value in Anniversary")
@@ -56,8 +56,9 @@ public class Anniversary extends AbstractJSContactType implements HasType, HasLa
     @Builder.Default
     String _type = "Anniversary";
 
+    @NotNull(message = "kind is missing in Anniversary")
     @JsonDeserialize(using = AnniversaryTypeDeserializer.class)
-    AnniversaryType type;
+    AnniversaryKind kind;
 
     @NotNull(message = "date is missing in Anniversary")
     @NonNull
@@ -78,7 +79,7 @@ public class Anniversary extends AbstractJSContactType implements HasType, HasLa
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isBirth() { return type.isBirth(); }
+    public boolean isBirth() { return kind.isBirth(); }
 
     /**
      * Tests if this anniversary is a date of death. See vCard 4.0 DEATHDATE property as defined in section 6.2.5 of [RFC6474].
@@ -87,7 +88,7 @@ public class Anniversary extends AbstractJSContactType implements HasType, HasLa
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
      */
     @JsonIgnore
-    public boolean isDeath() { return type.isDeath(); }
+    public boolean isDeath() { return kind.isDeath(); }
 
     /**
      * Tests if this anniversary is a date of wedding, or equivalent. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
@@ -96,7 +97,7 @@ public class Anniversary extends AbstractJSContactType implements HasType, HasLa
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isWedding() { return type.isWedding(); }
+    public boolean isWedding() { return kind.isWedding(); }
 
     /**
      * Tests if this is an undefined anniversary specified by the value of the "label" property.
@@ -104,9 +105,9 @@ public class Anniversary extends AbstractJSContactType implements HasType, HasLa
      * @return true if this is an undefined anniversary, false otherwise
      */
     @JsonIgnore
-    public boolean isOtherAnniversary() { return type == null || type.isExtValue(); }
+    public boolean isOtherAnniversary() { return kind.isExtValue(); }
 
-    private static Anniversary anniversary(AnniversaryType type, AnniversaryDate date, String label) {
-        return Anniversary.builder().type(type).date(date).build();
+    private static Anniversary anniversary(AnniversaryKind type, AnniversaryDate date, String label) {
+        return Anniversary.builder().kind(type).date(date).build();
     }
 }

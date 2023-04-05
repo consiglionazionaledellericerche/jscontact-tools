@@ -37,7 +37,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"directories\": {"+
                     "\"ENTRY-1\": {" +
                         "\"@type\":\"DirectoryResource\"," +
-                        "\"type\": \"entry\","+
+                        "\"kind\": \"entry\","+
                         "\"uri\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
                  "}" +
@@ -57,7 +57,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"media\": {"+
                     "\"PHOTO-1\": {" +
                         "\"@type\":\"MediaResource\"," +
-                        "\"type\":\"photo\"," +
+                        "\"kind\":\"photo\"," +
                         "\"mediaType\": \"image/gif\","+
                         "\"uri\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
                     "}" +
@@ -78,7 +78,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"media\": {"+
                     "\"LOGO-1\": {" +
                         "\"@type\":\"MediaResource\"," +
-                        "\"type\": \"logo\","+
+                        "\"kind\": \"logo\","+
                         "\"uri\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
                     "}" +
                 "}" +
@@ -98,7 +98,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"links\": {"+
                     "\"CONTACT-1\": {" +
                         "\"@type\":\"LinkResource\"," +
-                        "\"type\": \"contact\","+
+                        "\"kind\": \"contact\","+
                         "\"uri\": \"mailto:contact@example.com\"" +
                     "}" +
                 "}" +
@@ -118,7 +118,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"media\": {"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"MediaResource\"," +
-                        "\"type\": \"sound\","+
+                        "\"kind\": \"sound\","+
                         "\"mediaType\": \"audio/mp3\"," +
                         "\"uri\": \"sound.mp3\"" +
                     "}" +
@@ -139,7 +139,7 @@ public class ResourceTest extends RoundtripTest {
                 "\"media\":{"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"MediaResource\"," +
-                        "\"type\": \"sound\","+
+                        "\"kind\": \"sound\","+
                         "\"uri\": \"sound.mp3\"" +
                     "}" +
                 "}" +
@@ -197,13 +197,13 @@ public class ResourceTest extends RoundtripTest {
                 "\"calendars\": {"+
                     "\"FREEBUSY-1\": {" +
                         "\"@type\":\"CalendarResource\"," +
-                        "\"type\": \"freeBusy\","+
+                        "\"kind\": \"freeBusy\","+
                         "\"pref\": 1," +
                         "\"uri\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
                     "\"FREEBUSY-2\": {" +
                         "\"@type\":\"CalendarResource\"," +
-                        "\"type\": \"freeBusy\","+
+                        "\"kind\": \"freeBusy\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"uri\": \"ftp://example.com/busy/project-a.ifb\"" +
                     "}" +
@@ -248,13 +248,13 @@ public class ResourceTest extends RoundtripTest {
                 "\"calendars\": {"+
                     "\"CALENDAR-1\": {" +
                         "\"@type\":\"CalendarResource\"," +
-                        "\"type\": \"calendar\","+
+                        "\"kind\": \"calendar\","+
                         "\"pref\": 1," +
                         "\"uri\": \"http://cal.example.com/calA\"" +
                     "}," +
                     "\"CALENDAR-2\": {" +
                         "\"@type\":\"CalendarResource\"," +
-                        "\"type\": \"calendar\","+
+                        "\"kind\": \"calendar\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"uri\": \"ftp://ftp.example.com/calA.ics\"" +
                     "}" +

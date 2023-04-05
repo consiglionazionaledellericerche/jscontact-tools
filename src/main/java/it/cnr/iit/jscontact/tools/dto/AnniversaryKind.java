@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class AnniversaryType extends ExtensibleEnumType<AnniversaryEnum> implements Serializable {
+public class AnniversaryKind extends ExtensibleEnumType<AnniversaryEnum> implements Serializable {
 
     /**
      * Tests if this anniverary type is "birth".
@@ -61,33 +61,33 @@ public class AnniversaryType extends ExtensibleEnumType<AnniversaryEnum> impleme
     @JsonIgnore
     public boolean isWedding() { return isRfc(AnniversaryEnum.WEDDING); }
 
-    private static AnniversaryType rfc(AnniversaryEnum rfcValue) { return AnniversaryType.builder().rfcValue(rfcValue).build(); }
+    private static AnniversaryKind rfc(AnniversaryEnum rfcValue) { return AnniversaryKind.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns a "birth" anniversary type.
      *
      * @return a "birth" anniversary type
      */
-    public static AnniversaryType birth() { return rfc(AnniversaryEnum.BIRTH);}
+    public static AnniversaryKind birth() { return rfc(AnniversaryEnum.BIRTH);}
 
     /**
      * Returns a "death" anniversary type.
      *
      * @return a "death" anniversary type
      */
-    public static AnniversaryType death() { return rfc(AnniversaryEnum.DEATH);}
+    public static AnniversaryKind death() { return rfc(AnniversaryEnum.DEATH);}
 
     /**
      * Returns a "wedding" anniversary type.
      *
      * @return a "wedding" anniversary type
      */
-    public static AnniversaryType wedding() { return rfc(AnniversaryEnum.WEDDING);}
+    public static AnniversaryKind wedding() { return rfc(AnniversaryEnum.WEDDING);}
 
     /**
      * Returns a custom anniverary type.
      *
      * @return a custom anniverary type
      */
-    private static AnniversaryType ext(String extValue) { return AnniversaryType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    private static AnniversaryKind ext(String extValue) { return AnniversaryKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

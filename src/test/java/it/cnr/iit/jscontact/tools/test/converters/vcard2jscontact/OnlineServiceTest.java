@@ -55,7 +55,7 @@ public class OnlineServiceTest extends VCard2JSContactTest {
         assertTrue("testOnlineService2 - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());
         assertEquals("testOnlineService2 - 4", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
         assertEquals("testOnlineService2 - 5", "Twitter", jsCard.getOnlineServices().get("OS-1").getService());
-        assertTrue("testOnlineService2 - 6", jsCard.getOnlineServices().get("OS-1").getType().isUri());
+        assertTrue("testOnlineService2 - 6", jsCard.getOnlineServices().get("OS-1").getKind().isUri());
     }
 
 

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
@@ -89,11 +89,11 @@ public abstract class AbstractExtensibleJSContactType {
     }
     public void buildAllExtensionsMap(Map<String,Object> map, String jsonPointer) {
 
-        if (this instanceof HasType) { //The type property must be considered, if any
-            HasType o = (HasType) this;
-            if (o.getType()!=null && o.getType().isExtValue()) // extended value for a type
+        if (this instanceof HasKind) { //The type property must be considered, if any
+            HasKind o = (HasKind) this;
+            if (o.getKind()!=null && o.getKind().isExtValue()) // extended value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
-            else if (o.getType()==null) // unspecified value for a type
+            else if (o.getKind()==null) // unspecified value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
         } else {
 

@@ -18,16 +18,16 @@ package it.cnr.iit.jscontact.tools.dto.interfaces;
 import it.cnr.iit.jscontact.tools.dto.ExtensibleEnumType;
 
 /**
- * This interface imposes that a class implementing it must include the "type" property and type is extensible.
+ * This interface imposes that a class implementing it must include the "kind" property and type is extensible.
  *
  * @author Mario Loffredo
  */
-public interface HasType {
+public interface HasKind {
 
     /**
-     * Returns the value of the "type" property.
+     * Returns the value of the "kind" property.
      *
-     * @return the value of the "type" property
+     * @return the value of the "Kind" property
      */
-    <T extends ExtensibleEnumType> T getType();
+    <T extends ExtensibleEnumType> T getKind();
 }

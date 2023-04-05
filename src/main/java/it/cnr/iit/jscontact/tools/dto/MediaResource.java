@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.MediaResourceTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -37,14 +37,14 @@ import javax.validation.constraints.Pattern;
  * @author Mario Loffredo
  */
 @ResourceConstraint
-@JsonPropertyOrder({"@type","uri","type","mediaType","contexts","pref","label"})
+@JsonPropertyOrder({"@type","uri","kind","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MediaResource extends Resource implements HasType {
+public class MediaResource extends Resource implements HasKind {
 
     @NotNull
     @Pattern(regexp = "MediaResource", message="invalid @type value in MediaResource")
@@ -53,10 +53,10 @@ public class MediaResource extends Resource implements HasType {
     String _type = "MediaResource";
 
     @JsonDeserialize(using = MediaResourceTypeDeserializer.class)
-    MediaResourceType type;
+    MediaResourceKind kind;
 
     @JsonIgnore
-    private boolean isMediaResource(MediaResourceType type) { return this.type.equals(type); }
+    private boolean isMediaResource(MediaResourceKind type) { return this.kind.equals(type); }
 
     /**
      * Tests if this media resource is a photo.
@@ -64,7 +64,7 @@ public class MediaResource extends Resource implements HasType {
      * @return true if this media resource is a photo, false otherwise
      */
     @JsonIgnore
-    public boolean isPhoto() { return isMediaResource(MediaResourceType.photo()); }
+    public boolean isPhoto() { return isMediaResource(MediaResourceKind.photo()); }
 
     /**
      * Tests if this media resource is a sound.
@@ -72,7 +72,7 @@ public class MediaResource extends Resource implements HasType {
      * @return true if this media resource is a sound, false otherwise
      */
     @JsonIgnore
-    public boolean isSound() { return isMediaResource(MediaResourceType.sound()); }
+    public boolean isSound() { return isMediaResource(MediaResourceKind.sound()); }
 
     /**
      * Tests if this media resource is a logo.
@@ -80,12 +80,12 @@ public class MediaResource extends Resource implements HasType {
      * @return true if this media resource is a logo, false otherwise
      */
     @JsonIgnore
-    public boolean isLogo() { return isMediaResource(MediaResourceType.logo()); }
+    public boolean isLogo() { return isMediaResource(MediaResourceKind.logo()); }
 
-    private static MediaResource resource(MediaResourceType type, String uri) {
+    private static MediaResource resource(MediaResourceKind type, String uri) {
         return MediaResource.builder()
                        .uri(uri)
-                       .type(type)
+                       .kind(type)
                        .build();
     }
 
@@ -95,7 +95,7 @@ public class MediaResource extends Resource implements HasType {
      * @param uri photo uri
      * @return the photo
      */
-    public static MediaResource photo(String uri) { return resource(MediaResourceType.photo(), uri);}
+    public static MediaResource photo(String uri) { return resource(MediaResourceKind.photo(), uri);}
 
     /**
      * Returns a sound
@@ -103,7 +103,7 @@ public class MediaResource extends Resource implements HasType {
      * @param uri sound uri
      * @return the sound
      */
-    public static MediaResource sound(String uri) { return resource(MediaResourceType.sound(), uri);}
+    public static MediaResource sound(String uri) { return resource(MediaResourceKind.sound(), uri);}
 
     /**
      * Returns a logo
@@ -111,6 +111,6 @@ public class MediaResource extends Resource implements HasType {
      * @param uri logo uri
      * @return the logo
      */
-    public static MediaResource logo(String uri) { return resource(MediaResourceType.logo(), uri);}
+    public static MediaResource logo(String uri) { return resource(MediaResourceKind.logo(), uri);}
 
 }

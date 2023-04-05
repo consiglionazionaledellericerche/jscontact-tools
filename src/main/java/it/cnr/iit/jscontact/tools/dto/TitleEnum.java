@@ -22,7 +22,7 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the "type" property values as defined in section 2.2.6 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the "kind" property values as defined in section 2.2.6 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.6">draft-ietf-calext-jscontact</a>

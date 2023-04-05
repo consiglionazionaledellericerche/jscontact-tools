@@ -10,7 +10,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.TitleTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
@@ -30,14 +30,14 @@ import java.util.Map;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.6">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type","name","type","organization"})
+@JsonPropertyOrder({"@type","name","kind","organization"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Title extends AbstractJSContactType implements HasLabel, HasContexts, HasType, IdMapValue, Serializable {
+public class Title extends AbstractJSContactType implements HasLabel, HasContexts, HasKind, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "Title", message="invalid @type value in Title")
@@ -50,7 +50,7 @@ public class Title extends AbstractJSContactType implements HasLabel, HasContext
     String name;
 
     @JsonDeserialize(using = TitleTypeDeserializer.class)
-    TitleType type;
+    TitleKind kind;
 
     String organization;
 

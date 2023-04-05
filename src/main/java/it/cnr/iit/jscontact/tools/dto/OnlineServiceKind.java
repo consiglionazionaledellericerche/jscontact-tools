@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the OnlineService type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the OnlineService type as defined in section 2.3.2 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class OnlineServiceType extends ExtensibleEnumType<OnlineServiceEnum> implements Serializable {
+public class OnlineServiceKind extends ExtensibleEnumType<OnlineServiceEnum> implements Serializable {
 
     /**
      * Tests if this online service type is "impp".
@@ -61,33 +61,33 @@ public class OnlineServiceType extends ExtensibleEnumType<OnlineServiceEnum> imp
     @JsonIgnore
     public boolean isUsername() { return isRfc(OnlineServiceEnum.USERNAME); }
 
-    private static OnlineServiceType rfc(OnlineServiceEnum rfcValue) { return OnlineServiceType.builder().rfcValue(rfcValue).build(); }
+    private static OnlineServiceKind rfc(OnlineServiceEnum rfcValue) { return OnlineServiceKind.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns an "impp" online service type.
      *
      * @return an "impp" online service type
      */
-    public static OnlineServiceType impp() { return rfc(OnlineServiceEnum.IMPP);}
+    public static OnlineServiceKind impp() { return rfc(OnlineServiceEnum.IMPP);}
 
     /**
      * Returns an "uri" online service type.
      *
      * @return an "uri" online service type
      */
-    public static OnlineServiceType uri() { return rfc(OnlineServiceEnum.URI);}
+    public static OnlineServiceKind uri() { return rfc(OnlineServiceEnum.URI);}
 
     /**
      * Returns a "username" online service type.
      *
      * @return a "username" online service type
      */
-    public static OnlineServiceType username() { return rfc(OnlineServiceEnum.USERNAME);}
+    public static OnlineServiceKind username() { return rfc(OnlineServiceEnum.USERNAME);}
 
     /**
      * Returns a custom online service type.
      *
      * @return a custom online service type
      */
-    private static OnlineServiceType ext(String extValue) { return OnlineServiceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    private static OnlineServiceKind ext(String extValue) { return OnlineServiceKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

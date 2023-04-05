@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.DirectoryResourceTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -38,14 +38,14 @@ import javax.validation.constraints.Pattern;
  * @author Mario Loffredo
  */
 @ResourceConstraint
-@JsonPropertyOrder({"@type", "uri", "type", "mediaType", "contexts", "pref", "listAs", "label"})
+@JsonPropertyOrder({"@type", "uri", "kind", "mediaType", "contexts", "pref", "listAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class DirectoryResource extends Resource implements HasType {
+public class DirectoryResource extends Resource implements HasKind {
 
     @NotNull
     @Pattern(regexp = "DirectoryResource", message = "invalid @type value in DirectoryResource")
@@ -54,14 +54,14 @@ public class DirectoryResource extends Resource implements HasType {
     String _type = "DirectoryResource";
 
     @JsonDeserialize(using = DirectoryResourceTypeDeserializer.class)
-    DirectoryResourceType type;
+    DirectoryResourceKind kind;
 
     @Min(value = 1, message = "invalid listAs in DirectoryResource - value must be greater or equal than 1")
     Integer listAs;
 
     @JsonIgnore
-    private boolean isDirectoryResource(DirectoryResourceType type) {
-        return this.type.equals(type);
+    private boolean isDirectoryResource(DirectoryResourceKind type) {
+        return this.kind.equals(type);
     }
 
     /**
@@ -70,7 +70,7 @@ public class DirectoryResource extends Resource implements HasType {
      * @return true if this directory resource is a directory, false otherwise
      */
     @JsonIgnore
-    public boolean isDirectory() { return isDirectoryResource(DirectoryResourceType.directory()); }
+    public boolean isDirectory() { return isDirectoryResource(DirectoryResourceKind.directory()); }
 
     /**
      * Tests if this directory resource is an entry.
@@ -78,12 +78,12 @@ public class DirectoryResource extends Resource implements HasType {
      * @return true if this directory resource is an entry, false otherwise
      */
     @JsonIgnore
-    public boolean isEntry() { return isDirectoryResource(DirectoryResourceType.entry()); }
+    public boolean isEntry() { return isDirectoryResource(DirectoryResourceKind.entry()); }
 
-    private static DirectoryResource resource(DirectoryResourceType type, String uri) {
+    private static DirectoryResource resource(DirectoryResourceKind type, String uri) {
         return DirectoryResource.builder()
                        .uri(uri)
-                       .type(type)
+                       .kind(type)
                        .build();
     }
 
@@ -93,7 +93,7 @@ public class DirectoryResource extends Resource implements HasType {
      * @param uri directory uri
      * @return the directory
      */
-    public static DirectoryResource directory(String uri) { return resource(DirectoryResourceType.directory(), uri);}
+    public static DirectoryResource directory(String uri) { return resource(DirectoryResourceKind.directory(), uri);}
 
     /**
      * Returns an entry
@@ -101,6 +101,6 @@ public class DirectoryResource extends Resource implements HasType {
      * @param uri entry uri
      * @return the entry
      */
-    public static DirectoryResource entry(String uri) { return resource(DirectoryResourceType.entry(), uri);}
+    public static DirectoryResource entry(String uri) { return resource(DirectoryResourceKind.entry(), uri);}
 
 }

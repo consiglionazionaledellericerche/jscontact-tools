@@ -151,14 +151,14 @@ public class TitlesTest extends JSContact2VCardTest {
                     "}," +
                     "\"TITLE-2\" : {" +
                         "\"@type\":\"Title\"," +
-                        "\"type\":\"role\"," +
+                        "\"kind\":\"role\"," +
                         "\"name\": \"IETF Area Director\"" +
                     "}" +
                 "}," +
                 "\"localizations\" : {" +
                     "\"it\" : { " +
                         "\"titles/TITLE-1\": { \"@type\":\"Title\",\"name\": \"Ricercatore\" }, " +
-                        "\"titles/TITLE-2\": { \"@type\":\"Title\",\"type\":\"role\",\"name\": \"Direttore Area IETF\" } " +
+                        "\"titles/TITLE-2\": { \"@type\":\"Title\",\"kind\":\"role\",\"name\": \"Direttore Area IETF\" } " +
                     "}" +
                 "}" +
                 "}";

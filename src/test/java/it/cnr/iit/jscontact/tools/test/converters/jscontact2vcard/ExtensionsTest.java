@@ -68,7 +68,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"@type\":\"StreetComponent\",\"type\":\"name\", \"value\":\"54321 Oak St\", \"ext4\": 5}]," +
+                        "\"street\":[{\"@type\":\"StreetComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\", \"ext4\": 5}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -133,7 +133,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                 "{" +
                     "\"@type\":\"Anniversary\"," +
-                    "\"type\":\"example.com:engagement\", " +
+                    "\"kind\":\"example.com:engagement\", " +
                         "\"date\":{" +
                             "\"@type\":\"Timestamp\"," +
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
@@ -146,7 +146,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         assertEquals("testExtendedJSContact4 - 3", "JSCONTACT-PROP", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testExtendedJSContact4 - 4", "anniversaries/ANNIVERSARY-1", vcard.getExtendedProperties().get(0).getParameter("JSPTR"));
         assertEquals("testExtendedJSContact4 - 5", VCardDataType.TEXT, vcard.getExtendedProperties().get(0).getDataType());
-        assertEquals("testExtendedJSContact4 - 6", "{\"@type\":\"Anniversary\",\"type\":\"example.com:engagement\",\"date\":{\"@type\":\"Timestamp\",\"utc\":\"1953-10-15T23:10:00Z\"}}", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testExtendedJSContact4 - 6", "{\"@type\":\"Anniversary\",\"kind\":\"example.com:engagement\",\"date\":{\"@type\":\"Timestamp\",\"utc\":\"1953-10-15T23:10:00Z\"}}", vcard.getExtendedProperties().get(0).getValue());
     }
 
 
@@ -159,9 +159,9 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"given\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"extvalue\", \"type\": \"example.com:exttype\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"extvalue\", \"kind\": \"example.com:exttype\" }" +
                     "] " +
                 "}" +
                 "}";
@@ -174,7 +174,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         assertEquals("testExtendedJSContact5 - 6", "JSCONTACT-PROP", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testExtendedJSContact5 - 7", "name/components/2", vcard.getExtendedProperties().get(0).getParameter("JSPTR"));
         assertEquals("testExtendedJSContact5 - 8", VCardDataType.TEXT, vcard.getExtendedProperties().get(0).getDataType());
-        assertEquals("testExtendedJSContact5 - 9", "{\"@type\":\"NameComponent\",\"value\":\"extvalue\",\"type\":\"example.com:exttype\"}", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testExtendedJSContact5 - 9", "{\"@type\":\"NameComponent\",\"value\":\"extvalue\",\"kind\":\"example.com:exttype\"}", vcard.getExtendedProperties().get(0).getValue());
     }
 
 

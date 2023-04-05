@@ -70,15 +70,15 @@ public class FullNameTest extends RoundtripTest {
                 "\"locale\": \"jp\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"value\":\"正仁\", \"type\": \"given\" }," +
-                        "{ \"value\":\"大久保\", \"type\": \"surname\" }" +
+                        "{ \"value\":\"正仁\", \"kind\": \"given\" }," +
+                        "{ \"value\":\"大久保\", \"kind\": \"surname\" }" +
                     "] " +
                 "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
                         "\"name/components\":[ " +
-                        "{ \"value\":\"Masahito\", \"type\": \"given\" }," +
-                        "{ \"value\":\"Okubo\", \"type\": \"surname\" }" +
+                        "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
+                        "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
                         "]" +
                     "}" +
                 "}" +

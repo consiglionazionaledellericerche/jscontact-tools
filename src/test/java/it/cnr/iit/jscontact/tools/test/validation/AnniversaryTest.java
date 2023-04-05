@@ -42,7 +42,7 @@ public class AnniversaryTest {
 
         // date missing
         Anniversary.builder()
-                .type(AnniversaryType.birth())
+                .kind(AnniversaryKind.birth())
                 .build();
     }
 

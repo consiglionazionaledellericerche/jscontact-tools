@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "type" property of the DirectoryResource type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the DirectoryResource type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class DirectoryResourceType extends ExtensibleEnumType<DirectoryResourceEnum> implements Serializable {
+public class DirectoryResourceKind extends ExtensibleEnumType<DirectoryResourceEnum> implements Serializable {
 
     /**
      * Tests if this directory resource type is "directory".
@@ -54,21 +54,21 @@ public class DirectoryResourceType extends ExtensibleEnumType<DirectoryResourceE
     public boolean isEntry() { return isRfc(DirectoryResourceEnum.ENTRY); }
 
 
-    private static DirectoryResourceType rfc(DirectoryResourceEnum rfcValue) { return DirectoryResourceType.builder().rfcValue(rfcValue).build(); }
+    private static DirectoryResourceKind rfc(DirectoryResourceEnum rfcValue) { return DirectoryResourceKind.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns a "directory" directory resource type.
      *
      * @return a "directory" directory resource type
      */
-    public static DirectoryResourceType directory() { return rfc(DirectoryResourceEnum.DIRECTORY);}
+    public static DirectoryResourceKind directory() { return rfc(DirectoryResourceEnum.DIRECTORY);}
 
     /**
      * Returns an "entry" directory resource type.
      *
      * @return an "entry" directory resource type
      */
-    public static DirectoryResourceType entry() { return rfc(DirectoryResourceEnum.ENTRY);}
+    public static DirectoryResourceKind entry() { return rfc(DirectoryResourceEnum.ENTRY);}
 
     /**
      * Returns a custom directory resource type.
@@ -76,5 +76,5 @@ public class DirectoryResourceType extends ExtensibleEnumType<DirectoryResourceE
      * @param extValue a custom directory source type in text format
      * @return a custom directory resource type
      */
-    public static DirectoryResourceType ext(String extValue) { return DirectoryResourceType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    public static DirectoryResourceKind ext(String extValue) { return DirectoryResourceKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

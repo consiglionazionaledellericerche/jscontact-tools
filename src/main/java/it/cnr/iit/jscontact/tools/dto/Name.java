@@ -64,7 +64,7 @@ public class Name extends AbstractJSContactType implements HasLabel, Serializabl
 
     @JsonSerialize(using = NameSortAsSerializer.class)
     @JsonDeserialize(using = NameSortAsDeserializer.class)
-    Map<NameComponentType, String> sortAs;
+    Map<NameComponentKind, String> sortAs;
 
     String label;
 

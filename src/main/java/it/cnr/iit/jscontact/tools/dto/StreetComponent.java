@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.StreetComponentTypeDeserializer;
 
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -34,13 +34,13 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","type","value"})
+@JsonPropertyOrder({"@type","kind","value"})
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class StreetComponent extends AbstractJSContactType implements HasType, Serializable {
+public class StreetComponent extends AbstractJSContactType implements HasKind, Serializable {
 
     @NotNull
     @Pattern(regexp = "StreetComponent", message="invalid @type value in StreetComponent")
@@ -48,16 +48,16 @@ public class StreetComponent extends AbstractJSContactType implements HasType, S
     @Builder.Default
     String _type = "StreetComponent";
 
-    @NotNull(message = "type is missing in StreetComponent")
+    @NotNull(message = "kind is missing in StreetComponent")
     @NonNull
     @JsonDeserialize(using = StreetComponentTypeDeserializer.class)
-    StreetComponentType type;
+    StreetComponentKind kind;
 
     @NotNull(message = "value is missing in StreetComponent")
     @NonNull
     String value;
 
-    private boolean isRfc(StreetComponentEnum value) { return (type.getRfcValue()!= null && type.getRfcValue() == value);}
+    private boolean isRfc(StreetComponentEnum value) { return (kind.getRfcValue()!= null && kind.getRfcValue() == value);}
 
     /**
      * Tests if this is the street name.
@@ -153,12 +153,12 @@ public class StreetComponent extends AbstractJSContactType implements HasType, S
      * @return true if this is a custom street component, false otherwise
      */
     @JsonIgnore
-    public boolean isExt() { return type.isExtValue(); }
+    public boolean isExt() { return kind.isExtValue(); }
 
     private static StreetComponent rfc(StreetComponentEnum rfcValue, String value) {
         return StreetComponent.builder()
                 .value(value)
-                .type(StreetComponentType.builder().rfcValue(rfcValue).build())
+                .kind(StreetComponentKind.builder().rfcValue(rfcValue).build())
                 .build();
     }
 
@@ -249,7 +249,7 @@ public class StreetComponent extends AbstractJSContactType implements HasType, S
     public static StreetComponent ext(String extValue, String value) {
         return StreetComponent.builder()
                 .value(value)
-                .type(StreetComponentType.builder().extValue(V_Extension.toV_Extension(extValue)).build())
+                .kind(StreetComponentKind.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
     }
 

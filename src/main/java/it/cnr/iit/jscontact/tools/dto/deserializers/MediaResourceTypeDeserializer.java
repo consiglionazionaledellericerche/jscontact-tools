@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.MediaResourceEnum;
-import it.cnr.iit.jscontact.tools.dto.MediaResourceType;
+import it.cnr.iit.jscontact.tools.dto.MediaResourceKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
@@ -32,17 +32,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class MediaResourceTypeDeserializer extends JsonDeserializer<MediaResourceType> {
+public class MediaResourceTypeDeserializer extends JsonDeserializer<MediaResourceKind> {
 
     @Override
-    public MediaResourceType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public MediaResourceKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return MediaResourceType.builder().rfcValue(MediaResourceEnum.getEnum(value)).build();
+            return MediaResourceKind.builder().rfcValue(MediaResourceEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return MediaResourceType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return MediaResourceKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -36,14 +36,14 @@ import java.io.Serializable;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type", "value", "type", "rank"})
+@JsonPropertyOrder({"@type", "value", "kind", "rank"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class NameComponent extends AbstractJSContactType implements HasType, Serializable {
+public class NameComponent extends AbstractJSContactType implements HasKind, Serializable {
 
     @NotNull
     @Pattern(regexp = "NameComponent", message = "invalid @type value in NameComponent")
@@ -55,16 +55,16 @@ public class NameComponent extends AbstractJSContactType implements HasType, Ser
     @NonNull
     String value;
 
-    @NotNull(message = "type is missing in NameComponent")
+    @NotNull(message = "kind is missing in NameComponent")
     @NonNull
     @JsonDeserialize(using = NameComponentTypeDeserializer.class)
-    NameComponentType type;
+    NameComponentKind kind;
 
     @Min(value = 1, message = "invalid rank in NameComponent - value must be greater or equal than 1")
     Integer rank;
 
     private boolean isRfc(NameComponentEnum value) {
-        return (type.getRfcValue() != null && type.getRfcValue() == value);
+        return (kind.getRfcValue() != null && kind.getRfcValue() == value);
     }
 
     /**
@@ -115,12 +115,12 @@ public class NameComponent extends AbstractJSContactType implements HasType, Ser
      * @return true if this is a custom name component, false otherwise
      */
     @JsonIgnore
-    public boolean isExt() { return type.isExtValue(); }
+    public boolean isExt() { return kind.isExtValue(); }
 
     private static NameComponent rfc(NameComponentEnum rfcValue, String value, Integer rank) {
         return NameComponent.builder()
                 .value(value)
-                .type(NameComponentType.builder().rfcValue(rfcValue).build())
+                .kind(NameComponentKind.builder().rfcValue(rfcValue).build())
                 .rank(rank)
                 .build();
     }
@@ -217,7 +217,7 @@ public class NameComponent extends AbstractJSContactType implements HasType, Ser
     public static NameComponent ext(String extValue, String value, Integer rank) {
         return NameComponent.builder()
                 .value(value)
-                .type(NameComponentType.builder().extValue(V_Extension.toV_Extension(extValue)).build())
+                .kind(NameComponentKind.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .rank(rank)
                 .build();
     }

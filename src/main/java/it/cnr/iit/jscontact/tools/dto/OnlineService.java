@@ -45,7 +45,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @OnlineServiceConstraint
-@JsonPropertyOrder({"@type", "service", "user", "type", "contexts", "pref", "label"})
+@JsonPropertyOrder({"@type", "service", "user", "kind", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -67,9 +67,9 @@ public class OnlineService extends AbstractJSContactType implements HasLabel, Id
     String user;
 
     @NonNull
-    @NotNull(message = "type is missing in OnlineService")
+    @NotNull(message = "kind is missing in OnlineService")
     @JsonDeserialize(using = OnlineServiceTypeDeserializer.class)
-    OnlineServiceType type;
+    OnlineServiceKind kind;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)

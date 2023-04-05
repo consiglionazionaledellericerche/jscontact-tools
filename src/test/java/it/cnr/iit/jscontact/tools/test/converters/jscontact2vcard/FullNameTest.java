@@ -59,11 +59,11 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"type\": \"prefix\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"type\": \"given\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"type\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"type\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"type\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
                     "] " +
                 "} " +
                 "}";
@@ -117,15 +117,15 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"locale\": \"jp\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"value\":\"正仁\", \"type\": \"given\" }," +
-                        "{ \"value\":\"大久保\", \"type\": \"surname\" }" +
+                        "{ \"value\":\"正仁\", \"kind\": \"given\" }," +
+                        "{ \"value\":\"大久保\", \"kind\": \"surname\" }" +
                     "] " +
                 "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
                         "\"name/components\":[ " +
-                        "{ \"value\":\"Masahito\", \"type\": \"given\" }," +
-                        "{ \"value\":\"Okubo\", \"type\": \"surname\" }" +
+                        "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
+                        "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
                         "]" +
                     "}" +
                 "}" +

@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.PersonalInfo;
-import it.cnr.iit.jscontact.tools.dto.PersonalInfoType;
+import it.cnr.iit.jscontact.tools.dto.PersonalInfoKind;
 import org.junit.Test;
 
 public class PersonalInfoTest {
@@ -35,7 +35,7 @@ public class PersonalInfoTest {
 
         // value missing
         PersonalInfo.builder()
-                .type(PersonalInfoType.hobby())
+                .kind(PersonalInfoKind.hobby())
                 .build();
     }
 

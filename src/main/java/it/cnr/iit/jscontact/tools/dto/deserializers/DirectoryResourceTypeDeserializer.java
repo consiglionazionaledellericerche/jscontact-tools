@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.DirectoryResourceEnum;
-import it.cnr.iit.jscontact.tools.dto.DirectoryResourceType;
+import it.cnr.iit.jscontact.tools.dto.DirectoryResourceKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
@@ -32,17 +32,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class DirectoryResourceTypeDeserializer extends JsonDeserializer<DirectoryResourceType> {
+public class DirectoryResourceTypeDeserializer extends JsonDeserializer<DirectoryResourceKind> {
 
     @Override
-    public DirectoryResourceType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public DirectoryResourceKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return DirectoryResourceType.builder().rfcValue(DirectoryResourceEnum.getEnum(value)).build();
+            return DirectoryResourceKind.builder().rfcValue(DirectoryResourceEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return DirectoryResourceType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return DirectoryResourceKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

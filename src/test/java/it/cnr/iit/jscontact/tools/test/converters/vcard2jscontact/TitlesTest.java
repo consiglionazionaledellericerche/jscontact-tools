@@ -37,10 +37,10 @@ public class TitlesTest extends VCard2JSContactTest {
         assertNotNull("testTitleWithAltid1 - 1", jsCard.getTitles());
         assertEquals("testTitleWithAltid1 - 2", 1, jsCard.getTitles().size());
         assertEquals("testTitleWithAltid1 - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
-        assertTrue("testTitleWithAltid1 - 4", jsCard.getTitles().get("TITLE-1").getType().isTitle());
+        assertTrue("testTitleWithAltid1 - 4", jsCard.getTitles().get("TITLE-1").getKind().isTitle());
         assertEquals("testTitleWithAltid1 - 5", 1, jsCard.getLocalizationsPerLanguage("it").size());
         assertEquals("testTitleWithAltid1 - 6", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
-        assertEquals("testTitleWithAltid1 - 7", "title", jsCard.getLocalization("it", "titles/TITLE-1").get("type").asText());
+        assertEquals("testTitleWithAltid1 - 7", "title", jsCard.getLocalization("it", "titles/TITLE-1").get("kind").asText());
     }
 
     @Test

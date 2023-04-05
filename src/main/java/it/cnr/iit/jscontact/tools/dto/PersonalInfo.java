@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoLevelTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasType;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -38,14 +38,14 @@ import java.io.Serializable;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.3">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type", "type", "value", "level", "listAs", "label"})
+@JsonPropertyOrder({"@type", "kind", "value", "level", "listAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasType, IdMapValue, Serializable {
+public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasKind, IdMapValue, Serializable {
 
     @NotNull
     @Pattern(regexp = "PersonalInfo", message = "invalid @type value in PersonalInfo")
@@ -54,7 +54,7 @@ public class PersonalInfo extends AbstractJSContactType implements HasLabel, Has
     String _type = "PersonalInfo";
 
     @JsonDeserialize(using = PersonalInfoTypeDeserializer.class)
-    PersonalInfoType type;
+    PersonalInfoKind kind;
 
     @NotNull(message = "value is missing in PersonalInfo")
     @NonNull
@@ -74,7 +74,7 @@ public class PersonalInfo extends AbstractJSContactType implements HasLabel, Has
      * @return true if this personal information is a hobby, false otherwise
      */
     public boolean asHobby() {
-        return type.isHobby();
+        return kind.isHobby();
     }
 
     /**
@@ -82,19 +82,19 @@ public class PersonalInfo extends AbstractJSContactType implements HasLabel, Has
      *
      * @return true if this personal information is an interest, false otherwise
      */
-    public boolean asInterest() { return type.isInterest(); }
+    public boolean asInterest() { return kind.isInterest(); }
     /**
      * Tests if this personal information is an expertise.
      *
      * @return true if this personal information is an expertise, false otherwise
      */
-    public boolean asExpertise() { return type.isExpertise(); }
+    public boolean asExpertise() { return kind.isExpertise(); }
     /**
      * Tests if this personal information is other than the known types.
      *
      * @return true if this personal information is other than the known types, false otherwise
      */
-    public boolean asOtherPersonalInfo() { return type == null; }
+    public boolean asOtherPersonalInfo() { return kind == null; }
     /**
      * Tests if the level of this personal information is high.
      *

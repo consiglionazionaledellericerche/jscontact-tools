@@ -43,7 +43,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @ResourceConstraint
-@JsonPropertyOrder({"@type","uri","type","mediaType","contexts","pref","label"})
+@JsonPropertyOrder({"@type","uri","kind","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data

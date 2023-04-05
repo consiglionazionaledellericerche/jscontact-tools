@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.AnniversaryEnum;
-import it.cnr.iit.jscontact.tools.dto.AnniversaryType;
+import it.cnr.iit.jscontact.tools.dto.AnniversaryKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
@@ -32,17 +32,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class AnniversaryTypeDeserializer extends JsonDeserializer<AnniversaryType> {
+public class AnniversaryTypeDeserializer extends JsonDeserializer<AnniversaryKind> {
 
     @Override
-    public AnniversaryType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public AnniversaryKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return AnniversaryType.builder().rfcValue(AnniversaryEnum.getEnum(value)).build();
+            return AnniversaryKind.builder().rfcValue(AnniversaryEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return AnniversaryType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return AnniversaryKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

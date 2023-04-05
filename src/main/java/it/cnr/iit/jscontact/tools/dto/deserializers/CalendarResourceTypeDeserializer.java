@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.cnr.iit.jscontact.tools.dto.CalendarResourceEnum;
-import it.cnr.iit.jscontact.tools.dto.CalendarResourceType;
+import it.cnr.iit.jscontact.tools.dto.CalendarResourceKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
@@ -32,17 +32,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class CalendarResourceTypeDeserializer extends JsonDeserializer<CalendarResourceType> {
+public class CalendarResourceTypeDeserializer extends JsonDeserializer<CalendarResourceKind> {
 
     @Override
-    public CalendarResourceType deserialize(JsonParser jp, DeserializationContext ctxt)
+    public CalendarResourceKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return CalendarResourceType.builder().rfcValue(CalendarResourceEnum.getEnum(value)).build();
+            return CalendarResourceKind.builder().rfcValue(CalendarResourceEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return CalendarResourceType.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return CalendarResourceKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

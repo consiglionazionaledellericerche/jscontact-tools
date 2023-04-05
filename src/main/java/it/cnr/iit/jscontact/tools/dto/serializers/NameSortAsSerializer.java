@@ -18,7 +18,7 @@ package it.cnr.iit.jscontact.tools.dto.serializers;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import it.cnr.iit.jscontact.tools.dto.NameComponentType;
+import it.cnr.iit.jscontact.tools.dto.NameComponentKind;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
@@ -30,15 +30,15 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class NameSortAsSerializer extends JsonSerializer<Map<NameComponentType, String>> {
+public class NameSortAsSerializer extends JsonSerializer<Map<NameComponentKind, String>> {
 
     @Override
     public void serialize(
-            Map<NameComponentType, String> sortAs, JsonGenerator jgen, SerializerProvider provider)
+            Map<NameComponentKind, String> sortAs, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
         jgen.writeStartObject();
-        for (Map.Entry<NameComponentType, String> entry : sortAs.entrySet())
+        for (Map.Entry<NameComponentKind, String> entry : sortAs.entrySet())
             jgen.writeStringField(entry.getKey().toJson(), entry.getValue());
         jgen.writeEndObject();
 
