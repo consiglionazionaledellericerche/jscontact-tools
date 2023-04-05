@@ -617,9 +617,9 @@ This jscontact-tools version is compliant with JSContact specification version -
 
 Version 0.14.0 implements the following draft versions:
 
-* draft-ietf-calext-jscontact-08
+* draft-ietf-calext-jscontact-09
 * draft-ietf-calext-jscontact-vcard-07
-* draft-ietf-calext-vcard-jscontact-extensions-04
+* draft-ietf-calext-vcard-jscontact-extensions-05
 
 # Build Instructions
 
