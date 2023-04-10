@@ -48,22 +48,22 @@ public class SpeakToAs extends AbstractJSContactType implements Serializable {
     private boolean isRfc(GrammaticalGenderType type) { return grammaticalGender != null && grammaticalGender == type; }
 
     /**
-     * Tests if the grammatical gender is male. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
+     * Tests if the grammatical gender is masculine. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
-     * @return true if the grammatical gender is male, false otherwise
+     * @return true if the grammatical gender is masculine, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isMale() { return isRfc(GrammaticalGenderType.MALE); }
+    public boolean isMasculine() { return isRfc(GrammaticalGenderType.MASCULINE); }
 
     /**
-     * Tests if the grammatical gender is female. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
+     * Tests if the grammatical gender is feminine. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
-     * @return true if the grammatical gender is female, false otherwise
+     * @return true if the grammatical gender is feminine, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isFemale() { return isRfc(GrammaticalGenderType.FEMALE); }
+    public boolean isFeminine() { return isRfc(GrammaticalGenderType.FEMININE); }
 
     /**
      * Tests if the grammatical gender is animate. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
@@ -84,34 +84,34 @@ public class SpeakToAs extends AbstractJSContactType implements Serializable {
     public boolean isInanimate() { return isRfc(GrammaticalGenderType.INANIMATE); }
 
     /**
-     * Tests if the grammatical gender is neuter. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
+     * Tests if the grammatical gender is common. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
-     * @return true if the grammatical gender is neuter, false otherwise
+     * @return true if the grammatical gender is common, false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
      */
     @JsonIgnore
-    public boolean isNeuter() { return isRfc(GrammaticalGenderType.NEUTER); }
+    public boolean isCommon() { return isRfc(GrammaticalGenderType.COMMON); }
 
     private static SpeakToAs gender(GrammaticalGenderType type) { return SpeakToAs.builder().grammaticalGender(type).build(); }
 
     /**
-     * Returns a "male" gender.
+     * Returns a "masculine" gender.
      *
-     * @return a "mail" gender
+     * @return a "masculine" gender
      */
-    public static SpeakToAs male() { return gender(GrammaticalGenderType.MALE);}
+    public static SpeakToAs masculine() { return gender(GrammaticalGenderType.MASCULINE);}
     /**
-     * Returns a "female" gender.
+     * Returns a "feminine" gender.
      *
-     * @return a "female" gender
+     * @return a "feminine" gender
      */
-    public static SpeakToAs female() { return gender(GrammaticalGenderType.FEMALE);}
+    public static SpeakToAs feminine() { return gender(GrammaticalGenderType.FEMININE);}
     /**
-     * Returns a "neuter" gender.
+     * Returns a "common" gender.
      *
-     * @return a "neuter" gender
+     * @return a "common" gender
      */
-    public static SpeakToAs neuter() { return gender(GrammaticalGenderType.NEUTER);}
+    public static SpeakToAs common() { return gender(GrammaticalGenderType.COMMON);}
     /**
      * Returns a "animate" gender.
      *

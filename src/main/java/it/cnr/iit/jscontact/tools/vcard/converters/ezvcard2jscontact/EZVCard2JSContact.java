@@ -493,13 +493,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (vCard.getGender() != null) {
             if (vCard.getGender().isMale())
-                jsCard.setSpeakToAs(SpeakToAs.male());
+                jsCard.setSpeakToAs(SpeakToAs.masculine());
             else if (vCard.getGender().isFemale())
-                jsCard.setSpeakToAs(SpeakToAs.female());
+                jsCard.setSpeakToAs(SpeakToAs.feminine());
             else if (vCard.getGender().isOther())
                 jsCard.setSpeakToAs(SpeakToAs.animate());
             else if (vCard.getGender().isNone())
-                jsCard.setSpeakToAs(SpeakToAs.neuter());
+                jsCard.setSpeakToAs(SpeakToAs.common());
         } else {
             jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(GrammaticalGenderType.getEnum(vCard.getExtendedProperty(VCardPropEnum.GRAMMATICAL_GENDER.getValue()).getValue().toLowerCase())).build());
         }

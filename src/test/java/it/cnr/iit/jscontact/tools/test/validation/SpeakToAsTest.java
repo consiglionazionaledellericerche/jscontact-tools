@@ -35,7 +35,7 @@ public class SpeakToAsTest extends AbstractTest {
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .speakToAs(SpeakToAs.builder()
-                                    .grammaticalGender(GrammaticalGenderType.MALE)
+                                    .grammaticalGender(GrammaticalGenderType.MASCULINE)
                                     .build())
                 .build();
 
@@ -70,7 +70,7 @@ public class SpeakToAsTest extends AbstractTest {
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .speakToAs(SpeakToAs.builder()
-                                    .grammaticalGender(GrammaticalGenderType.MALE)
+                                    .grammaticalGender(GrammaticalGenderType.MASCULINE)
                                     .pronouns(pronouns)
                                     .build())
                 .build();

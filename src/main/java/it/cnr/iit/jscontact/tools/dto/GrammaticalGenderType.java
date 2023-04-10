@@ -28,11 +28,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum GrammaticalGenderType {
 
-    MALE("male"),
-    FEMALE("female"),
+    MASCULINE("masculine"),
+    FEMININE("feminine"),
     ANIMATE("animate"),
     INANIMATE("inanimate"),
-    NEUTER("neuter");
+    COMMON("common");
 
     private final String value;
 
