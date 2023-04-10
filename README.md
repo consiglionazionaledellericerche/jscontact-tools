@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.14.0</version>
+		  <version>0.14.1</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.14.0'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.14.1'
 ```
 
 # Features
@@ -246,10 +246,10 @@ The conversion is executed according to the following rules:
    if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
 
    GENDER SpeakToAs.grammaticalGender    
-   M male
-   F female
+   M masculine
+   F feminine
    O animate
-   N neuter
+   N common
    U SpeakToAs = null
 
 9. Where a language is required to represent a localization and the language is not specified, `en` is used by default
@@ -615,7 +615,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.14.0 implements the following draft versions:
+Version 0.14.1 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-09
 * draft-ietf-calext-jscontact-vcard-07

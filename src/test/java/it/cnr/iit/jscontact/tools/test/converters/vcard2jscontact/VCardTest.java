@@ -212,7 +212,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard4 - 14", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("0000-02-03"));
         assertTrue("testCompleteVCard4 - 15", jsCard.getAnniversaries().get("ANNIVERSARY-2").isWedding());
         assertTrue("testCompleteVCard4 - 17", jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("2009-08-08T14:30:00-05:00"));
-        assertTrue("testCompleteVCard4 - 18", jsCard.getSpeakToAs().isMale());
+        assertTrue("testCompleteVCard4 - 18", jsCard.getSpeakToAs().isMasculine());
 
         assertEquals("testCompleteVCard4 - 19", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testCompleteVCard4 - 20", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
@@ -392,7 +392,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 82", 1, jsCard.getAnniversaries().size());
         assertTrue("testCompleteVCard6 - 83", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("2016-08-01"));
         assertTrue("testCompleteVCard6 - 84", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
-        assertTrue("testCompleteVCard6 - 85", jsCard.getSpeakToAs().isMale());
+        assertTrue("testCompleteVCard6 - 85", jsCard.getSpeakToAs().isMasculine());
 
 
         assertEquals("testCompleteVCard6 - 86", 3, jsCard.getMedia().size());
