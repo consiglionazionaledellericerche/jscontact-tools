@@ -91,6 +91,14 @@ public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implement
     public boolean isTextphone() { return isRfc(PhoneFeatureEnum.TEXTPHONE); }
 
     /**
+     * Tests if this is a "main-number" phone feature.
+     *
+     * @return true if this is a "main-number" phone feature, false otherwise
+     */
+    @JsonIgnore
+    public boolean isMainNumber() { return isRfc(PhoneFeatureEnum.MAIN_NUMBER); }
+
+    /**
      * Returns a phone feature whose enum value is pre-defined.
      *
      * @param rfcValue the pre-defined feature
@@ -139,6 +147,12 @@ public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implement
      * @return a "textphone" phone feature
      */
     public static PhoneFeature textphone() { return rfc(PhoneFeatureEnum.TEXTPHONE);}
+    /**
+     * Returns a "main-number" phone feature.
+     *
+     * @return a "main-number" phone feature
+     */
+    public static PhoneFeature mainNumber() { return rfc(PhoneFeatureEnum.MAIN_NUMBER);}
     /**
      * Returns a custom phone feature.
      *

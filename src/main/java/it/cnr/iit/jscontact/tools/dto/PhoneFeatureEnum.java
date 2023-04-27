@@ -41,7 +41,9 @@ public enum PhoneFeatureEnum implements IsExtensibleEnum,VCardTypeDerivedEnum {
     TEXT("text"),
     CELL("cell"),
     VIDEO("video"),
-    TEXTPHONE("textphone");
+    TEXTPHONE("textphone"),
+
+    MAIN_NUMBER("main-number");
 
     private final String value;
 
