@@ -138,6 +138,13 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      */
     @JsonIgnore
     public boolean isSeparator() { return isRfc(StreetComponentEnum.SEPARATOR); }
+    /**
+     * Tests if this is the default separator for street components used to build the full address.
+     *
+     * @return true if this is the default separator, false otherwise
+     */
+    @JsonIgnore
+    public boolean isDefaultSeparator() { return isRfc(StreetComponentEnum.DEFAULT_SEPARATOR); }
 
     /**
      * Tests if this is a street component whose type is unknown.
@@ -232,6 +239,13 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return the separator component
      */
     public static StreetComponent separator(String value) { return rfc(StreetComponentEnum.SEPARATOR, value);}
+    /**
+     * Returns a separator component of a street address.
+     *
+     * @param value the default separator
+     * @return the separator default component
+     */
+    public static StreetComponent defaultSeparator(String value) { return rfc(StreetComponentEnum.DEFAULT_SEPARATOR, value);}
     /**
      * Returns an unknown component of a street address.
      *

@@ -35,7 +35,8 @@ public enum NameComponentEnum implements IsExtensibleEnum {
     MIDDLE("middle"),
     PREFIX("prefix"),
     SUFFIX("suffix"),
-    SEPARATOR("separator");
+    SEPARATOR("separator"),
+    DEFAULT_SEPARATOR("defaultSeparator");
 
     private final String value;
 

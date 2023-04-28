@@ -40,6 +40,7 @@ public enum StreetComponentEnum implements IsExtensibleEnum {
     EXTENSION("extension"),
     POST_OFFICE_BOX("postOfficeBox"),
     SEPARATOR("separator"),
+    DEFAULT_SEPARATOR("defaultSeparator"),
     UNKNOWN("unknown");
 
     private final String value;

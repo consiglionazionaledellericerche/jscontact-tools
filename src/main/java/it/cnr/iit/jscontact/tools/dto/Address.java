@@ -188,8 +188,8 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
      */
     @JsonIgnore
     public String getStreetDetails() {
-        String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
-        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : DelimiterUtils.SPACE_DELIMITER);
+        String defaultSeparator = getStreetDetail(StreetComponentEnum.DEFAULT_SEPARATOR);
+        StringJoiner joiner = new StringJoiner( (defaultSeparator != null) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER);
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.NAME))) joiner.add(getStreetDetail(StreetComponentEnum.NAME));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.NUMBER))) joiner.add(getStreetDetail(StreetComponentEnum.NUMBER));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.DIRECTION))) joiner.add(getStreetDetail(StreetComponentEnum.DIRECTION));
@@ -204,8 +204,8 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
      */
     @JsonIgnore
     public String getStreetExtensions() {
-        String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
-        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : DelimiterUtils.SPACE_DELIMITER);
+        String defaultSeparator = getStreetDetail(StreetComponentEnum.DEFAULT_SEPARATOR);
+        StringJoiner joiner = new StringJoiner( (defaultSeparator != null) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER);
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.BUILDING))) joiner.add("Building: " + getStreetDetail(StreetComponentEnum.BUILDING));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.FLOOR))) joiner.add("Floor: " + getStreetDetail(StreetComponentEnum.FLOOR));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.APARTMENT))) joiner.add("Apartment: " + getStreetDetail(StreetComponentEnum.APARTMENT));
