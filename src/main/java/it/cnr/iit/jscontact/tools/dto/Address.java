@@ -206,10 +206,10 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
     public String getStreetExtensions() {
         String defaultSeparator = getStreetDetail(StreetComponentEnum.DEFAULT_SEPARATOR);
         StringJoiner joiner = new StringJoiner( (defaultSeparator != null) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER);
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.BUILDING))) joiner.add("Building: " + getStreetDetail(StreetComponentEnum.BUILDING));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.FLOOR))) joiner.add("Floor: " + getStreetDetail(StreetComponentEnum.FLOOR));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.APARTMENT))) joiner.add("Apartment: " + getStreetDetail(StreetComponentEnum.APARTMENT));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.ROOM))) joiner.add("Room: " + getStreetDetail(StreetComponentEnum.ROOM));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.BUILDING))) joiner.add("BLD " + getStreetDetail(StreetComponentEnum.BUILDING));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.FLOOR))) joiner.add("FL " + getStreetDetail(StreetComponentEnum.FLOOR));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.APARTMENT))) joiner.add("APT " + getStreetDetail(StreetComponentEnum.APARTMENT));
+        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.ROOM))) joiner.add("RM " + getStreetDetail(StreetComponentEnum.ROOM));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.EXTENSION))) joiner.add(getStreetDetail(StreetComponentEnum.EXTENSION));
         if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.UNKNOWN))) joiner.add(getStreetDetail(StreetComponentEnum.EXTENSION));
         String streetExtensions = joiner.toString();

@@ -310,8 +310,8 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses8 - 5", "Reston", vcard.getAddresses().get(0).getLocality());
         assertEquals("testAddresses8 - 6", "VA", vcard.getAddresses().get(0).getRegion());
         assertEquals("testAddresses8 - 7", "Oak St 54321", vcard.getAddresses().get(0).getStreetAddress());
-        assertEquals("testAddresses8 - 8", "Floor: 5 Room: 100", vcard.getAddresses().get(0).getExtendedAddress());
-        assertEquals("testAddresses8 - 9", "Floor: 5 Room: 100\nOak St 54321\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
+        assertEquals("testAddresses8 - 8", "FL 5 RM 100", vcard.getAddresses().get(0).getExtendedAddress());
+        assertEquals("testAddresses8 - 9", "FL 5 RM 100\nOak St 54321\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
         assertEquals("testAddresses8 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
