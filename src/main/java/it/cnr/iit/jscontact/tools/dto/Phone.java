@@ -116,7 +116,7 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
      *
      * @return true if this phone number is for a cell phone, false otherwise
      */
-    public boolean asCell() { return asFeature(PhoneFeature.cell()); }
+    public boolean asMobile() { return asFeature(PhoneFeature.mobile()); }
     /**
      * Tests if this phone number supports text messages (SMS).
      *

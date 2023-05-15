@@ -73,6 +73,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private final Map<String, TimeZone> customTimeZones = new HashMap<>();
 
+    private static final Map<String, PhoneFeatureEnum> phoneFeatureAliases = new HashMap<String, PhoneFeatureEnum>() {{ put ("cell", PhoneFeatureEnum.MOBILE);}};
+
     private List<String> getVCard2JSContactProfileIds(VCard2JSContactIdsProfile.IdType idType, Object... args) {
 
         List<String> ids = new ArrayList<>();
@@ -187,7 +189,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
     private static Map<PhoneFeature,Boolean> toJSCardPhoneFeatures(String vcardTypeParam) {
-        List<PhoneFeatureEnum> enumValues = getJSCardEnumValues(PhoneFeatureEnum.class,vcardTypeParam, Arrays.asList("home", "work"), null);
+        List<PhoneFeatureEnum> enumValues = getJSCardEnumValues(PhoneFeatureEnum.class,vcardTypeParam, Arrays.asList("home", "work"), phoneFeatureAliases);
 
         Map<PhoneFeature,Boolean> phoneTypes = new HashMap<>();
         if (enumValues != null) {

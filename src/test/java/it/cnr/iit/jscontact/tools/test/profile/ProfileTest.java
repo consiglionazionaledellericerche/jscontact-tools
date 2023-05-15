@@ -85,7 +85,7 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("fax").getNumber());
         assertNull("testRDAPProfile - 40", jsCard.getPhones().get("fax").getPref());
         assertTrue("testRDAPProfile - 41", jsCard.getPhones().get("fax").asWork());
-        assertTrue("testRDAPProfile - 42", jsCard.getPhones().get("fax").asCell());
+        assertTrue("testRDAPProfile - 42", jsCard.getPhones().get("fax").asMobile());
         assertTrue("testRDAPProfile - 43", jsCard.getPhones().get("fax").asVideo());
         assertTrue("testRDAPProfile - 44", jsCard.getPhones().get("fax").asText());
         assertEquals("testRDAPProfile - 45", 1, jsCard.getCryptoKeys().size());

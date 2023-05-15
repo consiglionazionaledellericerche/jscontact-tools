@@ -72,7 +72,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 37", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteXCard1 - 38", jsCard.getPhones().get("PHONE-2").asWork());
         assertEquals("testCompleteXCard1 - 39", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getNumber());
-        assertTrue("testCompleteXCard1 - 40", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteXCard1 - 40", jsCard.getPhones().get("PHONE-2").asMobile());
         assertTrue("testCompleteXCard1 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteXCard1 - 42", jsCard.getPhones().get("PHONE-2").asText());
         assertNull("testCompleteXCard1 - 43", jsCard.getPhones().get("PHONE-2").getLabel());

@@ -176,7 +176,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("PHONE-2").getNumber());
         assertNull("testCompleteJCard1 - 40", jsCard.getPhones().get("PHONE-2").getPref());
         assertTrue("testCompleteJCard1 - 41", jsCard.getPhones().get("PHONE-2").asWork());
-        assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asMobile());
         assertTrue("testCompleteJCard1 - 43", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
         assertEquals("testCompleteJCard1 - 45", 1, jsCard.getCryptoKeys().size());
@@ -274,7 +274,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 37", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteJCard4 - 38", jsCard.getPhones().get("PHONE-2").asWork());
         assertEquals("testCompleteJCard4 - 39", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getNumber());
-        assertTrue("testCompleteJCard4 - 40", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteJCard4 - 40", jsCard.getPhones().get("PHONE-2").asMobile());
         assertTrue("testCompleteJCard4 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard4 - 42", jsCard.getPhones().get("PHONE-2").asText());
         assertNull("testCompleteJCard4 - 43", jsCard.getPhones().get("PHONE-2").getLabel());

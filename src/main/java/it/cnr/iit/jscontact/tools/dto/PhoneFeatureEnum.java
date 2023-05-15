@@ -22,9 +22,12 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
@@ -39,16 +42,23 @@ public enum PhoneFeatureEnum implements IsExtensibleEnum,VCardTypeDerivedEnum {
     FAX("fax"),
     PAGER("pager"),
     TEXT("text"),
-    CELL("cell"),
+    MOBILE("mobile"),
     VIDEO("video"),
     TEXTPHONE("textphone"),
 
     MAIN_NUMBER("main-number");
 
+    @Getter
+    @JsonIgnore
+    private static final Map<String, PhoneFeatureEnum> aliases = new HashMap<String, PhoneFeatureEnum>()
+    {{
+        put("cell", MOBILE);
+    }};
+
     private final String value;
 
-    @JsonIgnore
-    private static final List<String> otherVCardTypes = Arrays.asList("textphone", "video", "cell");
+//    @JsonIgnore
+//    private static final List<String> otherVCardTypes = Arrays.asList("textphone", "video", "cell");
 
     @JsonValue
     public String getValue() {
@@ -57,7 +67,7 @@ public enum PhoneFeatureEnum implements IsExtensibleEnum,VCardTypeDerivedEnum {
 
     @JsonCreator
     public static PhoneFeatureEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(PhoneFeatureEnum.class, value);
+        return (value == null) ? null : EnumUtils.getEnum(PhoneFeatureEnum.class, value, aliases);
     }
 
     @Override

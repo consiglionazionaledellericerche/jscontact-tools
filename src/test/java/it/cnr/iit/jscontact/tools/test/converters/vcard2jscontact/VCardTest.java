@@ -135,7 +135,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard1 - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("PHONE-2").getNumber());
         assertNull("testCompleteVCard1 - 40", jsCard.getPhones().get("PHONE-2").getPref());
         assertTrue("testCompleteVCard1 - 41", jsCard.getPhones().get("PHONE-2").asWork());
-        assertTrue("testCompleteVCard1 - 42", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteVCard1 - 42", jsCard.getPhones().get("PHONE-2").asMobile());
         assertTrue("testCompleteVCard1 - 43", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteVCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
         assertEquals("testCompleteVCard1 - 46", 1, jsCard.getCryptoKeys().size());
@@ -235,7 +235,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard4 - 37", 1, (int) jsCard.getPhones().get("PHONE-1").getPref());
         assertTrue("testCompleteVCard4 - 38", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteVCard4 - 39", jsCard.getPhones().get("PHONE-2").asWork());
-        assertTrue("testCompleteVCard4 - 40", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteVCard4 - 40", jsCard.getPhones().get("PHONE-2").asMobile());
         assertTrue("testCompleteVCard4 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteVCard4 - 42", jsCard.getPhones().get("PHONE-2").asText());
         assertEquals("testCompleteVCard4 - 43", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getNumber());
@@ -340,11 +340,11 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard6 - 24", jsCard.getPhones().get("PHONE-3").asVoice());
         assertTrue("testCompleteVCard6 - 25", jsCard.getPhones().get("PHONE-3").hasNoContext());
         assertEquals("testCompleteVCard6 - 26", "555-555-1113", jsCard.getPhones().get("PHONE-3").getNumber());
-        assertTrue("testCompleteVCard6 - 27", jsCard.getPhones().get("PHONE-3").asCell());
+        assertTrue("testCompleteVCard6 - 27", jsCard.getPhones().get("PHONE-3").asMobile());
         assertTrue("testCompleteVCard6 - 29", jsCard.getPhones().get("PHONE-4").asVoice());
         assertTrue("testCompleteVCard6 - 30", jsCard.getPhones().get("PHONE-4").hasNoContext());
         assertEquals("testCompleteVCard6 - 31", "555-555-1114", jsCard.getPhones().get("PHONE-4").getNumber());
-        assertTrue("testCompleteVCard6 - 32", jsCard.getPhones().get("PHONE-4").asCell());
+        assertTrue("testCompleteVCard6 - 32", jsCard.getPhones().get("PHONE-4").asMobile());
         assertTrue("testCompleteVCard6 - 34", jsCard.getPhones().get("PHONE-5").asVoice());
         assertTrue("testCompleteVCard6 - 35", jsCard.getPhones().get("PHONE-5").hasNoContext());
         assertEquals("testCompleteVCard6 - 36", "555-555-1115", jsCard.getPhones().get("PHONE-5").getNumber());
