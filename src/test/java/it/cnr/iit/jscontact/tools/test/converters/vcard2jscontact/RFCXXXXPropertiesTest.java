@@ -66,16 +66,16 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testLocale() throws CardException {
+    public void testLanguage() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "LOCALE:it\n" +
+                "DEFLANGUAGE:it\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testLocale - 1", "it", jsCard.getLocale());
+        assertEquals("testLanguage - 1", "it", jsCard.getLanguage());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "GRAMMATICAL-GENDER;VALUE=text:MASCULINE\n" +
+                "GRAMGENDER;VALUE=text:MASCULINE\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -131,7 +131,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "GRAMMATICAL-GENDER;VALUE=text:INANIMATE\n" +
+                "GRAMGENDER;VALUE=text:INANIMATE\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -159,7 +159,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "GRAMMATICAL-GENDER;VALUE=text:MASCULINE\n" +
+                "GRAMGENDER;VALUE=text:MASCULINE\n" +
                 "PRONOUNS;VALUE=text:he/him\n" +
                 "END:VCARD";
 

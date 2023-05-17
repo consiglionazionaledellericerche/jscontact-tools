@@ -36,7 +36,7 @@ public class LocalizationsTest {
         Card jsCard = Card.toJSCard(json);
         Card localizedCard = jsCard.getLocalizedVersion("jp");
 
-        assertEquals("testLocalizations1 - 1", "jp", localizedCard.getLocale());
+        assertEquals("testLocalizations1 - 1", "jp", localizedCard.getLanguage());
         assertNull("testLocalizations1 - 2", localizedCard.getLocalizations());
         assertEquals("testLocalizations1 - 3", 2, localizedCard.getAddresses().size());
         assertEquals("testLocalizations1 - 4", "東京", localizedCard.getAddresses().get("ADR-1").getLocality());

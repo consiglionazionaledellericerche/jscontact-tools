@@ -213,7 +213,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"fullName\":\"test\"," +
-                "\"locale\":\"en\"," +
+                "\"language\":\"en\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
@@ -359,7 +359,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"fullName\":\"test\"," +
-                "\"locale\":\"en\"," +
+                "\"language\":\"en\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +

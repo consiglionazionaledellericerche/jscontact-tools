@@ -56,7 +56,7 @@ import java.util.*;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "@type", "@version", "created", "kind", "locale", "members", "prodId", "relatedTo", "uid", "updated",
+        "@type", "@version", "created", "kind", "language", "members", "prodId", "relatedTo", "uid", "updated",
         "fullName", "name", "nickNames", "organizations", "speakToAs", "titles",
         "emails", "onlineServices", "phones", "preferredContactChannels", "preferredLanguages",
         "calendars", "schedulingAddresses",
@@ -107,7 +107,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
 
     // Section 2.1.5 of [draft-ietf-calext-jscontact]
     @LanguageTagConstraint
-    String locale;
+    String language;
 
     // Section 2.1.6 of [draft-ietf-calext-jscontact]
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in JSContact - Only Boolean.TRUE allowed")
@@ -804,7 +804,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
         }
 
         Card localizedCard = mapper.convertValue(root, Card.class);
-        localizedCard.setLocale(language);
+        localizedCard.setLanguage(language);
         localizedCard.setLocalizations(null);
 
         return localizedCard;

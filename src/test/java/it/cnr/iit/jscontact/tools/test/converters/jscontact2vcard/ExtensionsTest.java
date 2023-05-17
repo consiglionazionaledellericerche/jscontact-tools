@@ -59,7 +59,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
                     "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\", \"ext3\":\"text\"  }, " +
                     "\"NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Joe\" } " +
                 "}," +
-                "\"locale\":\"en\"," +
+                "\"language\":\"en\"," +
                 "\"ext1\": 10," +
                 "\"preferredLanguages\":{" +
                     "\"jp\":[{\"@type\":\"LanguagePreference\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
@@ -80,7 +80,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testExtendedJSContact2 - 1", 6, vcard.getExtendedProperties().size());
-        assertEquals("testExtendedJSContact2 - 2", "LOCALE", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testExtendedJSContact2 - 2", "DEFLANGUAGE", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testExtendedJSContact2 - 3", "JSCONTACT-PROP", vcard.getExtendedProperties().get(1).getPropertyName());
         assertEquals("testExtendedJSContact2 - 4", "addresses/ADR-1/street/0/ext4", vcard.getExtendedProperties().get(1).getParameter("JSPTR"));
         assertEquals("testExtendedJSContact2 - 5", VCardDataType.TEXT, vcard.getExtendedProperties().get(1).getDataType());

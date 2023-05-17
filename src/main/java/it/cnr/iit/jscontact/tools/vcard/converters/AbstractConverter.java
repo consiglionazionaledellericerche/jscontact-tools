@@ -16,8 +16,8 @@ public abstract class AbstractConverter {
     protected static final Map<String,String> fakeExtensionsMapping = new HashMap<String, String>() {{
         put("contact-uri","links");
         put("created","created");
-        put("locale","locale");
-        put("grammatical-gender","speakToAs/grammaticalGender");
+        put("language","language");
+        put("gramgender","speakToAs/grammaticalGender");
         put("pronouns","speakToAs/pronouns");
         put("contact-channel-pref","preferredContactChannels");
         put("jscontact-prop",null);

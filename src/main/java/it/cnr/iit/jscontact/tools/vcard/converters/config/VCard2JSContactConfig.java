@@ -43,7 +43,7 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private boolean setVoiceAsDefaultPhoneFeature = true;
     @Builder.Default
-    private boolean convertGenderToSpeakToAs = true; //ignored if GRAMMATICAL-GENDER is present
+    private boolean convertGenderToSpeakToAs = true; //ignored if GRAMGENDER is present
 
     private String defaultLanguage;
 

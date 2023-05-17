@@ -490,7 +490,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return;
         }
 
-        if (vCard.getExtendedProperty(VCardPropEnum.GRAMMATICAL_GENDER.getValue()) != null)
+        if (vCard.getExtendedProperty(VCardPropEnum.GRAMGENDER.getValue()) != null)
             return;
 
         if (vCard.getGender() != null) {
@@ -503,7 +503,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             else if (vCard.getGender().isNone())
                 jsCard.setSpeakToAs(SpeakToAs.common());
         } else {
-            jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(GrammaticalGenderType.getEnum(vCard.getExtendedProperty(VCardPropEnum.GRAMMATICAL_GENDER.getValue()).getValue().toLowerCase())).build());
+            jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(GrammaticalGenderType.getEnum(vCard.getExtendedProperty(VCardPropEnum.GRAMGENDER.getValue()).getValue().toLowerCase())).build());
         }
     }
 
@@ -766,7 +766,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             }
         }
 
-        addresses.sort(JSCardAddressesComparator.builder().defaultLanguage(jsCard.getLocale()).build()); //sort based on altid
+        addresses.sort(JSCardAddressesComparator.builder().defaultLanguage(jsCard.getLanguage()).build()); //sort based on altid
 
         int i = 1;
         String lastAltid = null;
@@ -1326,11 +1326,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (jsonPointer == null)
                 continue; //vcard extension already treated elsewhere
 
-            if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.LOCALE.getValue()))
+            if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.DEFLANGUAGE.getValue()))
                 continue; // has already been set
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.CREATED.getValue()))
                 jsCard.setCreated(DateUtils.toCalendar(extension.getValue()));
-            else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.GRAMMATICAL_GENDER.getValue())) {
+            else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.GRAMGENDER.getValue())) {
                 GrammaticalGenderType gender = GrammaticalGenderType.getEnum(extension.getValue().toLowerCase());
                 if (jsCard.getSpeakToAs() != null)
                     jsCard.getSpeakToAs().setGrammaticalGender(gender);
@@ -1498,9 +1498,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.setKind(toJSCardKind(vCard.getKind()));
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(toJSCardUpdated(vCard.getRevision()));
-        RawProperty locale = vCard.getExtendedProperty(VCardPropEnum.LOCALE.getValue());
-        jsCard.setLocale((locale!=null) ? locale.getValue() : config.getDefaultLanguage());
-        vCardPropertiesAltidComparator = VCardPropertiesAltidComparator.builder().defaultLanguage(jsCard.getLocale()).build();
+        RawProperty language = vCard.getExtendedProperty(VCardPropEnum.DEFLANGUAGE.getValue());
+        jsCard.setLanguage((language!=null) ? language.getValue() : config.getDefaultLanguage());
+        vCardPropertiesAltidComparator = VCardPropertiesAltidComparator.builder().defaultLanguage(jsCard.getLanguage()).build();
         vCardPropertiesPrefComparator = VCardPropertiesPrefComparator.builder().build();
         fillJSCardSpeakToAsOrGender(vCard, jsCard);
         fillJSCardMembers(vCard, jsCard);

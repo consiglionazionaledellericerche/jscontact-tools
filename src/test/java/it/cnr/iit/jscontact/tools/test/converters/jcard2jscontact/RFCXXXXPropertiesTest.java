@@ -66,15 +66,15 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
 
 
     @Test
-    public void testLocale() throws CardException {
+    public void testLanguage() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"locale\",{},\"text\",\"it\"] " +
+                "[\"deflanguage\",{},\"text\",\"it\"] " +
                 "]]";
 
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testLocale - 1", "it", jsCard.getLocale());
+        assertEquals("testLanguage - 1", "it", jsCard.getLanguage());
 
     }
 
@@ -116,7 +116,7 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"grammatical-gender\",{},\"text\",\"MASCULINE\"] " +
+                "[\"gramgender\",{},\"text\",\"MASCULINE\"] " +
                 "]]";
 
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
@@ -129,7 +129,7 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"grammatical-gender\",{},\"text\",\"INANIMATE\"] " +
+                "[\"gramgender\",{},\"text\",\"INANIMATE\"] " +
                 "]]";
 
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
@@ -155,7 +155,7 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"grammatical-gender\",{},\"text\",\"MASCULINE\"], " +
+                "[\"gramgender\",{},\"text\",\"MASCULINE\"], " +
                 "[\"pronouns\",{},\"text\",\"he/him\"] " +
                 "]]";
 

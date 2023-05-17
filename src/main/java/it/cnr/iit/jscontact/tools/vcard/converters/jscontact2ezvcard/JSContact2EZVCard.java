@@ -156,7 +156,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (sns.size() == 1) {
                     FormattedName fn = toVCardFormattedName(sns.get(0), separator);
                     fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
-                    fn.setLanguage(jsCard.getLocale());
+                    fn.setLanguage(jsCard.getLanguage());
                     vcard.setFormattedName(fn);
                 }
                 else {
@@ -178,7 +178,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getLocalizationsPerPath("fullName") != null) {
             List<FormattedName> fns = new ArrayList<>();
             FormattedName fn = toVCardFormattedName(jsCard.getFullName());
-            fn.setLanguage(jsCard.getLocale());
+            fn.setLanguage(jsCard.getLanguage());
             fns.add(fn);
             vcard.setFormattedName(fn);
             for (Map.Entry<String,JsonNode> localizations : jsCard.getLocalizationsPerPath("fullName").entrySet()) {
@@ -302,7 +302,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         List<StructuredName> sns = new ArrayList<>();
         if (jsCard.getLocalizationsPerPath("name") != null) {
             StructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
-            sn.setLanguage(jsCard.getLocale());
+            sn.setLanguage(jsCard.getLanguage());
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs())); // did this way because Ez-vcard allows to sort only for surname and given name
             VCardUtils.addVCardUnmatchedParams(sn,jsCard.getName());
             addVCardX_ABLabel(jsCard.getName(), sn, vcard);
@@ -315,7 +315,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
         else if (jsCard.getLocalizationsPerPath("name/components") != null) {
             StructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
-            sn.setLanguage(jsCard.getLocale());
+            sn.setLanguage(jsCard.getLanguage());
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs()));
             VCardUtils.addVCardUnmatchedParams(sn,jsCard.getName());
             addVCardX_ABLabel(jsCard.getName(), sn, vcard);
@@ -521,7 +521,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
             addr.setGeo(toVCardGeoUri(address.getCoordinates()));
             if (address.getCountryCode() != null)
-                addr.setParameter("CC", address.getCountryCode());
+                addr.setParameter(VCardParamEnum.CC.getValue(), address.getCountryCode());
             if (!address.hasNoContext()) {
                 List<String> vCardTypeValues = toVCardTypeParmaValues(AddressContextEnum.class, AddressContext.toEnumValues(address.getContexts().keySet()));
                 for (String vCardTypeValue : vCardTypeValues)
@@ -624,14 +624,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
-                ezvcard.property.Address addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLocale());
+                ezvcard.property.Address addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
                 addVCardPropIdParam(addr, entry.getKey());
                 addVCardX_ABLabel(entry.getValue(), addr, vcard);
                 vcard.addAddress(addr);
             }
             else {
                 List<ezvcard.property.Address> addrs = new ArrayList<>();
-                ezvcard.property.Address addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLocale());
+                ezvcard.property.Address addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
                 addVCardPropIdParam(addr, entry.getKey());
                 addVCardX_ABLabel(entry.getValue(), addr, vcard);
                 addrs.add(addr);
@@ -1132,7 +1132,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                     switch (resource.getKind().getRfcValue()) {
                         case CONTACT:
-                            RawProperty rp = new RawProperty("CONTACT-URI", resource.getUri());
+                            RawProperty rp = new RawProperty(VCardPropEnum.CONTACT_URI.getValue(), resource.getUri());
                             fillVCardProperty(rp, resource);
                             VCardUtils.addVCardUnmatchedParams(rp,resource);
                             addVCardPropIdParam(rp, resource.getPropId());
@@ -1578,15 +1578,15 @@ public class JSContact2EZVCard extends AbstractConverter {
     private void fillVCardRFCXXXXProps(VCard vCard, Card jsCard) {
 
         if (jsCard.getCreated() != null) {
-            vCard.addExtendedProperty("CREATED", VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsCard.getCreated().getTime()), VCardDataType.TIMESTAMP);
+            vCard.addExtendedProperty(VCardPropEnum.CREATED.getValue(), VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsCard.getCreated().getTime()), VCardDataType.TIMESTAMP);
         }
 
-        if (jsCard.getLocale() != null) {
-            vCard.addExtendedProperty("LOCALE", jsCard.getLocale(), VCardDataType.LANGUAGE_TAG);
+        if (jsCard.getLanguage() != null) {
+            vCard.addExtendedProperty(VCardPropEnum.DEFLANGUAGE.getValue(), jsCard.getLanguage(), VCardDataType.LANGUAGE_TAG);
         }
 
         if (jsCard.getSpeakToAs()!= null && jsCard.getSpeakToAs().getPronouns() != null) {
-            String propertyName = "PRONOUNS";
+            String propertyName = VCardPropEnum.PRONOUNS.getValue();
             String jsonPointer = fakeExtensionsMapping.get(propertyName.toLowerCase());
             Map<String,Pronouns> pronouns = jsCard.getSpeakToAs().getPronouns();
             for (Map.Entry<String,Pronouns> entry : pronouns.entrySet()) {
@@ -1605,7 +1605,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> entry2 : localizations.entrySet()) {
                         RawProperty raw2 = new RawProperty(propertyName, asJSCardPronouns(entry2.getValue()).getPronouns());
-                        raw2.setParameter("LANGUAGE",entry2.getKey());
+                        raw2.setParameter(VCardParamEnum.LANGUAGE.getValue(), entry2.getKey());
                         raw2.setDataType(VCardDataType.TEXT);
                         vCard.addProperty(raw2);
                     }
@@ -1614,14 +1614,14 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
 
         if (jsCard.getSpeakToAs()!= null && jsCard.getSpeakToAs().getGrammaticalGender() != null) {
-            String propertyName = "GRAMMATICAL-GENDER";
+            String propertyName = VCardPropEnum.GRAMGENDER.getValue();
             String jsonPointer = fakeExtensionsMapping.get(propertyName.toLowerCase());
             vCard.addExtendedProperty(propertyName, jsCard.getSpeakToAs().getGrammaticalGender().getValue().toUpperCase(), VCardDataType.TEXT);
             Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath(jsonPointer);
             if (localizations != null) {
                 for (Map.Entry<String,JsonNode> entry : localizations.entrySet()) {
                     RawProperty raw = new RawProperty(propertyName, entry.getValue().asText());
-                    raw.setParameter("LANGUAGE",entry.getKey());
+                    raw.setParameter(VCardParamEnum.LANGUAGE.getValue(),entry.getKey());
                     raw.setDataType(VCardDataType.TEXT);
                     vCard.addProperty(raw);
                 }
@@ -1630,7 +1630,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         if (jsCard.getPreferredContactChannels()!=null) {
 
-            String propertyName = "CONTACT-CHANNEL-PREF";
+            String propertyName = VCardPropEnum.CONTACT_CHANNEL_PREF.getValue();
             Map<ChannelType,ContactChannelPreference[]> preferredContactChannels = jsCard.getPreferredContactChannels();
             for (Map.Entry<ChannelType,ContactChannelPreference[]> entry: preferredContactChannels.entrySet()) {
                 String value;
