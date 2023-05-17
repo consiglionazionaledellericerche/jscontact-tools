@@ -45,7 +45,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class NameComponent extends AbstractJSContactType implements HasKind, Serializable {
 
-    @NotNull
     @Pattern(regexp = "NameComponent", message = "invalid @type value in NameComponent")
     @JsonProperty("@type")
     @Builder.Default

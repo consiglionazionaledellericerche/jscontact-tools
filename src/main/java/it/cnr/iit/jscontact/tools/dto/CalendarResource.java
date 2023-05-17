@@ -46,7 +46,6 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(callSuper = true)
 public class CalendarResource extends Resource implements HasKind {
 
-    @NotNull
     @Pattern(regexp = "CalendarResource", message="invalid @type value in CalendarResource")
     @JsonProperty("@type")
     @Builder.Default

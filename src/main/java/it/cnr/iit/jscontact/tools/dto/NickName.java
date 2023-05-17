@@ -33,7 +33,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class NickName extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
-    @NotNull
     @Pattern(regexp = "NickName", message="invalid @type value in NickName")
     @JsonProperty("@type")
     @Builder.Default

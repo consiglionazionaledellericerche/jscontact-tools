@@ -51,7 +51,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class LanguagePref extends AbstractJSContactType implements Serializable, HasContexts {
 
-    @NotNull
     @Pattern(regexp = "LanguagePref", message="invalid @type value in LanguagePref")
     @JsonProperty("@type")
     @Builder.Default

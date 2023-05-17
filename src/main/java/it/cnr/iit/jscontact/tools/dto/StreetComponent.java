@@ -42,7 +42,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class StreetComponent extends AbstractJSContactType implements HasKind, Serializable {
 
-    @NotNull
     @Pattern(regexp = "StreetComponent", message="invalid @type value in StreetComponent")
     @JsonProperty("@type")
     @Builder.Default

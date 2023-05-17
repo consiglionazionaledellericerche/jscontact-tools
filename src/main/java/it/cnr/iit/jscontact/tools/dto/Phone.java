@@ -41,7 +41,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
-    @NotNull
     @Pattern(regexp = "Phone", message="invalid @type value in Phone")
     @JsonProperty("@type")
     @Builder.Default

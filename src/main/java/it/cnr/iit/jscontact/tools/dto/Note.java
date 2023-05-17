@@ -40,7 +40,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class Note extends AbstractJSContactType implements HasLabel, HasContexts, IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Note", message="invalid @type value in Note")
     @JsonProperty("@type")
     @Builder.Default

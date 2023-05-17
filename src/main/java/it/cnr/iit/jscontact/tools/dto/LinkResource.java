@@ -46,7 +46,6 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(callSuper = true)
 public class LinkResource extends Resource implements HasKind {
 
-    @NotNull
     @Pattern(regexp = "LinkResource", message="invalid @type value in LinkResource")
     @JsonProperty("@type")
     @Builder.Default

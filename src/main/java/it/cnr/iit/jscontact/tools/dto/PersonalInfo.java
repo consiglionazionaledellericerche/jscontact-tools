@@ -47,7 +47,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasKind, IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "PersonalInfo", message = "invalid @type value in PersonalInfo")
     @JsonProperty("@type")
     @Builder.Default

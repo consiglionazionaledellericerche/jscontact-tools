@@ -59,7 +59,6 @@ import java.util.StringJoiner;
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
 public class Address extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Address", message="invalid @type value in Address")
     @JsonProperty("@type")
     @Builder.Default

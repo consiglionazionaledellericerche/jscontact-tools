@@ -39,7 +39,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class Title extends AbstractJSContactType implements HasLabel, HasContexts, HasKind, IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Title", message="invalid @type value in Title")
     @JsonProperty("@type")
     @Builder.Default

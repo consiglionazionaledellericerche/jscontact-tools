@@ -33,7 +33,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class SchedulingAddress extends AbstractJSContactType implements HasLabel, IdMapValue, HasContexts, Serializable {
 
-    @NotNull
     @Pattern(regexp = "SchedulingAddress", message="invalid @type value in SchedulingAddress")
     @JsonProperty("@type")
     @Builder.Default

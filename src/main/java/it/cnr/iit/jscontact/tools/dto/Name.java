@@ -50,7 +50,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class Name extends AbstractJSContactType implements HasLabel, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Name", message="invalid @type value in Name")
     @JsonProperty("@type")
     @Builder.Default

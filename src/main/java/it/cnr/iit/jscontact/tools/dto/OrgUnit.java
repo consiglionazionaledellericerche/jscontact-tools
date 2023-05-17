@@ -27,7 +27,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class OrgUnit extends AbstractJSContactType implements IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "OrgUnit", message="invalid @type value in OrgUnit")
     @JsonProperty("@type")
     @Builder.Default

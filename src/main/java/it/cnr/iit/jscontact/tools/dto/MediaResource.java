@@ -46,7 +46,6 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(callSuper = true)
 public class MediaResource extends Resource implements HasKind {
 
-    @NotNull
     @Pattern(regexp = "MediaResource", message="invalid @type value in MediaResource")
     @JsonProperty("@type")
     @Builder.Default

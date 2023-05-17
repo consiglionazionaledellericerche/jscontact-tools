@@ -46,7 +46,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class Relation extends AbstractJSContactType implements Serializable {
 
-    @NotNull
     @Pattern(regexp = "Relation", message="invalid @type value in Relation")
     @JsonProperty("@type")
     @Builder.Default

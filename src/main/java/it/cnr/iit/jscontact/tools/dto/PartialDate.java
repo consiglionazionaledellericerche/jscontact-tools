@@ -30,7 +30,6 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(callSuper = false)
 public class PartialDate extends AbstractJSContactType {
 
-    @NotNull
     @Pattern(regexp = "PartialDate", message = "invalid @type value in PartialDate")
     @JsonProperty("@type")
     @Builder.Default

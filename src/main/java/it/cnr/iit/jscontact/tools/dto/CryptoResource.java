@@ -42,7 +42,6 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(callSuper = true)
 public class CryptoResource extends Resource {
 
-    @NotNull
     @Pattern(regexp = "CryptoResource", message="invalid @type value in CryptoResource")
     @JsonProperty("@type")
     @Builder.Default

@@ -38,7 +38,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class Organization extends AbstractJSContactType implements HasLabel, HasContexts, IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Organization", message = "invalid @type value in Organization")
     @JsonProperty("@type")
     @Builder.Default

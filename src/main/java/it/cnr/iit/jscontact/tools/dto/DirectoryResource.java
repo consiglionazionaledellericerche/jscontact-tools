@@ -47,7 +47,6 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(callSuper = true)
 public class DirectoryResource extends Resource implements HasKind {
 
-    @NotNull
     @Pattern(regexp = "DirectoryResource", message = "invalid @type value in DirectoryResource")
     @JsonProperty("@type")
     @Builder.Default

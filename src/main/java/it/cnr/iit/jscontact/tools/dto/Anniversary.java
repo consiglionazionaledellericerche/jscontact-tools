@@ -50,7 +50,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class Anniversary extends AbstractJSContactType implements HasKind, HasLabel, IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Anniversary", message = "invalid @type value in Anniversary")
     @JsonProperty("@type")
     @Builder.Default

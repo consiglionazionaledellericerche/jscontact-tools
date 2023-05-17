@@ -32,7 +32,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class SpeakToAs extends AbstractJSContactType implements Serializable {
 
-    @NotNull
     @Pattern(regexp = "SpeakToAs", message="invalid @type value in SpeakToAs")
     @JsonProperty("@type")
     @Builder.Default

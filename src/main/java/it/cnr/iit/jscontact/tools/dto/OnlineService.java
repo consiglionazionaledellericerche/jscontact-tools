@@ -54,7 +54,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class OnlineService extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
-    @NotNull
     @Pattern(regexp = "OnlineService", message = "invalid @type value in OnlineService")
     @JsonProperty("@type")
     @Builder.Default

@@ -28,7 +28,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class Author extends AbstractJSContactType implements IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Author", message="invalid @type value in Author")
     @JsonProperty("@type")
     @Builder.Default

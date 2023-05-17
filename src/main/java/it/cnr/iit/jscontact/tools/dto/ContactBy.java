@@ -51,7 +51,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class ContactBy extends AbstractJSContactType implements Serializable, HasContexts {
 
-    @NotNull
     @Pattern(regexp = "ContactBy", message="invalid @type value in ContactBy")
     @JsonProperty("@type")
     @Builder.Default
