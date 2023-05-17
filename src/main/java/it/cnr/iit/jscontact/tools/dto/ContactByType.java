@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the "preferredContactChannels" map keys as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the "contacrtBy" map keys as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -33,7 +33,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @SuperBuilder
-public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Serializable, Comparable<ChannelType> {
+public class ContactByType extends ExtensibleEnumType<ContactByEnum> implements Serializable, Comparable<ContactByType> {
 
     /**
      * Tests if this contact channel type  is "addresses".
@@ -41,7 +41,7 @@ public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Seri
      * @return true if this contact channel type is "addresses", false otherwise
      */
     @JsonIgnore
-    public boolean isAddresses() { return isRfc(ChannelEnum.ADDRESSES); }
+    public boolean isAddresses() { return isRfc(ContactByEnum.ADDRESSES); }
 
     /**
      * Tests if this contact channel type  is "emails".
@@ -49,7 +49,7 @@ public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Seri
      * @return true if this contact channel type is "emails", false otherwise
      */
     @JsonIgnore
-    public boolean isEmails() { return isRfc(ChannelEnum.EMAILS); }
+    public boolean isEmails() { return isRfc(ContactByEnum.EMAILS); }
 
     /**
      * Tests if this contact channel type  is "onlineServices".
@@ -57,7 +57,7 @@ public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Seri
      * @return true if this contact channel type is "onlineServices", false otherwise
      */
     @JsonIgnore
-    public boolean isOnlineServices() { return isRfc(ChannelEnum.ONLINE_SERVICES); }
+    public boolean isOnlineServices() { return isRfc(ContactByEnum.ONLINE_SERVICES); }
 
     /**
      * Tests if this contact channel type  is "phones".
@@ -65,37 +65,37 @@ public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Seri
      * @return true if this contact channel type is "phones", false otherwise
      */
     @JsonIgnore
-    public boolean isPhones() { return isRfc(ChannelEnum.PHONES); }
+    public boolean isPhones() { return isRfc(ContactByEnum.PHONES); }
 
-    public static ChannelType rfc(ChannelEnum rfcValue) { return ChannelType.builder().rfcValue(rfcValue).build(); }
+    public static ContactByType rfc(ContactByEnum rfcValue) { return ContactByType.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns an "addresses" contact channel type.
      *
      * @return an "addresses" contact channel type.
      */
-    public static ChannelType addresses() { return rfc(ChannelEnum.ADDRESSES);}
+    public static ContactByType addresses() { return rfc(ContactByEnum.ADDRESSES);}
 
     /**
      * Returns an "emails" contact channel type.
      *
      * @return an "emails" contact channel type.
      */
-    public static ChannelType emails() { return rfc(ChannelEnum.EMAILS);}
+    public static ContactByType emails() { return rfc(ContactByEnum.EMAILS);}
 
     /**
      * Returns an "onlineServices" contact channel type.
      *
      * @return an "onlineServices" contact channel type.
      */
-    public static ChannelType onlineServices() { return rfc(ChannelEnum.ONLINE_SERVICES);}
+    public static ContactByType onlineServices() { return rfc(ContactByEnum.ONLINE_SERVICES);}
 
     /**
      * Returns a "phones" contact channel type.
      *
      * @return a "phones" contact channel type.
      */
-    public static ChannelType phones() { return rfc(ChannelEnum.PHONES);}
+    public static ContactByType phones() { return rfc(ContactByEnum.PHONES);}
 
     /**
      * Returns a custom contact channel type.
@@ -103,10 +103,10 @@ public class ChannelType extends ExtensibleEnumType<ChannelEnum> implements Seri
      * @param extValue the custom contact channel type in text format
      * @return a custom contact channel type
      */
-    public static ChannelType ext(String extValue) { return ChannelType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    public static ContactByType ext(String extValue) { return ContactByType.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
     @Override
-    public int compareTo(ChannelType o) {
+    public int compareTo(ContactByType o) {
 
         return this.toString().compareTo(o.toString());
     }

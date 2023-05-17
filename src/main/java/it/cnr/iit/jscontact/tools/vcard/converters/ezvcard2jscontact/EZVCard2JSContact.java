@@ -912,15 +912,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         for (Language lang : vcard.getLanguages()) {
             String vcardType = VCardUtils.getVCardParamValue(lang.getParameters(), VCardParamEnum.TYPE);
             if (vcardType!=null || lang.getPref()!=null)
-                jsCard.addLanguagePreference(getValue(lang),
-                        LanguagePreference.builder()
+                jsCard.addLanguagePref(getValue(lang),
+                        LanguagePref.builder()
                                 .contexts(toJSCardContexts(vcardType))
                                 .pref(lang.getPref())
                                 .vCardParams(VCardUtils.getVCardParamsOtherThan(lang, VCardParamEnum.TYPE, VCardParamEnum.PREF))
                                                            .build()
                                             );
             else
-                jsCard.addLanguagePreference(getValue(lang),null);
+                jsCard.addLanguagePref(getValue(lang),null);
         }
     }
 
@@ -1359,22 +1359,22 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     jsCard.addLocalization(language, jsonPointer, mapper.convertValue(pronouns, JsonNode.class));
                 }
             }
-            else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.CONTACT_CHANNEL_PREF.getValue())) {
+            else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.CONTACT_BY.getValue())) {
                 if (!extension.getValue().isEmpty()) {
-                    ChannelType channelType;
+                    ContactByType contactByType;
                     try {
-                        channelType = ChannelType.rfc(ChannelEnum.getEnum(extension.getValue().toLowerCase()));
+                        contactByType = ContactByType.rfc(ContactByEnum.getEnum(extension.getValue().toLowerCase()));
                     } catch (Exception e) {
-                        channelType = ChannelType.ext(extension.getValue().toLowerCase());
+                        contactByType = ContactByType.ext(extension.getValue().toLowerCase());
                     }
                     if (contexts != null || pref != null)
-                        jsCard.addContactChannelPreference(channelType, ContactChannelPreference.builder()
+                        jsCard.addContactByPref(contactByType, ContactBy.builder()
                                 .contexts(contexts)
                                 .pref(pref)
                                 .vCardParams(VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.TYPE, VCardParamEnum.PREF))
                                 .build());
                     else
-                        jsCard.addContactChannelPreference(channelType, null);
+                        jsCard.addContactByPref(contactByType, null);
                 }
             }
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.SOCIALSERVICE.getValue())) {

@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.PreferredContactChannelsValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.ContactByValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -26,11 +26,11 @@ import java.lang.annotation.Target;
 
 @Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {PreferredContactChannelsValidator.class})
+@Constraint(validatedBy = {ContactByValidator.class})
 @Documented
-public @interface PreferredContactChannelsConstraint {
+public @interface ContactByConstraint {
 
-    String message() default "invalid preferredContactChannels in JSContact";
+    String message() default "invalid contactBy in JSContact";
 
     Class<?>[] groups() default { };
 

@@ -58,7 +58,7 @@ import java.util.*;
 @JsonPropertyOrder({
         "@type", "@version", "created", "kind", "language", "members", "prodId", "relatedTo", "uid", "updated",
         "fullName", "name", "nickNames", "organizations", "speakToAs", "titles",
-        "emails", "onlineServices", "phones", "preferredContactChannels", "preferredLanguages",
+        "emails", "onlineServices", "phones", "contactBy", "preferredLanguages",
         "calendars", "schedulingAddresses",
         "addresses",
         "cryptoKeys", "directories", "links", "media",
@@ -194,18 +194,18 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     Map<String,Phone> phones;
 
     // Section 2.3.4 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addContactChannelPreference")
+    @JSContactCollection(addMethod = "addContactByPref")
     @JsonPropertyOrder(alphabetic = true)
     @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
     @JsonDeserialize(keyUsing = ContactChannelsKeyDeserializer.class)
-    @PreferredContactChannelsConstraint
-    Map<ChannelType,ContactChannelPreference[]> preferredContactChannels;
+    @ContactByConstraint
+    Map<ContactByType, ContactBy[]> contactBy;
 
     // Section 2.3.5 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addLanguagePreference")
+    @JSContactCollection(addMethod = "addLanguagePref")
     @JsonPropertyOrder(alphabetic = true)
     @PreferredLanguagesConstraint
-    Map<String, LanguagePreference[]> preferredLanguages;
+    Map<String, LanguagePref[]> preferredLanguages;
 
 
     /*
@@ -544,19 +544,19 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * Adds a language preference to this object.
      *
      * @param id the contact language identifier
-     * @param languagePreference the object representing the contact language
+     * @param languagePref the object representing the contact language
      */
-    public void addLanguagePreference(String id, LanguagePreference languagePreference) {
+    public void addLanguagePref(String id, LanguagePref languagePref) {
 
         if (preferredLanguages == null)
             preferredLanguages = new HashMap<>();
 
-        LanguagePreference[] languagesPerId = preferredLanguages.get(id);
-        LanguagePreference[] languages;
-        if (languagePreference == null)
-            languages = new LanguagePreference[]{};
+        LanguagePref[] languagesPerId = preferredLanguages.get(id);
+        LanguagePref[] languages;
+        if (languagePref == null)
+            languages = new LanguagePref[]{};
         else
-            languages = new LanguagePreference[] {languagePreference};
+            languages = new LanguagePref[] {languagePref};
         if (languagesPerId == null)
             preferredLanguages.put(id, languages);
         else
@@ -567,24 +567,24 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * Adds a contact channel preference to this object.
      *
      * @param id the contact channel preference identifier
-     * @param contactChannelPreference the object representing the contact channel preference
+     * @param contactByPref the object representing the contact channel preference
      */
-    public void addContactChannelPreference(ChannelType id, ContactChannelPreference contactChannelPreference) {
+    public void addContactByPref(ContactByType id, ContactBy contactByPref) {
 
-        if (preferredContactChannels == null)
-            preferredContactChannels = new HashMap<>();
+        if (contactBy == null)
+            contactBy = new HashMap<>();
 
-        ContactChannelPreference[] contactChannelsPerId = preferredContactChannels.get(id);
+        ContactBy[] contactChannelsPerId = contactBy.get(id);
 
-        ContactChannelPreference[] channels;
-        if (contactChannelPreference == null)
-            channels = new ContactChannelPreference[]{};
+        ContactBy[] channels;
+        if (contactByPref == null)
+            channels = new ContactBy[]{};
         else
-            channels = new ContactChannelPreference[] {contactChannelPreference};
+            channels = new ContactBy[] {contactByPref};
         if (contactChannelsPerId == null)
-            preferredContactChannels.put(id, channels);
+            contactBy.put(id, channels);
         else
-            preferredContactChannels.put(id, ArrayUtils.addAll(contactChannelsPerId, channels));
+            contactBy.put(id, ArrayUtils.addAll(contactChannelsPerId, channels));
     }
 
     /**

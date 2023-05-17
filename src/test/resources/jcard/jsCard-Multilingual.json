@@ -11,8 +11,8 @@
 },
 "kind": "individual",
 "preferredLanguages": {
-"jp": [{ "@type": "LanguagePreference", "pref": 1 }],
-"en": [{ "@type": "LanguagePreference", "pref": 2 }]
+"jp": [{ "@type": "LanguagePref", "pref": 1 }],
+"en": [{ "@type": "LanguagePref", "pref": 2 }]
 },
 "localizations": {
   "en": {

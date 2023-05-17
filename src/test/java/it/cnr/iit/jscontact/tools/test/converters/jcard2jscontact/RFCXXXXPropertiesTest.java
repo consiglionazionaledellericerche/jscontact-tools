@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.ChannelType;
+import it.cnr.iit.jscontact.tools.dto.ContactByType;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
@@ -42,26 +42,26 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
     }
 
     @Test
-    public void testPreferredContactChannels() throws CardException {
+    public void testContactBy() throws CardException {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"contact-channel-pref\",{\"type\":\"work\",\"pref\":\"1\"},\"text\",\"EMAIL\"], " +
-                "[\"contact-channel-pref\",{\"type\":\"home\",\"pref\":\"2\"},\"text\",\"EMAIL\"], " +
-                "[\"contact-channel-pref\",{\"type\":\"work\"},\"text\",\"TEL\"], " +
-                "[\"contact-channel-pref\",{},\"text\",\"ADR\"]" +
+                "[\"contact-by\",{\"type\":\"work\",\"pref\":\"1\"},\"text\",\"EMAIL\"], " +
+                "[\"contact-by\",{\"type\":\"home\",\"pref\":\"2\"},\"text\",\"EMAIL\"], " +
+                "[\"contact-by\",{\"type\":\"work\"},\"text\",\"TEL\"], " +
+                "[\"contact-by\",{},\"text\",\"ADR\"]" +
                 "]]";
 
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testPreferredContactChannels - 1", 3, jsCard.getPreferredContactChannels().size());
-        assertEquals("testPreferredContactChannels - 2", 2, jsCard.getPreferredContactChannels().get(ChannelType.emails()).length);
-        assertEquals("testPreferredContactChannels - 3", 1, (int) jsCard.getPreferredContactChannels().get(ChannelType.emails())[0].getPref());
-        assertTrue("testPreferredContactChannels - 4", jsCard.getPreferredContactChannels().get(ChannelType.emails())[0].asWork());
-        assertEquals("testPreferredContactChannels - 5", 2, (int) jsCard.getPreferredContactChannels().get(ChannelType.emails())[1].getPref());
-        assertTrue("testPreferredContactChannels - 6", jsCard.getPreferredContactChannels().get(ChannelType.emails())[1].asPrivate());
-        assertEquals("testPreferredContactChannels - 7", 1, jsCard.getPreferredContactChannels().get(ChannelType.phones()).length);
-        assertTrue("testPreferredContactChannels - 8", jsCard.getPreferredContactChannels().get(ChannelType.phones())[0].asWork());
-        assertEquals("testPreferredContactChannels - 9", 0, jsCard.getPreferredContactChannels().get(ChannelType.addresses()).length);
+        assertEquals("testContactBy - 1", 3, jsCard.getContactBy().size());
+        assertEquals("testContactBy - 2", 2, jsCard.getContactBy().get(ContactByType.emails()).length);
+        assertEquals("testContactBy - 3", 1, (int) jsCard.getContactBy().get(ContactByType.emails())[0].getPref());
+        assertTrue("testContactBy - 4", jsCard.getContactBy().get(ContactByType.emails())[0].asWork());
+        assertEquals("testContactBy - 5", 2, (int) jsCard.getContactBy().get(ContactByType.emails())[1].getPref());
+        assertTrue("testContactBy - 6", jsCard.getContactBy().get(ContactByType.emails())[1].asPrivate());
+        assertEquals("testContactBy - 7", 1, jsCard.getContactBy().get(ContactByType.phones()).length);
+        assertTrue("testContactBy - 8", jsCard.getContactBy().get(ContactByType.phones())[0].asWork());
+        assertEquals("testContactBy - 9", 0, jsCard.getContactBy().get(ContactByType.addresses()).length);
     }
 
 

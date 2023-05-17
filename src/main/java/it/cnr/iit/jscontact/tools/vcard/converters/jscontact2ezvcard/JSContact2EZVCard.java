@@ -815,7 +815,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static Language toVCardLanguage(String lang, LanguagePreference cl) {
+    private static Language toVCardLanguage(String lang, LanguagePref cl) {
 
         Language language = new Language(lang);
         String vCardTypeValue = toVCardTypeParam(cl);
@@ -830,8 +830,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getPreferredLanguages() == null)
             return;
 
-        for (Map.Entry<String, LanguagePreference[]> clArray : jsCard.getPreferredLanguages().entrySet()) {
-            for(LanguagePreference cl : clArray.getValue())
+        for (Map.Entry<String, LanguagePref[]> clArray : jsCard.getPreferredLanguages().entrySet()) {
+            for(LanguagePref cl : clArray.getValue())
                 vcard.addLanguage(toVCardLanguage(clArray.getKey(), cl));
         }
     }
@@ -1628,14 +1628,14 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
         }
 
-        if (jsCard.getPreferredContactChannels()!=null) {
+        if (jsCard.getContactBy()!=null) {
 
-            String propertyName = VCardPropEnum.CONTACT_CHANNEL_PREF.getValue();
-            Map<ChannelType,ContactChannelPreference[]> preferredContactChannels = jsCard.getPreferredContactChannels();
-            for (Map.Entry<ChannelType,ContactChannelPreference[]> entry: preferredContactChannels.entrySet()) {
+            String propertyName = VCardPropEnum.CONTACT_BY.getValue();
+            Map<ContactByType, ContactBy[]> contactBy = jsCard.getContactBy();
+            for (Map.Entry<ContactByType, ContactBy[]> entry: contactBy.entrySet()) {
                 String value;
                 if (entry.getKey().isRfcValue())
-                    value = ChannelEnum.toVCardChannelType(entry.getKey().getRfcValue());
+                    value = ContactByEnum.toVCardChannelType(entry.getKey().getRfcValue());
                 else
                     value = entry.getKey().getExtValue().toString().toUpperCase();
                 if (entry.getValue().length == 0) {
@@ -1644,7 +1644,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     vCard.addProperty(raw);
                 }
                 else {
-                    for (ContactChannelPreference pref : entry.getValue()) {
+                    for (ContactBy pref : entry.getValue()) {
                         RawProperty raw = new RawProperty(propertyName, value);
                         String vCardTypeValue = toVCardTypeParam(pref);
                         if (vCardTypeValue!=null)

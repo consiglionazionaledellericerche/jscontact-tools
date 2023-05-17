@@ -36,36 +36,36 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the ContactChannelPreference type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the ContactBy type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","contexts","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is missing in ContactChannelPreference")
+@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is missing in ContactBy")
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ContactChannelPreference extends AbstractJSContactType implements Serializable, HasContexts {
+public class ContactBy extends AbstractJSContactType implements Serializable, HasContexts {
 
     @NotNull
-    @Pattern(regexp = "ContactChannelPreference", message="invalid @type value in ContactChannelPreference")
+    @Pattern(regexp = "ContactBy", message="invalid @type value in ContactBy")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "ContactChannelPreference";
+    String _type = "ContactBy";
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in ContactChannelPreference - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in ContactBy - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in ContactChannelPreference - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in ContactChannelPreference - value must be less or equal than 100")
+    @Min(value=1, message = "invalid pref in ContactBy - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in ContactBy - value must be less or equal than 100")
     Integer pref;
 
 }

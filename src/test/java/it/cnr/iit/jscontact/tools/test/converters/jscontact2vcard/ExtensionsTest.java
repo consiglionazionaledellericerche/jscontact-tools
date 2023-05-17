@@ -62,8 +62,8 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "\"language\":\"en\"," +
                 "\"ext1\": 10," +
                 "\"preferredLanguages\":{" +
-                    "\"jp\":[{\"@type\":\"LanguagePreference\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
-                    "\"en\":[{\"@type\":\"LanguagePreference\",\"pref\":2}]" +
+                    "\"jp\":[{\"@type\":\"LanguagePref\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
+                    "\"en\":[{\"@type\":\"LanguagePref\",\"pref\":2}]" +
                 "}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
