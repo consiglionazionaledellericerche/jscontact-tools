@@ -28,6 +28,7 @@ import java.util.Calendar;
 @EqualsAndHashCode(callSuper = false)
 public class Timestamp extends AbstractJSContactType {
 
+    @NotNull
     @Pattern(regexp = "Timestamp", message="invalid @type value in Timestamp")
     @JsonProperty("@type")
     @Builder.Default
