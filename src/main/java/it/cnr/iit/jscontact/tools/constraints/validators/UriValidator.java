@@ -15,33 +15,25 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.OnlineServiceConstraint;
-import it.cnr.iit.jscontact.tools.dto.OnlineService;
-
+import it.cnr.iit.jscontact.tools.constraints.UriConstraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.net.URI;
 
-public class OnlineServiceValidator implements ConstraintValidator<OnlineServiceConstraint, OnlineService> {
+public class UriValidator implements ConstraintValidator<UriConstraint, String> {
 
-    public void initialize(OnlineServiceConstraint constraintAnnotation) {
+    public void initialize(UriConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(OnlineService onlineService, ConstraintValidatorContext context) {
+    public boolean isValid(String uri, ConstraintValidatorContext context) {
 
-        if (onlineService == null)
+        if (uri == null)
             return true;
 
-        if (onlineService.getKind().isUsername())
-            return onlineService.getService() != null;
-        else {
-            if (onlineService.getKind().isUri()) {
-                try {
-                    URI.create(onlineService.getUser());
-                } catch (Exception e) {
-                    return false;
-                }
-            }
+        try {
+            URI.create(uri);
+        } catch (Exception e) {
+            return false;
         }
 
         return true;

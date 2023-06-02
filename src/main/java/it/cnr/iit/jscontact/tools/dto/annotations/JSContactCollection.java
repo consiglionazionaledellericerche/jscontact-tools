@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface JSContactCollection {
     String addMethod() default "";
+    Class itemClass() default Object.class;
 }

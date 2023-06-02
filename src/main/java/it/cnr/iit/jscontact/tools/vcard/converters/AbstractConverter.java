@@ -22,7 +22,7 @@ public abstract class AbstractConverter {
         put("contact-by","contactBy");
         put("jscontact-prop",null);
         put("x-ablabel",null);
-        put("socialservice","onlineServices");
+        put("socialprofile","onlineServices");
     }};
 
     protected static final ObjectMapper mapper = new ObjectMapper();

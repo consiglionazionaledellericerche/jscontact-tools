@@ -57,7 +57,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard1 - 21", "Viagenie", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteXCard1 - 22", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteXCard1 - 23", "Simon Perreault 2875 boul. Laurier, suite D2-630 Quebec, QC, Canada G1V 2M2", jsCard.getAddresses().get("ADR-1").getFullAddress());
-        assertEquals("testCompleteXCard1 - 25", "2875 boul. Laurier, suite D2-630", jsCard.getAddresses().get("ADR-1").getStreetDetails());
+        assertEquals("testCompleteXCard1 - 25", "2875 boul. Laurier, suite D2-630", jsCard.getAddresses().get("ADR-1").getStreetAddress());
         assertEquals("testCompleteXCard1 - 26", "Quebec", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testCompleteXCard1 - 27", "QC", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testCompleteXCard1 - 28", "Canada", jsCard.getAddresses().get("ADR-1").getCountry());
@@ -122,14 +122,14 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard2 - 27", jsCard.getAddresses().get("ADR-1").asWork());
         assertEquals("testCompleteXCard2 - 28", 1, (int) jsCard.getAddresses().get("ADR-1").getPref());
 //        assertTrue("testCompleteXCard2 - 29", jsCard.getAddresses().get("ADR-1").getFullAddress().getValue().equals("100 Waters Edge\\nBaytown\\, LA 30314\\nUnited States of America"));
-        assertEquals("testCompleteXCard2 - 30", "100 Waters Edge", jsCard.getAddresses().get("ADR-1").getStreetDetails());
+        assertEquals("testCompleteXCard2 - 30", "100 Waters Edge", jsCard.getAddresses().get("ADR-1").getStreetAddress());
         assertEquals("testCompleteXCard2 - 31", "Baytown", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testCompleteXCard2 - 32", "LA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testCompleteXCard2 - 33", "United States of America", jsCard.getAddresses().get("ADR-1").getCountry());
         assertEquals("testCompleteXCard2 - 34", "30314", jsCard.getAddresses().get("ADR-1").getPostcode());
         assertTrue("testCompleteXCard2 - 35", jsCard.getAddresses().get("ADR-2").asPrivate());
 //        assertTrue("testCompleteXCard2 - 36", jsCard.getAddresses().get("ADR-2").getFullAddress().getValue().equals("42 Plantation St.\\nBaytown\\, LA 30314\\nUnited States of America"));
-        assertEquals("testCompleteXCard2 - 37", "42 Plantation St.", jsCard.getAddresses().get("ADR-2").getStreetDetails());
+        assertEquals("testCompleteXCard2 - 37", "42 Plantation St.", jsCard.getAddresses().get("ADR-2").getStreetAddress());
         assertEquals("testCompleteXCard2 - 38", "Baytown", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testCompleteXCard2 - 39", "LA", jsCard.getAddresses().get("ADR-2").getRegion());
         assertEquals("testCompleteXCard2 - 40", "United States of America", jsCard.getAddresses().get("ADR-2").getCountry());

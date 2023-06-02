@@ -17,12 +17,10 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
-import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import lombok.*;
@@ -32,9 +30,9 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 /**
- * Abstract class mapping the vCard extensions in section 1.5.2 of [draft-ietf-calext-jscontact].
+ * Abstract class mapping the vCard extensions in section 1.8.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.5.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @ToString
@@ -161,13 +159,11 @@ public abstract class AbstractExtensibleJSContactType {
         }
     }
 
-    public static Object convertToJSContactType(Object value) {
+    public static Object convertToJSContactType(Class classs, Object value) {
 
         try {
             String json = mapper.writeValueAsString(value);
-            JsonNode root = mapper.readTree(json);
-            String JSContactTypeName = root.get("@type").asText();
-            return mapper.readValue(json, ClassUtils.forName(JSContactTypeName));
+            return mapper.readValue(json, classs);
         } catch (Exception e) {
             return null;
         }
@@ -178,7 +174,7 @@ public abstract class AbstractExtensibleJSContactType {
         if (field.isAnnotationPresent(JSContactCollection.class)) {
             JSContactCollection annotation = field.getAnnotation(JSContactCollection.class);
             try {
-                Object typedValue = convertToJSContactType(value);
+                Object typedValue = convertToJSContactType(annotation.itemClass(), value);
                 classs.getDeclaredMethod(annotation.addMethod(), String.class, Objects.requireNonNull(typedValue).getClass()).invoke(o, key, typedValue);
             } catch (Exception e) {
                 throw new InternalErrorException(String.format("Internal Error: addObjectOnMap - message=%s", e.getMessage()));
@@ -191,7 +187,7 @@ public abstract class AbstractExtensibleJSContactType {
         if (field.isAnnotationPresent(JSContactCollection.class)) {
             JSContactCollection annotation = field.getAnnotation(JSContactCollection.class);
             try {
-                Object typedValue = convertToJSContactType(value);
+                Object typedValue = convertToJSContactType(annotation.itemClass(), value);
                 o.getClass().getDeclaredMethod(annotation.addMethod(), Objects.requireNonNull(typedValue).getClass()).invoke(o, typedValue);
             } catch (Exception e) {
                 throw new InternalErrorException(String.format("Internal Error: addObjectOnArray - message=%s", e.getMessage()));

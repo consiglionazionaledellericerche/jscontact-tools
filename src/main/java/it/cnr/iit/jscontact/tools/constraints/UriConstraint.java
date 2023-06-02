@@ -13,31 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.constraints.validators;
+package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
-import it.cnr.iit.jscontact.tools.dto.Resource;
+import it.cnr.iit.jscontact.tools.constraints.validators.UriValidator;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import java.net.URI;
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
 
-public class ResourceValidator implements ConstraintValidator<ResourceConstraint, Resource> {
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {UriValidator.class})
+@Documented
+public @interface UriConstraint {
 
-    public void initialize(ResourceConstraint constraintAnnotation) {
-    }
+    String message() default "invalid uri";
 
-    public boolean isValid(Resource resource, ConstraintValidatorContext context) {
+    Class<?>[] groups() default { };
 
-        if (resource == null)
-            return true;
-
-        try {
-            URI.create(resource.getUri());
-            return true;
-        } catch(Exception e) {
-            return false;
-        }
-    }
-
+    Class<? extends Payload>[] payload() default { };
 }
+

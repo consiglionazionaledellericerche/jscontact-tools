@@ -117,7 +117,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     String prodId;
 
     // Section 2.1.8 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addRelation")
+    @JSContactCollection(addMethod = "addRelation", itemClass = Relation.class)
     @JsonPropertyOrder(alphabetic = true)
     @RelatedToConstraint
     Map<String, Relation> relatedTo;
@@ -144,14 +144,14 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     Name name;
 
     // Section 2.2.3 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addNickName")
+    @JSContactCollection(addMethod = "addNickName", itemClass = NickName.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,NickName>")
     Map<String, NickName> nickNames;
 
     // Section 2.2.4 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addOrganization")
+    @JSContactCollection(addMethod = "addOrganization", itemClass = Organization.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
@@ -162,7 +162,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     SpeakToAs speakToAs;
 
     // Section 2.2.6 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addTitle")
+    @JSContactCollection(addMethod = "addTitle", itemClass = Title.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
@@ -173,36 +173,36 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.3.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addEmail")
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
-    Map<String, EmailAddress> emails;
-
-    // Section 2.3.2 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addOnlineService")
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,OnlineService>")
-    Map<String,OnlineService> onlineServices;
-
-    // Section 2.3.3 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addPhone")
-    @JsonPropertyOrder(alphabetic = true)
-    @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
-    Map<String,Phone> phones;
-
-    // Section 2.3.4 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addContactByPref")
+    @JSContactCollection(addMethod = "addContactByPref", itemClass = ContactBy.class)
     @JsonPropertyOrder(alphabetic = true)
     @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
     @JsonDeserialize(keyUsing = ContactChannelsKeyDeserializer.class)
     @ContactByConstraint
     Map<ContactByType, ContactBy[]> contactBy;
 
+    // Section 2.3.2 of [draft-ietf-calext-jscontact]
+    @JSContactCollection(addMethod = "addEmailAddress", itemClass = EmailAddress.class)
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
+    Map<String, EmailAddress> emails;
+
+    // Section 2.3.3 of [draft-ietf-calext-jscontact]
+    @JSContactCollection(addMethod = "addOnlineService", itemClass = OnlineService.class)
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,OnlineService>")
+    Map<String,OnlineService> onlineServices;
+
+    // Section 2.3.4 of [draft-ietf-calext-jscontact]
+    @JSContactCollection(addMethod = "addPhone", itemClass = Phone.class)
+    @JsonPropertyOrder(alphabetic = true)
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
+    Map<String,Phone> phones;
+
     // Section 2.3.5 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addLanguagePref")
+    @JSContactCollection(addMethod = "addLanguagePref", itemClass = LanguagePref.class)
     @JsonPropertyOrder(alphabetic = true)
     @PreferredLanguagesConstraint
     Map<String, LanguagePref[]> preferredLanguages;
@@ -213,14 +213,14 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.4.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addCalendar")
+    @JSContactCollection(addMethod = "addCalendar", itemClass = CalendarResource.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,CalendarResource>")
     Map<String, CalendarResource> calendars;
 
     // Section 2.4.2 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addSchedulingAddress")
+    @JSContactCollection(addMethod = "addSchedulingAddress", itemClass = SchedulingAddress.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,SchedulingAddress>")
@@ -232,7 +232,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.5.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addAddress")
+    @JSContactCollection(addMethod = "addAddress", itemClass = Address.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
@@ -243,28 +243,28 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.6.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addCryptoResource")
+    @JSContactCollection(addMethod = "addCryptoResource", itemClass = CryptoResource.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,CryptoResource>")
     Map<String, CryptoResource> cryptoKeys;
 
     // Section 2.6.2 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addDirectoryResource")
+    @JSContactCollection(addMethod = "addDirectoryResource", itemClass = DirectoryResource.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,DirectoryResource>")
     Map<String,DirectoryResource> directories;
 
     // Section 2.6.3 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addLinkResource")
+    @JSContactCollection(addMethod = "addLinkResource", itemClass = LinkResource.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,LinkResource>")
     Map<String,LinkResource> links;
 
     // Section 2.6.4 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addMediaResource")
+    @JSContactCollection(addMethod = "addMediaResource", itemClass = MediaResource.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,MediaResource>")
@@ -285,7 +285,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.8.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addAnniversary")
+    @JSContactCollection(addMethod = "addAnniversary", itemClass = Anniversary.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Anniversary>")
@@ -300,7 +300,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     Map<String, Note> notes;
 
     // Section 2.8.4 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addPersonalInfo")
+    @JSContactCollection(addMethod = "addPersonalInfo", itemClass = PersonalInfo.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInfo>")
@@ -418,7 +418,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * @param id the email identifier
      * @param email the object representing the email address
      */
-    public void addEmail(String id, EmailAddress email) {
+    public void addEmailAddress(String id, EmailAddress email) {
 
         if (emails == null)
             emails = new HashMap<>();

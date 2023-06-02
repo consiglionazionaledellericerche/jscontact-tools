@@ -33,8 +33,9 @@ public class OnlineServiceTest extends JCard2JSContactTest {
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testOnlineService1 - 1", 1, jsCard.getOnlineServices().size());
-        assertEquals("testOnlineService1 - 2", "xmpp:alice@example.com", jsCard.getOnlineServices().get("OS-1").getUser());
+        assertEquals("testOnlineService1 - 2", "xmpp:alice@example.com", jsCard.getOnlineServices().get("OS-1").getUri());
         assertTrue("testOnlineService1 - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());
+        assertEquals("testOnlineService1 - 4",jsCard.getOnlineServices().get("OS-1").getVCardName(), "impp");
         assertEquals("testOnlineService1 - 5", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
     }
     

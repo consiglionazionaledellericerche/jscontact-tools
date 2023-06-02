@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +29,6 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
@@ -48,14 +46,14 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Name extends AbstractJSContactType implements HasLabel, Serializable {
+public class Name extends AbstractJSContactType implements Serializable {
 
     @Pattern(regexp = "Name", message="invalid @type value in Name")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Name";
 
-    @JSContactCollection(addMethod = "addComponent")
+    @JSContactCollection(addMethod = "addComponent", itemClass = NameComponent.class)
     @NotEmpty(message = "components is missing or empty in Name")
     @NonNull
     @Valid
@@ -64,8 +62,6 @@ public class Name extends AbstractJSContactType implements HasLabel, Serializabl
     @JsonSerialize(using = NameSortAsSerializer.class)
     @JsonDeserialize(using = NameSortAsDeserializer.class)
     Map<NameComponentKind, String> sortAs;
-
-    String label;
 
     /**
      * Adds a name component to this object.

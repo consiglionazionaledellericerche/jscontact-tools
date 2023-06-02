@@ -41,6 +41,18 @@ public class StreetComponentKind extends ExtensibleEnumType<StreetComponentEnum>
      */
     public static StreetComponentKind rfc(StreetComponentEnum rfcValue) { return StreetComponentKind.builder().rfcValue(rfcValue).build();}
     /**
+     * Returns a "district" street component type.
+     *
+     * @return a "district" street component type
+     */
+    public static StreetComponentKind district() { return rfc(StreetComponentEnum.DISTRICT);}
+    /**
+     * Returns a "block" street component type.
+     *
+     * @return a "block" street component type
+     */
+    public static StreetComponentKind block() { return rfc(StreetComponentEnum.BLOCK);}
+    /**
      * Returns a "name" street component type.
      *
      * @return a "name" street component type
@@ -83,6 +95,12 @@ public class StreetComponentKind extends ExtensibleEnumType<StreetComponentEnum>
      */
     public static StreetComponentKind room() { return rfc(StreetComponentEnum.ROOM);}
     /**
+     * Returns an "landmark" street component type.
+     *
+     * @return an "landmark" street component type
+     */
+    public static StreetComponentKind landmark() { return rfc(StreetComponentEnum.LANDMARK);}
+    /**
      * Returns an "extension" street component type.
      *
      * @return an "extension" street component type
@@ -100,11 +118,5 @@ public class StreetComponentKind extends ExtensibleEnumType<StreetComponentEnum>
      * @return a "separator" street component type
      */
     public static StreetComponentKind separator() { return rfc(StreetComponentEnum.SEPARATOR);}
-    /**
-     * Returns an "unknown" street component type.
-     *
-     * @return an "unknown" street component type
-     */
-    public static StreetComponentKind unknown() { return rfc(StreetComponentEnum.UNKNOWN);}
 
 }

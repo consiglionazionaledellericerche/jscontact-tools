@@ -24,9 +24,7 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,9 +54,6 @@ public enum PhoneFeatureEnum implements IsExtensibleEnum,VCardTypeDerivedEnum {
     }};
 
     private final String value;
-
-//    @JsonIgnore
-//    private static final List<String> otherVCardTypes = Arrays.asList("textphone", "video", "cell");
 
     @JsonValue
     public String getValue() {

@@ -57,6 +57,11 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     Map<String, VCardParam> vCardParams;
 
 
+    @JsonProperty("vCardName")
+    @Getter
+    @Setter
+    String vCardName;
+
     /**
      * Adds a VCardParam object to this object.
      *

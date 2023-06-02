@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
-import it.cnr.iit.jscontact.tools.constraints.ResourceConstraint;
+import it.cnr.iit.jscontact.tools.constraints.UriConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
@@ -42,7 +42,6 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.4.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@ResourceConstraint
 @JsonPropertyOrder({"@type","uri","kind","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -54,6 +53,7 @@ public class Resource extends AbstractJSContactType implements HasLabel, IdMapVa
 
     @NotNull(message = "uri is missing in Resource")
     @NonNull
+    @UriConstraint
     @JsonProperty("uri")
     String uri;
 
