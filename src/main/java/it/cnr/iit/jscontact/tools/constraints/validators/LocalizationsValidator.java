@@ -68,13 +68,9 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
                         return false;
                     }
                     if (localizedNode.isObject()) {
-                        String nodeClassName = node.get("@type").asText();
-                        if (localizedNode.get("@type") == null) {
-                            context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
-                            return false;
-                        }
-                        String localizedNodeClassName = localizedNode.get("@type").asText();
-                        if (!nodeClassName.equals(localizedNodeClassName)) {
+                        String nodeClassName = (node.get("@type") != null) ? node.get("@type").asText() : null;
+                        String localizedNodeClassName = (localizedNode.get("@type") != null) ? localizedNode.get("@type").asText() : null;
+                        if (nodeClassName != null && localizedNodeClassName != null && !nodeClassName.equals(localizedNodeClassName)) {
                             context.buildConstraintViolationWithTemplate("type mismatch of JSON pointer in localizations: " + localization.getKey()).addConstraintViolation();
                             return false;
                         }

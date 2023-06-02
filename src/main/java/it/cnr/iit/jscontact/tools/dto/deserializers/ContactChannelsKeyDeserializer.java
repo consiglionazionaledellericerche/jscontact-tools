@@ -21,7 +21,7 @@ import it.cnr.iit.jscontact.tools.dto.*;
 import lombok.NoArgsConstructor;
 
 /**
- * Custom JSON deserializer for the "preferredContactChannels" map.
+ * Custom JSON deserializer for the "contactBy" map.
  *
  * @author Mario Loffredo
  */
@@ -29,12 +29,12 @@ import lombok.NoArgsConstructor;
 public class ContactChannelsKeyDeserializer extends KeyDeserializer {
 
     @Override
-    public ChannelType deserializeKey(String key, DeserializationContext ctxt) {
-        ChannelType channelType;
+    public ContactByType deserializeKey(String key, DeserializationContext ctxt) {
+        ContactByType channelType;
         try {
-            channelType = ChannelType.builder().rfcValue(ChannelEnum.getEnum(key)).build();
+            channelType = ContactByType.builder().rfcValue(ContactByEnum.getEnum(key)).build();
         } catch (IllegalArgumentException e) {
-            channelType = ChannelType.builder().extValue(V_Extension.toV_Extension(key)).build();
+            channelType = ContactByType.builder().extValue(V_Extension.toV_Extension(key)).build();
         }
         return channelType;
     }

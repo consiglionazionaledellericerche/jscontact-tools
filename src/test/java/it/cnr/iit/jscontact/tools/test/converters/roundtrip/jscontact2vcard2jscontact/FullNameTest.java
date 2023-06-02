@@ -47,7 +47,7 @@ public class FullNameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"locale\": \"jp\"," +
+                "\"language\": \"jp\"," +
                 "\"fullName\":\"大久保 正仁\"," +
                 "\"localizations\" : {" +
                   "\"en\": {" +
@@ -67,7 +67,7 @@ public class FullNameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"locale\": \"jp\"," +
+                "\"language\": \"jp\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
                         "{ \"value\":\"正仁\", \"kind\": \"given\" }," +

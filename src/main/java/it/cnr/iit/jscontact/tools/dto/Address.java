@@ -24,23 +24,18 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * Class mapping the Address type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
@@ -57,9 +52,8 @@ import java.util.StringJoiner;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
-public class Address extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable {
+public class Address extends AbstractJSContactType implements IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Address", message="invalid @type value in Address")
     @JsonProperty("@type")
     @Builder.Default
@@ -67,7 +61,7 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
 
     String fullAddress;
 
-    @JSContactCollection(addMethod = "addComponent")
+    @JSContactCollection(addMethod = "addComponent", itemClass = StreetComponent.class)
     StreetComponent[] street;
 
     String locality;
@@ -86,6 +80,8 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
 
     String timeZone;
 
+    String defaultSeparator;
+
     @JsonSerialize(using = AddressContextsSerializer.class)
     @JsonDeserialize(using = AddressContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
@@ -96,8 +92,6 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
     @Min(value=1, message = "invalid pref in Address - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Address - value must be less or equal than 100")
     Integer pref;
-
-    String label;
 
     @JsonIgnore
     String altid;
@@ -181,20 +175,45 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
         return getStreetDetail(StreetComponentEnum.POST_OFFICE_BOX);
     }
 
+
+    private String getStreetAddressDetails(List<StreetComponentEnum> componentsToCheck) {
+        if (street == null)
+            return null;
+
+        List<String> streetComponents = new ArrayList<>();
+        boolean applySeparator = false;
+        for (StreetComponent pair : street) {
+            if (pair.getKind().isRfcValue()) {
+                if (componentsToCheck.contains(pair.getKind().getRfcValue())) {
+                    applySeparator = true;
+                    streetComponents.add(pair.getValue());
+                    if (defaultSeparator != null)
+                        streetComponents.add(defaultSeparator);
+                    else
+                        streetComponents.add(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                } else if (pair.isSeparator()) {
+                    if (applySeparator)
+                        streetComponents.set(streetComponents.size() - 2, pair.getValue());
+                }
+            }
+        }
+
+        return (streetComponents.isEmpty()) ? null : String.join("",streetComponents.subList(0,streetComponents.size()-1));
+    }
+
     /**
      * Returns the street details of this object.
      *
      * @return a text obtained by concatenating the values of StreetComponent items in the "street" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
      */
     @JsonIgnore
-    public String getStreetDetails() {
-        String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
-        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : DelimiterUtils.SPACE_DELIMITER);
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.NAME))) joiner.add(getStreetDetail(StreetComponentEnum.NAME));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.NUMBER))) joiner.add(getStreetDetail(StreetComponentEnum.NUMBER));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.DIRECTION))) joiner.add(getStreetDetail(StreetComponentEnum.DIRECTION));
-        String streetDetails = joiner.toString();
-        return StringUtils.defaultIfEmpty(streetDetails, null);
+    public String getStreetAddress() {
+
+        return getStreetAddressDetails(Arrays.asList(StreetComponentEnum.DISTRICT,
+                                                     StreetComponentEnum.BLOCK,
+                                                     StreetComponentEnum.NAME,
+                                                     StreetComponentEnum.NUMBER,
+                                                     StreetComponentEnum.DIRECTION));
     }
 
     /**
@@ -203,17 +222,14 @@ public class Address extends AbstractJSContactType implements HasLabel, IdMapVal
      * @return a text obtained by concatenating the values of the StreetComponent items in the "street" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
      */
     @JsonIgnore
-    public String getStreetExtensions() {
-        String separator = getStreetDetail(StreetComponentEnum.SEPARATOR);
-        StringJoiner joiner = new StringJoiner( (separator != null) ? separator : DelimiterUtils.SPACE_DELIMITER);
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.BUILDING))) joiner.add("Building: " + getStreetDetail(StreetComponentEnum.BUILDING));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.FLOOR))) joiner.add("Floor: " + getStreetDetail(StreetComponentEnum.FLOOR));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.APARTMENT))) joiner.add("Apartment: " + getStreetDetail(StreetComponentEnum.APARTMENT));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.ROOM))) joiner.add("Room: " + getStreetDetail(StreetComponentEnum.ROOM));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.EXTENSION))) joiner.add(getStreetDetail(StreetComponentEnum.EXTENSION));
-        if (StringUtils.isNotEmpty(getStreetDetail(StreetComponentEnum.UNKNOWN))) joiner.add(getStreetDetail(StreetComponentEnum.EXTENSION));
-        String streetExtensions = joiner.toString();
-        return StringUtils.defaultIfEmpty(streetExtensions, null);
+    public String getStreetExtendedAddress() {
+
+        return getStreetAddressDetails(Arrays.asList(StreetComponentEnum.BUILDING,
+                StreetComponentEnum.FLOOR,
+                StreetComponentEnum.APARTMENT,
+                StreetComponentEnum.ROOM,
+                StreetComponentEnum.LANDMARK,
+                StreetComponentEnum.EXTENSION));
     }
 
 

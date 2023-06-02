@@ -55,12 +55,12 @@ public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implement
     @JsonIgnore
     public boolean isFax() { return isRfc(PhoneFeatureEnum.FAX); }
     /**
-     * Tests if this is a "cell" phone feature.
+     * Tests if this is a "mobile" phone feature.
      *
-     * @return true if this is a "cell" phone feature, false otherwise
+     * @return true if this is a "mobile" phone feature, false otherwise
      */
     @JsonIgnore
-    public boolean isCell() { return isRfc(PhoneFeatureEnum.CELL); }
+    public boolean isMobile() { return isRfc(PhoneFeatureEnum.MOBILE); }
     /**
      * Tests if this is a "pager" phone feature.
      *
@@ -91,6 +91,14 @@ public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implement
     public boolean isTextphone() { return isRfc(PhoneFeatureEnum.TEXTPHONE); }
 
     /**
+     * Tests if this is a "main-number" phone feature.
+     *
+     * @return true if this is a "main-number" phone feature, false otherwise
+     */
+    @JsonIgnore
+    public boolean isMainNumber() { return isRfc(PhoneFeatureEnum.MAIN_NUMBER); }
+
+    /**
      * Returns a phone feature whose enum value is pre-defined.
      *
      * @param rfcValue the pre-defined feature
@@ -116,11 +124,11 @@ public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implement
      */
     public static PhoneFeature pager() { return rfc(PhoneFeatureEnum.PAGER);}
     /**
-     * Returns a "cell" phone feature.
+     * Returns a "mobile" phone feature.
      *
-     * @return a "cell" phone feature
+     * @return a "mobile" phone feature
      */
-    public static PhoneFeature cell() { return rfc(PhoneFeatureEnum.CELL);}
+    public static PhoneFeature mobile() { return rfc(PhoneFeatureEnum.MOBILE);}
     /**
      * Returns a "video" phone feature.
      *
@@ -139,6 +147,12 @@ public class PhoneFeature extends ExtensibleEnumType<PhoneFeatureEnum> implement
      * @return a "textphone" phone feature
      */
     public static PhoneFeature textphone() { return rfc(PhoneFeatureEnum.TEXTPHONE);}
+    /**
+     * Returns a "main-number" phone feature.
+     *
+     * @return a "main-number" phone feature
+     */
+    public static PhoneFeature mainNumber() { return rfc(PhoneFeatureEnum.MAIN_NUMBER);}
     /**
      * Returns a custom phone feature.
      *

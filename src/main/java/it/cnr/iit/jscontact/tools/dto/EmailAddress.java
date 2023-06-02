@@ -34,7 +34,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class EmailAddress extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
-    @NotNull
     @Pattern(regexp = "EmailAddress", message="invalid @type value in EmailAddress")
     @JsonProperty("@type")
     @Builder.Default

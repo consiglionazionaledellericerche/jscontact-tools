@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
@@ -34,9 +33,8 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Pronouns extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
+public class Pronouns extends AbstractJSContactType implements IdMapValue, Serializable, HasContexts {
 
-    @NotNull
     @Pattern(regexp = "Pronouns", message="invalid @type value in Pronouns")
     @JsonProperty("@type")
     @Builder.Default
@@ -56,7 +54,5 @@ public class Pronouns extends AbstractJSContactType implements HasLabel, IdMapVa
     @Min(value=1, message = "invalid pref in Pronouns - value must be greater or equal than 1")
     @Max(value=100, message = "invalid pref in Pronouns - value must be less or equal than 100")
     Integer pref;
-
-    String label;
 
 }

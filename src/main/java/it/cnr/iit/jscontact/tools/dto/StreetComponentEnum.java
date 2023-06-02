@@ -30,6 +30,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum StreetComponentEnum implements IsExtensibleEnum {
 
+    DISTRICT("district"),
+    BLOCK("block"),
+
     NAME("name"),
     NUMBER("number"),
     DIRECTION("direction"),
@@ -37,10 +40,11 @@ public enum StreetComponentEnum implements IsExtensibleEnum {
     FLOOR("floor"),
     APARTMENT("apartment"),
     ROOM("room"),
+    LANDMARK("landmark"),
+
     EXTENSION("extension"),
     POST_OFFICE_BOX("postOfficeBox"),
-    SEPARATOR("separator"),
-    UNKNOWN("unknown");
+    SEPARATOR("separator");
 
     private final String value;
 

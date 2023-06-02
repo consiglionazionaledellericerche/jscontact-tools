@@ -6,24 +6,16 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
-import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
-import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
-import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Map;
 
 /**
  * Class mapping the Note type as defined in section 2.8.3 of [draft-ietf-calext-jscontact].
@@ -38,9 +30,8 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Note extends AbstractJSContactType implements HasLabel, HasContexts, IdMapValue, Serializable {
+public class Note extends AbstractJSContactType implements IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Note", message="invalid @type value in Note")
     @JsonProperty("@type")
     @Builder.Default
@@ -56,18 +47,5 @@ public class Note extends AbstractJSContactType implements HasLabel, HasContexts
 
     @Valid
     Author author;
-
-    @JsonSerialize(using = ContextsSerializer.class)
-    @JsonDeserialize(using = ContextsDeserializer.class)
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Note - Only Boolean.TRUE allowed")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @Singular(ignoreNullCollections = true)
-    Map<Context,Boolean> contexts;
-
-    @Min(value=1, message = "invalid pref in Note - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in Note - value must be less or equal than 100")
-    Integer pref;
-
-    String label;
 
 }

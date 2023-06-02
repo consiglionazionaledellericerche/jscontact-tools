@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.14.1</version>
+		  <version>0.15.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.14.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.15.0'
 ```
 
 # Features
@@ -217,22 +217,21 @@ The conversion is executed according to the following rules:
 
 1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
 
-2. A card (i.e. vCard, xCard, jCard) is converted into a CardGroup object if it includes a MEMBER property, otherwise into a Card object.
+2. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
 
-3. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
-
-4. An unmatched property is converted into an entry of the topmost Card/CardGroup `vCardProps` map. The following unmatched properties are considered:    
+3. An unmatched property is converted into an entry of the topmost Card `vCardProps` map. The following unmatched properties are considered:    
     CLIENTPIDMAP
+    VERSION
     XML
 
-5. An unmatched parameter is converted into an entry of an object `vCardParams` map. The following unmatched parameters
+4. An unmatched parameter is converted into an entry of a `vCardParams` map. The following unmatched parameters
    are considered:
    PID
    GROUP
 
-6. Validation is performed before conversion if the configuration property `setCardMustBeValidated` is set to `true`.
+5. Validation is performed before conversion if the  `setCardMustBeValidated` configuration property is set to `true`.
 
-7. Default values for the configuration properties are:
+6. Default values for the configuration properties are:
 
     - `customTimeZonesPrefix = "tz"`
     - `setCardMustBeValidated = true`
@@ -242,7 +241,7 @@ The conversion is executed according to the following rules:
     - `setVoiceAsDefaultPhoneFeature = true`
     - `convertGenderToSpeakToAs = true`
 
-8. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMMATICAL-GENDER is missing and
+7. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMGENDER is missing and
    if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
 
    GENDER SpeakToAs.grammaticalGender    
@@ -252,72 +251,72 @@ The conversion is executed according to the following rules:
    N common
    U SpeakToAs = null
 
-9. Where a language is required to represent a localization and the language is not specified, `en` is used by default
-   to set the mapping configuration parameter `defaultLanguage`.
+8. Where a language is required to represent a localization and the language is not specified, `en` is used by default
+   to set the `defaultLanguage` mapping configuration parameter.
 
-10. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following
-    order:
+9. Regardless of their positions inside the vCard, properties mapped as Anniversary objects appear in the following
+   order:
 
-    1. BDAY (BIRTHDATE)
-    2. DEATHDAY (DEATHDATE)
-    3. ANNIVERSARY
+   1. BDAY (BIRTHDATE)
+   2. DEATHDAY (DEATHDATE)
+   3. ANNIVERSARY
 
-11. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following
+10. Regardless of their positions inside the vCard, properties mapped as PersonalInfo objects appear in the following
     order:
 
     1. HOBBY
     2. INTEREST
     3. EXPERTISE
 
-12. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following
+11. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following
     order:
 
     1. PHOTO
     2. SOUND
     3. LOGO
 
-13. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the
+12. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the
     following order:
 
     1. CALURI
     2. FBURL
 
-14. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following
+13. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following
     order:
 
     1. URL
     2. CONTACT-URI
 
-15. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the
+14. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the
     following order:
 
     1. SOURCE
     2. ORG-DIRECTORY
 
-16. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
+15. Regardless of their positions inside the vCard, properties mapped as Title objects appear in the following order:
 
     1. TITLE
     2. ROLE
 
-17. If an ADR element doesn't include the LABEL parameter, based on the value of mapping configuration
-    parameter `setAutoFullAddress`, the full address results from the newline-delimited concatenation of the non-empty
+16. If an ADR element doesn't include the LABEL parameter, based on the value of `setAutoFullAddress` mapping
+    configuration parameter , the full address results from the newline-delimited concatenation of the non-empty
     address components.
 
-18. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties.
+17. Categories appear in the "keywords" map according to the values of the PREF parameter of the CATEGORIES properties.
 
-19. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
+18. Members appear in the "members" map according to the values of the PREF parameter of the MEMBER properties.
 
-20. JSContact UTCDateTime type is mapped to Java Calendar.
+19. JSContact UTCDateTime type is mapped to Java Calendar.
 
-21. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
+20. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
 
-22. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into
-    a `customTimeZones` map entry whose key is prefixed the configuration property `customTimeZonesPrefix` concatenated
+21. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into
+    a `customTimeZones` map entry whose key is prefixed the `customTimeZonesPrefix` configuration property concatenated
     with an incremental positive integer (e.g. "\tz1")
 
-23. The VCARD parameter DERIVED is ignored.
+22. The VCARD parameter DERIVED is ignored.
 
-24. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group
+23. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group
     construct.
 
 ### Conversion Profiles from vCard to JSContact Card
@@ -367,7 +366,7 @@ At present, the following converting methods are available:
 *   JSContact2XCard
     *   String convertToXml(Card... jsContact)
 
-All the methods take in input a list of JSContact Card objects and can raise a `CardException`.
+All the methods take in input a list of JSContact Card objects and can raise the `CardException` exception.
 `VCard` is the class mapping a vCard in ez-vcard Java library.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
 
@@ -381,7 +380,6 @@ All the methods take in input a list of JSContact Card objects and can raise a `
  
 3. An entry of an object `vCardParams` map is converted into a vCard parameter. The following parameters are considered:
     PID
-    SORT-AS
 
 4. Default values for the configuration properties are:
 
@@ -394,18 +392,18 @@ All the methods take in input a list of JSContact Card objects and can raise a `
 
 6. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
-7. The "street" component of ADR property results from the concatenation of "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "separator" value if present, space otherwise.
+7. The "street" component of ADR property results from the concatenation of "district", "block", "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
-8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room"
+8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room", "landmark"
    and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated
-   by the "separator" value if present, space otherwise.
+   by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
 9. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full
    address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL
    parameter can result from the newline-delimited concatenation of the non-empty "Address" members or.
 
-10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the mapping configuration
-    parameter `setPropIdParam`.
+10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the `setPropIdParam` mapping 
+    configuration parameter.
 
 ### Conversion examples
 
@@ -497,8 +495,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
                 "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\@type\": \"Address\","
-                        "\"street\":[{"@type":"StreetComponent",\"kind\":\"name\",\"value\":\"54321 Oak St\"}]," +
+                        "\"street\":[{\"kind\":\"name\",\"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -532,14 +529,10 @@ Here in the following two examples of conversion between JSContact Card and a vC
 
         String jsCards = "[" +
                          "{" +
-                             "\@type\": \"CardGroup\","
+                             "\@type\": \"Card\","
                              "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
-                             "\"card\": {" +
-                                 "\@type\": \"Card\","
-                                 "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
-                                 "\"kind\":\"group\"," +
-                                 "\"fullName\":\"The Doe family\"" +
-                             "}," +
+                             "\"kind\":\"group\"," +
+                             "\"fullName\":\"The Doe family\"," +
                              "\"members\": {" +
                                 "\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\":true," +
                                 "\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\":true" +
@@ -615,11 +608,11 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.14.1 implements the following draft versions:
+Version 0.15.0 implements the following draft versions:
 
-* draft-ietf-calext-jscontact-09
-* draft-ietf-calext-jscontact-vcard-07
-* draft-ietf-calext-vcard-jscontact-extensions-05
+* draft-ietf-calext-jscontact-11
+* draft-ietf-calext-jscontact-vcard-09
+* draft-ietf-calext-vcard-jscontact-extensions-07
 
 # Build Instructions
 

@@ -68,7 +68,7 @@ public class ResourceTest extends AbstractTest {
                 .build();
 
         assertFalse("testInvalidResourceUri-1", jsCard.isValid());
-        assertEquals("testInvalidResourceUri-2", "invalid uri in Resource", jsCard.getValidationMessage());
+        assertEquals("testInvalidResourceUri-2", "invalid uri", jsCard.getValidationMessage());
     }
 
 

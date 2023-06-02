@@ -29,7 +29,7 @@ public class LocaleTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .locale("it")
+                .language("it")
                 .build();
 
         assertTrue("testValidLocale", jsCard.isValid());
@@ -40,7 +40,7 @@ public class LocaleTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .locale("@@@@")
+                .language("@@@@")
                 .build();
 
         assertFalse("testInvalidLocale-1", jsCard.isValid());

@@ -76,4 +76,12 @@ public class NameComponentKind extends ExtensibleEnumType<NameComponentEnum> imp
      * @return a "suffix" name component type
      */
     public static NameComponentKind suffix() { return rfc(NameComponentEnum.SUFFIX);}
+    /**
+     * Returns a "defaultSeparator" name component type.
+     *
+     * @return a "defaultSeparator" name component type
+     */
+    public static NameComponentKind defaultSeparator() { return rfc(NameComponentEnum.DEFAULT_SEPARATOR);}
+
+
 }

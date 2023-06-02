@@ -4,8 +4,8 @@
   "fullName": "Joe User",
   "kind": "individual",
   "preferredLanguages": {
-  "fr": [{ "@type": "LanguagePreference", "pref": 1 }],
-  "en": [{ "@type": "LanguagePreference", "pref": 2 }]
+  "fr": [{ "@type": "LanguagePref", "pref": 1 }],
+  "en": [{ "@type": "LanguagePref", "pref": 2 }]
   },
   "organizations": { "ORG-1": { "@type": "Organization", "name": "Example" } },
   "titles": {"TITLE-1": { "@type": "Title", "name": "Research Scientist" },  "TITLE-2": { "@type": "Title", "name": "Project Lead" }},
@@ -35,7 +35,7 @@
       },
       "features": {
         "voice": true,
-        "cell": true,
+        "mobile": true,
         "video": true,
         "text": true
       },

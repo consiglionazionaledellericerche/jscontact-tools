@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.PreferredLanguagesConstraint;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
-import it.cnr.iit.jscontact.tools.dto.LanguagePreference;
+import it.cnr.iit.jscontact.tools.dto.LanguagePref;
 import it.cnr.iit.jscontact.tools.dto.utils.ConstraintViolationUtils;
 
 import javax.validation.ConstraintValidator;
@@ -29,17 +29,17 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class PreferredLanguagesValidator implements ConstraintValidator<PreferredLanguagesConstraint, Map<String, LanguagePreference[]>> {
+public class PreferredLanguagesValidator implements ConstraintValidator<PreferredLanguagesConstraint, Map<String, LanguagePref[]>> {
 
     public void initialize(PreferredLanguagesConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(Map<String, LanguagePreference[]> clMap, ConstraintValidatorContext context) {
+    public boolean isValid(Map<String, LanguagePref[]> clMap, ConstraintValidatorContext context) {
 
         if (clMap == null)
             return true;
 
-        for(Map.Entry<String, LanguagePreference[]> entry : clMap.entrySet()) {
+        for(Map.Entry<String, LanguagePref[]> entry : clMap.entrySet()) {
 
             try {
                 Locale locale = new Locale.Builder().setLanguageTag(entry.getKey()).build();
@@ -49,13 +49,13 @@ public class PreferredLanguagesValidator implements ConstraintValidator<Preferre
             }
 
             if (entry.getValue() == null) {
-                context.buildConstraintViolationWithTemplate("null LanguagePreference in preferredLanguages").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate("null LanguagePref in preferredLanguages").addConstraintViolation();
                 return false;
             }
 
-            for (LanguagePreference cl : entry.getValue()) {
+            for (LanguagePref cl : entry.getValue()) {
 
-                Set<ConstraintViolation<LanguagePreference>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
+                Set<ConstraintViolation<LanguagePref>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
                 if (constraintViolations.size() > 0) {
                     context.buildConstraintViolationWithTemplate(ConstraintViolationUtils.getMessage(constraintViolations)).addConstraintViolation();
                     return false;

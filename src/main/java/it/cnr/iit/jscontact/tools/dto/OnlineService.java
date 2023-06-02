@@ -21,9 +21,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
-import it.cnr.iit.jscontact.tools.constraints.OnlineServiceConstraint;
+import it.cnr.iit.jscontact.tools.constraints.UriConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.OnlineServiceTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
@@ -33,7 +32,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
@@ -44,7 +42,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@OnlineServiceConstraint
+
 @JsonPropertyOrder({"@type", "service", "user", "kind", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -54,7 +52,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class OnlineService extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
 
-    @NotNull
     @Pattern(regexp = "OnlineService", message = "invalid @type value in OnlineService")
     @JsonProperty("@type")
     @Builder.Default
@@ -62,14 +59,10 @@ public class OnlineService extends AbstractJSContactType implements HasLabel, Id
 
     String service;
 
-    @NonNull
-    @NotNull(message = "user is missing in OnlineService")
-    String user;
+    @UriConstraint
+    String uri;
 
-    @NonNull
-    @NotNull(message = "kind is missing in OnlineService")
-    @JsonDeserialize(using = OnlineServiceTypeDeserializer.class)
-    OnlineServiceKind kind;
+    String user;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)

@@ -155,8 +155,8 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getName());
         assertEquals("testCompleteJCard1 - 18", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteJCard1 - 19", "Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("ADR-1").getFullAddress());
-        assertEquals("testCompleteJCard1 - 20", "Suite 1234", jsCard.getAddresses().get("ADR-1").getStreetExtensions());
-        assertEquals("testCompleteJCard1 - 21", "4321 Rue Somewhere", jsCard.getAddresses().get("ADR-1").getStreetDetails());
+        assertEquals("testCompleteJCard1 - 20", "Suite 1234", jsCard.getAddresses().get("ADR-1").getStreetExtendedAddress());
+        assertEquals("testCompleteJCard1 - 21", "4321 Rue Somewhere", jsCard.getAddresses().get("ADR-1").getStreetAddress());
         assertEquals("testCompleteJCard1 - 22", "Quebec", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testCompleteJCard1 - 23", "QC", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testCompleteJCard1 - 24", "Canada", jsCard.getAddresses().get("ADR-1").getCountry());
@@ -176,7 +176,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("PHONE-2").getNumber());
         assertNull("testCompleteJCard1 - 40", jsCard.getPhones().get("PHONE-2").getPref());
         assertTrue("testCompleteJCard1 - 41", jsCard.getPhones().get("PHONE-2").asWork());
-        assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteJCard1 - 42", jsCard.getPhones().get("PHONE-2").asMobile());
         assertTrue("testCompleteJCard1 - 43", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard1 - 44", jsCard.getPhones().get("PHONE-2").asText());
         assertEquals("testCompleteJCard1 - 45", 1, jsCard.getCryptoKeys().size());
@@ -258,8 +258,8 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 21", "Viagenie", jsCard.getOrganizations().get("ORG-1").getName());
         assertEquals("testCompleteJCard4 - 22", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteJCard4 - 23", "Suite D2-630\n2875 Laurier\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("ADR-1").getFullAddress());
-        assertEquals("testCompleteJCard4 - 24", "Suite D2-630", jsCard.getAddresses().get("ADR-1").getStreetExtensions());
-        assertEquals("testCompleteJCard4 - 25", "2875 Laurier", jsCard.getAddresses().get("ADR-1").getStreetDetails());
+        assertEquals("testCompleteJCard4 - 24", "Suite D2-630", jsCard.getAddresses().get("ADR-1").getStreetExtendedAddress());
+        assertEquals("testCompleteJCard4 - 25", "2875 Laurier", jsCard.getAddresses().get("ADR-1").getStreetAddress());
         assertEquals("testCompleteJCard4 - 26", "Quebec", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testCompleteJCard4 - 27", "QC", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testCompleteJCard4 - 28", "Canada", jsCard.getAddresses().get("ADR-1").getCountry());
@@ -274,7 +274,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard4 - 37", jsCard.getPhones().get("PHONE-2").asVoice());
         assertTrue("testCompleteJCard4 - 38", jsCard.getPhones().get("PHONE-2").asWork());
         assertEquals("testCompleteJCard4 - 39", "tel:+1-418-262-6501", jsCard.getPhones().get("PHONE-2").getNumber());
-        assertTrue("testCompleteJCard4 - 40", jsCard.getPhones().get("PHONE-2").asCell());
+        assertTrue("testCompleteJCard4 - 40", jsCard.getPhones().get("PHONE-2").asMobile());
         assertTrue("testCompleteJCard4 - 41", jsCard.getPhones().get("PHONE-2").asVideo());
         assertTrue("testCompleteJCard4 - 42", jsCard.getPhones().get("PHONE-2").asText());
         assertNull("testCompleteJCard4 - 43", jsCard.getPhones().get("PHONE-2").getLabel());
@@ -323,14 +323,14 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard5 - 27", jsCard.getAddresses().get("ADR-1").asWork());
         assertEquals("testCompleteJCard5 - 28", 1, (int) jsCard.getAddresses().get("ADR-1").getPref());
         assertEquals("testCompleteJCard5 - 29", "100 Waters Edge\nBaytown, LA 30314\nUnited States of America", jsCard.getAddresses().get("ADR-1").getFullAddress());
-        assertEquals("testCompleteJCard5 - 30", "100 Waters Edge", jsCard.getAddresses().get("ADR-1").getStreetDetails());
+        assertEquals("testCompleteJCard5 - 30", "100 Waters Edge", jsCard.getAddresses().get("ADR-1").getStreetAddress());
         assertEquals("testCompleteJCard5 - 31", "Baytown", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testCompleteJCard5 - 32", "LA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testCompleteJCard5 - 33", "United States of America", jsCard.getAddresses().get("ADR-1").getCountry());
         assertEquals("testCompleteJCard5 - 34", "30314", jsCard.getAddresses().get("ADR-1").getPostcode());
         assertTrue("testCompleteJCard5 - 35", jsCard.getAddresses().get("ADR-2").asPrivate());
         assertEquals("testCompleteJCard5 - 36", "42 Plantation St.\nBaytown, LA 30314\nUnited States of America", jsCard.getAddresses().get("ADR-2").getFullAddress());
-        assertEquals("testCompleteJCard5 - 37", "42 Plantation St.", jsCard.getAddresses().get("ADR-2").getStreetDetails());
+        assertEquals("testCompleteJCard5 - 37", "42 Plantation St.", jsCard.getAddresses().get("ADR-2").getStreetAddress());
         assertEquals("testCompleteJCard5 - 38", "Baytown", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testCompleteJCard5 - 39", "LA", jsCard.getAddresses().get("ADR-2").getRegion());
         assertEquals("testCompleteJCard5 - 40", "United States of America", jsCard.getAddresses().get("ADR-2").getCountry());

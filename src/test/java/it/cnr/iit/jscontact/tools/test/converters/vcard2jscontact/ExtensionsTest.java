@@ -52,7 +52,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "ADR;CC=US;LANGUAGE=en:;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "LANG;PREF=1:jp\n" +
                 "LANG;PREF=2:en\n" +
-                "LOCALE;VALUE=language-tag:en\n" +
+                "DEFLANGUAGE;VALUE=language-tag:en\n" +
                 "JSCONTACT-PROP;JSPTR=\"addresses/ADR-1/street/0/ext4\";VALUE=TEXT:true\n" +
                 "JSCONTACT-PROP;JSPTR=\"nickNames/NICK-1/ext3\";VALUE=TEXT:\"text\"\n" +
                 "JSCONTACT-PROP;JSPTR=\"addresses/ADR-1/ext2\";VALUE=TEXT:{\"prop\":10}\n" +

@@ -8,7 +8,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -27,7 +26,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class OrgUnit extends AbstractJSContactType implements IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "OrgUnit", message="invalid @type value in OrgUnit")
     @JsonProperty("@type")
     @Builder.Default

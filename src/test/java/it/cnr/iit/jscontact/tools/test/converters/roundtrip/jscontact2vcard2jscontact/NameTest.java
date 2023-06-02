@@ -61,7 +61,7 @@ public class NameTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
-                "\"locale\": \"en\"," +
+                "\"language\": \"en\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
@@ -94,7 +94,7 @@ public class NameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"locale\": \"jp\"," +
+                "\"language\": \"jp\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
                         "{ \"@type\":\"NameComponent\",\"value\":\"正仁\", \"kind\": \"given\" }," +

@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.GroupKeyValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.ContactByValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -24,13 +24,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
+@Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {GroupKeyValidator.class})
+@Constraint(validatedBy = {ContactByValidator.class})
 @Documented
-public @interface GroupKeyConstraint {
+public @interface ContactByConstraint {
 
-    String message() default "";
+    String message() default "invalid contactBy in JSContact";
 
     Class<?>[] groups() default { };
 

@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -30,7 +29,6 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode(callSuper = false)
 public class PartialDate extends AbstractJSContactType {
 
-    @NotNull
     @Pattern(regexp = "PartialDate", message = "invalid @type value in PartialDate")
     @JsonProperty("@type")
     @Builder.Default

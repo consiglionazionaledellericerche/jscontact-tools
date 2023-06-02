@@ -42,7 +42,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class StreetComponent extends AbstractJSContactType implements HasKind, Serializable {
 
-    @NotNull
     @Pattern(regexp = "StreetComponent", message="invalid @type value in StreetComponent")
     @JsonProperty("@type")
     @Builder.Default
@@ -59,6 +58,21 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
 
     private boolean isRfc(StreetComponentEnum value) { return (kind.getRfcValue()!= null && kind.getRfcValue() == value);}
 
+    /**
+     * Tests if this is the street district.
+     *
+     * @return true if this is the street district, false otherwise
+     */
+    @JsonIgnore
+    public boolean isDistrict() { return isRfc(StreetComponentEnum.DISTRICT); }
+
+    /**
+     * Tests if this is the street block.
+     *
+     * @return true if this is the street block, false otherwise
+     */
+    @JsonIgnore
+    public boolean isBlock() { return isRfc(StreetComponentEnum.BLOCK); }
     /**
      * Tests if this is the street name.
      *
@@ -116,6 +130,13 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
     public boolean isRoom() { return isRfc(StreetComponentEnum.ROOM); }
 
     /**
+     * Tests if this is the landmarkr.
+     *
+     * @return true if this is the landmark, false otherwise
+     */
+    @JsonIgnore
+    public boolean isLandmark() { return isRfc(StreetComponentEnum.LANDMARK); }
+    /**
      * Tests if this is an extension designation or box number.
      *
      * @return true if this is an extension, false otherwise
@@ -140,14 +161,6 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
     public boolean isSeparator() { return isRfc(StreetComponentEnum.SEPARATOR); }
 
     /**
-     * Tests if this is a street component whose type is unknown.
-     *
-     * @return true if this is an unknown street component, false otherwise
-     */
-    @JsonIgnore
-    public boolean isUnknown() { return isRfc(StreetComponentEnum.UNKNOWN); }
-
-    /**
      * Tests if this is a custom street component.
      *
      * @return true if this is a custom street component, false otherwise
@@ -162,6 +175,20 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
                 .build();
     }
 
+    /**
+     * Returns a district component of a street address.
+     *
+     * @param value the street district
+     * @return the district component
+     */
+    public static StreetComponent district(String value) { return rfc(StreetComponentEnum.DISTRICT, value);}
+    /**
+     * Returns a block component of a street address.
+     *
+     * @param value the street block
+     * @return the block component
+     */
+    public static StreetComponent block(String value) { return rfc(StreetComponentEnum.BLOCK, value);}
     /**
      * Returns a name component of a street address.
      *
@@ -212,6 +239,13 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      */
     public static StreetComponent room(String value) { return rfc(StreetComponentEnum.ROOM, value);}
     /**
+     * Returns a landmark component of a street address.
+     *
+     * @param value the landmark
+     * @return the landmark component
+     */
+    public static StreetComponent landmark(String value) { return rfc(StreetComponentEnum.LANDMARK, value);}
+    /**
      * Returns an extension component of a street address.
      *
      * @param value the extension
@@ -232,13 +266,6 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return the separator component
      */
     public static StreetComponent separator(String value) { return rfc(StreetComponentEnum.SEPARATOR, value);}
-    /**
-     * Returns an unknown component of a street address.
-     *
-     * @param value the value for the unknown street component
-     * @return the unknown component
-     */
-    public static StreetComponent unknown(String value) { return rfc(StreetComponentEnum.UNKNOWN, value);}
     /**
      * Returns a custom component of a street address.
      *

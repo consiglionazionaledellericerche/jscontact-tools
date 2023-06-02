@@ -82,11 +82,11 @@ public class DeserializationTest {
                     "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\", \"ext3\":\"text\"  }, " +
                     "\"NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Joe\" } " +
                 "}," +
-                "\"locale\":\"en\"," +
+                "\"language\":\"en\"," +
                 "\"ext1\": 10," +
                 "\"preferredLanguages\":{" +
-                    "\"jp\":[{\"@type\":\"LanguagePreference\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
-                    "\"en\":[{\"@type\":\"LanguagePreference\",\"pref\":2}]" +
+                    "\"jp\":[{\"@type\":\"LanguagePref\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
+                    "\"en\":[{\"@type\":\"LanguagePref\",\"pref\":2}]" +
                 "}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +

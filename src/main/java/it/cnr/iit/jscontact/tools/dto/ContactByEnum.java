@@ -26,20 +26,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enum class mapping the "preferredContactChannels" map keys as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the "contactBy" map keys as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum ChannelEnum implements IsExtensibleEnum {
+public enum ContactByEnum implements IsExtensibleEnum {
 
     ADDRESSES("addresses"),
     EMAILS("emails"),
     ONLINE_SERVICES("onlineServices"),
     PHONES("phones");
 
-    private static final Map<String, ChannelEnum> aliases = new HashMap<String, ChannelEnum>()
+    private static final Map<String, ContactByEnum> aliases = new HashMap<String, ContactByEnum>()
     {{
         put("tel", PHONES);
         put("impp", ONLINE_SERVICES);
@@ -55,8 +55,8 @@ public enum ChannelEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static ChannelEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(ChannelEnum.class, value, aliases);
+    public static ContactByEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(ContactByEnum.class, value, aliases);
     }
 
     @Override
@@ -65,19 +65,19 @@ public enum ChannelEnum implements IsExtensibleEnum {
     }
 
     /**
-     * Returns the vCard 4.0 CONTACT-CHANNEL-PREF value corresponding to the enum value representing the channel type.
+     * Returns the vCard 4.0 CONTACT-BY value corresponding to the enum value representing the channel type.
      *
      * @param channel the channel type
-     * @return the vCard 4.0 CONTACT-CHANNEL-PREF value
+     * @return the vCard 4.0 CONTACT-BY value
      * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions">draft-ietf-calext-vcard-jscontact-extensions</a>
      */
     @JsonIgnore
-    public static String toVCardChannelType(ChannelEnum channel) {
+    public static String toVCardChannelType(ContactByEnum channel) {
 
         if (channel == null)
             return null;
 
-        for (Map.Entry<String,ChannelEnum> entry : aliases.entrySet()) {
+        for (Map.Entry<String, ContactByEnum> entry : aliases.entrySet()) {
             if (entry.getValue() == channel)
                 return entry.getKey().toUpperCase();
         }

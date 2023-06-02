@@ -47,7 +47,7 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"adr\",{\"cc\":\"US\",\"language\":\"en\"},\"text\",[\"\",\"\",\"54321 Oak St\",\"Reston\",\"VA\",\"20190\",\"USA\"]],"+
                 "[\"lang\",{\"pref\":\"1\"},\"language-tag\",\"jp\"],"+
                 "[\"lang\",{\"pref\":\"2\"},\"language-tag\",\"en\"],"+
-                "[\"locale\",{},\"language-tag\",\"en\"],"+
+                "[\"language\",{},\"language-tag\",\"en\"],"+
                 "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/street/0/ext4\"},\"text\",\"true\"],"+
                 "[\"jscontact-prop\",{\"jsptr\":\"nickNames/NICK-1/ext3\"},\"text\",\"\\\"text\\\"\"],"+
                 "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/ext2\"},\"text\",\"{\\\"prop\\\":10}\"],"+

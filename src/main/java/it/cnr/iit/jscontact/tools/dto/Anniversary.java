@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
@@ -48,9 +47,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Anniversary extends AbstractJSContactType implements HasKind, HasLabel, IdMapValue, Serializable {
+public class Anniversary extends AbstractJSContactType implements HasKind, IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Anniversary", message = "invalid @type value in Anniversary")
     @JsonProperty("@type")
     @Builder.Default
@@ -66,8 +64,6 @@ public class Anniversary extends AbstractJSContactType implements HasKind, HasLa
     @JsonDeserialize(using = AnniversaryDateDeserializer.class)
     @Valid
     AnniversaryDate date;
-
-    String label;
 
     @Valid
     Address place;

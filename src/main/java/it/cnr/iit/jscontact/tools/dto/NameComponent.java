@@ -45,7 +45,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class NameComponent extends AbstractJSContactType implements HasKind, Serializable {
 
-    @NotNull
     @Pattern(regexp = "NameComponent", message = "invalid @type value in NameComponent")
     @JsonProperty("@type")
     @Builder.Default
@@ -109,6 +108,13 @@ public class NameComponent extends AbstractJSContactType implements HasKind, Ser
      */
     @JsonIgnore
     public boolean isSeparator() { return isRfc(NameComponentEnum.SEPARATOR); }
+    /**
+     * Tests if this is the default separator for name components used to build the full name.
+     *
+     * @return true if this is the default separator, false otherwise
+     */
+    @JsonIgnore
+    public boolean isDefaultSeparator() { return isRfc(NameComponentEnum.DEFAULT_SEPARATOR); }
     /**
      * Tests if this is a custom name component.
      *
@@ -206,6 +212,13 @@ public class NameComponent extends AbstractJSContactType implements HasKind, Ser
      * @return the separator name  component
      */
     public static NameComponent separator(String value) {return rfc(NameComponentEnum.SEPARATOR, value, null);}
+    /**
+     * Returns a default separator name component of a name.
+     *
+     * @param value the default separator
+     * @return the default separator name  component
+     */
+    public static NameComponent defaultSeparator(String value) {return rfc(NameComponentEnum.DEFAULT_SEPARATOR, value, null);}
     /**
      * Returns a custom component of a name.
      *

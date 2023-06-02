@@ -10,14 +10,12 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
@@ -36,9 +34,8 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Organization extends AbstractJSContactType implements HasLabel, HasContexts, IdMapValue, Serializable {
+public class Organization extends AbstractJSContactType implements HasContexts, IdMapValue, Serializable {
 
-    @NotNull
     @Pattern(regexp = "Organization", message = "invalid @type value in Organization")
     @JsonProperty("@type")
     @Builder.Default
@@ -57,8 +54,6 @@ public class Organization extends AbstractJSContactType implements HasLabel, Has
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context, Boolean> contexts;
-
-    String label;
 
     @JsonIgnore
     String group; // used only to search for an organization related to a title/role

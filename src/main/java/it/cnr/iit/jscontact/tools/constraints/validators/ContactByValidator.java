@@ -15,10 +15,10 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.PreferredContactChannelsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.ContactByConstraint;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
-import it.cnr.iit.jscontact.tools.dto.ChannelType;
-import it.cnr.iit.jscontact.tools.dto.ContactChannelPreference;
+import it.cnr.iit.jscontact.tools.dto.ContactByType;
+import it.cnr.iit.jscontact.tools.dto.ContactBy;
 import it.cnr.iit.jscontact.tools.dto.utils.ConstraintViolationUtils;
 
 import javax.validation.ConstraintValidator;
@@ -28,26 +28,26 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class PreferredContactChannelsValidator implements ConstraintValidator<PreferredContactChannelsConstraint, Map<ChannelType, ContactChannelPreference[]>> {
+public class ContactByValidator implements ConstraintValidator<ContactByConstraint, Map<ContactByType, ContactBy[]>> {
 
-    public void initialize(PreferredContactChannelsConstraint constraintAnnotation) {
+    public void initialize(ContactByConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(Map<ChannelType, ContactChannelPreference[]> clMap, ConstraintValidatorContext context) {
+    public boolean isValid(Map<ContactByType, ContactBy[]> clMap, ConstraintValidatorContext context) {
 
         if (clMap == null)
             return true;
 
-        for(Map.Entry<ChannelType, ContactChannelPreference[]> entry : clMap.entrySet()) {
+        for(Map.Entry<ContactByType, ContactBy[]> entry : clMap.entrySet()) {
 
             if (entry.getValue() == null) {
-                context.buildConstraintViolationWithTemplate("null ContactChannelPreference in preferredContactedChannels").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate("null ContactBy in contactBy").addConstraintViolation();
                 return false;
             }
 
-            for (ContactChannelPreference cl : entry.getValue()) {
+            for (ContactBy cl : entry.getValue()) {
 
-                Set<ConstraintViolation<ContactChannelPreference>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
+                Set<ConstraintViolation<ContactBy>> constraintViolations = ValidatorBuilder.getValidator().validate(cl);
                 if (constraintViolations.size() > 0) {
                     context.buildConstraintViolationWithTemplate(ConstraintViolationUtils.getMessage(constraintViolations)).addConstraintViolation();
                     return false;

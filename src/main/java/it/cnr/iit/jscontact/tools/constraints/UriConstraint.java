@@ -15,22 +15,19 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.PreferredContactChannelsValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.UriValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
-@Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.ANNOTATION_TYPE})
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {PreferredContactChannelsValidator.class})
+@Constraint(validatedBy = {UriValidator.class})
 @Documented
-public @interface PreferredContactChannelsConstraint {
+public @interface UriConstraint {
 
-    String message() default "invalid preferredContactChannels in JSContact";
+    String message() default "invalid uri";
 
     Class<?>[] groups() default { };
 

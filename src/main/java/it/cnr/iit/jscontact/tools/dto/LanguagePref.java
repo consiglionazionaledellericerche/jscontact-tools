@@ -30,42 +30,40 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the LanguagePreference type as defined in section 2.3.5 of [draft-ietf-calext-jscontact].
+ * Class mapping the LanguagePref type as defined in section 2.3.5 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.5">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","contexts","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is missing in LanguagePreference")
+@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is missing in LanguagePref")
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class LanguagePreference extends AbstractJSContactType implements Serializable, HasContexts {
+public class LanguagePref extends AbstractJSContactType implements Serializable, HasContexts {
 
-    @NotNull
-    @Pattern(regexp = "LanguagePreference", message="invalid @type value in LanguagePreference")
+    @Pattern(regexp = "LanguagePref", message="invalid @type value in LanguagePref")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "LanguagePreference";
+    String _type = "LanguagePref";
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in LanguagePreference - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in LanguagePref - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in LanguagePreference - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in LanguagePreference - value must be less or equal than 100")
+    @Min(value=1, message = "invalid pref in LanguagePref - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in LanguagePref - value must be less or equal than 100")
     Integer pref;
 
 }

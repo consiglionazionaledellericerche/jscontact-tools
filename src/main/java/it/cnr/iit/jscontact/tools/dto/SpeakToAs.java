@@ -10,7 +10,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -32,7 +31,6 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = false)
 public class SpeakToAs extends AbstractJSContactType implements Serializable {
 
-    @NotNull
     @Pattern(regexp = "SpeakToAs", message="invalid @type value in SpeakToAs")
     @JsonProperty("@type")
     @Builder.Default

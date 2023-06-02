@@ -51,6 +51,7 @@ public enum VCardParamEnum  {
     RANKS("RANKS"),
     JSPTR("JSPTR"),
     SERVICE_TYPE("SERVICE-TYPE"),
+    USERNAME("USERNAME"),
     VALUE("VALUE");
 
     private final String value;

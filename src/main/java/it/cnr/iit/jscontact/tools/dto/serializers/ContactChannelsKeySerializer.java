@@ -18,21 +18,21 @@ package it.cnr.iit.jscontact.tools.dto.serializers;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import it.cnr.iit.jscontact.tools.dto.ChannelType;
+import it.cnr.iit.jscontact.tools.dto.ContactByType;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 /**
- * Custom JSON serializer for the "preferredContactChannels" map.
+ * Custom JSON serializer for the "contactBy" map.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class ContactChannelsKeySerializer extends JsonSerializer<ChannelType> {
+public class ContactChannelsKeySerializer extends JsonSerializer<ContactByType> {
 
     @Override
-    public void serialize(ChannelType value,
+    public void serialize(ContactByType value,
                           JsonGenerator gen,
                           SerializerProvider serializers)
             throws IOException {
