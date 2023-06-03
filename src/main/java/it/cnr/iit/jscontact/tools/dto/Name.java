@@ -59,6 +59,8 @@ public class Name extends AbstractJSContactType implements Serializable {
     @Valid
     NameComponent[] components;
 
+    String defaultSeparator;
+
     @JsonSerialize(using = NameSortAsSerializer.class)
     @JsonDeserialize(using = NameSortAsDeserializer.class)
     Map<NameComponentKind, String> sortAs;
