@@ -114,7 +114,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             joiner.add(value);
     }
 
-    private static FormattedName toVCardFormattedName(StructuredName sn, NameComponent[] nameComponents) {
+    private static FormattedName toVCardFormattedName(StructuredName sn, NameComponent[] nameComponents, String defaultSeparator) {
 
         List<String> components = new ArrayList<>();
         boolean applySeparator = false;
@@ -123,33 +123,27 @@ public class JSContact2EZVCard extends AbstractConverter {
                 switch (pair.getKind().getRfcValue()) {
                     case GIVEN:
                         components.add(sn.getGiven());
-                        components.add(DelimiterUtils.SPACE_DELIMITER);
-                        applySeparator = true;
                         break;
                     case SURNAME:
                         components.add(sn.getFamily());
-                        components.add(DelimiterUtils.SPACE_DELIMITER);
-                        applySeparator = true;
                         break;
                     case MIDDLE:
                         components.add(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,sn.getAdditionalNames()));
-                        components.add(DelimiterUtils.SPACE_DELIMITER);
-                        applySeparator = true;
                         break;
                     case PREFIX:
                         components.add(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,sn.getPrefixes()));
-                        components.add(DelimiterUtils.SPACE_DELIMITER);
-                        applySeparator = true;
                         break;
                     case SUFFIX:
                         components.add(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,sn.getSuffixes()));
-                        components.add(DelimiterUtils.SPACE_DELIMITER);
-                        applySeparator = true;
                         break;
                     case SEPARATOR:
                         if (applySeparator)
                             components.set(components.size() - 2, pair.getValue());
                         break;
+                }
+                if (!pair.isSeparator()) {
+                    components.add((defaultSeparator!=null) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER);
+                    applySeparator = true;
                 }
             }
         }
@@ -168,7 +162,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (jsCard.getName() != null) {
                 List<StructuredName> sns = toVCardStructuredNames(jsCard, vcard);
                 if (sns.size() == 1) {
-                    FormattedName fn = toVCardFormattedName(sns.get(0), jsCard.getName().getComponents());
+                    FormattedName fn = toVCardFormattedName(sns.get(0), jsCard.getName().getComponents(), jsCard.getName().getDefaultSeparator());
                     fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
                     fn.setLanguage(jsCard.getLanguage());
                     vcard.setFormattedName(fn);
@@ -176,7 +170,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 else {
                     List<FormattedName> fns = new ArrayList<>();
                     for (StructuredName sn : sns) {
-                        FormattedName fn = toVCardFormattedName(sn, jsCard.getName().getComponents());
+                        FormattedName fn = toVCardFormattedName(sn, jsCard.getName().getComponents(), jsCard.getName().getDefaultSeparator());
                         fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
                         fn.setLanguage(sn.getLanguage());
                         fns.add(fn);
