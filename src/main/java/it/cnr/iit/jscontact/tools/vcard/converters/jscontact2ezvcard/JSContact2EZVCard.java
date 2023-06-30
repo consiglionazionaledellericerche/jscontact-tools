@@ -1611,35 +1611,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
         }
 
-        if (jsCard.getContactBy()!=null) {
-
-            String propertyName = VCardPropEnum.CONTACT_BY.getValue();
-            Map<ContactByType, ContactBy[]> contactBy = jsCard.getContactBy();
-            for (Map.Entry<ContactByType, ContactBy[]> entry: contactBy.entrySet()) {
-                String value;
-                if (entry.getKey().isRfcValue())
-                    value = ContactByEnum.toVCardChannelType(entry.getKey().getRfcValue());
-                else
-                    value = entry.getKey().getExtValue().toString().toUpperCase();
-                if (entry.getValue().length == 0) {
-                    RawProperty raw = new RawProperty(propertyName, value);
-                    raw.setDataType(VCardDataType.TEXT);
-                    vCard.addProperty(raw);
-                }
-                else {
-                    for (ContactBy pref : entry.getValue()) {
-                        RawProperty raw = new RawProperty(propertyName, value);
-                        String vCardTypeValue = toVCardTypeParam(pref);
-                        if (vCardTypeValue!=null)
-                            raw.setParameter(VCardParamEnum.TYPE.getValue(), vCardTypeValue);
-                        if (pref.getPref()!=null)
-                            raw.setParameter(VCardParamEnum.PREF.getValue(), pref.getPref().toString());
-                        raw.setDataType(VCardDataType.TEXT);
-                        vCard.addProperty(raw);
-                    }
-                }
-            }
-        }
     }
 
     private void fillVCardPropsFromJSCardExtensions(VCard vcard, Card jsCard) {

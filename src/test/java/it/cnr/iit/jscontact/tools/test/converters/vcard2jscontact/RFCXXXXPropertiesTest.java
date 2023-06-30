@@ -17,7 +17,6 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.ContactByType;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
@@ -39,30 +38,6 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testCreated - 1", 0, jsCard.getCreated().compareTo(DateUtils.toCalendar("2010-10-10T10:10:10Z")));
-    }
-
-    @Test
-    public void testContactBy() throws CardException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:test\n" +
-                "CONTACT-BY;TYPE=work;PREF=1:EMAIL\n" +
-                "CONTACT-BY;TYPE=home;PREF=2:EMAIL\n" +
-                "CONTACT-BY;TYPE=work:TEL\n" +
-                "CONTACT-BY:ADR\n" +
-                "END:VCARD";
-
-        Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testContactBy - 1", 3, jsCard.getContactBy().size());
-        assertEquals("testContactBy - 2", 2, jsCard.getContactBy().get(ContactByType.emails()).length);
-        assertEquals("testContactBy - 3", 1, (int) jsCard.getContactBy().get(ContactByType.emails())[0].getPref());
-        assertTrue("testContactBy - 4", jsCard.getContactBy().get(ContactByType.emails())[0].asWork());
-        assertEquals("testContactBy - 5", 2, (int) jsCard.getContactBy().get(ContactByType.emails())[1].getPref());
-        assertTrue("testContactBy - 6", jsCard.getContactBy().get(ContactByType.emails())[1].asPrivate());
-        assertEquals("testContactBy - 7", 1, jsCard.getContactBy().get(ContactByType.phones()).length);
-        assertTrue("testContactBy - 8", jsCard.getContactBy().get(ContactByType.phones())[0].asWork());
-        assertEquals("testContactBy - 9", 0, jsCard.getContactBy().get(ContactByType.addresses()).length);
     }
 
     @Test

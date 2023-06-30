@@ -28,10 +28,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
-import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.VCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.VCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
@@ -58,7 +56,7 @@ import java.util.*;
 @JsonPropertyOrder({
         "@type", "@version", "created", "kind", "language", "members", "prodId", "relatedTo", "uid", "updated",
         "fullName", "name", "nickNames", "organizations", "speakToAs", "titles",
-        "emails", "onlineServices", "phones", "contactBy", "preferredLanguages",
+        "emails", "onlineServices", "phones", "preferredLanguages",
         "calendars", "schedulingAddresses",
         "addresses",
         "cryptoKeys", "directories", "links", "media",
@@ -171,14 +169,6 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     /*
     Contact and Resource properties
      */
-
-    // Section 2.3.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addContactByPref", itemClass = ContactBy.class)
-    @JsonPropertyOrder(alphabetic = true)
-    @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
-    @JsonDeserialize(keyUsing = ContactChannelsKeyDeserializer.class)
-    @ContactByConstraint
-    Map<ContactByType, ContactBy[]> contactBy;
 
     // Section 2.3.2 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addEmailAddress", itemClass = EmailAddress.class)
@@ -561,30 +551,6 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
             preferredLanguages.put(id, languages);
         else
             preferredLanguages.put(id, ArrayUtils.addAll(languagesPerId, languages));
-    }
-
-    /**
-     * Adds a contact channel preference to this object.
-     *
-     * @param id the contact channel preference identifier
-     * @param contactByPref the object representing the contact channel preference
-     */
-    public void addContactByPref(ContactByType id, ContactBy contactByPref) {
-
-        if (contactBy == null)
-            contactBy = new HashMap<>();
-
-        ContactBy[] contactChannelsPerId = contactBy.get(id);
-
-        ContactBy[] channels;
-        if (contactByPref == null)
-            channels = new ContactBy[]{};
-        else
-            channels = new ContactBy[] {contactByPref};
-        if (contactChannelsPerId == null)
-            contactBy.put(id, channels);
-        else
-            contactBy.put(id, ArrayUtils.addAll(contactChannelsPerId, channels));
     }
 
     /**

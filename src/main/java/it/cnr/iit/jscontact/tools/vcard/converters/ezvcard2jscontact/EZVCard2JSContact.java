@@ -708,7 +708,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .pref(vcardAddr.getPref())
                 .coordinates(getValue(vcardAddr.getGeo()))
                 .timeZone(toJSCardTimezoneName(vcardAddr.getTimezone()))
-                .countryCode(vcardAddr.getParameter(VCardParamEnum.CC.getValue()))
+                .countryCode((VCardParamEnum.CC.getValue()!=null) ? vcardAddr.getParameter(VCardParamEnum.CC.getValue()) : vcardAddr.getParameter(VCardParamEnum.ISO_3166_1_ALPHA_2.getValue()))
                 .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[0]) : null)
                 .locality(StringUtils.defaultIfEmpty(vcardAddr.getLocality(), null))
                 .region(StringUtils.defaultIfEmpty(vcardAddr.getRegion(), null))
@@ -1331,24 +1331,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     }
                 } else {
                     jsCard.addLocalization(language, jsonPointer, mapper.convertValue(pronouns, JsonNode.class));
-                }
-            }
-            else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.CONTACT_BY.getValue())) {
-                if (!extension.getValue().isEmpty()) {
-                    ContactByType contactByType;
-                    try {
-                        contactByType = ContactByType.rfc(ContactByEnum.getEnum(extension.getValue().toLowerCase()));
-                    } catch (Exception e) {
-                        contactByType = ContactByType.ext(extension.getValue().toLowerCase());
-                    }
-                    if (contexts != null || pref != null)
-                        jsCard.addContactByPref(contactByType, ContactBy.builder()
-                                .contexts(contexts)
-                                .pref(pref)
-                                .vCardParams(VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.TYPE, VCardParamEnum.PREF))
-                                .build());
-                    else
-                        jsCard.addContactByPref(contactByType, null);
                 }
             }
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.SOCIALPROFILE.getValue())) {

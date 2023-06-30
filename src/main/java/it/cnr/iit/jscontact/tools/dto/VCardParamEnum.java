@@ -35,6 +35,7 @@ public enum VCardParamEnum  {
     PID("PID"),
     LEVEL("LEVEL"),
     CC("CC"),
+    ISO_3166_1_ALPHA_2 ("ISO-3166-1-alpha-2"),
     GROUP("GROUP"),
     TYPE("TYPE"),
     PREF("PREF"),
