@@ -397,7 +397,7 @@ All the methods take in input a list of JSContact Card objects and can raise the
 7. The "street" component of ADR property results from the concatenation of "district", "block", "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
 8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room", "landmark"
-   and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated
+   and "extention" non-empty values presented in the "components" member of the "Address" object. Such values are separated
    by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
 9. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full
@@ -499,7 +499,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
                 "\"fullName\":\"test\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"street\":[{\"kind\":\"name\",\"value\":\"54321 Oak St\"}]," +
+                        "\"components\":[{\"kind\":\"name\",\"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +

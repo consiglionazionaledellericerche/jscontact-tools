@@ -48,7 +48,7 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"lang\",{\"pref\":\"1\"},\"language-tag\",\"jp\"],"+
                 "[\"lang\",{\"pref\":\"2\"},\"language-tag\",\"en\"],"+
                 "[\"language\",{},\"language-tag\",\"en\"],"+
-                "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/street/0/ext4\"},\"text\",\"true\"],"+
+                "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/components/0/ext4\"},\"text\",\"true\"],"+
                 "[\"jscontact-prop\",{\"jsptr\":\"nickNames/NICK-1/ext3\"},\"text\",\"\\\"text\\\"\"],"+
                 "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/ext2\"},\"text\",\"{\\\"prop\\\":10}\"],"+
                 "[\"jscontact-prop\",{\"jsptr\":\"preferredLanguages/jp/0/ext6\"},\"text\",\"[\\\"1\\\",\\\"2\\\"]\"],"+
@@ -63,8 +63,8 @@ public class ExtensionsTest extends JCard2JSContactTest {
         assertEquals("testExtendedJSContact2 - 6", "[1, 2]", jsCard.getPreferredLanguages().get("jp")[0].getExtensions().get("ext6").toString());
         assertEquals("testExtendedJSContact2 - 7", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
         assertEquals("testExtendedJSContact2 - 8", "{prop=10}", jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").toString());
-        assertEquals("testExtendedJSContact2 - 9", 1, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().size());
-        assertEquals("testExtendedJSContact2 - 10", true, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().get("ext4"));
+        assertEquals("testExtendedJSContact2 - 9", 1, jsCard.getAddresses().get("ADR-1").getComponents()[0].getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 10", true, jsCard.getAddresses().get("ADR-1").getComponents()[0].getExtensions().get("ext4"));
     }
 
 

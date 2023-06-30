@@ -53,7 +53,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "LANG;PREF=1:jp\n" +
                 "LANG;PREF=2:en\n" +
                 "DEFLANGUAGE;VALUE=language-tag:en\n" +
-                "JSCONTACT-PROP;JSPTR=\"addresses/ADR-1/street/0/ext4\";VALUE=TEXT:true\n" +
+                "JSCONTACT-PROP;JSPTR=\"addresses/ADR-1/components/0/ext4\";VALUE=TEXT:true\n" +
                 "JSCONTACT-PROP;JSPTR=\"nickNames/NICK-1/ext3\";VALUE=TEXT:\"text\"\n" +
                 "JSCONTACT-PROP;JSPTR=\"addresses/ADR-1/ext2\";VALUE=TEXT:{\"prop\":10}\n" +
                 "JSCONTACT-PROP;JSPTR=\"preferredLanguages/jp/0/ext6\";VALUE=TEXT:[\"1\",\"2\"]\n" +
@@ -68,8 +68,8 @@ public class ExtensionsTest extends VCard2JSContactTest {
         assertEquals("testExtendedJSContact2 - 6", "[1, 2]", jsCard.getPreferredLanguages().get("jp")[0].getExtensions().get("ext6").toString());
         assertEquals("testExtendedJSContact2 - 7", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
         assertEquals("testExtendedJSContact2 - 8", "{prop=10}", jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").toString());
-        assertEquals("testExtendedJSContact2 - 9", 1, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().size());
-        assertEquals("testExtendedJSContact2 - 10", true, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().get("ext4"));
+        assertEquals("testExtendedJSContact2 - 9", 1, jsCard.getAddresses().get("ADR-1").getComponents()[0].getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 10", true, jsCard.getAddresses().get("ADR-1").getComponents()[0].getExtensions().get("ext4"));
 
     }
 

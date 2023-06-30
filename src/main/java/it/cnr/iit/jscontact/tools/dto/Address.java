@@ -43,7 +43,7 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","fullAddress","street","locality","region","country",
+@JsonPropertyOrder({"@type","fullAddress","components","locality","region","country",
                      "postcode","countryCode","coordinates","timeZone",
                      "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -62,7 +62,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     String fullAddress;
 
     @JSContactCollection(addMethod = "addComponent", itemClass = StreetComponent.class)
-    StreetComponent[] street;
+    StreetComponent[] components;
 
     String locality;
 
@@ -154,10 +154,10 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
 
     private String getStreetDetail(StreetComponentEnum detail) {
 
-        if (street == null)
+        if (components == null)
             return null;
 
-        for (StreetComponent pair : street) {
+        for (StreetComponent pair : components) {
             if (!pair.isExt() && pair.getKind().getRfcValue() == detail)
                 return pair.getValue();
         }
@@ -168,7 +168,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     /**
      * Returns the P.O. box of this object.
      *
-     * @return the value of StreetComponent item in the "street" array tagged as POST_OFFICE_BOX
+     * @return the value of StreetComponent item in the "components" array tagged as POST_OFFICE_BOX
      */
     @JsonIgnore
     public String getPostOfficeBox() {
@@ -177,34 +177,34 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
 
 
     private String getStreetAddressDetails(List<StreetComponentEnum> componentsToCheck) {
-        if (street == null)
+        if (components == null)
             return null;
 
-        List<String> streetComponents = new ArrayList<>();
+        List<String> addressComponents = new ArrayList<>();
         boolean applySeparator = false;
-        for (StreetComponent pair : street) {
+        for (StreetComponent pair : components) {
             if (pair.getKind().isRfcValue()) {
                 if (componentsToCheck.contains(pair.getKind().getRfcValue())) {
                     applySeparator = true;
-                    streetComponents.add(pair.getValue());
+                    addressComponents.add(pair.getValue());
                     if (defaultSeparator != null)
-                        streetComponents.add(defaultSeparator);
+                        addressComponents.add(defaultSeparator);
                     else
-                        streetComponents.add(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                        addressComponents.add(DelimiterUtils.COMMA_ARRAY_DELIMITER);
                 } else if (pair.isSeparator()) {
                     if (applySeparator)
-                        streetComponents.set(streetComponents.size() - 2, pair.getValue());
+                        addressComponents.set(addressComponents.size() - 2, pair.getValue());
                 }
             }
         }
 
-        return (streetComponents.isEmpty()) ? null : String.join("",streetComponents.subList(0,streetComponents.size()-1));
+        return (addressComponents.isEmpty()) ? null : String.join("",addressComponents.subList(0,addressComponents.size()-1));
     }
 
     /**
      * Returns the street details of this object.
      *
-     * @return a text obtained by concatenating the values of StreetComponent items in the "street" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
+     * @return a text obtained by concatenating the values of StreetComponent items in the "components" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
      */
     @JsonIgnore
     public String getStreetAddress() {
@@ -219,7 +219,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     /**
      * Returns the street extensions of this object.
      *
-     * @return a text obtained by concatenating the values of the StreetComponent items in the "street" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
+     * @return a text obtained by concatenating the values of the StreetComponent items in the "components" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
      */
     @JsonIgnore
     public String getStreetExtendedAddress() {
@@ -250,7 +250,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      * @param sc the street component
      */
     public void addComponent(StreetComponent sc) {
-        street = ArrayUtils.add(street, sc);
+        components = ArrayUtils.add(components, sc);
     }
 
     /**

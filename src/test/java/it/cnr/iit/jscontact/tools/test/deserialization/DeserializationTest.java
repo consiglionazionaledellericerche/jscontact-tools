@@ -91,7 +91,7 @@ public class DeserializationTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"@type\":\"StreetComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\", \"ext4\": 5}]," +
+                        "\"components\":[{\"@type\":\"StreetComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\", \"ext4\": 5}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
@@ -110,7 +110,7 @@ public class DeserializationTest {
         Map<String, Object> allExtensionsMap = new HashMap<>();
         jsCard.buildAllExtensionsMap(allExtensionsMap, "");
         assertEquals("testDeserialization5 - 5", 5, allExtensionsMap.size());
-        assertTrue("testDeserialization5 - 6", allExtensionsMap.containsKey("addresses/ADR-1/street/0/ext4"));
+        assertTrue("testDeserialization5 - 6", allExtensionsMap.containsKey("addresses/ADR-1/components/0/ext4"));
         assertTrue("testDeserialization5 - 7", allExtensionsMap.containsKey("nickNames/NICK-1/ext3"));
         assertTrue("testDeserialization5 - 8", allExtensionsMap.containsKey("addresses/ADR-1/ext2"));
         assertTrue("testDeserialization5 - 9", allExtensionsMap.containsKey("preferredLanguages/jp/0/ext6"));

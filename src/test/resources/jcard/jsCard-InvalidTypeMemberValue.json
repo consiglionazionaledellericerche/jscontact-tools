@@ -13,7 +13,7 @@
     "ADR-1" : {
       "@type": "Wrong@TypeValue",
       "contexts": {"work": true},
-      "street": [{"@type": "StreetComponent","kind": "name","value": "4321 Rue Somewhere"},{"@type": "StreetComponent","kind": "extension","value":"Suite 1234"}],
+      "components": [{"@type": "StreetComponent","kind": "name","value": "4321 Rue Somewhere"},{"@type": "StreetComponent","kind": "extension","value":"Suite 1234"}],
       "locality": "Quebec",
       "region": "QC",
       "postcode": "G1V 2M2",

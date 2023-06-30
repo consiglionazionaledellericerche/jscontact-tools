@@ -709,7 +709,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .coordinates(getValue(vcardAddr.getGeo()))
                 .timeZone(toJSCardTimezoneName(vcardAddr.getTimezone()))
                 .countryCode((VCardParamEnum.CC.getValue()!=null) ? vcardAddr.getParameter(VCardParamEnum.CC.getValue()) : vcardAddr.getParameter(VCardParamEnum.ISO_3166_1_ALPHA_2.getValue()))
-                .street((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[0]) : null)
+                .components((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[0]) : null)
                 .locality(StringUtils.defaultIfEmpty(vcardAddr.getLocality(), null))
                 .region(StringUtils.defaultIfEmpty(vcardAddr.getRegion(), null))
                 .postcode(StringUtils.defaultIfEmpty(vcardAddr.getPostalCode(), null))

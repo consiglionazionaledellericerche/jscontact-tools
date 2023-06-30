@@ -37,7 +37,7 @@ public class PropertyGroupTest extends JSContact2VCardTest {
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
                         "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
-                        "\"street\":[{\"@type\":\"StreetComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
+                        "\"components\":[{\"@type\":\"StreetComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
