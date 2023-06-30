@@ -22,13 +22,13 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the StreetComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "kind" property of the AddressComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum StreetComponentEnum implements IsExtensibleEnum {
+public enum AddressComponentEnum implements IsExtensibleEnum {
 
     DISTRICT("district"),
     BLOCK("block"),
@@ -54,8 +54,8 @@ public enum StreetComponentEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static StreetComponentEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(StreetComponentEnum.class, value);
+    public static AddressComponentEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(AddressComponentEnum.class, value);
     }
 
     @Override

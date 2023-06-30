@@ -61,8 +61,8 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
 
     String fullAddress;
 
-    @JSContactCollection(addMethod = "addComponent", itemClass = StreetComponent.class)
-    StreetComponent[] components;
+    @JSContactCollection(addMethod = "addComponent", itemClass = AddressComponent.class)
+    AddressComponent[] components;
 
     String locality;
 
@@ -152,12 +152,12 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      */
     public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
 
-    private String getStreetDetail(StreetComponentEnum detail) {
+    private String getStreetDetail(AddressComponentEnum detail) {
 
         if (components == null)
             return null;
 
-        for (StreetComponent pair : components) {
+        for (AddressComponent pair : components) {
             if (!pair.isExt() && pair.getKind().getRfcValue() == detail)
                 return pair.getValue();
         }
@@ -168,21 +168,21 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     /**
      * Returns the P.O. box of this object.
      *
-     * @return the value of StreetComponent item in the "components" array tagged as POST_OFFICE_BOX
+     * @return the value of AddressComponent item in the "components" array tagged as POST_OFFICE_BOX
      */
     @JsonIgnore
     public String getPostOfficeBox() {
-        return getStreetDetail(StreetComponentEnum.POST_OFFICE_BOX);
+        return getStreetDetail(AddressComponentEnum.POST_OFFICE_BOX);
     }
 
 
-    private String getStreetAddressDetails(List<StreetComponentEnum> componentsToCheck) {
+    private String getStreetAddressDetails(List<AddressComponentEnum> componentsToCheck) {
         if (components == null)
             return null;
 
         List<String> addressComponents = new ArrayList<>();
         boolean applySeparator = false;
-        for (StreetComponent pair : components) {
+        for (AddressComponent pair : components) {
             if (pair.getKind().isRfcValue()) {
                 if (componentsToCheck.contains(pair.getKind().getRfcValue())) {
                     applySeparator = true;
@@ -204,32 +204,32 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     /**
      * Returns the street details of this object.
      *
-     * @return a text obtained by concatenating the values of StreetComponent items in the "components" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
+     * @return a text obtained by concatenating the values of AddressComponent items in the "components" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
      */
     @JsonIgnore
     public String getStreetAddress() {
 
-        return getStreetAddressDetails(Arrays.asList(StreetComponentEnum.DISTRICT,
-                                                     StreetComponentEnum.BLOCK,
-                                                     StreetComponentEnum.NAME,
-                                                     StreetComponentEnum.NUMBER,
-                                                     StreetComponentEnum.DIRECTION));
+        return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.DISTRICT,
+                                                     AddressComponentEnum.BLOCK,
+                                                     AddressComponentEnum.NAME,
+                                                     AddressComponentEnum.NUMBER,
+                                                     AddressComponentEnum.DIRECTION));
     }
 
     /**
      * Returns the street extensions of this object.
      *
-     * @return a text obtained by concatenating the values of the StreetComponent items in the "components" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
+     * @return a text obtained by concatenating the values of the AddressComponent items in the "components" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
      */
     @JsonIgnore
     public String getStreetExtendedAddress() {
 
-        return getStreetAddressDetails(Arrays.asList(StreetComponentEnum.BUILDING,
-                StreetComponentEnum.FLOOR,
-                StreetComponentEnum.APARTMENT,
-                StreetComponentEnum.ROOM,
-                StreetComponentEnum.LANDMARK,
-                StreetComponentEnum.EXTENSION));
+        return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.BUILDING,
+                AddressComponentEnum.FLOOR,
+                AddressComponentEnum.APARTMENT,
+                AddressComponentEnum.ROOM,
+                AddressComponentEnum.LANDMARK,
+                AddressComponentEnum.EXTENSION));
     }
 
 
@@ -240,7 +240,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      * @param components the street components
      * @return the street components in input plus the sc component
      */
-    public static StreetComponent[] addComponent(StreetComponent[] components, StreetComponent sc) {
+    public static AddressComponent[] addComponent(AddressComponent[] components, AddressComponent sc) {
         return ArrayUtils.add(components, sc);
     }
 
@@ -249,7 +249,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      *
      * @param sc the street component
      */
-    public void addComponent(StreetComponent sc) {
+    public void addComponent(AddressComponent sc) {
         components = ArrayUtils.add(components, sc);
     }
 

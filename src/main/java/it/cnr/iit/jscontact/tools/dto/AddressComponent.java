@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.StreetComponentTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentTypeDeserializer;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
@@ -29,7 +29,7 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the StreetComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the AddressComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -40,23 +40,23 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class StreetComponent extends AbstractJSContactType implements HasKind, Serializable {
+public class AddressComponent extends AbstractJSContactType implements HasKind, Serializable {
 
-    @Pattern(regexp = "StreetComponent", message="invalid @type value in StreetComponent")
+    @Pattern(regexp = "AddressComponent", message="invalid @type value in AddressComponent")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "StreetComponent";
+    String _type = "AddressComponent";
 
-    @NotNull(message = "kind is missing in StreetComponent")
+    @NotNull(message = "kind is missing in AddressComponent")
     @NonNull
-    @JsonDeserialize(using = StreetComponentTypeDeserializer.class)
-    StreetComponentKind kind;
+    @JsonDeserialize(using = AddressComponentTypeDeserializer.class)
+    AddressComponentKind kind;
 
-    @NotNull(message = "value is missing in StreetComponent")
+    @NotNull(message = "value is missing in AddressComponent")
     @NonNull
     String value;
 
-    private boolean isRfc(StreetComponentEnum value) { return (kind.getRfcValue()!= null && kind.getRfcValue() == value);}
+    private boolean isRfc(AddressComponentEnum value) { return (kind.getRfcValue()!= null && kind.getRfcValue() == value);}
 
     /**
      * Tests if this is the street district.
@@ -64,7 +64,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the street district, false otherwise
      */
     @JsonIgnore
-    public boolean isDistrict() { return isRfc(StreetComponentEnum.DISTRICT); }
+    public boolean isDistrict() { return isRfc(AddressComponentEnum.DISTRICT); }
 
     /**
      * Tests if this is the street block.
@@ -72,14 +72,14 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the street block, false otherwise
      */
     @JsonIgnore
-    public boolean isBlock() { return isRfc(StreetComponentEnum.BLOCK); }
+    public boolean isBlock() { return isRfc(AddressComponentEnum.BLOCK); }
     /**
      * Tests if this is the street name.
      *
      * @return true if this is the street name, false otherwise
      */
     @JsonIgnore
-    public boolean isName() { return isRfc(StreetComponentEnum.NAME); }
+    public boolean isName() { return isRfc(AddressComponentEnum.NAME); }
 
     /**
      * Tests if this is the street number.
@@ -87,7 +87,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the street number, false otherwise
      */
     @JsonIgnore
-    public boolean isNumber() { return isRfc(StreetComponentEnum.NUMBER); }
+    public boolean isNumber() { return isRfc(AddressComponentEnum.NUMBER); }
 
     /**
      * Tests if this is the cardinal direction.
@@ -95,7 +95,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the cardinal direction, false otherwise
      */
     @JsonIgnore
-    public boolean isDirection() { return isRfc(StreetComponentEnum.DIRECTION); }
+    public boolean isDirection() { return isRfc(AddressComponentEnum.DIRECTION); }
 
     /**
      * Tests if this is the building or building part.
@@ -103,7 +103,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the building or building part, false otherwise
      */
     @JsonIgnore
-    public boolean isBuilding() { return isRfc(StreetComponentEnum.BUILDING); }
+    public boolean isBuilding() { return isRfc(AddressComponentEnum.BUILDING); }
 
     /**
      * Tests if this is the floor number.
@@ -111,7 +111,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the floor number, false otherwise
      */
     @JsonIgnore
-    public boolean isFloor() { return isRfc(StreetComponentEnum.FLOOR); }
+    public boolean isFloor() { return isRfc(AddressComponentEnum.FLOOR); }
 
     /**
      * Tests if this is the apartment number or identifier.
@@ -119,7 +119,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the apartment number or identifier, false otherwise
      */
     @JsonIgnore
-    public boolean isApartment() { return isRfc(StreetComponentEnum.APARTMENT); }
+    public boolean isApartment() { return isRfc(AddressComponentEnum.APARTMENT); }
 
     /**
      * Tests if this is room number or identifier.
@@ -127,7 +127,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the room number or identifier, false otherwise
      */
     @JsonIgnore
-    public boolean isRoom() { return isRfc(StreetComponentEnum.ROOM); }
+    public boolean isRoom() { return isRfc(AddressComponentEnum.ROOM); }
 
     /**
      * Tests if this is the landmarkr.
@@ -135,14 +135,14 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the landmark, false otherwise
      */
     @JsonIgnore
-    public boolean isLandmark() { return isRfc(StreetComponentEnum.LANDMARK); }
+    public boolean isLandmark() { return isRfc(AddressComponentEnum.LANDMARK); }
     /**
      * Tests if this is an extension designation or box number.
      *
      * @return true if this is an extension, false otherwise
      */
     @JsonIgnore
-    public boolean isExtension() { return isRfc(StreetComponentEnum.EXTENSION); }
+    public boolean isExtension() { return isRfc(AddressComponentEnum.EXTENSION); }
 
     /**
      * Tests if this is the P.O. box number or identifier.
@@ -150,7 +150,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the P.O. box number or identifier, false otherwise
      */
     @JsonIgnore
-    public boolean isPostOfficeBox() { return isRfc(StreetComponentEnum.POST_OFFICE_BOX); }
+    public boolean isPostOfficeBox() { return isRfc(AddressComponentEnum.POST_OFFICE_BOX); }
 
     /**
      * Tests if this is the separator for street components used to build the full address.
@@ -158,7 +158,7 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @return true if this is the separator, false otherwise
      */
     @JsonIgnore
-    public boolean isSeparator() { return isRfc(StreetComponentEnum.SEPARATOR); }
+    public boolean isSeparator() { return isRfc(AddressComponentEnum.SEPARATOR); }
 
     /**
      * Tests if this is a custom street component.
@@ -168,10 +168,10 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
     @JsonIgnore
     public boolean isExt() { return kind.isExtValue(); }
 
-    private static StreetComponent rfc(StreetComponentEnum rfcValue, String value) {
-        return StreetComponent.builder()
+    private static AddressComponent rfc(AddressComponentEnum rfcValue, String value) {
+        return AddressComponent.builder()
                 .value(value)
-                .kind(StreetComponentKind.builder().rfcValue(rfcValue).build())
+                .kind(AddressComponentKind.builder().rfcValue(rfcValue).build())
                 .build();
     }
 
@@ -181,91 +181,91 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @param value the street district
      * @return the district component
      */
-    public static StreetComponent district(String value) { return rfc(StreetComponentEnum.DISTRICT, value);}
+    public static AddressComponent district(String value) { return rfc(AddressComponentEnum.DISTRICT, value);}
     /**
      * Returns a block component of a street address.
      *
      * @param value the street block
      * @return the block component
      */
-    public static StreetComponent block(String value) { return rfc(StreetComponentEnum.BLOCK, value);}
+    public static AddressComponent block(String value) { return rfc(AddressComponentEnum.BLOCK, value);}
     /**
      * Returns a name component of a street address.
      *
      * @param value the street name
      * @return the name component
      */
-    public static StreetComponent name(String value) { return rfc(StreetComponentEnum.NAME, value);}
+    public static AddressComponent name(String value) { return rfc(AddressComponentEnum.NAME, value);}
     /**
      * Returns a number component of a street address.
      *
      * @param value the street number
      * @return the number component
      */
-    public static StreetComponent number(String value) { return rfc(StreetComponentEnum.NUMBER, value);}
+    public static AddressComponent number(String value) { return rfc(AddressComponentEnum.NUMBER, value);}
     /**
      * Returns a direction component of a street address.
      *
      * @param value the street direction
      * @return the direction component
      */
-    public static StreetComponent direction(String value) { return rfc(StreetComponentEnum.DIRECTION, value);}
+    public static AddressComponent direction(String value) { return rfc(AddressComponentEnum.DIRECTION, value);}
     /**
      * Returns a building component of a street address.
      *
      * @param value the building number
      * @return the building component
      */
-    public static StreetComponent building(String value) { return rfc(StreetComponentEnum.BUILDING, value);}
+    public static AddressComponent building(String value) { return rfc(AddressComponentEnum.BUILDING, value);}
     /**
      * Returns a floor component of a street address.
      *
      * @param value the floor number
      * @return the floor component
      */
-    public static StreetComponent floor(String value) { return rfc(StreetComponentEnum.FLOOR, value);}
+    public static AddressComponent floor(String value) { return rfc(AddressComponentEnum.FLOOR, value);}
     /**
      * Returns an apartment component of a street address.
      *
      * @param value the apartment number
      * @return the apartment component
      */
-    public static StreetComponent apartment(String value) { return rfc(StreetComponentEnum.APARTMENT, value);}
+    public static AddressComponent apartment(String value) { return rfc(AddressComponentEnum.APARTMENT, value);}
     /**
      * Returns a room component of a street address.
      *
      * @param value the room number
      * @return the room component
      */
-    public static StreetComponent room(String value) { return rfc(StreetComponentEnum.ROOM, value);}
+    public static AddressComponent room(String value) { return rfc(AddressComponentEnum.ROOM, value);}
     /**
      * Returns a landmark component of a street address.
      *
      * @param value the landmark
      * @return the landmark component
      */
-    public static StreetComponent landmark(String value) { return rfc(StreetComponentEnum.LANDMARK, value);}
+    public static AddressComponent landmark(String value) { return rfc(AddressComponentEnum.LANDMARK, value);}
     /**
      * Returns an extension component of a street address.
      *
      * @param value the extension
      * @return the extension component
      */
-    public static StreetComponent extension(String value) { return rfc(StreetComponentEnum.EXTENSION, value);}
+    public static AddressComponent extension(String value) { return rfc(AddressComponentEnum.EXTENSION, value);}
     /**
      * Returns a P.O. box component of a street address.
      *
      * @param value the P.O. box number
      * @return the P.O. box component
      */
-    public static StreetComponent postOfficeBox(String value) { return rfc(StreetComponentEnum.POST_OFFICE_BOX, value);}
+    public static AddressComponent postOfficeBox(String value) { return rfc(AddressComponentEnum.POST_OFFICE_BOX, value);}
     /**
      * Returns a separator component of a street address.
      *
      * @param value the separator
      * @return the separator component
      */
-    public static StreetComponent separator(String value) { return rfc(StreetComponentEnum.SEPARATOR, value);}
+    public static AddressComponent separator(String value) { return rfc(AddressComponentEnum.SEPARATOR, value);}
     /**
      * Returns a custom component of a street address.
      *
@@ -273,10 +273,10 @@ public class StreetComponent extends AbstractJSContactType implements HasKind, S
      * @param value the value for the custom street component
      * @return the custom component
      */
-    public static StreetComponent ext(String extValue, String value) {
-        return StreetComponent.builder()
+    public static AddressComponent ext(String extValue, String value) {
+        return AddressComponent.builder()
                 .value(value)
-                .kind(StreetComponentKind.builder().extValue(V_Extension.toV_Extension(extValue)).build())
+                .kind(AddressComponentKind.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
     }
 

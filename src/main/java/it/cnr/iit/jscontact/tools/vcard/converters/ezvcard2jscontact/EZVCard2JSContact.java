@@ -689,13 +689,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private Address toJSCardAddress(ezvcard.property.Address vcardAddr, VCard vcard) {
 
-        List<StreetComponent> streetDetailPairs = new ArrayList<>();
+        List<AddressComponent> streetDetailPairs = new ArrayList<>();
         if (StringUtils.isNotEmpty(vcardAddr.getPoBox()))
-            streetDetailPairs.add(StreetComponent.postOfficeBox(vcardAddr.getPoBox()));
+            streetDetailPairs.add(AddressComponent.postOfficeBox(vcardAddr.getPoBox()));
         if (StringUtils.isNotEmpty(vcardAddr.getExtendedAddressFull()))
-            streetDetailPairs.add(StreetComponent.extension(vcardAddr.getExtendedAddressFull()));
+            streetDetailPairs.add(AddressComponent.extension(vcardAddr.getExtendedAddressFull()));
         if (StringUtils.isNotEmpty(vcardAddr.getStreetAddressFull()))
-            streetDetailPairs.add(StreetComponent.name(vcardAddr.getStreetAddressFull()));
+            streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddressFull()));
 
         String autoFullAddress = toJSCardAutoFulllAddress(vcardAddr);
         String vcardTypeParam = VCardUtils.getVCardParamValue(vcardAddr.getParameters(), VCardParamEnum.TYPE);
@@ -709,7 +709,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .coordinates(getValue(vcardAddr.getGeo()))
                 .timeZone(toJSCardTimezoneName(vcardAddr.getTimezone()))
                 .countryCode((VCardParamEnum.CC.getValue()!=null) ? vcardAddr.getParameter(VCardParamEnum.CC.getValue()) : vcardAddr.getParameter(VCardParamEnum.ISO_3166_1_ALPHA_2.getValue()))
-                .components((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new StreetComponent[0]) : null)
+                .components((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new AddressComponent[0]) : null)
                 .locality(StringUtils.defaultIfEmpty(vcardAddr.getLocality(), null))
                 .region(StringUtils.defaultIfEmpty(vcardAddr.getRegion(), null))
                 .postcode(StringUtils.defaultIfEmpty(vcardAddr.getPostalCode(), null))

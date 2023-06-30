@@ -91,7 +91,7 @@ public class DeserializationTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"StreetComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\", \"ext4\": 5}]," +
+                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\", \"ext4\": 5}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
                         "\"country\":\"USA\"," +
