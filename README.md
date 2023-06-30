@@ -319,6 +319,8 @@ The conversion is executed according to the following rules:
 23. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group
     construct.
 
+24. Either the "ISO-3166-1-alpha-2" parameter (that maybe used in RDAP) is converted.
+
 ### Conversion Profiles from vCard to JSContact Card
 
 By default, where a collection of objects is mapped to a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
@@ -404,6 +406,8 @@ All the methods take in input a list of JSContact Card objects and can raise the
 
 10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the `setPropIdParam` mapping 
     configuration parameter.
+
+10. The "countryCode" member of the Address type always converts to the vCard CC parameter.
 
 ### Conversion examples
 
