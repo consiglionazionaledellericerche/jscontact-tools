@@ -26,6 +26,7 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
@@ -499,9 +500,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         return (coordinates!=null) ? GeoUri.parse(coordinates) : null;
     }
 
-    private ezvcard.property.Address toVCardAddress(Address address, Map<String, TimeZone> timeZones, String language) {
+    private ExtendedAddress toVCardAddress(Address address, Map<String, TimeZone> timeZones, String language) {
 
-        ezvcard.property.Address addr = new ezvcard.property.Address();
+        ExtendedAddress addr = new ExtendedAddress();
         if (!isVCardNullAddress(address)) {
             if (config.isSetAutoAddrLabel())
                 addr.setLabel(toVCardAddressLabelParam(address));
@@ -614,7 +615,6 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-
     private void fillVCardAddresses(VCard vcard, Card jsCard) {
 
         if (jsCard.getAddresses() == null)
@@ -628,13 +628,13 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
                 jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
-                ezvcard.property.Address addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
+                ExtendedAddress addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
                 addVCardPropIdParam(addr, entry.getKey());
-                vcard.addAddress(addr);
+                vcard.addProperty(addr);
             }
             else {
-                List<ezvcard.property.Address> addrs = new ArrayList<>();
-                ezvcard.property.Address addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
+                List<ExtendedAddress> addrs = new ArrayList<>();
+                ExtendedAddress addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
                 addVCardPropIdParam(addr, entry.getKey());
                 addrs.add(addr);
 
@@ -648,7 +648,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
                         addrs.add(toVCardAddress(Address.builder().fullAddress(localization.getValue().asText()).build(), jsCard.getCustomTimeZones(), localization.getKey()));
                 }
-                vcard.addAddressAlt(addrs.toArray(new ezvcard.property.Address[0]));
+                vcard.addPropertyAlt(ExtendedAddress.class, addrs.toArray(new ExtendedAddress[0]));
             }
         }
     }

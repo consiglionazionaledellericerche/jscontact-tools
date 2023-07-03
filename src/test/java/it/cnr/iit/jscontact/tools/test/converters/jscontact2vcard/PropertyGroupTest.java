@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class PropertyGroupTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPropertyGroup1 - 1", "CONTACT", vcard.getAddresses().get(0).getGroup());
+        assertEquals("testPropertyGroup1 - 1", "CONTACT", vcard.getProperties(ExtendedAddress.class).get(0).getGroup());
 
     }
 

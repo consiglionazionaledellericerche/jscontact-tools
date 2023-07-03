@@ -21,6 +21,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class VCardTest extends RoundtripTest {
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         System.out.println(Ezvcard.write(vcard2).go());
-        assertEquals("testCompleteVCard1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testCompleteVCard1 - 1", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).all()).get(0));
 
     }
 
@@ -54,7 +55,7 @@ public class VCardTest extends RoundtripTest {
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         System.out.println(Ezvcard.write(vcard2).go());
-        assertEquals("testCompleteVCard2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testCompleteVCard2 - 1", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).all()).get(0));
     }
 
     //@Test
@@ -66,7 +67,7 @@ public class VCardTest extends RoundtripTest {
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         System.out.println(Ezvcard.write(vcard2).go());
-        assertEquals("testCompleteVCard1 - 3", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testCompleteVCard1 - 3", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).all()).get(0));
     }
 
 
@@ -79,7 +80,7 @@ public class VCardTest extends RoundtripTest {
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         System.out.println(Ezvcard.write(vcard2).go());
-        assertEquals("testCompleteVCard1 - 4", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testCompleteVCard1 - 4", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).all()).get(0));
     }
 
     //@Test
@@ -91,7 +92,7 @@ public class VCardTest extends RoundtripTest {
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         System.out.println(Ezvcard.write(vcard2).go());
-        assertEquals("testCompleteVCard5 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testCompleteVCard5 - 1", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).all()).get(0));
     }
 
 
@@ -104,7 +105,7 @@ public class VCardTest extends RoundtripTest {
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
         System.out.println(Ezvcard.write(vcard2).go());
-        assertEquals("testCompleteVCard6 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testCompleteVCard6 - 1", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).all()).get(0));
     }
 
 }

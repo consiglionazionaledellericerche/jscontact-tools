@@ -20,6 +20,7 @@ import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
@@ -54,7 +55,7 @@ public class VCardGroupTest extends RoundtripTest {
         List<Card> jsCards = vCard2JSContact.convert(vcard);
         List<VCard> vcards = jsContact2VCard.convert(jsCards.get(0), jsCards.get(1), jsCards.get(2));
         pruneVCard(vcards.get(0));
-        assertEquals("testVCardGroup1 - 1", vcards, Ezvcard.parse(vcard).all());
+        assertEquals("testVCardGroup1 - 1", vcards, Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).all());
 
     }
 

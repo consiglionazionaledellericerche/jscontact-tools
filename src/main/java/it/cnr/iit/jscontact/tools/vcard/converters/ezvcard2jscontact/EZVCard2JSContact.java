@@ -40,6 +40,7 @@ import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactIdsProfile;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.apache.commons.lang3.ArrayUtils;
@@ -216,7 +217,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return (vcardPref != null) ? Integer.parseInt(vcardPref) : null;
     }
 
-    private static String toJSCardAutoFulllAddress(ezvcard.property.Address addr) {
+    private static String toJSCardAutoFulllAddress(ExtendedAddress addr) {
 
         StringJoiner joiner = new StringJoiner(DelimiterUtils.NEWLINE_DELIMITER);
         if (StringUtils.isNotEmpty(addr.getPoBox())) joiner.add(addr.getPoBox());
@@ -687,7 +688,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return vcardTzParam;
     }
 
-    private Address toJSCardAddress(ezvcard.property.Address vcardAddr, VCard vcard) {
+    private Address toJSCardAddress(ExtendedAddress vcardAddr, VCard vcard) {
 
         List<AddressComponent> streetDetailPairs = new ArrayList<>();
         if (StringUtils.isNotEmpty(vcardAddr.getPoBox()))
@@ -724,13 +725,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private void fillJSCardAddresses(VCard vcard, Card jsCard) {
 
-        if (vcard.getAddresses() == null || vcard.getAddresses().isEmpty())
+        if (vcard.getProperties(ExtendedAddress.class) == null || vcard.getProperties(ExtendedAddress.class).isEmpty())
             return;
 
         List<it.cnr.iit.jscontact.tools.dto.Address> addresses = new ArrayList<>();
         String tz;
         String geo;
-        for (ezvcard.property.Address addr : vcard.getAddresses())
+        for (ExtendedAddress addr : vcard.getProperties(ExtendedAddress.class))
             addresses.add(toJSCardAddress(addr, vcard));
 
         if (vcard.getTimezone() != null) {

@@ -21,6 +21,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
 import lombok.Builder;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class VCard2JSContact extends EZVCard2JSContact {
      */
     public List<Card> convert(String vCard) throws CardException {
 
-        List<VCard> vcards = Ezvcard.parse(vCard).all();
+        List<VCard> vcards = Ezvcard.parse(vCard).register(new ExtendedAddressScribe()).all();
         if (vcards.size() == 0)
             throw new CardException("Bad vCard format");
         return convert(vcards.toArray(new VCard[0]));

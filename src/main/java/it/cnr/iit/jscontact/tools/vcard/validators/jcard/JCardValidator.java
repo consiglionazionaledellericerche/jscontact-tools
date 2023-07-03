@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
 import it.cnr.iit.jscontact.tools.vcard.validators.ezvcard.EZVCardValidator;
 import lombok.Builder;
 
@@ -45,7 +46,7 @@ public class JCardValidator extends EZVCardValidator {
      */
     public void validate(String jCard) throws CardException {
 
-        List<VCard> vcards = Ezvcard.parseJson(jCard).all();
+        List<VCard> vcards = Ezvcard.parseJson(jCard).register(new ExtendedAddressScribe()).all();
         validate(vcards);
     }
 
