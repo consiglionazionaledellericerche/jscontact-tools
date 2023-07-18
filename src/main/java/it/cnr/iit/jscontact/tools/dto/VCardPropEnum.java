@@ -41,7 +41,7 @@ public enum VCardPropEnum {
     CREATED("CREATED"),
     GENDER("GENDER"),
     GRAMGENDER("GRAMGENDER"),
-    JSCONTACT_PROP("JSCONTACT-PROP"),
+    JSPROP("JSPROP"),
     X_ABLABEL("X-ABLabel");
 
     private final String value;

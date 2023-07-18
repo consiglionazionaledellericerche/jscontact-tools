@@ -32,8 +32,8 @@ public class ExtensionsTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "JSCONTACT-PROP;JSPTR=\"extension:myext1\";VALUE=TEXT:\"extvalue\"\n" +
-                "JSCONTACT-PROP;JSPTR=\"extension:myext2\";VALUE=TEXT:{\"extprop\":\"extvalue\"}\n" +
+                "JSPROP;JSPTR=\"extension:myext1\";VALUE=TEXT:\"extvalue\"\n" +
+                "JSPROP;JSPTR=\"extension:myext2\";VALUE=TEXT:{\"extprop\":\"extvalue\"}\n" +
                 "END:VCARD";
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
@@ -53,11 +53,11 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "LANG;PREF=1:jp\n" +
                 "LANG;PREF=2:en\n" +
                 "DEFLANGUAGE;VALUE=language-tag:en\n" +
-                "JSCONTACT-PROP;JSPTR=\"addresses/ADR-1/components/0/ext4\";VALUE=TEXT:true\n" +
-                "JSCONTACT-PROP;JSPTR=\"nickNames/NICK-1/ext3\";VALUE=TEXT:\"text\"\n" +
-                "JSCONTACT-PROP;JSPTR=\"addresses/ADR-1/ext2\";VALUE=TEXT:{\"prop\":10}\n" +
-                "JSCONTACT-PROP;JSPTR=\"preferredLanguages/jp/0/ext6\";VALUE=TEXT:[\"1\",\"2\"]\n" +
-                "JSCONTACT-PROP;JSPTR=\"ext1\";VALUE=TEXT:10\n" +
+                "JSPROP;JSPTR=\"addresses/ADR-1/components/0/ext4\";VALUE=TEXT:true\n" +
+                "JSPROP;JSPTR=\"nickNames/NICK-1/ext3\";VALUE=TEXT:\"text\"\n" +
+                "JSPROP;JSPTR=\"addresses/ADR-1/ext2\";VALUE=TEXT:{\"prop\":10}\n" +
+                "JSPROP;JSPTR=\"preferredLanguages/jp/0/ext6\";VALUE=TEXT:[\"1\",\"2\"]\n" +
+                "JSPROP;JSPTR=\"ext1\";VALUE=TEXT:10\n" +
                 "END:VCARD";
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testExtendedJSContact2 - 1", 1, jsCard.getExtensions().size());
@@ -94,7 +94,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                 "JSCONTACT-PROP;JSPTR=anniversaries/ANNIVERSARY-1;VALUE=TEXT:{\"@type\":\"Anniversary\",\"kind\":\"example.com:engagement\",\"date\":{\"@type\":\"Timestamp\",\"utc\":\"1953-10-15T23:10:00Z\"}}\n" +
+                 "JSPROP;JSPTR=anniversaries/ANNIVERSARY-1;VALUE=TEXT:{\"@type\":\"Anniversary\",\"kind\":\"example.com:engagement\",\"date\":{\"@type\":\"Timestamp\",\"utc\":\"1953-10-15T23:10:00Z\"}}\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -109,7 +109,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "FN:Mr. John Q. Public, Esq.\n" +
                 "N:Public;John;;;\n" +
-                "JSCONTACT-PROP;JSPTR=name/components/2;VALUE=TEXT:{\"@type\":\"NameComponent\",\"kind\":\"example.com:exttype\",\"value\":\"extvalue\"}\n" +
+                "JSPROP;JSPTR=name/components/2;VALUE=TEXT:{\"@type\":\"NameComponent\",\"kind\":\"example.com:exttype\",\"value\":\"extvalue\"}\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -130,8 +130,8 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "FN:test\n" +
                 "TEL;VALUE=uri:tel:+33-01-23-45-6\n" +
-                "JSCONTACT-PROP;JSPTR=\"phones/PHONE-1/features/example.com:extfeature\";VALUE=TEXT:true\n" +
-                "JSCONTACT-PROP;JSPTR=\"phones/PHONE-1/contexts/example.com:extcontext\";VALUE=TEXT:true\n" +
+                "JSPROP;JSPTR=\"phones/PHONE-1/features/example.com:extfeature\";VALUE=TEXT:true\n" +
+                "JSPROP;JSPTR=\"phones/PHONE-1/contexts/example.com:extcontext\";VALUE=TEXT:true\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

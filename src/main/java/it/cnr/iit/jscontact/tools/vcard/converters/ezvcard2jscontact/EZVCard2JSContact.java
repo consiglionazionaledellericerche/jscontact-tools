@@ -1383,7 +1383,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         String extensionName;
         try {
             for (RawProperty extension : vcard.getExtendedProperties()) {
-                if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.JSCONTACT_PROP.getValue())) {
+                if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.JSPROP.getValue())) {
                     path = extension.getParameter(VCardParamEnum.JSPTR.getValue());
                     value = JSContactPropUtils.toJsonValue(extension.getValue());
                     if (!path.contains(DelimiterUtils.SLASH_DELIMITER)) {
@@ -1397,7 +1397,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 }
             }
         } catch(Exception e) {
-            throw new CardException(String.format("Unable to convert JSCONTACT-PROP property with path: %s", path));
+            throw new CardException(String.format("Unable to convert JSPROP property with path: %s", path));
         }
     }
 
