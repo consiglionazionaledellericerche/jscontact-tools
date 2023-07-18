@@ -44,7 +44,7 @@ public class FullNameTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"\"" +
+                "\"name\": { \"full\": \"\"}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testEmptyFullName - 1", vcard.getFormattedName().getValue(), vcard.getUid().getValue());
@@ -59,11 +59,11 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"title\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"given2\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"credential\" }" +
                     "] " +
                 "} " +
                 "}";
@@ -78,7 +78,7 @@ public class FullNameTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"John Q. Public, Esq.\"" +
+                "\"name\": { \"full\":\"John Q. Public, Esq.\"}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testFullName1 - 1", "John Q. Public, Esq.", vcard.getFormattedName().getValue());
@@ -91,10 +91,10 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"language\": \"jp\"," +
-                "\"fullName\":\"大久保 正仁\"," +
+                "\"name\": { \"full\":\"大久保 正仁\"}," +
                 "\"localizations\" : {" +
                   "\"en\": {" +
-                     "\"fullName\":\"Okubo Masahito\""+
+                     "\"name\": { \"full\":\"Okubo Masahito\"}"+
                   "}" +
                 "}" +
                 "}";

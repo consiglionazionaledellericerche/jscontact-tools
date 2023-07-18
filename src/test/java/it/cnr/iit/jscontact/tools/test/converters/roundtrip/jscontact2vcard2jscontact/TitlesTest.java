@@ -33,7 +33,7 @@ public class TitlesTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359h\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +
@@ -57,7 +57,7 @@ public class TitlesTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +
@@ -85,7 +85,7 @@ public class TitlesTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359g\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"titles\": {" +
                     "\"TITLE-1\" : {" +
                         "\"@type\":\"Title\"," +

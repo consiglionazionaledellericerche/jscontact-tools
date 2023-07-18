@@ -32,9 +32,12 @@ public enum NameComponentEnum implements IsExtensibleEnum {
 
     SURNAME("surname"),
     GIVEN("given"),
-    MIDDLE("middle"),
-    PREFIX("prefix"),
-    SUFFIX("suffix"),
+    GIVEN2("given2"),
+    TITLE("title"),
+    CREDENTIAL("credential"),
+    SURNAME2("surname2"),
+    GENERATION("generation"),
+
     SEPARATOR("separator");
 
     private final String value;

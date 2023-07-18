@@ -392,7 +392,7 @@ All the methods take in input a list of JSContact Card objects and can raise the
 
 5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
 
-6. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
+6. If the "name.full" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
 7. The "street" component of ADR property results from the concatenation of "district", "block", "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
@@ -471,16 +471,16 @@ Here in the following two examples of conversion between vCard and JSContact Car
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testJCardGroup1 - 2", jsCardGroup.getCard().getKind().isGroup());
         assertTrue("testJCardGroup1 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertEquals("testJCardGroup1 - 4", "The Doe family", jsCardGroup.getCard().getFullName());
+        assertEquals("testJCardGroup1 - 4", "The Doe family", jsCardGroup.getCard().getName().getFull());
         assertEquals("testJCardGroup1 - 5", 2, jsCardGroup.getMembers().size());
         assertSame("testJCardGroup1 - 6", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
         assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
         Card jsCard = jsCards.get(1);
         assertEquals("testJCardGroup1 - 8", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
-        assertEquals("testJCardGroup1 - 9", "John Doe", jsCard.getFullName());
+        assertEquals("testJCardGroup1 - 9", "John Doe", jsCard.getName().getFull());
         jsCard = jsCards.get(2);
         assertEquals("testJCardGroup1 - 10", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
-        assertEquals("testJCardGroup1 - 11", "Jane Doe", jsCard.getFullName());
+        assertEquals("testJCardGroup1 - 11", "Jane Doe", jsCard.getName().getFull());
         
     }
 
@@ -496,7 +496,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
         String jscard = "{" +
                 "\@type\": \"Card\","
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"components\":[{\"kind\":\"name\",\"value\":\"54321 Oak St\"}]," +
@@ -536,21 +536,21 @@ Here in the following two examples of conversion between JSContact Card and a vC
                              "\@type\": \"Card\","
                              "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
                              "\"kind\":\"group\"," +
-                             "\"fullName\":\"The Doe family\"," +
+                             "\"name\":{\"full\":\"The Doe family\"}," +
                              "\"members\": {" +
                                 "\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\":true," +
                                 "\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\":true" +
                              "}" +
                         "}," +
                         "{" +
-                             "\@type\": \"Card\","
+                            "\@type\": \"Card\","
                             "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
-                            "\"fullName\":\"John Doe\"" +
+                             "\"name\":{\"full\":\"John Doe\"}" +
                         "}," +
                         "{" +
                              "\@type\": \"Card\","
                             "\"uid\":\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"," +
-                            "\"fullName\":\"Jane Doe\"" +
+                             "\"name\":{\"full\":\"Jane Doe\"}" +
                         "}" +
                         "]";
 

@@ -33,17 +33,17 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"n\", {\"sort-as\":[\"Public\",\"John\"]}, \"text\", [\"Public\", \"John\", \"Quinlan\", \"Mr.\", \"Esq.\"]] " +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testName1 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testName1 - 1", "John Q. Public, Esq.", jsCard.getName().getFull());
         assertEquals("testName1 - 2", 5, jsCard.getName().getComponents().length);
-        assertTrue("testName1 - 3", jsCard.getName().getComponents()[0].isPrefix());
+        assertTrue("testName1 - 3", jsCard.getName().getComponents()[0].isTitle());
         assertEquals("testName1 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testName1 - 5", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testName1 - 6", "John", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testName1 - 7", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testName1 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testName1 - 9", jsCard.getName().getComponents()[3].isMiddle());
+        assertTrue("testName1 - 9", jsCard.getName().getComponents()[3].isGiven2());
         assertEquals("testName1 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
-        assertTrue("testName1 - 11", jsCard.getName().getComponents()[4].isSuffix());
+        assertTrue("testName1 - 11", jsCard.getName().getComponents()[4].isCredential());
         assertEquals("testName1 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
         assertEquals("testName1 - 13", "Public", jsCard.getName().getSortAs().get(NameComponentKind.surname()));
         assertEquals("testName1 - 14", "John", jsCard.getName().getSortAs().get(NameComponentKind.given()));
@@ -59,17 +59,17 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"nickname\", {}, \"text\", \"Johnny\"] " +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testName2 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testName2 - 1", "John Q. Public, Esq.", jsCard.getName().getFull());
         assertEquals("testName2 - 2", 5, jsCard.getName().getComponents().length);
-        assertTrue("testName2 - 3",jsCard.getName().getComponents()[0].isPrefix());
+        assertTrue("testName2 - 3",jsCard.getName().getComponents()[0].isTitle());
         assertEquals("testName2 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testName2 - 5",jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testName2 - 6", "John", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testName2 - 7",jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testName2 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testName2 - 9",jsCard.getName().getComponents()[3].isMiddle());
+        assertTrue("testName2 - 9",jsCard.getName().getComponents()[3].isGiven2());
         assertEquals("testName2 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
-        assertTrue("testName2 - 11",jsCard.getName().getComponents()[4].isSuffix());
+        assertTrue("testName2 - 11",jsCard.getName().getComponents()[4].isCredential());
         assertEquals("testName2 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
         assertEquals("testName2 - 12", 1, jsCard.getNickNames().size());
         assertEquals("testName2 - 13", "Johnny", jsCard.getNickNames().get("NICK-1").getName());
@@ -86,17 +86,17 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"nickname\", {\"pref\":\"1\"}, \"text\", \"Kid\"] " +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testName3 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testName3 - 1", "John Q. Public, Esq.", jsCard.getName().getFull());
         assertEquals("testName3 - 2", 5, jsCard.getName().getComponents().length);
-        assertTrue("testName3 - 3",jsCard.getName().getComponents()[0].isPrefix());
+        assertTrue("testName3 - 3",jsCard.getName().getComponents()[0].isTitle());
         assertEquals("testName3 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testName3 - 5",jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testName3 - 6", "John", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testName3 - 7",jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testName3 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testName3 - 9",jsCard.getName().getComponents()[3].isMiddle());
+        assertTrue("testName3 - 9",jsCard.getName().getComponents()[3].isGiven2());
         assertEquals("testName3 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
-        assertTrue("testName3 - 11",jsCard.getName().getComponents()[4].isSuffix());
+        assertTrue("testName3 - 11",jsCard.getName().getComponents()[4].isCredential());
         assertEquals("testName3 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
         assertEquals("testName3 - 12", 2, jsCard.getNickNames().size());
         assertEquals("testName3 - 13", "Johnny", jsCard.getNickNames().get("NICK-1").getName());
@@ -118,17 +118,17 @@ public class NameTest extends JCard2JSContactTest {
                 "[\"nickname\", {\"pref\":\"1\",\"altid\":\"2\",\"language\":\"it\"}, \"text\", \"Ragazzo\"] " +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
-        assertEquals("testName4 - 1", "John Q. Public, Esq.", jsCard.getFullName());
+        assertEquals("testName4 - 1", "John Q. Public, Esq.", jsCard.getName().getFull());
         assertEquals("testName4 - 2", 5, jsCard.getName().getComponents().length);
-        assertTrue("testName4 - 3",jsCard.getName().getComponents()[0].isPrefix());
+        assertTrue("testName4 - 3",jsCard.getName().getComponents()[0].isTitle());
         assertEquals("testName4 - 4", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testName4 - 5",jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testName4 - 6", "John", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testName4 - 7",jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testName4 - 8", "Public", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testName4 - 9",jsCard.getName().getComponents()[3].isMiddle());
+        assertTrue("testName4 - 9",jsCard.getName().getComponents()[3].isGiven2());
         assertEquals("testName4 - 10", "Quinlan", jsCard.getName().getComponents()[3].getValue());
-        assertTrue("testName4 - 11",jsCard.getName().getComponents()[4].isSuffix());
+        assertTrue("testName4 - 11",jsCard.getName().getComponents()[4].isCredential());
         assertEquals("testName4 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
         assertEquals("testName4 - 12", 2, jsCard.getNickNames().size());
         assertEquals("testName4 - 13", "Johnny", jsCard.getNickNames().get("NICK-1").getName());

@@ -65,7 +65,7 @@ public class VCardTest extends VCard2JSContactTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testVCard - 1", jsCard);
         assertTrue("testVCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
-        assertEquals("testVCard - 3", "test", jsCard.getFullName());
+        assertEquals("testVCard - 3", "test", jsCard.getName().getFull());
 
     }
 
@@ -81,7 +81,7 @@ public class VCardTest extends VCard2JSContactTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testExtendedVCard - 1", jsCard);
         assertTrue("testExtendedVCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
-        assertEquals("testExtendedVCard - 3", "test", jsCard.getFullName());
+        assertEquals("testExtendedVCard - 3", "test", jsCard.getName().getFull());
         assertEquals("testExtendedJCard - 4", 2, jsCard.getVCardProps().length); //including VERSION
         assertEquals("testExtendedJCard - 5", "myext", jsCard.getVCardProps()[1].getName().toString());
         assertNull("testExtendedJCard - 6", jsCard.getVCardProps()[1].getType());
@@ -94,16 +94,16 @@ public class VCardTest extends VCard2JSContactTest {
 
         String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7483.vcf")), StandardCharsets.UTF_8);
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCompleteVCard1 - 1", "Joe User", jsCard.getFullName());
+        assertEquals("testCompleteVCard1 - 1", "Joe User", jsCard.getName().getFull());
         assertTrue("testCompleteVCard1 - 2", jsCard.getKind().isIndividual());
         assertEquals("testCompleteVCard1 - 3", 4, jsCard.getName().getComponents().length);
         assertTrue("testCompleteVCard1 - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testCompleteVCard1 - 5", "Joe", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteVCard1 - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testCompleteVCard1 - 7", "User", jsCard.getName().getComponents()[1].getValue());
-        assertTrue("testCompleteVCard1 - 8", jsCard.getName().getComponents()[2].isSuffix());
+        assertTrue("testCompleteVCard1 - 8", jsCard.getName().getComponents()[2].isCredential());
         assertEquals("testCompleteVCard1 - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testCompleteVCard1 - 10", jsCard.getName().getComponents()[3].isSuffix());
+        assertTrue("testCompleteVCard1 - 10", jsCard.getName().getComponents()[3].isCredential());
         assertEquals("testCompleteVCard1 - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
         assertEquals("testCompleteVCard1 - 12", 2, jsCard.getPreferredLanguages().size());
         assertEquals("testCompleteVCard1 - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
@@ -156,8 +156,8 @@ public class VCardTest extends VCard2JSContactTest {
 
         String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Multilingual.vcf")), StandardCharsets.UTF_8);
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCompleteVCard2 - 1", "大久保 正仁", jsCard.getFullName());
-        assertEquals("testCompleteVCard2 - 3", "Okubo Masahito", jsCard.getLocalizations().get("en").get("fullName").asText());
+        assertEquals("testCompleteVCard2 - 1", "大久保 正仁", jsCard.getName().getFull());
+        assertEquals("testCompleteVCard2 - 3", "Okubo Masahito", jsCard.getLocalizations().get("en").get("name").get("full").asText());
         assertTrue("testCompleteVCard2 - 4", jsCard.getKind().isIndividual());
         assertEquals("testCompleteVCard2 - 5", 1, jsCard.getTitles().size());
         assertEquals("testCompleteVCard2 - 6", "事務局長", jsCard.getTitles().get("TITLE-1").getName());
@@ -174,8 +174,8 @@ public class VCardTest extends VCard2JSContactTest {
 
         String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Unstructured.vcf")), StandardCharsets.UTF_8);
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCompleteVCard3 - 1", "台灣固網股份有限公司", jsCard.getFullName());
-        assertEquals("testCompleteVCard3 - 3", "Taiwan Fixed Network CO.,LTD.", jsCard.getLocalizations().get("en").get("fullName").asText());
+        assertEquals("testCompleteVCard3 - 1", "台灣固網股份有限公司", jsCard.getName().getFull());
+        assertEquals("testCompleteVCard3 - 3", "Taiwan Fixed Network CO.,LTD.", jsCard.getLocalizations().get("en").get("name").get("full").asText());
         assertTrue("testCompleteVCard3 - 4", jsCard.getKind().isOrg());
         assertEquals("testCompleteVCard3 - 5", 1, jsCard.getAddresses().size());
         assertEquals("testCompleteVCard3 - 6", "8F., No.172-1, Sec.2, Ji-Lung Rd,", jsCard.getAddresses().get("ADR-1").getFullAddress());
@@ -196,16 +196,16 @@ public class VCardTest extends VCard2JSContactTest {
 
         String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("vcard/vCard-RFC7095.vcf")), StandardCharsets.UTF_8);
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCompleteVCard4 - 1", "Simon Perreault", jsCard.getFullName());
+        assertEquals("testCompleteVCard4 - 1", "Simon Perreault", jsCard.getName().getFull());
         assertNull("testCompleteVCard4 - 2", jsCard.getKind());
         assertEquals("testCompleteVCard4 - 3", 4, jsCard.getName().getComponents().length);
         assertTrue("testCompleteVCard4 - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testCompleteVCard4 - 5", "Simon", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteVCard4 - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testCompleteVCard4 - 7", "Perreault", jsCard.getName().getComponents()[1].getValue());
-        assertTrue("testCompleteVCard4 - 8", jsCard.getName().getComponents()[2].isSuffix());
+        assertTrue("testCompleteVCard4 - 8", jsCard.getName().getComponents()[2].isCredential());
         assertEquals("testCompleteVCard4 - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testCompleteVCard4 - 10", jsCard.getName().getComponents()[3].isSuffix());
+        assertTrue("testCompleteVCard4 - 10", jsCard.getName().getComponents()[3].isCredential());
         assertEquals("testCompleteVCard4 - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
         assertEquals("testCompleteVCard4 - 12", 2, jsCard.getAnniversaries().size());
         assertTrue("testCompleteVCard4 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
@@ -257,10 +257,10 @@ public class VCardTest extends VCard2JSContactTest {
 
         String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("vcard/vCard-Wikipedia.vcf")), StandardCharsets.UTF_8);
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCompleteVCard5 - 1", "Forrest Gump", jsCard.getFullName());
+        assertEquals("testCompleteVCard5 - 1", "Forrest Gump", jsCard.getName().getFull());
         assertNull("testCompleteVCard5 - 2", jsCard.getKind());
         assertEquals("testCompleteVCard5 - 3", 3, jsCard.getName().getComponents().length);
-        assertTrue("testCompleteVCard5 - 4", jsCard.getName().getComponents()[0].isPrefix());
+        assertTrue("testCompleteVCard5 - 4", jsCard.getName().getComponents()[0].isTitle());
         assertEquals("testCompleteVCard5 - 5", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteVCard5 - 6", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testCompleteVCard5 - 7", "Forrest", jsCard.getName().getComponents()[1].getValue());
@@ -314,17 +314,17 @@ public class VCardTest extends VCard2JSContactTest {
 
         String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("vcard/vCard-ezvcard-fullcontact.vcf")), StandardCharsets.UTF_8);
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCompleteVCard6 - 1", "Prefix FirstName MiddleName LastName Suffix", jsCard.getFullName());
+        assertEquals("testCompleteVCard6 - 1", "Prefix FirstName MiddleName LastName Suffix", jsCard.getName().getFull());
         assertEquals("testCompleteVCard6 - 2", 5, jsCard.getName().getComponents().length);
-        assertTrue("testCompleteVCard6 - 3", jsCard.getName().getComponents()[0].isPrefix());
+        assertTrue("testCompleteVCard6 - 3", jsCard.getName().getComponents()[0].isTitle());
         assertEquals("testCompleteVCard6 - 4", "Prefix", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteVCard6 - 5", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testCompleteVCard6 - 6", "FirstName", jsCard.getName().getComponents()[1].getValue());
         assertTrue("testCompleteVCard6 - 7", jsCard.getName().getComponents()[2].isSurname());
         assertEquals("testCompleteVCard6 - 8", "LastName", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testCompleteVCard6 - 9", jsCard.getName().getComponents()[3].isMiddle());
+        assertTrue("testCompleteVCard6 - 9", jsCard.getName().getComponents()[3].isGiven2());
         assertEquals("testCompleteVCard6 - 10", "MiddleName", jsCard.getName().getComponents()[3].getValue());
-        assertTrue("testCompleteVCard6 - 11", jsCard.getName().getComponents()[4].isSuffix());
+        assertTrue("testCompleteVCard6 - 11", jsCard.getName().getComponents()[4].isCredential());
         assertEquals("testCompleteVCard6 - 12", "Suffix", jsCard.getName().getComponents()[4].getValue());
         assertEquals("testCompleteVCard6 - 13", 1, jsCard.getNickNames().size());
         assertEquals("testCompleteVCard6 - 14", "NickName", jsCard.getNickNames().get("NICK-1").getName());

@@ -90,7 +90,7 @@ public class LanguagePreferenceTest extends AbstractTest {
 
         assertFalse("testInvalidLanguagePreference2-1", jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidLanguagePreference2-2", messages.contains("at least one not null member other than @type is missing in LanguagePref"));
+        assertTrue("testInvalidLanguagePreference2-2", messages.contains("at least one not null member other than @type is required in LanguagePref"));
         assertTrue("testInvalidLanguagePreference2-3", messages.contains("invalid preferredLanguages in JSContact"));
     }
 

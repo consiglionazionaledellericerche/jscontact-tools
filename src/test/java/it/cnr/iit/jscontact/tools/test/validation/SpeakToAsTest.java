@@ -88,7 +88,7 @@ public class SpeakToAsTest extends AbstractTest {
 
         assertFalse("testInvalidSpeakToAs1-1", jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidSpeakToAs1-2", messages.contains("at least one not null member other than @type is missing in SpeakToAs"));
+        assertTrue("testInvalidSpeakToAs1-2", messages.contains("at least one not null member other than @type is required in SpeakToAs"));
     }
 
 }

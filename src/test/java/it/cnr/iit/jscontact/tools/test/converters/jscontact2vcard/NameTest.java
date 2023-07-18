@@ -33,14 +33,14 @@ public class NameTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"," +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"title\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"given2\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"credential\" }" +
                     "], " +
                     "\"sortAs\": { \"surname\":\"Public\",\"given\":\"John\" }" +
                 "}, " +
@@ -74,15 +74,16 @@ public class NameTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
+                "\"name\": { }," +
                 "\"language\": \"en\"," +
                 "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"," +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"title\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"given2\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"credential\" }" +
                     "] " +
                 "}, " +
                 "\"nickNames\": { " +
@@ -179,9 +180,10 @@ public class NameTest extends JSContact2VCardTest {
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"name\" : { " +
                 "\"@type\" : \"Name\", " +
+                "\"full\" : \"John Paul Philip Stevenson\"," +
                 "\"components\" : [ { " +
                 "\"@type\" : \"NameComponent\"," +
-                "\"kind\" : \"prefix\"," +
+                "\"kind\" : \"title\"," +
                 "\"value\" : \"Dr.\"" +
                 "}, {" +
                 "\"@type\" : \"NameComponent\"," +
@@ -193,32 +195,26 @@ public class NameTest extends JSContact2VCardTest {
                             "\"value\" : \"Stevenson\"" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"kind\" : \"middle\"," +
-                            "\"value\" : \"Philip\"," +
-                            "\"rank\" : 2" +
+                            "\"kind\" : \"given2\"," +
+                            "\"value\" : \"Philip\"" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"kind\" : \"middle\"," +
-                            "\"value\" : \"Paul\"," +
-                            "\"rank\" : 1" +
+                            "\"kind\" : \"given2\"," +
+                            "\"value\" : \"Paul\"" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"kind\" : \"suffix\"," +
-                            "\"value\" : \"Jr.\"," +
-                            "\"rank\" : 3" +
+                            "\"kind\" : \"generation\"," +
+                            "\"value\" : \"Jr.\"" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"kind\" : \"suffix\"," +
-                            "\"value\" : \"M.D.\"," +
-                            "\"rank\" : 1" +
+                            "\"kind\" : \"credential\"," +
+                            "\"value\" : \"M.D.\"" +
                         "}, {" +
                             "\"@type\" : \"NameComponent\"," +
-                            "\"kind\" : \"suffix\"," +
-                            "\"value\" : \"A.C.P.\"," +
-                            "\"rank\" : 2" +
+                            "\"kind\" : \"credential\"," +
+                            "\"value\" : \"A.C.P.\"" +
                         "} ]" +
-                    "}," +
-                    "\"fullName\" : \"John Paul Philip Stevenson\"" +
+                    "}" +
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -231,7 +227,6 @@ public class NameTest extends JSContact2VCardTest {
         assertEquals("testName4 - 7", "Jr.", vcard.getStructuredName().getSuffixes().get(0));
         assertEquals("testName4 - 8", "M.D.", vcard.getStructuredName().getSuffixes().get(1));
         assertEquals("testName4 - 9", "A.C.P.", vcard.getStructuredName().getSuffixes().get(2));
-        assertEquals("testName4 - 10", ";;2,1;;3,1,2", vcard.getStructuredName().getParameter(VCardParamEnum.RANKS.getValue()));
     }
 
 }

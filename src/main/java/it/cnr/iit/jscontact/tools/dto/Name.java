@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
@@ -39,7 +40,8 @@ import java.util.Map;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type", "components", "sortAs", "label"})
+@NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null between full and components is required in Name")
+@JsonPropertyOrder({"@type", "full", "components", "sortAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -53,9 +55,10 @@ public class Name extends AbstractJSContactType implements Serializable {
     @Builder.Default
     String _type = "Name";
 
+    // Section 2.2.1 of [draft-ietf-calext-jscontact]
+    String full;
+
     @JSContactCollection(addMethod = "addComponent", itemClass = NameComponent.class)
-    @NotEmpty(message = "components is missing or empty in Name")
-    @NonNull
     @Valid
     NameComponent[] components;
 

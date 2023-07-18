@@ -35,7 +35,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"extension:myext1\":\"extvalue\"," +
                 "\"extension:myext2\": { \"extprop\":\"extvalue\" }" +
                 "}";
@@ -55,7 +55,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"nickNames\": { " +
                     "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\", \"ext3\":\"text\"  }, " +
                     "\"NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Joe\" } " +
@@ -111,7 +111,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"number\":\"tel:+33-01-23-45-6\", \"label\":\"a label\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -130,7 +130,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                 "{" +
                     "\"@type\":\"Anniversary\"," +
@@ -157,8 +157,8 @@ public class ExtensionsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"," +
                     "\"components\":[ " +
                         "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
@@ -185,7 +185,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"example.com:extcontext\": true},\"features\":{\"example.com:extfeature\": true},\"number\":\"tel:+33-01-23-45-6\"}}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

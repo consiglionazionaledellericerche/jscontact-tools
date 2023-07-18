@@ -49,7 +49,6 @@ public enum VCardParamEnum  {
     AUTHOR("AUTHOR"),
     AUTHOR_NAME("AUTHOR-NAME"),
     CREATED("CREATED"),
-    RANKS("RANKS"),
     JSPTR("JSPTR"),
     SERVICE_TYPE("SERVICE-TYPE"),
     USERNAME("USERNAME"),

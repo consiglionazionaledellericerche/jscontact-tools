@@ -33,7 +33,7 @@ public class PersonalInfoTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"personalInfo\":{ " +
                 "\"PERSINFO-1\": {" +
                 "\"@type\":\"PersonalInfo\"," +

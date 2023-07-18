@@ -33,7 +33,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                         "\"@type\":\"Card\"," +
                         "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                        "\"fullName\":\"test\"," +
+                        "\"name\":{\"full\":\"test\"}," +
                         "\"addresses\":{" +
                             "\"ADR-1\": {" +
                                 "\"@type\":\"Address\"," +
@@ -58,7 +58,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
@@ -82,7 +82,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
@@ -115,7 +115,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
@@ -140,7 +140,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
@@ -166,7 +166,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"language\":\"en\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
@@ -197,7 +197,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
@@ -221,7 +221,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
@@ -251,7 +251,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
@@ -278,7 +278,7 @@ public class AddressesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"language\":\"en\"," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +

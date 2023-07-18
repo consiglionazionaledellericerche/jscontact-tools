@@ -35,7 +35,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                         "\"@type\":\"Card\"," +
                         "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                        "\"fullName\":\"test\"," +
+                        "\"name\": { \"full\": \"test\"}," +
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                    "\"@type\":\"Anniversary\"," +
@@ -58,7 +58,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -86,7 +86,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                         "\"@type\":\"Card\"," +
                         "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                        "\"fullName\":\"test\"," +
+                        "\"name\": { \"full\": \"test\"}," +
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                    "\"@type\":\"Anniversary\"," +
@@ -109,7 +109,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -136,7 +136,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -177,7 +177,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -228,7 +228,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -281,7 +281,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"anniversaries\": { \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -337,7 +337,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         String jsCard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"anniversaries\": { \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +

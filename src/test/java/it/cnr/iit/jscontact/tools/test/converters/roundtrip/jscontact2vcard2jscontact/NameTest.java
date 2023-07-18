@@ -33,14 +33,14 @@ public class NameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"," +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"title\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"given2\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"credential\" }" +
                     "] " +
                 "}, " +
                 "\"nickNames\": { " +
@@ -60,15 +60,15 @@ public class NameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"language\": \"en\"," +
                 "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"," +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"title\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"given2\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"credential\" }" +
                     "] " +
                 "}, " +
                 "\"nickNames\": { " +

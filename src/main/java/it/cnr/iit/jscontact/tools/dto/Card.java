@@ -55,7 +55,7 @@ import java.util.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "@type", "@version", "created", "kind", "language", "members", "prodId", "relatedTo", "uid", "updated",
-        "fullName", "name", "nickNames", "organizations", "speakToAs", "titles",
+        "name", "nickNames", "organizations", "speakToAs", "titles",
         "emails", "onlineServices", "phones", "preferredLanguages",
         "calendars", "schedulingAddresses",
         "addresses",
@@ -133,9 +133,6 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     /*
     Name and Organization properties
      */
-
-    // Section 2.2.1 of [draft-ietf-calext-jscontact]
-    String fullName;
 
     // Section 2.2.2 of [draft-ietf-calext-jscontact]
     @Valid
@@ -655,9 +652,9 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
             localizationsPerLanguage = new HashMap<>();
 
         if (localizationsPerLanguage.containsKey(path))
-            return;
-
-        localizationsPerLanguage.put(path, object);
+            localizationsPerLanguage.replace(path, object);
+        else
+            localizationsPerLanguage.put(path, object);
 
         if (localizations.containsKey(language))
             localizations.replace(language, localizationsPerLanguage);

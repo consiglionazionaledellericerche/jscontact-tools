@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.jscontact2vcard2jscontact;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -34,7 +35,7 @@ public class FullNameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"John Q. Public, Esq.\"" +
+                "\"name\": { \"full\":\"John Q. Public, Esq.\"}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);
@@ -48,10 +49,10 @@ public class FullNameTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"language\": \"jp\"," +
-                "\"fullName\":\"大久保 正仁\"," +
+                "\"name\": { \"full\":\"大久保 正仁\"}," +
                 "\"localizations\" : {" +
                   "\"en\": {" +
-                     "\"fullName\":\"Okubo Masahito\""+
+                     "\"name\": { \"full\":\"Okubo Masahito\"}"+
                   "}" +
                 "}" +
                 "}";

@@ -42,7 +42,7 @@ import java.util.Map;
  */
 @JsonPropertyOrder({"@type","contexts","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is missing in LanguagePref")
+@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is required in LanguagePref")
 @SuperBuilder
 @Data
 @AllArgsConstructor

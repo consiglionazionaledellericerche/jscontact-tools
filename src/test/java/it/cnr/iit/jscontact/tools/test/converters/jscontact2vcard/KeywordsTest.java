@@ -31,7 +31,7 @@ public class KeywordsTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"keywords\":{" +
                     "\"INTERNET\": true," +
                     "\"IETF\" : true, " +

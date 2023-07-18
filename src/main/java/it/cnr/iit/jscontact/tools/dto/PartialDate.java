@@ -18,7 +18,7 @@ import javax.validation.constraints.Pattern;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@NotNullAnyConstraint(fieldNames = {"year", "month"}, message = "at least one not null between year and month is missing in PartialDate")
+@NotNullAnyConstraint(fieldNames = {"year", "month"}, message = "at least one not null between year and month is required in PartialDate")
 @DayVsMonthInPartialDateConstraint
 @JsonPropertyOrder({"@type", "year", "month", "day", "calscale"})
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -33,7 +33,7 @@ public class EmailAddressTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"emails\":{ \"EMAIL-1\": {\"@type\":\"EmailAddress\",\"contexts\": {\"work\": true},\"address\":\"jqpublic@xyz.example.com\"}}" +
                 "}";
 
@@ -48,7 +48,7 @@ public class EmailAddressTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"emails\":{ " +
                      "\"EMAIL-1\": {\"@type\":\"EmailAddress\",\"contexts\":{\"work\": true},\"address\":\"jqpublic@xyz.example.com\"}," +
                      "\"EMAIL-2\": {\"@type\":\"EmailAddress\",\"contexts\":{\"private\": true},\"pref\":1,\"address\":\"jane_doe@example.com\"}" +

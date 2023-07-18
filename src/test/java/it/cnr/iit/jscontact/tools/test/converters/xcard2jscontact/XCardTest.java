@@ -35,16 +35,16 @@ public class XCardTest extends XCard2JSContactTest {
 
         String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("xcard/xCard-RFC6351.xml")), StandardCharsets.UTF_8);
         Card jsCard = xCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCompleteXCard1 - 1", "Simon Perreault", jsCard.getFullName());
+        assertEquals("testCompleteXCard1 - 1", "Simon Perreault", jsCard.getName().getFull());
         assertNull("testCompleteXCard1 - 2", jsCard.getKind());
         assertEquals("testCompleteXCard1 - 3", 4, jsCard.getName().getComponents().length);
         assertTrue("testCompleteXCard1 - 4", jsCard.getName().getComponents()[0].isGiven());
         assertEquals("testCompleteXCard1 - 5", "Simon", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteXCard1 - 6", jsCard.getName().getComponents()[1].isSurname());
         assertEquals("testCompleteXCard1 - 7", "Perreault", jsCard.getName().getComponents()[1].getValue());
-        assertTrue("testCompleteXCard1 - 8", jsCard.getName().getComponents()[2].isSuffix());
+        assertTrue("testCompleteXCard1 - 8", jsCard.getName().getComponents()[2].isCredential());
         assertEquals("testCompleteXCard1 - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testCompleteXCard1 - 10", jsCard.getName().getComponents()[3].isSuffix());
+        assertTrue("testCompleteXCard1 - 10", jsCard.getName().getComponents()[3].isCredential());
         assertEquals("testCompleteXCard1 - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
         assertEquals("testCompleteXCard1 - 12", 2, jsCard.getAnniversaries().size());
         assertTrue("testCompleteXCard1 - 13", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
@@ -95,10 +95,10 @@ public class XCardTest extends XCard2JSContactTest {
 
         String vcard = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("xcard/xCard-Wikipedia.xml")), StandardCharsets.UTF_8);
         Card jsCard = xCard2JSContact.convert(vcard).get(0);
-        assertEquals("testCompleteXCard2 - 1", "Forrest Gump", jsCard.getFullName());
+        assertEquals("testCompleteXCard2 - 1", "Forrest Gump", jsCard.getName().getFull());
         assertNull("testCompleteXCard2 - 2", jsCard.getKind());
         assertEquals("testCompleteXCard2 - 3", 3, jsCard.getName().getComponents().length);
-        assertTrue("testCompleteXCard2 - 4", jsCard.getName().getComponents()[0].isPrefix());
+        assertTrue("testCompleteXCard2 - 4", jsCard.getName().getComponents()[0].isTitle());
         assertEquals("testCompleteXCard2 - 5", "Mr.", jsCard.getName().getComponents()[0].getValue());
         assertTrue("testCompleteXCard2 - 6", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testCompleteXCard2 - 7", "Forrest", jsCard.getName().getComponents()[1].getValue());

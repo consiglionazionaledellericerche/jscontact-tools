@@ -25,7 +25,6 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -36,7 +35,7 @@ import java.io.Serializable;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type", "value", "kind", "rank"})
+@JsonPropertyOrder({"@type", "value", "kind"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -59,20 +58,17 @@ public class NameComponent extends AbstractJSContactType implements HasKind, Ser
     @JsonDeserialize(using = NameComponentTypeDeserializer.class)
     NameComponentKind kind;
 
-    @Min(value = 1, message = "invalid rank in NameComponent - value must be greater or equal than 1")
-    Integer rank;
-
     private boolean isRfc(NameComponentEnum value) {
         return (kind.getRfcValue() != null && kind.getRfcValue() == value);
     }
 
     /**
-     * Tests if this is a prefix.
+     * Tests if this is a title.
      *
-     * @return true if this is a prefix, false otherwise
+     * @return true if this is a title, false otherwise
      */
     @JsonIgnore
-    public boolean isPrefix() { return isRfc(NameComponentEnum.PREFIX); }
+    public boolean isTitle() { return isRfc(NameComponentEnum.TITLE); }
     /**
      * Tests if this is a given name.
      *
@@ -88,19 +84,33 @@ public class NameComponent extends AbstractJSContactType implements HasKind, Ser
     @JsonIgnore
     public boolean isSurname() { return isRfc(NameComponentEnum.SURNAME); }
     /**
-     * Tests if this is a middle name.
+     * Tests if this is the second surname.
      *
-     * @return true if this is a middle name, false otherwise
+     * @return true if this is the second surname, false otherwise
      */
     @JsonIgnore
-    public boolean isMiddle() { return isRfc(NameComponentEnum.MIDDLE); }
+    public boolean isSurname2() { return isRfc(NameComponentEnum.SURNAME2); }
     /**
-     * Tests if this is a suffix.
+     * Tests if this is a second name.
      *
-     * @return true if this is a suffix, false otherwise
+     * @return true if this is a second name, false otherwise
      */
     @JsonIgnore
-    public boolean isSuffix() { return isRfc(NameComponentEnum.SUFFIX); }
+    public boolean isGiven2() { return isRfc(NameComponentEnum.GIVEN2); }
+    /**
+     * Tests if this is a credential.
+     *
+     * @return true if this is a credential, false otherwise
+     */
+    @JsonIgnore
+    public boolean isCredential() { return isRfc(NameComponentEnum.CREDENTIAL); }
+    /**
+     * Tests if this is a generation.
+     *
+     * @return true if this is a generation, false otherwise
+     */
+    @JsonIgnore
+    public boolean isGeneration() { return isRfc(NameComponentEnum.GENERATION); }
     /**
      * Tests if this is the separator for name components used to build the full name.
      *
@@ -116,108 +126,79 @@ public class NameComponent extends AbstractJSContactType implements HasKind, Ser
     @JsonIgnore
     public boolean isExt() { return kind.isExtValue(); }
 
-    private static NameComponent rfc(NameComponentEnum rfcValue, String value, Integer rank) {
+    private static NameComponent rfc(NameComponentEnum rfcValue, String value) {
         return NameComponent.builder()
                 .value(value)
                 .kind(NameComponentKind.builder().rfcValue(rfcValue).build())
-                .rank(rank)
                 .build();
     }
     /**
-     * Returns a prefix component of a name.
+     * Returns a title component of a name.
      *
-     * @param value the prefix
-     * @return the prefix component
+     * @param value the title
+     * @return the title component
      */
-    public static NameComponent prefix(String value) {return rfc(NameComponentEnum.PREFIX, value, null);}
-    /**
-     * Returns a prefix component of a name.
-     *
-     * @param value the prefix
-     * @param rank the rank
-     * @return the prefix component
-     */
-    public static NameComponent prefix(String value, Integer rank) {return rfc(NameComponentEnum.PREFIX, value, rank);}
+    public static NameComponent title(String value) {return rfc(NameComponentEnum.TITLE, value);}
     /**
      * Returns a given name component of a name.
      *
      * @param value the given name
      * @return the given name  component
      */
-    public static NameComponent given(String value) {return rfc(NameComponentEnum.GIVEN, value, null);}
-    /**
-     * Returns a given name component of a name.
-     *
-     * @param value the given name
-     * @param rank the rank
-     * @return the given name  component
-     */
-    public static NameComponent given(String value, Integer rank) {return rfc(NameComponentEnum.GIVEN, value, rank);}
+    public static NameComponent given(String value) {return rfc(NameComponentEnum.GIVEN, value);}
     /**
      * Returns a surname component of a name.
      *
      * @param value the surname
      * @return the surname  component
      */
-    public static NameComponent surname(String value) {return rfc(NameComponentEnum.SURNAME, value, null);}
+    public static NameComponent surname(String value) {return rfc(NameComponentEnum.SURNAME, value);}
     /**
-     * Returns a surname component of a name.
+     * Returns a second surname component of a name.
      *
-     * @param value the surname
-     * @param rank the rank
-     * @return the surname  component
+     * @param value the second surname
+     * @return the second surname component
      */
-    public static NameComponent surname(String value, Integer rank) {return rfc(NameComponentEnum.SURNAME, value, rank);}
+    public static NameComponent surname2(String value) {return rfc(NameComponentEnum.SURNAME2, value);}
     /**
-     * Returns an additional name component of a name.
+     * Returns a second given name component of a name.
      *
-     * @param value the middle name
-     * @return the middle name  component
+     * @param value the second given name
+     * @return the second given name component
      */
-    public static NameComponent middle(String value) {return rfc(NameComponentEnum.MIDDLE, value, null);}
+    public static NameComponent given2(String value) {return rfc(NameComponentEnum.GIVEN2, value);}
     /**
-     * Returns an additional name component of a name.
+     * Returns a credential name component of a name.
      *
-     * @param value the middle name
-     * @param rank the rank
-     * @return the middle name  component
+     * @param value the credential
+     * @return the credential name  component
      */
-    public static NameComponent middle(String value, Integer rank) {return rfc(NameComponentEnum.MIDDLE, value, rank);}
+    public static NameComponent credential(String value) {return rfc(NameComponentEnum.CREDENTIAL, value);}
     /**
-     * Returns a suffix name component of a name.
+     * Returns a generation name component of a name.
      *
-     * @param value the suffix
-     * @return the suffix name  component
+     * @param value the generation
+     * @return the generation name  component
      */
-    public static NameComponent suffix(String value) {return rfc(NameComponentEnum.SUFFIX, value, null);}
-    /**
-     * Returns a suffix name component of a name.
-     *
-     * @param value the suffix
-     * @param rank the suffix
-     * @return the suffix name  component
-     */
-    public static NameComponent suffix(String value, Integer rank) {return rfc(NameComponentEnum.SUFFIX, value, rank);}
+    public static NameComponent generation(String value) {return rfc(NameComponentEnum.GENERATION, value);}
     /**
      * Returns a separator name component of a name.
      *
      * @param value the separator
      * @return the separator name  component
      */
-    public static NameComponent separator(String value) {return rfc(NameComponentEnum.SEPARATOR, value, null);}
+    public static NameComponent separator(String value) {return rfc(NameComponentEnum.SEPARATOR, value);}
     /**
      * Returns a custom component of a name.
      *
      * @param extValue the custom name component
      * @param value the value for the custom name component
-     * @param rank the rank value for the custom name component
      * @return the custom component
      */
-    public static NameComponent ext(String extValue, String value, Integer rank) {
+    public static NameComponent ext(String extValue, String value) {
         return NameComponent.builder()
                 .value(value)
                 .kind(NameComponentKind.builder().extValue(V_Extension.toV_Extension(extValue)).build())
-                .rank(rank)
                 .build();
     }
 

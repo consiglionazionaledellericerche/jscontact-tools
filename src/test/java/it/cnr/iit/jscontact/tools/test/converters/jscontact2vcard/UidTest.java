@@ -31,7 +31,7 @@ public class UidTest extends JSContact2VCardTest {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
-                "\"fullName\":\"test\"" +
+                "\"name\": { \"full\": \"test\"}" +
                 "}";
         jsContact2VCard.convert(jscard);
     }
@@ -42,7 +42,7 @@ public class UidTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
-                "\"fullName\":\"test\"" +
+                "\"name\": { \"full\": \"test\"}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testUid - 1", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", vcard.getUid().getValue());

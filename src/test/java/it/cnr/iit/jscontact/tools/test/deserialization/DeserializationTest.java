@@ -77,7 +77,7 @@ public class DeserializationTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"nickNames\": { " +
                     "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\", \"ext3\":\"text\"  }, " +
                     "\"NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Joe\" } " +
@@ -126,7 +126,7 @@ public class DeserializationTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"vCardProps\": [ " +
                     "[\"x-foo1\", {\"x-bar\":\"Hello\",\"group\":\"item1\"}, \"unknown\", \"World!\"], " +
                     "[\"x-foo2\", {\"pref\": 1}, \"integer\", 100 ] " +
