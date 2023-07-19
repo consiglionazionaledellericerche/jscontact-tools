@@ -7,7 +7,7 @@
   "addresses": {
     "ADR-1" : {
       "@type": "Address",
-      "fullAddress": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
+      "full": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
     }
   },
   "phones": {

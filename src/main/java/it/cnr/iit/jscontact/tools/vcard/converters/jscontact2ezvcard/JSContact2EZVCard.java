@@ -27,6 +27,7 @@ import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
@@ -109,7 +110,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
-    private static FormattedName toVCardFormattedName(StructuredName sn, NameComponent[] nameComponents, String defaultSeparator) {
+    private static FormattedName toVCardFormattedName(ExtendedStructuredName sn, NameComponent[] nameComponents, String defaultSeparator) {
 
         List<String> components = new ArrayList<>();
         boolean applySeparator = false;
@@ -165,7 +166,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.setFormattedName(jsCard.getUid());
                 return;
             }
-            List<StructuredName> sns = toVCardStructuredNames(jsCard, vcard);
+            List<ExtendedStructuredName> sns = toVCardStructuredNames(jsCard, vcard);
             if (sns.size() == 1) {
                 FormattedName fn = toVCardFormattedName(sns.get(0), jsCard.getName().getComponents(), jsCard.getName().getDefaultSeparator());
                 fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
@@ -173,7 +174,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 vcard.setFormattedName(fn);
             } else {
                 List<FormattedName> fns = new ArrayList<>();
-                for (StructuredName sn : sns) {
+                for (ExtendedStructuredName sn : sns) {
                     FormattedName fn = toVCardFormattedName(sn, jsCard.getName().getComponents(), jsCard.getName().getDefaultSeparator());
                     fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
                     fn.setLanguage(sn.getLanguage());
@@ -208,29 +209,28 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static StructuredName toVCardStructuredName(NameComponent[] nameComponents) {
+    private static ExtendedStructuredName toVCardStructuredName(NameComponent[] nameComponents) {
 
-        StructuredName name = new StructuredName();
+        ExtendedStructuredName name = new ExtendedStructuredName();
         List<String> surnames = new ArrayList<>();
         List<String> givens = new ArrayList<>();
         for (NameComponent component : nameComponents) {
             if (component.isExt())
                 continue;
-            else if (component.isSurname()) {
+            else if (component.isSurname())
                 surnames.add(component.getValue());
-                for (NameComponent component2 : nameComponents) {
-                    if (component2.isSurname2())
-                        surnames.add(component2.getValue());
-                }
-            }
             else if (component.isGiven())
                 givens.add(component.getValue());
             else if (component.isGiven2())
                 name.getAdditionalNames().add(component.getValue());
             else if (component.isTitle())
                 name.getPrefixes().add(component.getValue());
-            else
+            else if (component.isCredential())
                 name.getSuffixes().add(component.getValue());
+            else if (component.isSurname2())
+                name.getSurname2().add(component.getValue());
+            else
+                name.getGeneration().add(component.getValue());
         }
         name.setFamily((surnames.size()>0) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,surnames) : null);
         name.setGiven((givens.size()>0) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,givens) : null);
@@ -253,14 +253,18 @@ public class JSContact2EZVCard extends AbstractConverter {
             joiner.add(jsContactSortAs.get(NameComponentKind.title()));
         if (jsContactSortAs.get(NameComponentKind.credential()) != null)
             joiner.add(jsContactSortAs.get(NameComponentKind.credential()));
+        if (jsContactSortAs.get(NameComponentKind.surname2()) != null)
+            joiner.add(jsContactSortAs.get(NameComponentKind.surname2()));
+        if (jsContactSortAs.get(NameComponentKind.generation()) != null)
+            joiner.add(jsContactSortAs.get(NameComponentKind.generation()));
         return joiner.toString();
     }
 
-    private List<StructuredName> toVCardStructuredNames(Card jsCard, VCard vcard) {
+    private List<ExtendedStructuredName> toVCardStructuredNames(Card jsCard, VCard vcard) {
 
-        List<StructuredName> sns = new ArrayList<>();
+        List<ExtendedStructuredName> sns = new ArrayList<>();
         if (jsCard.getLocalizationsPerPath("name") != null || jsCard.getLocalizationsPerPath("name/components") != null) {
-            StructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
+            ExtendedStructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLanguage());
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs())); // did this way because Ez-vcard allows to sort only for surname and given name
             VCardUtils.addVCardUnmatchedParams(sn,jsCard.getName());
@@ -281,7 +285,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
         }
         else {
-            StructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
+            ExtendedStructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs()));
             VCardUtils.addVCardUnmatchedParams(sn,jsCard.getName());
             sns.add(sn);
@@ -297,11 +301,11 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getName() == null || jsCard.getName().getComponents() == null)
             return;
 
-        List<StructuredName> sns = toVCardStructuredNames(jsCard, vcard);
+        List<ExtendedStructuredName> sns = toVCardStructuredNames(jsCard, vcard);
         if (sns.size() == 1)
-            vcard.setStructuredName(sns.get(0));
+            vcard.setProperty(sns.get(0));
         else
-            vcard.setStructuredNameAlt(sns.toArray(new StructuredName[0]));
+            vcard.addPropertyAlt(ExtendedStructuredName.class, sns.toArray(new ExtendedStructuredName[0]));
     }
 
 
@@ -481,8 +485,8 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
         }
 
-        if (address.getFullAddress() != null)
-            addr.setLabel(address.getFullAddress());
+        if (address.getFull() != null)
+            addr.setLabel(address.getFull());
 
         addr.setLanguage(language);
         VCardUtils.addVCardUnmatchedParams(addr,address);
@@ -570,11 +574,11 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,Address> entry : jsCard.getAddresses().entrySet()) {
 
             Address address = entry.getValue();
-            if (isVCardNullAddress(address) && address.getFullAddress() == null)
+            if (isVCardNullAddress(address) && address.getFull() == null)
                 continue;
 
             if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress")==null) {
+                jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/full")==null) {
                 ExtendedAddress addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
                 addVCardPropIdParam(addr, entry.getKey());
                 vcard.addProperty(addr);
@@ -590,10 +594,10 @@ public class JSContact2EZVCard extends AbstractConverter {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet())
                         addrs.add(toVCardAddress(asJSCardAddress(localization.getValue()), jsCard.getCustomTimeZones(),localization.getKey()));
                 }
-                localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/fullAddress");
+                localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/full");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet())
-                        addrs.add(toVCardAddress(Address.builder().fullAddress(localization.getValue().asText()).build(), jsCard.getCustomTimeZones(), localization.getKey()));
+                        addrs.add(toVCardAddress(Address.builder().full(localization.getValue().asText()).build(), jsCard.getCustomTimeZones(), localization.getKey()));
                 }
                 vcard.addPropertyAlt(ExtendedAddress.class, addrs.toArray(new ExtendedAddress[0]));
             }
@@ -607,9 +611,9 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         try {
             Constructor<T> constructor;
-            if (anniversary.getPlace().getFullAddress() != null) {
+            if (anniversary.getPlace().getFull() != null) {
                 constructor = classs.getDeclaredConstructor(String.class);
-                return constructor.newInstance(anniversary.getPlace().getFullAddress());
+                return constructor.newInstance(anniversary.getPlace().getFull());
             }
 
             if (!isVCardNullAddress(anniversary.getPlace())) {

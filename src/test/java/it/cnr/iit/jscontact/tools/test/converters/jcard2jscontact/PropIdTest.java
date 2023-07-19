@@ -49,7 +49,7 @@ public class PropIdTest extends VCard2JSContactTest {
         assertEquals("testPropId1 - 6", "Reston", jsCard.getAddresses().get("TEST").getLocality());
         assertEquals("testPropId1 - 7", "VA", jsCard.getAddresses().get("TEST").getRegion());
         assertEquals("testPropId1 - 8", "54321 Oak St", jsCard.getAddresses().get("TEST").getStreetAddress());
-        assertEquals("testPropId1 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("TEST").getFullAddress());
+        assertEquals("testPropId1 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("TEST").getFull());
 
     }
 
@@ -77,14 +77,14 @@ public class PropIdTest extends VCard2JSContactTest {
         assertEquals("testPropId2 - 6", "Reston", jsCard.getAddresses().get("TEST").getLocality());
         assertEquals("testPropId2 - 7", "VA", jsCard.getAddresses().get("TEST").getRegion());
         assertEquals("testPropId2 - 8", "54321 Oak St", jsCard.getAddresses().get("TEST").getStreetAddress());
-        assertEquals("testPropId2 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("TEST").getFullAddress());
+        assertEquals("testPropId2 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("TEST").getFull());
         assertEquals("testPropId2 - 10", "US", jsCard.getAddresses().get("ADR-2").getCountryCode());
         assertEquals("testPropId2 - 11", "USA", jsCard.getAddresses().get("ADR-2").getCountry());
         assertEquals("testPropId2 - 12", "20190", jsCard.getAddresses().get("ADR-2").getPostcode());
         assertEquals("testPropId2 - 13", "Reston", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testPropId2 - 14", "VA", jsCard.getAddresses().get("ADR-2").getRegion());
         assertEquals("testPropId2 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetAddress());
-        assertEquals("testPropId2 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFullAddress());
+        assertEquals("testPropId2 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFull());
 
     }
 

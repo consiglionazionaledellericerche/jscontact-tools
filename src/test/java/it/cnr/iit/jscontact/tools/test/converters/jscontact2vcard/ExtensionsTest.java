@@ -21,6 +21,7 @@ import ezvcard.VCardDataType;
 import ezvcard.util.TelUri;
 import it.cnr.iit.jscontact.tools.dto.VCardPropEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -168,9 +169,9 @@ public class ExtensionsTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testExtendedJSContact5 - 1", "Mr. John Q. Public, Esq.", vcard.getFormattedName().getValue());
-        assertNotNull("testExtendedJSContact5 - 2", vcard.getStructuredName());
-        assertEquals("testExtendedJSContact5 - 3", "Public", vcard.getStructuredName().getFamily());
-        assertEquals("testExtendedJSContact5 - 4", "John", vcard.getStructuredName().getGiven());
+        assertNotNull("testExtendedJSContact5 - 2", vcard.getProperty(ExtendedStructuredName.class));
+        assertEquals("testExtendedJSContact5 - 3", "Public", vcard.getProperty(ExtendedStructuredName.class).getFamily());
+        assertEquals("testExtendedJSContact5 - 4", "John", vcard.getProperty(ExtendedStructuredName.class).getGiven());
         assertEquals("testExtendedJSContact5 - 5", 1, vcard.getExtendedProperties().size());
         assertEquals("testExtendedJSContact5 - 6", "JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testExtendedJSContact5 - 7", "name/components/2", vcard.getExtendedProperties().get(0).getParameter("JSPTR"));

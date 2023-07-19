@@ -38,7 +38,7 @@ public class AddressesTest extends JSContact2VCardTest {
                         "\"addresses\":{" +
                             "\"ADR-1\": {" +
                                 "\"@type\":\"Address\"," +
-                                "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
+                                "\"full\":\"54321 Oak St Reston VA 20190 USA\"," +
                                 "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
                                 "\"locality\":\"Reston\"," +
                                 "\"region\":\"VA\"," +
@@ -218,7 +218,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
+                        "\"full\":\"54321 Oak St Reston VA 20190 USA\"," +
                         "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
                         "\"locality\":\"Reston\"," +
                         "\"region\":\"VA\"," +
@@ -229,7 +229,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}," +
                 "\"localizations\":{" +
                    "\"it\":{" +
-                       "\"addresses/ADR-1/fullAddress\":\"Via Moruzzi,1 Pisa 56124 Italia\"" +
+                       "\"addresses/ADR-1/full\":\"Via Moruzzi,1 Pisa 56124 Italia\"" +
                    "}" +
                 "}" +
                 "}";

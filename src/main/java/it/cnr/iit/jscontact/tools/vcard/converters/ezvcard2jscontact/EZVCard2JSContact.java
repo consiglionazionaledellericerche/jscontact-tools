@@ -41,6 +41,7 @@ import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactIdsProfile;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.apache.commons.lang3.ArrayUtils;
@@ -388,7 +389,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (property.getText() != null && property.getGeoUri() == null)
             return it.cnr.iit.jscontact.tools.dto.Address.builder()
-                    .fullAddress(property.getText())
+                    .full(property.getText())
                     .build();
         else if (property.getGeoUri() != null)
             return it.cnr.iit.jscontact.tools.dto.Address.builder()
@@ -538,7 +539,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private static Map<NameComponentKind, String> toJSCardNameSortAs(List<String> vcardSortAs, StructuredName sn) {
+    private static Map<NameComponentKind, String> toJSCardNameSortAs(List<String> vcardSortAs, ExtendedStructuredName sn) {
 
         if (vcardSortAs == null || vcardSortAs.isEmpty())
             return null;
@@ -554,7 +555,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return sortAs;
     }
 
-    private Name toJSCardName(StructuredName vcardName, VCard vcard) throws CardException {
+    private Name toJSCardName(ExtendedStructuredName vcardName, VCard vcard) throws CardException {
 
         NameComponent[] components = null;
 
@@ -566,21 +567,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 components = Name.addComponent(components, NameComponent.given(name));
         }
         if (vcardName.getFamily() != null) {
-            boolean first = true;
             String[] surnames = vcardName.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-            for (String surname : surnames) {
-                if (first) {
+            for (String surname : surnames)
                     components = Name.addComponent(components, NameComponent.surname(surname));
-                    first = false;
-                }
-                else
-                    components = Name.addComponent(components, NameComponent.surname2(surname));
-            }
         }
         for (String an : vcardName.getAdditionalNames())
             components = Name.addComponent(components,NameComponent.given2(an));
         for (String sx : vcardName.getSuffixes())
             components = Name.addComponent(components,NameComponent.credential(sx));
+        for (String sx : vcardName.getSurname2())
+            components = Name.addComponent(components,NameComponent.surname2(sx));
+        for (String sx : vcardName.getGeneration())
+            components = Name.addComponent(components,NameComponent.generation(sx));
 
         return Name.builder()
                 .components(components)
@@ -605,10 +603,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private void fillJSCardNames(VCard vcard, Card jsCard) throws CardException {
 
-        if (vcard.getStructuredNames()==null || vcard.getStructuredNames().isEmpty())
+        if (vcard.getProperties(ExtendedStructuredName.class) == null || vcard.getProperties(ExtendedStructuredName.class).isEmpty())
             return;
 
-        List<StructuredName> vcardNames = vcard.getStructuredNames();
+        List<ExtendedStructuredName> vcardNames = vcard.getProperties(ExtendedStructuredName.class);
         vcardNames.sort(vCardPropertiesAltidComparator);
 
         if (jsCard.getName() == null) // no full name exists
@@ -710,7 +708,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .hash(autoFullAddress)
                 .propId(vcardAddr.getParameter(VCardParamEnum.PROP_ID.getValue()))
                 .contexts(toJSCardAddressContexts(vcardTypeParam))
-                .fullAddress(toJSCardFulllAddress(vcardAddr.getLabel(), autoFullAddress))
+                .full(toJSCardFulllAddress(vcardAddr.getLabel(), autoFullAddress))
                 .pref(vcardAddr.getPref())
                 .coordinates(getValue(vcardAddr.getGeo()))
                 .timeZone(toJSCardTimezoneName(vcardAddr.getTimezone()))

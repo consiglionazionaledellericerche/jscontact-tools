@@ -25,6 +25,7 @@ import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2vcard.JSContact2VCard;
 import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -56,7 +57,7 @@ public class PropIdTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPropId1 - 1", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).all()).get(0));
+        assertEquals("testPropId1 - 1", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).register(new ExtendedStructuredNameScribe()).all()).get(0));
 
     }
 

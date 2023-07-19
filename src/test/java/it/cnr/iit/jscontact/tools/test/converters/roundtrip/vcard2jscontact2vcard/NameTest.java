@@ -20,9 +20,11 @@ import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class NameTest extends RoundtripTest {
 
@@ -35,10 +37,11 @@ public class NameTest extends RoundtripTest {
                 "N:Public;John;Quinlan;Mr.;Esq.\n" +
                 "END:VCARD";
 
+        VCard vcardInit = Ezvcard.parse(vcard).first();
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testName1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertTrue("testName1 - 1", ((ExtendedStructuredName) vcard2.getProperty(ExtendedStructuredName.class)).equalsStructuredName(vcardInit.getStructuredName()));
     }
 
 
@@ -52,10 +55,11 @@ public class NameTest extends RoundtripTest {
                 "NICKNAME:Johnny\n" +
                 "END:VCARD";
 
+        VCard vcardInit = Ezvcard.parse(vcard).first();
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testName2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertTrue("testName2 - 1", ((ExtendedStructuredName) vcard2.getProperty(ExtendedStructuredName.class)).equalsStructuredName(vcardInit.getStructuredName()));
     }
 
     //TODO -UNDISCERNIBLE

@@ -43,7 +43,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses1 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses1 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses1 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses1 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses1 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
 
     }
 
@@ -63,7 +63,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses2 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses2 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses2 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses2 - 9", "54321 Oak St Reston USA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses2 - 9", "54321 Oak St Reston USA", jsCard.getAddresses().get("ADR-1").getFull());
 
     }
 
@@ -84,14 +84,14 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses3 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses3 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses3 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses3 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses3 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses3 - 10", "US", jsCard.getAddresses().get("ADR-2").getCountryCode());
         assertEquals("testAddresses3 - 11", "USA", jsCard.getAddresses().get("ADR-2").getCountry());
         assertEquals("testAddresses3 - 12", "20190", jsCard.getAddresses().get("ADR-2").getPostcode());
         assertEquals("testAddresses3 - 13", "Reston", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testAddresses3 - 14", "VA", jsCard.getAddresses().get("ADR-2").getRegion());
         assertEquals("testAddresses3 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetAddress());
-        assertEquals("testAddresses3 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFullAddress());
+        assertEquals("testAddresses3 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFull());
 
     }
 
@@ -113,7 +113,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses4 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses4 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses4 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses4 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses4 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses4 - 10", "geo:46.772673,-71.282945", jsCard.getAddresses().get("ADR-1").getCoordinates());
 
     }
@@ -135,7 +135,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses5 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses5 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses5 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses5 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses5 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses5 - 10", "Etc/GMT+5", jsCard.getAddresses().get("ADR-1").getTimeZone());
     }
 
@@ -157,7 +157,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses6 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses6 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses6 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses6 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses6 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses6 - 10", "Etc/GMT-5", jsCard.getAddresses().get("ADR-1").getTimeZone());
     }
 
@@ -178,7 +178,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses7 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses7 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses7 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses7 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses7 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses7 - 10", "Etc/GMT", jsCard.getAddresses().get("ADR-1").getTimeZone());
     }
 
@@ -199,7 +199,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses8 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses8 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses8 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses8 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses8 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses8 - 10", "tz1", jsCard.getAddresses().get("ADR-1").getTimeZone());
         assertEquals("testAddresses8 - 11", 1, jsCard.getCustomTimeZones().size());
         assertEquals("testAddresses8 - 13", "TZ+0530", jsCard.getCustomTimeZones().get("tz1").getTzId());
@@ -227,7 +227,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses9 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses9 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses9 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses9 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses9 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses9 - 10", "America/New_York", jsCard.getAddresses().get("ADR-1").getTimeZone());
 
     }
@@ -248,7 +248,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses10 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses10 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses10 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses10 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses10 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses10 - 10", "America/New_York", jsCard.getAddresses().get("ADR-1").getTimeZone());
         assertEquals("testAddresses10 - 11", "geo:46.772673,-71.282945", jsCard.getAddresses().get("ADR-1").getCoordinates());
 
@@ -272,14 +272,14 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses11 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses11 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses11 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses11 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses11 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses11 - 10", "US", jsCard.getAddresses().get("ADR-2").getCountryCode());
         assertEquals("testAddresses11 - 11", "USA", jsCard.getAddresses().get("ADR-2").getCountry());
         assertEquals("testAddresses11 - 12", "20190", jsCard.getAddresses().get("ADR-2").getPostcode());
         assertEquals("testAddresses11 - 13", "Reston", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testAddresses11 - 14", "VA", jsCard.getAddresses().get("ADR-2").getRegion());
         assertEquals("testAddresses11 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetAddress());
-        assertEquals("testAddresses11 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFullAddress());
+        assertEquals("testAddresses11 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFull());
         assertEquals("testAddresses11 - 17", "America/New_York", jsCard.getAddresses().get("ADR-2").getTimeZone());
 
     }
@@ -300,7 +300,7 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses12 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses12 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses12 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses12 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses12 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses12 - 10", "Etc/GMT+5", jsCard.getAddresses().get("ADR-1").getTimeZone());
         assertEquals("testAddresses12 - 11", "geo:46.772673,-71.282945", jsCard.getAddresses().get("ADR-1").getCoordinates());
 
@@ -328,14 +328,14 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses11 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses11 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses11 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses11 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses11 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses11 - 10", "US", jsCard.getAddresses().get("ADR-2").getCountryCode());
         assertEquals("testAddresses11 - 11", "USA", jsCard.getAddresses().get("ADR-2").getCountry());
         assertEquals("testAddresses11 - 12", "20190", jsCard.getAddresses().get("ADR-2").getPostcode());
         assertEquals("testAddresses11 - 13", "Reston", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testAddresses11 - 14", "VA", jsCard.getAddresses().get("ADR-2").getRegion());
         assertEquals("testAddresses11 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetAddress());
-        assertEquals("testAddresses11 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFullAddress());
+        assertEquals("testAddresses11 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFull());
         assertNotNull("testAddresses11 - 17", jsCard.getLocalization("it", "addresses/ADR-2"));
 
     }
@@ -361,14 +361,14 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses12 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses12 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses12 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses12 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses12 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses12 - 10", "US", jsCard.getAddresses().get("ADR-2").getCountryCode());
         assertEquals("testAddresses12 - 11", "USA", jsCard.getAddresses().get("ADR-2").getCountry());
         assertEquals("testAddresses12 - 12", "20190", jsCard.getAddresses().get("ADR-2").getPostcode());
         assertEquals("testAddresses12 - 13", "Reston", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testAddresses12 - 14", "VA", jsCard.getAddresses().get("ADR-2").getRegion());
         assertEquals("testAddresses12 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetAddress());
-        assertEquals("testAddresses12 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFullAddress());
+        assertEquals("testAddresses12 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFull());
         assertNotNull("testAddresses12 - 17", jsCard.getLocalization("it", "addresses/ADR-2"));
 
     }
@@ -394,13 +394,13 @@ public class AddressesTest extends JCard2JSContactTest {
         assertEquals("testAddresses13 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
         assertEquals("testAddresses13 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
         assertEquals("testAddresses13 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetAddress());
-        assertEquals("testAddresses13 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFullAddress());
+        assertEquals("testAddresses13 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
         assertEquals("testAddresses13 - 10", "IT", jsCard.getAddresses().get("ADR-2").getCountryCode());
         assertEquals("testAddresses13 - 11", "Italy", jsCard.getAddresses().get("ADR-2").getCountry());
         assertEquals("testAddresses13 - 12", "56124", jsCard.getAddresses().get("ADR-2").getPostcode());
         assertEquals("testAddresses13 - 13", "Pisa", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testAddresses13 - 15", "Via Moruzzi,1", jsCard.getAddresses().get("ADR-2").getStreetAddress());
-        assertEquals("testAddresses13 - 16", "Via Moruzzi,1\nPisa\n56124\nItaly", jsCard.getAddresses().get("ADR-2").getFullAddress());
+        assertEquals("testAddresses13 - 16", "Via Moruzzi,1\nPisa\n56124\nItaly", jsCard.getAddresses().get("ADR-2").getFull());
         assertNotNull("testAddresses13 - 17", jsCard.getLocalization("en", "addresses/ADR-2"));
 
     }

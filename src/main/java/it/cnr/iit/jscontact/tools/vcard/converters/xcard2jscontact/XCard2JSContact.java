@@ -22,6 +22,7 @@ import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSC
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import lombok.Builder;
 
 import java.util.List;
@@ -54,7 +55,11 @@ public class XCard2JSContact extends EZVCard2JSContact {
      */
     public List<Card> convert(String xCard) throws CardException {
 
-        List<VCard> vcards = Ezvcard.parseXml(xCard).register(new ExtendedAddressScribe()).all();
+        List<VCard> vcards = Ezvcard.parseXml(xCard)
+                                    .register(new ExtendedAddressScribe())
+                                    .register(new ExtendedStructuredNameScribe())
+                                    .all();
+
         if (vcards.size() == 0)
             throw new CardException("Bad xCard format");
         return convert(vcards.toArray(new VCard[0]));

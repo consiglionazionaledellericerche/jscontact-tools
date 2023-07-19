@@ -43,7 +43,7 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","fullAddress","components","locality","region","country",
+@JsonPropertyOrder({"@type","full","components","locality","region","country",
                      "postcode","countryCode","coordinates","timeZone",
                      "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -59,7 +59,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     @Builder.Default
     String _type = "Address";
 
-    String fullAddress;
+    String full;
 
     @JSContactCollection(addMethod = "addComponent", itemClass = AddressComponent.class)
     AddressComponent[] components;

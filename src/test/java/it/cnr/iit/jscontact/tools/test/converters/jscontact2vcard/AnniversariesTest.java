@@ -69,7 +69,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                           "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                           "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}" +
                 "}" +
@@ -119,7 +119,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}" +
                 "}" +
@@ -146,7 +146,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Los Angeles CA USA\"" +
+                            "\"full\":\"Los Angeles CA USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
@@ -157,7 +157,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}" +
                 "}" +
@@ -187,7 +187,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Los Angeles CA USA\"" +
+                            "\"full\":\"Los Angeles CA USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
@@ -198,7 +198,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
@@ -251,7 +251,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
@@ -306,7 +306,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
@@ -362,7 +362,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-3\": {" +

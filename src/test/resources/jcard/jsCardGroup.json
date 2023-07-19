@@ -50,7 +50,7 @@
       "ADR-2" : {
         "@type": "Address",
         "contexts": {"private": true},
-        "fullAddress": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+        "full": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
       }
     },
     "phones": {
@@ -123,7 +123,7 @@
     "addresses": {
       "ADR-1": {
         "@type": "Address",
-        "fullAddress": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
+        "full": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
       }
     },
     "phones": {

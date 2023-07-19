@@ -400,7 +400,7 @@ All the methods take in input a list of JSContact Card objects and can raise the
    and "extention" non-empty values presented in the "components" member of the "Address" object. Such values are separated
    by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
-9. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full
+9. The LABEL parameter of the ADR property is equal to the "full" property of the "Address" object. If the full
    address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL
    parameter can result from the newline-delimited concatenation of the non-empty "Address" members or.
 

@@ -24,6 +24,7 @@ import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard.JSContact2EZVCard;
 import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import lombok.Builder;
 
 import java.util.List;
@@ -57,7 +58,10 @@ public class JSContact2JCard extends JSContact2EZVCard {
     public String convertToJson(Card... jsCards) throws CardException {
 
         List<VCard> vcards = convert(jsCards);
-        return Ezvcard.writeJson(vcards).register(new ExtendedAddressScribe()).go();
+        return Ezvcard.writeJson(vcards)
+                      .register(new ExtendedAddressScribe())
+                      .register(new ExtendedStructuredNameScribe())
+                      .go();
     }
 
 
