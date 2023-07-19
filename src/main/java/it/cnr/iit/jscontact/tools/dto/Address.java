@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasPronounce;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
@@ -31,6 +32,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -44,7 +46,7 @@ import java.util.*;
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","full","components","locality","region","country",
-                     "postcode","countryCode","coordinates","timeZone",
+                     "postcode","countryCode","coordinates","timeZone","pronounce",
                      "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -52,7 +54,7 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
-public class Address extends AbstractJSContactType implements IdMapValue, Serializable {
+public class Address extends AbstractJSContactType implements IdMapValue, HasPronounce, Serializable {
 
     @Pattern(regexp = "Address", message="invalid @type value in Address")
     @JsonProperty("@type")
@@ -79,6 +81,9 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     String coordinates;
 
     String timeZone;
+
+    @Valid
+    Pronounce pronounce;
 
     String defaultSeparator;
 

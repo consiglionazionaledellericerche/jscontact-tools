@@ -22,8 +22,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentTypeDeserializer;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasPronounce;
 import lombok.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -34,27 +36,30 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","kind","value"})
+@JsonPropertyOrder({"@type","value", "kind", "pronounce"})
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AddressComponent extends AbstractJSContactType implements HasKind, Serializable {
+public class AddressComponent extends AbstractJSContactType implements HasKind, HasPronounce, Serializable {
 
     @Pattern(regexp = "AddressComponent", message="invalid @type value in AddressComponent")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "AddressComponent";
 
+    @NotNull(message = "value is missing in AddressComponent")
+    @NonNull
+    String value;
+
     @NotNull(message = "kind is missing in AddressComponent")
     @NonNull
     @JsonDeserialize(using = AddressComponentTypeDeserializer.class)
     AddressComponentKind kind;
 
-    @NotNull(message = "value is missing in AddressComponent")
-    @NonNull
-    String value;
+    @Valid
+    Pronounce pronounce;
 
     private boolean isRfc(AddressComponentEnum value) { return (kind.getRfcValue()!= null && kind.getRfcValue() == value);}
 

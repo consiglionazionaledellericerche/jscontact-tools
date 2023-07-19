@@ -21,7 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasPronounce;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.JSContactPropUtils;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -87,28 +89,30 @@ public abstract class AbstractExtensibleJSContactType {
     }
     public void buildAllExtensionsMap(Map<String,Object> map, String jsonPointer) {
 
-        if (this instanceof HasKind) { //The type property must be considered, if any
+        if (this instanceof HasKind) { //The kind property must be considered, if any
             HasKind o = (HasKind) this;
             if (o.getKind()!=null && o.getKind().isExtValue()) // extended value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
             else if (o.getKind()==null) // unspecified value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
-        } else {
+        }
 
-            if (this instanceof HasContexts && ((HasContexts) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
-                for (Context context : ((HasContexts) this).getExtContexts())
-                    map.put(String.format("%scontexts/%s", jsonPointer,context.getExtValue().toString()), true);
-            }
+        if (this instanceof HasPronounce && ((HasPronounce) this).getPronounce() != null)  { //The pronounce property must be considered, if any
+            map.put(String.format("%s/pronounce", removeLastChar(jsonPointer)), ((HasPronounce) this).getPronounce());
+        }
+        if (this instanceof HasContexts && ((HasContexts) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
+            for (Context context : ((HasContexts) this).getExtContexts())
+                map.put(String.format("%scontexts/%s", jsonPointer,context.getExtValue().toString()), true);
+        }
 
-            if (this instanceof Address && ((Address) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
-                for (AddressContext context : ((Address) this).getExtContexts())
-                    map.put(String.format("%scontexts/%s", jsonPointer,context.getExtValue().toString()), true);
-            }
+        if (this instanceof Address && ((Address) this).getExtContexts() != null ) { //The extended contexts must be considered, if any
+            for (AddressContext context : ((Address) this).getExtContexts())
+                map.put(String.format("%scontexts/%s", jsonPointer,context.getExtValue().toString()), true);
+        }
 
-            if (this instanceof Phone && ((Phone) this).getExtPhoneFeatures() != null ) { //The extended contexts must be considered, if any
-                for (PhoneFeature feature : ((Phone) this).getExtPhoneFeatures())
-                    map.put(String.format("%sfeatures/%s", jsonPointer,feature.getExtValue().toString()), true);
-            }
+        if (this instanceof Phone && ((Phone) this).getExtPhoneFeatures() != null ) { //The extended contexts must be considered, if any
+            for (PhoneFeature feature : ((Phone) this).getExtPhoneFeatures())
+                map.put(String.format("%sfeatures/%s", jsonPointer,feature.getExtValue().toString()), true);
         }
 
         if (extensions != null) {
@@ -196,22 +200,31 @@ public abstract class AbstractExtensibleJSContactType {
     }
 
     public void addExtension(List<String> pathItems, String extension, Object value) {
-
         try {
             if (pathItems.isEmpty()) {
-                addExtension(extension, value);
+                if (this instanceof HasPronounce && extension.equals("pronounce"))
+                    ((HasPronounce) this).setPronounce((Pronounce) convertToJSContactType(Pronounce.class, value));
+                else
+                    addExtension(extension, value);
                 return;
             } else if (pathItems.size() == 1) {
-                if (this instanceof Phone && pathItems.get(0).equals("features")) {
+
+                String pathItem = pathItems.get(0);
+
+                if (this instanceof Phone && pathItem.equals("features")) {
                     ((Phone) this).addFeature(PhoneFeature.ext(extension));
                     return;
                 }
-                else if (this instanceof Address && pathItems.get(0).equals("contexts")) {
+                else if (this instanceof Address && pathItem.equals("contexts")) {
                     ((Address) this).addContext(AddressContext.ext(extension));
                     return;
                 }
-                else if (this instanceof HasContexts && pathItems.get(0).equals("contexts")) {
+                else if (this instanceof HasContexts && pathItem.equals("contexts")) {
                     ((HasContexts) this).addContext(Context.ext(extension));
+                    return;
+                }
+                else if (this instanceof HasPronounce && extension.equals("pronounce")) {
+                    ((HasPronounce) this).setPronounce((Pronounce) value);
                     return;
                 }
             }
@@ -263,6 +276,7 @@ public abstract class AbstractExtensibleJSContactType {
 
             }
         } catch(Exception e) {
+            e.printStackTrace();
             throw new InternalErrorException(String.format("Internal Error: addExtension - message=%s", e.getMessage()));
         }
     }

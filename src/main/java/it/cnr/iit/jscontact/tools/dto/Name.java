@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasPronounce;
 import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -41,14 +42,14 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
 @NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null between full and components is required in Name")
-@JsonPropertyOrder({"@type", "full", "components", "sortAs", "label"})
+@JsonPropertyOrder({"@type", "full", "components", "pronounce", "sortAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Name extends AbstractJSContactType implements Serializable {
+public class Name extends AbstractJSContactType implements HasPronounce, Serializable {
 
     @Pattern(regexp = "Name", message="invalid @type value in Name")
     @JsonProperty("@type")
@@ -61,6 +62,9 @@ public class Name extends AbstractJSContactType implements Serializable {
     @JSContactCollection(addMethod = "addComponent", itemClass = NameComponent.class)
     @Valid
     NameComponent[] components;
+
+    @Valid
+    Pronounce pronounce;
 
     String defaultSeparator;
 
