@@ -2,7 +2,7 @@
   {
     "@type": "Card",
     "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
-    "fullName": "a group",
+    "name": {"full": "a group"},
     "kind": "group",
     "members": {
       "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8": true,
@@ -13,7 +13,7 @@
   {
     "@type": "Card",
     "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
-    "fullName": "Joe User",
+    "name": {"full": "Joe User"},
     "kind": "individual",
     "preferredLanguages": {
       "fr": [{ "@type": "LanguagePref", "pref": 1 }],
@@ -96,7 +96,7 @@
   {
     "@type": "Card",
     "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
-    "fullName": "大久保 正仁",
+    "name": {"full": "大久保 正仁"},
     "titles": {
       "TITLE-1" : {
         "@type": "Title",
@@ -110,7 +110,7 @@
     },
     "localizations": {
       "en": {
-        "fullName": "Okubo Masahito",
+        "name/full": "Okubo Masahito",
         "titles/TITLE-1": { "@type": "Title", "name": "Secretary General" }
       }
     }
@@ -118,7 +118,7 @@
   {
     "@type": "Card",
     "uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
-    "fullName": "Taiwan Fixed Network CO.,LTD.",
+    "name": {"full": "Taiwan Fixed Network CO.,LTD."},
     "kind": "org",
     "addresses": {
       "ADR-1": {
@@ -141,7 +141,7 @@
     "emails": {},
     "localizations": {
        "zh-TW": {
-         "fullName": "台灣固網股份有限公司"
+         "name/full": "台灣固網股份有限公司"
        }
     }
   }

@@ -91,11 +91,13 @@ public class DeserializationTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\", \"ext4\": 5}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\",\"ext4\": 5}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"ext2\": { \"prop\": 10 }," +
                         "\"countryCode\":\"US\"" +
                     "}" +

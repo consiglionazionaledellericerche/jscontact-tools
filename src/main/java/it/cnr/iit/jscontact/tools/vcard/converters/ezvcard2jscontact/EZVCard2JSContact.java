@@ -694,6 +694,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private Address toJSCardAddress(ExtendedAddress vcardAddr, VCard vcard) {
 
         List<AddressComponent> streetDetailPairs = new ArrayList<>();
+        if (StringUtils.isNotEmpty(vcardAddr.getLocality()))
+            streetDetailPairs.add(AddressComponent.locality(vcardAddr.getLocality()));
+        if (StringUtils.isNotEmpty(vcardAddr.getRegion()))
+            streetDetailPairs.add(AddressComponent.region(vcardAddr.getRegion()));
+        if (StringUtils.isNotEmpty(vcardAddr.getCountry()))
+            streetDetailPairs.add(AddressComponent.country(vcardAddr.getCountry()));
+        if (StringUtils.isNotEmpty(vcardAddr.getPostalCode()))
+            streetDetailPairs.add(AddressComponent.postcode(vcardAddr.getPostalCode()));
         if (StringUtils.isNotEmpty(vcardAddr.getPoBox()))
             streetDetailPairs.add(AddressComponent.postOfficeBox(vcardAddr.getPoBox()));
         if (StringUtils.isNotEmpty(vcardAddr.getExtendedAddressFull()))
@@ -714,10 +722,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .timeZone(toJSCardTimezoneName(vcardAddr.getTimezone()))
                 .countryCode((VCardParamEnum.CC.getValue()!=null) ? vcardAddr.getParameter(VCardParamEnum.CC.getValue()) : vcardAddr.getParameter(VCardParamEnum.ISO_3166_1_ALPHA_2.getValue()))
                 .components((streetDetailPairs.size() > 0) ? streetDetailPairs.toArray(new AddressComponent[0]) : null)
-                .locality(StringUtils.defaultIfEmpty(vcardAddr.getLocality(), null))
-                .region(StringUtils.defaultIfEmpty(vcardAddr.getRegion(), null))
-                .postcode(StringUtils.defaultIfEmpty(vcardAddr.getPostalCode(), null))
-                .country(StringUtils.defaultIfEmpty(vcardAddr.getCountry(), null))
                 .altid(vcardAddr.getAltId())
                 .group(vcardAddr.getGroup())
                 .language(vcardAddr.getLanguage())

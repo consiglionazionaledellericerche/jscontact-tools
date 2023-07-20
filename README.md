@@ -499,11 +499,13 @@ Here in the following two examples of conversion between JSContact Card and a vC
                 "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"components\":[{\"kind\":\"name\",\"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                           "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                           "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                           "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                           "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                           "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"" +
                     "}" +

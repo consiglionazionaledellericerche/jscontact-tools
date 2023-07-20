@@ -38,11 +38,13 @@ public class AddressesTest extends RoundtripTest {
                             "\"ADR-1\": {" +
                                 "\"@type\":\"Address\"," +
                                 "\"full\":\"54321 Oak St Reston VA 20190 USA\"," +
-                                "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                                "\"locality\":\"Reston\"," +
-                                "\"region\":\"VA\"," +
-                                "\"country\":\"USA\"," +
-                                "\"postcode\":\"20190\"," +
+                                "\"components\":[ " +
+                                    "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                                    "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                                    "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                                    "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                                    "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                                "]," +
                                 "\"countryCode\":\"US\"" +
                             "}" +
                         "}" +
@@ -62,11 +64,13 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"" +
                     "}" +
                 "}" +
@@ -86,20 +90,24 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"" +
                     "}," +
                     "\"ADR-2\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"12345 Elm St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"12345 Elm St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"" +
                     "}" +
                 "}" +
@@ -119,11 +127,13 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"" +
                     "}" +
@@ -144,11 +154,13 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"," +
                         "\"timeZone\":\"Etc/GMT+5\"" +
@@ -172,11 +184,13 @@ public class AddressesTest extends RoundtripTest {
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
                         "\"full\":\"54321 Oak St Reston VA 20190 USA\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"" +
                     "}" +
                 "}," +
@@ -201,11 +215,14 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"Oak St\"}, {\"@type\":\"NameComponent\",\"kind\":\"number\", \"value\":\"54321\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"Oak St\"}," +
+                            "{\"kind\":\"number\",\"value\":\"54321\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"" +
                         "}" +
                     "}" +
@@ -229,12 +246,12 @@ public class AddressesTest extends RoundtripTest {
                                      "{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"Oak St\"}," +
                                      "{\"@type\":\"AddressComponent\",\"kind\":\"number\", \"value\":\"54321\"}," +
                                      "{\"@type\":\"AddressComponent\",\"kind\":\"floor\", \"value\":\"5\"}," +
-                                     "{\"@type\":\"AddressComponent\",\"kind\":\"room\", \"value\":\"100\"}" +
-                                    "]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                                     "{\"@type\":\"AddressComponent\",\"kind\":\"room\", \"value\":\"100\"}," +
+                                    "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                                    "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                                    "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                                    "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"" +
                     "}" +
                 "}" +
@@ -255,11 +272,13 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"," +
                         "\"timeZone\":\"tz1\"" +
@@ -283,11 +302,13 @@ public class AddressesTest extends RoundtripTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"" +
                     "}" +
                 "}," +
@@ -295,10 +316,12 @@ public class AddressesTest extends RoundtripTest {
                     "\"it\":{" +
                         "\"addresses/ADR-1\":{" +
                             "\"@type\":\"Address\"," +
-                            "\"components\":[{\"@type\":\"AddressComponent\",\"kind\":\"name\", \"value\":\"Via Moruzzi,1\"}]," +
-                            "\"locality\":\"Pisa\"," +
-                            "\"country\":\"Italia\"," +
-                            "\"postcode\":\"56124\"," +
+                            "\"components\":[ " +
+                                "{\"kind\":\"name\",\"value\":\"Via Moruzzi,1\"}," +
+                                "{\"kind\":\"locality\",\"value\":\"Pisa\"}," +
+                                "{\"kind\":\"country\",\"value\":\"Italia\"}," +
+                                "{\"kind\":\"postcode\",\"value\":\"56124\"}" +
+                            "]," +
                             "\"countryCode\":\"IT\"" +
                         "}" +
                     "}" +

@@ -1,6 +1,8 @@
 package it.cnr.iit.jscontact.tools.test.localizations;
 
+import ezvcard.Ezvcard;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -17,17 +19,26 @@ public class LocalizationsTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"locality\":\"Tokyo\"" +
+                        "\"components\":[ " +
+                            "{\"kind\":\"locality\",\"value\":\"Tokyo\"}" +
+                        "]" +
                     "}," +
                     "\"ADR-2\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"locality\":\"Osaka\"" +
+                        "\"components\":[ " +
+                            "{\"kind\":\"locality\",\"value\":\"Osaka\"}" +
+                        "]" +
                     "}" +
                 "}," +
                 "\"localizations\":{" +
                     "\"jp\": {" +
-                        "\"addresses/ADR-1/locality\" : \"東京\"," +
-                        "\"addresses/ADR-2\" : {\"@type\":\"Address\",\"locality\": \"大阪市\"}" +
+                        "\"addresses/ADR-1/components/0/value\" : \"東京\"," +
+                        "\"addresses/ADR-2\" : { " +
+                            "\"@type\":\"Address\"," +
+                            "\"components\":[ " +
+                                "{\"kind\":\"locality\",\"value\":\"大阪市\"}" +
+                            "]" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
@@ -50,19 +61,23 @@ public class LocalizationsTest {
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"addresses\":{" +
                 "\"ADR-1\": {" +
-                "\"@type\":\"Address\"," +
-                "\"locality\":\"Tokyo\"" +
+                    "\"@type\":\"Address\"," +
+                    "\"components\":[ " +
+                        "{\"kind\":\"locality\",\"value\":\"Tokyo\"}" +
+                    "]" +
                 "}," +
                 "\"ADR-2\": {" +
-                "\"@type\":\"Address\"," +
-                "\"locality\":\"Osaka\"" +
+                    "\"@type\":\"Address\"," +
+                    "\"components\":[ " +
+                        "{\"kind\":\"locality\",\"value\":\"Osaka\"}" +
+                    "]" +
                 "}" +
                 "}," +
                 "\"localizations\":{" +
-                "\"jp\": {" +
-                "\"addresses/ADR-1/locality\" : \"東京\"," +
-                "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"name\": \"大阪市\"}" +
-                "}" +
+                    "\"jp\": {" +
+                        "\"addresses/ADR-1/components/0/value\" : \"東京\"," +
+                        "\"addresses/ADR-2\" : {\"@type\":\"Title\",\"name\": \"大阪市\"}" +
+                    "}" +
                 "}" +
                 "}";
 
@@ -79,16 +94,20 @@ public class LocalizationsTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"locality\":\"Tokyo\"" +
+                        "\"components\":[ " +
+                            "{\"kind\":\"locality\",\"value\":\"Tokyo\"}" +
+                        "]" +
                     "}," +
                     "\"ADR-2\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"locality\":\"Osaka\"" +
+                        "\"components\":[ " +
+                            "{\"kind\":\"locality\",\"value\":\"Osaka\"}" +
+                        "]" +
                     "}" +
                 "}," +
                 "\"localizations\":{" +
                     "\"jp\": {" +
-                        "\"addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"addresses/ADR-1/components/0/value\" : \"東京\"," +
                         "\"addresses/ADR-2\" : {\"@type\":\"Unknown\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
@@ -107,16 +126,20 @@ public class LocalizationsTest {
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"locality\":\"Tokyo\"" +
+                        "\"components\":[ " +
+                            "{\"kind\":\"locality\",\"value\":\"Tokyo\"}" +
+                        "]" +
                     "}," +
                     "\"ADR-2\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"locality\":\"Osaka\"" +
+                        "\"components\":[ " +
+                            "{\"kind\":\"locality\",\"value\":\"Osaka\"}" +
+                        "]" +
                     "}" +
                 "}," +
                 "\"localizations\":{" +
                     "\"jp\": {" +
-                        "\"addresses/ADR-1/locality\" : \"東京\"," +
+                        "\"addresses/ADR-1/components/0/value\" : \"東京\"," +
                         "\"addresses/ADR-1\" : { \"@type\":\"Unknown\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
@@ -133,28 +156,28 @@ public class LocalizationsTest {
 
         String json = "{" +
                     "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                    "\"fullName\":\"Vasya Pupkin\"," +
-                    "\"organizations\": { \"org\": { \"@type\": \"Organization\", \"name\": \"My Company\" } }, " +
+                    "\"name\": {\"full\":\"Vasya Pupkin\"}," +
+                    "\"organizations\": { \"org\": {\"name\": \"My Company\" } }, " +
                     "\"addresses\":{" +
                         "\"addr\": {" +
-                            "\"@type\":\"Address\"," +
-                            "\"components\": [{\"@type\": \"AddressComponent\",\"kind\": \"name\", \"value\": \"1 Street\"}, " +
-                                         "{\"@type\": \"AddressComponent\",\"kind\": \"postOfficeBox\", \"value\":\"01001\"} " +
-                                         "], " +
-                            "\"locality\":\"Kyiv\"," +
+                            "\"components\": [" +
+                                "{\"kind\": \"name\", \"value\": \"1 Street\"}," +
+                                "{\"kind\": \"postOfficeBox\", \"value\":\"01001\"}," +
+                                "{\"kind\": \"locality\", \"value\": \"Kyiv\"}" +
+                            "]," +
                             "\"countryCode\":\"UA\"" +
                         "}" +
                     "}," +
                     "\"localizations\":{" +
                         "\"uk\": {" +
-                            "\"fullName\":\"Вася Пупкин\"," +
-                            "\"organizations/org\": { \"@type\": \"Organization\", \"name\": \"Моя Компания\" }, " +
+                            "\"name\": {\"full\":\"VВася Пупкин\"}," +
+                            "\"organizations/org\": {\"name\": \"Моя Компания\" }, " +
                             "\"addresses/addr\":{" +
-                                "\"@type\":\"Address\"," +
-                                "\"components\": [{\"@type\": \"AddressComponent\",\"kind\": \"name\",\"value\": \"1, Улица\"}, " +
-                                             "{\"@type\": \"AddressComponent\",\"kind\": \"postOfficeBox\",\"value\":\"01001\"} " +
-                                             "], " +
-                                "\"locality\":\"Киев\"," +
+                                "\"components\": [" +
+                                    "{\"kind\": \"name\",\"value\": \"1, Улица\"}," +
+                                    "{\"kind\": \"postOfficeBox\",\"value\":\"01001\"}," +
+                                    "{\"kind\": \"locality\",\"value\":\"Киев\"}" +
+                                "], " +
                                 "\"countryCode\":\"UA\"" +
                             "}" +
                         "}" +

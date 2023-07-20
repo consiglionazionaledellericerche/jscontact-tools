@@ -30,6 +30,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum AddressComponentEnum implements IsExtensibleEnum {
 
+    LOCALITY("locality"),
+
+    REGION("region"),
+
+    COUNTRY("country"),
+
+    POSTCODE("postcode"),
+
     DISTRICT("district"),
     BLOCK("block"),
 

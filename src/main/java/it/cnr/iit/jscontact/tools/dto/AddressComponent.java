@@ -64,17 +64,49 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     private boolean isRfc(AddressComponentEnum value) { return (kind.getRfcValue()!= null && kind.getRfcValue() == value);}
 
     /**
-     * Tests if this is the street district.
+     * Tests if this is the address locality.
      *
-     * @return true if this is the street district, false otherwise
+     * @return true if this is the address locality, false otherwise
+     */
+    @JsonIgnore
+    public boolean isLocality() { return isRfc(AddressComponentEnum.LOCALITY); }
+
+    /**
+     * Tests if this is the address region.
+     *
+     * @return true if this is the address region, false otherwise
+     */
+    @JsonIgnore
+    public boolean isRegion() { return isRfc(AddressComponentEnum.REGION); }
+
+    /**
+     * Tests if this is the address country.
+     *
+     * @return true if this is the address country, false otherwise
+     */
+    @JsonIgnore
+    public boolean isCountry() { return isRfc(AddressComponentEnum.COUNTRY); }
+
+    /**
+     * Tests if this is the postcode country.
+     *
+     * @return true if this is the postcode country, false otherwise
+     */
+    @JsonIgnore
+    public boolean isPostcode() { return isRfc(AddressComponentEnum.POSTCODE); }
+
+    /**
+     * Tests if this is the address district.
+     *
+     * @return true if this is the address district, false otherwise
      */
     @JsonIgnore
     public boolean isDistrict() { return isRfc(AddressComponentEnum.DISTRICT); }
 
     /**
-     * Tests if this is the street block.
+     * Tests if this is the address block.
      *
-     * @return true if this is the street block, false otherwise
+     * @return true if this is the address block, false otherwise
      */
     @JsonIgnore
     public boolean isBlock() { return isRfc(AddressComponentEnum.BLOCK); }
@@ -166,9 +198,9 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     public boolean isSeparator() { return isRfc(AddressComponentEnum.SEPARATOR); }
 
     /**
-     * Tests if this is a custom street component.
+     * Tests if this is a custom address component.
      *
-     * @return true if this is a custom street component, false otherwise
+     * @return true if this is a custom address component, false otherwise
      */
     @JsonIgnore
     public boolean isExt() { return kind.isExtValue(); }
@@ -181,101 +213,130 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     }
 
     /**
-     * Returns a district component of a street address.
+     * Returns a locality component of an address.
      *
-     * @param value the street district
+     * @param value the address locality
+     * @return the locality component
+     */
+    public static AddressComponent locality(String value) { return rfc(AddressComponentEnum.LOCALITY, value);}
+    /**
+     * Returns a region component of an address.
+     *
+     * @param value the address region
+     * @return the region component
+     */
+    public static AddressComponent region(String value) { return rfc(AddressComponentEnum.REGION, value);}
+    /**
+     * Returns a country component of an address.
+     *
+     * @param value the address country
+     * @return the country component
+     */
+    public static AddressComponent country(String value) { return rfc(AddressComponentEnum.COUNTRY, value);}
+    /**
+     * Returns a postcode component of an address.
+     *
+     * @param value the address postcode
+     * @return the postcode component
+     */
+    public static AddressComponent postcode(String value) { return rfc(AddressComponentEnum.POSTCODE, value);}
+
+    /**
+     * Returns a district component of an address.
+     *
+     * @param value the address district
      * @return the district component
      */
     public static AddressComponent district(String value) { return rfc(AddressComponentEnum.DISTRICT, value);}
     /**
-     * Returns a block component of a street address.
+     * Returns a block component of an address.
      *
-     * @param value the street block
+     * @param value the address block
      * @return the block component
      */
     public static AddressComponent block(String value) { return rfc(AddressComponentEnum.BLOCK, value);}
     /**
-     * Returns a name component of a street address.
+     * Returns a name component of an address.
      *
-     * @param value the street name
+     * @param value the address name
      * @return the name component
      */
     public static AddressComponent name(String value) { return rfc(AddressComponentEnum.NAME, value);}
     /**
-     * Returns a number component of a street address.
+     * Returns a number component of an address.
      *
-     * @param value the street number
+     * @param value the address number
      * @return the number component
      */
     public static AddressComponent number(String value) { return rfc(AddressComponentEnum.NUMBER, value);}
     /**
-     * Returns a direction component of a street address.
+     * Returns a direction component of an address.
      *
-     * @param value the street direction
+     * @param value the address direction
      * @return the direction component
      */
     public static AddressComponent direction(String value) { return rfc(AddressComponentEnum.DIRECTION, value);}
     /**
-     * Returns a building component of a street address.
+     * Returns a building component of an address.
      *
      * @param value the building number
      * @return the building component
      */
     public static AddressComponent building(String value) { return rfc(AddressComponentEnum.BUILDING, value);}
     /**
-     * Returns a floor component of a street address.
+     * Returns a floor component of an address.
      *
      * @param value the floor number
      * @return the floor component
      */
     public static AddressComponent floor(String value) { return rfc(AddressComponentEnum.FLOOR, value);}
     /**
-     * Returns an apartment component of a street address.
+     * Returns an apartment component of a address address.
      *
      * @param value the apartment number
      * @return the apartment component
      */
     public static AddressComponent apartment(String value) { return rfc(AddressComponentEnum.APARTMENT, value);}
     /**
-     * Returns a room component of a street address.
+     * Returns a room component of an address.
      *
      * @param value the room number
      * @return the room component
      */
     public static AddressComponent room(String value) { return rfc(AddressComponentEnum.ROOM, value);}
     /**
-     * Returns a landmark component of a street address.
+     * Returns a landmark component of a address address.
      *
      * @param value the landmark
      * @return the landmark component
      */
     public static AddressComponent landmark(String value) { return rfc(AddressComponentEnum.LANDMARK, value);}
     /**
-     * Returns an extension component of a street address.
+     * Returns an extension component of an address.
      *
      * @param value the extension
      * @return the extension component
      */
     public static AddressComponent extension(String value) { return rfc(AddressComponentEnum.EXTENSION, value);}
     /**
-     * Returns a P.O. box component of a street address.
+     * Returns a P.O. box component of an address.
      *
      * @param value the P.O. box number
      * @return the P.O. box component
      */
     public static AddressComponent postOfficeBox(String value) { return rfc(AddressComponentEnum.POST_OFFICE_BOX, value);}
     /**
-     * Returns a separator component of a street address.
+     * Returns a separator component of an address.
      *
      * @param value the separator
      * @return the separator component
      */
     public static AddressComponent separator(String value) { return rfc(AddressComponentEnum.SEPARATOR, value);}
     /**
-     * Returns a custom component of a street address.
+     * Returns a custom component of an address.
      *
-     * @param extValue the custom street component
-     * @param value the value for the custom street component
+     * @param extValue the custom address component
+     * @param value the value for the custom address component
      * @return the custom component
      */
     public static AddressComponent ext(String extValue, String value) {

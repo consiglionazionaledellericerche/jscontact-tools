@@ -17,10 +17,13 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -172,6 +175,9 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        VCard vCard = Ezvcard.parse(vcard).register(new ExtendedStructuredNameScribe()).first();
+        System.out.println(Ezvcard.write(vCard).register(new ExtendedStructuredNameScribe()).go());
+        System.out.println(PrettyPrintSerializer.print(jsCard));
         assertEquals("testExtendedJSContact8 - 1", "Smith", jsCard.getName().getFull());
         assertNotNull("testExtendedJSContact8 - 2", jsCard.getName().getPronounce());
         assertEquals("testExtendedJSContact8 - 3", "/smɪθ/", jsCard.getName().getPronounce().getPhonetics());

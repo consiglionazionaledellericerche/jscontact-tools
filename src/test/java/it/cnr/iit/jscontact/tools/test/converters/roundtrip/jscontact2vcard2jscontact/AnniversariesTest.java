@@ -278,9 +278,11 @@ public class AnniversariesTest extends RoundtripTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"locality\":\"Los Angeles\"," +
-                            "\"region\":\"CA\"," +
-                            "\"country\":\"USA\"" +
+                            "\"components\":[ " +
+                                "{\"kind\":\"locality\",\"value\":\"Los Angeles\"}," +
+                                "{\"kind\":\"region\",\"value\":\"CA\"}," +
+                                "{\"kind\":\"country\",\"value\":\"USA\"}" +
+                            "]" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
@@ -328,9 +330,11 @@ public class AnniversariesTest extends RoundtripTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"locality\":\"Los Angeles\"," +
-                            "\"region\":\"CA\"," +
-                            "\"country\":\"USA\"" +
+                            "\"components\":[ " +
+                                "{\"kind\":\"locality\",\"value\":\"Los Angeles\"}," +
+                                "{\"kind\":\"region\",\"value\":\"CA\"}," +
+                                "{\"kind\":\"country\",\"value\":\"USA\"}" +
+                            "]" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-2\": {" +

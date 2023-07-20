@@ -45,8 +45,7 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","full","components","locality","region","country",
-                     "postcode","countryCode","coordinates","timeZone","pronounce",
+@JsonPropertyOrder({"@type","full","components","countryCode","coordinates","timeZone","pronounce",
                      "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -65,14 +64,6 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasPro
 
     @JSContactCollection(addMethod = "addComponent", itemClass = AddressComponent.class)
     AddressComponent[] components;
-
-    String locality;
-
-    String region;
-
-    String country;
-
-    String postcode;
 
     @Pattern(regexp="[a-zA-Z]{2}", message = "invalid countryCode in Address")
     String countryCode;
@@ -255,7 +246,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasPro
      * @param sc the street component
      */
     public void addComponent(AddressComponent sc) {
-        components = ArrayUtils.add(components, sc);
+        components = addComponent(components, sc);
     }
 
     /**
@@ -285,6 +276,40 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasPro
         }
 
         return extended;
+    }
+
+
+    private String getComponentValue(AddressComponentKind componentKind) {
+
+        if (components == null)
+            return null;
+
+        for (AddressComponent component : components) {
+            if (component.getKind().equals(componentKind))
+                return component.getValue();
+        }
+
+        return null;
+    }
+
+    @JsonIgnore
+    public String getLocality() {
+        return getComponentValue(AddressComponentKind.locality());
+    }
+
+    @JsonIgnore
+    public String getCountry() {
+        return getComponentValue(AddressComponentKind.country());
+    }
+
+    @JsonIgnore
+    public String getRegion() {
+        return getComponentValue(AddressComponentKind.region());
+    }
+
+    @JsonIgnore
+    public String getPostcode() {
+        return getComponentValue(AddressComponentKind.postcode());
     }
 
 }

@@ -34,88 +34,113 @@ import java.io.Serializable;
 public class AddressComponentKind extends ExtensibleEnumType<AddressComponentEnum> implements Serializable {
 
     /**
-     * Returns a street component type whose enum value is pre-defined.
+     * Returns a address component type whose enum value is pre-defined.
      *
-     * @param rfcValue a pre-defined street component type
-     * @return a street component type
+     * @param rfcValue a pre-defined address component type
+     * @return a address component type
      */
     public static AddressComponentKind rfc(AddressComponentEnum rfcValue) { return AddressComponentKind.builder().rfcValue(rfcValue).build();}
     /**
-     * Returns a "district" street component type.
+     * Returns a "locality" address component type.
      *
-     * @return a "district" street component type
+     * @return a "locality" address component type
+     */
+    public static AddressComponentKind locality() { return rfc(AddressComponentEnum.LOCALITY);}
+    /**
+     * Returns a "region" address component type.
+     *
+     * @return a "region" address component type
+     */
+    public static AddressComponentKind region() { return rfc(AddressComponentEnum.REGION);}
+    /**
+     * Returns a "country" address component type.
+     *
+     * @return a "country" address component type
+     */
+    public static AddressComponentKind country() { return rfc(AddressComponentEnum.COUNTRY);}
+    /**
+     * Returns a "postcode" address component type.
+     *
+     * @return a "postcode" address component type
+     */
+    public static AddressComponentKind postcode() { return rfc(AddressComponentEnum.POSTCODE);}
+
+    /**
+     * Returns a "district" address component type.
+     *
+     * @return a "district" address component type
      */
     public static AddressComponentKind district() { return rfc(AddressComponentEnum.DISTRICT);}
     /**
-     * Returns a "block" street component type.
+     * Returns a "block" address component type.
      *
-     * @return a "block" street component type
+     * @return a "block" address component type
      */
     public static AddressComponentKind block() { return rfc(AddressComponentEnum.BLOCK);}
     /**
-     * Returns a "name" street component type.
+     * Returns a "name" address component type.
      *
-     * @return a "name" street component type
+     * @return a "name" address component type
      */
     public static AddressComponentKind name() { return rfc(AddressComponentEnum.NAME);}
     /**
-     * Returns a "number" street component type.
+     * Returns a "number" address component type.
      *
-     * @return a "number" street component type
+     * @return a "number" address component type
      */
     public static AddressComponentKind number() { return rfc(AddressComponentEnum.NUMBER);}
     /**
-     * Returns a "direction" street component type.
+     * Returns a "direction" address component type.
      *
-     * @return a "direction" street component type
+     * @return a "direction" address component type
      */
     public static AddressComponentKind direction() { return rfc(AddressComponentEnum.DIRECTION);}
     /**
-     * Returns a "building" street component type.
+     * Returns a "building" address component type.
      *
-     * @return a "building" street component type
+     * @return a "building" address component type
      */
     public static AddressComponentKind building() { return rfc(AddressComponentEnum.BUILDING);}
     /**
-     * Returns a "floor" street component type.
+     * Returns a "floor" address component type.
      *
-     * @return a "floor" street component type
+     * @return a "floor" address component type
      */
     public static AddressComponentKind floor() { return rfc(AddressComponentEnum.FLOOR);}
     /**
-     * Returns an "apartment" street component type.
+     * Returns an "apartment" address component type.
      *
-     * @return an "apartment" street component type
+     * @return an "apartment" address component type
      */
     public static AddressComponentKind apartment() { return rfc(AddressComponentEnum.APARTMENT);}
     /**
-     * Returns a "room" street component type.
+     * Returns a "room" address component type.
      *
-     * @return a "room" street component type
+     * @return a "room" address component type
      */
     public static AddressComponentKind room() { return rfc(AddressComponentEnum.ROOM);}
     /**
-     * Returns an "landmark" street component type.
+     * Returns an "landmark" address component type.
      *
-     * @return an "landmark" street component type
+     * @return an "landmark" address component type
      */
     public static AddressComponentKind landmark() { return rfc(AddressComponentEnum.LANDMARK);}
     /**
-     * Returns an "extension" street component type.
+     * Returns an "extension" address component type.
      *
-     * @return an "extension" street component type
+     * @return an "extension" address component type
      */
     public static AddressComponentKind extension() { return rfc(AddressComponentEnum.EXTENSION);}
     /**
-     * Returns a "postOfficeBox" street component type.
+     * Returns a "postOfficeBox" address component type.
      *
-     * @return a "postOfficeBox" street component type
+     * @return a "postOfficeBox" address component type
      */
     public static AddressComponentKind postOfficeBox() { return rfc(AddressComponentEnum.POST_OFFICE_BOX);}
     /**
-     * Returns a "separator" street component type.
+     * Returns a "separator" address component type.
      *
-     * @return a "separator" street component type
+     * @return a "separator" address component type
      */
     public static AddressComponentKind separator() { return rfc(AddressComponentEnum.SEPARATOR);}
 
