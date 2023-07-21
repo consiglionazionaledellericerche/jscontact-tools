@@ -897,24 +897,26 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private static Language toVCardLanguage(String lang, LanguagePref cl) {
+    private static Language toVCardLanguage(LanguagePref languagePref) {
 
-        Language language = new Language(lang);
-        String vCardTypeValue = toVCardTypeParam(cl);
+        Language language = new Language(languagePref.getLanguage());
+        String vCardTypeValue = toVCardTypeParam(languagePref);
         if (vCardTypeValue!=null)
             language.setParameter(VCardParamEnum.TYPE.getValue(), vCardTypeValue);
-        language.setPref(cl.getPref());
+        language.setPref(languagePref.getPref());
         return language;
     }
 
-    private static void fillVCardLanguages(VCard vcard, Card jsCard) {
+    private void fillVCardLanguages(VCard vcard, Card jsCard) {
 
         if (jsCard.getPreferredLanguages() == null)
             return;
 
-        for (Map.Entry<String, LanguagePref[]> clArray : jsCard.getPreferredLanguages().entrySet()) {
-            for(LanguagePref cl : clArray.getValue())
-                vcard.addLanguage(toVCardLanguage(clArray.getKey(), cl));
+        for (Map.Entry<String, LanguagePref> entry : jsCard.getPreferredLanguages().entrySet()) {
+            Language language = toVCardLanguage(entry.getValue());
+            addVCardPropIdParam(language, entry.getKey());
+            VCardUtils.addVCardUnmatchedParams(language,entry.getValue());
+            vcard.addLanguage(language);
         }
     }
 
@@ -1655,7 +1657,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
 
         if (jsCard.getLanguage() != null) {
-            vCard.addExtendedProperty(VCardPropEnum.DEFLANGUAGE.getValue(), jsCard.getLanguage(), VCardDataType.LANGUAGE_TAG);
+            vCard.addExtendedProperty(VCardPropEnum.LANGUAGE.getValue(), jsCard.getLanguage(), VCardDataType.LANGUAGE_TAG);
         }
 
         if (jsCard.getSpeakToAs()!= null && jsCard.getSpeakToAs().getPronouns() != null) {

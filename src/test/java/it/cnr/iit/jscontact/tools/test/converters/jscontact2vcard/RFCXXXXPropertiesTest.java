@@ -52,7 +52,7 @@ public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testLanguage - 1", 1, vcard.getExtendedProperties().size());
-        assertEquals("testLanguage - 2", "DEFLANGUAGE", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testLanguage - 2", "LANGUAGE", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testLanguage - 3", "it", vcard.getExtendedProperties().get(0).getValue());
     }
 

@@ -34,7 +34,7 @@ public class LanguagePreferenceTest extends AbstractTest {
     @Test
     public void testValidLanguagePreference1() {
 
-        Map<String, LanguagePref[]> map = new HashMap<String, LanguagePref[]>(){{ put("it", new LanguagePref[] { LanguagePref.builder().context(Context.work(), Boolean.TRUE).build()});}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -46,7 +46,7 @@ public class LanguagePreferenceTest extends AbstractTest {
     @Test
     public void testValidLanguagePreference2() {
 
-        Map<String, LanguagePref[]> map = new HashMap<String, LanguagePref[]>(){{ put("it", new LanguagePref[] { LanguagePref.builder().pref(1).build()});}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().pref(1).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -57,7 +57,7 @@ public class LanguagePreferenceTest extends AbstractTest {
     @Test
     public void testValidLanguagePreference3() {
 
-        Map<String, LanguagePref[]> map = new HashMap<String, LanguagePref[]>(){{ put("it", new LanguagePref[] { LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(1).build()});}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(1).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -66,38 +66,20 @@ public class LanguagePreferenceTest extends AbstractTest {
         assertTrue("testValidLanguagePreference3", jsCard.isValid());
     }
 
-    @Test
+
+    @Test(expected = NullPointerException.class)
     public void testInvalidLanguagePreference1() {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .preferredLanguages(new HashMap<String, LanguagePref[]>(){{put("it", null); }})
+                .preferredLanguages(new HashMap<String, LanguagePref>(){{put("LANG-1",LanguagePref.builder().build());}})
                 .build();
-
-        assertFalse("testInvalidLanguagePreference1-1", jsCard.isValid());
-        List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidLanguagePreference1-2", messages.contains("null LanguagePref in preferredLanguages"));
-        assertTrue("testInvalidLanguagePreference1-3", messages.contains("invalid preferredLanguages in JSContact"));
-    }
-
-    @Test
-    public void testInvalidLanguagePreference2() {
-
-        Card jsCard = Card.builder()
-                .uid(getUUID())
-                .preferredLanguages(new HashMap<String, LanguagePref[]>(){{put("it",new LanguagePref[] { LanguagePref.builder().build()});}})
-                .build();
-
-        assertFalse("testInvalidLanguagePreference2-1", jsCard.isValid());
-        List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidLanguagePreference2-2", messages.contains("at least one not null member other than @type is required in LanguagePref"));
-        assertTrue("testInvalidLanguagePreference2-3", messages.contains("invalid preferredLanguages in JSContact"));
     }
 
     @Test
     public void testInvalidLanguagePreference3() {
 
-        Map<String, LanguagePref[]> map = new HashMap<String, LanguagePref[]>(){{ put("it", new LanguagePref[] { LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(0).build()});}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(0).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -106,13 +88,12 @@ public class LanguagePreferenceTest extends AbstractTest {
         assertFalse("testInvalidLanguagePreference3-1", jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
         assertTrue("testInvalidLanguagePreference3-2", messages.contains("invalid pref in LanguagePref - value must be greater or equal than 1"));
-        assertTrue("testInvalidLanguagePreference3-3", messages.contains("invalid preferredLanguages in JSContact"));
     }
 
     @Test
     public void testInvalidLanguagePreference4() {
 
-        Map<String, LanguagePref[]> map = new HashMap<String, LanguagePref[]>(){{ put("it", new LanguagePref[] { LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(101).build()});}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(101).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -121,13 +102,12 @@ public class LanguagePreferenceTest extends AbstractTest {
         assertFalse("testInvalidLanguagePreference4-1", jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
         assertTrue("testInvalidLanguagePreference4-2", messages.contains("invalid pref in LanguagePref - value must be less or equal than 100"));
-        assertTrue("testInvalidLanguagePreference4-3", messages.contains("invalid preferredLanguages in JSContact"));
     }
 
     @Test
     public void testInvalidLanguagePreference5() {
 
-        Map<String, LanguagePref[]> map = new HashMap<String, LanguagePref[]>(){{put("  ", new LanguagePref[] { LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(101).build()});}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).language(" ").pref(1).build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -135,8 +115,7 @@ public class LanguagePreferenceTest extends AbstractTest {
 
         assertFalse("testInvalidLanguagePreference5-1", jsCard.isValid());
         List<String> messages = Arrays.asList(jsCard.getValidationMessage().split("\n"));
-        assertTrue("testInvalidLanguagePreference5-2", messages.contains("invalid language tag in preferredLanguages"));
-        assertTrue("testInvalidLanguagePreference5-3", messages.contains("invalid preferredLanguages in JSContact"));
+        assertTrue("testInvalidLanguagePreference5-2", messages.contains("invalid language tag"));
     }
 
 }

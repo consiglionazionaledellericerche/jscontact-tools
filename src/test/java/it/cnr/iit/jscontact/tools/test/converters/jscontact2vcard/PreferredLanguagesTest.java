@@ -33,8 +33,8 @@ public class PreferredLanguagesTest extends JSContact2VCardTest {
                         "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
                          "\"name\": { \"full\": \"test\"}," +
                          "\"preferredLanguages\":{" +
-                               "\"jp\":[{\"@type\":\"LanguagePref\",\"pref\":1}]," +
-                               "\"en\":[{\"@type\":\"LanguagePref\",\"pref\":2}]" +
+                               "\"LANG-1\":{\"@type\":\"LanguagePref\",\"pref\":1, \"language\": \"jp\"}," +
+                               "\"LANG-2\":{\"@type\":\"LanguagePref\",\"pref\":2, \"language\": \"en\"}" +
                          "}" +
                          "}";
 
@@ -54,20 +54,22 @@ public class PreferredLanguagesTest extends JSContact2VCardTest {
                 "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
                 "\"name\": { \"full\": \"test\"}," +
                 "\"preferredLanguages\":{" +
-                    "\"en\":[{\"@type\":\"LanguagePref\",\"contexts\": {\"work\": true }, \"pref\":1}]," +
-                    "\"fr\":[{\"@type\":\"LanguagePref\",\"contexts\": {\"work\": true }, \"pref\":2},{\"@type\":\"LanguagePref\",\"contexts\": {\"private\": true }}]" +
+                    "\"LANG-1\":{\"contexts\": {\"work\": true }, \"pref\":1,\"language\":\"fr\"}," +
+                    "\"LANG-2\":{\"contexts\": {\"work\": true }, \"pref\":2,\"language\":\"en\"}," +
+                    "\"LANG-3\":{\"contexts\": {\"private\": true },\"language\":\"en\"}" +
                 "}" +
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
         assertEquals("testPreferredLanguages2 - 1", 3, vcard.getLanguages().size());
-        assertEquals("testPreferredLanguages2 - 2", "en", vcard.getLanguages().get(0).getValue());
-        assertEquals("testPreferredLanguages2 - 3", 1, (int) vcard.getLanguages().get(0).getPref());
-        assertEquals("testPreferredLanguages2 - 4", "work", vcard.getLanguages().get(0).getType());
-        assertEquals("testPreferredLanguages2 - 5", "fr", vcard.getLanguages().get(1).getValue());
-        assertEquals("testPreferredLanguages2 - 6", 2, (int) vcard.getLanguages().get(1).getPref());
-        assertEquals("testPreferredLanguages2 - 7", "work", vcard.getLanguages().get(1).getType());
-        assertEquals("testPreferredLanguages2 - 8", "fr", vcard.getLanguages().get(2).getValue());
+        assertEquals("testPreferredLanguages2 - 2", 1, (int) vcard.getLanguages().get(0).getPref());
+        assertEquals("testPreferredLanguages2 - 3", "work", vcard.getLanguages().get(0).getType());
+        assertEquals("testPreferredLanguages2 - 4", "fr", vcard.getLanguages().get(0).getValue());
+        assertEquals("testPreferredLanguages2 - 5", 2, (int) vcard.getLanguages().get(1).getPref());
+        assertEquals("testPreferredLanguages2 - 6", "work", vcard.getLanguages().get(1).getType());
+        assertEquals("testPreferredLanguages2 - 7", "en", vcard.getLanguages().get(1).getValue());
+        assertEquals("testPreferredLanguages2 - 8", "en", vcard.getLanguages().get(2).getValue());
+        assertEquals("testPreferredLanguages2 - 9", "home", vcard.getLanguages().get(2).getType());
     }
 
 }

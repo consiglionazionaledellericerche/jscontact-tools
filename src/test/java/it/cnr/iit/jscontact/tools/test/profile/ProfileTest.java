@@ -57,8 +57,10 @@ public class ProfileTest extends JCard2JSContactTest {
         assertTrue("testRDAPProfile - 10", jsCard.getName().getComponents()[3].isCredential());
         assertEquals("testRDAPProfile - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
         assertEquals("testRDAPProfile - 12", 2, jsCard.getPreferredLanguages().size());
-        assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
-        assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
+        assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredLanguages().get("LANG-1").getPref());
+        assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredLanguages().get("LANG-2").getPref());
+        assertEquals("testRDAPProfile - 13", "fr", jsCard.getPreferredLanguages().get("LANG-1").getLanguage());
+        assertEquals("testRDAPProfile - 14", "en", jsCard.getPreferredLanguages().get("LANG-2").getLanguage());
         assertEquals("testRDAPProfile - 15", "Example", jsCard.getOrganizations().get("org").getName());
         assertEquals("testRDAPProfile - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
         assertEquals("testRDAPProfile - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getName());

@@ -4,8 +4,8 @@
   "name": {"full": "Joe User"},
   "kind": "individual",
   "preferredLanguages": {
-  "fr": [{ "@type": "LanguagePref", "pref": 1 }],
-  "en": [{ "@type": "LanguagePref", "pref": 2 }]
+  "LANG-1": { "@type": "LanguagePref", "pref": 1 , "language": "fr"},
+  "LANG-2": { "@type": "LanguagePref", "pref": 2 , "language": "en"}
   },
   "organizations": { "ORG-1": { "@type": "Organization", "name": "Example" } },
   "titles": {"TITLE-1": { "@type": "Title", "name": "Research Scientist" },  "TITLE-2": { "@type": "Title", "name": "Project Lead" }},

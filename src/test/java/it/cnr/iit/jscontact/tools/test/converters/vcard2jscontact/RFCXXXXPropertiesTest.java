@@ -46,7 +46,7 @@ public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "DEFLANGUAGE:it\n" +
+                "LANGUAGE:it\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

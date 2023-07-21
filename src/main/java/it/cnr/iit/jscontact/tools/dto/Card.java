@@ -191,8 +191,9 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     // Section 2.3.5 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addLanguagePref", itemClass = LanguagePref.class)
     @JsonPropertyOrder(alphabetic = true)
-    @PreferredLanguagesConstraint
-    Map<String, LanguagePref[]> preferredLanguages;
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,LanguagePref>")
+    Map<String, LanguagePref> preferredLanguages;
 
 
     /*
@@ -538,16 +539,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
         if (preferredLanguages == null)
             preferredLanguages = new HashMap<>();
 
-        LanguagePref[] languagesPerId = preferredLanguages.get(id);
-        LanguagePref[] languages;
-        if (languagePref == null)
-            languages = new LanguagePref[]{};
-        else
-            languages = new LanguagePref[] {languagePref};
-        if (languagesPerId == null)
-            preferredLanguages.put(id, languages);
-        else
-            preferredLanguages.put(id, ArrayUtils.addAll(languagesPerId, languages));
+        preferredLanguages.putIfAbsent(id, languagePref);
     }
 
     /**

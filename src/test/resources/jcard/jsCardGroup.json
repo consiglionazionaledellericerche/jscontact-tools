@@ -16,8 +16,8 @@
     "name": {"full": "Joe User"},
     "kind": "individual",
     "preferredLanguages": {
-      "fr": [{ "@type": "LanguagePref", "pref": 1 }],
-      "en": [{ "@type": "LanguagePref", "pref": 2 }]
+      "LANG-1": { "@type": "LanguagePref", "pref": 1 , "language": "fr"},
+      "LANG-2": { "@type": "LanguagePref", "pref": 2 , "language": "en"}
     },
     "organizations": {
       "ORG-1" :{
@@ -105,8 +105,8 @@
     },
     "kind": "individual",
     "preferredLanguages": {
-      "jp": [{ "@type": "LanguagePref", "pref": 1 }],
-      "en": [{ "@type": "LanguagePref", "pref": 2 }]
+      "LANG-1": { "@type": "LanguagePref", "pref": 1, "language": "jp" },
+      "LANG-2": { "@type": "LanguagePref", "pref": 2, "language": "en" }
     },
     "localizations": {
       "en": {

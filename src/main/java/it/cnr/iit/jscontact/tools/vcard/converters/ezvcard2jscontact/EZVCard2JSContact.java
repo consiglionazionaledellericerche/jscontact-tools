@@ -1084,20 +1084,20 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static void fillJSCardPreferredLanguages(VCard vcard, Card jsCard) {
+    private void fillJSCardPreferredLanguages(VCard vcard, Card jsCard) {
 
+        int i = 1;
         for (Language lang : vcard.getLanguages()) {
             String vcardType = VCardUtils.getVCardParamValue(lang.getParameters(), VCardParamEnum.TYPE);
-            if (vcardType!=null || lang.getPref()!=null)
-                jsCard.addLanguagePref(getValue(lang),
-                        LanguagePref.builder()
-                                .contexts(toJSCardContexts(vcardType))
-                                .pref(lang.getPref())
-                                .vCardParams(VCardUtils.getVCardParamsOtherThan(lang, VCardParamEnum.TYPE, VCardParamEnum.PREF))
-                                                           .build()
-                                            );
-            else
-                jsCard.addLanguagePref(getValue(lang),null);
+            jsCard.addLanguagePref(getJSCardId(VCard2JSContactIdsProfile.IdType.LANGUAGE, i,"LANG-" + (i++), lang.getParameter(VCardParamEnum.PROP_ID.getValue())),
+                    LanguagePref.builder()
+                            .contexts(toJSCardContexts(vcardType))
+                            .pref(lang.getPref())
+                            .language(getValue(lang))
+                            .vCardParams(VCardUtils.getVCardParamsOtherThan(lang, VCardParamEnum.TYPE, VCardParamEnum.PREF))
+                                                       .build()
+                                        );
+
         }
     }
 
@@ -1493,7 +1493,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (jsonPointer == null)
                 continue; //vcard extension already treated elsewhere
 
-            if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.DEFLANGUAGE.getValue()))
+            if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.LANGUAGE.getValue()))
                 continue; // has already been set
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.CREATED.getValue()))
                 jsCard.setCreated(DateUtils.toCalendar(extension.getValue()));
@@ -1650,7 +1650,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         jsCard.setKind(toJSCardKind(vCard.getKind()));
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(toJSCardUpdated(vCard.getRevision()));
-        RawProperty language = vCard.getExtendedProperty(VCardPropEnum.DEFLANGUAGE.getValue());
+        RawProperty language = vCard.getExtendedProperty(VCardPropEnum.LANGUAGE.getValue());
         jsCard.setLanguage((language!=null) ? language.getValue() : config.getDefaultLanguage());
         vCardPropertiesAltidComparator = VCardPropertiesAltidComparator.builder().defaultLanguage(jsCard.getLanguage()).build();
         vCardPropertiesPrefComparator = VCardPropertiesPrefComparator.builder().build();

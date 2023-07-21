@@ -37,8 +37,10 @@ public class PreferredLanguagesTest extends VCard2JSContactTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPreferredLanguages1 - 1", jsCard.getPreferredLanguages());
         assertEquals("testPreferredLanguages1 - 2", 2, jsCard.getPreferredLanguages().size());
-        assertEquals("testPreferredLanguages1 - 3", 1, (int) jsCard.getPreferredLanguages().get("jp")[0].getPref());
-        assertEquals("testPreferredLanguages1 - 4", 2, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
+        assertEquals("testPreferredLanguages1 - 3", 1, (int) jsCard.getPreferredLanguages().get("LANG-1").getPref());
+        assertEquals("testPreferredLanguages1 - 4", 2, (int) jsCard.getPreferredLanguages().get("LANG-2").getPref());
+        assertEquals("testPreferredLanguages1 - 5", "jp", jsCard.getPreferredLanguages().get("LANG-1").getLanguage());
+        assertEquals("testPreferredLanguages1 - 6", "en", jsCard.getPreferredLanguages().get("LANG-2").getLanguage());
     }
 
 
@@ -55,12 +57,15 @@ public class PreferredLanguagesTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testPreferredLanguages2 - 1", jsCard.getPreferredLanguages());
-        assertEquals("testPreferredLanguages2 - 2", 2, jsCard.getPreferredLanguages().size());
-        assertEquals("testPreferredLanguages2 - 3", 1, (int) jsCard.getPreferredLanguages().get("en")[0].getPref());
-        assertSame("testPreferredLanguages2 - 4",jsCard.getPreferredLanguages().get("en")[0].getContexts().get(Context.work()), Boolean.TRUE);
-        assertEquals("testPreferredLanguages2 - 5", 2, (int) jsCard.getPreferredLanguages().get("fr")[0].getPref());
-        assertSame("testPreferredLanguages2 - 6",jsCard.getPreferredLanguages().get("fr")[0].getContexts().get(Context.work()), Boolean.TRUE);
-        assertSame("testPreferredLanguages2 - 7",jsCard.getPreferredLanguages().get("fr")[1].getContexts().get(Context.private_()), Boolean.TRUE);
+        assertEquals("testPreferredLanguages2 - 2", 3, jsCard.getPreferredLanguages().size());
+        assertEquals("testPreferredLanguages2 - 3", 1, (int) jsCard.getPreferredLanguages().get("LANG-1").getPref());
+        assertSame("testPreferredLanguages2 - 4",jsCard.getPreferredLanguages().get("LANG-1").getContexts().get(Context.work()), Boolean.TRUE);
+        assertEquals("testPreferredLanguages2 - 5", 2, (int) jsCard.getPreferredLanguages().get("LANG-2").getPref());
+        assertSame("testPreferredLanguages2 - 6",jsCard.getPreferredLanguages().get("LANG-2").getContexts().get(Context.work()), Boolean.TRUE);
+        assertSame("testPreferredLanguages2 - 7",jsCard.getPreferredLanguages().get("LANG-3").getContexts().get(Context.private_()), Boolean.TRUE);
+        assertEquals("testPreferredLanguages1 - 8", "en", jsCard.getPreferredLanguages().get("LANG-1").getLanguage());
+        assertEquals("testPreferredLanguages1 - 9", "fr", jsCard.getPreferredLanguages().get("LANG-2").getLanguage());
+        assertEquals("testPreferredLanguages1 - 10", "fr", jsCard.getPreferredLanguages().get("LANG-3").getLanguage());
     }
 
 

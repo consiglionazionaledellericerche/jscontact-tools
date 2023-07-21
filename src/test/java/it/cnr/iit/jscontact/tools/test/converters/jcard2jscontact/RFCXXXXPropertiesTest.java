@@ -45,7 +45,7 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"deflanguage\",{},\"text\",\"it\"] " +
+                "[\"language\",{},\"text\",\"it\"] " +
                 "]]";
 
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
