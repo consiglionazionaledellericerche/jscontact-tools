@@ -39,9 +39,9 @@ public class XCardTest extends XCard2JSContactTest {
         assertNull("testCompleteXCard1 - 2", jsCard.getKind());
         assertEquals("testCompleteXCard1 - 3", 4, jsCard.getName().getComponents().length);
         assertTrue("testCompleteXCard1 - 4", jsCard.getName().getComponents()[0].isGiven());
-        assertEquals("testCompleteXCard1 - 5", "Simon", jsCard.getName().getComponents()[0].getValue());
+        assertEquals("testCompleteXCard1 - 5", "Simon", jsCard.getName().getGiven());
         assertTrue("testCompleteXCard1 - 6", jsCard.getName().getComponents()[1].isSurname());
-        assertEquals("testCompleteXCard1 - 7", "Perreault", jsCard.getName().getComponents()[1].getValue());
+        assertEquals("testCompleteXCard1 - 7", "Perreault", jsCard.getName().getSurname());
         assertTrue("testCompleteXCard1 - 8", jsCard.getName().getComponents()[2].isCredential());
         assertEquals("testCompleteXCard1 - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testCompleteXCard1 - 10", jsCard.getName().getComponents()[3].isCredential());

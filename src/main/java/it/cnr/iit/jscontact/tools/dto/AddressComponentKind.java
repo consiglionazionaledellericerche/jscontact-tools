@@ -72,6 +72,12 @@ public class AddressComponentKind extends ExtensibleEnumType<AddressComponentEnu
      */
     public static AddressComponentKind district() { return rfc(AddressComponentEnum.DISTRICT);}
     /**
+     * Returns a "subdistrict" address component type.
+     *
+     * @return a "subdistrict" address component type
+     */
+    public static AddressComponentKind subdistrict() { return rfc(AddressComponentEnum.SUBDISTRICT);}
+    /**
      * Returns a "block" address component type.
      *
      * @return a "block" address component type
@@ -125,12 +131,6 @@ public class AddressComponentKind extends ExtensibleEnumType<AddressComponentEnu
      * @return an "landmark" address component type
      */
     public static AddressComponentKind landmark() { return rfc(AddressComponentEnum.LANDMARK);}
-    /**
-     * Returns an "extension" address component type.
-     *
-     * @return an "extension" address component type
-     */
-    public static AddressComponentKind extension() { return rfc(AddressComponentEnum.EXTENSION);}
     /**
      * Returns a "postOfficeBox" address component type.
      *

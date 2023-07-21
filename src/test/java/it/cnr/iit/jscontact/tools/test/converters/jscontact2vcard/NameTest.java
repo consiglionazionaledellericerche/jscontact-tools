@@ -132,15 +132,15 @@ public class NameTest extends JSContact2VCardTest {
                 "\"language\": \"jp\"," +
                 "\"name\":{ " +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"正仁\", \"kind\": \"given\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"大久保\", \"kind\": \"surname\" }" +
+                        "{ \"value\":\"正仁\", \"kind\": \"given\" }," +
+                        "{ \"value\":\"大久保\", \"kind\": \"surname\" }" +
                     "] " +
                 "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
                         "\"name/components\":[ " +
-                            "{ \"@type\":\"NameComponent\", \"value\":\"Masahito\", \"kind\": \"given\" }," +
-                            "{ \"@type\":\"NameComponent\", \"value\":\"Okubo\", \"kind\": \"surname\" }" +
+                            "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
+                            "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
                         "]" +
                     "}" +
                 "}" +

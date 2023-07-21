@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -42,7 +43,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
 @NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null between full and components is required in Name")
-@JsonPropertyOrder({"@type", "full", "components", "pronounce", "sortAs", "label"})
+@JsonPropertyOrder({"@type", "full", "components", "isOrdered", "pronounce", "sortAs", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -62,6 +63,8 @@ public class Name extends AbstractJSContactType implements HasPronounce, Seriali
     @JSContactCollection(addMethod = "addComponent", itemClass = NameComponent.class)
     @Valid
     NameComponent[] components;
+
+    Boolean isOrdered = Boolean.FALSE;
 
     @Valid
     Pronounce pronounce;
@@ -92,5 +95,67 @@ public class Name extends AbstractJSContactType implements HasPronounce, Seriali
         components = ArrayUtils.add(components, nc);
     }
 
+    private String getComponentValue(NameComponentKind componentKind) {
+
+        if (components == null)
+            return null;
+
+        for (NameComponent component : components) {
+            if (component.getKind().equals(componentKind))
+                return component.getValue();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the given name of this object.
+     *
+     * @return the value of NameComponent item in the "components" array tagged as "given"
+     */
+    @JsonIgnore
+    public String getGiven() {
+        return getComponentValue(NameComponentKind.given());
+    }
+
+    /**
+     * Returns the secondary given name of this object.
+     *
+     * @return the value of NameComponent item in the "components" array tagged as "given2"
+     */
+    @JsonIgnore
+    public String getGiven2() {
+        return getComponentValue(NameComponentKind.given2());
+    }
+
+    /**
+     * Returns the surname of this object.
+     *
+     * @return the value of NameComponent item in the "components" array tagged as "surname"
+     */
+    @JsonIgnore
+    public String getSurname() {
+        return getComponentValue(NameComponentKind.surname());
+    }
+
+    /**
+     * Returns the secondary surname of this object.
+     *
+     * @return the value of NameComponent item in the "components" array tagged as "surname2"
+     */
+    @JsonIgnore
+    public String getSurname2() {
+        return getComponentValue(NameComponentKind.surname2());
+    }
+
+    /**
+     * Returns the generation of this object.
+     *
+     * @return the value of NameComponent item in the "components" array tagged as "generation"
+     */
+    @JsonIgnore
+    public String getGeneration() {
+        return getComponentValue(NameComponentKind.generation());
+    }
 
 }

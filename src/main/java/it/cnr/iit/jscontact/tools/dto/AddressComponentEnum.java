@@ -39,6 +39,7 @@ public enum AddressComponentEnum implements IsExtensibleEnum {
     POSTCODE("postcode"),
 
     DISTRICT("district"),
+    SUBDISTRICT("subdistrict"),
     BLOCK("block"),
 
     NAME("name"),
@@ -50,7 +51,6 @@ public enum AddressComponentEnum implements IsExtensibleEnum {
     ROOM("room"),
     LANDMARK("landmark"),
 
-    EXTENSION("extension"),
     POST_OFFICE_BOX("postOfficeBox"),
     SEPARATOR("separator");
 

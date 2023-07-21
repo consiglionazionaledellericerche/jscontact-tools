@@ -104,6 +104,14 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     public boolean isDistrict() { return isRfc(AddressComponentEnum.DISTRICT); }
 
     /**
+     * Tests if this is the address subdistrict.
+     *
+     * @return true if this is the address subdistrict, false otherwise
+     */
+    @JsonIgnore
+    public boolean isSubdistrict() { return isRfc(AddressComponentEnum.SUBDISTRICT); }
+
+    /**
      * Tests if this is the address block.
      *
      * @return true if this is the address block, false otherwise
@@ -173,13 +181,6 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     @JsonIgnore
     public boolean isLandmark() { return isRfc(AddressComponentEnum.LANDMARK); }
-    /**
-     * Tests if this is an extension designation or box number.
-     *
-     * @return true if this is an extension, false otherwise
-     */
-    @JsonIgnore
-    public boolean isExtension() { return isRfc(AddressComponentEnum.EXTENSION); }
 
     /**
      * Tests if this is the P.O. box number or identifier.
@@ -249,6 +250,13 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent district(String value) { return rfc(AddressComponentEnum.DISTRICT, value);}
     /**
+     * Returns a subdistrict component of an address.
+     *
+     * @param value the address subdistrict
+     * @return the subdistrict component
+     */
+    public static AddressComponent subdistrict(String value) { return rfc(AddressComponentEnum.SUBDISTRICT, value);}
+    /**
      * Returns a block component of an address.
      *
      * @param value the address block
@@ -311,13 +319,6 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      * @return the landmark component
      */
     public static AddressComponent landmark(String value) { return rfc(AddressComponentEnum.LANDMARK, value);}
-    /**
-     * Returns an extension component of an address.
-     *
-     * @param value the extension
-     * @return the extension component
-     */
-    public static AddressComponent extension(String value) { return rfc(AddressComponentEnum.EXTENSION, value);}
     /**
      * Returns a P.O. box component of an address.
      *

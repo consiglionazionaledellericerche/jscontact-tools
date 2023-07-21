@@ -50,6 +50,7 @@ public enum VCardParamEnum  {
     AUTHOR_NAME("AUTHOR-NAME"),
     CREATED("CREATED"),
     JSPTR("JSPTR"),
+    JSCOMPS("JSCOMPS"),
     SERVICE_TYPE("SERVICE-TYPE"),
     USERNAME("USERNAME"),
     VALUE("VALUE");

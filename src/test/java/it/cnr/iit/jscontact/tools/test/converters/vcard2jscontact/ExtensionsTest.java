@@ -118,9 +118,9 @@ public class ExtensionsTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertTrue("testExtendedJSContact5 - 1", jsCard.getName().getComponents()[0].isGiven());
-        assertEquals("testExtendedJSContact5 - 2", "John", jsCard.getName().getComponents()[0].getValue());
+        assertEquals("testExtendedJSContact5 - 2", "John", jsCard.getName().getGiven());
         assertTrue("testExtendedJSContact5 - 3", jsCard.getName().getComponents()[1].isSurname());
-        assertEquals("testExtendedJSContact5 - 4", "Public", jsCard.getName().getComponents()[1].getValue());
+        assertEquals("testExtendedJSContact5 - 4", "Public", jsCard.getName().getSurname());
         assertTrue("testExtendedJSContact5 - 5", jsCard.getName().getComponents()[2].isExt());
         assertEquals("testExtendedJSContact5 - 6", V_Extension.toV_Extension("example.com:exttype"), jsCard.getName().getComponents()[2].getKind().getExtValue());
         assertEquals("testExtendedJSContact5 - 7", "extvalue", jsCard.getName().getComponents()[2].getValue());
@@ -176,8 +176,6 @@ public class ExtensionsTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vCard = Ezvcard.parse(vcard).register(new ExtendedStructuredNameScribe()).first();
-        System.out.println(Ezvcard.write(vCard).register(new ExtendedStructuredNameScribe()).go());
-        System.out.println(PrettyPrintSerializer.print(jsCard));
         assertEquals("testExtendedJSContact8 - 1", "Smith", jsCard.getName().getFull());
         assertNotNull("testExtendedJSContact8 - 2", jsCard.getName().getPronounce());
         assertEquals("testExtendedJSContact8 - 3", "/smɪθ/", jsCard.getName().getPronounce().getPhonetics());

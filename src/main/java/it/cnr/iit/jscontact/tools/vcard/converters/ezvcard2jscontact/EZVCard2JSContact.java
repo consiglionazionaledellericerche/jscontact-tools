@@ -559,31 +559,96 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         NameComponent[] components = null;
 
-        for (String px : vcardName.getPrefixes())
-            components = Name.addComponent(components, NameComponent.title(px));
-        if (vcardName.getGiven() != null) {
-            String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-            for (String name : names)
-                components = Name.addComponent(components, NameComponent.given(name));
-        }
-        if (vcardName.getFamily() != null) {
-            String[] surnames = vcardName.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-            for (String surname : surnames)
+        String[] jscomps = (vcardName.getParameter(VCardParamEnum.JSCOMPS.getValue())!=null) ? VCardParamEnum.JSCOMPS.getValue().split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER) : null;
+
+        if (jscomps == null || jscomps.length < 2) {
+            for (String px : vcardName.getPrefixes())
+                components = Name.addComponent(components, NameComponent.title(px));
+
+            if (vcardName.getGiven() != null) {
+                String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                for (String name : names)
+                    components = Name.addComponent(components, NameComponent.given(name));
+            }
+            if (vcardName.getFamily() != null) {
+                String[] surnames = vcardName.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                for (String surname : surnames) {
+                    if (vcardName.getSurname2().contains(surname))
+                        continue;
                     components = Name.addComponent(components, NameComponent.surname(surname));
+                }
+            }
+            for (String an : vcardName.getAdditionalNames())
+                components = Name.addComponent(components, NameComponent.given2(an));
+
+            for (String sx : vcardName.getSuffixes()) {
+                if (vcardName.getGeneration().contains(sx))
+                    continue;
+                components = Name.addComponent(components, NameComponent.credential(sx));
+            }
+
+            for (String sx : vcardName.getSurname2())
+                components = Name.addComponent(components, NameComponent.surname2(sx));
+
+            for (String sx : vcardName.getGeneration())
+                components = Name.addComponent(components, NameComponent.generation(sx));
         }
-        for (String an : vcardName.getAdditionalNames())
-            components = Name.addComponent(components,NameComponent.given2(an));
-        for (String sx : vcardName.getSuffixes())
-            components = Name.addComponent(components,NameComponent.credential(sx));
-        for (String sx : vcardName.getSurname2())
-            components = Name.addComponent(components,NameComponent.surname2(sx));
-        for (String sx : vcardName.getGeneration())
-            components = Name.addComponent(components,NameComponent.generation(sx));
+        else {
+
+            for (int i = 1; i < jscomps.length; i++) {
+
+                String[] items = jscomps[i].split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+
+                if (items[i].startsWith(DelimiterUtils.SEPARATOR_ID)) {
+                    Name.addComponent(components, NameComponent.separator(items[i].replace(DelimiterUtils.SEPARATOR_ID, StringUtils.EMPTY)));
+                    continue;
+                }
+
+                int index1 = Integer.parseInt(items[0]);
+                int index2 = (items.length == 1) ? 0 : Integer.parseInt(items[1]);
+                NameComponentKind kind = null;
+                String value = null;
+                NameComponent component;
+                switch (index1) {
+                    case 0:
+                        if (index2 == 0)
+                            kind = NameComponentKind.surname();
+                        else
+                            kind = NameComponentKind.surname2();
+                        String[] surnames = vcardName.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                        value = surnames[index2];
+                        break;
+                    case 1:
+                        kind = NameComponentKind.given();
+                        String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                        value = names[index2];
+                        break;
+                    case 2:
+                        kind = NameComponentKind.given2();
+                        value = vcardName.getAdditionalNames().get(index2);
+                        break;
+                    case 3:
+                        kind = NameComponentKind.title();
+                        value = vcardName.getPrefixes().get(index2);
+                        break;
+                    case 4:
+                        if (index2 == 0)
+                            kind = NameComponentKind.credential();
+                        else
+                            kind = NameComponentKind.generation();
+                        value = vcardName.getSuffixes().get(index2);
+                        break;
+                }
+                Name.addComponent(components, NameComponent.builder().kind(kind).value(value).build());
+            }
+        }
 
         return Name.builder()
                 .components(components)
                 .sortAs(toJSCardNameSortAs(vcardName.getSortAs(), vcardName))
                 .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardName, VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID))
+                .defaultSeparator((ArrayUtils.isNotEmpty(jscomps) && jscomps[0].startsWith(DelimiterUtils.SEPARATOR_ID)) ? jscomps[0].replace(DelimiterUtils.SEPARATOR_ID,StringUtils.EMPTY) : null)
+                .isOrdered((jscomps!=null) ? Boolean.TRUE : null)
                 .build();
     }
 
@@ -694,20 +759,137 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private Address toJSCardAddress(ExtendedAddress vcardAddr, VCard vcard) {
 
         List<AddressComponent> streetDetailPairs = new ArrayList<>();
-        if (StringUtils.isNotEmpty(vcardAddr.getLocality()))
-            streetDetailPairs.add(AddressComponent.locality(vcardAddr.getLocality()));
-        if (StringUtils.isNotEmpty(vcardAddr.getRegion()))
-            streetDetailPairs.add(AddressComponent.region(vcardAddr.getRegion()));
-        if (StringUtils.isNotEmpty(vcardAddr.getCountry()))
-            streetDetailPairs.add(AddressComponent.country(vcardAddr.getCountry()));
-        if (StringUtils.isNotEmpty(vcardAddr.getPostalCode()))
-            streetDetailPairs.add(AddressComponent.postcode(vcardAddr.getPostalCode()));
-        if (StringUtils.isNotEmpty(vcardAddr.getPoBox()))
-            streetDetailPairs.add(AddressComponent.postOfficeBox(vcardAddr.getPoBox()));
-        if (StringUtils.isNotEmpty(vcardAddr.getExtendedAddressFull()))
-            streetDetailPairs.add(AddressComponent.extension(vcardAddr.getExtendedAddressFull()));
-        if (StringUtils.isNotEmpty(vcardAddr.getStreetAddressFull()))
-            streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddressFull()));
+
+        String[] jscomps = (vcardAddr.getParameter(VCardParamEnum.JSCOMPS.getValue())!=null) ? VCardParamEnum.JSCOMPS.getValue().split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER) : null;
+
+        if (jscomps == null || jscomps.length < 2) {
+            if (StringUtils.isNotEmpty(vcardAddr.getLocality()))
+                streetDetailPairs.add(AddressComponent.locality(vcardAddr.getLocality()));
+            if (StringUtils.isNotEmpty(vcardAddr.getRegion()))
+                streetDetailPairs.add(AddressComponent.region(vcardAddr.getRegion()));
+            if (StringUtils.isNotEmpty(vcardAddr.getCountry()))
+                streetDetailPairs.add(AddressComponent.country(vcardAddr.getCountry()));
+            if (StringUtils.isNotEmpty(vcardAddr.getPostalCode()))
+                streetDetailPairs.add(AddressComponent.postcode(vcardAddr.getPostalCode()));
+            if (StringUtils.isNotEmpty(vcardAddr.getPoBox()))
+                streetDetailPairs.add(AddressComponent.postOfficeBox(vcardAddr.getPoBox()));
+
+            if (StringUtils.isEmpty(vcardAddr.getApartment()) &&
+                    StringUtils.isEmpty(vcardAddr.getBuilding()) &&
+                    StringUtils.isEmpty(vcardAddr.getFloor()) &&
+                    StringUtils.isEmpty(vcardAddr.getRoom())) {
+                if (StringUtils.isNotEmpty(vcardAddr.getExtendedAddressFull()))
+                    streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getExtendedAddressFull()));
+            } else {
+                if (StringUtils.isNotEmpty(vcardAddr.getApartment()))
+                    streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getApartment()));
+                if (StringUtils.isNotEmpty(vcardAddr.getBuilding()))
+                    streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuilding()));
+                if (StringUtils.isNotEmpty(vcardAddr.getFloor()))
+                    streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloor()));
+                if (StringUtils.isNotEmpty(vcardAddr.getRoom()))
+                    streetDetailPairs.add(AddressComponent.room(vcardAddr.getRoom()));
+            }
+
+            if (StringUtils.isEmpty(vcardAddr.getStreetName()) &&
+                    StringUtils.isEmpty(vcardAddr.getStreetNumber()) &&
+                    StringUtils.isEmpty(vcardAddr.getDirection()) &&
+                    StringUtils.isEmpty(vcardAddr.getBlock()) &&
+                    StringUtils.isEmpty(vcardAddr.getSubDistrict()) &&
+                    StringUtils.isEmpty(vcardAddr.getDistrict()) &&
+                    StringUtils.isEmpty(vcardAddr.getLandmark())
+            ) {
+                if (StringUtils.isNotEmpty(vcardAddr.getStreetAddressFull()))
+                    streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddressFull()));
+            } else {
+                if (StringUtils.isNotEmpty(vcardAddr.getStreetName()))
+                    streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetName()));
+                if (StringUtils.isNotEmpty(vcardAddr.getStreetNumber()))
+                    streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumber()));
+                if (StringUtils.isNotEmpty(vcardAddr.getDirection()))
+                    streetDetailPairs.add(AddressComponent.direction(vcardAddr.getDirection()));
+                if (StringUtils.isNotEmpty(vcardAddr.getBlock()))
+                    streetDetailPairs.add(AddressComponent.block(vcardAddr.getBlock()));
+                if (StringUtils.isNotEmpty(vcardAddr.getSubDistrict()))
+                    streetDetailPairs.add(AddressComponent.subdistrict(vcardAddr.getSubDistrict()));
+                if (StringUtils.isNotEmpty(vcardAddr.getDistrict()))
+                    streetDetailPairs.add(AddressComponent.district(vcardAddr.getDistrict()));
+                if (StringUtils.isNotEmpty(vcardAddr.getLandmark()))
+                    streetDetailPairs.add(AddressComponent.landmark(vcardAddr.getLandmark()));
+            }
+         } else {
+
+            for (int i = 1; i < jscomps.length; i++) {
+
+                String[] items = jscomps[i].split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+
+                if (items[i].startsWith(DelimiterUtils.SEPARATOR_ID)) {
+                    streetDetailPairs.add(AddressComponent.separator(items[i].replace(DelimiterUtils.SEPARATOR_ID, StringUtils.EMPTY)));
+                    continue;
+                }
+
+                int index1 = Integer.parseInt(items[0]);
+                int index2 = (items.length == 1) ? 0 : Integer.parseInt(items[1]);
+                switch (index1) {
+                    case 0:
+                        streetDetailPairs.add(AddressComponent.postOfficeBox(vcardAddr.getPoBoxes().get(index2)));
+                        break;
+                    case 1:
+                        streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getExtendedAddress()));
+                        break;
+                    case 2:
+                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddresses().get(index2)));
+                        break;
+                    case 3:
+                        streetDetailPairs.add(AddressComponent.locality(vcardAddr.getLocalities().get(index2)));
+                        break;
+                    case 4:
+                        streetDetailPairs.add(AddressComponent.region(vcardAddr.getRegions().get(index2)));
+                        break;
+                    case 5:
+                        streetDetailPairs.add(AddressComponent.postcode(vcardAddr.getPostalCodes().get(index2)));
+                        break;
+                    case 6:
+                        streetDetailPairs.add(AddressComponent.country(vcardAddr.getCountries().get(index2)));
+                        break;
+                    case 7:
+                        streetDetailPairs.add(AddressComponent.room(vcardAddr.getRooms().get(index2)));
+                        break;
+                    case 8:
+                        streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getApartments().get(index2)));
+                        break;
+                    case 9:
+                        streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloors().get(index2)));
+                        break;
+                    case 10:
+                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetNames().get(index2)));
+                        break;
+                    case 11:
+                        streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumbers().get(index2)));
+                        break;
+                    case 12:
+                        streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuildings().get(index2)));
+                        break;
+                    case 13:
+                        streetDetailPairs.add(AddressComponent.block(vcardAddr.getBlocks().get(index2)));
+                        break;
+                    case 14:
+                        streetDetailPairs.add(AddressComponent.subdistrict(vcardAddr.getSubDistricts().get(index2)));
+                        break;
+                    case 15:
+                        streetDetailPairs.add(AddressComponent.district(vcardAddr.getDistricts().get(index2)));
+                        break;
+                    case 16:
+                        streetDetailPairs.add(AddressComponent.landmark(vcardAddr.getLandmarks().get(index2)));
+                        break;
+                    case 17:
+                        streetDetailPairs.add(AddressComponent.direction(vcardAddr.getDirections().get(index2)));
+                        break;
+                }
+            }
+
+        }
+
 
         String autoFullAddress = toJSCardAutoFulllAddress(vcardAddr);
         String vcardTypeParam = VCardUtils.getVCardParamValue(vcardAddr.getParameters(), VCardParamEnum.TYPE);
@@ -725,6 +907,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .altid(vcardAddr.getAltId())
                 .group(vcardAddr.getGroup())
                 .language(vcardAddr.getLanguage())
+                .defaultSeparator((ArrayUtils.isNotEmpty(jscomps) && jscomps[0].startsWith(DelimiterUtils.SEPARATOR_ID)) ? jscomps[0].replace(DelimiterUtils.SEPARATOR_ID,StringUtils.EMPTY) : null)
+                .isOrdered((jscomps!=null) ? Boolean.TRUE : null)
                 .propId(vcardAddr.getParameter(VCardParamEnum.PROP_ID.getValue()))
                 .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardAddr, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.LABEL, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.CC, VCardParamEnum.TZ, VCardParamEnum.GEO, VCardParamEnum.DERIVED, VCardParamEnum.ALTID))
                 .build();

@@ -76,8 +76,8 @@ public class AddressesTest extends JSContact2VCardTest {
                             "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
                             "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
                             "{\"kind\":\"region\",\"value\":\"VA\"}," +
-                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
-                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}" +
                         "]," +
                         "\"countryCode\":\"US\"" +
                     "}" +
@@ -91,7 +91,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses2 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses2 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses2 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
-        assertEquals("testAddresses2 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses2 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses2 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
@@ -109,8 +109,8 @@ public class AddressesTest extends JSContact2VCardTest {
                             "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
                             "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
                             "{\"kind\":\"region\",\"value\":\"VA\"}," +
-                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
-                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}" +
                         "]," +
                         "\"countryCode\":\"US\"" +
                     "}," +
@@ -120,8 +120,8 @@ public class AddressesTest extends JSContact2VCardTest {
                             "{\"kind\":\"name\",\"value\":\"12345 Elm St\"}," +
                             "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
                             "{\"kind\":\"region\",\"value\":\"VA\"}," +
-                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
-                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}" +
                         "]," +
                         "\"countryCode\":\"US\"" +
                     "}" +
@@ -135,14 +135,14 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses3 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses3 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses3 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
-        assertEquals("testAddresses3 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses3 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses3 - 9", "US", vcard.getProperties(ExtendedAddress.class).get(1).getParameter("CC"));
         assertEquals("testAddresses3 - 10", "USA", vcard.getProperties(ExtendedAddress.class).get(1).getCountry());
         assertEquals("testAddresses3 - 11", "20190", vcard.getProperties(ExtendedAddress.class).get(1).getPostalCode());
         assertEquals("testAddresses3 - 12", "Reston", vcard.getProperties(ExtendedAddress.class).get(1).getLocality());
         assertEquals("testAddresses3 - 13", "VA", vcard.getProperties(ExtendedAddress.class).get(1).getRegion());
         assertEquals("testAddresses3 - 14", "12345 Elm St", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddress());
-        assertEquals("testAddresses3 - 15", "12345 Elm St\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
+        assertEquals("testAddresses3 - 15", "12345 Elm St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
         assertEquals("testAddresses3 - 16", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
         assertEquals("testAddresses3 - 17", "ADR-2", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
@@ -161,8 +161,8 @@ public class AddressesTest extends JSContact2VCardTest {
                             "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
                             "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
                             "{\"kind\":\"region\",\"value\":\"VA\"}," +
-                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
-                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}" +
                         "]," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"" +
@@ -177,7 +177,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses4 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses4 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses4 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
-        assertEquals("testAddresses4 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses4 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses4 - 9", vcard.getProperties(ExtendedAddress.class).get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
         assertEquals("testAddresses4 - 10", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
@@ -196,8 +196,8 @@ public class AddressesTest extends JSContact2VCardTest {
                             "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
                             "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
                             "{\"kind\":\"region\",\"value\":\"VA\"}," +
-                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
-                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}" +
                         "]," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"," +
@@ -213,7 +213,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses5 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses5 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses5 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
-        assertEquals("testAddresses5 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses5 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses5 - 9", vcard.getProperties(ExtendedAddress.class).get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
         assertEquals("testAddresses5 - 10", "Etc/GMT+5", vcard.getProperties(ExtendedAddress.class).get(0).getTimezone());
         assertEquals("testAddresses5 - 11", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
@@ -277,8 +277,8 @@ public class AddressesTest extends JSContact2VCardTest {
                             "{\"kind\":\"number\",\"value\":\"54321\"}," +
                             "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
                             "{\"kind\":\"region\",\"value\":\"VA\"}," +
-                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
-                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}" +
                         "]," +
                         "\"countryCode\":\"US\"" +
                         "}" +
@@ -292,7 +292,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses7 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses7 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses7 - 7", "Oak St,54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
-        assertEquals("testAddresses7 - 8", "Oak St,54321\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses7 - 8", "Oak St 54321 Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses7 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
@@ -307,14 +307,14 @@ public class AddressesTest extends JSContact2VCardTest {
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
                         "\"components\":[" +
+                                    "{\"kind\":\"floor\", \"value\":\"5\"}," +
+                                    "{\"kind\":\"room\", \"value\":\"100\"}," +
                                      "{\"kind\":\"name\", \"value\":\"Oak St\"}," +
                                      "{\"kind\":\"number\", \"value\":\"54321\"}," +
-                                     "{\"kind\":\"floor\", \"value\":\"5\"}," +
-                                     "{\"kind\":\"room\", \"value\":\"100\"}," +
                                      "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
                                      "{\"kind\":\"region\",\"value\":\"VA\"}," +
-                                     "{\"kind\":\"country\",\"value\":\"USA\"}," +
-                                     "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                                     "{\"kind\":\"postcode\",\"value\":\"20190\"}," +
+                                    "{\"kind\":\"country\",\"value\":\"USA\"}" +
                         "]," +
                         "\"countryCode\":\"US\"" +
                     "}" +
@@ -329,7 +329,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses8 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses8 - 7", "Oak St,54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
         assertEquals("testAddresses8 - 8", "5,100", vcard.getProperties(ExtendedAddress.class).get(0).getExtendedAddress());
-        assertEquals("testAddresses8 - 9", "5,100\nOak St,54321\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses8 - 9", "5 100 Oak St 54321 Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses8 - 10", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
@@ -365,7 +365,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses9 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses9 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses9 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
-        assertEquals("testAddresses9 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses9 - 8", "54321 Oak St Reston VA USA 20190", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses9 - 9", vcard.getProperties(ExtendedAddress.class).get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
         assertEquals("testAddresses9 - 10", "-0530", vcard.getProperties(ExtendedAddress.class).get(0).getTimezone());
         assertEquals("testAddresses9 - 11", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
@@ -400,8 +400,8 @@ public class AddressesTest extends JSContact2VCardTest {
                             "\"components\":[ " +
                                 "{\"kind\":\"name\",\"value\":\"Via Moruzzi,1\"}," +
                                 "{\"kind\":\"locality\",\"value\":\"Pisa\"}," +
-                                "{\"kind\":\"country\",\"value\":\"Italia\"}," +
-                                "{\"kind\":\"postcode\",\"value\":\"56124\"}" +
+                                "{\"kind\":\"postcode\",\"value\":\"56124\"}," +
+                                "{\"kind\":\"country\",\"value\":\"Italia\"}" +
                             "]," +
                             "\"countryCode\":\"IT\"" +
                         "}" +
@@ -416,14 +416,14 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses10 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses10 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses10 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
-        assertEquals("testAddresses10 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses10 - 8", "54321 Oak St Reston VA USA 20190", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses10 - 9", "en", vcard.getProperties(ExtendedAddress.class).get(0).getLanguage());
         assertEquals("testAddresses10 - 10", "IT", vcard.getProperties(ExtendedAddress.class).get(1).getParameter("CC"));
         assertEquals("testAddresses10 - 11", "Italia", vcard.getProperties(ExtendedAddress.class).get(1).getCountry());
         assertEquals("testAddresses10 - 12", "56124", vcard.getProperties(ExtendedAddress.class).get(1).getPostalCode());
         assertEquals("testAddresses10 - 13", "Pisa", vcard.getProperties(ExtendedAddress.class).get(1).getLocality());
         assertEquals("testAddresses10 - 14", "Via Moruzzi,1", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddress());
-        assertEquals("testAddresses10 - 15", "Via Moruzzi,1\nPisa\n56124\nItalia", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
+        assertEquals("testAddresses10 - 15", "Via Moruzzi,1 Pisa 56124 Italia", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
         assertEquals("testAddresses10 - 16", "it", vcard.getProperties(ExtendedAddress.class).get(1).getLanguage());
         assertEquals("testAddresses10 - 17", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }

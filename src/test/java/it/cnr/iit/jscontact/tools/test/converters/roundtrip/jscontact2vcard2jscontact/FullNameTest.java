@@ -78,8 +78,8 @@ public class FullNameTest extends RoundtripTest {
                 "\"localizations\" : {" +
                     "\"en\": {" +
                         "\"name/components\":[ " +
-                        "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
-                        "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
+                            "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
+                            "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
                         "]" +
                     "}" +
                 "}" +

@@ -98,9 +98,9 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard1 - 2", jsCard.getKind().isIndividual());
         assertEquals("testCompleteVCard1 - 3", 4, jsCard.getName().getComponents().length);
         assertTrue("testCompleteVCard1 - 4", jsCard.getName().getComponents()[0].isGiven());
-        assertEquals("testCompleteVCard1 - 5", "Joe", jsCard.getName().getComponents()[0].getValue());
+        assertEquals("testCompleteVCard1 - 5", "Joe", jsCard.getName().getGiven());
         assertTrue("testCompleteVCard1 - 6", jsCard.getName().getComponents()[1].isSurname());
-        assertEquals("testCompleteVCard1 - 7", "User", jsCard.getName().getComponents()[1].getValue());
+        assertEquals("testCompleteVCard1 - 7", "User", jsCard.getName().getSurname());
         assertTrue("testCompleteVCard1 - 8", jsCard.getName().getComponents()[2].isCredential());
         assertEquals("testCompleteVCard1 - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testCompleteVCard1 - 10", jsCard.getName().getComponents()[3].isCredential());
@@ -200,9 +200,9 @@ public class VCardTest extends VCard2JSContactTest {
         assertNull("testCompleteVCard4 - 2", jsCard.getKind());
         assertEquals("testCompleteVCard4 - 3", 4, jsCard.getName().getComponents().length);
         assertTrue("testCompleteVCard4 - 4", jsCard.getName().getComponents()[0].isGiven());
-        assertEquals("testCompleteVCard4 - 5", "Simon", jsCard.getName().getComponents()[0].getValue());
+        assertEquals("testCompleteVCard4 - 5", "Simon", jsCard.getName().getGiven());
         assertTrue("testCompleteVCard4 - 6", jsCard.getName().getComponents()[1].isSurname());
-        assertEquals("testCompleteVCard4 - 7", "Perreault", jsCard.getName().getComponents()[1].getValue());
+        assertEquals("testCompleteVCard4 - 7", "Perreault", jsCard.getName().getSurname());
         assertTrue("testCompleteVCard4 - 8", jsCard.getName().getComponents()[2].isCredential());
         assertEquals("testCompleteVCard4 - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testCompleteVCard4 - 10", jsCard.getName().getComponents()[3].isCredential());
