@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentTypeDeserializer;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPronounce;
 import lombok.*;
 
 import javax.validation.Valid;
@@ -36,13 +35,13 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","value", "kind", "pronounce"})
+@JsonPropertyOrder({"@type","value", "kind", "phonetic"})
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AddressComponent extends AbstractJSContactType implements HasKind, HasPronounce, Serializable {
+public class AddressComponent extends AbstractJSContactType implements HasKind, Serializable {
 
     @Pattern(regexp = "AddressComponent", message="invalid @type value in AddressComponent")
     @JsonProperty("@type")
@@ -58,8 +57,7 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     @JsonDeserialize(using = AddressComponentTypeDeserializer.class)
     AddressComponentKind kind;
 
-    @Valid
-    Pronounce pronounce;
+    String phonetic;
 
     private boolean isRfc(AddressComponentEnum value) { return (kind.getRfcValue()!= null && kind.getRfcValue() == value);}
 
@@ -206,9 +204,10 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     @JsonIgnore
     public boolean isExt() { return kind.isExtValue(); }
 
-    private static AddressComponent rfc(AddressComponentEnum rfcValue, String value) {
+    private static AddressComponent rfc(AddressComponentEnum rfcValue, String value, String phonetic) {
         return AddressComponent.builder()
                 .value(value)
+                .phonetic(phonetic)
                 .kind(AddressComponentKind.builder().rfcValue(rfcValue).build())
                 .build();
     }
@@ -217,132 +216,143 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      * Returns a locality component of an address.
      *
      * @param value the address locality
+     * @param phonetic the phonetic
      * @return the locality component
      */
-    public static AddressComponent locality(String value) { return rfc(AddressComponentEnum.LOCALITY, value);}
+    public static AddressComponent locality(String value, String phonetic) { return rfc(AddressComponentEnum.LOCALITY, value, phonetic);}
     /**
      * Returns a region component of an address.
      *
      * @param value the address region
+     * @param phonetic the phonetic
      * @return the region component
      */
-    public static AddressComponent region(String value) { return rfc(AddressComponentEnum.REGION, value);}
+    public static AddressComponent region(String value, String phonetic) { return rfc(AddressComponentEnum.REGION, value, phonetic);}
     /**
      * Returns a country component of an address.
      *
      * @param value the address country
+     * @param phonetic the phonetic
      * @return the country component
      */
-    public static AddressComponent country(String value) { return rfc(AddressComponentEnum.COUNTRY, value);}
+    public static AddressComponent country(String value, String phonetic) { return rfc(AddressComponentEnum.COUNTRY, value, phonetic);}
     /**
      * Returns a postcode component of an address.
      *
      * @param value the address postcode
      * @return the postcode component
      */
-    public static AddressComponent postcode(String value) { return rfc(AddressComponentEnum.POSTCODE, value);}
+    public static AddressComponent postcode(String value) { return rfc(AddressComponentEnum.POSTCODE, value, null);}
 
     /**
      * Returns a district component of an address.
      *
      * @param value the address district
+     * @param phonetic the phonetic
      * @return the district component
      */
-    public static AddressComponent district(String value) { return rfc(AddressComponentEnum.DISTRICT, value);}
+    public static AddressComponent district(String value, String phonetic) { return rfc(AddressComponentEnum.DISTRICT, value, phonetic);}
     /**
      * Returns a subdistrict component of an address.
      *
      * @param value the address subdistrict
+     * @param phonetic the phonetic
      * @return the subdistrict component
      */
-    public static AddressComponent subdistrict(String value) { return rfc(AddressComponentEnum.SUBDISTRICT, value);}
+    public static AddressComponent subdistrict(String value, String phonetic) { return rfc(AddressComponentEnum.SUBDISTRICT, value, phonetic);}
     /**
      * Returns a block component of an address.
      *
      * @param value the address block
+     * @param phonetic the phonetic
      * @return the block component
      */
-    public static AddressComponent block(String value) { return rfc(AddressComponentEnum.BLOCK, value);}
+    public static AddressComponent block(String value, String phonetic) { return rfc(AddressComponentEnum.BLOCK, value, phonetic);}
     /**
      * Returns a name component of an address.
      *
      * @param value the address name
+     * @param phonetic the phonetic
      * @return the name component
      */
-    public static AddressComponent name(String value) { return rfc(AddressComponentEnum.NAME, value);}
+    public static AddressComponent name(String value, String phonetic) { return rfc(AddressComponentEnum.NAME, value, phonetic);}
     /**
      * Returns a number component of an address.
      *
      * @param value the address number
      * @return the number component
      */
-    public static AddressComponent number(String value) { return rfc(AddressComponentEnum.NUMBER, value);}
+    public static AddressComponent number(String value) { return rfc(AddressComponentEnum.NUMBER, value, null);}
     /**
      * Returns a direction component of an address.
      *
      * @param value the address direction
      * @return the direction component
      */
-    public static AddressComponent direction(String value) { return rfc(AddressComponentEnum.DIRECTION, value);}
+    public static AddressComponent direction(String value) { return rfc(AddressComponentEnum.DIRECTION, value, null);}
     /**
      * Returns a building component of an address.
      *
      * @param value the building number
+     * @param phonetic the phonetic
      * @return the building component
      */
-    public static AddressComponent building(String value) { return rfc(AddressComponentEnum.BUILDING, value);}
+    public static AddressComponent building(String value, String phonetic) { return rfc(AddressComponentEnum.BUILDING, value, phonetic);}
     /**
      * Returns a floor component of an address.
      *
      * @param value the floor number
      * @return the floor component
      */
-    public static AddressComponent floor(String value) { return rfc(AddressComponentEnum.FLOOR, value);}
+    public static AddressComponent floor(String value) { return rfc(AddressComponentEnum.FLOOR, value, null);}
     /**
      * Returns an apartment component of a address address.
      *
      * @param value the apartment number
      * @return the apartment component
      */
-    public static AddressComponent apartment(String value) { return rfc(AddressComponentEnum.APARTMENT, value);}
+    public static AddressComponent apartment(String value) { return rfc(AddressComponentEnum.APARTMENT, value, null);}
     /**
      * Returns a room component of an address.
      *
      * @param value the room number
      * @return the room component
      */
-    public static AddressComponent room(String value) { return rfc(AddressComponentEnum.ROOM, value);}
+    public static AddressComponent room(String value) { return rfc(AddressComponentEnum.ROOM, value, null);}
     /**
      * Returns a landmark component of a address address.
      *
      * @param value the landmark
+     * @param phonetic the phonetic
      * @return the landmark component
      */
-    public static AddressComponent landmark(String value) { return rfc(AddressComponentEnum.LANDMARK, value);}
+    public static AddressComponent landmark(String value, String phonetic) { return rfc(AddressComponentEnum.LANDMARK, value, phonetic);}
     /**
      * Returns a P.O. box component of an address.
      *
      * @param value the P.O. box number
      * @return the P.O. box component
      */
-    public static AddressComponent postOfficeBox(String value) { return rfc(AddressComponentEnum.POST_OFFICE_BOX, value);}
+    public static AddressComponent postOfficeBox(String value) { return rfc(AddressComponentEnum.POST_OFFICE_BOX, value, null);}
     /**
      * Returns a separator component of an address.
      *
      * @param value the separator
      * @return the separator component
      */
-    public static AddressComponent separator(String value) { return rfc(AddressComponentEnum.SEPARATOR, value);}
+    public static AddressComponent separator(String value) { return rfc(AddressComponentEnum.SEPARATOR, value, null);}
     /**
      * Returns a custom component of an address.
      *
      * @param extValue the custom address component
      * @param value the value for the custom address component
+     * @param phonetic the phonetic
      * @return the custom component
      */
-    public static AddressComponent ext(String extValue, String value) {
+    public static AddressComponent ext(String extValue, String value, String phonetic) {
         return AddressComponent.builder()
                 .value(value)
+                .phonetic(phonetic)
                 .kind(AddressComponentKind.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
     }

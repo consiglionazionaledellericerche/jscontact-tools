@@ -808,6 +808,22 @@ public class ExtendedAddress extends VCardProperty implements HasAltId {
 		return true;
 	}
 
+
+	public boolean isExtended() {
+
+		return !(rooms.isEmpty() &&
+				apartments.isEmpty() &&
+				floors.isEmpty() &&
+				streetNumbers.isEmpty() &&
+				streetNames.isEmpty() &&
+				buildings.isEmpty() &&
+				blocks.isEmpty() &&
+				subDistricts.isEmpty() &&
+				districts.isEmpty() &&
+				landmarks.isEmpty() &&
+				directions.isEmpty());
+	}
+
 	private static String first(List<String> list) {
 		return list.isEmpty() ? null : list.get(0);
 	}

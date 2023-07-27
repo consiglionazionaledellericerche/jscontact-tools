@@ -117,9 +117,9 @@ public class ExtensionsTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertTrue("testExtendedJSContact5 - 1", jsCard.getName().getComponents()[0].isGiven());
+        assertTrue("testExtendedJSContact5 - 1", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testExtendedJSContact5 - 2", "John", jsCard.getName().getGiven());
-        assertTrue("testExtendedJSContact5 - 3", jsCard.getName().getComponents()[1].isSurname());
+        assertTrue("testExtendedJSContact5 - 3", jsCard.getName().getComponents()[0].isSurname());
         assertEquals("testExtendedJSContact5 - 4", "Public", jsCard.getName().getSurname());
         assertTrue("testExtendedJSContact5 - 5", jsCard.getName().getComponents()[2].isExt());
         assertEquals("testExtendedJSContact5 - 6", V_Extension.toV_Extension("example.com:exttype"), jsCard.getName().getComponents()[2].getKind().getExtValue());
@@ -143,45 +143,5 @@ public class ExtensionsTest extends VCard2JSContactTest {
         assertTrue("testExtendedJSContact6 - 2", jsCard.getPhones().get("PHONE-1").asExtContext("example.com:extcontext"));
         assertTrue("testExtendedJSContact6 - 3", jsCard.getPhones().get("PHONE-1").asExt("example.com:extfeature"));
     }
-
-
-    @Test
-    public void testExtendedJSContact7() throws CardException, JsonProcessingException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:Mr. John Q. Smith, Esq.\n" +
-                "N;SORT-AS=\"Smith,John\":Smith;John;Quinlan;Mr.;Esq.;;\n" +
-                "NICKNAME;PROP-ID=NICK-1:Johnny\n" +
-                "NICKNAME;PROP-ID=NICK-2:Joe\n" +
-                "JSPROP;JSPTR=name/components/2/pronounce;VALUE=text:{\"@type\":\"Pronounce\",\"phonetics\":\"/smɪθ/\",\"system\":\"ipa\"}\n" +
-                "END:VCARD";
-
-        Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testExtendedJSContact7 - 1", "Mr. John Q. Smith, Esq.", jsCard.getName().getFull());
-        assertNull("testExtendedJSContact7 - 2", jsCard.getName().getPronounce());
-        assertNotNull("testExtendedJSContact7 - 3", jsCard.getName().getComponents()[2].getPronounce());
-        assertEquals("testExtendedJSContact7 - 4", "/smɪθ/", jsCard.getName().getComponents()[2].getPronounce().getPhonetics());
-        assertTrue("testExtendedJSContact7 - 5", jsCard.getName().getComponents()[2].getPronounce().getSystem().isIpa());
-    }
-
-    @Test
-    public void testExtendedJSContact8() throws CardException, JsonProcessingException {
-
-        String vcard = "BEGIN:VCARD\n" +
-                "VERSION:4.0\n" +
-                "FN:Smith\n" +
-                "JSPROP;JSPTR=name/pronounce;VALUE=text:{\"@type\":\"Pronounce\",\"phonetics\":\"/smɪθ/\",\"system\":\"ipa\"}\n" +
-                "END:VCARD";
-
-        Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        VCard vCard = Ezvcard.parse(vcard).register(new ExtendedStructuredNameScribe()).first();
-        assertEquals("testExtendedJSContact8 - 1", "Smith", jsCard.getName().getFull());
-        assertNotNull("testExtendedJSContact8 - 2", jsCard.getName().getPronounce());
-        assertEquals("testExtendedJSContact8 - 3", "/smɪθ/", jsCard.getName().getPronounce().getPhonetics());
-        assertTrue("testExtendedJSContact8 - 4", jsCard.getName().getPronounce().getSystem().isIpa());
-    }
-
-
 
 }

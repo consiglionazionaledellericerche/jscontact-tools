@@ -47,6 +47,9 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 public class JSContact2EZVCard extends AbstractConverter {
 
+    private static int EXTENDED_ADDRESS_COMPONENTS_NUM = 17;
+    private static int EXTENDED_NAME_COMPONENTS_NUM = 7;
+
     protected JSContact2VCardConfig config;
 
     private void addVCardX_ABLabel(HasLabel jsContactType, VCardProperty vcardProperty, VCard vcard) {
@@ -299,6 +302,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static ExtendedStructuredName toVCardStructuredName(NameComponent[] nameComponents) {
 
+
         ExtendedStructuredName name = new ExtendedStructuredName();
         List<String> surnames = new ArrayList<>();
         List<String> givens = new ArrayList<>();
@@ -351,11 +355,65 @@ public class JSContact2EZVCard extends AbstractConverter {
         return joiner.toString();
     }
 
+    private static NameComponent[] getNameComponentsOfPhonetics(NameComponent[] componentsWithPhonetic) {
+
+        NameComponent[] components = new NameComponent[componentsWithPhonetic.length];
+        int i = 0;
+        for (NameComponent componentWithPhonetic : componentsWithPhonetic)
+            components[i++] = NameComponent.builder()
+                                        .value(componentWithPhonetic.getPhonetic())
+                                        .kind(componentWithPhonetic.getKind())
+                                        .build();
+        return components;
+    }
+
+    private static List<String> getLanguagesOfPhoneticLocalizations(Card jsCard) {
+
+        List<String> languages = new ArrayList<>();
+
+        if (jsCard.getLocalizationsPerPath("name/phoneticSystem")!=null)
+            languages.addAll(jsCard.getLocalizationsPerPath("name/phoneticSystem").keySet());
+
+        if (jsCard.getLocalizationsPerPath("name/phoneticScript")!=null) {
+            languages.removeAll(jsCard.getLocalizationsPerPath("name/phoneticScript").keySet());
+            languages.addAll(jsCard.getLocalizationsPerPath("name/phoneticScript").keySet());
+        }
+
+        for (int i=0; i<=EXTENDED_NAME_COMPONENTS_NUM; i++) {
+            String key = String.format("name/components/%d/phonetic", i);
+            if (jsCard.getLocalizationsPerPath(key) != null) {
+                languages.removeAll(jsCard.getLocalizationsPerPath(key).keySet());
+                languages.addAll(jsCard.getLocalizationsPerPath(key).keySet());
+            }
+        }
+
+        return (!languages.isEmpty()) ? languages : null;
+    }
+
+    private static NameComponent[] getNameComponentsOfPhoneticLocalizations(String language, Card jsCard) {
+
+
+        List components = new ArrayList<NameComponent>();
+        for (int i=0; i<=EXTENDED_NAME_COMPONENTS_NUM; i++) {
+            String key = String.format("name/components/%d/phonetic", i);
+            if (jsCard.getLocalization(language,key) != null) {
+                components.add(NameComponent.builder()
+                                            .value(jsCard.getLocalization(language,key).asText())
+                                            .kind(NameComponentKind.builder().rfcValue(NameComponentEnum.values()[i]).build())
+                                            .build());
+            }
+        }
+
+        return (!components.isEmpty()) ? (NameComponent[]) components.toArray(new NameComponent[0]) : null;
+    }
 
     private List<ExtendedStructuredName> toVCardStructuredNames(Card jsCard, VCard vcard) {
 
         List<ExtendedStructuredName> sns = new ArrayList<>();
-        if (jsCard.getLocalizationsPerPath("name") != null || jsCard.getLocalizationsPerPath("name/components") != null) {
+        List<String> languagesOfPhoneticLocalizations = getLanguagesOfPhoneticLocalizations(jsCard);
+        if (jsCard.getLocalizationsPerPath("name") != null ||
+            jsCard.getLocalizationsPerPath("name/components") != null ||
+            languagesOfPhoneticLocalizations != null) {
             ExtendedStructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLanguage());
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs())); // did this way because Ez-vcard allows to sort only for surname and given name
@@ -364,8 +422,13 @@ public class JSContact2EZVCard extends AbstractConverter {
             VCardUtils.addVCardUnmatchedParams(sn,jsCard.getName());
             sns.add(sn);
             if (jsCard.getLocalizationsPerPath("name") != null) {
+
                 for (Map.Entry<String, JsonNode> localization : jsCard.getLocalizationsPerPath("name").entrySet()) {
-                    sn = toVCardStructuredName(asJSCardNameComponentArray(localization.getValue().get("components")));
+
+                    String phoneticSystem = ((localization.getValue().get("phoneticSystem")!=null) ? localization.getValue().get("phoneticSystem").asText() : null);
+                    String phoneticScript = ((localization.getValue().get("phoneticScript")!=null) ? localization.getValue().get("phoneticScript").asText() : null);
+                    NameComponent[] components = asJSCardNameComponentArray(localization.getValue().get("components"));
+                    sn = toVCardStructuredName(components);
                     JsonNode isOrdered = (localization.getValue().get("components").get("isOrdered"));
                     if (isOrdered != null && isOrdered.asBoolean() == Boolean.TRUE) {
                         JsonNode defaultSeparator = (localization.getValue().get("components").get("defaultSeparator"));
@@ -373,12 +436,32 @@ public class JSContact2EZVCard extends AbstractConverter {
                     }
                     sn.setLanguage(localization.getKey());
                     sns.add(sn);
+
+                    if (phoneticSystem!=null || phoneticScript !=null) {
+                        sn = toVCardStructuredName(getNameComponentsOfPhonetics(components));
+                        sn.setParameter(VCardParamEnum.PHONETIC.getValue(), phoneticSystem);
+                        sn.setParameter(VCardParamEnum.SCRIPT.getValue(), phoneticScript);
+                        sn.setLanguage(localization.getKey());
+                        sns.add(sn);
+                    }
                 }
             }
-            else {
+            else if (jsCard.getLocalizationsPerPath("name/components") != null){
                 for (Map.Entry<String, JsonNode> localization : jsCard.getLocalizationsPerPath("name/components").entrySet()) {
                     sn = toVCardStructuredName(asJSCardNameComponentArray(localization.getValue()));
                     sn.setLanguage(localization.getKey());
+                    sns.add(sn);
+                }
+            }
+            else {
+                List<String> languages = getLanguagesOfPhoneticLocalizations(jsCard);
+                for (String language : languages) {
+                    String phoneticSystem = ((jsCard.getLocalization(language, "name/phoneticSystem") != null) ? jsCard.getLocalization(language, "name/phoneticSystem").asText() : null);
+                    String phoneticScript = ((jsCard.getLocalization(language, "name/phoneticScript") != null) ? jsCard.getLocalization(language, "name/phoneticSystem").asText() : null);
+                    sn = toVCardStructuredName(getNameComponentsOfPhoneticLocalizations(language, jsCard));
+                    sn.setParameter(VCardParamEnum.PHONETIC.getValue(), phoneticSystem);
+                    sn.setParameter(VCardParamEnum.SCRIPT.getValue(), phoneticScript);
+                    sn.setLanguage(language);
                     sns.add(sn);
                 }
             }
@@ -393,7 +476,6 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
 
         return sns;
-
     }
 
 

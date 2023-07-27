@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPronounce;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
@@ -46,7 +46,7 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","full","components","isOrdered","countryCode","coordinates","timeZone","pronounce",
+@JsonPropertyOrder({"@type","full","components","isOrdered","countryCode","coordinates","timeZone","phoneticScript","phoneticSystem",
                      "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -54,7 +54,7 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
-public class Address extends AbstractJSContactType implements IdMapValue, HasPronounce, Serializable {
+public class Address extends AbstractJSContactType implements IdMapValue, Serializable {
 
     @Pattern(regexp = "Address", message="invalid @type value in Address")
     @JsonProperty("@type")
@@ -76,8 +76,10 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasPro
 
     String timeZone;
 
-    @Valid
-    Pronounce pronounce;
+    String phoneticScript;
+
+    @JsonDeserialize(using = PronounceSystemDeserializer.class)
+    PhoneticSystem phoneticSystem;
 
     String defaultSeparator;
 

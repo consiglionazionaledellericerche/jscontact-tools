@@ -555,43 +555,48 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return sortAs;
     }
 
-    private Name toJSCardName(ExtendedStructuredName vcardName, VCard vcard) throws CardException {
+    private Name toJSCardName(ExtendedStructuredName vcardName) throws CardException {
 
         NameComponent[] components = null;
 
         String[] jscomps = (vcardName.getParameter(VCardParamEnum.JSCOMPS.getValue())!=null) ? VCardParamEnum.JSCOMPS.getValue().split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER) : null;
 
-        if (jscomps == null || jscomps.length < 2) {
-            for (String px : vcardName.getPrefixes())
-                components = Name.addComponent(components, NameComponent.title(px));
+        boolean isPhonetic = (vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) || (vcardName.getParameter(VCardParamEnum.SCRIPT.getValue())!=null);
 
-            if (vcardName.getGiven() != null) {
-                String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-                for (String name : names)
-                    components = Name.addComponent(components, NameComponent.given(name));
-            }
+        if (jscomps == null || jscomps.length < 2) {
+
             if (vcardName.getFamily() != null) {
                 String[] surnames = vcardName.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
                 for (String surname : surnames) {
                     if (vcardName.getSurname2().contains(surname))
                         continue;
-                    components = Name.addComponent(components, NameComponent.surname(surname));
+                    components = Name.addComponent(components, NameComponent.surname(surname, (isPhonetic) ? surname : null));
                 }
             }
+
+            if (vcardName.getGiven() != null) {
+                String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
+                for (String name : names)
+                    components = Name.addComponent(components, NameComponent.given(name, (isPhonetic) ? name : null));
+            }
+
             for (String an : vcardName.getAdditionalNames())
-                components = Name.addComponent(components, NameComponent.given2(an));
+                components = Name.addComponent(components, NameComponent.given2(an, (isPhonetic) ? an : null));
+
+            for (String px : vcardName.getPrefixes())
+                components = Name.addComponent(components, NameComponent.title(px, (isPhonetic) ? px : null));
 
             for (String sx : vcardName.getSuffixes()) {
                 if (vcardName.getGeneration().contains(sx))
                     continue;
-                components = Name.addComponent(components, NameComponent.credential(sx));
+                components = Name.addComponent(components, NameComponent.credential(sx, (isPhonetic) ? sx : null));
             }
 
             for (String sx : vcardName.getSurname2())
-                components = Name.addComponent(components, NameComponent.surname2(sx));
+                components = Name.addComponent(components, NameComponent.surname2(sx, (isPhonetic) ? sx : null));
 
             for (String sx : vcardName.getGeneration())
-                components = Name.addComponent(components, NameComponent.generation(sx));
+                components = Name.addComponent(components, NameComponent.generation(sx, (isPhonetic) ? sx : null));
         }
         else {
 
@@ -608,7 +613,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 int index2 = (items.length == 1) ? 0 : Integer.parseInt(items[1]);
                 NameComponentKind kind = null;
                 String value = null;
-                NameComponent component;
                 switch (index1) {
                     case 0:
                         if (index2 == 0)
@@ -639,16 +643,28 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         value = vcardName.getSuffixes().get(index2);
                         break;
                 }
-                Name.addComponent(components, NameComponent.builder().kind(kind).value(value).build());
+                Name.addComponent(components, NameComponent.builder().kind(kind).value(value).phonetic((isPhonetic) ? value : null).build());
+            }
+        }
+
+        PhoneticSystem phoneticSystem = null;
+
+        if (vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) {
+            try {
+                phoneticSystem = PhoneticSystem.rfc(PhoneticSystemEnum.getEnum(vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())));
+            } catch (IllegalArgumentException e) {
+                phoneticSystem = PhoneticSystem.ext(vcardName.getParameter(VCardParamEnum.PHONETIC.getValue()));
             }
         }
 
         return Name.builder()
                 .components(components)
                 .sortAs(toJSCardNameSortAs(vcardName.getSortAs(), vcardName))
-                .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardName, VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID))
                 .defaultSeparator((ArrayUtils.isNotEmpty(jscomps) && jscomps[0].startsWith(DelimiterUtils.SEPARATOR_ID)) ? jscomps[0].replace(DelimiterUtils.SEPARATOR_ID,StringUtils.EMPTY) : null)
                 .isOrdered((jscomps!=null) ? Boolean.TRUE : null)
+                .phoneticSystem(phoneticSystem)
+                .phoneticScript(vcardName.getParameter(VCardParamEnum.SCRIPT.getValue()))
+                .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardName, VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID))
                 .build();
     }
 
@@ -675,19 +691,39 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         vcardNames.sort(vCardPropertiesAltidComparator);
 
         if (jsCard.getName() == null) // no full name exists
-            jsCard.setName(toJSCardName(vcardNames.get(0), vcard)); //the first N property is the name, all the others name localization
+            jsCard.setName(toJSCardName(vcardNames.get(0))); //the first N property is the name, all the others name localization
         else {
+            // full name already been set,
             String fullName = jsCard.getName().getFull();
-            Name name = toJSCardName(vcardNames.get(0), vcard);
+            Name name = toJSCardName(vcardNames.get(0));
             name.setFull(fullName);
             jsCard.setName(name);
         }
+        if (jsCard.getLanguage() == null && vcardNames.get(0).getLanguage() != null)
+            jsCard.setLanguage(vcardNames.get(0).getLanguage());
+
         for (int i = 1; i < vcardNames.size(); i++) {
             String language = vcardNames.get(i).getLanguage();
-            if (jsCard.getLocalization(language, "name") == null)
-                jsCard.addLocalization(language, "name", mapper.convertValue(toJSCardName(vcardNames.get(i), vcard), JsonNode.class));
+
+            Name name = toJSCardName(vcardNames.get(i));
+
+            if (name.getPhoneticSystem() != null || name.getPhoneticScript() != null) {
+                if (name.getPhoneticSystem()!= null)
+                    jsCard.addLocalization(language, "name/phoneticSystem", JsonNodeUtils.textNode(name.getPhoneticSystem().toJson()));
+                if (name.getPhoneticScript()!= null)
+                    jsCard.addLocalization(language, "name/phoneticScript", JsonNodeUtils.textNode(name.getPhoneticScript()));
+
+                if (name.getComponents() != null) {
+                    int j = 0;
+                    for (NameComponent component : name.getComponents()) {
+                        if (component.getValue().equals(component.getPhonetic()))
+                            jsCard.addLocalization(language, "name/components/" + j++ + "/phonetic", JsonNodeUtils.textNode(component.getPhonetic()));
+                    }
+                }
+            }
+            else if (jsCard.getLocalization(language, "name") == null)
+                jsCard.addLocalization(language, "name", mapper.convertValue(name, JsonNode.class));
             else {
-                Name name = toJSCardName(vcardNames.get(i), vcard);
                 name.setFull(getFullNamePerLanguage(vcard, language));
                 jsCard.addLocalization(language, "name", mapper.convertValue(name, JsonNode.class));
             }
@@ -762,61 +798,48 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         String[] jscomps = (vcardAddr.getParameter(VCardParamEnum.JSCOMPS.getValue())!=null) ? VCardParamEnum.JSCOMPS.getValue().split(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER) : null;
 
+        boolean isPhonetic = (vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) || (vcardAddr.getParameter(VCardParamEnum.SCRIPT.getValue())!=null);
+
         if (jscomps == null || jscomps.length < 2) {
-            if (StringUtils.isNotEmpty(vcardAddr.getLocality()))
-                streetDetailPairs.add(AddressComponent.locality(vcardAddr.getLocality()));
-            if (StringUtils.isNotEmpty(vcardAddr.getRegion()))
-                streetDetailPairs.add(AddressComponent.region(vcardAddr.getRegion()));
-            if (StringUtils.isNotEmpty(vcardAddr.getCountry()))
-                streetDetailPairs.add(AddressComponent.country(vcardAddr.getCountry()));
-            if (StringUtils.isNotEmpty(vcardAddr.getPostalCode()))
-                streetDetailPairs.add(AddressComponent.postcode(vcardAddr.getPostalCode()));
+
             if (StringUtils.isNotEmpty(vcardAddr.getPoBox()))
                 streetDetailPairs.add(AddressComponent.postOfficeBox(vcardAddr.getPoBox()));
+            if (StringUtils.isNotEmpty(vcardAddr.getLocality()))
+                streetDetailPairs.add(AddressComponent.locality(vcardAddr.getLocality(), (isPhonetic) ? vcardAddr.getLocality() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getRegion()))
+                streetDetailPairs.add(AddressComponent.region(vcardAddr.getRegion(), (isPhonetic) ? vcardAddr.getRegion() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getPostalCode()))
+                streetDetailPairs.add(AddressComponent.postcode(vcardAddr.getPostalCode()));
+            if (StringUtils.isNotEmpty(vcardAddr.getCountry()))
+                streetDetailPairs.add(AddressComponent.country(vcardAddr.getCountry(), (isPhonetic) ? vcardAddr.getCountry() : null));
 
-            if (StringUtils.isEmpty(vcardAddr.getApartment()) &&
-                    StringUtils.isEmpty(vcardAddr.getBuilding()) &&
-                    StringUtils.isEmpty(vcardAddr.getFloor()) &&
-                    StringUtils.isEmpty(vcardAddr.getRoom())) {
-                if (StringUtils.isNotEmpty(vcardAddr.getExtendedAddressFull()))
-                    streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getExtendedAddressFull()));
-            } else {
-                if (StringUtils.isNotEmpty(vcardAddr.getApartment()))
-                    streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getApartment()));
-                if (StringUtils.isNotEmpty(vcardAddr.getBuilding()))
-                    streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuilding()));
-                if (StringUtils.isNotEmpty(vcardAddr.getFloor()))
-                    streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloor()));
-                if (StringUtils.isNotEmpty(vcardAddr.getRoom()))
-                    streetDetailPairs.add(AddressComponent.room(vcardAddr.getRoom()));
-            }
+            if (StringUtils.isNotEmpty(vcardAddr.getRoom()))
+                streetDetailPairs.add(AddressComponent.room(vcardAddr.getRoom()));
+            if (!vcardAddr.isExtended() && StringUtils.isNotEmpty(vcardAddr.getExtendedAddress()))
+                streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getExtendedAddress()));
+            if (StringUtils.isNotEmpty(vcardAddr.getApartment()))
+                streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getApartment()));
+            if (StringUtils.isNotEmpty(vcardAddr.getFloor()))
+                streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloor()));
+            if (!vcardAddr.isExtended() && StringUtils.isNotEmpty(vcardAddr.getStreetAddressFull()))
+                streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddressFull(), (isPhonetic) ? vcardAddr.getStreetAddressFull() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getStreetName()))
+                streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetName(), (isPhonetic) ? vcardAddr.getStreetName() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getStreetNumber()))
+                streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumber()));
+            if (StringUtils.isNotEmpty(vcardAddr.getBuilding()))
+                streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuilding(), (isPhonetic) ? vcardAddr.getBuilding() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getBlock()))
+                streetDetailPairs.add(AddressComponent.block(vcardAddr.getBlock(), (isPhonetic) ? vcardAddr.getBlock() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getSubDistrict()))
+                streetDetailPairs.add(AddressComponent.subdistrict(vcardAddr.getSubDistrict(), (isPhonetic) ? vcardAddr.getSubDistrict() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getDistrict()))
+                streetDetailPairs.add(AddressComponent.district(vcardAddr.getDistrict(), (isPhonetic) ? vcardAddr.getDistrict() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getLandmark()))
+                streetDetailPairs.add(AddressComponent.landmark(vcardAddr.getLandmark(), (isPhonetic) ? vcardAddr.getLandmark() : null));
+            if (StringUtils.isNotEmpty(vcardAddr.getDirection()))
+                streetDetailPairs.add(AddressComponent.direction(vcardAddr.getDirection()));
 
-            if (StringUtils.isEmpty(vcardAddr.getStreetName()) &&
-                    StringUtils.isEmpty(vcardAddr.getStreetNumber()) &&
-                    StringUtils.isEmpty(vcardAddr.getDirection()) &&
-                    StringUtils.isEmpty(vcardAddr.getBlock()) &&
-                    StringUtils.isEmpty(vcardAddr.getSubDistrict()) &&
-                    StringUtils.isEmpty(vcardAddr.getDistrict()) &&
-                    StringUtils.isEmpty(vcardAddr.getLandmark())
-            ) {
-                if (StringUtils.isNotEmpty(vcardAddr.getStreetAddressFull()))
-                    streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddressFull()));
-            } else {
-                if (StringUtils.isNotEmpty(vcardAddr.getStreetName()))
-                    streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetName()));
-                if (StringUtils.isNotEmpty(vcardAddr.getStreetNumber()))
-                    streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumber()));
-                if (StringUtils.isNotEmpty(vcardAddr.getDirection()))
-                    streetDetailPairs.add(AddressComponent.direction(vcardAddr.getDirection()));
-                if (StringUtils.isNotEmpty(vcardAddr.getBlock()))
-                    streetDetailPairs.add(AddressComponent.block(vcardAddr.getBlock()));
-                if (StringUtils.isNotEmpty(vcardAddr.getSubDistrict()))
-                    streetDetailPairs.add(AddressComponent.subdistrict(vcardAddr.getSubDistrict()));
-                if (StringUtils.isNotEmpty(vcardAddr.getDistrict()))
-                    streetDetailPairs.add(AddressComponent.district(vcardAddr.getDistrict()));
-                if (StringUtils.isNotEmpty(vcardAddr.getLandmark()))
-                    streetDetailPairs.add(AddressComponent.landmark(vcardAddr.getLandmark()));
-            }
          } else {
 
             for (int i = 1; i < jscomps.length; i++) {
@@ -835,22 +858,24 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         streetDetailPairs.add(AddressComponent.postOfficeBox(vcardAddr.getPoBoxes().get(index2)));
                         break;
                     case 1:
-                        streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getExtendedAddress()));
+                        if (!vcardAddr.isExtended())
+                            streetDetailPairs.add(AddressComponent.apartment(vcardAddr.getExtendedAddress()));
                         break;
                     case 2:
-                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddresses().get(index2)));
+                        if (!vcardAddr.isExtended())
+                            streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddresses().get(index2), (isPhonetic) ? vcardAddr.getStreetAddresses().get(index2) : null));
                         break;
                     case 3:
-                        streetDetailPairs.add(AddressComponent.locality(vcardAddr.getLocalities().get(index2)));
+                        streetDetailPairs.add(AddressComponent.locality(vcardAddr.getLocalities().get(index2), (isPhonetic) ? vcardAddr.getLocalities().get(index2) : null));
                         break;
                     case 4:
-                        streetDetailPairs.add(AddressComponent.region(vcardAddr.getRegions().get(index2)));
+                        streetDetailPairs.add(AddressComponent.region(vcardAddr.getRegions().get(index2), (isPhonetic) ? vcardAddr.getRegions().get(index2) : null));
                         break;
                     case 5:
                         streetDetailPairs.add(AddressComponent.postcode(vcardAddr.getPostalCodes().get(index2)));
                         break;
                     case 6:
-                        streetDetailPairs.add(AddressComponent.country(vcardAddr.getCountries().get(index2)));
+                        streetDetailPairs.add(AddressComponent.country(vcardAddr.getCountries().get(index2), (isPhonetic) ? vcardAddr.getCountries().get(index2) : null));
                         break;
                     case 7:
                         streetDetailPairs.add(AddressComponent.room(vcardAddr.getRooms().get(index2)));
@@ -862,25 +887,25 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloors().get(index2)));
                         break;
                     case 10:
-                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetNames().get(index2)));
+                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetNames().get(index2), (isPhonetic) ? vcardAddr.getStreetNames().get(index2) : null));
                         break;
                     case 11:
                         streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumbers().get(index2)));
                         break;
                     case 12:
-                        streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuildings().get(index2)));
+                        streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuildings().get(index2), (isPhonetic) ? vcardAddr.getBuildings().get(index2) : null));
                         break;
                     case 13:
-                        streetDetailPairs.add(AddressComponent.block(vcardAddr.getBlocks().get(index2)));
+                        streetDetailPairs.add(AddressComponent.block(vcardAddr.getBlocks().get(index2), (isPhonetic) ? vcardAddr.getBlocks().get(index2) : null));
                         break;
                     case 14:
-                        streetDetailPairs.add(AddressComponent.subdistrict(vcardAddr.getSubDistricts().get(index2)));
+                        streetDetailPairs.add(AddressComponent.subdistrict(vcardAddr.getSubDistricts().get(index2), (isPhonetic) ? vcardAddr.getSubDistricts().get(index2) : null));
                         break;
                     case 15:
-                        streetDetailPairs.add(AddressComponent.district(vcardAddr.getDistricts().get(index2)));
+                        streetDetailPairs.add(AddressComponent.district(vcardAddr.getDistricts().get(index2), (isPhonetic) ? vcardAddr.getDistricts().get(index2) : null));
                         break;
                     case 16:
-                        streetDetailPairs.add(AddressComponent.landmark(vcardAddr.getLandmarks().get(index2)));
+                        streetDetailPairs.add(AddressComponent.landmark(vcardAddr.getLandmarks().get(index2), (isPhonetic) ? vcardAddr.getLandmarks().get(index2) : null));
                         break;
                     case 17:
                         streetDetailPairs.add(AddressComponent.direction(vcardAddr.getDirections().get(index2)));
@@ -890,9 +915,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         }
 
-
         String autoFullAddress = toJSCardAutoFulllAddress(vcardAddr);
         String vcardTypeParam = VCardUtils.getVCardParamValue(vcardAddr.getParameters(), VCardParamEnum.TYPE);
+
+        PhoneticSystem phoneticSystem = null;
+
+        if (vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) {
+            try {
+                phoneticSystem = PhoneticSystem.rfc(PhoneticSystemEnum.getEnum(vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())));
+            } catch (IllegalArgumentException e) {
+                phoneticSystem = PhoneticSystem.ext(vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue()));
+            }
+        }
 
         return it.cnr.iit.jscontact.tools.dto.Address.builder()
                 .hash(autoFullAddress)
@@ -910,6 +944,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .defaultSeparator((ArrayUtils.isNotEmpty(jscomps) && jscomps[0].startsWith(DelimiterUtils.SEPARATOR_ID)) ? jscomps[0].replace(DelimiterUtils.SEPARATOR_ID,StringUtils.EMPTY) : null)
                 .isOrdered((jscomps!=null) ? Boolean.TRUE : null)
                 .propId(vcardAddr.getParameter(VCardParamEnum.PROP_ID.getValue()))
+                .phoneticSystem(phoneticSystem)
+                .phoneticScript(vcardAddr.getParameter(VCardParamEnum.SCRIPT.getValue()))
                 .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardAddr, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.LABEL, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.CC, VCardParamEnum.TZ, VCardParamEnum.GEO, VCardParamEnum.DERIVED, VCardParamEnum.ALTID))
                 .build();
     }
@@ -961,13 +997,31 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         String lastAltid = null;
         String lastMapId = null;
         for (Address address : addresses) {
+
+            if (address.getAltid() == null && jsCard.getLanguage() == null && address.getLanguage() != null)
+                jsCard.setLanguage(address.getLanguage());
+
             if (address.getAltid() == null || !address.getAltid().equals(lastAltid)) {
                 String id = getJSCardId(VCard2JSContactIdsProfile.IdType.ADDRESS, i, "ADR-" + (i++), address.getPropId() );
                 jsCard.addAddress(id, address);
                 lastAltid = address.getAltid();
                 lastMapId = id;
             } else {
-                jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId, mapper.convertValue(address, JsonNode.class));
+                if (address.getPhoneticSystem()!= null || address.getPhoneticScript() != null) {
+                    if (address.getPhoneticSystem()!= null)
+                        jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId+ "/phoneticSystem", JsonNodeUtils.textNode(address.getPhoneticSystem().toJson()));
+                    if (address.getPhoneticScript()!= null)
+                        jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId+ "/phoneticScript", JsonNodeUtils.textNode(address.getPhoneticScript()));
+
+                    if (address.getComponents() != null) {
+                        for (AddressComponent component : address.getComponents()) {
+                            if (component.getValue().equals(component.getPhonetic()))
+                                jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId+ "/components/" + i + "/phonetic", JsonNodeUtils.textNode(component.getPhonetic()));
+                        }
+                    }
+                }
+                else
+                    jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId, mapper.convertValue(address, JsonNode.class));
             }
         }
     }
