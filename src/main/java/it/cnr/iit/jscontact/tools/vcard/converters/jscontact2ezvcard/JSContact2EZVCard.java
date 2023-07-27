@@ -149,29 +149,40 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         List<String> jscomps = new ArrayList<>();
         jscomps.add((StringUtils.isNotEmpty(defaultSeparator)) ? DelimiterUtils.SEPARATOR_ID + defaultSeparator : StringUtils.EMPTY);
-        int[] count = new int[] {0,0,0,0,0};
+        int[] count = new int[] {0,0,0,0,0,0,0};
         for (NameComponent component : components) {
             if (!component.isExt()) {
                 switch (component.getKind().getRfcValue()) {
                     case SEPARATOR:
-                        jscomps.add(component.getValue());
+                        jscomps.add(DelimiterUtils.SEPARATOR_ID + ((component.getValue().equals(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? "\\," : component.getValue()) );
                         break;
                     case SURNAME:
-                    case SURNAME2:
-                        jscomps.add((count[0] == 0) ? "0" : "0," + count[0]++);
+                        jscomps.add((count[0] == 0) ? "0" : "0," + count[0]);
+                        count[0] ++;
                         break;
                     case GIVEN:
-                        jscomps.add((count[1] == 0) ? "1" : "1," + count[1]++);
+                        jscomps.add((count[1] == 0) ? "1" : "1," + count[1]);
+                        count[1] ++;
                         break;
                     case GIVEN2:
-                        jscomps.add((count[2] == 0) ? "2" : "2," + count[2]++);
+                        jscomps.add((count[2] == 0) ? "2" : "2," + count[2]);
+                        count[2] ++;
                         break;
                     case TITLE:
-                        jscomps.add((count[3] == 0) ? "3" : "3," + count[3]++);
+                        jscomps.add((count[3] == 0) ? "3" : "3," + count[3]);
+                        count[3] ++;
                         break;
                     case CREDENTIAL:
+                        jscomps.add((count[4] == 0) ? "4" : "4," + count[4]);
+                        count[4] ++;
+                        break;
+                    case SURNAME2:
+                        jscomps.add((count[5] == 0) ? "5" : "5," + count[5]);
+                        count[5] ++;
+                        break;
                     case GENERATION:
-                        jscomps.add((count[4] == 0) ? "4" : "4," + count[4]++);
+                        jscomps.add((count[6] == 0) ? "6" : "6," + count[6]);
+                        count[6] ++;
                         break;
                 }
             }
@@ -193,7 +204,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (!component.isExt()) {
                 switch (component.getKind().getRfcValue()) {
                     case SEPARATOR:
-                        jscomps.add(component.getValue());
+                        jscomps.add(DelimiterUtils.SEPARATOR_ID + ((component.getValue().equals(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? "\\," : component.getValue()) );
                         break;
                     case POST_OFFICE_BOX:
                         jscomps.add((count[0] == 0) ? "0" : "0," + count[0]++);
@@ -302,7 +313,6 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static ExtendedStructuredName toVCardStructuredName(NameComponent[] nameComponents) {
 
-
         ExtendedStructuredName name = new ExtendedStructuredName();
         List<String> surnames = new ArrayList<>();
         List<String> givens = new ArrayList<>();
@@ -399,7 +409,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (jsCard.getLocalization(language,key) != null) {
                 components.add(NameComponent.builder()
                                             .value(jsCard.getLocalization(language,key).asText())
-                                            .kind(NameComponentKind.builder().rfcValue(NameComponentEnum.values()[i]).build())
+                                            .kind(jsCard.getName().getComponents()[i].getKind())
                                             .build());
             }
         }
@@ -457,7 +467,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 List<String> languages = getLanguagesOfPhoneticLocalizations(jsCard);
                 for (String language : languages) {
                     String phoneticSystem = ((jsCard.getLocalization(language, "name/phoneticSystem") != null) ? jsCard.getLocalization(language, "name/phoneticSystem").asText() : null);
-                    String phoneticScript = ((jsCard.getLocalization(language, "name/phoneticScript") != null) ? jsCard.getLocalization(language, "name/phoneticSystem").asText() : null);
+                    String phoneticScript = ((jsCard.getLocalization(language, "name/phoneticScript") != null) ? jsCard.getLocalization(language, "name/phoneticScript").asText() : null);
                     sn = toVCardStructuredName(getNameComponentsOfPhoneticLocalizations(language, jsCard));
                     sn.setParameter(VCardParamEnum.PHONETIC.getValue(), phoneticSystem);
                     sn.setParameter(VCardParamEnum.SCRIPT.getValue(), phoneticScript);
