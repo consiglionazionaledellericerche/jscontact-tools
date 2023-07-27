@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.util.TelUri;

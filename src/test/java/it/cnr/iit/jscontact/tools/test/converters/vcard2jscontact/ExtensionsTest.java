@@ -16,14 +16,9 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

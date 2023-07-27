@@ -15,11 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
 import org.junit.Test;
 

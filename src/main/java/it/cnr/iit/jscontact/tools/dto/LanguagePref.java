@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.LanguageTagConstraint;
-import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;

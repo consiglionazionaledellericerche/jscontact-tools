@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import org.junit.Test;
 
 import java.io.IOException;
 
