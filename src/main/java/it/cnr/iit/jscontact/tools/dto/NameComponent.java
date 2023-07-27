@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPronounce;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -37,14 +36,14 @@ import java.io.Serializable;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type", "value", "kind", "pronounce"})
+@JsonPropertyOrder({"@type", "value", "kind", "phonetic"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class NameComponent extends AbstractJSContactType implements HasKind, HasPronounce, Serializable {
+public class NameComponent extends AbstractJSContactType implements HasKind, Serializable {
 
     @Pattern(regexp = "NameComponent", message = "invalid @type value in NameComponent")
     @JsonProperty("@type")
@@ -60,8 +59,7 @@ public class NameComponent extends AbstractJSContactType implements HasKind, Has
     @JsonDeserialize(using = NameComponentTypeDeserializer.class)
     NameComponentKind kind;
 
-    @Valid
-    Pronounce pronounce;
+    String phonetic;
 
     private boolean isRfc(NameComponentEnum value) {
         return (kind.getRfcValue() != null && kind.getRfcValue() == value);
@@ -131,9 +129,10 @@ public class NameComponent extends AbstractJSContactType implements HasKind, Has
     @JsonIgnore
     public boolean isExt() { return kind.isExtValue(); }
 
-    private static NameComponent rfc(NameComponentEnum rfcValue, String value) {
+    private static NameComponent rfc(NameComponentEnum rfcValue, String value, String phonetic) {
         return NameComponent.builder()
                 .value(value)
+                .phonetic(phonetic)
                 .kind(NameComponentKind.builder().rfcValue(rfcValue).build())
                 .build();
     }
@@ -141,68 +140,77 @@ public class NameComponent extends AbstractJSContactType implements HasKind, Has
      * Returns a title component of a name.
      *
      * @param value the title
+     * @param phonetic the phonetic
      * @return the title component
      */
-    public static NameComponent title(String value) {return rfc(NameComponentEnum.TITLE, value);}
+    public static NameComponent title(String value, String phonetic) {return rfc(NameComponentEnum.TITLE, value, phonetic);}
     /**
      * Returns a given name component of a name.
      *
      * @param value the given name
+     * @param phonetic the phonetic
      * @return the given name  component
      */
-    public static NameComponent given(String value) {return rfc(NameComponentEnum.GIVEN, value);}
+    public static NameComponent given(String value, String phonetic) {return rfc(NameComponentEnum.GIVEN, value, phonetic);}
     /**
      * Returns a surname component of a name.
      *
      * @param value the surname
+     * @param phonetic the phonetic
      * @return the surname  component
      */
-    public static NameComponent surname(String value) {return rfc(NameComponentEnum.SURNAME, value);}
+    public static NameComponent surname(String value, String phonetic) {return rfc(NameComponentEnum.SURNAME, value, phonetic);}
     /**
      * Returns a second surname component of a name.
      *
      * @param value the second surname
+     * @param phonetic the phonetic
      * @return the second surname component
      */
-    public static NameComponent surname2(String value) {return rfc(NameComponentEnum.SURNAME2, value);}
+    public static NameComponent surname2(String value, String phonetic) {return rfc(NameComponentEnum.SURNAME2, value, phonetic);}
     /**
      * Returns a second given name component of a name.
      *
      * @param value the second given name
+     * @param phonetic the phonetic
      * @return the second given name component
      */
-    public static NameComponent given2(String value) {return rfc(NameComponentEnum.GIVEN2, value);}
+    public static NameComponent given2(String value, String phonetic) {return rfc(NameComponentEnum.GIVEN2, value, phonetic);}
     /**
      * Returns a credential name component of a name.
      *
      * @param value the credential
+     * @param phonetic the phonetic
      * @return the credential name  component
      */
-    public static NameComponent credential(String value) {return rfc(NameComponentEnum.CREDENTIAL, value);}
+    public static NameComponent credential(String value, String phonetic) {return rfc(NameComponentEnum.CREDENTIAL, value, phonetic);}
     /**
      * Returns a generation name component of a name.
      *
      * @param value the generation
+     * @param phonetic the phonetic
      * @return the generation name  component
      */
-    public static NameComponent generation(String value) {return rfc(NameComponentEnum.GENERATION, value);}
+    public static NameComponent generation(String value, String phonetic) {return rfc(NameComponentEnum.GENERATION, value, phonetic);}
     /**
      * Returns a separator name component of a name.
      *
      * @param value the separator
      * @return the separator name  component
      */
-    public static NameComponent separator(String value) {return rfc(NameComponentEnum.SEPARATOR, value);}
+    public static NameComponent separator(String value) {return rfc(NameComponentEnum.SEPARATOR, value, null);}
     /**
      * Returns a custom component of a name.
      *
      * @param extValue the custom name component
      * @param value the value for the custom name component
+     * @param phonetic the phonetic
      * @return the custom component
      */
-    public static NameComponent ext(String extValue, String value) {
+    public static NameComponent ext(String extValue, String value, String phonetic) {
         return NameComponent.builder()
                 .value(value)
+                .phonetic(phonetic)
                 .kind(NameComponentKind.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
     }

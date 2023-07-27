@@ -33,6 +33,12 @@ public class RoundtripTest {
 
             for (ExtendedAddress ea : vcard.getProperties(ExtendedAddress.class)) {
 
+                if (!ea.getStreetNames().isEmpty() && ea.getStreetAddresses().isEmpty())
+                    ea.getStreetAddresses().addAll(ea.getStreetNames());
+
+                if (!ea.getApartments().isEmpty() && ea.getExtendedAddress().isEmpty())
+                    ea.getExtendedAddresses().addAll(ea.getApartments());
+
                 ea.getStreetNames().clear();
                 ea.getStreetNumbers().clear();
                 ea.getDirections().clear();
@@ -40,6 +46,11 @@ public class RoundtripTest {
                 ea.getSubDistricts().clear();
                 ea.getBlocks().clear();
                 ea.getLandmarks().clear();
+                ea.getFloors().clear();
+                ea.getBlocks().clear();
+                ea.getBuildings().clear();
+                ea.getRooms().clear();
+                ea.getApartments().clear();
             }
 
         }

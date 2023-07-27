@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class PronounceSystem extends ExtensibleEnumType<PronounceSystemEnum> implements Serializable {
+public class PhoneticSystem extends ExtensibleEnumType<PhoneticSystemEnum> implements Serializable {
 
     /**
      * Tests if the pronounce system is "ipa".
@@ -43,7 +43,7 @@ public class PronounceSystem extends ExtensibleEnumType<PronounceSystemEnum> imp
      * @return true if the pronounce system is "ipa", false otherwise
      */
     @JsonIgnore
-    public boolean isIpa() { return isRfc(PronounceSystemEnum.IPA); }
+    public boolean isIpa() { return isRfc(PhoneticSystemEnum.IPA); }
 
     /**
      * Tests if the pronounce system is "piny".
@@ -51,7 +51,7 @@ public class PronounceSystem extends ExtensibleEnumType<PronounceSystemEnum> imp
      * @return true if the pronounce system is "piny", false otherwise
      */
     @JsonIgnore
-    public boolean isPiny() { return isRfc(PronounceSystemEnum.PINY); }
+    public boolean isPiny() { return isRfc(PhoneticSystemEnum.PINY); }
 
     /**
      * Tests if the pronounce system is "jyut".
@@ -59,7 +59,7 @@ public class PronounceSystem extends ExtensibleEnumType<PronounceSystemEnum> imp
      * @return true if the pronounce system is "jyut", false otherwise
      */
     @JsonIgnore
-    public boolean isJyut() { return isRfc(PronounceSystemEnum.JYUT); }
+    public boolean isJyut() { return isRfc(PhoneticSystemEnum.JYUT); }
 
     /**
      * Returns a pronounce system whose enum value is pre-defined.
@@ -67,28 +67,28 @@ public class PronounceSystem extends ExtensibleEnumType<PronounceSystemEnum> imp
      * @param rfcValue the pre-defined pronounce system
      * @return a pre-defined pronounce system
      */
-    public static PronounceSystem rfc(PronounceSystemEnum rfcValue) { return PronounceSystem.builder().rfcValue(rfcValue).build();}
+    public static PhoneticSystem rfc(PhoneticSystemEnum rfcValue) { return PhoneticSystem.builder().rfcValue(rfcValue).build();}
 
     /**
      * Returns a "ipa" pronounce system.
      *
      * @return a "ipa" pronounce system
      */
-    public static PronounceSystem ipa() { return rfc(PronounceSystemEnum.IPA);}
+    public static PhoneticSystem ipa() { return rfc(PhoneticSystemEnum.IPA);}
 
     /**
      * Returns a "piny" pronounce system.
      *
      * @return a "piny" pronounce system
      */
-    public static PronounceSystem piny() { return rfc(PronounceSystemEnum.PINY);}
+    public static PhoneticSystem piny() { return rfc(PhoneticSystemEnum.PINY);}
 
     /**
      * Returns a "jyut" pronounce system.
      *
      * @return a "jyut" pronounce system
      */
-    public static PronounceSystem jyut() { return rfc(PronounceSystemEnum.JYUT);}
+    public static PhoneticSystem jyut() { return rfc(PhoneticSystemEnum.JYUT);}
 
     /**
      * Returns a custom relation type.
@@ -96,6 +96,6 @@ public class PronounceSystem extends ExtensibleEnumType<PronounceSystemEnum> imp
      * @param extValue the custom relation type
      * @return a custom relation type
      */
-    public static PronounceSystem ext(String extValue) { return PronounceSystem.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    public static PhoneticSystem ext(String extValue) { return PhoneticSystem.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 
 }

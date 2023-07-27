@@ -15,10 +15,13 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
 import org.junit.Test;
 
@@ -230,4 +233,49 @@ public class NameTest extends JSContact2VCardTest {
         assertEquals("testName4 - 9", "A.C.P.", vcard.getProperty(ExtendedStructuredName.class).getSuffixes().get(1));
     }
 
+    @Test
+    public void testName5() throws IOException, CardException {
+
+
+        String jscard = "{" +
+                "\"@type\" : \"Card\"," +
+                "\"@version\" : \"1.0\"," +
+                "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
+                "\"language\" : \"zh-Hant\"," +
+                "\"name\" : { " +
+                    "\"@type\" : \"Name\", " +
+                    "\"full\" : \"John Paul Philip Stevenson\"," +
+                    "\"components\" : [ { " +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"kind\" : \"surname\"," +
+                            "\"value\" : \"孫\"" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"kind\" : \"given\"," +
+                            "\"value\" : \"中山\"" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"kind\" : \"given2\"," +
+                            "\"value\" : \"文\"" +
+                        "}, {" +
+                            "\"@type\" : \"NameComponent\"," +
+                            "\"kind\" : \"given2\"," +
+                            "\"value\" : \"逸仙\"" +
+                    "}]" +
+                "}," +
+                "\"localizations\" : { " +
+                    "\"yue\" : { " +
+                        "\"name/components/0/phonetic\" : \"syun1\", " +
+                        "\"name/components/1/phonetic\" : \"zung1saan1\", " +
+                        "\"name/components/2/phonetic\" : \"man4\", " +
+                        "\"name/components/3/phonetic\" : \"jat6sin1\", " +
+                        "\"name/phoneticScript\" : \"Latn\", " +
+                        "\"name/phoneticSystem\" : \"jyut\" " +
+                    "}" +
+                "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        System.out.println(Ezvcard.write(vcard).register(new ExtendedStructuredNameScribe()).register(new ExtendedAddressScribe()).go());
+    }
 }

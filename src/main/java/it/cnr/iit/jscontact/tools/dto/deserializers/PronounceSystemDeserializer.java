@@ -30,17 +30,17 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class PronounceSystemDeserializer extends JsonDeserializer<PronounceSystem> {
+public class PronounceSystemDeserializer extends JsonDeserializer<PhoneticSystem> {
 
     @Override
-    public PronounceSystem deserialize(JsonParser jp, DeserializationContext ctxt)
+    public PhoneticSystem deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return PronounceSystem.builder().rfcValue(PronounceSystemEnum.getEnum(value)).build();
+            return PhoneticSystem.builder().rfcValue(PhoneticSystemEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return PronounceSystem.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return PhoneticSystem.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

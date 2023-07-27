@@ -48,9 +48,9 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 1", "Joe User", jsCard.getName().getFull());
         assertTrue("testRDAPProfile - 2", jsCard.getKind().isIndividual());
         assertEquals("testRDAPProfile - 3", 4, jsCard.getName().getComponents().length);
-        assertTrue("testRDAPProfile - 4", jsCard.getName().getComponents()[0].isGiven());
+        assertTrue("testRDAPProfile - 4", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testRDAPProfile - 5", "Joe", jsCard.getName().getGiven());
-        assertTrue("testRDAPProfile - 6", jsCard.getName().getComponents()[1].isSurname());
+        assertTrue("testRDAPProfile - 6", jsCard.getName().getComponents()[0].isSurname());
         assertEquals("testRDAPProfile - 7", "User", jsCard.getName().getSurname());
         assertTrue("testRDAPProfile - 8", jsCard.getName().getComponents()[2].isCredential());
         assertEquals("testRDAPProfile - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());

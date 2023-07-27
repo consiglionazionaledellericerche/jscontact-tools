@@ -28,7 +28,7 @@ import lombok.AllArgsConstructor;
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum PronounceSystemEnum implements IsExtensibleEnum {
+public enum PhoneticSystemEnum implements IsExtensibleEnum {
 
     IPA("ipa"),
     PINY("piny"),
@@ -42,8 +42,8 @@ public enum PronounceSystemEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static PronounceSystemEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(PronounceSystemEnum.class, value);
+    public static PhoneticSystemEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(PhoneticSystemEnum.class, value);
     }
 
     @Override

@@ -24,14 +24,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPronounce;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
@@ -43,14 +42,14 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  */
 @NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null between full and components is required in Name")
-@JsonPropertyOrder({"@type", "full", "components", "isOrdered", "pronounce", "sortAs", "label"})
+@JsonPropertyOrder({"@type", "full", "components", "isOrdered", "pronounce", "sortAs", "phoneticSystem", "phoneticScript"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Name extends AbstractJSContactType implements HasPronounce, Serializable {
+public class Name extends AbstractJSContactType implements Serializable {
 
     @Pattern(regexp = "Name", message="invalid @type value in Name")
     @JsonProperty("@type")
@@ -66,14 +65,16 @@ public class Name extends AbstractJSContactType implements HasPronounce, Seriali
 
     Boolean isOrdered = Boolean.FALSE;
 
-    @Valid
-    Pronounce pronounce;
-
     String defaultSeparator;
 
     @JsonSerialize(using = NameSortAsSerializer.class)
     @JsonDeserialize(using = NameSortAsDeserializer.class)
     Map<NameComponentKind, String> sortAs;
+
+    String phoneticScript;
+
+    @JsonDeserialize(using = PronounceSystemDeserializer.class)
+    PhoneticSystem phoneticSystem;
 
     /**
      * Adds a name component to this object.

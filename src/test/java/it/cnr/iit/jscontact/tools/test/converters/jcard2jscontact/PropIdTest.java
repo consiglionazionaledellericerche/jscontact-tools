@@ -83,7 +83,7 @@ public class PropIdTest extends VCard2JSContactTest {
         assertEquals("testPropId2 - 12", "20190", jsCard.getAddresses().get("ADR-2").getPostcode());
         assertEquals("testPropId2 - 13", "Reston", jsCard.getAddresses().get("ADR-2").getLocality());
         assertEquals("testPropId2 - 14", "VA", jsCard.getAddresses().get("ADR-2").getRegion());
-        assertEquals("testPropId2 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetAddress());
+        assertEquals("testPropId2 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetName());
         assertEquals("testPropId2 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFull());
 
     }

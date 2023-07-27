@@ -16,10 +16,9 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.LanguageTagConstraint;
-import org.apache.commons.lang3.LocaleUtils;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Locale;
 
 public class LanguageTagValidator implements ConstraintValidator<LanguageTagConstraint, String> {
 
@@ -32,7 +31,7 @@ public class LanguageTagValidator implements ConstraintValidator<LanguageTagCons
             return true;
 
         try {
-            LocaleUtils.toLocale(languageTag);
+            Locale locale = new Locale.Builder().setLanguageTag(languageTag).build();
             return true;
         } catch(Exception e) {
             return false;

@@ -51,6 +51,8 @@ public enum VCardParamEnum  {
     CREATED("CREATED"),
     JSPTR("JSPTR"),
     JSCOMPS("JSCOMPS"),
+    PHONETIC("PHONETIC"),
+    SCRIPT("SCRIPT"),
     SERVICE_TYPE("SERVICE-TYPE"),
     USERNAME("USERNAME"),
     VALUE("VALUE");
