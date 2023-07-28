@@ -30,28 +30,24 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum AddressComponentEnum implements IsExtensibleEnum {
 
+    POST_OFFICE_BOX("postOfficeBox"),
+    EXTENDED_ADDRESS("extendedAddress"), //not used - placeholder to respect the order of extended address components
+    STREET_ADDRESS("streetAddress"), //not used - placeholder to respect the order of extended address components
     LOCALITY("locality"),
-
     REGION("region"),
-
-    COUNTRY("country"),
-
     POSTCODE("postcode"),
-
-    DISTRICT("district"),
-    SUBDISTRICT("subdistrict"),
-    BLOCK("block"),
-
+    COUNTRY("country"),
+    ROOM("room"),
+    APARTMENT("apartment"),
+    FLOOR("floor"),
     NAME("name"),
     NUMBER("number"),
-    DIRECTION("direction"),
     BUILDING("building"),
-    FLOOR("floor"),
-    APARTMENT("apartment"),
-    ROOM("room"),
+    BLOCK("block"),
+    SUBDISTRICT("subdistrict"),
+    DISTRICT("district"),
     LANDMARK("landmark"),
-
-    POST_OFFICE_BOX("postOfficeBox"),
+    DIRECTION("direction"),
     SEPARATOR("separator");
 
     private final String value;

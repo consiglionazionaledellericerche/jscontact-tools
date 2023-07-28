@@ -15,10 +15,12 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.util.GeoUri;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
 import org.junit.Test;
 
@@ -291,7 +293,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses7 - 4", "20190", vcard.getProperties(ExtendedAddress.class).get(0).getPostalCode());
         assertEquals("testAddresses7 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses7 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
-        assertEquals("testAddresses7 - 7", "Oak St,54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
+        assertEquals("testAddresses7 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
         assertEquals("testAddresses7 - 8", "Oak St 54321 Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses7 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
@@ -327,8 +329,8 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses8 - 4", "20190", vcard.getProperties(ExtendedAddress.class).get(0).getPostalCode());
         assertEquals("testAddresses8 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses8 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
-        assertEquals("testAddresses8 - 7", "Oak St,54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
-        assertEquals("testAddresses8 - 8", "5,100", vcard.getProperties(ExtendedAddress.class).get(0).getExtendedAddress());
+        assertEquals("testAddresses8 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
+        assertEquals("testAddresses8 - 8", "100 5", vcard.getProperties(ExtendedAddress.class).get(0).getExtendedAddress());
         assertEquals("testAddresses8 - 9", "5 100 Oak St 54321 Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses8 - 10", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
@@ -426,6 +428,54 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses10 - 15", "Via Moruzzi,1 Pisa 56124 Italia", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
         assertEquals("testAddresses10 - 16", "it", vcard.getProperties(ExtendedAddress.class).get(1).getLanguage());
         assertEquals("testAddresses10 - 17", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+    }
+
+
+
+    @Test
+    public void testAddresses11() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"name\": { \"full\": \"test\"}," +
+                "\"language\":\"en\"," +
+                "\"addresses\":{" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                            "\"components\":[ " +
+                                "{\"kind\":\"number\",\"value\":\"54321\"}," +
+                                "{\"kind\":\"separator\",\"value\":\" \"}," +
+                                "{\"kind\":\"name\",\"value\":\"Oak St\"}," +
+                                "{\"kind\":\"locality\",\"value\":\"Reston\"}" +
+                            "]," +
+                        "\"isOrdered\": true," +
+                        "\"defaultSeparator\":\",\"" +
+                    "}" +
+                "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        System.out.println(Ezvcard.write(vcard).register(new ExtendedAddressScribe()).go());
+        /*
+        assertEquals("testAddresses10 - 1", 2, vcard.getProperties(ExtendedAddress.class).size());
+        assertEquals("testAddresses10 - 2", "US", vcard.getProperties(ExtendedAddress.class).get(0).getParameter("CC"));
+        assertEquals("testAddresses10 - 3", "USA", vcard.getProperties(ExtendedAddress.class).get(0).getCountry());
+        assertEquals("testAddresses10 - 4", "20190", vcard.getProperties(ExtendedAddress.class).get(0).getPostalCode());
+        assertEquals("testAddresses10 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
+        assertEquals("testAddresses10 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
+        assertEquals("testAddresses10 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
+        assertEquals("testAddresses10 - 8", "54321 Oak St Reston VA USA 20190", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses10 - 9", "en", vcard.getProperties(ExtendedAddress.class).get(0).getLanguage());
+        assertEquals("testAddresses10 - 10", "IT", vcard.getProperties(ExtendedAddress.class).get(1).getParameter("CC"));
+        assertEquals("testAddresses10 - 11", "Italia", vcard.getProperties(ExtendedAddress.class).get(1).getCountry());
+        assertEquals("testAddresses10 - 12", "56124", vcard.getProperties(ExtendedAddress.class).get(1).getPostalCode());
+        assertEquals("testAddresses10 - 13", "Pisa", vcard.getProperties(ExtendedAddress.class).get(1).getLocality());
+        assertEquals("testAddresses10 - 14", "Via Moruzzi,1", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddress());
+        assertEquals("testAddresses10 - 15", "Via Moruzzi,1 Pisa 56124 Italia", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
+        assertEquals("testAddresses10 - 16", "it", vcard.getProperties(ExtendedAddress.class).get(1).getLanguage());
+        assertEquals("testAddresses10 - 17", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+ */
     }
 
 }

@@ -149,41 +149,20 @@ public class JSContact2EZVCard extends AbstractConverter {
             return null;
 
         List<String> jscomps = new ArrayList<>();
-        jscomps.add((StringUtils.isNotEmpty(defaultSeparator)) ? DelimiterUtils.SEPARATOR_ID + defaultSeparator : StringUtils.EMPTY);
+        String adjustedDefaultSeparator = (StringUtils.isNotEmpty(defaultSeparator)) ? DelimiterUtils.SEPARATOR_ID + ((defaultSeparator.startsWith(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? defaultSeparator.replace(DelimiterUtils.COMMA_ARRAY_DELIMITER, "\\,") : defaultSeparator ) : StringUtils.EMPTY;
+        jscomps.add(adjustedDefaultSeparator);
         int[] count = new int[] {0,0,0,0,0,0,0};
+        List<NameComponentEnum> enums = Arrays.asList(NameComponentEnum.values());
         for (NameComponent component : components) {
             if (!component.isExt()) {
                 switch (component.getKind().getRfcValue()) {
                     case SEPARATOR:
-                        jscomps.add(DelimiterUtils.SEPARATOR_ID + ((component.getValue().equals(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? "\\," : component.getValue()) );
+                        jscomps.add(DelimiterUtils.SEPARATOR_ID + ((component.getValue().startsWith(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? component.getValue().replace(DelimiterUtils.COMMA_ARRAY_DELIMITER, "\\,") : component.getValue()) );
                         break;
-                    case SURNAME:
-                        jscomps.add((count[0] == 0) ? "0" : "0," + count[0]);
-                        count[0] ++;
-                        break;
-                    case GIVEN:
-                        jscomps.add((count[1] == 0) ? "1" : "1," + count[1]);
-                        count[1] ++;
-                        break;
-                    case GIVEN2:
-                        jscomps.add((count[2] == 0) ? "2" : "2," + count[2]);
-                        count[2] ++;
-                        break;
-                    case TITLE:
-                        jscomps.add((count[3] == 0) ? "3" : "3," + count[3]);
-                        count[3] ++;
-                        break;
-                    case CREDENTIAL:
-                        jscomps.add((count[4] == 0) ? "4" : "4," + count[4]);
-                        count[4] ++;
-                        break;
-                    case SURNAME2:
-                        jscomps.add((count[5] == 0) ? "5" : "5," + count[5]);
-                        count[5] ++;
-                        break;
-                    case GENERATION:
-                        jscomps.add((count[6] == 0) ? "6" : "6," + count[6]);
-                        count[6] ++;
+                    default:
+                        int j = enums.indexOf(component.getKind().getRfcValue());
+                        jscomps.add((count[j] == 0) ? ""+j : j + "," + count[j]);
+                        count[j]++;
                         break;
                 }
             }
@@ -199,45 +178,23 @@ public class JSContact2EZVCard extends AbstractConverter {
             return null;
 
         List<String> jscomps = new ArrayList<>();
-        jscomps.add((StringUtils.isNotEmpty(defaultSeparator)) ? DelimiterUtils.SEPARATOR_ID + defaultSeparator : StringUtils.EMPTY);
-        int[] count = new int[] {0,0,0,0,0,0,0};
+        String adjustedDefaultSeparator = (StringUtils.isNotEmpty(defaultSeparator)) ? DelimiterUtils.SEPARATOR_ID + ((defaultSeparator.startsWith(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? defaultSeparator.replace(DelimiterUtils.COMMA_ARRAY_DELIMITER, "\\,") : defaultSeparator ) : StringUtils.EMPTY;
+        jscomps.add(adjustedDefaultSeparator);
+        int[] count = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        List<AddressComponentEnum> enums = Arrays.asList(AddressComponentEnum.values());
         for (AddressComponent component : components) {
             if (!component.isExt()) {
                 switch (component.getKind().getRfcValue()) {
                     case SEPARATOR:
-                        jscomps.add(DelimiterUtils.SEPARATOR_ID + ((component.getValue().equals(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? "\\," : component.getValue()) );
+                        jscomps.add(DelimiterUtils.SEPARATOR_ID + ((component.getValue().startsWith(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? component.getValue().replace(DelimiterUtils.COMMA_ARRAY_DELIMITER, "\\,") : component.getValue()) );
                         break;
-                    case POST_OFFICE_BOX:
-                        jscomps.add((count[0] == 0) ? "0" : "0," + count[0]++);
-                        break;
-                    case NAME:
-                    case NUMBER:
-                    case DIRECTION:
-                    case DISTRICT:
-                    case SUBDISTRICT:
-                    case BLOCK:
-                    case APARTMENT:
-                    case BUILDING:
-                    case FLOOR:
-                    case ROOM:
-                    case LANDMARK:
-                        jscomps.add((count[2] == 0) ? "2" : "2," + count[2]++);
-                        break;
-                    case LOCALITY:
-                        jscomps.add((count[3] == 0) ? "3" : "3," + count[3]++);
-                        break;
-                    case REGION:
-                        jscomps.add((count[4] == 0) ? "4" : "4," + count[4]++);
-                        break;
-                    case POSTCODE:
-                        jscomps.add((count[5] == 0) ? "5" : "5," + count[5]++);
-                        break;
-                    case COUNTRY:
-                        jscomps.add((count[6] == 0) ? "6" : "6," + count[6]++);
+                    default:
+                        int j = enums.indexOf(component.getKind().getRfcValue());
+                        jscomps.add((count[j] == 0) ? ""+j : j + "," + count[j]);
+                        count[j]++;
                         break;
                 }
             }
-
         }
 
         return String.join(DelimiterUtils.SEMICOLON_ARRAY_DELIMITER, jscomps);
@@ -671,24 +628,24 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (!isVCardNullAddress(address)) {
             if (config.isSetAutoAddrLabel())
                 addr.setLabel(toVCardAddressLabelParam(address));
-            addr.setCountry(address.getCountry());
-            addr.setRegion(address.getRegion());
-            addr.setLocality(address.getLocality());
-            addr.setStreetAddress(address.getStreetAddress());
-            addr.setExtendedAddress(address.getStreetExtendedAddress());
             addr.setPoBox(address.getPostOfficeBox());
+            addr.setExtendedAddress(address.getStreetExtendedAddress());
+            addr.setStreetAddress(address.getStreetAddress());
+            addr.setLocality(address.getLocality());
+            addr.setRegion(address.getRegion());
             addr.setPostalCode(address.getPostcode());
-            addr.setApartment(address.getApartment());
-            addr.setBuilding(address.getBuilding());
-            addr.setFloor(address.getFloor());
+            addr.setCountry(address.getCountry());
             addr.setRoom(address.getRoom());
+            addr.setApartment(address.getApartment());
+            addr.setFloor(address.getFloor());
             addr.setStreetName(address.getStreetName());
             addr.setStreetNumber(address.getStreetNumber());
-            addr.setDirection(address.getDirection());
-            addr.setDistrict(address.getDistrict());
-            addr.setSubDistrict(address.getSubDistrict());
+            addr.setBuilding(address.getBuilding());
             addr.setBlock(address.getBlock());
+            addr.setDirection(address.getDirection());
             addr.setLandmark(address.getLandmark());
+            addr.setSubDistrict(address.getSubDistrict());
+            addr.setDistrict(address.getDistrict());
             addr.setPref(address.getPref());
             if (address.getTimeZone() != null) {
                 TimeZone timeZone = null;

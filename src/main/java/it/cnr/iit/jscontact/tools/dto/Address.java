@@ -158,18 +158,22 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
 
         List<String> addressComponents = new ArrayList<>();
         boolean applySeparator = false;
-        for (AddressComponent pair : components) {
-            if (pair.getKind().isRfcValue()) {
-                if (componentsToCheck.contains(pair.getKind().getRfcValue())) {
+        for (AddressComponentEnum componentEnum : componentsToCheck) {
+            AddressComponent component = getComponent(AddressComponentKind.builder().rfcValue(componentEnum).build());
+            if (component != null) {
+                if (componentEnum != AddressComponentEnum.SEPARATOR) {
                     applySeparator = true;
-                    addressComponents.add(pair.getValue());
-                    if (defaultSeparator != null)
+                    addressComponents.add(component.getValue());
+                    /*
+                    if (isOrdered != null && isOrdered == Boolean.TRUE && defaultSeparator != null)
                         addressComponents.add(defaultSeparator);
                     else
-                        addressComponents.add(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-                } else if (pair.isSeparator()) {
+                        addressComponents.add(DelimiterUtils.SPACE_DELIMITER);
+                     */
+                    addressComponents.add(DelimiterUtils.SPACE_DELIMITER);
+                } else {
                     if (applySeparator)
-                        addressComponents.set(addressComponents.size() - 2, pair.getValue());
+                        addressComponents.set(addressComponents.size() - 2, component.getValue());
                 }
             }
         }
@@ -185,13 +189,15 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     @JsonIgnore
     public String getStreetAddress() {
 
-        return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.DISTRICT,
-                                                     AddressComponentEnum.SUBDISTRICT,
-                                                     AddressComponentEnum.BLOCK,
+        return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.NUMBER,
                                                      AddressComponentEnum.NAME,
-                                                     AddressComponentEnum.NUMBER,
+                                                     AddressComponentEnum.BUILDING,
+                                                     AddressComponentEnum.BLOCK,
                                                      AddressComponentEnum.DIRECTION,
-                                                     AddressComponentEnum.LANDMARK));
+                                                     AddressComponentEnum.LANDMARK,
+                                                    AddressComponentEnum.SUBDISTRICT,
+                                                    AddressComponentEnum.DISTRICT
+                ));
     }
 
     /**
@@ -202,10 +208,9 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     @JsonIgnore
     public String getStreetExtendedAddress() {
 
-        return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.BUILDING,
-                AddressComponentEnum.FLOOR,
+        return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.ROOM,
                 AddressComponentEnum.APARTMENT,
-                AddressComponentEnum.ROOM));
+                AddressComponentEnum.FLOOR));
     }
 
 
@@ -258,18 +263,24 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
         return extended;
     }
 
-
-    private String getComponentValue(AddressComponentKind componentKind) {
+    private AddressComponent getComponent(AddressComponentKind componentKind) {
 
         if (components == null)
             return null;
 
         for (AddressComponent component : components) {
             if (component.getKind().equals(componentKind))
-                return component.getValue();
+                return component;
         }
 
         return null;
+
+    }
+
+    private String getComponentValue(AddressComponentKind componentKind) {
+
+        AddressComponent component = getComponent(componentKind);
+        return (component != null) ? component.getValue() : null;
     }
 
     /**
