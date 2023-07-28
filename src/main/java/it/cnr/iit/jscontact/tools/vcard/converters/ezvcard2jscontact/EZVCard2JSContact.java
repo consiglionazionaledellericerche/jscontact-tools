@@ -28,6 +28,7 @@ import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
+import it.cnr.iit.jscontact.tools.dto.Nickname;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.comparators.JSCardAddressesComparator;
@@ -733,9 +734,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private NickName toJSCardNickName(String name, ezvcard.property.Nickname vcardNickname, VCard vcard) {
+    private Nickname toJSCardNickName(String name, ezvcard.property.Nickname vcardNickname, VCard vcard) {
 
-        return NickName.builder()
+        return Nickname.builder()
                 .name(name)
                 .pref(vcardNickname.getPref())
                 .contexts(toJSCardContexts(vcardNickname.getType()))
@@ -764,7 +765,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     lastMapId = id;
                 }
                 else {
-                    jsCard.addLocalization(vcardNickName.getLanguage(), "nickNames/" + lastMapId, mapper.convertValue(toJSCardNickName(name, vcardNickName, vcard), JsonNode.class));
+                    jsCard.addLocalization(vcardNickName.getLanguage(), "nicknames/" + lastMapId, mapper.convertValue(toJSCardNickName(name, vcardNickName, vcard), JsonNode.class));
                 }
             }
         }

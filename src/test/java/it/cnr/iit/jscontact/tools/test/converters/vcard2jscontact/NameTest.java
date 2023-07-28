@@ -75,8 +75,8 @@ public class NameTest extends VCard2JSContactTest {
         assertEquals("testName2 - 10", "Quinlan", jsCard.getName().getGiven2());
         assertTrue("testName2 - 11",jsCard.getName().getComponents()[4].isCredential());
         assertEquals("testName2 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
-        assertEquals("testName2 - 12", 1, jsCard.getNickNames().size());
-        assertEquals("testName2 - 13", "Johnny", jsCard.getNickNames().get("NICK-1").getName());
+        assertEquals("testName2 - 12", 1, jsCard.getNicknames().size());
+        assertEquals("testName2 - 13", "Johnny", jsCard.getNicknames().get("NICK-1").getName());
 
     }
 
@@ -104,10 +104,10 @@ public class NameTest extends VCard2JSContactTest {
         assertEquals("testName3 - 10", "Quinlan", jsCard.getName().getComponents()[2].getValue());
         assertTrue("testName3 - 11",jsCard.getName().getComponents()[4].isCredential());
         assertEquals("testName3 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
-        assertEquals("testName3 - 12", 2, jsCard.getNickNames().size());
-        assertEquals("testName3 - 13", "Johnny", jsCard.getNickNames().get("NICK-1").getName());
-        assertEquals("testName3 - 14", "Kid", jsCard.getNickNames().get("NICK-2").getName());
-        assertEquals("testName3 - 15", 1, jsCard.getNickNames().get("NICK-2").getPref().intValue());
+        assertEquals("testName3 - 12", 2, jsCard.getNicknames().size());
+        assertEquals("testName3 - 13", "Johnny", jsCard.getNicknames().get("NICK-1").getName());
+        assertEquals("testName3 - 14", "Kid", jsCard.getNicknames().get("NICK-2").getName());
+        assertEquals("testName3 - 15", 1, jsCard.getNicknames().get("NICK-2").getPref().intValue());
 
     }
 
@@ -137,11 +137,11 @@ public class NameTest extends VCard2JSContactTest {
         assertEquals("testName4 - 10", "Quinlan", jsCard.getName().getGiven2());
         assertTrue("testName4 - 11",jsCard.getName().getComponents()[4].isCredential());
         assertEquals("testName4 - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
-        assertEquals("testName4 - 12", 2, jsCard.getNickNames().size());
-        assertEquals("testName4 - 13", "Johnny", jsCard.getNickNames().get("NICK-1").getName());
-        assertEquals("testName4 - 14", "Kid", jsCard.getNickNames().get("NICK-2").getName());
-        assertEquals("testName4 - 15", "Giovannino", jsCard.getLocalization("it", "nickNames/NICK-1").get("name").asText());
-        assertEquals("testName4 - 16", "Ragazzo", jsCard.getLocalization("it", "nickNames/NICK-2").get("name").asText());
+        assertEquals("testName4 - 12", 2, jsCard.getNicknames().size());
+        assertEquals("testName4 - 13", "Johnny", jsCard.getNicknames().get("NICK-1").getName());
+        assertEquals("testName4 - 14", "Kid", jsCard.getNicknames().get("NICK-2").getName());
+        assertEquals("testName4 - 15", "Giovannino", jsCard.getLocalization("it", "nicknames/NICK-1").get("name").asText());
+        assertEquals("testName4 - 16", "Ragazzo", jsCard.getLocalization("it", "nicknames/NICK-2").get("name").asText());
 
     }
 

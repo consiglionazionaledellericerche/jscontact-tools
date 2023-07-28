@@ -78,9 +78,9 @@ public class DeserializationTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"name\": { \"full\": \"test\"}," +
-                "\"nickNames\": { " +
-                    "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\", \"ext3\":\"text\"  }, " +
-                    "\"NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Joe\" } " +
+                "\"nicknames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"Nickname\", \"name\": \"Johnny\", \"ext3\":\"text\"  }, " +
+                    "\"NICK-2\" : {  \"@type\":\"Nickname\", \"name\": \"Joe\" } " +
                 "}," +
                 "\"language\":\"en\"," +
                 "\"ext1\": 10," +
@@ -113,7 +113,7 @@ public class DeserializationTest {
         jsCard.buildAllExtensionsMap(allExtensionsMap, "");
         assertEquals("testDeserialization5 - 5", 5, allExtensionsMap.size());
         assertTrue("testDeserialization5 - 6", allExtensionsMap.containsKey("addresses/ADR-1/components/0/ext4"));
-        assertTrue("testDeserialization5 - 7", allExtensionsMap.containsKey("nickNames/NICK-1/ext3"));
+        assertTrue("testDeserialization5 - 7", allExtensionsMap.containsKey("nicknames/NICK-1/ext3"));
         assertTrue("testDeserialization5 - 8", allExtensionsMap.containsKey("addresses/ADR-1/ext2"));
         assertTrue("testDeserialization5 - 9", allExtensionsMap.containsKey("preferredLanguages/LANG-1/ext6"));
         assertTrue("testDeserialization5 - 10", allExtensionsMap.containsKey("ext1"));

@@ -54,9 +54,9 @@ public class PronounceTest extends JSContact2VCardTest {
                     "], " +
                     "\"sortAs\": { \"surname\":\"Smith\",\"given\":\"John\" }" +
                 "}, " +
-                "\"nickNames\": { " +
-                    "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +
-                    "\"NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Joe\" } " +
+                "\"nicknames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"Nickname\",\"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"Nickname\",\"name\": \"Joe\" } " +
                 "}" +
         "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);

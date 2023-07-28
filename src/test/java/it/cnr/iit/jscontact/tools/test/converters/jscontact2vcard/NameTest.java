@@ -45,9 +45,9 @@ public class NameTest extends JSContact2VCardTest {
                     "], " +
                     "\"sortAs\": { \"surname\":\"Public\",\"given\":\"John\" }" +
                 "}, " +
-                "\"nickNames\": { " +
-                    "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +
-                    "\"NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Joe\" } " +
+                "\"nicknames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"Nickname\",\"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"Nickname\",\"name\": \"Joe\" } " +
                 "}" +
         "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -87,14 +87,14 @@ public class NameTest extends JSContact2VCardTest {
                         "{ \"value\":\"Esq.\", \"kind\": \"credential\" }" +
                     "] " +
                 "}, " +
-                "\"nickNames\": { " +
-                    "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\" }, " +
-                    "\"NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Joe\" } " +
+                "\"nicknames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"Nickname\", \"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"Nickname\", \"name\": \"Joe\" } " +
                 "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                        "\"nickNames/NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Giovannino\" }, " +
-                        "\"nickNames/NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Giò\" } " +
+                        "\"nicknames/NICK-1\" : {  \"@type\":\"Nickname\", \"name\": \"Giovannino\" }, " +
+                        "\"nicknames/NICK-2\" : {  \"@type\":\"Nickname\", \"name\": \"Giò\" } " +
                     "}" +
                 "}" +
                 "}";

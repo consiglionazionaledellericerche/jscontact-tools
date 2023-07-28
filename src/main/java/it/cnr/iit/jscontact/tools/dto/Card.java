@@ -55,7 +55,7 @@ import java.util.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "@type", "@version", "created", "kind", "language", "members", "prodId", "relatedTo", "uid", "updated",
-        "name", "nickNames", "organizations", "speakToAs", "titles",
+        "name", "nicknames", "organizations", "speakToAs", "titles",
         "emails", "onlineServices", "phones", "preferredLanguages",
         "calendars", "schedulingAddresses",
         "addresses",
@@ -139,11 +139,11 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     Name name;
 
     // Section 2.2.3 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addNickName", itemClass = NickName.class)
+    @JSContactCollection(addMethod = "addNickName", itemClass = Nickname.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,NickName>")
-    Map<String, NickName> nickNames;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Nickname>")
+    Map<String, Nickname> nicknames;
 
     // Section 2.2.4 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addOrganization", itemClass = Organization.class)
@@ -363,14 +363,14 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * Adds a nickname to this object.
      *
      * @param id the nickname identifier
-     * @param nickName the object representing the nickname
+     * @param nickname the object representing the nickname
      */
-    public void addNickName(String id, NickName nickName) {
+    public void addNickName(String id, Nickname nickname) {
 
-        if(nickNames == null)
-            nickNames = new HashMap<>();
+        if(nicknames == null)
+            nicknames = new HashMap<>();
 
-        nickNames.putIfAbsent(id,nickName);
+        nicknames.putIfAbsent(id,nickname);
     }
     /**
      * Adds an organization to this object.

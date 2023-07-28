@@ -14,6 +14,7 @@ import ezvcard.util.PartialDate;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
+import it.cnr.iit.jscontact.tools.dto.Nickname;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.Organization;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
@@ -502,7 +503,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     }
 
 
-    private static ezvcard.property.Nickname toVCardNickname(NickName jsNickName) {
+    private static ezvcard.property.Nickname toVCardNickname(Nickname jsNickName) {
 
         ezvcard.property.Nickname nickname = new ezvcard.property.Nickname();
         nickname.getValues().add(jsNickName.getName());
@@ -515,23 +516,23 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private void fillVCardNickNames(VCard vcard, Card jsCard) {
 
-        if (jsCard.getNickNames() == null)
+        if (jsCard.getNicknames() == null)
             return;
 
-        for (Map.Entry<String,NickName> entry : jsCard.getNickNames().entrySet()) {
-            if (jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()) == null &&
-                    jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name")==null) {
-                Nickname nickname = toVCardNickname(entry.getValue());
+        for (Map.Entry<String, Nickname> entry : jsCard.getNicknames().entrySet()) {
+            if (jsCard.getLocalizationsPerPath("nicknames/"+entry.getKey()) == null &&
+                    jsCard.getLocalizationsPerPath("nicknames/"+entry.getKey()+"/name")==null) {
+                ezvcard.property.Nickname nickname = toVCardNickname(entry.getValue());
                 addVCardPropIdParam(nickname, entry.getKey());
                 vcard.addNickname(nickname);
             }
             else {
                 List<ezvcard.property.Nickname> nicknames = new ArrayList<>();
-                Nickname nickname = toVCardNickname(entry.getValue());
+                ezvcard.property.Nickname nickname = toVCardNickname(entry.getValue());
                 addVCardPropIdParam(nickname, entry.getKey());
                 nicknames.add(nickname);
 
-                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey());
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("nicknames/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
                         nickname = toVCardNickname(asJSCardNickName(localization.getValue()));
@@ -539,7 +540,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         nicknames.add(nickname);
                     }
                 }
-                localizations = jsCard.getLocalizationsPerPath("nickNames/"+entry.getKey()+"/name");
+                localizations = jsCard.getLocalizationsPerPath("nicknames/"+entry.getKey()+"/name");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
                         nickname = new ezvcard.property.Nickname();
@@ -749,8 +750,8 @@ public class JSContact2EZVCard extends AbstractConverter {
         return (Title) asJSCardTypeObject(jsonNode, Title.class);
     }
 
-    private static NickName asJSCardNickName(JsonNode jsonNode) {
-        return (NickName) asJSCardTypeObject(jsonNode, NickName.class);
+    private static Nickname asJSCardNickName(JsonNode jsonNode) {
+        return (Nickname) asJSCardTypeObject(jsonNode, Nickname.class);
     }
 
     private static Organization asJSCardOrganization(JsonNode jsonNode) {
