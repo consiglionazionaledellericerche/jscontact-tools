@@ -15,13 +15,12 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.util.GeoUri;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -456,7 +455,7 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(Ezvcard.write(vcard).register(new ExtendedAddressScribe()).go());
+        System.out.println(VCardWriter.write(vcard));
         /*
         assertEquals("testAddresses10 - 1", 2, vcard.getProperties(ExtendedAddress.class).size());
         assertEquals("testAddresses10 - 2", "US", vcard.getProperties(ExtendedAddress.class).get(0).getParameter("CC"));

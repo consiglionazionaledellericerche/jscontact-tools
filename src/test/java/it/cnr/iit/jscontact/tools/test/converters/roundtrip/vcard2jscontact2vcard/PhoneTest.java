@@ -15,11 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -38,7 +38,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone1 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));    }
+        assertEquals("testPhone1 - 1", vcard2, VCardParser.parse(vcard).get(0));    }
 
     @Test
     public void testPhone2() throws CardException {
@@ -53,7 +53,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone2 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPhone2 - 1", vcard2, VCardParser.parse(vcard).get(0));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone3 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPhone3 - 1", vcard2, VCardParser.parse(vcard).get(0));
 
     }
 
@@ -84,7 +84,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone4 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPhone4 - 1", vcard2, VCardParser.parse(vcard).get(0));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone5 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPhone5 - 1", vcard2, VCardParser.parse(vcard).get(0));
 
     }
 
@@ -115,7 +115,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone6 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPhone6 - 1", vcard2, VCardParser.parse(vcard).get(0));
 
     }
 
@@ -132,7 +132,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone7 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPhone7 - 1", vcard2, VCardParser.parse(vcard).get(0));
 
     }
 
@@ -148,7 +148,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone8 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPhone8 - 1", vcard2, VCardParser.parse(vcard).get(0));
 
     }
 
@@ -164,7 +164,7 @@ public class PhoneTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPhone9 - 1", vcard2, (Ezvcard.parse(vcard).all()).get(0));
+        assertEquals("testPhone9 - 1", vcard2, VCardParser.parse(vcard).get(0));
 
     }
 

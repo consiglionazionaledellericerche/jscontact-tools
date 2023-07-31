@@ -290,7 +290,7 @@ public class NameTest extends JSContact2VCardTest {
                 "} ";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testName6 - 1", "Jane Doe", vcard.getFormattedName().getValue());
-        assertEquals("testName6 - 2", true, Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
+        assertTrue("testName6 - 2", Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
         assertEquals("testName6 - 3", "Doe", vcard.getProperty(ExtendedStructuredName.class).getFamily());
         assertEquals("testName6 - 4", "Jane", vcard.getProperty(ExtendedStructuredName.class).getGiven());
         assertEquals("testName6 - 5", ";1;0", vcard.getProperty(ExtendedStructuredName.class).getParameter(VCardParamEnum.JSCOMPS.getValue()));
@@ -319,7 +319,7 @@ public class NameTest extends JSContact2VCardTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testName7 - 1", "John Philip Paul Stevenson Jr. M.D.", vcard.getFormattedName().getValue());
-        assertEquals("testName7 - 2", true, Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
+        assertTrue("testName7 - 2", Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
         assertEquals("testName7 - 3", "Stevenson", vcard.getProperty(ExtendedStructuredName.class).getFamily());
         assertEquals("testName7 - 4", "John", vcard.getProperty(ExtendedStructuredName.class).getGiven());
         assertEquals("testName7 - 5", "Philip", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(0));
@@ -354,7 +354,7 @@ public class NameTest extends JSContact2VCardTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testName8 - 1", "John Philip Paul Stevenson Loffredo Jr. M.D.", vcard.getFormattedName().getValue());
-        assertEquals("testName8 - 2", true, Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
+        assertTrue("testName8 - 2", Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
         assertEquals("testName8 - 3", "Stevenson,Loffredo", vcard.getProperty(ExtendedStructuredName.class).getFamily());
         assertEquals("testName8 - 4", "John", vcard.getProperty(ExtendedStructuredName.class).getGiven());
         assertEquals("testName8 - 5", "Philip", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(0));
@@ -391,7 +391,7 @@ public class NameTest extends JSContact2VCardTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testName9 - 1", "John Philip Paul Stevenson-Loffredo Jr. M.D.", vcard.getFormattedName().getValue());
-        assertEquals("testName9 - 2", true, Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
+        assertTrue("testName9 - 2", Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
         assertEquals("testName9 - 3", "Stevenson,Loffredo", vcard.getProperty(ExtendedStructuredName.class).getFamily());
         assertEquals("testName9 - 4", "John", vcard.getProperty(ExtendedStructuredName.class).getGiven());
         assertEquals("testName9 - 5", "Philip", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(0));

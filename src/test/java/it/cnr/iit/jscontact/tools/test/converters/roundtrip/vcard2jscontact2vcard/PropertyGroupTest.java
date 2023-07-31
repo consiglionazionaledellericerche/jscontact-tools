@@ -15,13 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -41,7 +39,7 @@ public class PropertyGroupTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPropertyGroup1 - 1", vcard2, (Ezvcard.parse(vcard).register(new ExtendedAddressScribe()).register(new ExtendedStructuredNameScribe()).all()).get(0));
+        assertEquals("testPropertyGroup1 - 1", vcard2, VCardParser.parse(vcard).get(0));
 
     }
 

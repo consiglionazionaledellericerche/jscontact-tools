@@ -803,9 +803,7 @@ public class ExtendedAddress extends VCardProperty implements HasAltId {
 		if (!subDistricts.equals(other.subDistricts)) return false;
 		if (!districts.equals(other.districts)) return false;
 		if (!landmarks.equals(other.landmarks)) return false;
-		if (!directions.equals(other.directions)) return false;
-
-		return true;
+		return directions.equals(other.directions);
 	}
 
 

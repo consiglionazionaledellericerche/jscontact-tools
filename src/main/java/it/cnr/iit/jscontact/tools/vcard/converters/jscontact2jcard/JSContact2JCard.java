@@ -17,14 +17,12 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jscontact2jcard;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2ezvcard.JSContact2EZVCard;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import lombok.Builder;
 
 import java.util.List;
@@ -58,10 +56,7 @@ public class JSContact2JCard extends JSContact2EZVCard {
     public String convertToJson(Card... jsCards) throws CardException {
 
         List<VCard> vcards = convert(jsCards);
-        return Ezvcard.writeJson(vcards)
-                      .register(new ExtendedAddressScribe())
-                      .register(new ExtendedStructuredNameScribe())
-                      .go();
+        return VCardWriter.writeJson(vcards);
     }
 
 

@@ -255,8 +255,7 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 		if (!prefixes.equals(other.prefixes)) return false;
 		if (!suffixes.equals(other.suffixes)) return false;
 		if (!surname2.equals(other.surname2)) return false;
-		if (!generation.equals(other.generation)) return false;
-		return true;
+		return generation.equals(other.generation);
 	}
 
 	public boolean equalsStructuredName(StructuredName sn) {
@@ -272,7 +271,6 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 			if (sn.getGiven() != null) return false;
 		} else if (!given.equals(sn.getGiven())) return false;
 		if (!prefixes.equals(sn.getPrefixes())) return false;
-		if (!suffixes.equals(sn.getSuffixes())) return false;
-		return true;
+		return suffixes.equals(sn.getSuffixes());
 	}
 }

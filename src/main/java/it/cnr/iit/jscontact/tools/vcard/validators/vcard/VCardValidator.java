@@ -15,11 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.vcard.validators.vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
 import it.cnr.iit.jscontact.tools.vcard.validators.ezvcard.EZVCardValidator;
 import lombok.Builder;
 
@@ -43,10 +41,7 @@ public class VCardValidator extends EZVCardValidator {
      */
     public void validate(String vCard) throws CardException {
 
-        List<VCard> vcards = Ezvcard.parse(vCard)
-                                    .register(new ExtendedAddressScribe())
-                                    .register(new ExtendedStructuredNameScribe())
-                                    .all();
+        List<VCard> vcards = VCardParser.parse(vCard);
         validate(vcards);
     }
 

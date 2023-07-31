@@ -48,9 +48,6 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 public class JSContact2EZVCard extends AbstractConverter {
 
-    private static int EXTENDED_ADDRESS_COMPONENTS_NUM = 17;
-    private static int EXTENDED_NAME_COMPONENTS_NUM = 7;
-
     protected JSContact2VCardConfig config;
 
     private void addVCardX_ABLabel(HasLabel jsContactType, VCardProperty vcardProperty, VCard vcard) {
@@ -347,7 +344,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             languages.addAll(jsCard.getLocalizationsPerPath("name/phoneticScript").keySet());
         }
 
-        for (int i=0; i<=EXTENDED_NAME_COMPONENTS_NUM; i++) {
+        for (int i=0; i<= NameComponentEnum.values().length; i++) {
             String key = String.format("name/components/%d/phonetic", i);
             if (jsCard.getLocalizationsPerPath(key) != null) {
                 languages.removeAll(jsCard.getLocalizationsPerPath(key).keySet());
@@ -362,7 +359,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
 
         List components = new ArrayList<NameComponent>();
-        for (int i=0; i<=EXTENDED_NAME_COMPONENTS_NUM; i++) {
+        for (int i=0; i<= NameComponentEnum.values().length; i++) {
             String key = String.format("name/components/%d/phonetic", i);
             if (jsCard.getLocalization(language,key) != null) {
                 components.add(NameComponent.builder()

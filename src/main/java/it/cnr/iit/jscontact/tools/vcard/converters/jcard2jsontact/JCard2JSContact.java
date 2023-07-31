@@ -17,14 +17,12 @@ package it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
 import lombok.Builder;
 
 import java.util.*;
@@ -57,10 +55,7 @@ public class JCard2JSContact extends EZVCard2JSContact {
      */
     public List<Card> convert(String jCard) throws CardException {
 
-        List<VCard> vcards = Ezvcard.parseJson(jCard)
-                                    .register(new ExtendedAddressScribe())
-                                    .register(new ExtendedStructuredNameScribe())
-                                    .all();
+        List<VCard> vcards = VCardParser.parseJson(jCard);
         if (vcards.size() == 0)
             throw new CardException("Bad jCard format");
         return convert(vcards.toArray(new VCard[0]));
