@@ -664,7 +664,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return Name.builder()
                 .components(components)
                 .sortAs(toJSCardNameSortAs(vcardName.getSortAs(), vcardName))
-                .defaultSeparator((ArrayUtils.isNotEmpty(jscomps) && jscomps[0].startsWith(DelimiterUtils.SEPARATOR_ID)) ? jscomps[0].replace(DelimiterUtils.SEPARATOR_ID,StringUtils.EMPTY) : null)
+                .defaultSeparator((ArrayUtils.isNotEmpty(jscomps) && jscomps[0].startsWith(DelimiterUtils.SEPARATOR_ID)) ? jscomps[0].replace(DelimiterUtils.SEPARATOR_ID + "\\",StringUtils.EMPTY).replace(DelimiterUtils.SEPARATOR_ID,StringUtils.EMPTY) : null)
                 .isOrdered((jscomps!=null) ? Boolean.TRUE : null)
                 .phoneticSystem(phoneticSystem)
                 .phoneticScript(vcardName.getParameter(VCardParamEnum.SCRIPT.getValue()))
@@ -796,7 +796,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return vcardTzParam;
     }
 
-    private Address toJSCardAddress(ExtendedAddress vcardAddr, VCard vcard) {
+    private Address toJSCardAddress(ExtendedAddress vcardAddr) {
 
         List<AddressComponent> streetDetailPairs = new ArrayList<>();
 
@@ -848,12 +848,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
             for (int i = 1; i < jscomps.length; i++) {
 
-                String[] items = jscomps[i].split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-
-                if (items[i].startsWith(DelimiterUtils.SEPARATOR_ID)) {
-                    streetDetailPairs.add(AddressComponent.separator(items[i].replace(DelimiterUtils.SEPARATOR_ID, StringUtils.EMPTY)));
+                if (jscomps[i].startsWith(DelimiterUtils.SEPARATOR_ID)) {
+                    streetDetailPairs.add(AddressComponent.separator(jscomps[i].replace(DelimiterUtils.SEPARATOR_ID, StringUtils.EMPTY)));
                     continue;
                 }
+
+                String[] items = jscomps[i].split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
 
                 int index1 = Integer.parseInt(items[0]);
                 int index2 = (items.length == 1) ? 0 : Integer.parseInt(items[1]);
@@ -945,7 +945,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .altid(vcardAddr.getAltId())
                 .group(vcardAddr.getGroup())
                 .language(vcardAddr.getLanguage())
-                .defaultSeparator((ArrayUtils.isNotEmpty(jscomps) && jscomps[0].startsWith(DelimiterUtils.SEPARATOR_ID)) ? jscomps[0].replace(DelimiterUtils.SEPARATOR_ID,StringUtils.EMPTY) : null)
+                .defaultSeparator((ArrayUtils.isNotEmpty(jscomps) && jscomps[0].startsWith(DelimiterUtils.SEPARATOR_ID)) ? jscomps[0].replace(DelimiterUtils.SEPARATOR_ID + "\\",StringUtils.EMPTY).replace(DelimiterUtils.SEPARATOR_ID,StringUtils.EMPTY) : null)
                 .isOrdered((jscomps!=null) ? Boolean.TRUE : null)
                 .propId(vcardAddr.getParameter(VCardParamEnum.PROP_ID.getValue()))
                 .phoneticSystem(phoneticSystem)
@@ -963,7 +963,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         String tz;
         String geo;
         for (ExtendedAddress addr : vcard.getProperties(ExtendedAddress.class))
-            addresses.add(toJSCardAddress(addr, vcard));
+            addresses.add(toJSCardAddress(addr));
 
         if (vcard.getTimezone() != null) {
             tz = getValue(vcard.getTimezone());

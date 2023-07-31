@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
@@ -385,6 +386,33 @@ public class AddressesTest extends VCard2JSContactTest {
         assertEquals("testAddresses13 - 15", "Via Moruzzi,1", jsCard.getAddresses().get("ADR-2").getStreetName());
         assertEquals("testAddresses13 - 16", "Via Moruzzi,1\nPisa\n56124\nItaly", jsCard.getAddresses().get("ADR-2").getFull());
         assertNotNull("testAddresses13 - 17", jsCard.getLocalization("en", "addresses/ADR-2"));
+
+    }
+
+
+    @Test
+    public void testAddresses14() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ADR;JSCOMPS=\"s,\\,;11;s, ;10;3\";LANGUAGE=en;PROP-ID=ADR-1:;;54321 Oak St;Reston;;;;;;;54321;Oak St;;;;;;\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testAddresses14 - 1", jsCard.getAddresses());
+        assertEquals("testAddresses14 - 2", 1, jsCard.getAddresses().size());
+        assertEquals("testAddresses14 - 3", Boolean.TRUE, jsCard.getAddresses().get("ADR-1").getIsOrdered());
+        assertEquals("testAddresses14 - 4", DelimiterUtils.COMMA_ARRAY_DELIMITER, jsCard.getAddresses().get("ADR-1").getDefaultSeparator());
+        assertEquals("testAddresses14 - 5", 4, jsCard.getAddresses().get("ADR-1").getComponents().length);
+        assertTrue("testAddresses14 - 6", jsCard.getAddresses().get("ADR-1").getComponents()[0].isNumber());
+        assertEquals("testAddresses14 - 7", "54321", jsCard.getAddresses().get("ADR-1").getComponents()[0].getValue());
+        assertTrue("testAddresses14 - 8", jsCard.getAddresses().get("ADR-1").getComponents()[1].isSeparator());
+        assertEquals("testAddresses14 - 9", DelimiterUtils.SPACE_DELIMITER, jsCard.getAddresses().get("ADR-1").getComponents()[1].getValue());
+        assertTrue("testAddresses14 - 10", jsCard.getAddresses().get("ADR-1").getComponents()[2].isName());
+        assertEquals("testAddresses14 - 11", "Oak St", jsCard.getAddresses().get("ADR-1").getComponents()[2].getValue());
+        assertTrue("testAddresses14 - 12", jsCard.getAddresses().get("ADR-1").getComponents()[3].isLocality());
+        assertEquals("testAddresses14 - 13", "Reston", jsCard.getAddresses().get("ADR-1").getComponents()[3].getValue());
 
     }
 }
