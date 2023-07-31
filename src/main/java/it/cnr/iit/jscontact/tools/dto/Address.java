@@ -191,7 +191,6 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
 
         return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.NUMBER,
                                                      AddressComponentEnum.NAME,
-                                                     AddressComponentEnum.BUILDING,
                                                      AddressComponentEnum.BLOCK,
                                                      AddressComponentEnum.DIRECTION,
                                                      AddressComponentEnum.LANDMARK,
@@ -210,7 +209,8 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
 
         return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.ROOM,
                 AddressComponentEnum.APARTMENT,
-                AddressComponentEnum.FLOOR));
+                AddressComponentEnum.FLOOR,
+                AddressComponentEnum.BUILDING));
     }
 
 
