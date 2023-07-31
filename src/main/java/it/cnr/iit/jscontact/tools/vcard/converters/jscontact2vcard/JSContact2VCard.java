@@ -52,7 +52,7 @@ public class JSContact2VCard extends JSContact2EZVCard {
     public String convertToText(Card... jsCards) throws CardException {
 
         List<VCard> vcards = convert(jsCards);
-        return VCardWriter.write();
+        return VCardWriter.write(vcards);
     }
 
 
