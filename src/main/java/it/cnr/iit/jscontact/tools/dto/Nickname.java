@@ -18,9 +18,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Nickname type as defined in section 2.2.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the Nickname type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","name","contexts","pref","label"})

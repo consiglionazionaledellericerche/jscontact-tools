@@ -30,10 +30,10 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the NameComponent type as defined in section 2.2.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the NameComponent type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  */
 @JsonPropertyOrder({"@type", "value", "kind", "phonetic"})
 @JsonInclude(JsonInclude.Include.NON_NULL)

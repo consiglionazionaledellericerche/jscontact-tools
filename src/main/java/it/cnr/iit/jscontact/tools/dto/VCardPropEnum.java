@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-5">https://www.rfc-editor.org/rfc/rfc6350</a>
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions">draft-ietf-calext-vcard-jscontact-extensions</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions#section-3">draft-ietf-calext-vcard-jscontact-extensions</a>
  */
 @AllArgsConstructor
 public enum VCardPropEnum {
