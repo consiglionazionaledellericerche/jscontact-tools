@@ -33,7 +33,7 @@ public class OrganizationsTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"organizations\": {" +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
@@ -68,7 +68,7 @@ public class OrganizationsTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"organizations\":{ " +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
@@ -107,7 +107,7 @@ public class OrganizationsTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"organizations\": {" +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +
@@ -151,7 +151,7 @@ public class OrganizationsTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"organizations\": {" +
                     "\"ORG-1\": {" +
                         "\"@type\":\"Organization\"," +

@@ -21,10 +21,10 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "kind" property of the NameComponent type as defined in section 2.2.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the NameComponent type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  */
 @Getter
 @Setter
@@ -41,11 +41,11 @@ public class NameComponentKind extends ExtensibleEnumType<NameComponentEnum> imp
      */
     public static NameComponentKind rfc(NameComponentEnum rfcValue) { return NameComponentKind.builder().rfcValue(rfcValue).build();}
     /**
-     * Returns a "prefix" name component type.
+     * Returns a "title" name component type.
      *
-     * @return a "prefix" name component type
+     * @return a "title" name component type
      */
-    public static NameComponentKind prefix() { return rfc(NameComponentEnum.PREFIX);}
+    public static NameComponentKind title() { return rfc(NameComponentEnum.TITLE);}
     /**
      * Returns a "given" name component type.
      *
@@ -59,11 +59,17 @@ public class NameComponentKind extends ExtensibleEnumType<NameComponentEnum> imp
      */
     public static NameComponentKind surname() { return rfc(NameComponentEnum.SURNAME);}
     /**
-     * Returns a "middle" name component type.
+     * Returns a "surname2" name component type.
      *
-     * @return a "middle" name component type
+     * @return a "surname2" name component type
      */
-    public static NameComponentKind middle() { return rfc(NameComponentEnum.MIDDLE);}
+    public static NameComponentKind surname2() { return rfc(NameComponentEnum.SURNAME2);}
+    /**
+     * Returns a "given2" name component type.
+     *
+     * @return a "given2" name component type
+     */
+    public static NameComponentKind given2() { return rfc(NameComponentEnum.GIVEN2);}
     /**
      * Returns a "separator" name component type.
      *
@@ -71,10 +77,16 @@ public class NameComponentKind extends ExtensibleEnumType<NameComponentEnum> imp
      */
     public static NameComponentKind separator() { return rfc(NameComponentEnum.SEPARATOR);}
     /**
-     * Returns a "suffix" name component type.
+     * Returns a "credential" name component type.
      *
-     * @return a "suffix" name component type
+     * @return a "credential" name component type
      */
-    public static NameComponentKind suffix() { return rfc(NameComponentEnum.SUFFIX);}
+    public static NameComponentKind credential() { return rfc(NameComponentEnum.CREDENTIAL);}
+    /**
+     * Returns a "generation" name component type.
+     *
+     * @return a "generation" name component type
+     */
+    public static NameComponentKind generation() { return rfc(NameComponentEnum.GENERATION);}
 
 }

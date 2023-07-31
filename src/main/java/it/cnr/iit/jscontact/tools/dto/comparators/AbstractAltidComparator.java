@@ -15,7 +15,7 @@ public abstract class AbstractAltidComparator {
 
         if (altid1 == null && altid2 == null)
             return 0;
-        else if (altid1 == null && altid2 != null)
+        else if (altid1 == null)
             return -1;
         else if (altid2 == null)
             return 1;
@@ -29,7 +29,7 @@ public abstract class AbstractAltidComparator {
 
                 if (language1 == null && language2 == null)
                     return 0;
-                else if (language1 == null && language2 != null)
+                else if (language1 == null)
                     return -1;
                 else if (language2 == null)
                     return 1;

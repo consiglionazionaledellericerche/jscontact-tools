@@ -19,10 +19,10 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the VCard parameters as defined in section 5 of [RFC6350] and section 3 of [draft-ietf-calext-vcard-jscontact-extensions] .
+ * Enum class mapping the VCard parameters as defined in section 5 of [RFC6350] and section 4 of [draft-ietf-calext-vcard-jscontact-extensions] .
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-5">https://www.rfc-editor.org/rfc/rfc6350</a>
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions">draft-ietf-calext-vcard-jscontact-extensions</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions#section-4">draft-ietf-calext-vcard-jscontact-extensions</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
@@ -35,6 +35,7 @@ public enum VCardParamEnum  {
     PID("PID"),
     LEVEL("LEVEL"),
     CC("CC"),
+    ISO_3166_1_ALPHA_2 ("ISO-3166-1-alpha-2"),
     GROUP("GROUP"),
     TYPE("TYPE"),
     PREF("PREF"),
@@ -48,8 +49,10 @@ public enum VCardParamEnum  {
     AUTHOR("AUTHOR"),
     AUTHOR_NAME("AUTHOR-NAME"),
     CREATED("CREATED"),
-    RANKS("RANKS"),
     JSPTR("JSPTR"),
+    JSCOMPS("JSCOMPS"),
+    PHONETIC("PHONETIC"),
+    SCRIPT("SCRIPT"),
     SERVICE_TYPE("SERVICE-TYPE"),
     USERNAME("USERNAME"),
     VALUE("VALUE");

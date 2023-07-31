@@ -28,8 +28,8 @@ public class ExtensionsTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"jscontact-prop\",{\"jsptr\":\"extension:myext1\"},\"text\",\"\\\"extvalue\\\"\"]," +
-                "[\"jscontact-prop\",{\"jsptr\":\"extension:myext2\"},\"text\",\"{\\\"extprop\\\":\\\"extvalue\\\"}\"]" +
+                "[\"jsprop\",{\"jsptr\":\"extension:myext1\"},\"text\",\"\\\"extvalue\\\"\"]," +
+                "[\"jsprop\",{\"jsptr\":\"extension:myext2\"},\"text\",\"{\\\"extprop\\\":\\\"extvalue\\\"}\"]" +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testExtendedJSContact1 - 1", 2, jsCard.getExtensions().size());
@@ -48,23 +48,23 @@ public class ExtensionsTest extends JCard2JSContactTest {
                 "[\"lang\",{\"pref\":\"1\"},\"language-tag\",\"jp\"],"+
                 "[\"lang\",{\"pref\":\"2\"},\"language-tag\",\"en\"],"+
                 "[\"language\",{},\"language-tag\",\"en\"],"+
-                "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/street/0/ext4\"},\"text\",\"true\"],"+
-                "[\"jscontact-prop\",{\"jsptr\":\"nickNames/NICK-1/ext3\"},\"text\",\"\\\"text\\\"\"],"+
-                "[\"jscontact-prop\",{\"jsptr\":\"addresses/ADR-1/ext2\"},\"text\",\"{\\\"prop\\\":10}\"],"+
-                "[\"jscontact-prop\",{\"jsptr\":\"preferredLanguages/jp/0/ext6\"},\"text\",\"[\\\"1\\\",\\\"2\\\"]\"],"+
-                "[\"jscontact-prop\",{\"jsptr\":\"ext1\"},\"text\",\"10\"]"+
+                "[\"jsprop\",{\"jsptr\":\"addresses/ADR-1/components/0/ext4\"},\"text\",\"true\"],"+
+                "[\"jsprop\",{\"jsptr\":\"nicknames/NICK-1/ext3\"},\"text\",\"\\\"text\\\"\"],"+
+                "[\"jsprop\",{\"jsptr\":\"addresses/ADR-1/ext2\"},\"text\",\"{\\\"prop\\\":10}\"],"+
+                "[\"jsprop\",{\"jsptr\":\"preferredLanguages/LANG-1/ext6\"},\"text\",\"[\\\"1\\\",\\\"2\\\"]\"],"+
+                "[\"jsprop\",{\"jsptr\":\"ext1\"},\"text\",\"10\"]"+
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testExtendedJSContact2 - 1", 1, jsCard.getExtensions().size());
         assertEquals("testExtendedJSContact2 - 2", 10, jsCard.getExtensions().get("ext1"));
-        assertEquals("testExtendedJSContact2 - 3", 1, jsCard.getNickNames().get("NICK-1").getExtensions().size());
-        assertEquals("testExtendedJSContact2 - 4", "text", jsCard.getNickNames().get("NICK-1").getExtensions().get("ext3"));
-        assertEquals("testExtendedJSContact2 - 5", 1, jsCard.getPreferredLanguages().get("jp")[0].getExtensions().size());
-        assertEquals("testExtendedJSContact2 - 6", "[1, 2]", jsCard.getPreferredLanguages().get("jp")[0].getExtensions().get("ext6").toString());
+        assertEquals("testExtendedJSContact2 - 3", 1, jsCard.getNicknames().get("NICK-1").getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 4", "text", jsCard.getNicknames().get("NICK-1").getExtensions().get("ext3"));
+        assertEquals("testExtendedJSContact2 - 5", 1, jsCard.getPreferredLanguages().get("LANG-1").getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 6", "[1, 2]", jsCard.getPreferredLanguages().get("LANG-1").getExtensions().get("ext6").toString());
         assertEquals("testExtendedJSContact2 - 7", 1, jsCard.getAddresses().get("ADR-1").getExtensions().size());
         assertEquals("testExtendedJSContact2 - 8", "{prop=10}", jsCard.getAddresses().get("ADR-1").getExtensions().get("ext2").toString());
-        assertEquals("testExtendedJSContact2 - 9", 1, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().size());
-        assertEquals("testExtendedJSContact2 - 10", true, jsCard.getAddresses().get("ADR-1").getStreet()[0].getExtensions().get("ext4"));
+        assertEquals("testExtendedJSContact2 - 9", 1, jsCard.getAddresses().get("ADR-1").getComponents()[0].getExtensions().size());
+        assertEquals("testExtendedJSContact2 - 10", true, jsCard.getAddresses().get("ADR-1").getComponents()[0].getExtensions().get("ext4"));
     }
 
 

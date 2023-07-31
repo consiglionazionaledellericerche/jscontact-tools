@@ -22,29 +22,17 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the StreetComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the "system" values of the Pronounce type as defined in section 1.5.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.5.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum StreetComponentEnum implements IsExtensibleEnum {
+public enum PhoneticSystemEnum implements IsExtensibleEnum {
 
-    DISTRICT("district"),
-    BLOCK("block"),
-
-    NAME("name"),
-    NUMBER("number"),
-    DIRECTION("direction"),
-    BUILDING("building"),
-    FLOOR("floor"),
-    APARTMENT("apartment"),
-    ROOM("room"),
-    LANDMARK("landmark"),
-
-    EXTENSION("extension"),
-    POST_OFFICE_BOX("postOfficeBox"),
-    SEPARATOR("separator");
+    IPA("ipa"),
+    PINY("piny"),
+    JYUT("jyut");
 
     private final String value;
 
@@ -54,14 +42,15 @@ public enum StreetComponentEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static StreetComponentEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(StreetComponentEnum.class, value);
+    public static PhoneticSystemEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(PhoneticSystemEnum.class, value);
     }
 
     @Override
     public String toString() {
         return value;
     }
+
 
 }
 

@@ -21,39 +21,45 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
-import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
+import it.cnr.iit.jscontact.tools.constraints.LanguageTagConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the LanguagePref type as defined in section 2.3.5 of [draft-ietf-calext-jscontact].
+ * Class mapping the LanguagePref type as defined in section 2.3.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.5">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","contexts","pref"})
+@JsonPropertyOrder({"@type","langiage", "contexts","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NotNullAnyConstraint(fieldNames={"contexts","pref"}, message = "at least one not null member other than @type is missing in LanguagePref")
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class LanguagePref extends AbstractJSContactType implements Serializable, HasContexts {
+public class LanguagePref extends AbstractJSContactType implements IdMapValue, Serializable, HasContexts {
 
     @Pattern(regexp = "LanguagePref", message="invalid @type value in LanguagePref")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "LanguagePref";
+
+    @NotNull(message = "language is missing in LanguagePref")
+    @NonNull
+    @LanguageTagConstraint
+    String language;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)

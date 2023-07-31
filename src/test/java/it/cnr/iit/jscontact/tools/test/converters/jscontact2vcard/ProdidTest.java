@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class ProdidTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"prodId\":\"-//ONLINE DIRECTORY//NONSGML Version 1//EN\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -45,11 +46,11 @@ public class ProdidTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"" +
+                "\"name\": { \"full\": \"test\"}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertNull("testAutoProdid1 - 1", vcard.getProductId());
-        String text1 = Ezvcard.write(vcard).go();
+        String text1 = VCardWriter.write(vcard);
         assertTrue("testAutoProdid2 - 1", text1.contains("PRODID"));
         text1 = Ezvcard.write(vcard).prodId(false).go();
         assertFalse("testAutoProdid3 - 1", text1.contains("PRODID"));

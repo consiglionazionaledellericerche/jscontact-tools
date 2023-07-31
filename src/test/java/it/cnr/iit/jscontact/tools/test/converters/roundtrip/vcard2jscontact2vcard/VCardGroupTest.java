@@ -15,11 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
@@ -54,7 +54,7 @@ public class VCardGroupTest extends RoundtripTest {
         List<Card> jsCards = vCard2JSContact.convert(vcard);
         List<VCard> vcards = jsContact2VCard.convert(jsCards.get(0), jsCards.get(1), jsCards.get(2));
         pruneVCard(vcards.get(0));
-        assertEquals("testVCardGroup1 - 1", vcards, Ezvcard.parse(vcard).all());
+        assertEquals("testVCardGroup1 - 1", vcards, VCardParser.parse(vcard));
 
     }
 
@@ -77,7 +77,7 @@ public class VCardGroupTest extends RoundtripTest {
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testVCardGroup2 - 3", jsCardGroup.getKind().isGroup());
         assertTrue("testVCardGroup2 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertEquals("testVCardGroup2 - 5", "Funky distribution list", jsCardGroup.getFullName());
+        assertEquals("testVCardGroup2 - 5", "Funky distribution list", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup2 - 6", 4, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup2 - 7", jsCardGroup.getMembers().get("mailto:subscriber1@example.com"), Boolean.TRUE);
         assertSame("testVCardGroup2 - 8", jsCardGroup.getMembers().get("xmpp:subscriber2@example.com"), Boolean.TRUE);
@@ -112,16 +112,16 @@ public class VCardGroupTest extends RoundtripTest {
         Card jsCardGroup = jsCards.get(2);
         assertTrue("testVCardGroup3 - 3", jsCardGroup.getKind().isGroup());
         assertTrue("testVCardGroup3 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertEquals("testVCardGroup3 - 5", "The Doe family", jsCardGroup.getFullName());
+        assertEquals("testVCardGroup3 - 5", "The Doe family", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup3 - 6", 2, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup3 - 7", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
         assertSame("testVCardGroup3 - 8", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
         Card jsCard = jsCards.get(0);
         assertEquals("testVCardGroup3 - 9", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
-        assertEquals("testVCardGroup3 - 10", "John Doe", jsCard.getFullName());
+        assertEquals("testVCardGroup3 - 10", "John Doe", jsCard.getName().getFull());
         jsCard = jsCards.get(1);
         assertEquals("testVCardGroup3 - 11", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
-        assertEquals("testVCardGroup3 - 12", "Jane Doe", jsCard.getFullName());
+        assertEquals("testVCardGroup3 - 12", "Jane Doe", jsCard.getName().getFull());
 
     }
 
@@ -143,7 +143,7 @@ public class VCardGroupTest extends RoundtripTest {
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testVCardGroup4 - 3", jsCardGroup.getKind().isGroup());
         assertTrue("testVCardGroup4 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertEquals("testVCardGroup4 - 5", "Funky distribution list", jsCardGroup.getFullName());
+        assertEquals("testVCardGroup4 - 5", "Funky distribution list", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup4 - 6", 4, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup4 - 7", jsCardGroup.getMembers().get("mailto:subscriber1@example.com"), Boolean.TRUE);
         assertSame("testVCardGroup4 - 8", jsCardGroup.getMembers().get("xmpp:subscriber2@example.com"), Boolean.TRUE);

@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-5">https://www.rfc-editor.org/rfc/rfc6350</a>
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions">draft-ietf-calext-vcard-jscontact-extensions</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions#section-3">draft-ietf-calext-vcard-jscontact-extensions</a>
  */
 @AllArgsConstructor
 public enum VCardPropEnum {
@@ -34,15 +34,14 @@ public enum VCardPropEnum {
     XML("XML"),
     SOCIALPROFILE("SOCIALPROFILE"),
     PRONOUNS("PRONOUNS"),
-    CONTACT_BY("CONTACT-BY"),
     CONTACT_URI("CONTACT-URI"),
-    DEFLANGUAGE("DEFLANGUAGE"),
+    LANGUAGE("LANGUAGE"),
     CLIENTPIDMAP("CLIENTPIDMAP"),
     IMPP("IMPP"),
     CREATED("CREATED"),
     GENDER("GENDER"),
     GRAMGENDER("GRAMGENDER"),
-    JSCONTACT_PROP("JSCONTACT-PROP"),
+    JSPROP("JSPROP"),
     X_ABLABEL("X-ABLabel");
 
     private final String value;

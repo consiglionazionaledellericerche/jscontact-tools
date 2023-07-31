@@ -34,7 +34,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"directories\": {"+
                     "\"ENTRY-1\": {" +
                         "\"@type\":\"DirectoryResource\"," +
@@ -55,7 +55,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"media\": {"+
                     "\"PHOTO-1\": {" +
                         "\"@type\":\"MediaResource\"," +
@@ -78,7 +78,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"media\": {"+
                     "\"LOGO-1\": {" +
                         "\"@type\":\"MediaResource\"," +
@@ -99,7 +99,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"links\": {"+
                     "\"CONTACT-1\": {" +
                         "\"@type\":\"LinkResource\"," +
@@ -121,7 +121,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"media\": {"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"MediaResource\"," +
@@ -144,7 +144,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"media\":{"+
                     "\"SOUND-1\": {" +
                         "\"@type\":\"MediaResource\"," +
@@ -166,7 +166,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"links\": {"+
                     "\"LINK-1\": {" +
                         "\"@type\":\"LinkResource\"," +
@@ -186,7 +186,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"cryptoKeys\": {"+
                     "\"KEY-1\": {" +
                         "\"@type\":\"CryptoResource\"," +
@@ -206,7 +206,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"calendars\": {"+
                     "\"FREEBUSY-1\": {" +
                         "\"@type\":\"CalendarResource\"," +
@@ -238,7 +238,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"schedulingAddresses\": {"+
                     "\"SCHEDULING-1\": {" +
                         "\"@type\":\"SchedulingAddress\"," +
@@ -266,7 +266,7 @@ public class ResourceTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"calendars\": {"+
                     "\"CALENDAR-1\": {" +
                         "\"@type\":\"CalendarResource\"," +

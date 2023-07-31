@@ -84,7 +84,7 @@ public class SerializationTest {
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         jsCard.setUid("549e9dd2-ecb1-46af-8df1-09e98329d0ff");
         String serialized = Card.toJson(jsCard);
-        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"@version\":\"1.0\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"fullName\":\"test\",\"vCardProps\":[[\"version\",{},\"text\",\"4.0\"],[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
+        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"@version\":\"1.0\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"name\":{\"@type\":\"Name\",\"full\":\"test\"},\"vCardProps\":[[\"version\",{},\"text\",\"4.0\"],[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
 
     }
 

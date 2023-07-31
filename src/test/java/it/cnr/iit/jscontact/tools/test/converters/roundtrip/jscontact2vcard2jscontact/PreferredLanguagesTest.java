@@ -33,10 +33,10 @@ public class PreferredLanguagesTest extends RoundtripTest {
         String jscard = "{" +
                         "\"@type\":\"Card\"," +
                         "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
-                         "\"fullName\":\"test\"," +
+                        "\"name\":{\"full\":\"test\"}," +
                          "\"preferredLanguages\":{" +
-                               "\"jp\":[{\"@type\":\"LanguagePref\",\"pref\":1}]," +
-                               "\"en\":[{\"@type\":\"LanguagePref\",\"pref\":2}]" +
+                               "\"LANG-1\":{\"@type\":\"LanguagePref\",\"pref\":1,\"language\":\"jp\"}," +
+                               "\"LANG-2\":{\"@type\":\"LanguagePref\",\"pref\":2,\"language\":\"en\"}" +
                          "}" +
                          "}";
 
@@ -51,10 +51,11 @@ public class PreferredLanguagesTest extends RoundtripTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"139c2287-90ae-4f86-9a85-6e58a8f667d2\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"preferredLanguages\":{" +
-                    "\"en\":[{\"@type\":\"LanguagePref\",\"contexts\": {\"work\": true }, \"pref\":1}]," +
-                    "\"fr\":[{\"@type\":\"LanguagePref\",\"contexts\": {\"work\": true }, \"pref\":2},{\"@type\":\"LanguagePref\",\"contexts\": {\"private\": true }}]" +
+                    "\"LANG-1\":{\"@type\":\"LanguagePref\",\"contexts\": {\"work\": true }, \"pref\":1,\"language\":\"en\"}," +
+                    "\"LANG-2\":{\"@type\":\"LanguagePref\",\"contexts\": {\"work\": true }, \"pref\":2,\"language\":\"fr\"}," +
+                    "\"LANG-3\":{\"@type\":\"LanguagePref\",\"contexts\": {\"private\": true },\"language\":\"fr\"}" +
                 "}" +
                 "}";
 

@@ -14,5 +14,7 @@ public class DelimiterUtils {
 
     public static final String SLASH_DELIMITER = "/";
 
+    public static final String SEPARATOR_ID = "s," ;
+
     public static final String SLASH_DELIMITER_IN_JSON_POINTER = "~1";
 }

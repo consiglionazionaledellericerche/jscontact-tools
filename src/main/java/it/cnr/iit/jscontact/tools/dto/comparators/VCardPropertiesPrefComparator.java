@@ -19,7 +19,7 @@ public class VCardPropertiesPrefComparator implements Comparator<VCardProperty> 
 
         if (pref1 == null && pref2 == null)
             return 0;
-        else if (pref1 == null && pref2 != null)
+        else if (pref1 == null)
             return 1;
         else if (pref2 == null)
             return -1;

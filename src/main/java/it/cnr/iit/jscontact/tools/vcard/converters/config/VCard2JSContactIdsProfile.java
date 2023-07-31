@@ -23,6 +23,7 @@ public class VCard2JSContactIdsProfile {
         EMAIL,
         ADDRESS,
         PHONE,
+        LANGUAGE,
         SCHEDULING,
         RESOURCE,
         ONLINE_SERVICE,
@@ -47,6 +48,7 @@ public class VCard2JSContactIdsProfile {
         public static JSContactId emailsId(String id) { return jsContactId(IdType.EMAIL,id); }
         public static JSContactId addressesId(String id) { return jsContactId(IdType.ADDRESS,id); }
         public static JSContactId phonesId(String id) { return jsContactId(IdType.PHONE,id); }
+        public static JSContactId languagesId(String id) { return jsContactId(IdType.LANGUAGE,id); }
         public static JSContactId schedulingAddressId(String id) { return jsContactId(IdType.SCHEDULING,id); }
         public static JSContactId onlineServicesId(String id) { return jsContactId(IdType.ONLINE_SERVICE,id); }
         public static JSContactId resourcesId(ResourceId id) { return jsContactId(IdType.RESOURCE,id); }

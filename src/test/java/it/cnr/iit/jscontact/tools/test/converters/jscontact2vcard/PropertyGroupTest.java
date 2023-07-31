@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -32,16 +33,18 @@ public class PropertyGroupTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"fullAddress\":\"54321 Oak St Reston VA 20190 USA\"," +
-                        "\"street\":[{\"@type\":\"StreetComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"full\":\"54321 Oak St Reston VA 20190 USA\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"," +
                         "\"vCardParams\" : { " +
                             "\"group\" : \"CONTACT\"" +
@@ -50,7 +53,7 @@ public class PropertyGroupTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testPropertyGroup1 - 1", "CONTACT", vcard.getAddresses().get(0).getGroup());
+        assertEquals("testPropertyGroup1 - 1", "CONTACT", vcard.getProperties(ExtendedAddress.class).get(0).getGroup());
 
     }
 

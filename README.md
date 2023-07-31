@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.15.1</version>
+		  <version>0.16.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.15.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.0'
 ```
 
 # Features
@@ -31,9 +31,10 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 5. [vCard Conversion](#vcard-conversion)
 6. [JSContact Conversion](#jscontact-conversion)
 7. [Testing](#testing)
-8. [ez-vcard bugs](#ez-vcard-bugs)
-9. [JSContact Compliance](#jscontact-compliance)
-10. [References](#references)
+8. [ez-vcard extensions](#ez-vcard-extensions)
+9. [ez-vcard bugs](#ez-vcard-bugs)
+10. [JSContact Compliance](#jscontact-compliance)
+11. [References](#references)
 
 
 <a name="creation"></a>
@@ -319,6 +320,8 @@ The conversion is executed according to the following rules:
 23. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group
     construct.
 
+24. Either the "ISO-3166-1-alpha-2" parameter (that maybe used in RDAP) is converted.
+
 ### Conversion Profiles from vCard to JSContact Card
 
 By default, where a collection of objects is mapped to a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
@@ -390,20 +393,22 @@ All the methods take in input a list of JSContact Card objects and can raise the
 
 5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
 
-6. If the "fullName" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
+6. If the "name.full" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
 7. The "street" component of ADR property results from the concatenation of "district", "block", "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
 8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room", "landmark"
-   and "extention" non-empty values presented in the "street" member of the "Address" object. Such values are separated
+   and "extention" non-empty values presented in the "components" member of the "Address" object. Such values are separated
    by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
-9. The LABEL parameter of the ADR property is equal to the "fullAddress" property of the "Address" object. If the full
+9. The LABEL parameter of the ADR property is equal to the "full" property of the "Address" object. If the full
    address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL
    parameter can result from the newline-delimited concatenation of the non-empty "Address" members or.
 
 10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the `setPropIdParam` mapping 
     configuration parameter.
+
+10. The "countryCode" member of the Address type always converts to the vCard CC parameter.
 
 ### Conversion examples
 
@@ -467,16 +472,16 @@ Here in the following two examples of conversion between vCard and JSContact Car
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testJCardGroup1 - 2", jsCardGroup.getCard().getKind().isGroup());
         assertTrue("testJCardGroup1 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
-        assertEquals("testJCardGroup1 - 4", "The Doe family", jsCardGroup.getCard().getFullName());
+        assertEquals("testJCardGroup1 - 4", "The Doe family", jsCardGroup.getCard().getName().getFull());
         assertEquals("testJCardGroup1 - 5", 2, jsCardGroup.getMembers().size());
         assertSame("testJCardGroup1 - 6", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
         assertSame("testJCardGroup1 - 7", jsCardGroup.getMembers().get("urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519"), Boolean.TRUE);
         Card jsCard = jsCards.get(1);
         assertEquals("testJCardGroup1 - 8", "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af", jsCard.getUid());
-        assertEquals("testJCardGroup1 - 9", "John Doe", jsCard.getFullName());
+        assertEquals("testJCardGroup1 - 9", "John Doe", jsCard.getName().getFull());
         jsCard = jsCards.get(2);
         assertEquals("testJCardGroup1 - 10", "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519", jsCard.getUid());
-        assertEquals("testJCardGroup1 - 11", "Jane Doe", jsCard.getFullName());
+        assertEquals("testJCardGroup1 - 11", "Jane Doe", jsCard.getName().getFull());
         
     }
 
@@ -492,14 +497,16 @@ Here in the following two examples of conversion between JSContact Card and a vC
         String jscard = "{" +
                 "\@type\": \"Card\","
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
-                        "\"street\":[{\"kind\":\"name\",\"value\":\"54321 Oak St\"}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                           "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                           "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                           "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                           "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                           "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"countryCode\":\"US\"," +
                         "\"coordinates\":\"geo:46.772673,-71.282945\"" +
                     "}" +
@@ -532,21 +539,21 @@ Here in the following two examples of conversion between JSContact Card and a vC
                              "\@type\": \"Card\","
                              "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
                              "\"kind\":\"group\"," +
-                             "\"fullName\":\"The Doe family\"," +
+                             "\"name\":{\"full\":\"The Doe family\"}," +
                              "\"members\": {" +
                                 "\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\":true," +
                                 "\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\":true" +
                              "}" +
                         "}," +
                         "{" +
-                             "\@type\": \"Card\","
+                            "\@type\": \"Card\","
                             "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
-                            "\"fullName\":\"John Doe\"" +
+                             "\"name\":{\"full\":\"John Doe\"}" +
                         "}," +
                         "{" +
                              "\@type\": \"Card\","
                             "\"uid\":\"urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519\"," +
-                            "\"fullName\":\"Jane Doe\"" +
+                             "\"name\":{\"full\":\"Jane Doe\"}" +
                         "}" +
                         "]";
 
@@ -571,6 +578,13 @@ Here in the following two examples of conversion between JSContact Card and a vC
 ## Testing
 
 Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all the features provided.
+
+<a name="ez-vcard-extensions"></a>
+## ez-vcard extensions
+
+New scribers and properties have been defined to support the implementation of the extensions to vCard name and address components as dfined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/).
+To parse and write vCard instances having such extensions, the methods provided by ez-vcard in the Ezvcard class cannot be used.
+Similar methods considering those extensions have been defined in the classes VCardParser and VCardWriter.
 
 <a name="ez-vcard-bugs"></a>
 ## ez-vcard bugs
@@ -608,11 +622,11 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.15.1 implements the following draft versions:
+Version 0.16.0 implements the following draft versions:
 
-* draft-ietf-calext-jscontact-11
-* draft-ietf-calext-jscontact-vcard-09
-* draft-ietf-calext-vcard-jscontact-extensions-07
+* draft-ietf-calext-jscontact-13
+* draft-ietf-calext-jscontact-vcard-11
+* draft-ietf-calext-vcard-jscontact-extensions-09
 
 # Build Instructions
 

@@ -2,7 +2,7 @@
   {
     "@type": "Card",
     "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
-    "fullName": "a group",
+    "name": {"full": "a group"},
     "kind": "group",
     "members": {
       "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8": true,
@@ -13,11 +13,11 @@
   {
     "@type": "Card",
     "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
-    "fullName": "Joe User",
+    "name": {"full": "Joe User"},
     "kind": "individual",
     "preferredLanguages": {
-      "fr": [{ "@type": "LanguagePref", "pref": 1 }],
-      "en": [{ "@type": "LanguagePref", "pref": 2 }]
+      "LANG-1": { "@type": "LanguagePref", "pref": 1 , "language": "fr"},
+      "LANG-2": { "@type": "LanguagePref", "pref": 2 , "language": "en"}
     },
     "organizations": {
       "ORG-1" :{
@@ -39,7 +39,7 @@
       "ADR-1": {
         "@type": "Address",
         "contexts": {"work": true},
-        "street": [{"@type": "StreetComponent","kind": "name","value": "4321 Rue Somewhere"},{"@type": "StreetComponent","kind": "extension","value": "Suite 1234"}],
+        "components": [{"@type": "AddressComponent","kind": "name","value": "4321 Rue Somewhere"},{"@type": "AddressComponent","kind": "extension","value": "Suite 1234"}],
         "locality": "Quebec",
         "region": "QC",
         "postcode": "G1V 2M2",
@@ -50,7 +50,7 @@
       "ADR-2" : {
         "@type": "Address",
         "contexts": {"private": true},
-        "fullAddress": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+        "full": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
       }
     },
     "phones": {
@@ -96,7 +96,7 @@
   {
     "@type": "Card",
     "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
-    "fullName": "大久保 正仁",
+    "name": {"full": "大久保 正仁"},
     "titles": {
       "TITLE-1" : {
         "@type": "Title",
@@ -105,12 +105,12 @@
     },
     "kind": "individual",
     "preferredLanguages": {
-      "jp": [{ "@type": "LanguagePref", "pref": 1 }],
-      "en": [{ "@type": "LanguagePref", "pref": 2 }]
+      "LANG-1": { "@type": "LanguagePref", "pref": 1, "language": "jp" },
+      "LANG-2": { "@type": "LanguagePref", "pref": 2, "language": "en" }
     },
     "localizations": {
       "en": {
-        "fullName": "Okubo Masahito",
+        "name/full": "Okubo Masahito",
         "titles/TITLE-1": { "@type": "Title", "name": "Secretary General" }
       }
     }
@@ -118,12 +118,12 @@
   {
     "@type": "Card",
     "uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
-    "fullName": "Taiwan Fixed Network CO.,LTD.",
+    "name": {"full": "Taiwan Fixed Network CO.,LTD."},
     "kind": "org",
     "addresses": {
       "ADR-1": {
         "@type": "Address",
-        "fullAddress": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
+        "full": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
       }
     },
     "phones": {
@@ -141,7 +141,7 @@
     "emails": {},
     "localizations": {
        "zh-TW": {
-         "fullName": "台灣固網股份有限公司"
+         "name/full": "台灣固網股份有限公司"
        }
     }
   }

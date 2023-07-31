@@ -24,12 +24,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -43,8 +45,7 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","fullAddress","street","locality","region","country",
-                     "postcode","countryCode","coordinates","timeZone",
+@JsonPropertyOrder({"@type","full","components","isOrdered","countryCode","coordinates","timeZone","phoneticScript","phoneticSystem",
                      "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -59,18 +60,12 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     @Builder.Default
     String _type = "Address";
 
-    String fullAddress;
+    String full;
 
-    @JSContactCollection(addMethod = "addComponent", itemClass = StreetComponent.class)
-    StreetComponent[] street;
+    @JSContactCollection(addMethod = "addComponent", itemClass = AddressComponent.class)
+    AddressComponent[] components;
 
-    String locality;
-
-    String region;
-
-    String country;
-
-    String postcode;
+    Boolean isOrdered = Boolean.FALSE;
 
     @Pattern(regexp="[a-zA-Z]{2}", message = "invalid countryCode in Address")
     String countryCode;
@@ -79,6 +74,11 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     String coordinates;
 
     String timeZone;
+
+    String phoneticScript;
+
+    @JsonDeserialize(using = PronounceSystemDeserializer.class)
+    PhoneticSystem phoneticSystem;
 
     String defaultSeparator;
 
@@ -152,84 +152,65 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      */
     public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
 
-    private String getStreetDetail(StreetComponentEnum detail) {
-
-        if (street == null)
+    private String getStreetAddressDetails(List<AddressComponentEnum> componentsToCheck) {
+        if (components == null)
             return null;
 
-        for (StreetComponent pair : street) {
-            if (!pair.isExt() && pair.getKind().getRfcValue() == detail)
-                return pair.getValue();
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the P.O. box of this object.
-     *
-     * @return the value of StreetComponent item in the "street" array tagged as POST_OFFICE_BOX
-     */
-    @JsonIgnore
-    public String getPostOfficeBox() {
-        return getStreetDetail(StreetComponentEnum.POST_OFFICE_BOX);
-    }
-
-
-    private String getStreetAddressDetails(List<StreetComponentEnum> componentsToCheck) {
-        if (street == null)
-            return null;
-
-        List<String> streetComponents = new ArrayList<>();
+        List<String> addressComponents = new ArrayList<>();
         boolean applySeparator = false;
-        for (StreetComponent pair : street) {
-            if (pair.getKind().isRfcValue()) {
-                if (componentsToCheck.contains(pair.getKind().getRfcValue())) {
+        for (AddressComponentEnum componentEnum : componentsToCheck) {
+            AddressComponent component = getComponent(AddressComponentKind.builder().rfcValue(componentEnum).build());
+            if (component != null) {
+                if (componentEnum != AddressComponentEnum.SEPARATOR) {
                     applySeparator = true;
-                    streetComponents.add(pair.getValue());
-                    if (defaultSeparator != null)
-                        streetComponents.add(defaultSeparator);
+                    addressComponents.add(component.getValue());
+                    /*
+                    if (isOrdered != null && isOrdered == Boolean.TRUE && defaultSeparator != null)
+                        addressComponents.add(defaultSeparator);
                     else
-                        streetComponents.add(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-                } else if (pair.isSeparator()) {
+                        addressComponents.add(DelimiterUtils.SPACE_DELIMITER);
+                     */
+                    addressComponents.add(DelimiterUtils.SPACE_DELIMITER);
+                } else {
                     if (applySeparator)
-                        streetComponents.set(streetComponents.size() - 2, pair.getValue());
+                        addressComponents.set(addressComponents.size() - 2, component.getValue());
                 }
             }
         }
 
-        return (streetComponents.isEmpty()) ? null : String.join("",streetComponents.subList(0,streetComponents.size()-1));
+        return (addressComponents.isEmpty()) ? null : String.join(StringUtils.EMPTY,addressComponents.subList(0,addressComponents.size()-1));
     }
 
     /**
      * Returns the street details of this object.
      *
-     * @return a text obtained by concatenating the values of StreetComponent items in the "street" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
+     * @return a text obtained by concatenating the values of AddressComponent items in the "components" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
      */
     @JsonIgnore
     public String getStreetAddress() {
 
-        return getStreetAddressDetails(Arrays.asList(StreetComponentEnum.DISTRICT,
-                                                     StreetComponentEnum.BLOCK,
-                                                     StreetComponentEnum.NAME,
-                                                     StreetComponentEnum.NUMBER,
-                                                     StreetComponentEnum.DIRECTION));
+        return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.NUMBER,
+                                                     AddressComponentEnum.NAME,
+                                                     AddressComponentEnum.BLOCK,
+                                                     AddressComponentEnum.DIRECTION,
+                                                     AddressComponentEnum.LANDMARK,
+                                                    AddressComponentEnum.SUBDISTRICT,
+                                                    AddressComponentEnum.DISTRICT
+                ));
     }
 
     /**
      * Returns the street extensions of this object.
      *
-     * @return a text obtained by concatenating the values of the StreetComponent items in the "street" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
+     * @return a text obtained by concatenating the values of the AddressComponent items in the "components" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
      */
     @JsonIgnore
     public String getStreetExtendedAddress() {
 
-        return getStreetAddressDetails(Arrays.asList(StreetComponentEnum.BUILDING,
-                StreetComponentEnum.FLOOR,
-                StreetComponentEnum.APARTMENT,
-                StreetComponentEnum.ROOM,
-                StreetComponentEnum.LANDMARK,
-                StreetComponentEnum.EXTENSION));
+        return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.ROOM,
+                AddressComponentEnum.APARTMENT,
+                AddressComponentEnum.FLOOR,
+                AddressComponentEnum.BUILDING));
     }
 
 
@@ -240,7 +221,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      * @param components the street components
      * @return the street components in input plus the sc component
      */
-    public static StreetComponent[] addComponent(StreetComponent[] components, StreetComponent sc) {
+    public static AddressComponent[] addComponent(AddressComponent[] components, AddressComponent sc) {
         return ArrayUtils.add(components, sc);
     }
 
@@ -249,8 +230,8 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      *
      * @param sc the street component
      */
-    public void addComponent(StreetComponent sc) {
-        street = ArrayUtils.add(street, sc);
+    public void addComponent(AddressComponent sc) {
+        components = addComponent(components, sc);
     }
 
     /**
@@ -281,5 +262,163 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
 
         return extended;
     }
+
+    private AddressComponent getComponent(AddressComponentKind componentKind) {
+
+        if (components == null)
+            return null;
+
+        for (AddressComponent component : components) {
+            if (component.getKind().equals(componentKind))
+                return component;
+        }
+
+        return null;
+
+    }
+
+    private String getComponentValue(AddressComponentKind componentKind) {
+
+        AddressComponent component = getComponent(componentKind);
+        return (component != null) ? component.getValue() : null;
+    }
+
+    /**
+     * Returns the locality of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "locality"
+     */
+    @JsonIgnore
+    public String getLocality() {
+        return getComponentValue(AddressComponentKind.locality());
+    }
+
+    /**
+     * Returns the country of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "country"
+     */
+    @JsonIgnore
+    public String getCountry() {
+        return getComponentValue(AddressComponentKind.country());
+    }
+
+    /**
+     * Returns the region of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "region"
+     */
+    @JsonIgnore
+    public String getRegion() {
+        return getComponentValue(AddressComponentKind.region());
+    }
+
+    /**
+     * Returns the postal code of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "postcode"
+     */
+    @JsonIgnore
+    public String getPostcode() {
+        return getComponentValue(AddressComponentKind.postcode());
+    }
+
+    /**
+     * Returns the P.O. box of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as postOfficeBox
+     */
+    @JsonIgnore
+    public String getPostOfficeBox() {
+        return getComponentValue(AddressComponentKind.postOfficeBox());
+    }
+
+    /**
+     * Returns the apartment of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "apartment"
+     */
+    @JsonIgnore
+    public String getApartment() { return getComponentValue(AddressComponentKind.apartment()); }
+
+    /**
+     * Returns the building of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "building"
+     */
+    @JsonIgnore
+    public String getBuilding() { return getComponentValue(AddressComponentKind.building()); }
+
+    /**
+     * Returns the floor of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "floor"
+     */
+    @JsonIgnore
+    public String getFloor() { return getComponentValue(AddressComponentKind.floor()); }
+
+    /**
+     * Returns the room of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "room"
+     */
+    @JsonIgnore
+    public String getRoom() { return getComponentValue(AddressComponentKind.room()); }
+
+    /**
+     * Returns the street name of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "name"
+     */
+    @JsonIgnore
+    public String getStreetName() { return getComponentValue(AddressComponentKind.name()); }
+
+    /**
+     * Returns the street number of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "number"
+     */
+    @JsonIgnore
+    public String getStreetNumber() { return getComponentValue(AddressComponentKind.number()); }
+
+    /**
+     * Returns the street direction of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "direction"
+     */
+    @JsonIgnore
+    public String getDirection() { return getComponentValue(AddressComponentKind.direction()); }
+
+    /**
+     * Returns the district of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "district"
+     */
+    @JsonIgnore
+    public String getDistrict() { return getComponentValue(AddressComponentKind.district()); }
+
+    /**
+     * Returns the subdistrict of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "subdistrict"
+     */
+    @JsonIgnore
+    public String getSubDistrict() { return getComponentValue(AddressComponentKind.subdistrict()); }
+
+    /**
+     * Returns the block of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "block"
+     */
+    @JsonIgnore
+    public String getBlock() { return getComponentValue(AddressComponentKind.block()); }
+
+    /**
+     * Returns the landmark of this object.
+     *
+     * @return the value of AddressComponent item in the "components" array tagged as "landmark"
+     */
+    @JsonIgnore
+    public String getLandmark() { return getComponentValue(AddressComponentKind.landmark()); }
 
 }

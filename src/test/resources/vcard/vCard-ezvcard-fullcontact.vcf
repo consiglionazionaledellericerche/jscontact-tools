@@ -57,7 +57,7 @@ ADR;TYPE=home:;HomeExtended;HomeStreet;HomeCity;HomeState;HomePostal;HomeCountry
 ADR;TYPE=work:;WorkExtended;WorkStreet;WorkCity;WorkState;WorkPostal;WorkCountry
 ADR;TYPE=other:;OtherExtended;OtherStreet;OtherCity;OtherState;OtherPostal;OtherCountry
 ADR;TYPE=customtype:;CustomExtended;CustomStreet;CustomCity;CustomState;CustomPostal;CustomCountry
-NICKNAME:NickName
+NICKNAME:Nickname
 IMPP;X-SERVICE-TYPE=GTalk:xmpp:gtalk
 IMPP;X-SERVICE-TYPE=Skype:skype:skype
 IMPP;X-SERVICE-TYPE=Yahoo:ymsgr:yahoo

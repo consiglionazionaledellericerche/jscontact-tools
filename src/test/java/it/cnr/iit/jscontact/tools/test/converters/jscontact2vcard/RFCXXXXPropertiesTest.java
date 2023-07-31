@@ -16,7 +16,6 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
-import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -27,59 +26,12 @@ import static org.junit.Assert.*;
 public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
 
     @Test
-    public void testContactBy() throws IOException, CardException {
-
-        String jscard="{" +
-                "\"@type\":\"Card\"," +
-                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
-                "\"contactBy\": {" +
-                     "\"emails\": [" +
-                        "{ " +
-                            "\"@type\": \"ContactBy\", " +
-                            "\"contexts\": {\"work\": true}, " +
-                            "\"pref\": 1 " +
-                        "}," +
-                        "{ " +
-                            "\"@type\": \"ContactBy\", " +
-                            "\"contexts\": {\"private\": true}, " +
-                            "\"pref\": 2 " +
-                        "}" +
-                     "]," +
-                    "\"phones\": [" +
-                        "{ " +
-                        "\"@type\": \"ContactBy\", " +
-                        "\"contexts\": {\"work\": true} " +
-                        "}" +
-                    "]," +
-                    "\"addresses\": [ ]" +
-                "}" +
-                "}";
-        VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testContactBy - 1", 4, vcard.getExtendedProperties().size());
-        assertEquals("testContactBy - 2", "CONTACT-BY", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testContactBy - 3", "EMAIL", vcard.getExtendedProperties().get(0).getValue());
-        assertEquals("testContactBy - 4", "work", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.TYPE.getValue()));
-        assertEquals("testContactBy - 4", "1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PREF.getValue()));
-        assertEquals("testContactBy - 2", "CONTACT-BY", vcard.getExtendedProperties().get(1).getPropertyName());
-        assertEquals("testContactBy - 3", "EMAIL", vcard.getExtendedProperties().get(1).getValue());
-        assertEquals("testContactBy - 4", "home", vcard.getExtendedProperties().get(1).getParameter(VCardParamEnum.TYPE.getValue()));
-        assertEquals("testContactBy - 4", "2", vcard.getExtendedProperties().get(1).getParameter(VCardParamEnum.PREF.getValue()));
-        assertEquals("testContactBy - 2", "CONTACT-BY", vcard.getExtendedProperties().get(2).getPropertyName());
-        assertEquals("testContactBy - 3", "TEL", vcard.getExtendedProperties().get(2).getValue());
-        assertEquals("testContactBy - 4", "work", vcard.getExtendedProperties().get(2).getParameter(VCardParamEnum.TYPE.getValue()));
-        assertEquals("testContactBy - 2", "CONTACT-BY", vcard.getExtendedProperties().get(3).getPropertyName());
-        assertEquals("testContactBy - 3", "ADR", vcard.getExtendedProperties().get(3).getValue());
-
-    }
-
-    @Test
     public void testCreated() throws IOException, CardException {
 
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"created\":\"2010-10-10T10:10:10Z\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -94,12 +46,12 @@ public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"language\":\"it\"" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testLanguage - 1", 1, vcard.getExtendedProperties().size());
-        assertEquals("testLanguage - 2", "DEFLANGUAGE", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testLanguage - 2", "LANGUAGE", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testLanguage - 3", "it", vcard.getExtendedProperties().get(0).getValue());
     }
 

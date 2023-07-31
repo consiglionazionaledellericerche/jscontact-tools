@@ -34,7 +34,7 @@ public class FullNameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\":\"John Q. Public, Esq.\"" +
+                "\"name\": { \"full\":\"John Q. Public, Esq.\"}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);
@@ -48,10 +48,10 @@ public class FullNameTest extends RoundtripTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"language\": \"jp\"," +
-                "\"fullName\":\"大久保 正仁\"," +
+                "\"name\": { \"full\":\"大久保 正仁\"}," +
                 "\"localizations\" : {" +
                   "\"en\": {" +
-                     "\"fullName\":\"Okubo Masahito\""+
+                     "\"name\": { \"full\":\"Okubo Masahito\"}"+
                   "}" +
                 "}" +
                 "}";
@@ -77,8 +77,8 @@ public class FullNameTest extends RoundtripTest {
                 "\"localizations\" : {" +
                     "\"en\": {" +
                         "\"name/components\":[ " +
-                        "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
-                        "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
+                            "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
+                            "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
                         "]" +
                     "}" +
                 "}" +

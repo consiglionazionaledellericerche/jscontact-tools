@@ -15,27 +15,34 @@
  */
 package it.cnr.iit.jscontact.tools.dto.deserializers;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.KeyDeserializer;
-import it.cnr.iit.jscontact.tools.dto.*;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import it.cnr.iit.jscontact.tools.dto.AddressComponentEnum;
+import it.cnr.iit.jscontact.tools.dto.AddressComponentKind;
+import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
+import java.io.IOException;
+
 /**
- * Custom JSON deserializer for the "contactBy" map.
+ * Custom JSON deserializer for the AddressComponentType value.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class ContactChannelsKeyDeserializer extends KeyDeserializer {
+public class AddressComponentTypeDeserializer extends JsonDeserializer<AddressComponentKind> {
 
     @Override
-    public ContactByType deserializeKey(String key, DeserializationContext ctxt) {
-        ContactByType channelType;
+    public AddressComponentKind deserialize(JsonParser jp, DeserializationContext ctxt)
+            throws IOException {
+        JsonNode node = jp.getCodec().readTree(jp);
+        String value = node.asText();
         try {
-            channelType = ContactByType.builder().rfcValue(ContactByEnum.getEnum(key)).build();
+            return AddressComponentKind.builder().rfcValue(AddressComponentEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            channelType = ContactByType.builder().extValue(V_Extension.toV_Extension(key)).build();
+            return AddressComponentKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
-        return channelType;
     }
 }

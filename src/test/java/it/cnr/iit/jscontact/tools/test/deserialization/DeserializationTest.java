@@ -77,25 +77,27 @@ public class DeserializationTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
-                "\"nickNames\": { " +
-                    "\"NICK-1\" : {  \"@type\":\"NickName\", \"name\": \"Johnny\", \"ext3\":\"text\"  }, " +
-                    "\"NICK-2\" : {  \"@type\":\"NickName\", \"name\": \"Joe\" } " +
+                "\"name\": { \"full\": \"test\"}," +
+                "\"nicknames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"Nickname\", \"name\": \"Johnny\", \"ext3\":\"text\"  }, " +
+                    "\"NICK-2\" : {  \"@type\":\"Nickname\", \"name\": \"Joe\" } " +
                 "}," +
                 "\"language\":\"en\"," +
                 "\"ext1\": 10," +
                 "\"preferredLanguages\":{" +
-                    "\"jp\":[{\"@type\":\"LanguagePref\",\"pref\":1, \"ext6\": [\"1\",\"2\"]}]," +
-                    "\"en\":[{\"@type\":\"LanguagePref\",\"pref\":2}]" +
+                    "\"LANG-1\":{\"@type\":\"LanguagePref\",\"pref\":1, \"ext6\": [\"1\",\"2\"],\"language\":\"jp\"}," +
+                    "\"LANG-2\":{\"@type\":\"LanguagePref\",\"pref\":2,\"language\":\"en\"}" +
                 "}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
                         "\"@type\":\"Address\"," +
-                        "\"street\":[{\"@type\":\"StreetComponent\",\"kind\":\"name\", \"value\":\"54321 Oak St\", \"ext4\": 5}]," +
-                        "\"locality\":\"Reston\"," +
-                        "\"region\":\"VA\"," +
-                        "\"country\":\"USA\"," +
-                        "\"postcode\":\"20190\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\",\"ext4\": 5}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
                         "\"ext2\": { \"prop\": 10 }," +
                         "\"countryCode\":\"US\"" +
                     "}" +
@@ -110,10 +112,10 @@ public class DeserializationTest {
         Map<String, Object> allExtensionsMap = new HashMap<>();
         jsCard.buildAllExtensionsMap(allExtensionsMap, "");
         assertEquals("testDeserialization5 - 5", 5, allExtensionsMap.size());
-        assertTrue("testDeserialization5 - 6", allExtensionsMap.containsKey("addresses/ADR-1/street/0/ext4"));
-        assertTrue("testDeserialization5 - 7", allExtensionsMap.containsKey("nickNames/NICK-1/ext3"));
+        assertTrue("testDeserialization5 - 6", allExtensionsMap.containsKey("addresses/ADR-1/components/0/ext4"));
+        assertTrue("testDeserialization5 - 7", allExtensionsMap.containsKey("nicknames/NICK-1/ext3"));
         assertTrue("testDeserialization5 - 8", allExtensionsMap.containsKey("addresses/ADR-1/ext2"));
-        assertTrue("testDeserialization5 - 9", allExtensionsMap.containsKey("preferredLanguages/jp/0/ext6"));
+        assertTrue("testDeserialization5 - 9", allExtensionsMap.containsKey("preferredLanguages/LANG-1/ext6"));
         assertTrue("testDeserialization5 - 10", allExtensionsMap.containsKey("ext1"));
 
     }
@@ -126,7 +128,7 @@ public class DeserializationTest {
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
-                "\"fullName\":\"test\"," +
+                "\"name\": { \"full\": \"test\"}," +
                 "\"vCardProps\": [ " +
                     "[\"x-foo1\", {\"x-bar\":\"Hello\",\"group\":\"item1\"}, \"unknown\", \"World!\"], " +
                     "[\"x-foo2\", {\"pref\": 1}, \"integer\", 100 ] " +

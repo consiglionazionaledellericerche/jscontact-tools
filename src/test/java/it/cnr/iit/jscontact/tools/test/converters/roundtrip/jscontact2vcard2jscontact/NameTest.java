@@ -33,19 +33,19 @@ public class NameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"," +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"title\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"given2\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"credential\" }" +
                     "] " +
                 "}, " +
-                "\"nickNames\": { " +
-                    "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +
-                    "\"NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Joe\" } " +
+                "\"nicknames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"Nickname\",\"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"Nickname\",\"name\": \"Joe\" } " +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -60,25 +60,25 @@ public class NameTest extends RoundtripTest {
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
-                "\"fullName\": \"Mr. John Q. Public, Esq.\"," +
                 "\"language\": \"en\"," +
                 "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"," +
                     "\"components\":[ " +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"prefix\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Mr.\", \"kind\": \"title\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"John\", \"kind\": \"given\" }," +
                         "{ \"@type\":\"NameComponent\",\"value\":\"Public\", \"kind\": \"surname\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"middle\" }," +
-                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"suffix\" }" +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Quinlan\", \"kind\": \"given2\" }," +
+                        "{ \"@type\":\"NameComponent\",\"value\":\"Esq.\", \"kind\": \"credential\" }" +
                     "] " +
                 "}, " +
-                "\"nickNames\": { " +
-                    "\"NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Johnny\" }, " +
-                    "\"NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Joe\" } " +
+                "\"nicknames\": { " +
+                    "\"NICK-1\" : {  \"@type\":\"Nickname\",\"name\": \"Johnny\" }, " +
+                    "\"NICK-2\" : {  \"@type\":\"Nickname\",\"name\": \"Joe\" } " +
                 "}," +
                 "\"localizations\": { " +
                     "\"it\" : { " +
-                            "\"nickNames/NICK-1\" : {  \"@type\":\"NickName\",\"name\": \"Giovannino\" }, " +
-                            "\"nickNames/NICK-2\" : {  \"@type\":\"NickName\",\"name\": \"Giò\" } " +
+                            "\"nicknames/NICK-1\" : {  \"@type\":\"Nickname\",\"name\": \"Giovannino\" }, " +
+                            "\"nicknames/NICK-2\" : {  \"@type\":\"Nickname\",\"name\": \"Giò\" } " +
                     "}" +
                 "}" +
                 "}";

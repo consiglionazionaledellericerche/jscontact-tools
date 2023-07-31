@@ -33,7 +33,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                         "\"@type\":\"Card\"," +
                         "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                        "\"fullName\":\"test\"," +
+                        "\"name\":{\"full\":\"test\"}," +
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                     "\"@type\":\"Anniversary\"," +
@@ -56,7 +56,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -67,7 +67,7 @@ public class AnniversariesTest extends RoundtripTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                           "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                           "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}" +
                 "}" +
@@ -84,7 +84,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                         "\"@type\":\"Card\"," +
                         "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                        "\"fullName\":\"test\"," +
+                        "\"name\":{\"full\":\"test\"}," +
                         "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                                "{" +
                                     "\"@type\":\"Anniversary\"," +
@@ -108,7 +108,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -118,7 +118,7 @@ public class AnniversariesTest extends RoundtripTest {
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}" +
                 "}" +
@@ -135,7 +135,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -145,7 +145,7 @@ public class AnniversariesTest extends RoundtripTest {
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Los Angeles CA USA\"" +
+                            "\"full\":\"Los Angeles CA USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
@@ -156,7 +156,7 @@ public class AnniversariesTest extends RoundtripTest {
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}" +
                 "}" +
@@ -173,7 +173,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -183,7 +183,7 @@ public class AnniversariesTest extends RoundtripTest {
                             "\"utc\":\"1953-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Los Angeles CA USA\"" +
+                            "\"full\":\"Los Angeles CA USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
@@ -194,7 +194,7 @@ public class AnniversariesTest extends RoundtripTest {
                             "\"utc\":\"1993-10-15T23:10:00Z\"" +
                         "}," +
                         "\"place\":{ " +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
@@ -219,7 +219,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"anniversaries\":{ \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -242,7 +242,7 @@ public class AnniversariesTest extends RoundtripTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
@@ -267,7 +267,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"anniversaries\": { \"ANNIVERSARY-1\": " +
                     "{" +
                         "\"@type\":\"Anniversary\"," +
@@ -278,9 +278,11 @@ public class AnniversariesTest extends RoundtripTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"locality\":\"Los Angeles\"," +
-                            "\"region\":\"CA\"," +
-                            "\"country\":\"USA\"" +
+                            "\"components\":[ " +
+                                "{\"kind\":\"locality\",\"value\":\"Los Angeles\"}," +
+                                "{\"kind\":\"region\",\"value\":\"CA\"}," +
+                                "{\"kind\":\"country\",\"value\":\"USA\"}" +
+                            "]" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
@@ -292,7 +294,7 @@ public class AnniversariesTest extends RoundtripTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-3\": {" +
@@ -317,7 +319,7 @@ public class AnniversariesTest extends RoundtripTest {
         String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
-                "\"fullName\":\"test\"," +
+                "\"name\":{\"full\":\"test\"}," +
                 "\"anniversaries\": { " +
                     "\"ANNIVERSARY-1\": {" +
                         "\"@type\":\"Anniversary\"," +
@@ -328,9 +330,11 @@ public class AnniversariesTest extends RoundtripTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"locality\":\"Los Angeles\"," +
-                            "\"region\":\"CA\"," +
-                            "\"country\":\"USA\"" +
+                            "\"components\":[ " +
+                                "{\"kind\":\"locality\",\"value\":\"Los Angeles\"}," +
+                                "{\"kind\":\"region\",\"value\":\"CA\"}," +
+                                "{\"kind\":\"country\",\"value\":\"USA\"}" +
+                            "]" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-2\": {" +
@@ -342,7 +346,7 @@ public class AnniversariesTest extends RoundtripTest {
                         "}," +
                         "\"place\":{ " +
                             "\"@type\":\"Address\"," +
-                            "\"fullAddress\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
+                            "\"full\":\"Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\"" +
                         "}" +
                     "}," +
                     "\"ANNIVERSARY-3\": {" +

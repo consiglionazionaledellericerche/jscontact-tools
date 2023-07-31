@@ -18,9 +18,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the NickName type as defined in section 2.2.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the Nickname type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","name","contexts","pref","label"})
@@ -30,26 +30,26 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class NickName extends AbstractJSContactType implements IdMapValue, Serializable, HasContexts {
+public class Nickname extends AbstractJSContactType implements IdMapValue, Serializable, HasContexts {
 
-    @Pattern(regexp = "NickName", message="invalid @type value in NickName")
+    @Pattern(regexp = "Nickname", message="invalid @type value in Nickname")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "NickName";
+    String _type = "Nickname";
 
-    @NotNull(message = "name is missing in NickName")
+    @NotNull(message = "name is missing in Nickname")
     @NonNull
     String name;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
-    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in NickName - Only Boolean.TRUE allowed")
+    @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Nickname - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
-    @Min(value=1, message = "invalid pref in NickName - value must be greater or equal than 1")
-    @Max(value=100, message = "invalid pref in NickName - value must be less or equal than 100")
+    @Min(value=1, message = "invalid pref in Nickname - value must be greater or equal than 1")
+    @Max(value=100, message = "invalid pref in Nickname - value must be less or equal than 100")
     Integer pref;
 
 }

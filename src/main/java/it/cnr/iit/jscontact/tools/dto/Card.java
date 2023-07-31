@@ -28,10 +28,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
-import it.cnr.iit.jscontact.tools.dto.deserializers.ContactChannelsKeyDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.VCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.serializers.ContactChannelsKeySerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.VCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
@@ -52,13 +50,14 @@ import java.util.*;
  * Class mapping the Card object as defined in section 2 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard#section-2.15.1">draft-ietf-calext-jscontact-vcard</a>
  * @author Mario Loffredo
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "@type", "@version", "created", "kind", "language", "members", "prodId", "relatedTo", "uid", "updated",
-        "fullName", "name", "nickNames", "organizations", "speakToAs", "titles",
-        "emails", "onlineServices", "phones", "contactBy", "preferredLanguages",
+        "name", "nicknames", "organizations", "speakToAs", "titles",
+        "emails", "onlineServices", "phones", "preferredLanguages",
         "calendars", "schedulingAddresses",
         "addresses",
         "cryptoKeys", "directories", "links", "media",
@@ -137,31 +136,28 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.2.1 of [draft-ietf-calext-jscontact]
-    String fullName;
-
-    // Section 2.2.2 of [draft-ietf-calext-jscontact]
     @Valid
     Name name;
 
-    // Section 2.2.3 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addNickName", itemClass = NickName.class)
+    // Section 2.2.1 of [draft-ietf-calext-jscontact]
+    @JSContactCollection(addMethod = "addNickName", itemClass = Nickname.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,NickName>")
-    Map<String, NickName> nickNames;
+    @IdMapConstraint(message = "invalid Id in Map<Id,Nickname>")
+    Map<String, Nickname> nicknames;
 
-    // Section 2.2.4 of [draft-ietf-calext-jscontact]
+    // Section 2.2.2 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addOrganization", itemClass = Organization.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
     Map<String, Organization> organizations;
 
-    // Section 2.2.5 of [draft-ietf-calext-jscontact]
+    // Section 2.2.3 of [draft-ietf-calext-jscontact]
     @Valid
     SpeakToAs speakToAs;
 
-    // Section 2.2.6 of [draft-ietf-calext-jscontact]
+    // Section 2.2.4 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addTitle", itemClass = Title.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -173,39 +169,32 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.3.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addContactByPref", itemClass = ContactBy.class)
-    @JsonPropertyOrder(alphabetic = true)
-    @JsonSerialize(keyUsing = ContactChannelsKeySerializer.class)
-    @JsonDeserialize(keyUsing = ContactChannelsKeyDeserializer.class)
-    @ContactByConstraint
-    Map<ContactByType, ContactBy[]> contactBy;
-
-    // Section 2.3.2 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addEmailAddress", itemClass = EmailAddress.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
     Map<String, EmailAddress> emails;
 
-    // Section 2.3.3 of [draft-ietf-calext-jscontact]
+    // Section 2.3.2 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addOnlineService", itemClass = OnlineService.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,OnlineService>")
     Map<String,OnlineService> onlineServices;
 
-    // Section 2.3.4 of [draft-ietf-calext-jscontact]
+    // Section 2.3.3 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addPhone", itemClass = Phone.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
     Map<String,Phone> phones;
 
-    // Section 2.3.5 of [draft-ietf-calext-jscontact]
+    // Section 2.3.4 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addLanguagePref", itemClass = LanguagePref.class)
     @JsonPropertyOrder(alphabetic = true)
-    @PreferredLanguagesConstraint
-    Map<String, LanguagePref[]> preferredLanguages;
+    @Valid
+    @IdMapConstraint(message = "invalid Id in Map<Id,LanguagePref>")
+    Map<String, LanguagePref> preferredLanguages;
 
 
     /*
@@ -306,6 +295,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInfo>")
     Map<String, PersonalInfo> personalInfo;
 
+    // Section 2.15.1 of [draft-ietf-calext-jscontact-vcard]
     @JsonProperty("vCardProps")
     @JsonSerialize(using = VCardPropsSerializer.class)
     @JsonDeserialize(using = VCardPropsDeserializer.class)
@@ -375,14 +365,14 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * Adds a nickname to this object.
      *
      * @param id the nickname identifier
-     * @param nickName the object representing the nickname
+     * @param nickname the object representing the nickname
      */
-    public void addNickName(String id, NickName nickName) {
+    public void addNickName(String id, Nickname nickname) {
 
-        if(nickNames == null)
-            nickNames = new HashMap<>();
+        if(nicknames == null)
+            nicknames = new HashMap<>();
 
-        nickNames.putIfAbsent(id,nickName);
+        nicknames.putIfAbsent(id,nickname);
     }
     /**
      * Adds an organization to this object.
@@ -551,40 +541,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
         if (preferredLanguages == null)
             preferredLanguages = new HashMap<>();
 
-        LanguagePref[] languagesPerId = preferredLanguages.get(id);
-        LanguagePref[] languages;
-        if (languagePref == null)
-            languages = new LanguagePref[]{};
-        else
-            languages = new LanguagePref[] {languagePref};
-        if (languagesPerId == null)
-            preferredLanguages.put(id, languages);
-        else
-            preferredLanguages.put(id, ArrayUtils.addAll(languagesPerId, languages));
-    }
-
-    /**
-     * Adds a contact channel preference to this object.
-     *
-     * @param id the contact channel preference identifier
-     * @param contactByPref the object representing the contact channel preference
-     */
-    public void addContactByPref(ContactByType id, ContactBy contactByPref) {
-
-        if (contactBy == null)
-            contactBy = new HashMap<>();
-
-        ContactBy[] contactChannelsPerId = contactBy.get(id);
-
-        ContactBy[] channels;
-        if (contactByPref == null)
-            channels = new ContactBy[]{};
-        else
-            channels = new ContactBy[] {contactByPref};
-        if (contactChannelsPerId == null)
-            contactBy.put(id, channels);
-        else
-            contactBy.put(id, ArrayUtils.addAll(contactChannelsPerId, channels));
+        preferredLanguages.putIfAbsent(id, languagePref);
     }
 
     /**
@@ -689,9 +646,9 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
             localizationsPerLanguage = new HashMap<>();
 
         if (localizationsPerLanguage.containsKey(path))
-            return;
-
-        localizationsPerLanguage.put(path, object);
+            localizationsPerLanguage.replace(path, object);
+        else
+            localizationsPerLanguage.put(path, object);
 
         if (localizations.containsKey(language))
             localizations.replace(language, localizationsPerLanguage);

@@ -13,30 +13,34 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto.serializers;
+package it.cnr.iit.jscontact.tools.dto.deserializers;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import it.cnr.iit.jscontact.tools.dto.ContactByType;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import it.cnr.iit.jscontact.tools.dto.*;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 /**
- * Custom JSON serializer for the "contactBy" map.
+ * Custom JSON deserializer for the PronounceSystem value.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class ContactChannelsKeySerializer extends JsonSerializer<ContactByType> {
+public class PronounceSystemDeserializer extends JsonDeserializer<PhoneticSystem> {
 
     @Override
-    public void serialize(ContactByType value,
-                          JsonGenerator gen,
-                          SerializerProvider serializers)
+    public PhoneticSystem deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
-
-        gen.writeFieldName(value.toJson());
+        JsonNode node = jp.getCodec().readTree(jp);
+        String value = node.asText();
+        try {
+            return PhoneticSystem.builder().rfcValue(PhoneticSystemEnum.getEnum(value)).build();
+        } catch (IllegalArgumentException e) {
+            return PhoneticSystem.builder().extValue(V_Extension.toV_Extension(value)).build();
+        }
     }
 }
