@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.15.1</version>
+		  <version>0.16.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.15.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.0'
 ```
 
 # Features
@@ -31,9 +31,10 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 5. [vCard Conversion](#vcard-conversion)
 6. [JSContact Conversion](#jscontact-conversion)
 7. [Testing](#testing)
-8. [ez-vcard bugs](#ez-vcard-bugs)
-9. [JSContact Compliance](#jscontact-compliance)
-10. [References](#references)
+8. [ez-vcard extensions](#ez-vcard-extensions)
+9. [ez-vcard bugs](#ez-vcard-bugs)
+10. [JSContact Compliance](#jscontact-compliance)
+11. [References](#references)
 
 
 <a name="creation"></a>
@@ -578,6 +579,13 @@ Here in the following two examples of conversion between JSContact Card and a vC
 
 Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all the features provided.
 
+<a name="ez-vcard-extensions"></a>
+## ez-vcard extensions
+
+New scribers and properties have been defined to support the implementation of the extensions to vCard name and address components as dfined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/).
+To parse and write vCard instances having such extensions, the methods provided by ez-vcard in the Ezvcard class cannot be used.
+Similar methods considering those extensions have been defined in the classes VCardParser and VCardWriter.
+
 <a name="ez-vcard-bugs"></a>
 ## ez-vcard bugs
 
@@ -614,11 +622,11 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.15.1 implements the following draft versions:
+Version 0.16.0 implements the following draft versions:
 
-* draft-ietf-calext-jscontact-11
-* draft-ietf-calext-jscontact-vcard-09
-* draft-ietf-calext-vcard-jscontact-extensions-07
+* draft-ietf-calext-jscontact-13
+* draft-ietf-calext-jscontact-vcard-11
+* draft-ietf-calext-vcard-jscontact-extensions-09
 
 # Build Instructions
 
