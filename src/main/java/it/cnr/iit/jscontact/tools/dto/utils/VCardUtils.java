@@ -39,14 +39,18 @@ public class VCardUtils {
      * Gets the Ezvcard VCardParameters object corresponding to a VCardProp "parameters" map.
      *
      * @param vCardPropParameters the vCardProp "parameters" map
+     * @param ignoreGroup tif the GROUP parameter must be considered
      * @return the Ezvcard VCardParameters object corresponding to a VCardProp "parameters" map
      */
-    public static VCardParameters getVCardParameters(Map<String,Object> vCardPropParameters) {
+    public static VCardParameters getVCardParameters(Map<String,Object> vCardPropParameters, boolean ignoreGroup) {
 
         VCardParameters vCardParameters = new VCardParameters();
 
-        for (Map.Entry<String,Object> entry : vCardPropParameters.entrySet())
+        for (Map.Entry<String,Object> entry : vCardPropParameters.entrySet()) {
+            if (ignoreGroup && VCardParamEnum.GROUP.getValue().equalsIgnoreCase(entry.getKey()))
+                continue;
             vCardParameters.put(entry.getKey(), entry.getValue().toString());
+        }
 
         return vCardParameters;
     }

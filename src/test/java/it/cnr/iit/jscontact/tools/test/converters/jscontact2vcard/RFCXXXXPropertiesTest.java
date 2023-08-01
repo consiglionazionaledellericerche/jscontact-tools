@@ -16,8 +16,11 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
+import ezvcard.VCardDataType;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -154,8 +157,35 @@ public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
         assertEquals("testSpeakToAs5 - 1","NEUTER", vcard.getExtendedProperty("GRAMGENDER").getValue());
         assertEquals("testSpeakToAs5 - 2", "they/them", vcard.getExtendedProperties("PRONOUNS").get(0).getValue());
         assertEquals("testSpeakToAs5 - 3", "2", vcard.getExtendedProperties("PRONOUNS").get(0).getParameter(VCardParamEnum.PREF.getValue()));
-        assertEquals("testSpeakToAs5 - 4", "xe/xir", vcard.getExtendedProperties("PRONOUNS").get(1).getValue());
-        assertEquals("testSpeakToAs5 - 5", "1", vcard.getExtendedProperties("PRONOUNS").get(1).getParameter(VCardParamEnum.PREF.getValue()));
+        assertEquals("testSpeakToAs5 - 4", "k19", vcard.getExtendedProperties("PRONOUNS").get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testSpeakToAs5 - 5", "xe/xir", vcard.getExtendedProperties("PRONOUNS").get(1).getValue());
+        assertEquals("testSpeakToAs5 - 6", "1", vcard.getExtendedProperties("PRONOUNS").get(1).getParameter(VCardParamEnum.PREF.getValue()));
+        assertEquals("testSpeakToAs5 - 7", "k32", vcard.getExtendedProperties("PRONOUNS").get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+    }
+
+
+    @Test
+    public void testVCardProps() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"name\": { \"full\": \"test\"}," +
+                "\"vCardProps\": [ " +
+                    "[\"x-foo1\", {\"x-bar\":\"Hello\",\"group\":\"item1\"}, \"unknown\", \"World!\"], " +
+                    "[\"x-foo2\", {\"pref\": 1}, \"integer\", 100 ] " +
+                "]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        System.out.println(VCardWriter.write(vcard));
+        assertEquals("testVCardProps - 1",2, vcard.getExtendedProperties().size());
+        assertEquals("testVCardProps - 2","World!", vcard.getExtendedProperty("X-FOO1").getValue());
+        assertEquals("testVCardProps - 3","Hello", vcard.getExtendedProperty("X-FOO1").getParameter("X-BAR"));
+        assertEquals("testVCardProps - 4","item1", vcard.getExtendedProperty("X-FOO1").getGroup());
+        assertEquals("testVCardProps - 5","100", vcard.getExtendedProperty("X-FOO2").getValue());
+        assertEquals("testVCardProps - 6","1", vcard.getExtendedProperty("X-FOO2").getParameter("PREF"));
+        assertEquals("testVCardProps - 7",VCardDataType.INTEGER, vcard.getExtendedProperty("X-FOO2").getDataType());
+
     }
 
 }
