@@ -69,7 +69,8 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 	 * @param familyNames the family names or null to remove
 	 */
 	public void setFamilyNames(List<String> familyNames) {
-		this.familyNames.addAll(familyNames);
+		if (familyNames!=null)
+			this.familyNames.addAll(familyNames);
 	}
 
 	/**
