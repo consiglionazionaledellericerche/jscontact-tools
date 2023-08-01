@@ -41,7 +41,7 @@ public class AnniversaryDateDeserializer extends JsonDeserializer<AnniversaryDat
     public AnniversaryDate deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
-        if (node.get("@type").asText().equals("Timestamp")) {
+        if (node.get("@type")!= null && node.get("@type").asText().equals("Timestamp")) {
             return AnniversaryDate.builder().date(mapper.treeToValue(node, Timestamp.class)).build();
         } else {
             return AnniversaryDate.builder().partialDate(mapper.treeToValue(node, PartialDate.class)).build();
