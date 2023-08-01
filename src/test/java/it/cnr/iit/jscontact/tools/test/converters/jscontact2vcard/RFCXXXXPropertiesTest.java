@@ -17,10 +17,8 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
-import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -177,7 +175,6 @@ public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
                 "]" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(VCardWriter.write(vcard));
         assertEquals("testVCardProps - 1",2, vcard.getExtendedProperties().size());
         assertEquals("testVCardProps - 2","World!", vcard.getExtendedProperty("X-FOO1").getValue());
         assertEquals("testVCardProps - 3","Hello", vcard.getExtendedProperty("X-FOO1").getParameter("X-BAR"));
