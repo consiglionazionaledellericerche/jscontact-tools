@@ -16,10 +16,12 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
+import it.cnr.iit.jscontact.tools.dto.PhoneticSystem;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -355,7 +357,8 @@ public class NameTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testName8 - 1", "John Philip Paul Stevenson Loffredo Jr. M.D.", vcard.getFormattedName().getValue());
         assertTrue("testName8 - 2", Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
-        assertEquals("testName8 - 3", "Stevenson,Loffredo", vcard.getProperty(ExtendedStructuredName.class).getFamily());
+        assertEquals("testName8 - 3", "Stevenson", vcard.getProperty(ExtendedStructuredName.class).getFamilyNames().get(0));
+        assertEquals("testName8 - 3", "Loffredo", vcard.getProperty(ExtendedStructuredName.class).getFamilyNames().get(1));
         assertEquals("testName8 - 4", "John", vcard.getProperty(ExtendedStructuredName.class).getGiven());
         assertEquals("testName8 - 5", "Philip", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(0));
         assertEquals("testName8 - 6", "Paul", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(1));
@@ -392,7 +395,8 @@ public class NameTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testName9 - 1", "John Philip Paul Stevenson-Loffredo Jr. M.D.", vcard.getFormattedName().getValue());
         assertTrue("testName9 - 2", Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
-        assertEquals("testName9 - 3", "Stevenson,Loffredo", vcard.getProperty(ExtendedStructuredName.class).getFamily());
+        assertEquals("testName9 - 3.a", "Stevenson", vcard.getProperty(ExtendedStructuredName.class).getFamilyNames().get(0));
+        assertEquals("testName9 - 3.b", "Loffredo", vcard.getProperty(ExtendedStructuredName.class).getFamilyNames().get(1));
         assertEquals("testName9 - 4", "John", vcard.getProperty(ExtendedStructuredName.class).getGiven());
         assertEquals("testName9 - 5", "Philip", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(0));
         assertEquals("testName9 - 6", "Paul", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(1));
@@ -404,4 +408,32 @@ public class NameTest extends JSContact2VCardTest {
 
     }
 
+
+    @Test
+    public void testName10() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\" : \"Card\"," +
+                "\"@version\" : \"1.0\"," +
+                "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
+                "\"name\": { " +
+                    "\"components\": [ " +
+                        "{ \"kind\": \"given\", \"value\": \"John\", \"phonetic\": \"/d\\u0361\\u0292\\u0251n/\"}, " +
+                        "{ \"kind\": \"surname\", \"value\": \"Smith\", \"phonetic\": \"/sm\\u026a\\u03b8/\" } " +
+                    "]," +
+                    "\"phoneticSystem\": \"ipa\"" +
+                "} " +
+                "} ";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testName10 - 1", "John Smith", vcard.getFormattedName().getValue());
+        assertTrue("testName10 - 2", Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
+        assertEquals("testName10 - 3", 2, vcard.getProperties(ExtendedStructuredName.class).size());
+        assertEquals("testName10 - 4", "Smith", vcard.getProperties(ExtendedStructuredName.class).get(0).getFamily());
+        assertEquals("testName10 - 5", "John", vcard.getProperties(ExtendedStructuredName.class).get(0).getGiven());
+        assertEquals("testName10 - 6", "/sm\u026a\u03b8/", vcard.getProperties(ExtendedStructuredName.class).get(1).getFamily());
+        assertEquals("testName10 - 7", "/d\u0361\u0292\u0251n/", vcard.getProperties(ExtendedStructuredName.class).get(1).getGiven());
+        assertEquals("testName10 - 7", PhoneticSystem.ipa().toJson(), vcard.getProperties(ExtendedStructuredName.class).get(1).getParameter(VCardParamEnum.PHONETIC.getValue()));
+
+    }
 }

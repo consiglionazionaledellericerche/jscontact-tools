@@ -14,7 +14,7 @@ import ezvcard.property.StructuredName;
 import ezvcard.property.VCardProperty;
 
 public class ExtendedStructuredName extends VCardProperty implements HasAltId {
-	private String family;
+	private final List<String> familyNames;
 	private String given;
 	private final List<String> additional;
 	private final List<String> prefixes;
@@ -24,6 +24,7 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 
 
 	public ExtendedStructuredName() {
+		familyNames = new ArrayList<>();
 		additional = new ArrayList<>();
 		prefixes = new ArrayList<>();
 		suffixes = new ArrayList<>();
@@ -37,7 +38,7 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 	 */
 	public ExtendedStructuredName(ExtendedStructuredName original) {
 		super(original);
-		family = original.family;
+		familyNames = new ArrayList<>(original.familyNames);
 		given = original.given;
 		additional = new ArrayList<>(original.additional);
 		prefixes = new ArrayList<>(original.prefixes);
@@ -47,19 +48,36 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 	}
 
 	/**
-	 * Gets the family name (aka "surname" or "last name").
+	 * Gets the family name (aka "surname" or "last name" and "secondary surname").
 	 * @return the family name or null if not set
 	 */
-	public String getFamily() {
-		return family;
+	public List<String> getFamilyNames() {
+		return familyNames;
 	}
 
 	/**
-	 * Sets the family name (aka "surname" or "last name").
+	 * Gets the family name (aka "surname" or "last name" and "secondary surname").
+	 * @return the family name or null if not set
+	 */
+	public String getFamily() {
+		return (familyNames.isEmpty()) ? null : familyNames.get(0);
+	}
+
+
+	/**
+	 * Sets the family name (aka "surname" or "last name" and "secondary surname").
+	 * @param familyNames the family names or null to remove
+	 */
+	public void setFamilyNames(List<String> familyNames) {
+		this.familyNames.addAll(familyNames);
+	}
+
+	/**
+	 * Sets the family names (aka "surname" or "last name" and "secondary surname").
 	 * @param family the family name or null to remove
 	 */
 	public void setFamily(String family) {
-		this.family = family;
+		this.familyNames.add(family);
 	}
 
 	/**
@@ -193,7 +211,7 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 	@Override
 	protected Map<String, Object> toStringValues() {
 		Map<String, Object> values = new LinkedHashMap<>();
-		values.put("family", family);
+		values.put("family", familyNames);
 		values.put("given", given);
 		values.put("additional", additional);
 		values.put("prefixes", prefixes);
@@ -231,7 +249,7 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + additional.hashCode();
-		result = prime * result + ((family == null) ? 0 : family.hashCode());
+		result = prime * result + familyNames.hashCode();
 		result = prime * result + ((given == null) ? 0 : given.hashCode());
 		result = prime * result + prefixes.hashCode();
 		result = prime * result + suffixes.hashCode();
@@ -246,9 +264,7 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 		if (!super.equals(obj)) return false;
 		ExtendedStructuredName other = (ExtendedStructuredName) obj;
 		if (!additional.equals(other.additional)) return false;
-		if (family == null) {
-			if (other.family != null) return false;
-		} else if (!family.equals(other.family)) return false;
+		if (!familyNames.equals(other.familyNames)) return false;
 		if (given == null) {
 			if (other.given != null) return false;
 		} else if (!given.equals(other.given)) return false;
@@ -260,13 +276,10 @@ public class ExtendedStructuredName extends VCardProperty implements HasAltId {
 
 	public boolean equalsStructuredName(StructuredName sn) {
 
-		if (!this.surname2.isEmpty() || !this.generation.isEmpty())
-			return false;
+		if (sn == null) return false;
 
 		if (!additional.equals(sn.getAdditionalNames())) return false;
-		if (family == null) {
-			if (sn.getFamily() != null) return false;
-		} else if (!family.equals(sn.getFamily())) return false;
+		if (familyNames.size() != 1 || !familyNames.get(0).equals(sn.getFamily())) return false;
 		if (given == null) {
 			if (sn.getGiven() != null) return false;
 		} else if (!given.equals(sn.getGiven())) return false;

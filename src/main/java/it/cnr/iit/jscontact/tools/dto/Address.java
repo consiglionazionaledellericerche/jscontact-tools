@@ -27,11 +27,9 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
-import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -152,60 +150,55 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      */
     public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
 
-    private String getStreetAddressDetails(List<AddressComponentEnum> componentsToCheck) {
+    private List<String> getStreetAddressDetails(List<AddressComponentEnum> componentsToCheck) {
         if (components == null)
             return null;
 
         List<String> addressComponents = new ArrayList<>();
-        boolean applySeparator = false;
         for (AddressComponentEnum componentEnum : componentsToCheck) {
             AddressComponent component = getComponent(AddressComponentKind.builder().rfcValue(componentEnum).build());
-            if (component != null) {
-                if (componentEnum != AddressComponentEnum.SEPARATOR) {
-                    applySeparator = true;
-                    addressComponents.add(component.getValue());
-                    /*
-                    if (isOrdered != null && isOrdered == Boolean.TRUE && defaultSeparator != null)
-                        addressComponents.add(defaultSeparator);
-                    else
-                        addressComponents.add(DelimiterUtils.SPACE_DELIMITER);
-                     */
-                    addressComponents.add(DelimiterUtils.SPACE_DELIMITER);
-                } else {
-                    if (applySeparator)
-                        addressComponents.set(addressComponents.size() - 2, component.getValue());
-                }
-            }
+            if (component!=null)
+                addressComponents.add(component.getValue());
         }
 
-        return (addressComponents.isEmpty()) ? null : String.join(StringUtils.EMPTY,addressComponents.subList(0,addressComponents.size()-1));
+        return (addressComponents.isEmpty()) ? null : addressComponents;
     }
 
     /**
      * Returns the street details of this object.
      *
-     * @return a text obtained by concatenating the values of AddressComponent items in the "components" array tagged as NAME, NUMBER or DIRECTION. The items are separated by the value of the item tagged as SEPARATOR if it isn't empty, space otherwise
+     * @return a text obtained by concatenating the values of AddressComponent items in the "components" array tagged as NUMBER, NAME, BLOCK, SUBDISTRICT, DISTRICT, LANDMARK,  or DIRECTION.
      */
     @JsonIgnore
-    public String getStreetAddress() {
+    public List<String> getStreetAddressItems() {
 
         return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.NUMBER,
                                                      AddressComponentEnum.NAME,
                                                      AddressComponentEnum.BLOCK,
-                                                     AddressComponentEnum.DIRECTION,
+                                                     AddressComponentEnum.SUBDISTRICT,
+                                                     AddressComponentEnum.DISTRICT,
                                                      AddressComponentEnum.LANDMARK,
-                                                    AddressComponentEnum.SUBDISTRICT,
-                                                    AddressComponentEnum.DISTRICT
+                                                     AddressComponentEnum.DIRECTION
                 ));
+    }
+
+    /**
+     * Returns the first street address item of this object.
+     *
+     * @return the first street address item
+     */
+    @JsonIgnore
+    public String getStreetAddress() {
+        return (getStreetAddressItems()!=null) ? getStreetAddressItems().get(0) : null;
     }
 
     /**
      * Returns the street extensions of this object.
      *
-     * @return a text obtained by concatenating the values of the AddressComponent items in the "components" array tagged as BUILDING, FLOOR, APARTMENT, ROOM, EXTENSION or UNKNOWN. The items are separated by the item tagged as SEPARATOR if it isn't empty, space otherwise
+     * @return the list of values of the AddressComponent items in the "components" array tagged as BUILDING, FLOOR, APARTMENT, ROOM.
      */
     @JsonIgnore
-    public String getStreetExtendedAddress() {
+    public List<String> getStreetExtendedAddressItems() {
 
         return getStreetAddressDetails(Arrays.asList(AddressComponentEnum.ROOM,
                 AddressComponentEnum.APARTMENT,
@@ -213,6 +206,16 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
                 AddressComponentEnum.BUILDING));
     }
 
+
+    /**
+     * Returns the first street extension item of this object.
+     *
+     * @return the first street extension item
+     */
+    @JsonIgnore
+    public String getStreetExtendedAddress() {
+        return (getStreetExtendedAddressItems()!=null) ? getStreetExtendedAddressItems().get(0) : null;
+    }
 
     /**
      * Adds a street component to this object.

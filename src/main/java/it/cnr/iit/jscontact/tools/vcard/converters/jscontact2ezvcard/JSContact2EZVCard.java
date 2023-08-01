@@ -292,7 +292,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 name.getSuffixes().add(component.getValue());
             }
         }
-        name.setFamily((surnames.size()>0) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,surnames) : null);
+        name.setFamilyNames((surnames.size()>0) ? surnames : null);
         name.setGiven((givens.size()>0) ? String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,givens) : null);
         return name;
     }
@@ -438,6 +438,15 @@ public class JSContact2EZVCard extends AbstractConverter {
                 sn.setParameter(VCardParamEnum.JSCOMPS.getValue(), toVCardJSCompsParam(jsCard.getName().getComponents(),jsCard.getName().getDefaultSeparator())); // did this way because Ez-vcard allows to sort only for surname and given name
             VCardUtils.addVCardUnmatchedParams(sn,jsCard.getName());
             sns.add(sn);
+
+            PhoneticSystem phoneticSystem = jsCard.getName().getPhoneticSystem();
+            String phoneticScript = jsCard.getName().getPhoneticScript();
+            if (phoneticSystem!=null || phoneticScript!=null) {
+                sn = toVCardStructuredName(getNameComponentsOfPhonetics(jsCard.getName().getComponents()));
+                sn.setParameter(VCardParamEnum.PHONETIC.getValue(), phoneticSystem.toJson());
+                sn.setParameter(VCardParamEnum.SCRIPT.getValue(), phoneticScript);
+                sns.add(sn);
+            }
         }
 
         return sns;
@@ -514,10 +523,10 @@ public class JSContact2EZVCard extends AbstractConverter {
                 address.getCountryCode() ==null &&
                 address.getRegion() == null &&
                 address.getLocality() == null &&
-                address.getStreetAddress() == null &&
+                address.getStreetAddressItems() == null &&
                 address.getPostOfficeBox() == null &&
                 address.getPostcode() == null &&
-                address.getStreetExtendedAddress() == null &&
+                address.getStreetExtendedAddressItems() == null &&
                 address.getStreetName() == null &&
                 address.getStreetNumber() == null &&
                 address.getDirection() == null &&
@@ -626,8 +635,10 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (config.isSetAutoAddrLabel())
                 addr.setLabel(toVCardAddressLabelParam(address));
             addr.setPoBox(address.getPostOfficeBox());
-            addr.setExtendedAddress(address.getStreetExtendedAddress());
-            addr.setStreetAddress(address.getStreetAddress());
+            if (address.getStreetExtendedAddressItems()!=null)
+                    addr.getExtendedAddresses().addAll(address.getStreetExtendedAddressItems());
+            if (address.getStreetAddressItems()!=null)
+                    addr.getStreetAddresses().addAll(address.getStreetAddressItems());
             addr.setLocality(address.getLocality());
             addr.setRegion(address.getRegion());
             addr.setPostalCode(address.getPostcode());
