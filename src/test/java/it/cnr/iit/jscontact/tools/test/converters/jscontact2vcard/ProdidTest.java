@@ -38,6 +38,9 @@ public class ProdidTest extends JSContact2VCardTest {
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testProdid - 1", "-//ONLINE DIRECTORY//NONSGML Version 1//EN", vcard.getProductId().getValue());
+        String text1 = VCardWriter.write(vcard);
+        assertFalse("testProdid - 2", text1.contains("-//ONLINE DIRECTORY//NONSGML Version 1//EN"));
+        assertTrue("testProdid - 3", text1.contains("ez-vcard 0.11.3"));
     }
 
     @Test

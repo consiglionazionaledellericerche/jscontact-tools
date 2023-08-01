@@ -28,6 +28,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum GrammaticalGenderType {
 
+    NEUTER("neuter"),
     MASCULINE("masculine"),
     FEMININE("feminine"),
     ANIMATE("animate"),

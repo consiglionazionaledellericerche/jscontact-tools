@@ -566,9 +566,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         if (jscomps == null || jscomps.length < 2) {
 
-            if (vcardName.getFamily() != null) {
-                String[] surnames = vcardName.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-                for (String surname : surnames) {
+            if (vcardName.getFamilyNames() != null) {
+                for (String surname : vcardName.getFamilyNames()) {
                     if (vcardName.getSurname2().contains(surname))
                         continue;
                     components = Name.addComponent(components, NameComponent.surname(surname, (isPhonetic) ? surname : null));
@@ -617,8 +616,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 switch (index1) {
                     case 0:
                         kind = NameComponentKind.surname();
-                        String[] surnames = vcardName.getFamily().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
-                        value = surnames[index2];
+                        value = vcardName.getFamilyNames().get(index2);
                         break;
                     case 1:
                         kind = NameComponentKind.given();

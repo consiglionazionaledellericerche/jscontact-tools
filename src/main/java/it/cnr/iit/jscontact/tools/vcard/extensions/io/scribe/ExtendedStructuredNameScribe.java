@@ -45,7 +45,7 @@ public class ExtendedStructuredNameScribe extends VCardPropertyScribe<ExtendedSt
 		 */
 		if (context.getVersion() == VCardVersion.V2_1) {
 			SemiStructuredValueBuilder builder = new SemiStructuredValueBuilder();
-			builder.append(property.getFamily());
+			builder.append(property.getFamilyNames());
 			builder.append(property.getGiven());
 			builder.append(join(property.getAdditionalNames(), ","));
 			builder.append(join(property.getPrefixes(), ","));
@@ -53,7 +53,7 @@ public class ExtendedStructuredNameScribe extends VCardPropertyScribe<ExtendedSt
 			return builder.build(false, context.isIncludeTrailingSemicolons());
 		} else {
 			StructuredValueBuilder builder = new StructuredValueBuilder();
-			builder.append(property.getFamily());
+			builder.append(property.getFamilyNames());
 			builder.append(property.getGiven());
 			builder.append(property.getAdditionalNames());
 			builder.append(property.getPrefixes());
@@ -73,7 +73,7 @@ public class ExtendedStructuredNameScribe extends VCardPropertyScribe<ExtendedSt
 			 * 2.1 does not recognize multi-valued components.
 			 */
 			SemiStructuredValueIterator it = new SemiStructuredValueIterator(value);
-			property.setFamily(it.next());
+			property.getFamilyNames().add(it.next());
 			property.setGiven(it.next());
 
 			String next = it.next();
@@ -92,7 +92,7 @@ public class ExtendedStructuredNameScribe extends VCardPropertyScribe<ExtendedSt
 			}
 		} else {
 			StructuredValueIterator it = new StructuredValueIterator(value);
-			property.setFamily(it.nextValue());
+			property.getFamilyNames().addAll(it.nextComponent());
 			property.setGiven(it.nextValue());
 			property.getAdditionalNames().addAll(it.nextComponent());
 			property.getPrefixes().addAll(it.nextComponent());
@@ -106,20 +106,20 @@ public class ExtendedStructuredNameScribe extends VCardPropertyScribe<ExtendedSt
 
 	@Override
 	protected void _writeXml(ExtendedStructuredName property, XCardElement parent) {
-		parent.append("surname", property.getFamily()); //the XML element still needs to be printed if value == null
+		parent.append("surname", property.getFamilyNames()); //the XML element still needs to be printed if value == null
 		parent.append("given", property.getGiven());
 		parent.append("additional", property.getAdditionalNames());
 		parent.append("prefix", property.getPrefixes());
 		parent.append("suffix", property.getSuffixes());
 		parent.append("surname2", property.getSurname2());
-		parent.append("feberation", property.getGeneration());
+		parent.append("generation", property.getGeneration());
 	}
 
 	@Override
 	protected ExtendedStructuredName _parseXml(XCardElement element, VCardParameters parameters, ParseContext context) {
 		ExtendedStructuredName property = new ExtendedStructuredName();
 
-		property.setFamily(s(element.first("surname")));
+		property.getFamilyNames().addAll(element.all("surname"));
 		property.setGiven(s(element.first("given")));
 		property.getAdditionalNames().addAll(element.all("additional"));
 		property.getPrefixes().addAll(element.all("prefix"));
@@ -138,7 +138,7 @@ public class ExtendedStructuredNameScribe extends VCardPropertyScribe<ExtendedSt
 	protected ExtendedStructuredName _parseHtml(HCardElement element, ParseContext context) {
 		ExtendedStructuredName property = new ExtendedStructuredName();
 
-		property.setFamily(s(element.firstValue("family-name")));
+		property.getFamilyNames().addAll(element.allValues("family-name"));
 		property.setGiven(s(element.firstValue("given-name")));
 		property.getAdditionalNames().addAll(element.allValues("additional-name"));
 		property.getPrefixes().addAll(element.allValues("honorific-prefix"));
@@ -151,7 +151,7 @@ public class ExtendedStructuredNameScribe extends VCardPropertyScribe<ExtendedSt
 
 	@Override
 	protected JCardValue _writeJson(ExtendedStructuredName property) {
-		return JCardValue.structured(property.getFamily(), property.getGiven(), property.getAdditionalNames(), property.getPrefixes(), property.getSuffixes(), property.getSurname2(), property.getGeneration());
+		return JCardValue.structured(property.getFamilyNames(), property.getGiven(), property.getAdditionalNames(), property.getPrefixes(), property.getSuffixes(), property.getSurname2(), property.getGeneration());
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class ExtendedStructuredNameScribe extends VCardPropertyScribe<ExtendedSt
 		ExtendedStructuredName property = new ExtendedStructuredName();
 		StructuredValueIterator it = new StructuredValueIterator(value.asStructured());
 
-		property.setFamily(it.nextValue());
+		property.getFamilyNames().addAll(it.nextComponent());
 		property.setGiven(it.nextValue());
 		property.getAdditionalNames().addAll(it.nextComponent());
 		property.getPrefixes().addAll(it.nextComponent());

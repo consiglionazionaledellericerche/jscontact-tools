@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
+import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -127,6 +128,34 @@ public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testSpeakToAs4 - 1","MASCULINE", vcard.getExtendedProperty("GRAMGENDER").getValue());
         assertEquals("testSpeakToAs4 - 2", "he/him", vcard.getExtendedProperty("PRONOUNS").getValue());
+    }
+
+    @Test
+    public void testSpeakToAs5() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af\"," +
+                "\"speakToAs\": {" +
+                    "\"grammaticalGender\":\"neuter\"," +
+                    "\"pronouns\": { " +
+                        "\"k19\": { " +
+                            "\"pref\":2, " +
+                            "\"pronouns\":\"they/them\"" +
+                        "}," +
+                        "\"k32\": { " +
+                            "\"pref\":1, " +
+                            "\"pronouns\":\"xe/xir\"" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testSpeakToAs5 - 1","NEUTER", vcard.getExtendedProperty("GRAMGENDER").getValue());
+        assertEquals("testSpeakToAs5 - 2", "they/them", vcard.getExtendedProperties("PRONOUNS").get(0).getValue());
+        assertEquals("testSpeakToAs5 - 3", "2", vcard.getExtendedProperties("PRONOUNS").get(0).getParameter(VCardParamEnum.PREF.getValue()));
+        assertEquals("testSpeakToAs5 - 4", "xe/xir", vcard.getExtendedProperties("PRONOUNS").get(1).getValue());
+        assertEquals("testSpeakToAs5 - 5", "1", vcard.getExtendedProperties("PRONOUNS").get(1).getParameter(VCardParamEnum.PREF.getValue()));
     }
 
 }
