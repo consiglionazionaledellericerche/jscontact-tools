@@ -11,6 +11,7 @@ import ezvcard.parameter.*;
 import ezvcard.property.*;
 import ezvcard.util.*;
 import ezvcard.util.PartialDate;
+import ezvcard.util.org.apache.commons.codec.binary.Base64;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
@@ -35,6 +36,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Constructor;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -115,7 +117,7 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static FormattedName toVCardFormattedName(NameComponent[] nameComponents, Boolean isOrdered, String defaultSeparator) {
 
         List<String> components = new ArrayList<>();
-        String separator = (StringUtils.isNotEmpty(defaultSeparator)) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER;
+        String separator = (defaultSeparator != null) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER;
         boolean applySeparator = (isOrdered == Boolean.TRUE);
         for (NameComponent pair : nameComponents) {
             if (pair.getKind().isRfcValue()) {
@@ -146,7 +148,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             return null;
 
         List<String> jscomps = new ArrayList<>();
-        String adjustedDefaultSeparator = (StringUtils.isNotEmpty(defaultSeparator)) ? DelimiterUtils.SEPARATOR_ID + ((defaultSeparator.startsWith(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? defaultSeparator.replace(DelimiterUtils.COMMA_ARRAY_DELIMITER, "\\,") : defaultSeparator ) : StringUtils.EMPTY;
+        String adjustedDefaultSeparator = (defaultSeparator != null) ? DelimiterUtils.SEPARATOR_ID + ((defaultSeparator.startsWith(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? defaultSeparator.replace(DelimiterUtils.COMMA_ARRAY_DELIMITER, "\\,") : defaultSeparator ) : StringUtils.EMPTY;
         jscomps.add(adjustedDefaultSeparator);
         int[] count = new int[] {0,0,0,0,0,0,0};
         List<NameComponentEnum> enums = Arrays.asList(NameComponentEnum.values());
@@ -175,7 +177,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             return null;
 
         List<String> jscomps = new ArrayList<>();
-        String adjustedDefaultSeparator = (StringUtils.isNotEmpty(defaultSeparator)) ? DelimiterUtils.SEPARATOR_ID + ((defaultSeparator.startsWith(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? defaultSeparator.replace(DelimiterUtils.COMMA_ARRAY_DELIMITER, "\\,") : defaultSeparator ) : StringUtils.EMPTY;
+        String adjustedDefaultSeparator = (defaultSeparator != null) ? DelimiterUtils.SEPARATOR_ID + ((defaultSeparator.startsWith(DelimiterUtils.COMMA_ARRAY_DELIMITER)) ? defaultSeparator.replace(DelimiterUtils.COMMA_ARRAY_DELIMITER, "\\,") : defaultSeparator ) : StringUtils.EMPTY;
         jscomps.add(adjustedDefaultSeparator);
         int[] count = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         List<AddressComponentEnum> enums = Arrays.asList(AddressComponentEnum.values());
@@ -1088,13 +1090,115 @@ public class JSContact2EZVCard extends AbstractConverter {
         return null;
     }
 
-    private static Photo toVCardPhoto(MediaResource resource) {
 
-        ImageType it = toVCardImageTypeValue(resource.getMediaType());
-        if (it == null) return null;
-        Photo photo = new Photo(resource.getUri(), it);
+    private <T extends UriProperty> T toVCardUriProperty(Class<T> classs, Resource resource, VCard vcard) {
+
+        try {
+            Constructor<T> constructor = classs.getDeclaredConstructor(String.class);
+            T object = constructor.newInstance(resource.getUri());
+            fillVCardProperty(object,resource);
+            VCardUtils.addVCardUnmatchedParams(object,resource);
+            addVCardPropIdParam(object, resource.getPropId());
+            addVCardX_ABLabel(resource, object, vcard);
+            return object;
+        } catch (Exception e) {
+            throw new InternalErrorException(e.getMessage());
+        }
+    }
+
+
+    private <T extends BinaryProperty> T toVCardImageProperty(Class<T> classs, Resource resource) {
+
+        T object;
+        Constructor<T> constructor;
+        try {
+            if (resource.getUri().startsWith("data:")) {
+                DataUri data = DataUri.parse(resource.getUri());
+                constructor = classs.getDeclaredConstructor(byte[].class, ImageType.class);
+                ImageType imageType = toVCardImageTypeValue(data.getContentType());
+                object = constructor.newInstance(data.getData(), imageType);
+                if (data.getText() != null)
+                    classs.getDeclaredMethod("setText", String.class, SoundType.class).invoke(object, data.getText(), imageType);
+            } else {
+                constructor = classs.getDeclaredConstructor(String.class, ImageType.class);
+                object = constructor.newInstance(resource.getUri(), toVCardImageTypeValue(resource.getMediaType()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalErrorException(e.getMessage());
+        }
+
+        return object;
+    }
+
+
+    private <T extends BinaryProperty> T toVCardSoundProperty(Class<T> classs, Resource resource) {
+
+        T object;
+        Constructor<T> constructor;
+        try {
+            if (resource.getUri().startsWith("data:")) {
+                DataUri data = DataUri.parse(resource.getUri());
+                constructor = classs.getDeclaredConstructor(byte[].class, SoundType.class);
+                SoundType soundType = toVCardSoundTypeValue(data.getContentType());
+                object = constructor.newInstance(data.getData(), soundType);
+                if (data.getText() != null)
+                    classs.getDeclaredMethod("setText", String.class, SoundType.class).invoke(object, data.getText(), soundType);
+            } else {
+                constructor = classs.getDeclaredConstructor(String.class, SoundType.class);
+                object = constructor.newInstance(resource.getUri(), toVCardSoundTypeValue(resource.getMediaType()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalErrorException(e.getMessage());
+        }
+
+        return object;
+    }
+
+
+    private <T extends BinaryProperty> T toVCardKeyProperty(Class<T> classs, Resource resource) {
+
+        T object;
+        Constructor<T> constructor;
+        try {
+            if (resource.getUri().startsWith("data:")) {
+                DataUri data = DataUri.parse(resource.getUri());
+                constructor = classs.getDeclaredConstructor(byte[].class, KeyType.class);
+                KeyType keyType = toVCardKeyTypeValue(data.getContentType());
+                object = constructor.newInstance(data.getData(), keyType);
+                if (data.getText() != null)
+                    classs.getDeclaredMethod("setText", String.class, KeyType.class).invoke(object, data.getText(), keyType);
+            } else {
+                constructor = classs.getDeclaredConstructor(String.class, KeyType.class);
+                object = constructor.newInstance(resource.getUri(), toVCardKeyTypeValue(resource.getMediaType()));
+            }
+        } catch (Exception e) {
+            throw new InternalErrorException(e.getMessage());
+        }
+
+        return object;
+    }
+
+
+    private <T extends BinaryProperty> T toVCardImageProperty(Class<T> classs, Resource resource, VCard vcard) {
+
+        try {
+            T object = toVCardImageProperty(classs, resource);
+            fillVCardProperty(object,resource);
+            VCardUtils.addVCardUnmatchedParams(object,resource);
+            addVCardPropIdParam(object, resource.getPropId());
+            addVCardX_ABLabel(resource, object, vcard);
+            return object;
+        } catch (Exception e) {
+            throw new InternalErrorException(e.getMessage());
+        }
+    }
+
+    private Photo toVCardPhoto(MediaResource resource) {
+
+        Photo photo = toVCardImageProperty(Photo.class, resource);
         photo.setPref(resource.getPref());
-        photo.setContentType(it);
         VCardUtils.addVCardUnmatchedParams(photo,resource);
         return photo;
     }
@@ -1151,37 +1255,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             property.setParameter(VCardParamEnum.TYPE.getValue(), vCardTypeValue);
     }
 
-    private <T extends UriProperty> T toVCardUriProperty(Class<T> classs, Resource resource, VCard vcard) {
 
-        try {
-            Constructor<T> constructor = classs.getDeclaredConstructor(String.class);
-            T object = constructor.newInstance(resource.getUri());
-            fillVCardProperty(object,resource);
-            VCardUtils.addVCardUnmatchedParams(object,resource);
-            addVCardPropIdParam(object, resource.getPropId());
-            addVCardX_ABLabel(resource, object, vcard);
-            return object;
-        } catch (Exception e) {
-            throw new InternalErrorException(e.getMessage());
-        }
-    }
-
-    private <T extends BinaryProperty> T toVCardBinaryProperty(Class<T> classs, Resource resource, VCard vcard) {
-
-        try {
-            ImageType it = toVCardImageTypeValue(resource.getMediaType());
-            Constructor<T> constructor = classs.getDeclaredConstructor(String.class, ImageType.class);
-            T object = constructor.newInstance(resource.getUri(), it);
-            fillVCardProperty(object,resource);
-            VCardUtils.addVCardUnmatchedParams(object,resource);
-            addVCardPropIdParam(object, resource.getPropId());
-            addVCardX_ABLabel(resource, object, vcard);
-            return object;
-        } catch (Exception e) {
-            throw new InternalErrorException(e.getMessage());
-        }
-
-    }
 
     private void fillVCardPropsFromJSCardOnlineServices(VCard vcard, Card jsCard) {
 
@@ -1263,7 +1337,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             return;
 
         for (Map.Entry<String,CryptoResource> entry : jsCard.getCryptoKeys().entrySet()) {
-            Key key = new Key(entry.getValue().getUri(), toVCardKeyTypeValue(entry.getValue().getMediaType()));
+            Key key = toVCardKeyProperty(Key.class, entry.getValue());
             VCardUtils.addVCardUnmatchedParams(key,entry.getValue());
             addVCardPropIdParam(key, entry.getKey());
             addVCardX_ABLabel(entry.getValue(),key,vcard);
@@ -1311,14 +1385,14 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                 switch (resource.getKind().getRfcValue()) {
                     case SOUND:
-                        Sound sound = new Sound(resource.getUri(), toVCardSoundTypeValue(resource.getMediaType()));
+                        Sound sound = toVCardSoundProperty(Sound.class, resource);
                         VCardUtils.addVCardUnmatchedParams(sound,resource);
                         addVCardPropIdParam(sound, resource.getPropId());
                         addVCardX_ABLabel(resource, sound, vcard);
                         vcard.getSounds().add(sound);
                         break;
                     case LOGO:
-                        vcard.getLogos().add(toVCardBinaryProperty(Logo.class, resource, vcard));
+                        vcard.getLogos().add(toVCardImageProperty(Logo.class, resource, vcard));
                         break;
                     case PHOTO:
                         Photo photo = toVCardPhoto(resource);

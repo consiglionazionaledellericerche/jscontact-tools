@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
+import ezvcard.util.DataUri;
 import it.cnr.iit.jscontact.tools.constraints.UriConstraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -29,6 +30,15 @@ public class UriValidator implements ConstraintValidator<UriConstraint, String> 
 
         if (uri == null)
             return true;
+
+        if (uri.startsWith("data:")) {
+            try {
+                DataUri dataUri = DataUri.parse(uri);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
 
         try {
             URI.create(uri);
