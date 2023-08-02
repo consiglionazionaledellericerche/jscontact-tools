@@ -877,13 +877,21 @@ public class JSContact2EZVCard extends AbstractConverter {
                         vcard.setBirthday(toVCardDateOrTimeProperty(Birthday.class, anniversary));
                         VCardUtils.addVCardUnmatchedParams(vcard.getBirthday(),anniversary);
                         addVCardPropIdParam(vcard.getBirthday(), entry.getKey());
-                        vcard.setBirthplace(toVCardPlaceProperty(Birthplace.class, anniversary));
+                        Birthplace birthplace = toVCardPlaceProperty(Birthplace.class, anniversary);
+                        if (birthplace!=null) {
+                            addVCardPropIdParam(birthplace, entry.getKey());
+                            vcard.setBirthplace(birthplace);
+                        }
                         break;
                     case DEATH:
                         vcard.setDeathdate(toVCardDateOrTimeProperty(Deathdate.class, anniversary));
                         VCardUtils.addVCardUnmatchedParams(vcard.getDeathdate(),anniversary);
                         addVCardPropIdParam(vcard.getDeathdate(), entry.getKey());
-                        vcard.setDeathplace(toVCardPlaceProperty(Deathplace.class, anniversary));
+                        Deathplace deathplace = toVCardPlaceProperty(Deathplace.class, anniversary);
+                        if (deathplace!=null) {
+                            addVCardPropIdParam(deathplace, entry.getKey());
+                            vcard.setDeathplace(deathplace);
+                        }
                         break;
                     case WEDDING:
                         vcard.setAnniversary(toVCardDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));

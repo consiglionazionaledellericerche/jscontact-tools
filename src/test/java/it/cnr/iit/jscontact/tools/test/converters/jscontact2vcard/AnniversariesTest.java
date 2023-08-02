@@ -78,6 +78,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         assertEquals("testAnniversaries2 - 1", 0, vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
         assertEquals("testAnniversaries2 - 2", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getBirthplace().getText());
         assertEquals("testAnniversaries2 - 3", "ANNIVERSARY-1", vcard.getBirthday().getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAnniversaries2 - 4", "ANNIVERSARY-1", vcard.getBirthplace().getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
     @Test
