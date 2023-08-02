@@ -373,7 +373,6 @@ public class AnniversariesTest extends JSContact2VCardTest {
                         "\"@type\":\"Anniversary\"," +
                         "\"kind\":\"wedding\", " +
                         "\"date\":{" +
-                            "\"@type\":\"PartialDate\"," +
                             "\"year\":1986, " +
                             "\"month\":2 " +
                         "}" +

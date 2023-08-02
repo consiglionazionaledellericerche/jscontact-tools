@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import lombok.*;
@@ -91,7 +92,7 @@ public abstract class AbstractExtensibleJSContactType {
             HasKind o = (HasKind) this;
             if (o.getKind()!=null && o.getKind().isExtValue()) // extended value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
-            else if (o.getKind()==null) // unspecified value for a type
+            else if (o.getKind()==null && !(o instanceof HasOptionalKind)) // unspecified value for a type
                 map.put(String.format("%s", removeLastChar(jsonPointer)), this);
         }
 

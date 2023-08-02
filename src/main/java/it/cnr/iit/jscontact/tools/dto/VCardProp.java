@@ -51,9 +51,17 @@ public class VCardProp {
      * @return the Ezvcard VCardParameters object corresponding to the parameters map
      */
     public VCardParameters getVCardParameters() {
-        return VCardUtils.getVCardParameters(this.parameters);
+        return VCardUtils.getVCardParameters(this.parameters, true);
     }
 
+    /**
+     * Gets the value of the group parameter.
+     *
+     * @return the value of the group parameter if any
+     */
+    public String getGroupParameterValue() {
+        return VCardUtils.getVCardParamValue(VCardUtils.getVCardParameters(this.parameters, false), VCardParamEnum.GROUP);
+    }
 
 
 }

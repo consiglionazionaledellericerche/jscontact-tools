@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.LinkResourceTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.Pattern;
@@ -40,7 +41,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class LinkResource extends Resource implements HasKind {
+public class LinkResource extends Resource implements HasKind, HasOptionalKind {
 
     @Pattern(regexp = "LinkResource", message="invalid @type value in LinkResource")
     @JsonProperty("@type")

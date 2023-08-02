@@ -21,7 +21,6 @@ import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -436,4 +435,28 @@ public class NameTest extends JSContact2VCardTest {
         assertEquals("testName10 - 7", PhoneticSystem.ipa().toJson(), vcard.getProperties(ExtendedStructuredName.class).get(1).getParameter(VCardParamEnum.PHONETIC.getValue()));
 
     }
+
+
+    @Test
+    public void testName11() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\" : \"Card\"," +
+                "\"@version\" : \"1.0\"," +
+                "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
+                "\"name\": { " +
+                    "\"components\": [ " +
+                        "{ \"kind\": \"given\", \"value\": \"John\"} " +
+                    "]" +
+                "} " +
+                "} ";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testName11 - 1", "John", vcard.getFormattedName().getValue());
+        assertTrue("testName11 - 2", Boolean.parseBoolean(vcard.getFormattedName().getParameter(VCardParamEnum.DERIVED.getValue())));
+        assertEquals("testName11 - 3", 1, vcard.getProperties(ExtendedStructuredName.class).size());
+        assertEquals("testName11 - 4", "John", vcard.getProperties(ExtendedStructuredName.class).get(0).getGiven());
+
+    }
+
 }

@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.16.2</version>
+		  <version>0.16.3</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.2'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.3'
 ```
 
 # Features
@@ -622,7 +622,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.16.2 implements the following draft versions:
+Version 0.16.3 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-13
 * draft-ietf-calext-jscontact-vcard-11

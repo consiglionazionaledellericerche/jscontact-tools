@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.TitleTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -27,7 +28,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Title extends AbstractJSContactType implements HasKind, IdMapValue, Serializable {
+public class Title extends AbstractJSContactType implements HasKind, HasOptionalKind, IdMapValue, Serializable {
 
     @Pattern(regexp = "Title", message="invalid @type value in Title")
     @JsonProperty("@type")

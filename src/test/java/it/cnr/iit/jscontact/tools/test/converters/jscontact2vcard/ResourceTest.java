@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.parameter.SoundType;
+import ezvcard.util.org.apache.commons.codec.binary.Base64;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
@@ -105,6 +106,9 @@ public class ResourceTest extends JSContact2VCardTest {
                         "\"@type\":\"LinkResource\"," +
                         "\"kind\": \"contact\","+
                         "\"uri\": \"mailto:contact@example.com\"" +
+                    "}," +
+                    "\"LINK-1\": {" +
+                        "\"uri\": \"https://example.com\"" +
                     "}" +
                 "}" +
                 "}";
@@ -113,6 +117,8 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource3 - 2", "CONTACT-URI", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testResource3 - 2", "mailto:contact@example.com", vcard.getExtendedProperties().get(0).getValue());
         assertEquals("testResource3 - 4", "CONTACT-1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testResource3 - 5", "LINK-1", vcard.getUrls().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testResource3 - 6", "https://example.com", vcard.getUrls().get(0).getValue());
     }
 
     @Test
@@ -290,6 +296,26 @@ public class ResourceTest extends JSContact2VCardTest {
         assertEquals("testResource10 - 5", "text/calendar", vcard.getCalendarUris().get(1).getMediaType());
         assertEquals("testResource10 - 6", "CALENDAR-1", vcard.getCalendarUris().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
         assertEquals("testResource10 - 7", "CALENDAR-2", vcard.getCalendarUris().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+    }
+
+    @Test
+    public void testResource11() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\": { \"full\": \"test\"}," +
+                "\"cryptoKeys\": {"+
+                "\"KEY-1\": {" +
+                    "\"@type\":\"CryptoResource\"," +
+                        "\"uri\": \"data:application/pgp-keys;base64,MIIBCgKCAQEA+xGZ/wcz9ugFpP07Nspo6U17l0YhFiFpxxU4pTk3Lifz9R3zsIsuERwta7+fWIfxOo208ett/jhskiVodSEt3QBGh4XBipyWopKwZ93HHaDVZAALi/2A+xTBtWdEo7XGUujKDvC2/aZKukfjpOiUI8AhLAfjmlcD/UZ1QPh0mHsglRNCmpCwmwSXA9VNmhz+PiB+Dml4WWnKW/VHo2ujTXxq7+efMU4H2fny3Se3KYOsFPFGZ1TNQSYlFuShWrHPtiLmUdPoP6CV2mML1tk+l7DIIqXrQhLUKDACeM5roMx0kLhUWB8P+0uj1CNlNN4JRZlC7xFfqiMbFRU9Z4N6YwIDAQAB\"" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testResource11 - 1", 1, vcard.getKeys().size());
+        assertEquals("testResource11 - 2", "MIIBCgKCAQEA+xGZ/wcz9ugFpP07Nspo6U17l0YhFiFpxxU4pTk3Lifz9R3zsIsuERwta7+fWIfxOo208ett/jhskiVodSEt3QBGh4XBipyWopKwZ93HHaDVZAALi/2A+xTBtWdEo7XGUujKDvC2/aZKukfjpOiUI8AhLAfjmlcD/UZ1QPh0mHsglRNCmpCwmwSXA9VNmhz+PiB+Dml4WWnKW/VHo2ujTXxq7+efMU4H2fny3Se3KYOsFPFGZ1TNQSYlFuShWrHPtiLmUdPoP6CV2mML1tk+l7DIIqXrQhLUKDACeM5roMx0kLhUWB8P+0uj1CNlNN4JRZlC7xFfqiMbFRU9Z4N6YwIDAQAB", Base64.encodeBase64String(vcard.getKeys().get(0).getData()));
+        assertEquals("testResource11 - 3", "KEY-1", vcard.getKeys().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
 }
