@@ -20,6 +20,7 @@ import ezvcard.util.GeoUri;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -458,14 +459,91 @@ public class AddressesTest extends JSContact2VCardTest {
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testAddresses11 - 1", 1, vcard.getProperties(ExtendedAddress.class).size());
-        assertEquals("testAddresses11 - 1", "54321 Oak St,Reston", vcard.getProperty(ExtendedAddress.class).getLabel());
-        assertEquals("testAddresses11 - 2", "en", vcard.getProperty(ExtendedAddress.class).getLanguage());
-        assertEquals("testAddresses11 - 3", "s,\\,;11;s, ;10;3", vcard.getProperty(ExtendedAddress.class).getParameter(VCardParamEnum.JSCOMPS.getValue()));
-        assertEquals("testAddresses11 - 4", "54321", vcard.getProperty(ExtendedAddress.class).getStreetAddresses().get(0));
-        assertEquals("testAddresses11 - 4", "Oak St", vcard.getProperty(ExtendedAddress.class).getStreetAddresses().get(1));
-        assertEquals("testAddresses11 - 5", "Reston", vcard.getProperty(ExtendedAddress.class).getLocality());
-        assertEquals("testAddresses11 - 6", "Oak St", vcard.getProperty(ExtendedAddress.class).getStreetName());
-        assertEquals("testAddresses11 - 7", "54321", vcard.getProperty(ExtendedAddress.class).getStreetNumber());
+        assertEquals("testAddresses11 - 1", "54321 Oak St,Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses11 - 2", "en", vcard.getProperties(ExtendedAddress.class).get(0).getLanguage());
+        assertEquals("testAddresses11 - 3", "s,\\,;11;s, ;10;3", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSCOMPS.getValue()));
+        assertEquals("testAddresses11 - 4", "54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(0));
+        assertEquals("testAddresses11 - 4", "Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(1));
+        assertEquals("testAddresses11 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
+        assertEquals("testAddresses11 - 6", "Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetName());
+        assertEquals("testAddresses11 - 7", "54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetNumber());
     }
+
+
+    @Test
+    public void testAddresses12() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"addresses\":{" +
+                    "\"k26\": {" +
+                        "\"full\": \"2-7-2 Marunouchi, Chiyoda-ku, Tokyo 100-8994\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"block\",\"value\":\"2-7\"}," +
+                            "{\"kind\":\"separator\",\"value\":\"-\"}," +
+                            "{\"kind\":\"number\",\"value\":\"2\"}," +
+                            "{\"kind\":\"separator\",\"value\":\" \"}," +
+                            "{\"kind\":\"district\",\"value\":\"Marunouchi\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Chiyoda-ku\"}," +
+                            "{\"kind\":\"region\",\"value\":\"Tokyo\"}," +
+                            "{\"kind\":\"separator\",\"value\":\" \"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"100-8994\"}" +
+                        "]," +
+                        "\"isOrdered\": true," +
+                        "\"defaultSeparator\":\", \"" +
+                    "}" +
+                "}," +
+                "\"localizations\":{" +
+                    "\"jp\":{" +
+                        "\"addresses/k26\": {" +
+                            "\"full\": \"\\u3012100-8994\\u6771\\u4eac\\u90fd\\u5343\\u4ee3\\u7530\\u533a\\u4e38\\u30ce\\u51852-7-2\"," +
+                            "\"components\":[ " +
+                                "{\"kind\":\"region\",\"value\":\"\\u6771\\u4eac\\u90fd\"}," +
+                                "{\"kind\":\"locality\",\"value\":\"\\u5343\\u4ee3\\u7530\\u533a\"}," +
+                                "{\"kind\":\"district\",\"value\":\"\\u4e38\\u30ce\\u5185\"}," +
+                                "{\"kind\":\"block\",\"value\":\"2-7\"}," +
+                                "{\"kind\":\"separator\",\"value\":\"-\"}," +
+                                "{\"kind\":\"number\",\"value\":\"2\"}," +
+                                "{\"kind\":\"postcode\",\"value\":\"\\u3012100-8994\"}" +
+                            "]," +
+                            "\"isOrdered\": true," +
+                            "\"defaultSeparator\":\", \"" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        System.out.println(VCardWriter.write(vcard));
+        assertEquals("testAddresses12 - 1", 2, vcard.getProperties(ExtendedAddress.class).size());
+        assertEquals("testAddresses12 - 2", "2-7-2 Marunouchi, Chiyoda-ku, Tokyo 100-8994", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses12 - 3", "s,\\, ;13;s,-;11;s, ;15;3;4;s, ;5", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSCOMPS.getValue()));
+        assertEquals("testAddresses12 - 4", "2", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(0));
+        assertEquals("testAddresses12 - 5", "2-7", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(1));
+        assertEquals("testAddresses12 - 6", "Marunouchi", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(2));
+        assertEquals("testAddresses12 - 7", "Chiyoda-ku", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
+        assertEquals("testAddresses12 - 8", "Tokyo", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
+        assertEquals("testAddresses12 - 9", "100-8994", vcard.getProperties(ExtendedAddress.class).get(0).getPostalCode());
+        assertEquals("testAddresses12 - 10", "2", vcard.getProperties(ExtendedAddress.class).get(0).getStreetNumber());
+        assertEquals("testAddresses12 - 11", "2-7", vcard.getProperties(ExtendedAddress.class).get(0).getBlock());
+        assertEquals("testAddresses12 - 12", "Marunouchi", vcard.getProperties(ExtendedAddress.class).get(0).getDistrict());
+        assertEquals("testAddresses12 - 13", "k26", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses12 - 14", "jp", vcard.getProperties(ExtendedAddress.class).get(1).getLanguage());
+        assertEquals("testAddresses12 - 15", "〒100-8994東京都千代田区丸ノ内2-7-2", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
+        assertEquals("testAddresses12 - 16", "s,\\, ;4;3;15;13;s,-;11;5", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.JSCOMPS.getValue()));
+        assertEquals("testAddresses12 - 17", "2", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddresses().get(0));
+        assertEquals("testAddresses12 - 18", "2-7", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddresses().get(1));
+        assertEquals("testAddresses12 - 19", "丸ノ内", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddresses().get(2));
+        assertEquals("testAddresses12 - 20", "千代田区", vcard.getProperties(ExtendedAddress.class).get(1).getLocality());
+        assertEquals("testAddresses12 - 21", "東京都", vcard.getProperties(ExtendedAddress.class).get(1).getRegion());
+        assertEquals("testAddresses12 - 22", "〒100-8994", vcard.getProperties(ExtendedAddress.class).get(1).getPostalCode());
+        assertEquals("testAddresses12 - 23", "2", vcard.getProperties(ExtendedAddress.class).get(1).getStreetNumber());
+        assertEquals("testAddresses12 - 24", "2-7", vcard.getProperties(ExtendedAddress.class).get(1).getBlock());
+        assertEquals("testAddresses12 - 25", "丸ノ内", vcard.getProperties(ExtendedAddress.class).get(1).getDistrict());
+        assertEquals("testAddresses12 - 26", "k26", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+
+    }
+
 
 }
