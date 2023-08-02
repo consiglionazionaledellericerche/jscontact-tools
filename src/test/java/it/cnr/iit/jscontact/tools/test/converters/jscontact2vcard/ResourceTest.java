@@ -306,16 +306,22 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"name\": { \"full\": \"test\"}," +
                 "\"cryptoKeys\": {"+
-                "\"KEY-1\": {" +
-                    "\"@type\":\"CryptoResource\"," +
-                        "\"uri\": \"data:application/pgp-keys;base64,MIIBCgKCAQEA+xGZ/wcz9ugFpP07Nspo6U17l0YhFiFpxxU4pTk3Lifz9R3zsIsuERwta7+fWIfxOo208ett/jhskiVodSEt3QBGh4XBipyWopKwZ93HHaDVZAALi/2A+xTBtWdEo7XGUujKDvC2/aZKukfjpOiUI8AhLAfjmlcD/UZ1QPh0mHsglRNCmpCwmwSXA9VNmhz+PiB+Dml4WWnKW/VHo2ujTXxq7+efMU4H2fny3Se3KYOsFPFGZ1TNQSYlFuShWrHPtiLmUdPoP6CV2mML1tk+l7DIIqXrQhLUKDACeM5roMx0kLhUWB8P+0uj1CNlNN4JRZlC7xFfqiMbFRU9Z4N6YwIDAQAB\"" +
+                    "\"KEY-1\": {" +
+                        "\"@type\":\"CryptoResource\"," +
+                         "\"uri\": \"data:application/pgp-keys;base64,MIIBCgKCAQEA+xGZ/wcz9ugFpP07Nspo6U17l0YhFiFpxxU4pTk3Lifz9R3zsIsuERwta7+fWIfxOo208ett/jhskiVodSEt3QBGh4XBipyWopKwZ93HHaDVZAALi/2A+xTBtWdEo7XGUujKDvC2/aZKukfjpOiUI8AhLAfjmlcD/UZ1QPh0mHsglRNCmpCwmwSXA9VNmhz+PiB+Dml4WWnKW/VHo2ujTXxq7+efMU4H2fny3Se3KYOsFPFGZ1TNQSYlFuShWrHPtiLmUdPoP6CV2mML1tk+l7DIIqXrQhLUKDACeM5roMx0kLhUWB8P+0uj1CNlNN4JRZlC7xFfqiMbFRU9Z4N6YwIDAQAB\"" +
+                   "}," +
+                    "\"KEY-2\": {" +
+                        "\"@type\":\"CryptoResource\"," +
+                        "\"uri\": \"https://www.example.com/keys/jdoe.cer\"" +
                     "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testResource11 - 1", 1, vcard.getKeys().size());
+        assertEquals("testResource11 - 1", 2, vcard.getKeys().size());
         assertEquals("testResource11 - 2", "MIIBCgKCAQEA+xGZ/wcz9ugFpP07Nspo6U17l0YhFiFpxxU4pTk3Lifz9R3zsIsuERwta7+fWIfxOo208ett/jhskiVodSEt3QBGh4XBipyWopKwZ93HHaDVZAALi/2A+xTBtWdEo7XGUujKDvC2/aZKukfjpOiUI8AhLAfjmlcD/UZ1QPh0mHsglRNCmpCwmwSXA9VNmhz+PiB+Dml4WWnKW/VHo2ujTXxq7+efMU4H2fny3Se3KYOsFPFGZ1TNQSYlFuShWrHPtiLmUdPoP6CV2mML1tk+l7DIIqXrQhLUKDACeM5roMx0kLhUWB8P+0uj1CNlNN4JRZlC7xFfqiMbFRU9Z4N6YwIDAQAB", Base64.encodeBase64String(vcard.getKeys().get(0).getData()));
         assertEquals("testResource11 - 3", "KEY-1", vcard.getKeys().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testResource11 - 4", "https://www.example.com/keys/jdoe.cer", vcard.getKeys().get(1).getUrl());
+        assertEquals("testResource11 - 5", "KEY-2", vcard.getKeys().get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
     }
 
 }

@@ -11,7 +11,6 @@ import ezvcard.parameter.*;
 import ezvcard.property.*;
 import ezvcard.util.*;
 import ezvcard.util.PartialDate;
-import ezvcard.util.org.apache.commons.codec.binary.Base64;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
@@ -36,7 +35,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Constructor;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -877,13 +875,21 @@ public class JSContact2EZVCard extends AbstractConverter {
                         vcard.setBirthday(toVCardDateOrTimeProperty(Birthday.class, anniversary));
                         VCardUtils.addVCardUnmatchedParams(vcard.getBirthday(),anniversary);
                         addVCardPropIdParam(vcard.getBirthday(), entry.getKey());
-                        vcard.setBirthplace(toVCardPlaceProperty(Birthplace.class, anniversary));
+                        Birthplace birthplace = toVCardPlaceProperty(Birthplace.class, anniversary);
+                        if (birthplace!=null) {
+                            addVCardPropIdParam(birthplace, entry.getKey());
+                            vcard.setBirthplace(birthplace);
+                        }
                         break;
                     case DEATH:
                         vcard.setDeathdate(toVCardDateOrTimeProperty(Deathdate.class, anniversary));
                         VCardUtils.addVCardUnmatchedParams(vcard.getDeathdate(),anniversary);
                         addVCardPropIdParam(vcard.getDeathdate(), entry.getKey());
-                        vcard.setDeathplace(toVCardPlaceProperty(Deathplace.class, anniversary));
+                        Deathplace deathplace = toVCardPlaceProperty(Deathplace.class, anniversary);
+                        if (deathplace!=null) {
+                            addVCardPropIdParam(deathplace, entry.getKey());
+                            vcard.setDeathplace(deathplace);
+                        }
                         break;
                     case WEDDING:
                         vcard.setAnniversary(toVCardDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
@@ -1342,7 +1348,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             addVCardPropIdParam(key, entry.getKey());
             addVCardX_ABLabel(entry.getValue(),key,vcard);
             vcard.getKeys().add(key);
-            break;
         }
     }
 
@@ -1653,7 +1658,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsNote.getAuthor()!=null && jsNote.getAuthor().getName()!=null)
             note.setParameter(VCardParamEnum.AUTHOR_NAME.getValue(), jsNote.getAuthor().getName());
         if (jsNote.getCreated()!=null)
-            note.setParameter(VCardParamEnum.CREATED.getValue(), DateUtils.toString(jsNote.getCreated()));
+            note.setParameter(VCardParamEnum.CREATED.getValue(), DateUtils.toVCardTimestamp(jsNote.getCreated()));
         VCardUtils.addVCardUnmatchedParams(note, jsNote);
         return note;
     }

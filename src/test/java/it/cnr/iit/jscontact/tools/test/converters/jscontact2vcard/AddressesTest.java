@@ -20,7 +20,6 @@ import ezvcard.util.GeoUri;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -515,7 +514,6 @@ public class AddressesTest extends JSContact2VCardTest {
                 "}";
 
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(VCardWriter.write(vcard));
         assertEquals("testAddresses12 - 1", 2, vcard.getProperties(ExtendedAddress.class).size());
         assertEquals("testAddresses12 - 2", "2-7-2 Marunouchi, Chiyoda-ku, Tokyo 100-8994", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses12 - 3", "s,\\, ;13;s,-;11;s, ;15;3;4;s, ;5", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSCOMPS.getValue()));
