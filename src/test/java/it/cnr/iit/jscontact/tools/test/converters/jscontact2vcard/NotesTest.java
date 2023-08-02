@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -39,11 +40,12 @@ public class NotesTest extends JSContact2VCardTest {
                     "\"localizations\": { \"it\": { \"notes/NOTE-1\": { \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" } } }" +
                     "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        System.out.println(VCardWriter.write(vcard));
         assertEquals("testNotes1 - 1", 2, vcard.getNotes().size());
         assertEquals("testNotes1 - 2", "This fax number is operational 0800 to 1715 EST, Mon-Fri", vcard.getNotes().get(0).getValue());
         assertNull("testNotes1 - 3", vcard.getNotes().get(0).getLanguage());
         assertEquals("testNotes1 - 4", "1", vcard.getNotes().get(0).getAltId());
-        assertEquals("testNotes1 - 5", "2010-10-10T10:10:10Z", vcard.getNotes().get(0).getParameter(VCardParamEnum.CREATED.getValue()));
+        assertEquals("testNotes1 - 5", "20101010T101010Z", vcard.getNotes().get(0).getParameter(VCardParamEnum.CREATED.getValue()));
         assertEquals("testNotes1 - 6", "Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven", vcard.getNotes().get(1).getValue());
         assertEquals("testNotes1 - 7", "it", vcard.getNotes().get(1).getLanguage());
         assertEquals("testNotes1 - 8", "1", vcard.getNotes().get(1).getAltId());
@@ -68,7 +70,7 @@ public class NotesTest extends JSContact2VCardTest {
         assertEquals("testNotes2 - 2", "This fax number is operational 0800 to 1715 EST, Mon-Fri", vcard.getNotes().get(0).getValue());
         assertNull("testNotes2 - 3", vcard.getNotes().get(0).getLanguage());
         assertEquals("testNotes2 - 4", "1", vcard.getNotes().get(0).getAltId());
-        assertEquals("testNotes2 - 5", "2010-10-10T10:10:10Z", vcard.getNotes().get(0).getParameter(VCardParamEnum.CREATED.getValue()));
+        assertEquals("testNotes2 - 5", "20101010T101010Z", vcard.getNotes().get(0).getParameter(VCardParamEnum.CREATED.getValue()));
         assertEquals("testNotes1 - 5", "John Public", vcard.getNotes().get(0).getParameter(VCardParamEnum.AUTHOR_NAME.getValue()));
         assertEquals("testNotes2 - 6", "Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven", vcard.getNotes().get(1).getValue());
         assertEquals("testNotes2 - 7", "it", vcard.getNotes().get(1).getLanguage());

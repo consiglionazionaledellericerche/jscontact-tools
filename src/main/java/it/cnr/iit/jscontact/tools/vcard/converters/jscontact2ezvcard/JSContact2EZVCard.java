@@ -11,7 +11,6 @@ import ezvcard.parameter.*;
 import ezvcard.property.*;
 import ezvcard.util.*;
 import ezvcard.util.PartialDate;
-import ezvcard.util.org.apache.commons.codec.binary.Base64;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
@@ -36,7 +35,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Constructor;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1660,7 +1658,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsNote.getAuthor()!=null && jsNote.getAuthor().getName()!=null)
             note.setParameter(VCardParamEnum.AUTHOR_NAME.getValue(), jsNote.getAuthor().getName());
         if (jsNote.getCreated()!=null)
-            note.setParameter(VCardParamEnum.CREATED.getValue(), DateUtils.toString(jsNote.getCreated()));
+            note.setParameter(VCardParamEnum.CREATED.getValue(), DateUtils.toVCardTimestamp(jsNote.getCreated()));
         VCardUtils.addVCardUnmatchedParams(note, jsNote);
         return note;
     }

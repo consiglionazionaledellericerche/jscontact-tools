@@ -142,4 +142,24 @@ public class DateUtils {
     public static Calendar toCalendar(String date) {
         return VCardDateFormat.parseAsCalendar(date);
     }
+
+    /**
+     * Converts the timestamp string in the VCard timestamp string.
+     * @param timestamp a date in text format
+     * @return VCard timestamp string
+     */
+    public static String toVCardTimestamp(Calendar timestamp) {
+
+        if (timestamp == null)
+            return null;
+
+        String result = "";
+        String timestampAsString = toString(timestamp);
+        String items[] = timestampAsString.split("T");
+        result = result + items[0].replace("-", StringUtils.EMPTY) + "T";
+        result = result + items[1].replace(":", StringUtils.EMPTY);
+
+        return result;
+    }
+
 }
