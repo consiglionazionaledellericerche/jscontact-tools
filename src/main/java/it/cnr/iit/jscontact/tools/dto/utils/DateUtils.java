@@ -144,8 +144,8 @@ public class DateUtils {
     }
 
     /**
-     * Converts the timestamp string in the VCard timestamp string.
-     * @param timestamp a date in text format
+     * Converts the timestamp as a Calendar object in the VCard timestamp string.
+     * @param timestamp a timestamp as a Calendar object
      * @return VCard timestamp string
      */
     public static String toVCardTimestamp(Calendar timestamp) {
