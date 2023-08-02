@@ -1350,7 +1350,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             addVCardPropIdParam(key, entry.getKey());
             addVCardX_ABLabel(entry.getValue(),key,vcard);
             vcard.getKeys().add(key);
-            break;
         }
     }
 
