@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.constraints.NameSortAsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
@@ -47,6 +48,7 @@ import java.util.Map;
 @NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null member between full and components is required in Name")
 @NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"sortAs"})
 @ComponentsConstraint
+@NameSortAsConstraint
 @JsonPropertyOrder({"@type", "full", "components", "isOrdered", "pronounce", "sortAs", "phoneticSystem", "phoneticScript"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -100,7 +102,15 @@ public class Name extends AbstractJSContactType implements HasComponents, Serial
         components = ArrayUtils.add(components, nc);
     }
 
-    private String getComponentValue(NameComponentKind componentKind) {
+
+    /**
+     * Gets the value of a name component.
+     *
+     * @param componentKind the name component to get
+     * @return the value of the given name component in the "components" array, null otherwise
+     */
+    @JsonIgnore
+    public String getComponentValue(NameComponentKind componentKind) {
 
         if (components == null)
             return null;
