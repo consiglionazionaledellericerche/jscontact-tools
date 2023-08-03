@@ -16,11 +16,14 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.Address;
+import it.cnr.iit.jscontact.tools.dto.AddressComponent;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -103,6 +106,24 @@ public class AddressTest extends AbstractTest {
                 .build();
         assertFalse("testInvalidAddressId-1", jsCard.isValid());
         assertEquals("testInvalidAddressId-2", "invalid Id in Map<Id,Address>", jsCard.getValidationMessage());
+    }
+
+
+    @Test
+    public void testInvalidPhonetic() {
+
+        List components = new ArrayList<AddressComponent>();
+        components.add(AddressComponent.landmark("landmark", "phonetic"));
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                .components((AddressComponent[]) components.toArray(new AddressComponent[0]))
+                .build());
+        }};
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .addresses(addresses)
+                .build();
+        assertFalse("testInvalidPhonetic-1", jsCard.isValid());
+        assertTrue("testInvalidPhonetic-2", jsCard.getValidationMessages().contains("component includes the phonetic property but parent object doesn't include either the phoneticSystem or the phoneticScript properties"));
     }
 
 }

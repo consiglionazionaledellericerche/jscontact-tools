@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentTypeDeserializer;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasPhonetic;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -40,7 +41,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AddressComponent extends AbstractJSContactType implements HasKind, Serializable {
+public class AddressComponent extends AbstractJSContactType implements HasKind, HasPhonetic, Serializable {
 
     @Pattern(regexp = "AddressComponent", message="invalid @type value in AddressComponent")
     @JsonProperty("@type")

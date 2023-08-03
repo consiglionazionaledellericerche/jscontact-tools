@@ -40,7 +40,6 @@ public class NotesTest extends JSContact2VCardTest {
                     "\"localizations\": { \"it\": { \"notes/NOTE-1\": { \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" } } }" +
                     "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        System.out.println(VCardWriter.write(vcard));
         assertEquals("testNotes1 - 1", 2, vcard.getNotes().size());
         assertEquals("testNotes1 - 2", "This fax number is operational 0800 to 1715 EST, Mon-Fri", vcard.getNotes().get(0).getValue());
         assertNull("testNotes1 - 3", vcard.getNotes().get(0).getLanguage());
