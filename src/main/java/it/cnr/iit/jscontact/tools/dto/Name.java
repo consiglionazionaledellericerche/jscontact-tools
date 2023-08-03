@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
@@ -44,6 +45,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  */
 @NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null member between full and components is required in Name")
+@NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"sortAs"})
 @ComponentsConstraint
 @JsonPropertyOrder({"@type", "full", "components", "isOrdered", "pronounce", "sortAs", "phoneticSystem", "phoneticScript"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
