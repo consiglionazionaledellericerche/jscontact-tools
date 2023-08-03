@@ -37,7 +37,7 @@ public class ComponentsValidator implements ConstraintValidator<ComponentsConstr
             return true;
 
         if (object.getIsOrdered()!=null && object.getIsOrdered()==Boolean.FALSE && object.getDefaultSeparator()!=null) {
-            context.buildConstraintViolationWithTemplate("isOrdered is false but defaultSeparator is not null").addConstraintViolation();
+            context.buildConstraintViolationWithTemplate("defaultSeparator must not be set if the isOrdered property value is false").addConstraintViolation();
             return false;
         }
 
@@ -45,15 +45,30 @@ public class ComponentsValidator implements ConstraintValidator<ComponentsConstr
             return true;
 
         if (object.getComponents().length == 0) {
-            context.buildConstraintViolationWithTemplate("components array is empty").addConstraintViolation();
+            context.buildConstraintViolationWithTemplate("components array must not be empty").addConstraintViolation();
             return false;
         }
 
+        boolean previousComponentIsSeparator = false;
         for (HasPhonetic component : object.getComponents()) {
             if (component.getPhonetic()!=null && object.getPhoneticScript()==null && object.getPhoneticSystem()==null) {
-                context.buildConstraintViolationWithTemplate("component includes the phonetic property but parent object doesn't include either the phoneticSystem or the phoneticScript properties").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate("if phonetic is set, at least one of the parent object phoneticSystem or phoneticScript properties must be set").addConstraintViolation();
                 return false;
             }
+
+            if (object.getIsOrdered()!=null && object.getIsOrdered() == Boolean.FALSE && component.getKind().toJson().equals("separator")) {
+                context.buildConstraintViolationWithTemplate("if a separator component is set, the isOrdered member of the parent object must be true").addConstraintViolation();
+                return false;
+            }
+
+            if (component.getKind().toJson().equals("separator")) {
+                if (previousComponentIsSeparator) {
+                    context.buildConstraintViolationWithTemplate("two consecutive separator components must not be set").addConstraintViolation();
+                    return false;
+                }
+                previousComponentIsSeparator = true;
+            } else
+                previousComponentIsSeparator = false;
         }
 
         return true;

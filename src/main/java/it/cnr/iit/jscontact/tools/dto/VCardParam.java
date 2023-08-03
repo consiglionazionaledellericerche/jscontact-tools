@@ -9,7 +9,7 @@ import lombok.*;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.16.2">draft-ietf-calext-jscontact-vcard</a>
  */
-@NotNullAnyConstraint(fieldNames={"value","values"}, message = "at least one not null member is required in VCardParam")
+@NotNullAnyConstraint(fieldNames={"value","values"}, message = "at least one not null member between value and values is required in VCardParam")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
