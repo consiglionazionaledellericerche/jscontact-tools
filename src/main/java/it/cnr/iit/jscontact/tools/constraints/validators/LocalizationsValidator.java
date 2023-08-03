@@ -54,7 +54,8 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
             for(Map.Entry<String,JsonNode> localization : localizationsPerlanguage.entrySet()) {
 
-                if (localization.getKey().contains("/-/")) {
+                if (localization.getKey().contains("/-/") ||
+                    localization.getKey().endsWith("/-")) {
                     context.buildConstraintViolationWithTemplate(String.format("array index in key %s is -", localization.getKey())).addConstraintViolation();
                     return false;
                 }
