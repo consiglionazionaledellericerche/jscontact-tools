@@ -41,12 +41,17 @@ public class PhoneticComponentsValidator implements ConstraintValidator<Phonetic
         if (object.getComponents() == null)
             return true;
 
-            for (HasPhonetic component : object.getComponents()) {
-                if (component.getPhonetic()!=null && object.getPhoneticScript()==null && object.getPhoneticSystem()==null) {
-                    context.buildConstraintViolationWithTemplate("component includes the phonetic property but parent object doesn't include either the phoneticSystem or the phoneticScript properties").addConstraintViolation();
-                    return false;
-                }
+        if (object.getComponents().length == 0) {
+            context.buildConstraintViolationWithTemplate("components array is empty").addConstraintViolation();
+            return false;
+        }
+
+        for (HasPhonetic component : object.getComponents()) {
+            if (component.getPhonetic()!=null && object.getPhoneticScript()==null && object.getPhoneticSystem()==null) {
+                context.buildConstraintViolationWithTemplate("component includes the phonetic property but parent object doesn't include either the phoneticSystem or the phoneticScript properties").addConstraintViolation();
+                return false;
             }
+        }
 
         return true;
 
