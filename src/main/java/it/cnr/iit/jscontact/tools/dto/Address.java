@@ -22,11 +22,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
-import it.cnr.iit.jscontact.tools.constraints.PhoneticComponentsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPhoneticComponents;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import lombok.*;
@@ -45,7 +45,7 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@PhoneticComponentsConstraint
+@ComponentsConstraint
 @JsonPropertyOrder({"@type","full","components","isOrdered","countryCode","coordinates","timeZone","phoneticScript","phoneticSystem",
                      "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -54,7 +54,7 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
-public class Address extends AbstractJSContactType implements IdMapValue, HasPhoneticComponents, Serializable {
+public class Address extends AbstractJSContactType implements IdMapValue, HasComponents, Serializable {
 
     @Pattern(regexp = "Address", message="invalid @type value in Address")
     @JsonProperty("@type")

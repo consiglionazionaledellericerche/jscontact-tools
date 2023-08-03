@@ -16,27 +16,30 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cnr.iit.jscontact.tools.constraints.PhoneticComponentsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasPhonetic;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPhoneticComponents;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.lang.reflect.Field;
-import java.util.Map;
 
-public class PhoneticComponentsValidator implements ConstraintValidator<PhoneticComponentsConstraint, HasPhoneticComponents> {
+public class ComponentsValidator implements ConstraintValidator<ComponentsConstraint, HasComponents> {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
 
-    public void initialize(PhoneticComponentsConstraint constraintAnnotation) {
+    public void initialize(ComponentsConstraint constraintAnnotation) {
     }
 
-    public boolean isValid(HasPhoneticComponents object, ConstraintValidatorContext context) {
+    public boolean isValid(HasComponents object, ConstraintValidatorContext context) {
 
         if (object == null)
             return true;
+
+        if (object.getIsOrdered()!=null && object.getIsOrdered()==Boolean.FALSE && object.getDefaultSeparator()!=null) {
+            context.buildConstraintViolationWithTemplate("isOrdered is false but defaultSeparator is not null").addConstraintViolation();
+            return false;
+        }
 
         if (object.getComponents() == null)
             return true;

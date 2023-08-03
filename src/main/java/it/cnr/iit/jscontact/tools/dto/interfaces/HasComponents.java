@@ -22,7 +22,7 @@ import it.cnr.iit.jscontact.tools.dto.PhoneticSystem;
  *
  * @author Mario Loffredo
  */
-public interface HasPhoneticComponents {
+public interface HasComponents {
 
     /**
      * Returns the value of the "phoneticSystem" property.
@@ -44,4 +44,21 @@ public interface HasPhoneticComponents {
      * @return the value of the "components" property
      */
     HasPhonetic[] getComponents();
+
+
+    /**
+     * Returns the value of the "isOrdered" property.
+     *
+     * @return the value of the "isOrdered" property
+     */
+    Boolean getIsOrdered();
+
+    /**
+     * Returns the value of the "defaultSeparator" property.
+     *
+     * @return the value of the "defaultSeparator" property
+     */
+    String getDefaultSeparator();
+
+
 }
