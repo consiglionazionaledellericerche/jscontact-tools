@@ -54,6 +54,13 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
 
             for(Map.Entry<String,JsonNode> localization : localizationsPerlanguage.entrySet()) {
 
+                for (String key : localizationsPerlanguage.keySet()) {
+                    if (localization.getKey().startsWith(key) && !localization.getKey().equals(key)) {
+                        context.buildConstraintViolationWithTemplate(String.format("the key %s is prefix of %s", key, localization.getKey())).addConstraintViolation();
+                        return false;
+                    }
+                }
+
                 JsonNode node;
                 try {
                     node = JsonPointerUtils.getPointedJsonNode(card, localization.getKey());

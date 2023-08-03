@@ -138,14 +138,14 @@ public class LocalizationsTest {
                 "\"localizations\":{" +
                     "\"jp\": {" +
                         "\"addresses/ADR-1/components/0/value\" : \"東京\"," +
-                        "\"addresses/ADR-1\" : { \"@type\":\"Unknown\",\"unknown\": \"大阪市\"}" +
+                        "\"addresses/ADR-2\" : { \"@type\":\"Unknown\",\"unknown\": \"大阪市\"}" +
                     "}" +
                 "}" +
                 "}";
 
         Card jsCard = Card.toJSCard(json);
         assertFalse("testLocalizations4 - 1", jsCard.isValid());
-        assertEquals("testLocalizations4 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-1", jsCard.getValidationMessage().replace("\n", ""));
+        assertEquals("testLocalizations4 - 2", "type mismatch of JSON pointer in localizations: addresses/ADR-2", jsCard.getValidationMessage().replace("\n", ""));
     }
 
 
