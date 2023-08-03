@@ -16,17 +16,11 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import it.cnr.iit.jscontact.tools.constraints.NameSortAsConstraint;
-import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.Name;
 import it.cnr.iit.jscontact.tools.dto.NameComponentKind;
-import it.cnr.iit.jscontact.tools.dto.Relation;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import javax.validation.ConstraintViolation;
-import java.util.Map;
-import java.util.Set;
 
 public class NameSortAsValidator implements ConstraintValidator<NameSortAsConstraint, Name> {
 
