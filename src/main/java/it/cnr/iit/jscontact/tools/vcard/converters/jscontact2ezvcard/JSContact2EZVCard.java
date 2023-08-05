@@ -404,7 +404,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
                     if (phoneticSystem!=null || phoneticScript !=null) {
                         sn = toVCardStructuredName(getNameComponentsOfPhonetics(components));
-                        sn.setParameter(VCardParamEnum.PHONETIC.getValue(), phoneticSystem);
+                        sn.setParameter(VCardParamEnum.PHONETIC.getValue(), (phoneticSystem == null && phoneticScript != null) ? PhoneticSystemEnum.SCRIPT.getValue() : phoneticSystem);
                         sn.setParameter(VCardParamEnum.SCRIPT.getValue(), phoneticScript);
                         sn.setLanguage(localization.getKey());
                         sns.add(sn);
@@ -424,7 +424,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     String phoneticSystem = ((jsCard.getLocalization(language, "name/phoneticSystem") != null) ? jsCard.getLocalization(language, "name/phoneticSystem").asText() : null);
                     String phoneticScript = ((jsCard.getLocalization(language, "name/phoneticScript") != null) ? jsCard.getLocalization(language, "name/phoneticScript").asText() : null);
                     sn = toVCardStructuredName(getNameComponentsOfPhoneticLocalizations(language, jsCard));
-                    sn.setParameter(VCardParamEnum.PHONETIC.getValue(), phoneticSystem);
+                    sn.setParameter(VCardParamEnum.PHONETIC.getValue(), (phoneticSystem == null && phoneticScript != null) ? PhoneticSystemEnum.SCRIPT.getValue() : phoneticSystem);
                     sn.setParameter(VCardParamEnum.SCRIPT.getValue(), phoneticScript);
                     sn.setLanguage(language);
                     sns.add(sn);
@@ -443,7 +443,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             String phoneticScript = jsCard.getName().getPhoneticScript();
             if (phoneticSystem!=null || phoneticScript!=null) {
                 sn = toVCardStructuredName(getNameComponentsOfPhonetics(jsCard.getName().getComponents()));
-                sn.setParameter(VCardParamEnum.PHONETIC.getValue(), phoneticSystem.toJson());
+                sn.setParameter(VCardParamEnum.PHONETIC.getValue(), (phoneticSystem == null && phoneticScript != null) ? PhoneticSystemEnum.SCRIPT.getValue() : (phoneticSystem!=null) ? phoneticSystem.toJson() : null);
                 sn.setParameter(VCardParamEnum.SCRIPT.getValue(), phoneticScript);
                 sns.add(sn);
             }

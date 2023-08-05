@@ -651,7 +651,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         PhoneticSystem phoneticSystem = null;
 
-        if (vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) {
+        if (vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())!=null && !vcardName.getParameter(VCardParamEnum.PHONETIC.getValue()).equalsIgnoreCase(PhoneticSystemEnum.SCRIPT.getValue())) {
             try {
                 phoneticSystem = PhoneticSystem.rfc(PhoneticSystemEnum.getEnum(vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())));
             } catch (IllegalArgumentException e) {
@@ -922,7 +922,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         PhoneticSystem phoneticSystem = null;
 
-        if (vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) {
+        if (vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())!=null && !vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue()).equalsIgnoreCase(PhoneticSystemEnum.SCRIPT.getValue())) {
             try {
                 phoneticSystem = PhoneticSystem.rfc(PhoneticSystemEnum.getEnum(vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())));
             } catch (IllegalArgumentException e) {
