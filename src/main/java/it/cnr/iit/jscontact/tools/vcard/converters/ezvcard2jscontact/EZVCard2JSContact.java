@@ -577,26 +577,26 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (vcardName.getGiven() != null) {
                 String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
                 for (String name : names)
-                    components = Name.addComponent(components, NameComponent.given(name, (isPhonetic) ? name : null));
+                    components = Name.addComponent(components, (isPhonetic) ? NameComponent.given(name, name) : NameComponent.given(name));
             }
 
             for (String an : vcardName.getAdditionalNames())
-                components = Name.addComponent(components, NameComponent.given2(an, (isPhonetic) ? an : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.given2(an, an) : NameComponent.given2(an));
 
             for (String px : vcardName.getPrefixes())
-                components = Name.addComponent(components, NameComponent.title(px, (isPhonetic) ? px : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.title(px, px) : NameComponent.title(px));
 
             for (String sx : vcardName.getSuffixes()) {
                 if (vcardName.getGeneration().contains(sx))
                     continue;
-                components = Name.addComponent(components, NameComponent.credential(sx, (isPhonetic) ? sx : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.credential(sx, sx) : NameComponent.credential(sx));
             }
 
             for (String sx : vcardName.getSurname2())
-                components = Name.addComponent(components, NameComponent.surname2(sx, (isPhonetic) ? sx : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.surname2(sx,  sx) : NameComponent.surname2(sx));
 
             for (String sx : vcardName.getGeneration())
-                components = Name.addComponent(components, NameComponent.generation(sx, (isPhonetic) ? sx : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.generation(sx, sx) : NameComponent.generation(sx));
         }
         else {
 

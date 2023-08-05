@@ -43,7 +43,7 @@ public interface HasComponents {
      *
      * @return the value of the "components" property
      */
-    HasPhonetic[] getComponents();
+    IsComponent[] getComponents();
 
 
     /**

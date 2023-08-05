@@ -15,17 +15,14 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPhonetic;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class ComponentsValidator implements ConstraintValidator<ComponentsConstraint, HasComponents> {
-
-    private static final ObjectMapper mapper = new ObjectMapper();
 
 
     public void initialize(ComponentsConstraint constraintAnnotation) {
@@ -50,7 +47,8 @@ public class ComponentsValidator implements ConstraintValidator<ComponentsConstr
         }
 
         boolean previousComponentIsSeparator = false;
-        for (HasPhonetic component : object.getComponents()) {
+        boolean notSeparatorFound = false;
+        for (IsComponent component : object.getComponents()) {
             if (component.getPhonetic()!=null && object.getPhoneticScript()==null && object.getPhoneticSystem()==null) {
                 context.buildConstraintViolationWithTemplate("if phonetic is set, at least one of the parent object phoneticSystem or phoneticScript properties must be set").addConstraintViolation();
                 return false;
@@ -67,12 +65,18 @@ public class ComponentsValidator implements ConstraintValidator<ComponentsConstr
                     return false;
                 }
                 previousComponentIsSeparator = true;
-            } else
+            } else {
                 previousComponentIsSeparator = false;
+                notSeparatorFound = true;
+            }
+        }
+
+        if (!notSeparatorFound) {
+            context.buildConstraintViolationWithTemplate("the components array must include at least one component other than separator").addConstraintViolation();
+            return false;
         }
 
         return true;
-
     }
 
 }

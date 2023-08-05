@@ -40,7 +40,7 @@ public class NameSortAsValidator implements ConstraintValidator<NameSortAsConstr
 
         for(NameComponentKind kind : name.getSortAs().keySet()) {
             if (name.getComponentValue(kind) == null) {
-                context.buildConstraintViolationWithTemplate(String.format("the name component %s of the sortAs member must be present in the components member")).addConstraintViolation();
+                context.buildConstraintViolationWithTemplate(String.format("the name component %s of the sortAs member must be present in the components member", kind.toJson())).addConstraintViolation();
                 return false;
             }
         }

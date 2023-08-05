@@ -20,7 +20,7 @@ package it.cnr.iit.jscontact.tools.dto.interfaces;
  *
  * @author Mario Loffredo
  */
-public interface HasPhonetic extends HasKind {
+public interface IsComponent extends HasKind {
 
     /**
      * Returns the value of the "phonetic" property.

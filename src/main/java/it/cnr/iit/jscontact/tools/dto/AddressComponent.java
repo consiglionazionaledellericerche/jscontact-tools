@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentTypeDeserializer;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
-import it.cnr.iit.jscontact.tools.dto.interfaces.HasPhonetic;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -41,7 +41,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AddressComponent extends AbstractJSContactType implements HasKind, HasPhonetic, Serializable {
+public class AddressComponent extends AbstractJSContactType implements HasKind, IsComponent, Serializable {
 
     @Pattern(regexp = "AddressComponent", message="invalid @type value in AddressComponent")
     @JsonProperty("@type")
@@ -213,7 +213,7 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     }
 
     /**
-     * Returns a locality component of an address.
+     * Returns a locality component of an address with phonetic.
      *
      * @param value the address locality
      * @param phonetic the phonetic
@@ -221,7 +221,14 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent locality(String value, String phonetic) { return rfc(AddressComponentEnum.LOCALITY, value, phonetic);}
     /**
-     * Returns a region component of an address.
+     * Returns a locality component of an address.
+     *
+     * @param value the address locality
+     * @return the locality component
+     */
+    public static AddressComponent locality(String value) { return AddressComponent.locality(value, null);}
+    /**
+     * Returns a region component of an address with phonetic.
      *
      * @param value the address region
      * @param phonetic the phonetic
@@ -229,7 +236,14 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent region(String value, String phonetic) { return rfc(AddressComponentEnum.REGION, value, phonetic);}
     /**
-     * Returns a country component of an address.
+     * Returns a region component of an address.
+     *
+     * @param value the address region
+     * @return the region component
+     */
+    public static AddressComponent region(String value) { return AddressComponent.region(value, null);}
+    /**
+     * Returns a country component of an address with phonetic.
      *
      * @param value the address country
      * @param phonetic the phonetic
@@ -237,15 +251,21 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent country(String value, String phonetic) { return rfc(AddressComponentEnum.COUNTRY, value, phonetic);}
     /**
+     * Returns a country component of an address.
+     *
+     * @param value the address country
+     * @return the country component
+     */
+    public static AddressComponent country(String value) { return AddressComponent.country(value, null);}
+    /**
      * Returns a postcode component of an address.
      *
      * @param value the address postcode
      * @return the postcode component
      */
     public static AddressComponent postcode(String value) { return rfc(AddressComponentEnum.POSTCODE, value, null);}
-
     /**
-     * Returns a district component of an address.
+     * Returns a district component of an address with phonetic.
      *
      * @param value the address district
      * @param phonetic the phonetic
@@ -253,7 +273,14 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent district(String value, String phonetic) { return rfc(AddressComponentEnum.DISTRICT, value, phonetic);}
     /**
-     * Returns a subdistrict component of an address.
+     * Returns a district component of an address.
+     *
+     * @param value the address district
+     * @return the district component
+     */
+    public static AddressComponent district(String value) { return AddressComponent.district(value, null);}
+    /**
+     * Returns a subdistrict component of an address with phonetic.
      *
      * @param value the address subdistrict
      * @param phonetic the phonetic
@@ -261,7 +288,14 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent subdistrict(String value, String phonetic) { return rfc(AddressComponentEnum.SUBDISTRICT, value, phonetic);}
     /**
-     * Returns a block component of an address.
+     * Returns a subdistrict component of an address.
+     *
+     * @param value the address subdistrict
+     * @return the subdistrict component
+     */
+    public static AddressComponent subdistrict(String value) { return AddressComponent.subdistrict(value, null);}
+    /**
+     * Returns a block component of an address with phonetic.
      *
      * @param value the address block
      * @param phonetic the phonetic
@@ -269,13 +303,27 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent block(String value, String phonetic) { return rfc(AddressComponentEnum.BLOCK, value, phonetic);}
     /**
-     * Returns a name component of an address.
+     * Returns a block component of an address.
+     *
+     * @param value the address block
+     * @return the block component
+     */
+    public static AddressComponent block(String value) { return AddressComponent.block(value, null);}
+    /**
+     * Returns a name component of an address with phonetic.
      *
      * @param value the address name
      * @param phonetic the phonetic
      * @return the name component
      */
     public static AddressComponent name(String value, String phonetic) { return rfc(AddressComponentEnum.NAME, value, phonetic);}
+    /**
+     * Returns a name component of an address.
+     *
+     * @param value the address name
+     * @return the name component
+     */
+    public static AddressComponent name(String value) { return AddressComponent.name(value, null);}
     /**
      * Returns a number component of an address.
      *
@@ -291,13 +339,20 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent direction(String value) { return rfc(AddressComponentEnum.DIRECTION, value, null);}
     /**
-     * Returns a building component of an address.
+     * Returns a building component of an address with phonetic.
      *
      * @param value the building number
      * @param phonetic the phonetic
      * @return the building component
      */
     public static AddressComponent building(String value, String phonetic) { return rfc(AddressComponentEnum.BUILDING, value, phonetic);}
+    /**
+     * Returns a building component of an address.
+     *
+     * @param value the building number
+     * @return the building component
+     */
+    public static AddressComponent building(String value) { return AddressComponent.building(value, null);}
     /**
      * Returns a floor component of an address.
      *
@@ -306,7 +361,7 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent floor(String value) { return rfc(AddressComponentEnum.FLOOR, value, null);}
     /**
-     * Returns an apartment component of a address address.
+     * Returns an apartment component of an address.
      *
      * @param value the apartment number
      * @return the apartment component
@@ -320,13 +375,20 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent room(String value) { return rfc(AddressComponentEnum.ROOM, value, null);}
     /**
-     * Returns a landmark component of a address address.
+     * Returns a landmark component of an address with phonetic.
      *
      * @param value the landmark
      * @param phonetic the phonetic
      * @return the landmark component
      */
     public static AddressComponent landmark(String value, String phonetic) { return rfc(AddressComponentEnum.LANDMARK, value, phonetic);}
+    /**
+     * Returns a landmark component of an address.
+     *
+     * @param value the landmark
+     * @return the landmark component
+     */
+    public static AddressComponent landmark(String value) { return AddressComponent.landmark(value, null);}
     /**
      * Returns a P.O. box component of an address.
      *
@@ -342,7 +404,7 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
      */
     public static AddressComponent separator(String value) { return rfc(AddressComponentEnum.SEPARATOR, value, null);}
     /**
-     * Returns a custom component of an address.
+     * Returns a custom component of an address with phonetic.
      *
      * @param extValue the custom address component
      * @param value the value for the custom address component
@@ -355,6 +417,16 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
                 .phonetic(phonetic)
                 .kind(AddressComponentKind.builder().extValue(V_Extension.toV_Extension(extValue)).build())
                 .build();
+    }
+    /**
+     * Returns a custom component of an address.
+     *
+     * @param extValue the custom address component
+     * @param value the value for the custom address component
+     * @return the custom component
+     */
+    public static AddressComponent ext(String extValue, String value) {
+        return AddressComponent.ext(extValue, value, null);
     }
 
 }
