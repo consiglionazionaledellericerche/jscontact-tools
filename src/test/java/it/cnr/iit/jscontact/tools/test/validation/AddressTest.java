@@ -164,7 +164,6 @@ public class AddressTest extends AbstractTest {
                 .addresses(addresses)
                 .build();
         assertFalse("testInvalidSeparators2-1", jsCard.isValid());
-        System.out.println(jsCard.getValidationMessages());
         assertTrue("testInvalidSeparators2-2", jsCard.getValidationMessages().contains("if a separator component is set, the isOrdered member of the parent object must be true"));
     }
 
