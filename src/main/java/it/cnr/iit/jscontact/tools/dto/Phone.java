@@ -53,14 +53,12 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
     @JsonSerialize(using = PhoneFeaturesSerializer.class)
     @JsonDeserialize(using = PhoneFeaturesDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<PhoneFeature,Boolean> features in Phone - Only Boolean.TRUE allowed")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<PhoneFeature,Boolean> features;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Phone - Only Boolean.TRUE allowed")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 

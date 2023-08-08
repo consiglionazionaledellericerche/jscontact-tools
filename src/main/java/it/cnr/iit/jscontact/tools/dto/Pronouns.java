@@ -47,7 +47,6 @@ public class Pronouns extends AbstractJSContactType implements IdMapValue, Seria
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Pronouns - Only Boolean.TRUE allowed")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 

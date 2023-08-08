@@ -62,7 +62,6 @@ public class Resource extends AbstractJSContactType implements HasLabel, IdMapVa
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Resource - Only Boolean.TRUE allowed")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 

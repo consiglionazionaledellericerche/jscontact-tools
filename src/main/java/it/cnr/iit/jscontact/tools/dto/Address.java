@@ -86,7 +86,6 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
     @JsonSerialize(using = AddressContextsSerializer.class)
     @JsonDeserialize(using = AddressContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<AddressContext,Boolean> contexts;
 

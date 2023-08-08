@@ -15,7 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -185,5 +187,23 @@ public class PhoneTest extends VCard2JSContactTest {
         assertTrue("testPhone9 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhone9 - 3",jsCard.getPhones().get("PHONE-1").asVoice());
     }
+
+    @Test
+    public void testPhone10() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "TEL;VALUE=uri:tel:+33-01-23-45-6\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        try {
+            System.out.println(PrettyPrintSerializer.print(jsCard));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

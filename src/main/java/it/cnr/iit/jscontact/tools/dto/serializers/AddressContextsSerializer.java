@@ -37,6 +37,10 @@ public class AddressContextsSerializer extends JsonSerializer<Map<AddressContext
             Map<AddressContext,Boolean> contexts, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
+        if (contexts.isEmpty()) {
+            jgen.writeNull();
+            return;
+        }
         jgen.writeStartObject();
         for (Map.Entry<AddressContext,Boolean> entry : contexts.entrySet())
             jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());

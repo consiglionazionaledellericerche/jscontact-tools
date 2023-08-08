@@ -37,6 +37,11 @@ public class ContextsSerializer extends JsonSerializer<Map<Context,Boolean>> {
             Map<Context,Boolean> contexts, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
+        if (contexts.isEmpty()) {
+            jgen.writeNull();
+            return;
+        }
+
         jgen.writeStartObject();
         for (Map.Entry<Context,Boolean> entry : contexts.entrySet())
             jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());

@@ -51,7 +51,6 @@ public class Organization extends AbstractJSContactType implements HasContexts, 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Organization - Only Boolean.TRUE allowed")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(ignoreNullCollections = true)
     Map<Context, Boolean> contexts;
 
