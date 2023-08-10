@@ -43,6 +43,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 ### Builders
 
 Object creation is achieved through builders.
+In addition to the class builders, the following collections builders are provided:
+
+* ContextsBuilder
+* AddressContextsBuilder
+* PhoneFeaturesBuilder
+* NameComponentsBuilder
+* AddressComponentsBuilder
+
 Simplest maps can be loaded by putting entries singularly.
 Here in the following a successful creation of an EmailAddress instance is shown.
  
