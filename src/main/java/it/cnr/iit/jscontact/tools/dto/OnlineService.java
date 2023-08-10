@@ -69,7 +69,7 @@ public class OnlineService extends AbstractJSContactType implements HasLabel, Id
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in OnlineService - Only Boolean.TRUE allowed")
-    @Singular(ignoreNullCollections = true)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<Context, Boolean> contexts;
 
     @Min(value = 1, message = "invalid pref in OnlineService - value must be greater or equal than 1")

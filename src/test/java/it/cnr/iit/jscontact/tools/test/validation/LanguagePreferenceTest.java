@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.validation;
 import it.cnr.iit.jscontact.tools.dto.LanguagePref;
 import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.utils.builders.ContextsBuilder;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ public class LanguagePreferenceTest extends AbstractTest {
     @Test
     public void testValidLanguagePreference1() {
 
-        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).language("it").build());}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().contexts(new ContextsBuilder().work().build()).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -57,7 +58,7 @@ public class LanguagePreferenceTest extends AbstractTest {
     @Test
     public void testValidLanguagePreference3() {
 
-        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(1).language("it").build());}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().contexts(new ContextsBuilder().work().build()).pref(1).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -79,7 +80,7 @@ public class LanguagePreferenceTest extends AbstractTest {
     @Test
     public void testInvalidLanguagePreference3() {
 
-        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(0).language("it").build());}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().contexts(new ContextsBuilder().work().build()).pref(0).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -93,7 +94,7 @@ public class LanguagePreferenceTest extends AbstractTest {
     @Test
     public void testInvalidLanguagePreference4() {
 
-        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).pref(101).language("it").build());}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{ put("LANG-1", LanguagePref.builder().contexts(new ContextsBuilder().work().build()).pref(101).language("it").build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)
@@ -107,7 +108,7 @@ public class LanguagePreferenceTest extends AbstractTest {
     @Test
     public void testInvalidLanguagePreference5() {
 
-        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{put("LANG-1", LanguagePref.builder().context(Context.work(), Boolean.TRUE).language(" ").pref(1).build());}};
+        Map<String, LanguagePref> map = new HashMap<String, LanguagePref>(){{put("LANG-1", LanguagePref.builder().contexts(new ContextsBuilder().work().build()).language(" ").pref(1).build());}};
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .preferredLanguages(map)

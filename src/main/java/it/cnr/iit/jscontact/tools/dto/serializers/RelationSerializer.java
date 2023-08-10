@@ -37,11 +37,6 @@ public class RelationSerializer extends JsonSerializer<Map<RelationType,Boolean>
             Map<RelationType,Boolean> relation, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-        if (relation.isEmpty()) {
-            jgen.writeNull();
-            return;
-        }
-
         jgen.writeStartObject();
         for (Map.Entry<RelationType,Boolean> entry : relation.entrySet())
             jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());

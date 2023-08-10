@@ -37,11 +37,6 @@ public class PhoneFeaturesSerializer extends JsonSerializer<Map<PhoneFeature,Boo
             Map<PhoneFeature,Boolean> features, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-        if (features.isEmpty()) {
-            jgen.writeNull();
-            return;
-        }
-
         jgen.writeStartObject();
         for (Map.Entry<PhoneFeature,Boolean> entry : features.entrySet())
             jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());

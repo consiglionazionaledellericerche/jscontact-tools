@@ -63,6 +63,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
 
     String full;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JSContactCollection(addMethod = "addComponent", itemClass = AddressComponent.class)
     AddressComponent[] components;
 
@@ -86,7 +87,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
     @JsonSerialize(using = AddressContextsSerializer.class)
     @JsonDeserialize(using = AddressContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
-    @Singular(ignoreNullCollections = true)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<AddressContext,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Address - value must be greater or equal than 1")
@@ -245,7 +246,12 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
      * @param context the context
      */
     public void addContext(AddressContext context) {
-        Map<AddressContext, Boolean> clone = new HashMap<>(getContexts());
+
+        Map<AddressContext, Boolean> clone;
+        if (getContexts() == null)
+            clone = new HashMap<>();
+        else
+            clone = new HashMap<>(getContexts());
         clone.put(context,Boolean.TRUE);
         setContexts(clone);
     }

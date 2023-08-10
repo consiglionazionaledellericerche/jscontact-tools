@@ -44,7 +44,7 @@ public class Nickname extends AbstractJSContactType implements IdMapValue, Seria
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Nickname - Only Boolean.TRUE allowed")
-    @Singular(ignoreNullCollections = true)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Nickname - value must be greater or equal than 1")

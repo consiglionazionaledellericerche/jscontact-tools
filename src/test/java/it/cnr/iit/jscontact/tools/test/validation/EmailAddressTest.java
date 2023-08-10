@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.validation;
 import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.EmailAddress;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.utils.builders.ContextsBuilder;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -39,7 +40,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testInvalidEmailBuild2() {
 
         // email missing
-        EmailAddress.builder().context(Context.work(),Boolean.TRUE).build();
+        EmailAddress.builder().contexts(new ContextsBuilder().work().build()).build();
     }
 
 
@@ -69,7 +70,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testValidEmail2() {
 
         EmailAddress email = EmailAddress.builder()
-                .context(Context.work(), Boolean.TRUE)
+                .contexts(new ContextsBuilder().work().build())
                 .address("mario.loffredo@iit.cnr.it")
                 .build();
         Card jsCard = Card.builder()
@@ -84,7 +85,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testValidEmail3() {
 
         EmailAddress email = EmailAddress.builder()
-                .context(Context.work(), Boolean.TRUE)
+                .contexts(new ContextsBuilder().work().build())
                 .address("mario.loffredo@iit.cnr.it")
                 .pref(1)
                 .build();
@@ -118,7 +119,7 @@ public class EmailAddressTest extends AbstractTest {
 
         //invalid contexts
         EmailAddress email = EmailAddress.builder()
-                .context(Context.work(), Boolean.FALSE)
+                .contexts(new HashMap<Context,Boolean>(){{put (Context.work(), Boolean.FALSE);}})
                 .address("mario.loffredo@iit.cnr.it")
                 .build();
         Card jsCard = Card.builder()
@@ -136,7 +137,7 @@ public class EmailAddressTest extends AbstractTest {
 
         //invalid pref
         EmailAddress email = EmailAddress.builder()
-                .context(Context.work(), Boolean.TRUE)
+                .contexts(new ContextsBuilder().work().build())
                 .address("mario.loffredo@iit.cnr.it")
                 .pref(0)
                 .build();

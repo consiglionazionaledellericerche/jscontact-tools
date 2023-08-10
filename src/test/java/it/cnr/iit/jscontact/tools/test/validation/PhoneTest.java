@@ -16,6 +16,8 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.utils.builders.ContextsBuilder;
+import it.cnr.iit.jscontact.tools.dto.utils.builders.PhoneFeaturesBuilder;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -30,9 +32,8 @@ public class PhoneTest extends AbstractTest {
     public void testValidPhone() {
 
         Phone phone = Phone.builder()
-                .context(Context.work(), Boolean.TRUE)
-                .context(Context.private_(), Boolean.TRUE)
-                .feature(PhoneFeature.voice(), Boolean.TRUE)
+                .contexts(new ContextsBuilder().work().private_().build())
+                .features(new PhoneFeaturesBuilder().voice().build())
                 .number("+39.050000001")
                 .build();
         Card jsCard = Card.builder()
@@ -48,9 +49,8 @@ public class PhoneTest extends AbstractTest {
 
        //missing phone
         Phone phone = Phone.builder()
-                .context(Context.work(), Boolean.TRUE)
-                .context(Context.private_(), Boolean.TRUE)
-                .feature(PhoneFeature.voice(), Boolean.TRUE)
+                .contexts(new ContextsBuilder().work().private_().build())
+                .features(new PhoneFeaturesBuilder().voice().build())
                 .build();
     }
 

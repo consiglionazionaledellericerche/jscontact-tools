@@ -66,6 +66,7 @@ public class Name extends AbstractJSContactType implements HasComponents, Serial
     String full;
 
     @JSContactCollection(addMethod = "addComponent", itemClass = NameComponent.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Valid
     NameComponent[] components;
 
@@ -75,6 +76,7 @@ public class Name extends AbstractJSContactType implements HasComponents, Serial
 
     @JsonSerialize(using = NameSortAsSerializer.class)
     @JsonDeserialize(using = NameSortAsDeserializer.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<NameComponentKind, String> sortAs;
 
     String phoneticScript;

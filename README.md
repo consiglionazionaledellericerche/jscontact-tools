@@ -49,9 +49,8 @@ Here in the following a successful creation of an EmailAddress instance is shown
 ```
 
         EmailAddress email = EmailAddress.builder()
-                                        .context(Context.work(), Boolean.TRUE)
-                                        .context(Context.private(), Boolean.TRUE)
                                         .address("mario.loffredo@iit.cnr.it")
+                                        .contexts(new ContextsBuilder().work().private_().build())
                                         .build();
 
 ```
@@ -62,7 +61,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 ```
 
         // address is missing in EmailAddress
-        EmailAddress.builder().context(Context.work(),Boolean.TRUE).build();
+        EmailAddress.builder().contexts(new ContextsBuilder().work().build()).build();
 
 ```
 
