@@ -15,10 +15,11 @@ public class JSPropUtils {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     /**
-     * Converts a JSContact object into the vCard JSPROP property value
+     * Converts a JSContact object into the JSON of the vCard JSPROP property value
      *
      * @param o the JSContact object
      * @return the vCard JSPROP property value
+     * @throws JsonProcessingException if the JSContact serialization into JSON fails
      */
     public static String toJSPropValue(Object o) throws JsonProcessingException {
 
@@ -38,10 +39,11 @@ public class JSPropUtils {
 
 
     /**
-     * Converts vCard JSPROP property value into a JSContact object
+     * Converts the JSON of vCard JSPROP property value into a JSContact object
      *
      * @param s the vCard JSPROP property value
      * @return the JSContact object
+     * @throws JsonProcessingException if the JSON deserialization into a JSContact object fails
      */
     public static Object toJSContactObject(String s) throws JsonProcessingException {
 

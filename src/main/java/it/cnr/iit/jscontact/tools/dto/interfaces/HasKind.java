@@ -27,6 +27,7 @@ public interface HasKind {
     /**
      * Returns the value of the "kind" property.
      *
+     * @param <T> the class extending ExtensibleEnumType
      * @return the value of the "Kind" property
      */
     <T extends ExtensibleEnumType> T getKind();

@@ -83,6 +83,7 @@ public class PhoneFeaturesBuilder {
 
     /**
      * Adds an ext phone feature.
+     * @param extValue the ext phone feature value
      * @return the phone features builder updated by adding the ext phone feature
      */
     public PhoneFeaturesBuilder ext(String extValue) {
