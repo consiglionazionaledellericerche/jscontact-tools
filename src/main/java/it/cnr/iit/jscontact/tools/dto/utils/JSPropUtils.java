@@ -5,12 +5,22 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Calendar;
 
-public class JSContactPropUtils {
-
+/**
+ * Utility class for handling vCard JSPROP properties.
+ *
+ * @author Mario Loffredo
+ */
+public class JSPropUtils {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static String toJSContactPropValue(Object o) throws JsonProcessingException {
+    /**
+     * Converts a JSContact object into the vCard JSPROP property value
+     *
+     * @param o the JSContact object
+     * @return the vCard JSPROP property value
+     */
+    public static String toJSPropValue(Object o) throws JsonProcessingException {
 
         if (o == null)
             return null;
@@ -27,7 +37,13 @@ public class JSContactPropUtils {
     }
 
 
-    public static Object toJsonValue(String s) throws JsonProcessingException {
+    /**
+     * Converts vCard JSPROP property value into a JSContact object
+     *
+     * @param s the vCard JSPROP property value
+     * @return the JSContact object
+     */
+    public static Object toJSContactObject(String s) throws JsonProcessingException {
 
         if (s == null)
             return null;

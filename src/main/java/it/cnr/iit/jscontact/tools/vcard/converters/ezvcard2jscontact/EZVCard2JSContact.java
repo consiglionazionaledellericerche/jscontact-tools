@@ -1618,7 +1618,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private void fillJSCardPropsFromJSCardExtensionsInVCard(VCard vcard, Card jsCard) throws CardException {
+    private void fillJSPropsFromJSCardExtensionsInVCard(VCard vcard, Card jsCard) throws CardException {
 
         String path = null;
         Object value;
@@ -1627,7 +1627,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             for (RawProperty extension : vcard.getExtendedProperties()) {
                 if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.JSPROP.getValue())) {
                     path = extension.getParameter(VCardParamEnum.JSPTR.getValue());
-                    value = JSContactPropUtils.toJsonValue(extension.getValue());
+                    value = JSPropUtils.toJSContactObject(extension.getValue());
                     if (!path.contains(DelimiterUtils.SLASH_DELIMITER)) {
                         jsCard.addExtension(path, value);
                     } else {
@@ -1739,7 +1739,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             jsCard.setCustomTimeZones(customTimeZones);
         fillVCardUnmatchedProps(vCard, jsCard);
         fillJSCardPropsFromVCardExtensions(vCard, jsCard);
-        fillJSCardPropsFromJSCardExtensionsInVCard(vCard, jsCard);
+        fillJSPropsFromJSCardExtensionsInVCard(vCard, jsCard);
 
        return jsCard;
     }

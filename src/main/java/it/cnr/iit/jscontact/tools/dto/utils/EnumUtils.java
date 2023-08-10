@@ -23,7 +23,6 @@ import java.util.Map;
  *
  * @author Mario Loffredo
  */
-
 public class EnumUtils {
 
     /**

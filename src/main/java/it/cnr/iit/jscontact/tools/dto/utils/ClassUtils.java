@@ -19,6 +19,10 @@ public class ClassUtils {
         return thisClassName.replace(".utils.ClassUtils", StringUtils.EMPTY);
     }
 
+    /**
+     * Returns the class corresponding to the class name.
+     * @return the class corresponding to the class name
+     */
     public static Class forName(String className) throws ClassNotFoundException {
         return Class.forName(getDtoPackageName()+"."+className);
     }
