@@ -54,14 +54,12 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
     @JsonDeserialize(using = PhoneFeaturesDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<PhoneFeature,Boolean> features in Phone - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @Singular(ignoreNullCollections = true)
     Map<PhoneFeature,Boolean> features;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Phone - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Phone - value must be greater or equal than 1")
@@ -142,6 +140,9 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
      * @param feature the phone feature
      */
     public void addFeature(PhoneFeature feature) {
+        if (features == null)
+            features = new HashMap<>();
+
         Map<PhoneFeature, Boolean> clone = new HashMap<>(features);
         clone.put(feature,Boolean.TRUE);
         setFeatures(clone);

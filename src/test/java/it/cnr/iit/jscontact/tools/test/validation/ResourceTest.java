@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.utils.builders.ContextsBuilder;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -30,10 +31,11 @@ public class ResourceTest extends AbstractTest {
     public void testValidLinkResource() {
 
         LinkResource resource = LinkResource.builder()
-                .context(Context.work(), Boolean.TRUE)
                 .uri("mailto:mario.loffredo@iit.cnr.it")
                 .kind(LinkResourceKind.contact())
+                .contexts(new ContextsBuilder().work().build())
                 .build();
+
         Card jsCard = Card.builder()
                 .uid(getUUID())
                 .links(new HashMap<String,LinkResource>(){{ put("CONTACT-1", resource);}})
@@ -48,7 +50,7 @@ public class ResourceTest extends AbstractTest {
 
         // value missing
         LinkResource.builder()
-                .context(Context.work(), Boolean.TRUE)
+                .contexts(new ContextsBuilder().work().build())
                 .kind(LinkResourceKind.contact())
                 .build();
     }
@@ -57,10 +59,10 @@ public class ResourceTest extends AbstractTest {
     public void testInvalidLinkResourceUri() {
 
         LinkResource resource = LinkResource.builder()
-                .context(Context.work(), Boolean.TRUE)
                 .kind(LinkResourceKind.contact())
                 .uri(" ")
                 .label("url")
+                .contexts(new ContextsBuilder().work().build())
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())

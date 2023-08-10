@@ -15,12 +15,13 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.Address;
+import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
-import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -103,6 +104,99 @@ public class AddressTest extends AbstractTest {
                 .build();
         assertFalse("testInvalidAddressId-1", jsCard.isValid());
         assertEquals("testInvalidAddressId-2", "invalid Id in Map<Id,Address>", jsCard.getValidationMessage());
+    }
+
+
+    @Test
+    public void testInvalidPhonetic() {
+
+        List components = new ArrayList<AddressComponent>();
+        components.add(AddressComponent.landmark("landmark", "phonetic"));
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                .components((AddressComponent[]) components.toArray(new AddressComponent[0]))
+                .build());
+        }};
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .addresses(addresses)
+                .build();
+        assertFalse("testInvalidPhonetic-1", jsCard.isValid());
+        assertTrue("testInvalidPhonetic-2", jsCard.getValidationMessages().contains("if phonetic is set, at least one of the parent object phoneticSystem or phoneticScript properties must be set"));
+    }
+
+    @Test
+    public void testInvalidSeparators1() {
+
+        List components = new ArrayList<AddressComponent>();
+        components.add(AddressComponent.landmark("landmark"));
+        components.add(AddressComponent.separator(" "));
+        components.add(AddressComponent.separator(","));
+        components.add(AddressComponent.country("it"));
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                .components((AddressComponent[]) components.toArray(new AddressComponent[0]))
+                .isOrdered(Boolean.TRUE)
+                .build());
+        }};
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .addresses(addresses)
+                .build();
+        assertFalse("testInvalidSeparators1-1", jsCard.isValid());
+        assertTrue("testInvalidSeparators1-2", jsCard.getValidationMessages().contains("two consecutive separator components must not be set"));
+    }
+
+    @Test
+    public void testInvalidSeparators2() {
+
+        List components = new ArrayList<AddressComponent>();
+        components.add(AddressComponent.landmark("landmark"));
+        components.add(AddressComponent.separator(","));
+        components.add(AddressComponent.country("it"));
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                .components((AddressComponent[]) components.toArray(new AddressComponent[0]))
+                .isOrdered(Boolean.FALSE)
+                .build());
+        }};
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .addresses(addresses)
+                .build();
+        assertFalse("testInvalidSeparators2-1", jsCard.isValid());
+        assertTrue("testInvalidSeparators2-2", jsCard.getValidationMessages().contains("if a separator component is set, the isOrdered member of the parent object must be true"));
+    }
+
+    @Test
+    public void testInvalidSeparators3() {
+
+        List components = new ArrayList<AddressComponent>();
+        components.add(AddressComponent.separator(","));
+
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                .components((AddressComponent[]) components.toArray(new AddressComponent[0]))
+                .build());
+        }};
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .addresses(addresses)
+                .build();
+
+        assertFalse("testInvalidSeparators3-1", jsCard.isValid());
+        assertTrue("testInvalidSeparators3-2", jsCard.getValidationMessages().contains("the components array must include at least one component other than separator"));
+    }
+
+    @Test
+    public void testInvalidComponents() {
+
+        Map<String,Address> addresses = new HashMap<String,Address>() {{ put("ADR-1", Address.builder()
+                .components(new AddressComponent[0])
+                .build());
+        }};
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .addresses(addresses)
+                .build();
+        assertFalse("testInvalidComponents-1", jsCard.isValid());
+        assertTrue("testInvalidComponents-2", jsCard.getValidationMessages().contains("components array must not be empty"));
     }
 
 }

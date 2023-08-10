@@ -32,7 +32,8 @@ public enum PhoneticSystemEnum implements IsExtensibleEnum {
 
     IPA("ipa"),
     PINY("piny"),
-    JYUT("jyut");
+    JYUT("jyut"),
+    SCRIPT("script");
 
     private final String value;
 

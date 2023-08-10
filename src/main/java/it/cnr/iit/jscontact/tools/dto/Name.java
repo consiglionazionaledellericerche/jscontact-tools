@@ -21,10 +21,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.constraints.NameSortAsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
+import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
 import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -41,7 +45,10 @@ import java.util.Map;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  */
-@NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null between full and components is required in Name")
+@NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null member between full and components is required in Name")
+@NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"sortAs"})
+@ComponentsConstraint
+@NameSortAsConstraint
 @JsonPropertyOrder({"@type", "full", "components", "isOrdered", "pronounce", "sortAs", "phoneticSystem", "phoneticScript"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -49,7 +56,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Name extends AbstractJSContactType implements Serializable {
+public class Name extends AbstractJSContactType implements HasComponents, Serializable {
 
     @Pattern(regexp = "Name", message="invalid @type value in Name")
     @JsonProperty("@type")
@@ -59,6 +66,7 @@ public class Name extends AbstractJSContactType implements Serializable {
     String full;
 
     @JSContactCollection(addMethod = "addComponent", itemClass = NameComponent.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Valid
     NameComponent[] components;
 
@@ -68,6 +76,7 @@ public class Name extends AbstractJSContactType implements Serializable {
 
     @JsonSerialize(using = NameSortAsSerializer.class)
     @JsonDeserialize(using = NameSortAsDeserializer.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<NameComponentKind, String> sortAs;
 
     String phoneticScript;
@@ -95,7 +104,15 @@ public class Name extends AbstractJSContactType implements Serializable {
         components = ArrayUtils.add(components, nc);
     }
 
-    private String getComponentValue(NameComponentKind componentKind) {
+
+    /**
+     * Gets the value of a name component.
+     *
+     * @param componentKind the name component to get
+     * @return the value of the given name component in the "components" array, null otherwise
+     */
+    @JsonIgnore
+    public String getComponentValue(NameComponentKind componentKind) {
 
         if (components == null)
             return null;

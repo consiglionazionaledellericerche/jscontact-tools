@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.16.4</version>
+		  <version>0.16.5</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.4'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.5'
 ```
 
 # Features
@@ -43,15 +43,22 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 ### Builders
 
 Object creation is achieved through builders.
+In addition to the class builders, the following collections builders are provided:
+
+* ContextsBuilder
+* AddressContextsBuilder
+* PhoneFeaturesBuilder
+* NameComponentsBuilder
+* AddressComponentsBuilder
+
 Simplest maps can be loaded by putting entries singularly.
 Here in the following a successful creation of an EmailAddress instance is shown.
  
 ```
 
         EmailAddress email = EmailAddress.builder()
-                                        .context(Context.work(), Boolean.TRUE)
-                                        .context(Context.private(), Boolean.TRUE)
                                         .address("mario.loffredo@iit.cnr.it")
+                                        .contexts(new ContextsBuilder().work().private_().build())
                                         .build();
 
 ```
@@ -62,7 +69,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 ```
 
         // address is missing in EmailAddress
-        EmailAddress.builder().context(Context.work(),Boolean.TRUE).build();
+        EmailAddress.builder().contexts(new ContextsBuilder().work().build()).build();
 
 ```
 
@@ -622,7 +629,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.16.4 implements the following draft versions:
+Version 0.16.5 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-13
 * draft-ietf-calext-jscontact-vcard-11

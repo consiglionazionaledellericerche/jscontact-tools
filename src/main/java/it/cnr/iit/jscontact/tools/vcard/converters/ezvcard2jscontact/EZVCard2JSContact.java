@@ -577,26 +577,26 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (vcardName.getGiven() != null) {
                 String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
                 for (String name : names)
-                    components = Name.addComponent(components, NameComponent.given(name, (isPhonetic) ? name : null));
+                    components = Name.addComponent(components, (isPhonetic) ? NameComponent.given(name, name) : NameComponent.given(name));
             }
 
             for (String an : vcardName.getAdditionalNames())
-                components = Name.addComponent(components, NameComponent.given2(an, (isPhonetic) ? an : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.given2(an, an) : NameComponent.given2(an));
 
             for (String px : vcardName.getPrefixes())
-                components = Name.addComponent(components, NameComponent.title(px, (isPhonetic) ? px : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.title(px, px) : NameComponent.title(px));
 
             for (String sx : vcardName.getSuffixes()) {
                 if (vcardName.getGeneration().contains(sx))
                     continue;
-                components = Name.addComponent(components, NameComponent.credential(sx, (isPhonetic) ? sx : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.credential(sx, sx) : NameComponent.credential(sx));
             }
 
             for (String sx : vcardName.getSurname2())
-                components = Name.addComponent(components, NameComponent.surname2(sx, (isPhonetic) ? sx : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.surname2(sx,  sx) : NameComponent.surname2(sx));
 
             for (String sx : vcardName.getGeneration())
-                components = Name.addComponent(components, NameComponent.generation(sx, (isPhonetic) ? sx : null));
+                components = Name.addComponent(components, (isPhonetic) ? NameComponent.generation(sx, sx) : NameComponent.generation(sx));
         }
         else {
 
@@ -651,7 +651,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         PhoneticSystem phoneticSystem = null;
 
-        if (vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) {
+        if (vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())!=null && !vcardName.getParameter(VCardParamEnum.PHONETIC.getValue()).equalsIgnoreCase(PhoneticSystemEnum.SCRIPT.getValue())) {
             try {
                 phoneticSystem = PhoneticSystem.rfc(PhoneticSystemEnum.getEnum(vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())));
             } catch (IllegalArgumentException e) {
@@ -922,7 +922,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         PhoneticSystem phoneticSystem = null;
 
-        if (vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) {
+        if (vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())!=null && !vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue()).equalsIgnoreCase(PhoneticSystemEnum.SCRIPT.getValue())) {
             try {
                 phoneticSystem = PhoneticSystem.rfc(PhoneticSystemEnum.getEnum(vcardAddr.getParameter(VCardParamEnum.PHONETIC.getValue())));
             } catch (IllegalArgumentException e) {
@@ -1618,7 +1618,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    private void fillJSCardPropsFromJSCardExtensionsInVCard(VCard vcard, Card jsCard) throws CardException {
+    private void fillJSPropsFromJSCardExtensionsInVCard(VCard vcard, Card jsCard) throws CardException {
 
         String path = null;
         Object value;
@@ -1627,7 +1627,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             for (RawProperty extension : vcard.getExtendedProperties()) {
                 if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.JSPROP.getValue())) {
                     path = extension.getParameter(VCardParamEnum.JSPTR.getValue());
-                    value = JSContactPropUtils.toJsonValue(extension.getValue());
+                    value = JSPropUtils.toJSContactObject(extension.getValue());
                     if (!path.contains(DelimiterUtils.SLASH_DELIMITER)) {
                         jsCard.addExtension(path, value);
                     } else {
@@ -1739,7 +1739,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             jsCard.setCustomTimeZones(customTimeZones);
         fillVCardUnmatchedProps(vCard, jsCard);
         fillJSCardPropsFromVCardExtensions(vCard, jsCard);
-        fillJSCardPropsFromJSCardExtensionsInVCard(vCard, jsCard);
+        fillJSPropsFromJSCardExtensionsInVCard(vCard, jsCard);
 
        return jsCard;
     }

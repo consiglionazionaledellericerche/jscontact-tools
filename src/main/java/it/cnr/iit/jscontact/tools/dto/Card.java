@@ -110,6 +110,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
 
     // Section 2.1.6 of [draft-ietf-calext-jscontact]
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in JSContact - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Boolean> members;
 
     // Section 2.1.7 of [draft-ietf-calext-jscontact]
@@ -119,6 +120,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JSContactCollection(addMethod = "addRelation", itemClass = Relation.class)
     @JsonPropertyOrder(alphabetic = true)
     @RelatedToConstraint
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Relation> relatedTo;
 
     // Section 2.1.9 of [draft-ietf-calext-jscontact]
@@ -144,6 +146,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Nickname>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Nickname> nicknames;
 
     // Section 2.2.2 of [draft-ietf-calext-jscontact]
@@ -151,6 +154,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Organization> organizations;
 
     // Section 2.2.3 of [draft-ietf-calext-jscontact]
@@ -162,6 +166,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Title>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Title> titles;
 
     /*
@@ -173,6 +178,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, EmailAddress> emails;
 
     // Section 2.3.2 of [draft-ietf-calext-jscontact]
@@ -180,6 +186,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,OnlineService>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,OnlineService> onlineServices;
 
     // Section 2.3.3 of [draft-ietf-calext-jscontact]
@@ -187,6 +194,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,Phone> phones;
 
     // Section 2.3.4 of [draft-ietf-calext-jscontact]
@@ -194,6 +202,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,LanguagePref>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, LanguagePref> preferredLanguages;
 
 
@@ -206,6 +215,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,CalendarResource>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, CalendarResource> calendars;
 
     // Section 2.4.2 of [draft-ietf-calext-jscontact]
@@ -213,6 +223,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,SchedulingAddress>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, SchedulingAddress> schedulingAddresses;
 
 
@@ -225,6 +236,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Address> addresses;
 
     /*
@@ -236,6 +248,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,CryptoResource>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, CryptoResource> cryptoKeys;
 
     // Section 2.6.2 of [draft-ietf-calext-jscontact]
@@ -243,6 +256,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,DirectoryResource>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,DirectoryResource> directories;
 
     // Section 2.6.3 of [draft-ietf-calext-jscontact]
@@ -250,6 +264,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,LinkResource>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,LinkResource> links;
 
     // Section 2.6.4 of [draft-ietf-calext-jscontact]
@@ -257,6 +272,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,MediaResource>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, MediaResource> media;
 
 
@@ -266,6 +282,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
 
     // Section 2.7.1 of [draft-ietf-calext-jscontact]
     @JsonPropertyOrder(alphabetic = true)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Map<String, JsonNode>> localizations;
 
 
@@ -278,14 +295,17 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Anniversary>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Anniversary> anniversaries;
 
     // Section 2.8.2 of [draft-ietf-calext-jscontact]
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Boolean> keywords;
 
     // Section 2.8.3 of [draft-ietf-calext-jscontact]
     @IdMapConstraint(message = "invalid Id in Map<Id,Note>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Note> notes;
 
     // Section 2.8.4 of [draft-ietf-calext-jscontact]
@@ -293,6 +313,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,PersonalInfo>")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, PersonalInfo> personalInfo;
 
     // Section 2.15.1 of [draft-ietf-calext-jscontact-vcard]
@@ -300,6 +321,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     @JsonSerialize(using = VCardPropsSerializer.class)
     @JsonDeserialize(using = VCardPropsDeserializer.class)
     @Valid
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     VCardProp[] vCardProps;
 
     @JsonIgnore

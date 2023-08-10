@@ -89,7 +89,6 @@ public class PhoneticSystem extends ExtensibleEnumType<PhoneticSystemEnum> imple
      * @return a "jyut" pronounce system
      */
     public static PhoneticSystem jyut() { return rfc(PhoneticSystemEnum.JYUT);}
-
     /**
      * Returns a custom relation type.
      *

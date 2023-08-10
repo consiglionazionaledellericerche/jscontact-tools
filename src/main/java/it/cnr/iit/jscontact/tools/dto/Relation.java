@@ -53,7 +53,6 @@ public class Relation extends AbstractJSContactType implements Serializable {
     @JsonSerialize(using = RelationSerializer.class)
     @JsonDeserialize(using = RelationDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<RelationType,Boolean> relation in Relation - Only Boolean.TRUE allowed")
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Singular(value="relationType", ignoreNullCollections = true)
     Map<RelationType,Boolean> relation;
 

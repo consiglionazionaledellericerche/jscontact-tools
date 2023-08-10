@@ -49,7 +49,6 @@ public class SchedulingAddress extends AbstractJSContactType implements HasLabel
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Resource - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Resource - value must be greater or equal than 1")

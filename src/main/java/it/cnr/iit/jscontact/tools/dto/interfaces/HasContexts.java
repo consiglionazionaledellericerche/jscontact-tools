@@ -79,7 +79,12 @@ public interface HasContexts {
      * @param context the context
      */
     default void addContext(Context context) {
-        Map<Context, Boolean> clone = new HashMap<>(getContexts());
+        Map<Context, Boolean> clone;
+
+        if (getContexts() == null)
+            clone = new HashMap<>();
+        else
+            clone = new HashMap<>(getContexts());
         clone.put(context,Boolean.TRUE);
         setContexts(clone);
     }

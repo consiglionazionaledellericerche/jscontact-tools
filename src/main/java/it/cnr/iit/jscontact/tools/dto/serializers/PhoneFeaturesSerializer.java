@@ -34,11 +34,11 @@ public class PhoneFeaturesSerializer extends JsonSerializer<Map<PhoneFeature,Boo
 
     @Override
     public void serialize(
-            Map<PhoneFeature,Boolean> contexts, JsonGenerator jgen, SerializerProvider provider)
+            Map<PhoneFeature,Boolean> features, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
         jgen.writeStartObject();
-        for (Map.Entry<PhoneFeature,Boolean> entry : contexts.entrySet())
+        for (Map.Entry<PhoneFeature,Boolean> entry : features.entrySet())
             jgen.writeBooleanField(entry.getKey().toJson(), entry.getValue());
         jgen.writeEndObject();
 

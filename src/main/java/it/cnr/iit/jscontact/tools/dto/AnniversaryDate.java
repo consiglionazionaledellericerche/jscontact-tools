@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@NotNullAnyConstraint(fieldNames = {"date", "partialDate"}, message = "at least one not null member is required in AnniversaryDate")
+@NotNullAnyConstraint(fieldNames = {"date", "partialDate"}, message = "at least one not null member between date and partialDate is required in AnniversaryDate")
 @Builder
 @Data
 @AllArgsConstructor

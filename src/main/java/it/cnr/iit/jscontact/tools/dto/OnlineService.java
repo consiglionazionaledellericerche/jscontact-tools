@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.constraints.UriConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
@@ -43,6 +44,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 
+@NotNullAnyConstraint(fieldNames = {"uri", "user"}, message = "at least one not null member between uri and user is required in OnlineService")
 @JsonPropertyOrder({"@type", "service", "user", "kind", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -68,7 +70,6 @@ public class OnlineService extends AbstractJSContactType implements HasLabel, Id
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in OnlineService - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @Singular(ignoreNullCollections = true)
     Map<Context, Boolean> contexts;
 
     @Min(value = 1, message = "invalid pref in OnlineService - value must be greater or equal than 1")

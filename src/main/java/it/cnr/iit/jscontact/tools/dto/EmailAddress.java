@@ -48,7 +48,6 @@ public class EmailAddress extends AbstractJSContactType implements HasLabel, IdM
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in EmailAddress - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @Singular(ignoreNullCollections = true)
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in EmailAddress - value must be greater or equal than 1")

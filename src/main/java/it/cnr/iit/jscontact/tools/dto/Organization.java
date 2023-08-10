@@ -26,7 +26,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null between name and units is required in Organization")
+@NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null member between name and units is required in Organization")
 @JsonPropertyOrder({"@type", "name", "sortAs", "units", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -52,7 +52,6 @@ public class Organization extends AbstractJSContactType implements HasContexts, 
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Organization - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @Singular(ignoreNullCollections = true)
     Map<Context, Boolean> contexts;
 
     @JsonIgnore

@@ -22,9 +22,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import lombok.*;
@@ -43,6 +45,7 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
+@ComponentsConstraint
 @JsonPropertyOrder({"@type","full","components","isOrdered","countryCode","coordinates","timeZone","phoneticScript","phoneticSystem",
                      "contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -51,7 +54,7 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
-public class Address extends AbstractJSContactType implements IdMapValue, Serializable {
+public class Address extends AbstractJSContactType implements IdMapValue, HasComponents, Serializable {
 
     @Pattern(regexp = "Address", message="invalid @type value in Address")
     @JsonProperty("@type")
@@ -60,6 +63,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
 
     String full;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JSContactCollection(addMethod = "addComponent", itemClass = AddressComponent.class)
     AddressComponent[] components;
 
@@ -84,7 +88,6 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
     @JsonDeserialize(using = AddressContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<AddressContext,Boolean> contexts in Address - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @Singular(ignoreNullCollections = true)
     Map<AddressContext,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Address - value must be greater or equal than 1")
@@ -243,7 +246,12 @@ public class Address extends AbstractJSContactType implements IdMapValue, Serial
      * @param context the context
      */
     public void addContext(AddressContext context) {
-        Map<AddressContext, Boolean> clone = new HashMap<>(getContexts());
+
+        Map<AddressContext, Boolean> clone;
+        if (getContexts() == null)
+            clone = new HashMap<>();
+        else
+            clone = new HashMap<>(getContexts());
         clone.put(context,Boolean.TRUE);
         setContexts(clone);
     }
