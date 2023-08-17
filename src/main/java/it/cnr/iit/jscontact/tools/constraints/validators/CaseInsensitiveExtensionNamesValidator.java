@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.constraints.CaseInsensitiveConstraint;
+import it.cnr.iit.jscontact.tools.constraints.CaseInsensitiveExtensionNamesConstraint;
 import it.cnr.iit.jscontact.tools.dto.AbstractExtensibleJSContactType;
 import it.cnr.iit.jscontact.tools.dto.utils.ClassUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
@@ -30,9 +30,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class CaseInsensitiveValidator implements ConstraintValidator<CaseInsensitiveConstraint, AbstractExtensibleJSContactType> {
+public class CaseInsensitiveExtensionNamesValidator implements ConstraintValidator<CaseInsensitiveExtensionNamesConstraint, AbstractExtensibleJSContactType> {
 
-    public void initialize(CaseInsensitiveConstraint constraintAnnotation) {
+    public void initialize(CaseInsensitiveExtensionNamesConstraint constraintAnnotation) {
     }
 
 

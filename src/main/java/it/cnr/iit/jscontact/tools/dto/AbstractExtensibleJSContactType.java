@@ -18,7 +18,7 @@ package it.cnr.iit.jscontact.tools.dto;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cnr.iit.jscontact.tools.constraints.CaseInsensitiveConstraint;
+import it.cnr.iit.jscontact.tools.constraints.CaseInsensitiveExtensionNamesConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
@@ -37,7 +37,7 @@ import java.util.*;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.8.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@CaseInsensitiveConstraint
+@CaseInsensitiveExtensionNamesConstraint
 @ToString
 @SuperBuilder
 @AllArgsConstructor

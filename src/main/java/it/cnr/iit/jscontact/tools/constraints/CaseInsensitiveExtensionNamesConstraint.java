@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.CaseInsensitiveValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.CaseInsensitiveExtensionNamesValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -23,9 +23,9 @@ import java.lang.annotation.*;
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {CaseInsensitiveValidator.class})
+@Constraint(validatedBy = {CaseInsensitiveExtensionNamesValidator.class})
 @Documented
-public @interface CaseInsensitiveConstraint {
+public @interface CaseInsensitiveExtensionNamesConstraint {
 
     String message() default "";
 
