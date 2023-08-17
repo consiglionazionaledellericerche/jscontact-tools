@@ -28,6 +28,7 @@ import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
+import it.cnr.iit.jscontact.tools.dto.Calendar;
 import it.cnr.iit.jscontact.tools.dto.Nickname;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.TimeZone;
@@ -283,7 +284,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         Resource resource = toJSCardResource(vcardProperty);
 
         jsCard.addMediaResource(getJSCardId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), vcardProperty.getParameter(VCardParamEnum.PROP_ID.getValue()),  ResourceType.valueOf(type.getRfcValue().name())),
-                                    MediaResource.builder()
+                                    Media.builder()
                                             .kind(type)
                                             .propId(resource.getPropId())
                                             .uri(resource.getUri())
@@ -296,18 +297,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                            );
     }
 
-    private DirectoryResource toJSCardDirectoryResource(VCardProperty vcardProperty, DirectoryResourceKind type, List<RawProperty> vcardExtendedProperties) {
+    private Directory toJSCardDirectoryResource(VCardProperty vcardProperty, DirectoryResourceKind type, List<RawProperty> vcardExtendedProperties) {
 
         String index = vcardProperty.getParameter(VCardParamEnum.INDEX.getValue());
         Resource resource = toJSCardResource(vcardProperty);
-        return DirectoryResource.builder()
+        return Directory.builder()
                 .kind(type)
                 .propId(resource.getPropId())
                 .uri(resource.getUri())
                 .contexts(resource.getContexts())
                 .mediaType(resource.getMediaType())
                 .pref(resource.getPref())
-                .listAs((index != null) ? Integer.parseInt(index) : null) //used only for DirectoryResource objects whose "kind" is "directory"
+                .listAs((index != null) ? Integer.parseInt(index) : null) //used only for Directory objects whose "kind" is "directory"
                 .label(toJSCardLabel(vcardProperty, vcardExtendedProperties))
                 .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardProperty, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.MEDIATYPE, VCardParamEnum.INDEX))
                 .build();
@@ -319,7 +320,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                                     toJSCardDirectoryResource(property,type, vcardExtendedProperties));
     }
 
-    private void addJSCardDirectoryResource(Card jsCard, DirectoryResource resource, int index) {
+    private void addJSCardDirectoryResource(Card jsCard, Directory resource, int index) {
 
         jsCard.addDirectoryResource(getJSCardId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",resource.getKind().getRfcValue().name(),index), resource.getPropId(), ResourceType.valueOf(resource.getKind().getRfcValue().name())),
                                    resource);
@@ -330,7 +331,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         Resource resource = toJSCardResource(vcardProperty);
 
         jsCard.addCryptoResource(getJSCardId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("KEY-%s",index), vcardProperty.getParameter(VCardParamEnum.PROP_ID.getValue()), ResourceType.KEY),
-                CryptoResource.builder()
+                CryptoKey.builder()
                         .propId(resource.getPropId())
                         .uri(resource.getUri())
                         .contexts(resource.getContexts())
@@ -347,7 +348,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         Resource resource = toJSCardResource(vcardProperty);
 
         jsCard.addCalendarResource(getJSCardId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), vcardProperty.getParameter(VCardParamEnum.PROP_ID.getValue()), ResourceType.valueOf(type.getRfcValue().name())),
-                CalendarResource.builder()
+                Calendar.builder()
                         .kind(type)
                         .propId(resource.getPropId())
                         .uri(resource.getUri())
@@ -365,7 +366,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         Resource resource = toJSCardResource(vcardProperty);
 
         jsCard.addLinkResource(getJSCardId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",(type!=null) ? type.getRfcValue().name() : "LINK",index), vcardProperty.getParameter(VCardParamEnum.PROP_ID.getValue()), (type!=null) ? ResourceType.valueOf(type.getRfcValue().name()) : ResourceType.LINK),
-                LinkResource.builder()
+                Link.builder()
                         .kind(type)
                         .propId(resource.getPropId())
                         .uri(resource.getUri())
@@ -446,7 +447,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 String timeZoneName = String.format("%s%d", config.getCustomTimeZonesPrefix(), ++customTimeZoneCounter);
                 customTimeZones.put(timeZoneName, TimeZone.builder()
                         .tzId(String.format("%s%s%s%s",CUSTOM_TIME_ZONE_ID_PREFIX,sign,hours,minutes))
-                        .updated(Calendar.getInstance())
+                        .updated(java.util.Calendar.getInstance())
                         .standardItem(TimeZoneRule.builder()
                                 .offsetFrom(String.format("%s%s%s",sign,hours,minutes))
                                 .offsetTo(String.format("%s%s%s",sign,hours,minutes))
@@ -1673,7 +1674,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     }
 
-    private static Calendar toJSCardUpdated(Revision rev) {
+    private static java.util.Calendar toJSCardUpdated(Revision rev) {
 
         if (rev == null)
             return null;

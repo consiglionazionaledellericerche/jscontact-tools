@@ -38,7 +38,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"directories\": {"+
                     "\"ENTRY-1\": {" +
-                        "\"@type\":\"DirectoryResource\"," +
+                        "\"@type\":\"Directory\"," +
                         "\"kind\": \"entry\","+
                         "\"uri\": \"http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf\"" +
                     "}" +
@@ -59,7 +59,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"media\": {"+
                     "\"PHOTO-1\": {" +
-                        "\"@type\":\"MediaResource\"," +
+                        "\"@type\":\"Media\"," +
                         "\"kind\":\"photo\"," +
                         "\"mediaType\": \"image/gif\","+
                         "\"uri\": \"http://www.example.com/pub/photos/jqpublic.gif\"" +
@@ -82,7 +82,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"media\": {"+
                     "\"LOGO-1\": {" +
-                        "\"@type\":\"MediaResource\"," +
+                        "\"@type\":\"Media\"," +
                         "\"kind\": \"logo\","+
                         "\"uri\": \"http://www.example.com/pub/logos/abccorp.jpg\"" +
                     "}" +
@@ -103,7 +103,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"links\": {"+
                     "\"CONTACT-1\": {" +
-                        "\"@type\":\"LinkResource\"," +
+                        "\"@type\":\"Link\"," +
                         "\"kind\": \"contact\","+
                         "\"uri\": \"mailto:contact@example.com\"" +
                     "}," +
@@ -130,7 +130,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"media\": {"+
                     "\"SOUND-1\": {" +
-                        "\"@type\":\"MediaResource\"," +
+                        "\"@type\":\"Media\"," +
                         "\"kind\": \"sound\","+
                         "\"mediaType\": \"audio/mp3\"," +
                         "\"uri\": \"android.resource:///com.my.android.sharesound/2130968609\"" +
@@ -153,7 +153,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"media\":{"+
                     "\"SOUND-1\": {" +
-                        "\"@type\":\"MediaResource\"," +
+                        "\"@type\":\"Media\"," +
                         "\"kind\": \"sound\","+
                         "\"uri\": \"android.resource:///com.my.android.sharesound/2130968609\"" +
                     "}" +
@@ -175,7 +175,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"links\": {"+
                     "\"LINK-1\": {" +
-                        "\"@type\":\"LinkResource\"," +
+                        "\"@type\":\"Link\"," +
                         "\"uri\": \"http://example.org/restaurant.french/~chezchic.htm\"" +
                     "}" +
                 "}" +
@@ -195,7 +195,7 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"cryptoKeys\": {"+
                     "\"KEY-1\": {" +
-                        "\"@type\":\"CryptoResource\"," +
+                        "\"@type\":\"CryptoKey\"," +
                         "\"uri\": \"http://www.example.com/keys/jdoe.cer\"" +
                     "}" +
                 "}" +
@@ -215,13 +215,13 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"calendars\": {"+
                     "\"FREEBUSY-1\": {" +
-                        "\"@type\":\"CalendarResource\"," +
+                        "\"@type\":\"Calendar\"," +
                         "\"kind\": \"freeBusy\","+
                         "\"pref\": 1," +
                         "\"uri\": \"http://www.example.com/busy/janedoe\"" +
                     "}," +
                     "\"FREEBUSY-2\": {" +
-                        "\"@type\":\"CalendarResource\"," +
+                        "\"@type\":\"Calendar\"," +
                         "\"kind\": \"freeBusy\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"uri\": \"ftp://example.com/busy/project-a.ifb\"" +
@@ -275,13 +275,13 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"calendars\": {"+
                     "\"CALENDAR-1\": {" +
-                        "\"@type\":\"CalendarResource\"," +
+                        "\"@type\":\"Calendar\"," +
                         "\"kind\": \"calendar\","+
                         "\"pref\": 1," +
                         "\"uri\": \"http://cal.example.com/calA\"" +
                     "}," +
                     "\"CALENDAR-2\": {" +
-                        "\"@type\":\"CalendarResource\"," +
+                        "\"@type\":\"Calendar\"," +
                         "\"kind\": \"calendar\","+
                         "\"mediaType\": \"text/calendar\"," +
                         "\"uri\": \"ftp://ftp.example.com/calA.ics\"" +
@@ -307,11 +307,11 @@ public class ResourceTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"cryptoKeys\": {"+
                     "\"KEY-1\": {" +
-                        "\"@type\":\"CryptoResource\"," +
+                        "\"@type\":\"CryptoKey\"," +
                          "\"uri\": \"data:application/pgp-keys;base64,MIIBCgKCAQEA+xGZ/wcz9ugFpP07Nspo6U17l0YhFiFpxxU4pTk3Lifz9R3zsIsuERwta7+fWIfxOo208ett/jhskiVodSEt3QBGh4XBipyWopKwZ93HHaDVZAALi/2A+xTBtWdEo7XGUujKDvC2/aZKukfjpOiUI8AhLAfjmlcD/UZ1QPh0mHsglRNCmpCwmwSXA9VNmhz+PiB+Dml4WWnKW/VHo2ujTXxq7+efMU4H2fny3Se3KYOsFPFGZ1TNQSYlFuShWrHPtiLmUdPoP6CV2mML1tk+l7DIIqXrQhLUKDACeM5roMx0kLhUWB8P+0uj1CNlNN4JRZlC7xFfqiMbFRU9Z4N6YwIDAQAB\"" +
                    "}," +
                     "\"KEY-2\": {" +
-                        "\"@type\":\"CryptoResource\"," +
+                        "\"@type\":\"CryptoKey\"," +
                         "\"uri\": \"https://www.example.com/keys/jdoe.cer\"" +
                     "}" +
                 "}" +

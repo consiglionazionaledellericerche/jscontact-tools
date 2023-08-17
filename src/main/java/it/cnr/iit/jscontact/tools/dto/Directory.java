@@ -30,7 +30,7 @@ import javax.validation.constraints.Pattern;
 
 
 /**
- * Class mapping the DirectoryResource type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the Directory type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -42,17 +42,17 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class DirectoryResource extends Resource implements HasKind {
+public class Directory extends Resource implements HasKind {
 
-    @Pattern(regexp = "DirectoryResource", message = "invalid @type value in DirectoryResource")
+    @Pattern(regexp = "Directory", message = "invalid @type value in Directory")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "DirectoryResource";
+    String _type = "Directory";
 
     @JsonDeserialize(using = DirectoryResourceTypeDeserializer.class)
     DirectoryResourceKind kind;
 
-    @Min(value = 1, message = "invalid listAs in DirectoryResource - value must be greater or equal than 1")
+    @Min(value = 1, message = "invalid listAs in Directory - value must be greater or equal than 1")
     Integer listAs;
 
     @JsonIgnore
@@ -76,8 +76,8 @@ public class DirectoryResource extends Resource implements HasKind {
     @JsonIgnore
     public boolean isEntry() { return isDirectoryResource(DirectoryResourceKind.entry()); }
 
-    private static DirectoryResource resource(DirectoryResourceKind type, String uri) {
-        return DirectoryResource.builder()
+    private static Directory resource(DirectoryResourceKind type, String uri) {
+        return Directory.builder()
                        .uri(uri)
                        .kind(type)
                        .build();
@@ -89,7 +89,7 @@ public class DirectoryResource extends Resource implements HasKind {
      * @param uri directory uri
      * @return the directory
      */
-    public static DirectoryResource directory(String uri) { return resource(DirectoryResourceKind.directory(), uri);}
+    public static Directory directory(String uri) { return resource(DirectoryResourceKind.directory(), uri);}
 
     /**
      * Returns an entry
@@ -97,6 +97,6 @@ public class DirectoryResource extends Resource implements HasKind {
      * @param uri entry uri
      * @return the entry
      */
-    public static DirectoryResource entry(String uri) { return resource(DirectoryResourceKind.entry(), uri);}
+    public static Directory entry(String uri) { return resource(DirectoryResourceKind.entry(), uri);}
 
 }

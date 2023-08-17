@@ -54,7 +54,7 @@
   },
   "cryptoKeys": {
     "KEY-1": {
-      "@type": "CryptoResource",
+      "@type": "CryptoKey",
       "contexts": {
         "work": true
       },
@@ -63,7 +63,7 @@
   },
   "links": {
     "LINK-1": {
-      "@type" : "LinkResource",
+      "@type" : "Link",
       "contexts": {"private": true},
       "uri": "http://example.org"
     }

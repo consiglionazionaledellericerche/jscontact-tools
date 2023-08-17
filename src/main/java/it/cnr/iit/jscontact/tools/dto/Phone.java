@@ -12,6 +12,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneFeaturesDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.PhoneFeaturesSerializer;
 import lombok.*;
@@ -39,7 +40,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
+public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue, IsIANAType, Serializable, HasContexts {
 
     @Pattern(regexp = "Phone", message="invalid @type value in Phone")
     @JsonProperty("@type")

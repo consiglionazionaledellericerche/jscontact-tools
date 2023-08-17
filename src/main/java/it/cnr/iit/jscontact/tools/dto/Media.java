@@ -28,7 +28,7 @@ import javax.validation.constraints.Pattern;
 
 
 /**
- * Class mapping the MediaResource type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the Media type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -40,12 +40,12 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MediaResource extends Resource implements HasKind {
+public class Media extends Resource implements HasKind {
 
-    @Pattern(regexp = "MediaResource", message="invalid @type value in MediaResource")
+    @Pattern(regexp = "Media", message="invalid @type value in Media")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "MediaResource";
+    String _type = "Media";
 
     @JsonDeserialize(using = MediaResourceTypeDeserializer.class)
     MediaResourceKind kind;
@@ -77,8 +77,8 @@ public class MediaResource extends Resource implements HasKind {
     @JsonIgnore
     public boolean isLogo() { return isMediaResource(MediaResourceKind.logo()); }
 
-    private static MediaResource resource(MediaResourceKind type, String uri) {
-        return MediaResource.builder()
+    private static Media resource(MediaResourceKind type, String uri) {
+        return Media.builder()
                        .uri(uri)
                        .kind(type)
                        .build();
@@ -90,7 +90,7 @@ public class MediaResource extends Resource implements HasKind {
      * @param uri photo uri
      * @return the photo
      */
-    public static MediaResource photo(String uri) { return resource(MediaResourceKind.photo(), uri);}
+    public static Media photo(String uri) { return resource(MediaResourceKind.photo(), uri);}
 
     /**
      * Returns a sound
@@ -98,7 +98,7 @@ public class MediaResource extends Resource implements HasKind {
      * @param uri sound uri
      * @return the sound
      */
-    public static MediaResource sound(String uri) { return resource(MediaResourceKind.sound(), uri);}
+    public static Media sound(String uri) { return resource(MediaResourceKind.sound(), uri);}
 
     /**
      * Returns a logo
@@ -106,6 +106,6 @@ public class MediaResource extends Resource implements HasKind {
      * @param uri logo uri
      * @return the logo
      */
-    public static MediaResource logo(String uri) { return resource(MediaResourceKind.logo(), uri);}
+    public static Media logo(String uri) { return resource(MediaResourceKind.logo(), uri);}
 
 }

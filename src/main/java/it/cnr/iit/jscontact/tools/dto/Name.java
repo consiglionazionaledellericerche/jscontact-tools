@@ -29,6 +29,7 @@ import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -56,7 +57,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Name extends AbstractJSContactType implements HasComponents, Serializable {
+public class Name extends AbstractJSContactType implements HasComponents, IsIANAType, Serializable {
 
     @Pattern(regexp = "Name", message="invalid @type value in Name")
     @JsonProperty("@type")

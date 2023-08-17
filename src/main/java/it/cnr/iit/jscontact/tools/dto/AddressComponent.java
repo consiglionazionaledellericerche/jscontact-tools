@@ -23,6 +23,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentTypeDeserial
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -41,7 +42,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AddressComponent extends AbstractJSContactType implements HasKind, IsComponent, Serializable {
+public class AddressComponent extends AbstractJSContactType implements HasKind, IsComponent, IsIANAType, Serializable {
 
     @Pattern(regexp = "AddressComponent", message="invalid @type value in AddressComponent")
     @JsonProperty("@type")

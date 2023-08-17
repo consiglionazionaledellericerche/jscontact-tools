@@ -11,6 +11,7 @@ import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -34,7 +35,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Organization extends AbstractJSContactType implements HasContexts, IdMapValue, Serializable {
+public class Organization extends AbstractJSContactType implements HasContexts, IsIANAType, IdMapValue, Serializable {
 
     @Pattern(regexp = "Organization", message = "invalid @type value in Organization")
     @JsonProperty("@type")

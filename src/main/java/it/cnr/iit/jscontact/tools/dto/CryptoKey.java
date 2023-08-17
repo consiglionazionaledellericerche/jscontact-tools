@@ -24,7 +24,7 @@ import javax.validation.constraints.Pattern;
 
 
 /**
- * Class mapping the CryptoResource type as defined in section 2.6.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the CryptoKey type as defined in section 2.6.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -36,11 +36,11 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CryptoResource extends Resource {
+public class CryptoKey extends Resource {
 
-    @Pattern(regexp = "CryptoResource", message="invalid @type value in CryptoResource")
+    @Pattern(regexp = "CryptoKey", message="invalid @type value in CryptoKey")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "CryptoResource";
+    String _type = "CryptoKey";
 
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.constraints.IdMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -29,7 +30,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class SpeakToAs extends AbstractJSContactType implements Serializable {
+public class SpeakToAs extends AbstractJSContactType implements IsIANAType, Serializable {
 
     @Pattern(regexp = "SpeakToAs", message="invalid @type value in SpeakToAs")
     @JsonProperty("@type")

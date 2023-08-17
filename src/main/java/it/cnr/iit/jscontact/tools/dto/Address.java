@@ -28,6 +28,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.AddressContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -54,7 +55,7 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of={"hash"}, callSuper = false)
-public class Address extends AbstractJSContactType implements IdMapValue, HasComponents, Serializable {
+public class Address extends AbstractJSContactType implements IdMapValue, HasComponents, IsIANAType, Serializable {
 
     @Pattern(regexp = "Address", message="invalid @type value in Address")
     @JsonProperty("@type")

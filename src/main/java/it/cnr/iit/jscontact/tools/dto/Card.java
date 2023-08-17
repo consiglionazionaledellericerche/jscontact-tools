@@ -30,6 +30,7 @@ import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilde
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.VCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.VCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
@@ -73,7 +74,7 @@ import java.util.*;
 @ToString(callSuper = true)
 @EqualsAndHashCode(of = {"uid"}, callSuper = false)
 @SuperBuilder
-public class Card extends AbstractExtensibleJSContactType implements Serializable {
+public class Card extends AbstractExtensibleJSContactType implements IsIANAType, Serializable {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -98,7 +99,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     // Section 2.1.3 of [draft-ietf-calext-jscontact]
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
-    Calendar created;
+    java.util.Calendar created;
 
     // Section 2.1.4 of [draft-ietf-calext-jscontact]
     @JsonDeserialize(using = KindTypeDeserializer.class)
@@ -131,7 +132,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
     // Section 2.1.10 of [draft-ietf-calext-jscontact]
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
-    Calendar updated;
+    java.util.Calendar updated;
 
     /*
     Name and Organization properties
@@ -211,12 +212,12 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.4.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addCalendar", itemClass = CalendarResource.class)
+    @JSContactCollection(addMethod = "addCalendar", itemClass = Calendar.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,CalendarResource>")
+    @IdMapConstraint(message = "invalid Id in Map<Id,Calendar>")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    Map<String, CalendarResource> calendars;
+    Map<String, Calendar> calendars;
 
     // Section 2.4.2 of [draft-ietf-calext-jscontact]
     @JSContactCollection(addMethod = "addSchedulingAddress", itemClass = SchedulingAddress.class)
@@ -244,36 +245,36 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      */
 
     // Section 2.6.1 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addCryptoResource", itemClass = CryptoResource.class)
+    @JSContactCollection(addMethod = "addCryptoResource", itemClass = CryptoKey.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,CryptoResource>")
+    @IdMapConstraint(message = "invalid Id in Map<Id,CryptoKey>")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    Map<String, CryptoResource> cryptoKeys;
+    Map<String, CryptoKey> cryptoKeys;
 
     // Section 2.6.2 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addDirectoryResource", itemClass = DirectoryResource.class)
+    @JSContactCollection(addMethod = "addDirectoryResource", itemClass = Directory.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,DirectoryResource>")
+    @IdMapConstraint(message = "invalid Id in Map<Id,Directory>")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    Map<String,DirectoryResource> directories;
+    Map<String, Directory> directories;
 
     // Section 2.6.3 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addLinkResource", itemClass = LinkResource.class)
+    @JSContactCollection(addMethod = "addLinkResource", itemClass = Link.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,LinkResource>")
+    @IdMapConstraint(message = "invalid Id in Map<Id,Link>")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    Map<String,LinkResource> links;
+    Map<String, Link> links;
 
     // Section 2.6.4 of [draft-ietf-calext-jscontact]
-    @JSContactCollection(addMethod = "addMediaResource", itemClass = MediaResource.class)
+    @JSContactCollection(addMethod = "addMediaResource", itemClass = Media.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
-    @IdMapConstraint(message = "invalid Id in Map<Id,MediaResource>")
+    @IdMapConstraint(message = "invalid Id in Map<Id,Media>")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    Map<String, MediaResource> media;
+    Map<String, Media> media;
 
 
     /*
@@ -486,7 +487,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * @param id the directory resource identifier
      * @param resource the object representing the directory resource
      */
-    public void addDirectoryResource(String id, DirectoryResource resource) {
+    public void addDirectoryResource(String id, Directory resource) {
 
         if (directories == null)
             directories = new HashMap<>();
@@ -500,7 +501,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * @param id the crypto resource identifier
      * @param resource the object representing the crypto resource
      */
-    public void addCryptoResource(String id, CryptoResource resource) {
+    public void addCryptoResource(String id, CryptoKey resource) {
 
         if (cryptoKeys == null)
             cryptoKeys = new HashMap<>();
@@ -515,7 +516,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * @param id the calendar resource identifier
      * @param resource the object representing the calendar resource
      */
-    public void addCalendarResource(String id, CalendarResource resource) {
+    public void addCalendarResource(String id, Calendar resource) {
 
         if (calendars == null)
             calendars = new HashMap<>();
@@ -529,7 +530,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * @param id the link resource identifier
      * @param resource the object representing the link resource
      */
-    public void addLinkResource(String id, LinkResource resource) {
+    public void addLinkResource(String id, Link resource) {
 
         if (links == null)
             links = new HashMap<>();
@@ -544,7 +545,7 @@ public class Card extends AbstractExtensibleJSContactType implements Serializabl
      * @param id the media resource identifier
      * @param resource the object representing the media resource
      */
-    public void addMediaResource(String id, MediaResource resource) {
+    public void addMediaResource(String id, Media resource) {
 
         if (media == null)
             media = new HashMap<>();

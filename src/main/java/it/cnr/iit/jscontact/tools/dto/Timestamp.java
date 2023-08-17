@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,7 +27,7 @@ import java.util.Calendar;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Timestamp extends AbstractJSContactType {
+public class Timestamp extends AbstractJSContactType implements IsIANAType {
 
     @NotNull
     @Pattern(regexp = "Timestamp", message="invalid @type value in Timestamp")

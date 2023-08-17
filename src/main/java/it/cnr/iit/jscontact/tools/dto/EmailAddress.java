@@ -10,6 +10,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -32,7 +33,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class EmailAddress extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
+public class EmailAddress extends AbstractJSContactType implements HasLabel, IdMapValue, IsIANAType, Serializable, HasContexts {
 
     @Pattern(regexp = "EmailAddress", message="invalid @type value in EmailAddress")
     @JsonProperty("@type")

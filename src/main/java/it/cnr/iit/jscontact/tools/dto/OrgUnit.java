@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -24,7 +25,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class OrgUnit extends AbstractJSContactType implements IdMapValue, Serializable {
+public class OrgUnit extends AbstractJSContactType implements IdMapValue, IsIANAType, Serializable {
 
     @Pattern(regexp = "OrgUnit", message="invalid @type value in OrgUnit")
     @JsonProperty("@type")

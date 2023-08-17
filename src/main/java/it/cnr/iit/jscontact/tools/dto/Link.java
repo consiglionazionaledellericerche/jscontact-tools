@@ -29,7 +29,7 @@ import javax.validation.constraints.Pattern;
 
 
 /**
- * Class mapping the LinkResource type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the Link type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -41,12 +41,12 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class LinkResource extends Resource implements HasKind, HasOptionalKind {
+public class Link extends Resource implements HasKind, HasOptionalKind {
 
-    @Pattern(regexp = "LinkResource", message="invalid @type value in LinkResource")
+    @Pattern(regexp = "Link", message="invalid @type value in Link")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "LinkResource";
+    String _type = "Link";
 
     @JsonDeserialize(using = LinkResourceTypeDeserializer.class)
     LinkResourceKind kind;
@@ -70,8 +70,8 @@ public class LinkResource extends Resource implements HasKind, HasOptionalKind {
     @JsonIgnore
     public boolean isGenericLink() { return kind == null; }
 
-    private static LinkResource resource(LinkResourceKind type, String uri) {
-        return LinkResource.builder()
+    private static Link resource(LinkResourceKind type, String uri) {
+        return Link.builder()
                        .uri(uri)
                        .kind(type)
                        .build();
@@ -83,7 +83,7 @@ public class LinkResource extends Resource implements HasKind, HasOptionalKind {
      * @param uri contact link uri
      * @return the contact link
      */
-    public static LinkResource contact(String uri) { return resource(LinkResourceKind.contact(), uri);}
+    public static Link contact(String uri) { return resource(LinkResourceKind.contact(), uri);}
 
     /**
      * Returns an unspecified link
@@ -91,6 +91,6 @@ public class LinkResource extends Resource implements HasKind, HasOptionalKind {
      * @param uri link uri
      * @return the link
      */
-    public static LinkResource genericLink(String uri) { return resource(null, uri);}
+    public static Link genericLink(String uri) { return resource(null, uri);}
 
 }

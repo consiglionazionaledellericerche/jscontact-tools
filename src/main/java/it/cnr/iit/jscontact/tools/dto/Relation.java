@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.RelationDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.RelationSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -43,7 +44,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Relation extends AbstractJSContactType implements Serializable {
+public class Relation extends AbstractJSContactType implements IsIANAType, Serializable {
 
     @Pattern(regexp = "Relation", message="invalid @type value in Relation")
     @JsonProperty("@type")

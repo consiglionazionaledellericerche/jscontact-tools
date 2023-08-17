@@ -24,6 +24,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoTypeDeserializer
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -45,7 +46,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasKind, IdMapValue, Serializable {
+public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasKind, IdMapValue, IsIANAType, Serializable {
 
     @Pattern(regexp = "PersonalInfo", message = "invalid @type value in PersonalInfo")
     @JsonProperty("@type")

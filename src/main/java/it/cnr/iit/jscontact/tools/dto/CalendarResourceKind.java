@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "kind" property of the CalendarResource type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the Calendar type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo

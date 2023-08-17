@@ -1,6 +1,9 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.TextNode;
@@ -13,6 +16,8 @@ import com.fasterxml.jackson.databind.node.TextNode;
 public class JsonNodeUtils {
 
     private static final JsonNodeFactory JSON_NODE_FACTORY = JsonNodeFactory.instance;
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Converts a text into a Jackson TextNode object.
@@ -59,7 +64,7 @@ public class JsonNodeUtils {
      * @param node the JsonNode object
      * @return the object
      */
-    public static Object getValue(JsonNode node) {
+    public static Object toObject(JsonNode node) {
 
         if (node.isBoolean())
             return node.asBoolean();
@@ -72,4 +77,25 @@ public class JsonNodeUtils {
 
         return null;
     }
+
+    /**
+     * Converts a Java object into a Jackson JsonNode object.
+     * @param object the object
+     * @return the JsonNode object
+     */
+    public static JsonNode toJsonNode(Object object) {
+
+        if (object == null)
+            return null;
+
+        try {
+            String json = mapper.writeValueAsString(object);
+            return mapper.readTree(json);
+        } catch (JsonMappingException e) {
+            return null;
+        } catch (JsonProcessingException e) {
+            return null;
+        }
+    }
+
 }

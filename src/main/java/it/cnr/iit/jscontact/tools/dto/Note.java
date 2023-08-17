@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +31,7 @@ import java.util.Calendar;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Note extends AbstractJSContactType implements IdMapValue, Serializable {
+public class Note extends AbstractJSContactType implements IdMapValue, IsIANAType, Serializable {
 
     @Pattern(regexp = "Note", message="invalid @type value in Note")
     @JsonProperty("@type")

@@ -8,6 +8,7 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.TitleTypeDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -28,7 +29,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Title extends AbstractJSContactType implements HasKind, HasOptionalKind, IdMapValue, Serializable {
+public class Title extends AbstractJSContactType implements HasKind, HasOptionalKind, IdMapValue, IsIANAType, Serializable {
 
     @Pattern(regexp = "Title", message="invalid @type value in Title")
     @JsonProperty("@type")
