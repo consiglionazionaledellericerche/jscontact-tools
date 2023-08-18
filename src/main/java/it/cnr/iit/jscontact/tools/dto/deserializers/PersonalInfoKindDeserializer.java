@@ -32,7 +32,7 @@ import java.io.IOException;
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class PersonalInfoTypeDeserializer extends JsonDeserializer<PersonalInfoKind> {
+public class PersonalInfoKindDeserializer extends JsonDeserializer<PersonalInfoKind> {
 
     @Override
     public PersonalInfoKind deserialize(JsonParser jp, DeserializationContext ctxt)

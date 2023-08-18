@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.LinkResourceTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.LinkKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import lombok.*;
@@ -48,11 +48,11 @@ public class Link extends Resource implements HasKind, HasOptionalKind {
     @Builder.Default
     String _type = "Link";
 
-    @JsonDeserialize(using = LinkResourceTypeDeserializer.class)
-    LinkResourceKind kind;
+    @JsonDeserialize(using = LinkKindDeserializer.class)
+    LinkKind kind;
 
     @JsonIgnore
-    private boolean isLinkResource(LinkResourceKind type) { return this.kind.equals(type); }
+    private boolean isLinkResource(LinkKind type) { return this.kind.equals(type); }
 
     /**
      * Tests if this directory resource is a contact link.
@@ -60,7 +60,7 @@ public class Link extends Resource implements HasKind, HasOptionalKind {
      * @return true if this directory resource is a contact link, false otherwise
      */
     @JsonIgnore
-    public boolean isContact() { return isLinkResource(LinkResourceKind.contact()); }
+    public boolean isContact() { return isLinkResource(LinkKind.contact()); }
 
     /**
      * Tests if this directory resource is a generic link.
@@ -70,7 +70,7 @@ public class Link extends Resource implements HasKind, HasOptionalKind {
     @JsonIgnore
     public boolean isGenericLink() { return kind == null; }
 
-    private static Link resource(LinkResourceKind type, String uri) {
+    private static Link resource(LinkKind type, String uri) {
         return Link.builder()
                        .uri(uri)
                        .kind(type)
@@ -83,7 +83,7 @@ public class Link extends Resource implements HasKind, HasOptionalKind {
      * @param uri contact link uri
      * @return the contact link
      */
-    public static Link contact(String uri) { return resource(LinkResourceKind.contact(), uri);}
+    public static Link contact(String uri) { return resource(LinkKind.contact(), uri);}
 
     /**
      * Returns an unspecified link

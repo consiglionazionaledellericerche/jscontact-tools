@@ -29,7 +29,7 @@ import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.VCardPropsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.KindTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.CardKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.VCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
@@ -102,7 +102,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     java.util.Calendar created;
 
     // Section 2.1.4 of [draft-ietf-calext-jscontact]
-    @JsonDeserialize(using = KindTypeDeserializer.class)
+    @JsonDeserialize(using = CardKindDeserializer.class)
     KindType kind;
 
     // Section 2.1.5 of [draft-ietf-calext-jscontact]

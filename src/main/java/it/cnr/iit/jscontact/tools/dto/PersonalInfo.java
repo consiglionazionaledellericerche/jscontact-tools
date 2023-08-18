@@ -19,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoLevelTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoLevelDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
@@ -53,14 +53,14 @@ public class PersonalInfo extends AbstractJSContactType implements HasLabel, Has
     @Builder.Default
     String _type = "PersonalInfo";
 
-    @JsonDeserialize(using = PersonalInfoTypeDeserializer.class)
+    @JsonDeserialize(using = PersonalInfoKindDeserializer.class)
     PersonalInfoKind kind;
 
     @NotNull(message = "value is missing in PersonalInfo")
     @NonNull
     String value;
 
-    @JsonDeserialize(using = PersonalInfoLevelTypeDeserializer.class)
+    @JsonDeserialize(using = PersonalInfoLevelDeserializer.class)
     PersonalInfoLevelType level;
 
     @Min(value = 1, message = "invalid listAs in PersonalInfo - value must be greater or equal than 1")

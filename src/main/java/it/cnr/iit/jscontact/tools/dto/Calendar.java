@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.CalendarResourceTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.CalendarKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
@@ -48,11 +48,11 @@ public class Calendar extends Resource implements HasKind, IsIANAType {
     @Builder.Default
     String _type = "Calendar";
 
-    @JsonDeserialize(using = CalendarResourceTypeDeserializer.class)
-    CalendarResourceKind kind;
+    @JsonDeserialize(using = CalendarKindDeserializer.class)
+    CalendarKind kind;
 
     @JsonIgnore
-    private boolean isCalendarResource(CalendarResourceKind type) { return this.kind.equals(type); }
+    private boolean isCalendarResource(CalendarKind type) { return this.kind.equals(type); }
 
     /**
      * Tests if this calendar resource is a calendar.
@@ -60,7 +60,7 @@ public class Calendar extends Resource implements HasKind, IsIANAType {
      * @return true if this calendar resource is a calendar, false otherwise
      */
     @JsonIgnore
-    public boolean isCalendar() { return isCalendarResource(CalendarResourceKind.calendar()); }
+    public boolean isCalendar() { return isCalendarResource(CalendarKind.calendar()); }
 
     /**
      * Tests if this calendar resource is a free busy calendar.
@@ -68,9 +68,9 @@ public class Calendar extends Resource implements HasKind, IsIANAType {
      * @return true if this calendar resource is a free busy calendar, false otherwise
      */
     @JsonIgnore
-    public boolean isFreeBusy() { return isCalendarResource(CalendarResourceKind.freeBusy()); }
+    public boolean isFreeBusy() { return isCalendarResource(CalendarKind.freeBusy()); }
 
-    private static Calendar resource(CalendarResourceKind type, String uri) {
+    private static Calendar resource(CalendarKind type, String uri) {
         return Calendar.builder()
                        .uri(uri)
                        .kind(type)
@@ -83,7 +83,7 @@ public class Calendar extends Resource implements HasKind, IsIANAType {
      * @param uri calendar uri
      * @return the calendar
      */
-    public static Calendar calendar(String uri) { return resource(CalendarResourceKind.calendar(), uri);}
+    public static Calendar calendar(String uri) { return resource(CalendarKind.calendar(), uri);}
 
     /**
      * Returns a free busy calendar
@@ -91,7 +91,7 @@ public class Calendar extends Resource implements HasKind, IsIANAType {
      * @param uri entry uri
      * @return the entry
      */
-    public static Calendar freeBusy(String uri) { return resource(CalendarResourceKind.freeBusy(), uri);}
+    public static Calendar freeBusy(String uri) { return resource(CalendarKind.freeBusy(), uri);}
 
 
     @JsonIgnore

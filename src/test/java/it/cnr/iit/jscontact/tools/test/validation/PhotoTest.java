@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.Media;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.MediaResourceKind;
+import it.cnr.iit.jscontact.tools.dto.MediaKind;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -48,7 +48,7 @@ public class PhotoTest extends AbstractTest {
         Media photo = Media.builder()
                 .uri("http://www.media.com/aphoto.png")
                 .pref(1)
-                .kind(MediaResourceKind.photo())
+                .kind(MediaKind.photo())
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
@@ -65,7 +65,7 @@ public class PhotoTest extends AbstractTest {
         Media photo = Media.builder()
                          .uri("http://www.media.com/aphoto.png")
                          .pref(0)
-                         .kind(MediaResourceKind.photo())
+                         .kind(MediaKind.photo())
                          .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
@@ -83,7 +83,7 @@ public class PhotoTest extends AbstractTest {
         // invalid pref - lower than min value
         Media photo = Media.builder()
                 .uri("http://www.media.com/aphoto.png")
-                .kind(MediaResourceKind.photo())
+                .kind(MediaKind.photo())
                 .pref(101)
                 .build();
         Card jsCard = Card.builder()

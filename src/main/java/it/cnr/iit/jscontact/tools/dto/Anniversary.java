@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
@@ -56,7 +56,7 @@ public class Anniversary extends AbstractJSContactType implements HasKind, IdMap
     String _type = "Anniversary";
 
     @NotNull(message = "kind is missing in Anniversary")
-    @JsonDeserialize(using = AnniversaryTypeDeserializer.class)
+    @JsonDeserialize(using = AnniversaryKindDeserializer.class)
     AnniversaryKind kind;
 
     @NotNull(message = "date is missing in Anniversary")

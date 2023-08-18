@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.TitleTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.TitleKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
@@ -40,7 +40,7 @@ public class Title extends AbstractJSContactType implements HasKind, HasOptional
     @NonNull
     String name;
 
-    @JsonDeserialize(using = TitleTypeDeserializer.class)
+    @JsonDeserialize(using = TitleKindDeserializer.class)
     TitleKind kind;
 
     String organization;

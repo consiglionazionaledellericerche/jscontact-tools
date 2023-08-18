@@ -279,7 +279,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .build();
     }
 
-    private void addJSCardMediaResource(VCardProperty vcardProperty, Card jsCard, MediaResourceKind type, int index, List<RawProperty> vcardExtendedProperties) {
+    private void addJSCardMediaResource(VCardProperty vcardProperty, Card jsCard, MediaKind type, int index, List<RawProperty> vcardExtendedProperties) {
 
         Resource resource = toJSCardResource(vcardProperty);
 
@@ -297,7 +297,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                            );
     }
 
-    private Directory toJSCardDirectoryResource(VCardProperty vcardProperty, DirectoryResourceKind type, List<RawProperty> vcardExtendedProperties) {
+    private Directory toJSCardDirectoryResource(VCardProperty vcardProperty, DirectoryKind type, List<RawProperty> vcardExtendedProperties) {
 
         String index = vcardProperty.getParameter(VCardParamEnum.INDEX.getValue());
         Resource resource = toJSCardResource(vcardProperty);
@@ -314,7 +314,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .build();
     }
 
-    private void addJSCardDirectoryResource(VCardProperty property, Card jsCard, DirectoryResourceKind type, int index, List<RawProperty> vcardExtendedProperties) {
+    private void addJSCardDirectoryResource(VCardProperty property, Card jsCard, DirectoryKind type, int index, List<RawProperty> vcardExtendedProperties) {
 
         jsCard.addDirectoryResource(getJSCardId(VCard2JSContactIdsProfile.IdType.RESOURCE, index, String.format("%s-%s",type.getRfcValue().name(),index), property.getParameter(VCardParamEnum.PROP_ID.getValue()), type),
                                     toJSCardDirectoryResource(property,type, vcardExtendedProperties));
@@ -343,7 +343,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         );
     }
 
-    private void addJSCardCalendarResource(VCardProperty vcardProperty, Card jsCard, CalendarResourceKind type, int index, List<RawProperty> vcardExtendedProperties) {
+    private void addJSCardCalendarResource(VCardProperty vcardProperty, Card jsCard, CalendarKind type, int index, List<RawProperty> vcardExtendedProperties) {
 
         Resource resource = toJSCardResource(vcardProperty);
 
@@ -361,7 +361,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         );
     }
 
-    private void addJSCardLinkResource(VCardProperty vcardProperty, Card jsCard, LinkResourceKind type, int index, List<RawProperty> vcardExtendedProperties) {
+    private void addJSCardLinkResource(VCardProperty vcardProperty, Card jsCard, LinkKind type, int index, List<RawProperty> vcardExtendedProperties) {
 
         Resource resource = toJSCardResource(vcardProperty);
 
@@ -1244,14 +1244,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (Photo photo : vcard.getPhotos())
-            addJSCardMediaResource(photo, jsCard, MediaResourceKind.photo(), i++, vcard.getExtendedProperties());
+            addJSCardMediaResource(photo, jsCard, MediaKind.photo(), i++, vcard.getExtendedProperties());
         i = 1;
         for (Sound sound : vcard.getSounds())
-            addJSCardMediaResource(sound, jsCard, MediaResourceKind.sound(), i++, vcard.getExtendedProperties());
+            addJSCardMediaResource(sound, jsCard, MediaKind.sound(), i++, vcard.getExtendedProperties());
 
         i = 1;
         for (Logo logo : vcard.getLogos())
-            addJSCardMediaResource(logo, jsCard, MediaResourceKind.logo(), i++, vcard.getExtendedProperties());
+            addJSCardMediaResource(logo, jsCard, MediaKind.logo(), i++, vcard.getExtendedProperties());
 
     }
 
@@ -1267,22 +1267,22 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         int i = 1;
         for (Source source : vcard.getSources())
-            addJSCardDirectoryResource(source, jsCard, DirectoryResourceKind.entry(), i++, vcard.getExtendedProperties());
+            addJSCardDirectoryResource(source, jsCard, DirectoryKind.entry(), i++, vcard.getExtendedProperties());
 
         i = 1;
         for (OrgDirectory od : vcard.getOrgDirectories())
-            addJSCardDirectoryResource(jsCard, toJSCardDirectoryResource(od, DirectoryResourceKind.directory(), vcard.getExtendedProperties()), i++);
+            addJSCardDirectoryResource(jsCard, toJSCardDirectoryResource(od, DirectoryKind.directory(), vcard.getExtendedProperties()), i++);
     }
 
     private void fillJSCardCalendars(VCard vcard, Card jsCard) {
 
         int i = 1;
         for (CalendarUri calendarUri : vcard.getCalendarUris())
-            addJSCardCalendarResource(calendarUri, jsCard, CalendarResourceKind.calendar(), i++, vcard.getExtendedProperties());
+            addJSCardCalendarResource(calendarUri, jsCard, CalendarKind.calendar(), i++, vcard.getExtendedProperties());
 
         i = 1;
         for (FreeBusyUrl fburl : vcard.getFbUrls())
-            addJSCardCalendarResource(fburl, jsCard, CalendarResourceKind.freeBusy(), i++, vcard.getExtendedProperties());
+            addJSCardCalendarResource(fburl, jsCard, CalendarKind.freeBusy(), i++, vcard.getExtendedProperties());
 
     }
 
@@ -1298,7 +1298,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         for (RawProperty contactUri : contactUris) {
             UriProperty uriProperty = new UriProperty(getValue(contactUri));
             uriProperty.setParameters(contactUri.getParameters());
-            addJSCardLinkResource(uriProperty, jsCard, LinkResourceKind.contact(), i++, vcard.getExtendedProperties());
+            addJSCardLinkResource(uriProperty, jsCard, LinkKind.contact(), i++, vcard.getExtendedProperties());
         }
 
     }

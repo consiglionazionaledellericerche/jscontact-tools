@@ -22,16 +22,16 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the Calendar type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "kind" property of the Directory type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum CalendarResourceEnum implements IsExtensibleEnum {
+public enum DirectoryEnum implements IsExtensibleEnum {
 
-    CALENDAR("calendar"),
-    FREEBUSY("freeBusy");
+    DIRECTORY("directory"),
+    ENTRY("entry");
 
     private final String value;
 
@@ -41,8 +41,8 @@ public enum CalendarResourceEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static CalendarResourceEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(CalendarResourceEnum.class, value);
+    public static DirectoryEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(DirectoryEnum.class, value);
     }
 
     @Override

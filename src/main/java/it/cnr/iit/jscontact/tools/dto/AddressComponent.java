@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentKindDeserializer;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
@@ -55,7 +55,7 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
 
     @NotNull(message = "kind is missing in AddressComponent")
     @NonNull
-    @JsonDeserialize(using = AddressComponentTypeDeserializer.class)
+    @JsonDeserialize(using = AddressComponentKindDeserializer.class)
     AddressComponentKind kind;
 
     String phonetic;

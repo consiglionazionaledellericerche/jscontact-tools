@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.DirectoryResourceTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.DirectoryKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -49,14 +49,14 @@ public class Directory extends Resource implements HasKind {
     @Builder.Default
     String _type = "Directory";
 
-    @JsonDeserialize(using = DirectoryResourceTypeDeserializer.class)
-    DirectoryResourceKind kind;
+    @JsonDeserialize(using = DirectoryKindDeserializer.class)
+    DirectoryKind kind;
 
     @Min(value = 1, message = "invalid listAs in Directory - value must be greater or equal than 1")
     Integer listAs;
 
     @JsonIgnore
-    private boolean isDirectoryResource(DirectoryResourceKind type) {
+    private boolean isDirectoryResource(DirectoryKind type) {
         return this.kind.equals(type);
     }
 
@@ -66,7 +66,7 @@ public class Directory extends Resource implements HasKind {
      * @return true if this directory resource is a directory, false otherwise
      */
     @JsonIgnore
-    public boolean isDirectory() { return isDirectoryResource(DirectoryResourceKind.directory()); }
+    public boolean isDirectory() { return isDirectoryResource(DirectoryKind.directory()); }
 
     /**
      * Tests if this directory resource is an entry.
@@ -74,9 +74,9 @@ public class Directory extends Resource implements HasKind {
      * @return true if this directory resource is an entry, false otherwise
      */
     @JsonIgnore
-    public boolean isEntry() { return isDirectoryResource(DirectoryResourceKind.entry()); }
+    public boolean isEntry() { return isDirectoryResource(DirectoryKind.entry()); }
 
-    private static Directory resource(DirectoryResourceKind type, String uri) {
+    private static Directory resource(DirectoryKind type, String uri) {
         return Directory.builder()
                        .uri(uri)
                        .kind(type)
@@ -89,7 +89,7 @@ public class Directory extends Resource implements HasKind {
      * @param uri directory uri
      * @return the directory
      */
-    public static Directory directory(String uri) { return resource(DirectoryResourceKind.directory(), uri);}
+    public static Directory directory(String uri) { return resource(DirectoryKind.directory(), uri);}
 
     /**
      * Returns an entry
@@ -97,6 +97,6 @@ public class Directory extends Resource implements HasKind {
      * @param uri entry uri
      * @return the entry
      */
-    public static Directory entry(String uri) { return resource(DirectoryResourceKind.entry(), uri);}
+    public static Directory entry(String uri) { return resource(DirectoryKind.entry(), uri);}
 
 }

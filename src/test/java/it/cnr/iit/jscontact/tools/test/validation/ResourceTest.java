@@ -32,7 +32,7 @@ public class ResourceTest extends AbstractTest {
 
         Link resource = Link.builder()
                 .uri("mailto:mario.loffredo@iit.cnr.it")
-                .kind(LinkResourceKind.contact())
+                .kind(LinkKind.contact())
                 .contexts(new ContextsBuilder().work().build())
                 .build();
 
@@ -51,7 +51,7 @@ public class ResourceTest extends AbstractTest {
         // value missing
         Link.builder()
                 .contexts(new ContextsBuilder().work().build())
-                .kind(LinkResourceKind.contact())
+                .kind(LinkKind.contact())
                 .build();
     }
 
@@ -59,7 +59,7 @@ public class ResourceTest extends AbstractTest {
     public void testInvalidLinkResourceUri() {
 
         Link resource = Link.builder()
-                .kind(LinkResourceKind.contact())
+                .kind(LinkKind.contact())
                 .uri(" ")
                 .label("url")
                 .contexts(new ContextsBuilder().work().build())
