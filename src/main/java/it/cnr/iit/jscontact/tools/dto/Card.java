@@ -66,7 +66,7 @@ import java.util.*;
         "anniversaries", "keywords", "personalInfo", "notes",
         "vCardProps"})
 @TitleOrganizationConstraint
-@MembersVsKindValueConstraint
+@MembersVsCardKindValueConstraint
 @LocalizationsConstraint
 @NoArgsConstructor
 @Getter

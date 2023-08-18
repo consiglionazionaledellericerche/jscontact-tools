@@ -15,7 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.constraints;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.MembersVsKindValueValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.MembersVsCardKindValueValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -23,9 +23,9 @@ import java.lang.annotation.*;
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {MembersVsKindValueValidator.class})
+@Constraint(validatedBy = {MembersVsCardKindValueValidator.class})
 @Documented
-public @interface MembersVsKindValueConstraint {
+public @interface MembersVsCardKindValueConstraint {
 
     String message() default "not empty members requires kind=group";
 
