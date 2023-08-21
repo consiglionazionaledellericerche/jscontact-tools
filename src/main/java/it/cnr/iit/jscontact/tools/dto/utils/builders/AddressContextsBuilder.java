@@ -1,7 +1,6 @@
 package it.cnr.iit.jscontact.tools.dto.utils.builders;
 
 import it.cnr.iit.jscontact.tools.dto.AddressContext;
-import it.cnr.iit.jscontact.tools.dto.Context;
 
 import java.util.HashMap;
 import java.util.Map;

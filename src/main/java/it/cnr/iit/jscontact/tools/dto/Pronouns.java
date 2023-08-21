@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -33,7 +35,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Pronouns extends AbstractJSContactType implements IdMapValue, Serializable, HasContexts {
+public class Pronouns extends AbstractJSContactType implements IdMapValue, IsIANAType, Serializable, HasContexts {
 
     @Pattern(regexp = "Pronouns", message="invalid @type value in Pronouns")
     @JsonProperty("@type")
@@ -48,6 +50,7 @@ public class Pronouns extends AbstractJSContactType implements IdMapValue, Seria
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Pronouns - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @ContainsExtensibleEnum(enumClass = ContextEnum.class, getMethod = "getContexts")
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Pronouns - value must be greater or equal than 1")

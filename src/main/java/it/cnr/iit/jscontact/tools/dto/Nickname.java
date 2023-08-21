@@ -9,6 +9,7 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +31,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Nickname extends AbstractJSContactType implements IdMapValue, Serializable, HasContexts {
+public class Nickname extends AbstractJSContactType implements IdMapValue, Serializable, HasContexts, IsIANAType {
 
     @Pattern(regexp = "Nickname", message="invalid @type value in Nickname")
     @JsonProperty("@type")

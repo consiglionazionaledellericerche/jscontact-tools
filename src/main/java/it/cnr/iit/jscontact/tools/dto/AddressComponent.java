@@ -19,10 +19,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AddressComponentKindDeserializer;
 
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -41,7 +43,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AddressComponent extends AbstractJSContactType implements HasKind, IsComponent, Serializable {
+public class AddressComponent extends AbstractJSContactType implements HasKind, IsComponent, IsIANAType, Serializable {
 
     @Pattern(regexp = "AddressComponent", message="invalid @type value in AddressComponent")
     @JsonProperty("@type")
@@ -54,7 +56,8 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
 
     @NotNull(message = "kind is missing in AddressComponent")
     @NonNull
-    @JsonDeserialize(using = AddressComponentTypeDeserializer.class)
+    @JsonDeserialize(using = AddressComponentKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = AddressComponentEnum.class, getMethod = "getKind")
     AddressComponentKind kind;
 
     String phonetic;
@@ -428,5 +431,4 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     public static AddressComponent ext(String extValue, String value) {
         return AddressComponent.ext(extValue, value, null);
     }
-
 }

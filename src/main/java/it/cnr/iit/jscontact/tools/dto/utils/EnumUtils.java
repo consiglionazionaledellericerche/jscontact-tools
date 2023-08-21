@@ -101,4 +101,24 @@ public class EnumUtils {
         return array;
     }
 
+    /**
+     * Returns true if any of the given extensible enum registered values match case insensitively the give value, false otherwise
+     *
+     * @param <E> a generic extensible enum
+     * @param enumValues an array of registerd values for an extensible enum
+     * @param value the given value to match case insensitively
+     * @return true if any of the given extensible enum registered values match case insensitively the give value, false otherwise
+     */
+    public static <E extends Enum <E>> boolean containsIgnoreCase(E[] enumValues, String value) {
+
+        for (E enumValue : enumValues) {
+            if (enumValue.toString().equalsIgnoreCase(value))
+                return true;
+        }
+
+        return false;
+    }
+
+
+
 }

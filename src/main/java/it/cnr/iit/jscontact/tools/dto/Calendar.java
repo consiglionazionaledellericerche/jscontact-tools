@@ -20,15 +20,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.CalendarResourceTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
+import it.cnr.iit.jscontact.tools.dto.deserializers.CalendarKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.Pattern;
 
-
 /**
- * Class mapping the CalendarResource type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Calendar type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -40,18 +41,19 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CalendarResource extends Resource implements HasKind {
+public class Calendar extends Resource implements HasKind, IsIANAType {
 
-    @Pattern(regexp = "CalendarResource", message="invalid @type value in CalendarResource")
+    @Pattern(regexp = "Calendar", message="invalid @type value in Calendar")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "CalendarResource";
+    String _type = "Calendar";
 
-    @JsonDeserialize(using = CalendarResourceTypeDeserializer.class)
-    CalendarResourceKind kind;
+    @JsonDeserialize(using = CalendarKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = CalendarEnum.class, getMethod = "getKind")
+    CalendarKind kind;
 
     @JsonIgnore
-    private boolean isCalendarResource(CalendarResourceKind type) { return this.kind.equals(type); }
+    private boolean isCalendarResource(CalendarKind type) { return this.kind.equals(type); }
 
     /**
      * Tests if this calendar resource is a calendar.
@@ -59,7 +61,7 @@ public class CalendarResource extends Resource implements HasKind {
      * @return true if this calendar resource is a calendar, false otherwise
      */
     @JsonIgnore
-    public boolean isCalendar() { return isCalendarResource(CalendarResourceKind.calendar()); }
+    public boolean isCalendar() { return isCalendarResource(CalendarKind.calendar()); }
 
     /**
      * Tests if this calendar resource is a free busy calendar.
@@ -67,10 +69,10 @@ public class CalendarResource extends Resource implements HasKind {
      * @return true if this calendar resource is a free busy calendar, false otherwise
      */
     @JsonIgnore
-    public boolean isFreeBusy() { return isCalendarResource(CalendarResourceKind.freeBusy()); }
+    public boolean isFreeBusy() { return isCalendarResource(CalendarKind.freeBusy()); }
 
-    private static CalendarResource resource(CalendarResourceKind type, String uri) {
-        return CalendarResource.builder()
+    private static Calendar resource(CalendarKind type, String uri) {
+        return Calendar.builder()
                        .uri(uri)
                        .kind(type)
                        .build();
@@ -82,7 +84,7 @@ public class CalendarResource extends Resource implements HasKind {
      * @param uri calendar uri
      * @return the calendar
      */
-    public static CalendarResource calendar(String uri) { return resource(CalendarResourceKind.calendar(), uri);}
+    public static Calendar calendar(String uri) { return resource(CalendarKind.calendar(), uri);}
 
     /**
      * Returns a free busy calendar
@@ -90,6 +92,12 @@ public class CalendarResource extends Resource implements HasKind {
      * @param uri entry uri
      * @return the entry
      */
-    public static CalendarResource freeBusy(String uri) { return resource(CalendarResourceKind.freeBusy(), uri);}
+    public static Calendar freeBusy(String uri) { return resource(CalendarKind.freeBusy(), uri);}
+
+
+    @JsonIgnore
+    public String getRegisteredIANATypeName() {
+        return "Calendar";
+    }
 
 }

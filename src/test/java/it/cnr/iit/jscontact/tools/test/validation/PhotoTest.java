@@ -15,9 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.dto.MediaResource;
+import it.cnr.iit.jscontact.tools.dto.Media;
 import it.cnr.iit.jscontact.tools.dto.Card;
-import it.cnr.iit.jscontact.tools.dto.MediaResourceKind;
+import it.cnr.iit.jscontact.tools.dto.MediaKind;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class PhotoTest extends AbstractTest {
     public void testInvalidPhotoBuild1() {
 
         // href missing
-        MediaResource.builder().build();
+        Media.builder().build();
     }
 
 
@@ -39,20 +39,20 @@ public class PhotoTest extends AbstractTest {
     public void testInvalidPhotoBuild2() {
 
         // href missing
-        MediaResource.builder().pref(1).build();
+        Media.builder().pref(1).build();
     }
 
     @Test
     public void testValidPhoto1() {
 
-        MediaResource photo = MediaResource.builder()
+        Media photo = Media.builder()
                 .uri("http://www.media.com/aphoto.png")
                 .pref(1)
-                .kind(MediaResourceKind.photo())
+                .kind(MediaKind.photo())
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .media(new HashMap<String, MediaResource>() {{ put("PHOTO-1", photo); }})
+                .media(new HashMap<String, Media>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertTrue("testValidPhoto1", jsCard.isValid());
@@ -62,14 +62,14 @@ public class PhotoTest extends AbstractTest {
     public void testInvalidPhoto1() {
 
         // invalid pref - lower than min value
-        MediaResource photo = MediaResource.builder()
+        Media photo = Media.builder()
                          .uri("http://www.media.com/aphoto.png")
                          .pref(0)
-                         .kind(MediaResourceKind.photo())
+                         .kind(MediaKind.photo())
                          .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .media(new HashMap<String, MediaResource>() {{ put("PHOTO-1", photo); }})
+                .media(new HashMap<String, Media>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertFalse("testInvalidPhoto1-1", jsCard.isValid());
@@ -81,14 +81,14 @@ public class PhotoTest extends AbstractTest {
     public void testInvalidPhoto2() {
 
         // invalid pref - lower than min value
-        MediaResource photo = MediaResource.builder()
+        Media photo = Media.builder()
                 .uri("http://www.media.com/aphoto.png")
-                .kind(MediaResourceKind.photo())
+                .kind(MediaKind.photo())
                 .pref(101)
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .media(new HashMap<String, MediaResource>() {{ put("PHOTO-1", photo); }})
+                .media(new HashMap<String, Media>() {{ put("PHOTO-1", photo); }})
                 .build();
 
         assertFalse("testInvalidPhoto2-1", jsCard.isValid());

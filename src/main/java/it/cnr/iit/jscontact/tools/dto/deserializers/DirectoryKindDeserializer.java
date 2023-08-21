@@ -19,30 +19,30 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.MediaResourceEnum;
-import it.cnr.iit.jscontact.tools.dto.MediaResourceKind;
+import it.cnr.iit.jscontact.tools.dto.DirectoryEnum;
+import it.cnr.iit.jscontact.tools.dto.DirectoryKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 /**
- * Custom JSON deserializer for the MediaResourceType value.
+ * Custom JSON deserializer for the DirectoryResourceType value.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class MediaResourceTypeDeserializer extends JsonDeserializer<MediaResourceKind> {
+public class DirectoryKindDeserializer extends JsonDeserializer<DirectoryKind> {
 
     @Override
-    public MediaResourceKind deserialize(JsonParser jp, DeserializationContext ctxt)
+    public DirectoryKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return MediaResourceKind.builder().rfcValue(MediaResourceEnum.getEnum(value)).build();
+            return DirectoryKind.builder().rfcValue(DirectoryEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return MediaResourceKind.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return DirectoryKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

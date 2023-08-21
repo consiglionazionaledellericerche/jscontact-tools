@@ -15,15 +15,15 @@
  */
 package it.cnr.iit.jscontact.tools.constraints.validators;
 
-import it.cnr.iit.jscontact.tools.constraints.MembersVsKindValueConstraint;
+import it.cnr.iit.jscontact.tools.constraints.MembersVsCardKindValueConstraint;
 import it.cnr.iit.jscontact.tools.dto.Card;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class MembersVsKindValueValidator implements ConstraintValidator<MembersVsKindValueConstraint, Card> {
+public class MembersVsCardKindValueValidator implements ConstraintValidator<MembersVsCardKindValueConstraint, Card> {
 
-    public void initialize(MembersVsKindValueConstraint constraintAnnotation) {
+    public void initialize(MembersVsCardKindValueConstraint constraintAnnotation) {
     }
 
     public boolean isValid(Card jsCard, ConstraintValidatorContext context) {

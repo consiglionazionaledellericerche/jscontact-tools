@@ -16,8 +16,8 @@
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
 /**
- * This interface imposes that a class implementing it must include the "kind" property that maybe optional.
+ * This interface imposes that a class implementing a JSContact IANA registered type.
  *
  * @author Mario Loffredo
  */
-public interface HasOptionalKind { }
+public interface IsIANAType { }

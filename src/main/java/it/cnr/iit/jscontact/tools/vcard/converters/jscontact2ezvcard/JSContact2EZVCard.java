@@ -14,6 +14,7 @@ import ezvcard.util.PartialDate;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Anniversary;
+import it.cnr.iit.jscontact.tools.dto.Calendar;
 import it.cnr.iit.jscontact.tools.dto.Nickname;
 import it.cnr.iit.jscontact.tools.dto.Note;
 import it.cnr.iit.jscontact.tools.dto.Organization;
@@ -97,7 +98,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return (uid!=null) ? new Uid(uid) : null;
     }
 
-    private static Revision toVCardRevision(Calendar update) {
+    private static Revision toVCardRevision(java.util.Calendar update) {
 
         return (update!=null) ? new Revision(update) : null;
     }
@@ -842,7 +843,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         try {
             if (anniversary.getDate().getDate()!=null) {
-                Constructor<T> constructor = classs.getDeclaredConstructor(Calendar.class, boolean.class);
+                Constructor<T> constructor = classs.getDeclaredConstructor(java.util.Calendar.class, boolean.class);
                 return constructor.newInstance(anniversary.getDate().getDate().getUtc(), true);
             }
             if (anniversary.getDate().getPartialDate()!=null) {
@@ -1201,7 +1202,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    private Photo toVCardPhoto(MediaResource resource) {
+    private Photo toVCardPhoto(Media resource) {
 
         Photo photo = toVCardImageProperty(Photo.class, resource);
         photo.setPref(resource.getPref());
@@ -1319,9 +1320,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getCalendars() == null)
             return;
 
-        for (Map.Entry<String,CalendarResource> entry : jsCard.getCalendars().entrySet()) {
+        for (Map.Entry<String, Calendar> entry : jsCard.getCalendars().entrySet()) {
 
-            CalendarResource resource = entry.getValue();
+            Calendar resource = entry.getValue();
             resource.setPropId(entry.getKey());
             if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                 switch (resource.getKind().getRfcValue()) {
@@ -1342,7 +1343,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getCryptoKeys() == null)
             return;
 
-        for (Map.Entry<String,CryptoResource> entry : jsCard.getCryptoKeys().entrySet()) {
+        for (Map.Entry<String, CryptoKey> entry : jsCard.getCryptoKeys().entrySet()) {
             Key key = toVCardKeyProperty(Key.class, entry.getValue());
             VCardUtils.addVCardUnmatchedParams(key,entry.getValue());
             addVCardPropIdParam(key, entry.getKey());
@@ -1356,9 +1357,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getLinks() == null)
             return;
 
-        for (Map.Entry<String,LinkResource> entry : jsCard.getLinks().entrySet()) {
+        for (Map.Entry<String, Link> entry : jsCard.getLinks().entrySet()) {
 
-            LinkResource resource = entry.getValue();
+            Link resource = entry.getValue();
             resource.setPropId(entry.getKey());
             if (resource.isGenericLink())
                 vcard.getUrls().add(toVCardUriProperty(Url.class,resource,vcard));
@@ -1383,9 +1384,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getMedia() == null)
             return;
 
-        for (Map.Entry<String,MediaResource> entry : jsCard.getMedia().entrySet()) {
+        for (Map.Entry<String, Media> entry : jsCard.getMedia().entrySet()) {
 
-            MediaResource resource = entry.getValue();
+            Media resource = entry.getValue();
             resource.setPropId(entry.getKey());
             if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                 switch (resource.getKind().getRfcValue()) {
@@ -1416,9 +1417,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         if (jsCard.getDirectories() == null)
             return;
 
-        for (Map.Entry<String,DirectoryResource> entry : jsCard.getDirectories().entrySet()) {
+        for (Map.Entry<String, Directory> entry : jsCard.getDirectories().entrySet()) {
 
-            DirectoryResource resource = entry.getValue();
+            Directory resource = entry.getValue();
             resource.setPropId(entry.getKey());
             if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                 switch (resource.getKind().getRfcValue()) {

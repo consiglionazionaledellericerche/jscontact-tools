@@ -45,7 +45,7 @@ public class VCardPropsDeserializer extends JsonDeserializer<VCardProp[]> {
         Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
         while (iter.hasNext()) {
             Map.Entry<String, JsonNode> entry = iter.next();
-            parameters.put(entry.getKey(),JsonNodeUtils.getValue(entry.getValue()));
+            parameters.put(entry.getKey(),JsonNodeUtils.toObject(entry.getValue()));
         }
         return parameters;
     }
@@ -66,7 +66,7 @@ public class VCardPropsDeserializer extends JsonDeserializer<VCardProp[]> {
                               .name(V_Extension.toV_Extension(subnode.get(0).asText()))
                               .parameters(getParameters(subnode.get(1)))
                               .type((subnode.get(2).asText().equals("unknown")) ? null : VCardDataType.get(subnode.get(2).asText()))
-                              .value(JsonNodeUtils.getValue(subnode.get(3)))
+                              .value(JsonNodeUtils.toObject(subnode.get(3)))
                               .build());
         }
 

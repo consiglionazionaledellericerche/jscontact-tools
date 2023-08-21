@@ -20,16 +20,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.LinkResourceTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
+import it.cnr.iit.jscontact.tools.dto.deserializers.LinkKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.Pattern;
 
-
 /**
- * Class mapping the LinkResource type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the Link type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -41,18 +41,19 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class LinkResource extends Resource implements HasKind, HasOptionalKind {
+public class Link extends Resource implements HasKind, HasOptionalKind {
 
-    @Pattern(regexp = "LinkResource", message="invalid @type value in LinkResource")
+    @Pattern(regexp = "Link", message="invalid @type value in Link")
     @JsonProperty("@type")
     @Builder.Default
-    String _type = "LinkResource";
+    String _type = "Link";
 
-    @JsonDeserialize(using = LinkResourceTypeDeserializer.class)
-    LinkResourceKind kind;
+    @JsonDeserialize(using = LinkKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = LinkEnum.class, getMethod = "getKind")
+    LinkKind kind;
 
     @JsonIgnore
-    private boolean isLinkResource(LinkResourceKind type) { return this.kind.equals(type); }
+    private boolean isLinkResource(LinkKind type) { return this.kind.equals(type); }
 
     /**
      * Tests if this directory resource is a contact link.
@@ -60,7 +61,7 @@ public class LinkResource extends Resource implements HasKind, HasOptionalKind {
      * @return true if this directory resource is a contact link, false otherwise
      */
     @JsonIgnore
-    public boolean isContact() { return isLinkResource(LinkResourceKind.contact()); }
+    public boolean isContact() { return isLinkResource(LinkKind.contact()); }
 
     /**
      * Tests if this directory resource is a generic link.
@@ -70,8 +71,8 @@ public class LinkResource extends Resource implements HasKind, HasOptionalKind {
     @JsonIgnore
     public boolean isGenericLink() { return kind == null; }
 
-    private static LinkResource resource(LinkResourceKind type, String uri) {
-        return LinkResource.builder()
+    private static Link resource(LinkKind type, String uri) {
+        return Link.builder()
                        .uri(uri)
                        .kind(type)
                        .build();
@@ -83,7 +84,7 @@ public class LinkResource extends Resource implements HasKind, HasOptionalKind {
      * @param uri contact link uri
      * @return the contact link
      */
-    public static LinkResource contact(String uri) { return resource(LinkResourceKind.contact(), uri);}
+    public static Link contact(String uri) { return resource(LinkKind.contact(), uri);}
 
     /**
      * Returns an unspecified link
@@ -91,6 +92,6 @@ public class LinkResource extends Resource implements HasKind, HasOptionalKind {
      * @param uri link uri
      * @return the link
      */
-    public static LinkResource genericLink(String uri) { return resource(null, uri);}
+    public static Link genericLink(String uri) { return resource(null, uri);}
 
 }

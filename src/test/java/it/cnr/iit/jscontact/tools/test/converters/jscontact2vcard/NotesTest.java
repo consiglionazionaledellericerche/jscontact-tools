@@ -18,7 +18,6 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;

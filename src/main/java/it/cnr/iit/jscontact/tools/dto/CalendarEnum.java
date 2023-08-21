@@ -22,17 +22,16 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the MediaResource type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "kind" property of the Calendar type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum MediaResourceEnum implements IsExtensibleEnum {
+public enum CalendarEnum implements IsExtensibleEnum {
 
-    PHOTO("photo"),
-    SOUND("sound"),
-    LOGO("logo");
+    CALENDAR("calendar"),
+    FREEBUSY("freeBusy");
 
     private final String value;
 
@@ -42,8 +41,8 @@ public enum MediaResourceEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static MediaResourceEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(MediaResourceEnum.class, value);
+    public static CalendarEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(CalendarEnum.class, value);
     }
 
     @Override

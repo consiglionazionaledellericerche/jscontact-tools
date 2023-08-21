@@ -22,16 +22,15 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the CalendarResource type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "kind" property of the Link type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.4.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum CalendarResourceEnum implements IsExtensibleEnum {
+public enum LinkEnum implements IsExtensibleEnum {
 
-    CALENDAR("calendar"),
-    FREEBUSY("freeBusy");
+    CONTACT("contact");
 
     private final String value;
 
@@ -41,8 +40,8 @@ public enum CalendarResourceEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static CalendarResourceEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(CalendarResourceEnum.class, value);
+    public static LinkEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(LinkEnum.class, value);
     }
 
     @Override

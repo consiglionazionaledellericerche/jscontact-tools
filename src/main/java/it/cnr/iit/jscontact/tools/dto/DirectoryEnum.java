@@ -22,15 +22,16 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the LinkResource type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "kind" property of the Directory type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum LinkResourceEnum implements IsExtensibleEnum {
+public enum DirectoryEnum implements IsExtensibleEnum {
 
-    CONTACT("contact");
+    DIRECTORY("directory"),
+    ENTRY("entry");
 
     private final String value;
 
@@ -40,8 +41,8 @@ public enum LinkResourceEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static LinkResourceEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(LinkResourceEnum.class, value);
+    public static DirectoryEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(DirectoryEnum.class, value);
     }
 
     @Override

@@ -52,6 +52,9 @@ public class ContextsDeserializer extends JsonDeserializer<Map<Context,Boolean>>
                 context = Context.builder().rfcValue(ContextEnum.getEnum(type)).build();
             } catch (IllegalArgumentException e) {
                 context = Context.builder().extValue(V_Extension.toV_Extension(type)).build();
+            } catch (Exception e) {
+                e.printStackTrace();
+                context = null;
             }
             contexts.put(context,value);
         }

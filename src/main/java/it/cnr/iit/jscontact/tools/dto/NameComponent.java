@@ -20,9 +20,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
+import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -43,7 +45,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class NameComponent extends AbstractJSContactType implements HasKind, IsComponent, Serializable {
+public class NameComponent extends AbstractJSContactType implements HasKind, IsComponent, IsIANAType, Serializable {
 
     @Pattern(regexp = "NameComponent", message = "invalid @type value in NameComponent")
     @JsonProperty("@type")
@@ -56,7 +58,8 @@ public class NameComponent extends AbstractJSContactType implements HasKind, IsC
 
     @NotNull(message = "kind is missing in NameComponent")
     @NonNull
-    @JsonDeserialize(using = NameComponentTypeDeserializer.class)
+    @JsonDeserialize(using = NameComponentKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = NameComponentEnum.class, getMethod = "getKind")
     NameComponentKind kind;
 
     String phonetic;

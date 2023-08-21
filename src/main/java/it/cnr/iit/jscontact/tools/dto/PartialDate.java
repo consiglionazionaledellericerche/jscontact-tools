@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.cnr.iit.jscontact.tools.constraints.DayVsMonthInPartialDateConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -27,7 +28,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PartialDate extends AbstractJSContactType {
+public class PartialDate extends AbstractJSContactType implements IsIANAType {
 
     @Pattern(regexp = "PartialDate", message = "invalid @type value in PartialDate")
     @JsonProperty("@type")

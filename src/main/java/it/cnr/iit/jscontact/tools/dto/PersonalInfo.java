@@ -19,11 +19,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoLevelTypeDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoLevelDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -45,21 +47,23 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasKind, IdMapValue, Serializable {
+public class PersonalInfo extends AbstractJSContactType implements HasLabel, HasKind, IdMapValue, IsIANAType, Serializable {
 
     @Pattern(regexp = "PersonalInfo", message = "invalid @type value in PersonalInfo")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "PersonalInfo";
 
-    @JsonDeserialize(using = PersonalInfoTypeDeserializer.class)
+    @JsonDeserialize(using = PersonalInfoKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = PersonalInfoEnum.class, getMethod = "getKind")
     PersonalInfoKind kind;
 
     @NotNull(message = "value is missing in PersonalInfo")
     @NonNull
     String value;
 
-    @JsonDeserialize(using = PersonalInfoLevelTypeDeserializer.class)
+    @JsonDeserialize(using = PersonalInfoLevelDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = PersonalInfoLevelEnum.class, getMethod = "getLevel")
     PersonalInfoLevelType level;
 
     @Min(value = 1, message = "invalid listAs in PersonalInfo - value must be greater or equal than 1")

@@ -1,6 +1,15 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Utility class for supporting class loading of dto classes.
@@ -27,6 +36,32 @@ public class ClassUtils {
      */
     public static Class forName(String className) throws ClassNotFoundException {
         return Class.forName(getDtoPackageName()+"."+className);
+    }
+
+
+    /**
+     * Returns the list of class names corresponding to JSContact IANA registered types.
+     * @return list of class names corresponding to JSContact IANA registered types
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public static List<String> getIANATypes() throws ClassNotFoundException, IOException {
+
+        InputStream stream = ClassLoader.getSystemClassLoader()
+                .getResourceAsStream(getDtoPackageName().replaceAll("[.]", "/"));
+
+        List<String> IANATypes = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        while (reader.ready()) {
+            String line = reader.readLine();
+            if (line.endsWith(".class")) {
+                Class classs = forName(line.replace(".class", StringUtils.EMPTY));
+                if (Arrays.asList(classs.getInterfaces()).contains(IsIANAType.class))
+                    IANATypes.add(classs.getSimpleName());
+            }
+        }
+
+        return (IANATypes.isEmpty()) ? null : IANATypes;
     }
 
 }

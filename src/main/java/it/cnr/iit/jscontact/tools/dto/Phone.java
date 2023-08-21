@@ -7,11 +7,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneFeaturesDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.ContextsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.PhoneFeaturesSerializer;
 import lombok.*;
@@ -39,7 +41,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue, Serializable, HasContexts {
+public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue, IsIANAType, Serializable, HasContexts {
 
     @Pattern(regexp = "Phone", message="invalid @type value in Phone")
     @JsonProperty("@type")
@@ -54,12 +56,14 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
     @JsonDeserialize(using = PhoneFeaturesDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<PhoneFeature,Boolean> features in Phone - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @ContainsExtensibleEnum(enumClass = PhoneFeatureEnum.class, getMethod = "getFeatures")
     Map<PhoneFeature,Boolean> features;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Phone - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @ContainsExtensibleEnum(enumClass = ContextEnum.class, getMethod = "getContexts")
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Phone - value must be greater or equal than 1")

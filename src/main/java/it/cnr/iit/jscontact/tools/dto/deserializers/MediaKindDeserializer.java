@@ -19,30 +19,30 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.AddressComponentEnum;
-import it.cnr.iit.jscontact.tools.dto.AddressComponentKind;
+import it.cnr.iit.jscontact.tools.dto.MediaEnum;
+import it.cnr.iit.jscontact.tools.dto.MediaKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 /**
- * Custom JSON deserializer for the AddressComponentType value.
+ * Custom JSON deserializer for the MediaResourceType value.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class AddressComponentTypeDeserializer extends JsonDeserializer<AddressComponentKind> {
+public class MediaKindDeserializer extends JsonDeserializer<MediaKind> {
 
     @Override
-    public AddressComponentKind deserialize(JsonParser jp, DeserializationContext ctxt)
+    public MediaKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return AddressComponentKind.builder().rfcValue(AddressComponentEnum.getEnum(value)).build();
+            return MediaKind.builder().rfcValue(MediaEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return AddressComponentKind.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return MediaKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

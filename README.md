@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.16.5</version>
+		  <version>0.16.6</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.5'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.6'
 ```
 
 # Features
@@ -276,26 +276,26 @@ The conversion is executed according to the following rules:
     2. INTEREST
     3. EXPERTISE
 
-11. Regardless of their positions inside the vCard, properties mapped as MediaResource objects appear in the following
+11. Regardless of their positions inside the vCard, properties mapped as Media objects appear in the following
     order:
 
     1. PHOTO
     2. SOUND
     3. LOGO
 
-12. Regardless of their positions inside the vCard, properties mapped as CalendarResource objects appear in the
+12. Regardless of their positions inside the vCard, properties mapped as Calendar objects appear in the
     following order:
 
     1. CALURI
     2. FBURL
 
-13. Regardless of their positions inside the vCard, properties mapped as LinkResource objects appear in the following
+13. Regardless of their positions inside the vCard, properties mapped as Link objects appear in the following
     order:
 
     1. URL
     2. CONTACT-URI
 
-14. Regardless of their positions inside the vCard, properties mapped as DirectoryResource objects appear in the
+14. Regardless of their positions inside the vCard, properties mapped as Directory objects appear in the
     following order:
 
     1. SOURCE
@@ -316,7 +316,7 @@ The conversion is executed according to the following rules:
 
 19. JSContact UTCDateTime type is mapped to Java Calendar.
 
-20. Media type information of `MediaResource` objects is automatically detected when the MEDIATYPE parameter is missing.
+20. Media type information of `Media` objects is automatically detected when the MEDIATYPE parameter is missing.
 
 21. A custom time zone (i.e. a time zone including non-zero minutes or non-IANA time zone) is transformed into
     a `customTimeZones` map entry whose key is prefixed the `customTimeZonesPrefix` configuration property concatenated
@@ -629,7 +629,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.16.5 implements the following draft versions:
+Version 0.16.6 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-13
 * draft-ietf-calext-jscontact-vcard-11

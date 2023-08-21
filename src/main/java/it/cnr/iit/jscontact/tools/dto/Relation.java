@@ -21,7 +21,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.RelationDeserializer;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.RelationSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -43,7 +45,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Relation extends AbstractJSContactType implements Serializable {
+public class Relation extends AbstractJSContactType implements IsIANAType, Serializable {
 
     @Pattern(regexp = "Relation", message="invalid @type value in Relation")
     @JsonProperty("@type")
@@ -54,6 +56,7 @@ public class Relation extends AbstractJSContactType implements Serializable {
     @JsonDeserialize(using = RelationDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<RelationType,Boolean> relation in Relation - Only Boolean.TRUE allowed")
     @Singular(value="relationType", ignoreNullCollections = true)
+    @ContainsExtensibleEnum(enumClass = RelationEnum.class, getMethod = "getRelation")
     Map<RelationType,Boolean> relation;
 
     private boolean asRelation(RelationType type) { return relation!= null && relation.containsKey(type); }

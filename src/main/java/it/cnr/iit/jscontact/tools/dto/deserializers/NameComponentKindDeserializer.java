@@ -19,30 +19,30 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.cnr.iit.jscontact.tools.dto.LinkResourceEnum;
-import it.cnr.iit.jscontact.tools.dto.LinkResourceKind;
+import it.cnr.iit.jscontact.tools.dto.NameComponentEnum;
+import it.cnr.iit.jscontact.tools.dto.NameComponentKind;
 import it.cnr.iit.jscontact.tools.dto.V_Extension;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 /**
- * Custom JSON deserializer for the LinkResourceType value.
+ * Custom JSON deserializer for the NameComponentType value.
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class LinkResourceTypeDeserializer extends JsonDeserializer<LinkResourceKind> {
+public class NameComponentKindDeserializer extends JsonDeserializer<NameComponentKind> {
 
     @Override
-    public LinkResourceKind deserialize(JsonParser jp, DeserializationContext ctxt)
+    public NameComponentKind deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         String value = node.asText();
         try {
-            return LinkResourceKind.builder().rfcValue(LinkResourceEnum.getEnum(value)).build();
+            return NameComponentKind.builder().rfcValue(NameComponentEnum.getEnum(value)).build();
         } catch (IllegalArgumentException e) {
-            return LinkResourceKind.builder().extValue(V_Extension.toV_Extension(value)).build();
+            return NameComponentKind.builder().extValue(V_Extension.toV_Extension(value)).build();
         }
     }
 }

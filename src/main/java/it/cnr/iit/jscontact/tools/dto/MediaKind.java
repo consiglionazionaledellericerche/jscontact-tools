@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "kind" property of the MediaResource type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the Media type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
@@ -35,7 +35,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class MediaResourceKind extends ExtensibleEnumType<MediaResourceEnum> implements Serializable {
+public class MediaKind extends ExtensibleEnumType<MediaEnum> implements Serializable {
 
     /**
      * Tests if this media resource type is "photo".
@@ -43,7 +43,7 @@ public class MediaResourceKind extends ExtensibleEnumType<MediaResourceEnum> imp
      * @return true if media resource type is "photo", false otherwise
      */
     @JsonIgnore
-    public boolean isPhoto() { return isRfc(MediaResourceEnum.PHOTO); }
+    public boolean isPhoto() { return isRfc(MediaEnum.PHOTO); }
 
     /**
      * Tests if this media resource type is "sound".
@@ -51,7 +51,7 @@ public class MediaResourceKind extends ExtensibleEnumType<MediaResourceEnum> imp
      * @return true if media resource type is "sound", false otherwise
      */
     @JsonIgnore
-    public boolean isSound() { return isRfc(MediaResourceEnum.SOUND); }
+    public boolean isSound() { return isRfc(MediaEnum.SOUND); }
 
     /**
      * Tests if this media resource type is "logo".
@@ -59,35 +59,35 @@ public class MediaResourceKind extends ExtensibleEnumType<MediaResourceEnum> imp
      * @return true if media resource type is "logo", false otherwise
      */
     @JsonIgnore
-    public boolean isLogo() { return isRfc(MediaResourceEnum.LOGO); }
+    public boolean isLogo() { return isRfc(MediaEnum.LOGO); }
 
-    private static MediaResourceKind rfc(MediaResourceEnum rfcValue) { return MediaResourceKind.builder().rfcValue(rfcValue).build(); }
+    private static MediaKind rfc(MediaEnum rfcValue) { return MediaKind.builder().rfcValue(rfcValue).build(); }
 
     /**
      * Returns a "photo" media resource type.
      *
      * @return a "photo" media resource type
      */
-    public static MediaResourceKind photo() { return rfc(MediaResourceEnum.PHOTO);}
+    public static MediaKind photo() { return rfc(MediaEnum.PHOTO);}
 
     /**
      * Returns a "sound" media resource type.
      *
      * @return a "sound" media resource type
      */
-    public static MediaResourceKind sound() { return rfc(MediaResourceEnum.SOUND);}
+    public static MediaKind sound() { return rfc(MediaEnum.SOUND);}
 
     /**
      * Returns a "logo" media resource type.
      *
      * @return a "logo" media resource type
      */
-    public static MediaResourceKind logo() { return rfc(MediaResourceEnum.LOGO);}
+    public static MediaKind logo() { return rfc(MediaEnum.LOGO);}
 
     /**
      * Returns a custom media resource type.
      *
      * @return a custom media resource type
      */
-    private static MediaResourceKind ext(String extValue) { return MediaResourceKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
+    private static MediaKind ext(String extValue) { return MediaKind.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 }

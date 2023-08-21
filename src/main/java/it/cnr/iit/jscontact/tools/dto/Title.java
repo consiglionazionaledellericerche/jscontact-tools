@@ -4,16 +4,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.cnr.iit.jscontact.tools.dto.deserializers.TitleTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
+import it.cnr.iit.jscontact.tools.dto.deserializers.TitleKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+
 
 /**
  * Class mapping the Title type as defined in section 2.2.6 of [draft-ietf-calext-jscontact].
@@ -28,7 +31,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Title extends AbstractJSContactType implements HasKind, HasOptionalKind, IdMapValue, Serializable {
+public class Title extends AbstractJSContactType implements HasKind, HasOptionalKind, IdMapValue, IsIANAType, Serializable {
 
     @Pattern(regexp = "Title", message="invalid @type value in Title")
     @JsonProperty("@type")
@@ -39,7 +42,8 @@ public class Title extends AbstractJSContactType implements HasKind, HasOptional
     @NonNull
     String name;
 
-    @JsonDeserialize(using = TitleTypeDeserializer.class)
+    @JsonDeserialize(using = TitleKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = TitleEnum.class, getMethod = "getKind")
     TitleKind kind;
 
     String organization;

@@ -22,16 +22,17 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the DirectoryResource type as defined in section 2.6.2 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "kind" property of the Media type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
-public enum DirectoryResourceEnum implements IsExtensibleEnum {
+public enum MediaEnum implements IsExtensibleEnum {
 
-    DIRECTORY("directory"),
-    ENTRY("entry");
+    PHOTO("photo"),
+    SOUND("sound"),
+    LOGO("logo");
 
     private final String value;
 
@@ -41,8 +42,8 @@ public enum DirectoryResourceEnum implements IsExtensibleEnum {
     }
 
     @JsonCreator
-    public static DirectoryResourceEnum getEnum(String value) throws IllegalArgumentException {
-        return (value == null) ? null : EnumUtils.getEnum(DirectoryResourceEnum.class, value);
+    public static MediaEnum getEnum(String value) throws IllegalArgumentException {
+        return (value == null) ? null : EnumUtils.getEnum(MediaEnum.class, value);
     }
 
     @Override

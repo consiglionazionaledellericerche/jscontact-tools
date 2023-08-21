@@ -13,11 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto.interfaces;
+package it.cnr.iit.jscontact.tools.constraints;
 
-/**
- * This interface imposes that a class implementing it must include the "kind" property that maybe optional.
- *
- * @author Mario Loffredo
- */
-public interface HasOptionalKind { }
+import it.cnr.iit.jscontact.tools.constraints.validators.CaseInsensitiveExtensionNamesValidator;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
+
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {CaseInsensitiveExtensionNamesValidator.class})
+@Documented
+public @interface CaseInsensitiveExtensionNamesConstraint {
+
+    String message() default "";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
+}
+

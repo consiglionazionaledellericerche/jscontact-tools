@@ -21,10 +21,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryTypeDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.AnniversaryDateSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -33,6 +35,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+
 
 /**
  * Class mapping the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
@@ -47,7 +50,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Anniversary extends AbstractJSContactType implements HasKind, IdMapValue, Serializable {
+public class Anniversary extends AbstractJSContactType implements HasKind, IdMapValue, IsIANAType, Serializable {
 
     @Pattern(regexp = "Anniversary", message = "invalid @type value in Anniversary")
     @JsonProperty("@type")
@@ -55,7 +58,8 @@ public class Anniversary extends AbstractJSContactType implements HasKind, IdMap
     String _type = "Anniversary";
 
     @NotNull(message = "kind is missing in Anniversary")
-    @JsonDeserialize(using = AnniversaryTypeDeserializer.class)
+    @JsonDeserialize(using = AnniversaryKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = AnniversaryEnum.class, getMethod = "getKind")
     AnniversaryKind kind;
 
     @NotNull(message = "date is missing in Anniversary")
@@ -106,4 +110,5 @@ public class Anniversary extends AbstractJSContactType implements HasKind, IdMap
     private static Anniversary anniversary(AnniversaryKind type, AnniversaryDate date, String label) {
         return Anniversary.builder().kind(type).date(date).build();
     }
+
 }

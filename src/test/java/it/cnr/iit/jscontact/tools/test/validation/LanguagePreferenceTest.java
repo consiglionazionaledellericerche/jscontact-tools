@@ -16,7 +16,6 @@
 package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.LanguagePref;
-import it.cnr.iit.jscontact.tools.dto.Context;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.utils.builders.ContextsBuilder;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;

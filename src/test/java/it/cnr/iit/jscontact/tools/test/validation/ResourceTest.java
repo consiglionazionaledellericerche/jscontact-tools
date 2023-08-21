@@ -30,15 +30,15 @@ public class ResourceTest extends AbstractTest {
     @Test
     public void testValidLinkResource() {
 
-        LinkResource resource = LinkResource.builder()
+        Link resource = Link.builder()
                 .uri("mailto:mario.loffredo@iit.cnr.it")
-                .kind(LinkResourceKind.contact())
+                .kind(LinkKind.contact())
                 .contexts(new ContextsBuilder().work().build())
                 .build();
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .links(new HashMap<String,LinkResource>(){{ put("CONTACT-1", resource);}})
+                .links(new HashMap<String, Link>(){{ put("CONTACT-1", resource);}})
                 .build();
 
         assertTrue("testValidLinkResource", jsCard.isValid());
@@ -49,24 +49,24 @@ public class ResourceTest extends AbstractTest {
     public void testInvalidLinkResourceBuild() {
 
         // value missing
-        LinkResource.builder()
+        Link.builder()
                 .contexts(new ContextsBuilder().work().build())
-                .kind(LinkResourceKind.contact())
+                .kind(LinkKind.contact())
                 .build();
     }
 
     @Test
     public void testInvalidLinkResourceUri() {
 
-        LinkResource resource = LinkResource.builder()
-                .kind(LinkResourceKind.contact())
+        Link resource = Link.builder()
+                .kind(LinkKind.contact())
                 .uri(" ")
                 .label("url")
                 .contexts(new ContextsBuilder().work().build())
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
-                .links(new HashMap<String,LinkResource>(){{ put("CONTACT-1", resource);}})
+                .links(new HashMap<String, Link>(){{ put("CONTACT-1", resource);}})
                 .build();
 
         assertFalse("testInvalidResourceUri-1", jsCard.isValid());
