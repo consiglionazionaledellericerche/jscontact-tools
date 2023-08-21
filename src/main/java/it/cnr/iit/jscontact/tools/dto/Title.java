@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.TitleKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
@@ -15,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+
 
 /**
  * Class mapping the Title type as defined in section 2.2.6 of [draft-ietf-calext-jscontact].
@@ -41,6 +43,7 @@ public class Title extends AbstractJSContactType implements HasKind, HasOptional
     String name;
 
     @JsonDeserialize(using = TitleKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = TitleEnum.class, getMethod = "getKind")
     TitleKind kind;
 
     String organization;

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
@@ -58,6 +59,7 @@ public class NameComponent extends AbstractJSContactType implements HasKind, IsC
     @NotNull(message = "kind is missing in NameComponent")
     @NonNull
     @JsonDeserialize(using = NameComponentKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = NameComponentEnum.class, getMethod = "getKind")
     NameComponentKind kind;
 
     String phonetic;

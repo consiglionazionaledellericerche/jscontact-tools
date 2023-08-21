@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.VCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.CardKindDeserializer;
@@ -103,6 +104,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
 
     // Section 2.1.4 of [draft-ietf-calext-jscontact]
     @JsonDeserialize(using = CardKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = KindEnum.class, getMethod = "getKind")
     KindType kind;
 
     // Section 2.1.5 of [draft-ietf-calext-jscontact]

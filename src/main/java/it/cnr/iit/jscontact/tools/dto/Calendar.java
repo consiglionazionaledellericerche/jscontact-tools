@@ -20,13 +20,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.CalendarKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.Pattern;
-
 
 /**
  * Class mapping the Calendar type as defined in section 2.4.1 of [draft-ietf-calext-jscontact].
@@ -49,6 +49,7 @@ public class Calendar extends Resource implements HasKind, IsIANAType {
     String _type = "Calendar";
 
     @JsonDeserialize(using = CalendarKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = CalendarEnum.class, getMethod = "getKind")
     CalendarKind kind;
 
     @JsonIgnore
@@ -98,4 +99,5 @@ public class Calendar extends Resource implements HasKind, IsIANAType {
     public String getRegisteredIANATypeName() {
         return "Calendar";
     }
+
 }

@@ -25,6 +25,7 @@ import it.cnr.iit.jscontact.tools.constraints.NameSortAsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
@@ -83,6 +84,7 @@ public class Name extends AbstractJSContactType implements HasComponents, IsIANA
     String phoneticScript;
 
     @JsonDeserialize(using = PronounceSystemDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = PhoneticSystemEnum.class, getMethod = "getPhoneticSystem")
     PhoneticSystem phoneticSystem;
 
     /**

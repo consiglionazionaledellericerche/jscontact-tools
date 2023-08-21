@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoLevelDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PersonalInfoKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
@@ -54,6 +55,7 @@ public class PersonalInfo extends AbstractJSContactType implements HasLabel, Has
     String _type = "PersonalInfo";
 
     @JsonDeserialize(using = PersonalInfoKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = PersonalInfoEnum.class, getMethod = "getKind")
     PersonalInfoKind kind;
 
     @NotNull(message = "value is missing in PersonalInfo")
@@ -61,6 +63,7 @@ public class PersonalInfo extends AbstractJSContactType implements HasLabel, Has
     String value;
 
     @JsonDeserialize(using = PersonalInfoLevelDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = PersonalInfoLevelEnum.class, getMethod = "getLevel")
     PersonalInfoLevelType level;
 
     @Min(value = 1, message = "invalid listAs in PersonalInfo - value must be greater or equal than 1")

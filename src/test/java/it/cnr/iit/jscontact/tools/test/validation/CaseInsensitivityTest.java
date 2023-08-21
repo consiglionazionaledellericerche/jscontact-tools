@@ -42,7 +42,7 @@ public class CaseInsensitivityTest extends AbstractTest {
 
         Card jsCard = Card.toJSCard(jscard);
         assertFalse("testInvalidNickName1-1", jsCard.isValid());
-        assertTrue("testInvalidNickName1-2", jsCard.getValidationMessages().contains("the extension name nickNames differs in case of the IANA registered property nicknames for the object Card"));
+        assertTrue("testInvalidNickName1-2", jsCard.getValidationMessages().contains("the extension name nickNames differs only in case with the IANA registered property Card.nicknames"));
 
     }
 
@@ -60,7 +60,63 @@ public class CaseInsensitivityTest extends AbstractTest {
 
         Card jsCard = Card.toJSCard(jscard);
         assertFalse("testInvalidNickName2-1", jsCard.isValid());
-        assertTrue("testInvalidNickName2-2", jsCard.getValidationMessages().contains("the type NickName of extension object differs in case of the IANA registered type Nickname"));
+        assertTrue("testInvalidNickName2-2", jsCard.getValidationMessages().contains("the extended type NickName differs only in case with the IANA registered type Nickname"));
+
+    }
+
+
+    @Test
+    public void testInvalidEmail1() throws JsonProcessingException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"" +
+                "}, " +
+                "\"emails\":{ \"EMAIL-1\": {\"contexts\": {\"WORK\": true},\"address\":\"jqpublic@xyz.example.com\"}}" +
+                "}";
+
+        Card jsCard = Card.toJSCard(jscard);
+        assertFalse("testInvalidEmail1-1", jsCard.isValid());
+        assertTrue("testInvalidEmail1-2", jsCard.getValidationMessages().contains("the extension value WORK differs only in case with an IANA registered EmailAddress.contexts key"));
+
+    }
+
+    @Test
+    public void testInvalidEmail2() throws JsonProcessingException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\":{ " +
+                "\"full\": \"Mr. John Q. Public, Esq.\"" +
+                "}, " +
+                "\"emails\":{ \"EMAIL-1\": {\"contexts\": {\"example.com:work\": true,\"example.com:WORK\": true},\"address\":\"jqpublic@xyz.example.com\"}}" +
+                "}";
+
+        Card jsCard = Card.toJSCard(jscard);
+        assertFalse("testInvalidEmail2-1", jsCard.isValid());
+        assertTrue("testInvalidEmail2-2", jsCard.getValidationMessages().contains("the extension key example.com:work differs only in case with the extension example.com:WORK key in EmailAddress.contexts"));
+
+    }
+
+
+    @Test
+    public void testInvalidKind() throws JsonProcessingException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"kind\":\"GROUP\"," +
+                "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"" +
+                "}" +
+                "}";
+
+        Card jsCard = Card.toJSCard(jscard);
+        assertFalse("testInvalidKind-1", jsCard.isValid());
+        assertTrue("testInvalidKind-2", jsCard.getValidationMessages().contains("the extension value GROUP differs only in case with an IANA registered Card.kind value"));
 
     }
 

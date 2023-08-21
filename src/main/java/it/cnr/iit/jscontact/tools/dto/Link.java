@@ -20,13 +20,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.LinkKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasOptionalKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.Pattern;
-
 
 /**
  * Class mapping the Link type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
@@ -49,6 +49,7 @@ public class Link extends Resource implements HasKind, HasOptionalKind {
     String _type = "Link";
 
     @JsonDeserialize(using = LinkKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = LinkEnum.class, getMethod = "getKind")
     LinkKind kind;
 
     @JsonIgnore

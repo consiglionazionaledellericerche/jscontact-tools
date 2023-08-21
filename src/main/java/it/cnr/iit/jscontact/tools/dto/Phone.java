@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneFeaturesDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasLabel;
@@ -55,12 +56,14 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
     @JsonDeserialize(using = PhoneFeaturesDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<PhoneFeature,Boolean> features in Phone - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @ContainsExtensibleEnum(enumClass = PhoneFeatureEnum.class, getMethod = "getFeatures")
     Map<PhoneFeature,Boolean> features;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
     @BooleanMapConstraint(message = "invalid Map<Context,Boolean> contexts in Phone - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @ContainsExtensibleEnum(enumClass = ContextEnum.class, getMethod = "getContexts")
     Map<Context,Boolean> contexts;
 
     @Min(value=1, message = "invalid pref in Phone - value must be greater or equal than 1")

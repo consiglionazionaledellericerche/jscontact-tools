@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.DirectoryKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
@@ -50,6 +51,7 @@ public class Directory extends Resource implements HasKind {
     String _type = "Directory";
 
     @JsonDeserialize(using = DirectoryKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = DirectoryEnum.class, getMethod = "getKind")
     DirectoryKind kind;
 
     @Min(value = 1, message = "invalid listAs in Directory - value must be greater or equal than 1")

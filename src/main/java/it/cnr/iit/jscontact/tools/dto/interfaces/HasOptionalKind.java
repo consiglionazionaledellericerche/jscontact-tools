@@ -15,8 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.dto.interfaces;
 
-import it.cnr.iit.jscontact.tools.dto.ExtensibleEnumType;
-
 /**
  * This interface imposes that a class implementing it must include the "kind" property that maybe optional.
  *

@@ -20,12 +20,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.MediaKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.Pattern;
-
 
 /**
  * Class mapping the Media type as defined in section 2.6.4 of [draft-ietf-calext-jscontact].
@@ -48,6 +48,7 @@ public class Media extends Resource implements HasKind {
     String _type = "Media";
 
     @JsonDeserialize(using = MediaKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = MediaEnum.class, getMethod = "getKind")
     MediaKind kind;
 
     @JsonIgnore

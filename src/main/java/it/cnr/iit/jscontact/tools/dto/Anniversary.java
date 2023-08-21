@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryDateDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AnniversaryKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
@@ -34,6 +35,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+
 
 /**
  * Class mapping the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
@@ -57,6 +59,7 @@ public class Anniversary extends AbstractJSContactType implements HasKind, IdMap
 
     @NotNull(message = "kind is missing in Anniversary")
     @JsonDeserialize(using = AnniversaryKindDeserializer.class)
+    @ContainsExtensibleEnum(enumClass = AnniversaryEnum.class, getMethod = "getKind")
     AnniversaryKind kind;
 
     @NotNull(message = "date is missing in Anniversary")
@@ -107,4 +110,5 @@ public class Anniversary extends AbstractJSContactType implements HasKind, IdMap
     private static Anniversary anniversary(AnniversaryKind type, AnniversaryDate date, String label) {
         return Anniversary.builder().kind(type).date(date).build();
     }
+
 }
