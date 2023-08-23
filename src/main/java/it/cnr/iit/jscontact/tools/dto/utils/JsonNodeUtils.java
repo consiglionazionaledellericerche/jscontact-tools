@@ -82,6 +82,7 @@ public class JsonNodeUtils {
     /**
      * Converts a Jackson JsonNode object into a Java object.
      * @param node the JsonNode object
+     * @param objectClass the class of the converted object
      * @return the object
      */
     public static Object toObject(JsonNode node, Class objectClass) {
