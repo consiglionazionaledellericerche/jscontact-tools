@@ -36,6 +36,7 @@ import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.comparators.JSCardAddressesComparator;
 import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesAltidComparator;
 import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesPrefComparator;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.*;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -516,18 +517,38 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     }
 
 
-    private static boolean structuredNameWithAltidExists(List<ExtendedStructuredName> extendedStructuredNames, String altid) {
+    private static boolean structuredNameWithAltidExists(List<ExtendedStructuredName> extendedStructuredNames, String altid, String language) {
 
         if (extendedStructuredNames == null || extendedStructuredNames.isEmpty())
             return false;
 
         for (ExtendedStructuredName esn : extendedStructuredNames) {
-            if (esn.getAltId()!= null && esn.getAltId().equals(altid))
+            if (language != null) {
+                if (esn.getAltId()!= null && esn.getAltId().equals(altid) && esn.getLanguage()!=null && esn.getLanguage().equals(language))
+                    return true;
+            }
+            else if (esn.getAltId()!= null && esn.getAltId().equals(altid))
                 return true;
         }
 
         return false;
     }
+
+    private boolean isFNDerivedFromN(FormattedName fn, VCard vcard) {
+
+        List<FormattedName> fns = vcard.getFormattedNames();
+        if (fn.getParameter(VCardParamEnum.DERIVED.getValue()) != null && Boolean.parseBoolean(fn.getParameter(VCardParamEnum.DERIVED.getValue())) == Boolean.TRUE ) {
+            if (fns.size() == 1) {
+                if (vcard.getProperties(ExtendedStructuredName.class) != null && !vcard.getProperties(ExtendedStructuredName.class).isEmpty()) // structured name corresponding to full name exists
+                    return true;
+            } else {
+                if (fn.getAltId()!=null && structuredNameWithAltidExists(vcard.getProperties(ExtendedStructuredName.class), fn.getAltId(), fn.getLanguage())) // structured name corresponding to full name exists
+                    return true;
+            }
+        }
+        return false;
+    }
+
 
     private void fillJSCardFullName(VCard vcard, Card jsCard) {
 
@@ -539,15 +560,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         String lastAltid = null;
         for (FormattedName fn : fns) {
 
-            if (fn.getParameter(VCardParamEnum.DERIVED.getValue()) != null && Boolean.parseBoolean(fn.getParameter(VCardParamEnum.DERIVED.getValue())) == Boolean.TRUE ) {
-                if (fns.size() == 1) {
-                    if (vcard.getProperties(ExtendedStructuredName.class) != null && !vcard.getProperties(ExtendedStructuredName.class).isEmpty()) // structured name corresponding to full name exists
-                        continue;
-                } else {
-                    if (fn.getAltId()!=null && !structuredNameWithAltidExists(vcard.getProperties(ExtendedStructuredName.class), fn.getAltId())) // structured name corresponding to full name exists
-                        continue;
-                }
-            }
+            if (isFNDerivedFromN(fn,vcard))
+                continue;
 
             if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
                 if (jsCard.getName() == null) //no name exists
@@ -707,7 +721,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return null;
 
         for (FormattedName fn : vcard.getFormattedNames()) {
-            if (fn.getLanguage().equals(language))
+
+            if (isFNDerivedFromN(fn, vcard))
+                continue;
+
+            if (fn.getLanguage()!= null && fn.getLanguage().equals(language))
                 return fn.getValue();
         }
 
@@ -855,10 +873,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloor()));
             if (!vcardAddr.isExtended() && StringUtils.isNotEmpty(vcardAddr.getStreetAddressFull()))
                 streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddressFull(), (isPhonetic) ? vcardAddr.getStreetAddressFull() : null));
-            if (StringUtils.isNotEmpty(vcardAddr.getStreetName()))
-                streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetName(), (isPhonetic) ? vcardAddr.getStreetName() : null));
             if (StringUtils.isNotEmpty(vcardAddr.getStreetNumber()))
                 streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumber()));
+            if (StringUtils.isNotEmpty(vcardAddr.getStreetName()))
+                streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetName(), (isPhonetic) ? vcardAddr.getStreetName() : null));
             if (StringUtils.isNotEmpty(vcardAddr.getBuilding()))
                 streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuilding(), (isPhonetic) ? vcardAddr.getBuilding() : null));
             if (StringUtils.isNotEmpty(vcardAddr.getBlock()))
@@ -919,10 +937,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloors().get(index2)));
                         break;
                     case 10:
-                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetNames().get(index2), (isPhonetic) ? vcardAddr.getStreetNames().get(index2) : null));
+                        streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumbers().get(index2)));
                         break;
                     case 11:
-                        streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumbers().get(index2)));
+                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetNames().get(index2), (isPhonetic) ? vcardAddr.getStreetNames().get(index2) : null));
                         break;
                     case 12:
                         streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuildings().get(index2), (isPhonetic) ? vcardAddr.getBuildings().get(index2) : null));

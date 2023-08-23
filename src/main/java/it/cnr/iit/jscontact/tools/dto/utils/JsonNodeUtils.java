@@ -60,7 +60,7 @@ public class JsonNodeUtils {
     }
 
     /**
-     * Converts a Jackson JsonNode object into a Java object.
+     * Converts a Jackson JsonNode object into a Java object of primitive type.
      * @param node the JsonNode object
      * @return the object
      */
@@ -77,6 +77,28 @@ public class JsonNodeUtils {
 
         return null;
     }
+
+
+    /**
+     * Converts a Jackson JsonNode object into a Java object.
+     * @param node the JsonNode object
+     * @return the object
+     */
+    public static Object toObject(JsonNode node, Class objectClass) {
+
+        if (node == null)
+            return null;
+
+        try {
+            return mapper.readValue(mapper.writeValueAsString(node),objectClass);
+        } catch (JsonMappingException e) {
+            return null;
+        } catch (JsonProcessingException e) {
+            return null;
+        }
+
+    }
+
 
     /**
      * Converts a Java object into a Jackson JsonNode object.

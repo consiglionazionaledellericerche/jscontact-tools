@@ -15,13 +15,16 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
+import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSContact;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -405,14 +408,85 @@ public class AddressesTest extends VCard2JSContactTest {
         assertEquals("testAddresses14 - 3", Boolean.TRUE, jsCard.getAddresses().get("ADR-1").getIsOrdered());
         assertEquals("testAddresses14 - 4", DelimiterUtils.COMMA_ARRAY_DELIMITER, jsCard.getAddresses().get("ADR-1").getDefaultSeparator());
         assertEquals("testAddresses14 - 5", 4, jsCard.getAddresses().get("ADR-1").getComponents().length);
-        assertTrue("testAddresses14 - 6", jsCard.getAddresses().get("ADR-1").getComponents()[0].isNumber());
-        assertEquals("testAddresses14 - 7", "54321", jsCard.getAddresses().get("ADR-1").getComponents()[0].getValue());
+        assertTrue("testAddresses14 - 6", jsCard.getAddresses().get("ADR-1").getComponents()[2].isNumber());
+        assertEquals("testAddresses14 - 7", "54321", jsCard.getAddresses().get("ADR-1").getComponents()[2].getValue());
         assertTrue("testAddresses14 - 8", jsCard.getAddresses().get("ADR-1").getComponents()[1].isSeparator());
         assertEquals("testAddresses14 - 9", DelimiterUtils.SPACE_DELIMITER, jsCard.getAddresses().get("ADR-1").getComponents()[1].getValue());
-        assertTrue("testAddresses14 - 10", jsCard.getAddresses().get("ADR-1").getComponents()[2].isName());
-        assertEquals("testAddresses14 - 11", "Oak St", jsCard.getAddresses().get("ADR-1").getComponents()[2].getValue());
+        assertTrue("testAddresses14 - 10", jsCard.getAddresses().get("ADR-1").getComponents()[0].isName());
+        assertEquals("testAddresses14 - 11", "Oak St", jsCard.getAddresses().get("ADR-1").getComponents()[0].getValue());
         assertTrue("testAddresses14 - 12", jsCard.getAddresses().get("ADR-1").getComponents()[3].isLocality());
         assertEquals("testAddresses14 - 13", "Reston", jsCard.getAddresses().get("ADR-1").getComponents()[3].getValue());
+
+    }
+
+
+    @Test
+    public void testAddresses15() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ADR;JSCOMPS=\"s,\\, ;13;s,-;10;s, ;15;3;4;s, ;5\";LABEL=\"2-7-2 Marunouchi, Chiyoda-ku, Tokyo 100-8994\";PROP-ID=k26;ALTID=1:;;2,2-7,Marunouchi;Chiyoda-ku;Tokyo;100-8994;;;;;2;;;2-7;;Marunouchi;;\n" +
+                "ADR;JSCOMPS=\"s,;4;3;15;13;s,-;10;5\";LABEL=〒100-8994東京都千代田区丸ノ内2-7-2;LANGUAGE=jp;PROP-ID=k26;ALTID=1:;;2,2-7,丸ノ内;千代田区;東京都;〒100-8994;;;;;2;;;2-7;;丸ノ内;;\n" +
+                "ADR;JSCOMPS=\"s,\\,;11;s, ;10;3\";LANGUAGE=en;PROP-ID=ADR-1:;;54321 Oak St;Reston;;;;;;;54321;Oak St;;;;;;\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testAddresses15 - 1", jsCard.getAddresses());
+        assertEquals("testAddresses15 - 2", 2, jsCard.getAddresses().size());
+        assertEquals("testAddresses15 - 3", Boolean.TRUE, jsCard.getAddresses().get("ADR-1").getIsOrdered());
+        assertEquals("testAddresses15 - 4", DelimiterUtils.COMMA_ARRAY_DELIMITER, jsCard.getAddresses().get("ADR-1").getDefaultSeparator());
+        assertEquals("testAddresses15 - 5", 4, jsCard.getAddresses().get("ADR-1").getComponents().length);
+        assertTrue("testAddresses15 - 6", jsCard.getAddresses().get("ADR-1").getComponents()[0].isName());
+        assertEquals("testAddresses15 - 7", "Oak St", jsCard.getAddresses().get("ADR-1").getComponents()[0].getValue());
+        assertTrue("testAddresses15 - 8", jsCard.getAddresses().get("ADR-1").getComponents()[1].isSeparator());
+        assertEquals("testAddresses15 - 9", DelimiterUtils.SPACE_DELIMITER, jsCard.getAddresses().get("ADR-1").getComponents()[1].getValue());
+        assertTrue("testAddresses15 - 10", jsCard.getAddresses().get("ADR-1").getComponents()[2].isNumber());
+        assertEquals("testAddresses15 - 11", "54321", jsCard.getAddresses().get("ADR-1").getComponents()[2].getValue());
+        assertTrue("testAddresses15 - 12", jsCard.getAddresses().get("ADR-1").getComponents()[3].isLocality());
+        assertEquals("testAddresses15 - 13", "Reston", jsCard.getAddresses().get("ADR-1").getComponents()[3].getValue());
+        assertEquals("testAddresses15 - 14", Boolean.TRUE, jsCard.getAddresses().get("k26").getIsOrdered());
+        assertEquals("testAddresses15 - 15", ", ", jsCard.getAddresses().get("k26").getDefaultSeparator());
+        assertEquals("testAddresses15 - 16", "2-7-2 Marunouchi, Chiyoda-ku, Tokyo 100-8994", jsCard.getAddresses().get("k26").getFull());
+        assertEquals("testAddresses15 - 17", 9, jsCard.getAddresses().get("k26").getComponents().length);
+        assertTrue("testAddresses15 - 18", jsCard.getAddresses().get("k26").getComponents()[0].isBlock());
+        assertEquals("testAddresses15 - 19", "2-7", jsCard.getAddresses().get("k26").getComponents()[0].getValue());
+        assertTrue("testAddresses15 - 20", jsCard.getAddresses().get("k26").getComponents()[1].isSeparator());
+        assertEquals("testAddresses15 - 21", "-", jsCard.getAddresses().get("k26").getComponents()[1].getValue());
+        assertTrue("testAddresses15 - 22", jsCard.getAddresses().get("k26").getComponents()[2].isNumber());
+        assertEquals("testAddresses15 - 23", "2", jsCard.getAddresses().get("k26").getComponents()[2].getValue());
+        assertTrue("testAddresses15 - 24", jsCard.getAddresses().get("k26").getComponents()[3].isSeparator());
+        assertEquals("testAddresses15 - 25", DelimiterUtils.SPACE_DELIMITER, jsCard.getAddresses().get("k26").getComponents()[3].getValue());
+        assertTrue("testAddresses15 - 26", jsCard.getAddresses().get("k26").getComponents()[4].isDistrict());
+        assertEquals("testAddresses15 - 27", "Marunouchi", jsCard.getAddresses().get("k26").getComponents()[4].getValue());
+        assertTrue("testAddresses15 - 28", jsCard.getAddresses().get("k26").getComponents()[5].isLocality());
+        assertEquals("testAddresses15 - 29", "Chiyoda-ku", jsCard.getAddresses().get("k26").getComponents()[5].getValue());
+        assertTrue("testAddresses15 - 30", jsCard.getAddresses().get("k26").getComponents()[6].isRegion());
+        assertEquals("testAddresses15 - 31", "Tokyo", jsCard.getAddresses().get("k26").getComponents()[6].getValue());
+        assertTrue("testAddresses15 - 32", jsCard.getAddresses().get("k26").getComponents()[7].isSeparator());
+        assertEquals("testAddresses15 - 33", DelimiterUtils.SPACE_DELIMITER, jsCard.getAddresses().get("k26").getComponents()[7].getValue());
+        assertTrue("testAddresses15 - 34", jsCard.getAddresses().get("k26").getComponents()[8].isPostcode());
+        assertEquals("testAddresses15 - 35", "100-8994", jsCard.getAddresses().get("k26").getComponents()[8].getValue());
+        assertNotNull("testAddresses15 - 36",  jsCard.getLocalization("jp","addresses/k26"));
+        Address addressLocalization = (Address) JsonNodeUtils.toObject(jsCard.getLocalization("jp","addresses/k26"), Address.class);
+        assertEquals("testAddresses15 - 37", Boolean.TRUE, addressLocalization.getIsOrdered());
+        assertEquals("testAddresses15 - 38", StringUtils.EMPTY, addressLocalization.getDefaultSeparator());
+        assertEquals("testAddresses15 - 39", "〒100-8994東京都千代田区丸ノ内2-7-2", addressLocalization.getFull());
+        assertEquals("testAddresses15 - 40", 7, addressLocalization.getComponents().length);
+        assertTrue("testAddresses15 - 41", addressLocalization.getComponents()[0].isRegion());
+        assertEquals("testAddresses15 - 42", "東京都", addressLocalization.getComponents()[0].getValue());
+        assertTrue("testAddresses15 - 43", addressLocalization.getComponents()[1].isLocality());
+        assertEquals("testAddresses15 - 44", "千代田区", addressLocalization.getComponents()[1].getValue());
+        assertTrue("testAddresses15 - 45", addressLocalization.getComponents()[2].isDistrict());
+        assertEquals("testAddresses15 - 46", "丸ノ内", addressLocalization.getComponents()[2].getValue());
+        assertTrue("testAddresses15 - 47", addressLocalization.getComponents()[3].isBlock());
+        assertEquals("testAddresses15 - 48", "2-7", addressLocalization.getComponents()[3].getValue());
+        assertTrue("testAddresses15 - 49", addressLocalization.getComponents()[4].isSeparator());
+        assertEquals("testAddresses15 - 50", "-", addressLocalization.getComponents()[4].getValue());
+        assertTrue("testAddresses15 - 51", addressLocalization.getComponents()[5].isNumber());
+        assertEquals("testAddresses15 - 52", "2", addressLocalization.getComponents()[5].getValue());
+        assertTrue("testAddresses15 - 53", addressLocalization.getComponents()[6].isPostcode());
+        assertEquals("testAddresses15 - 54", "〒100-8994", addressLocalization.getComponents()[6].getValue());
 
     }
 }
