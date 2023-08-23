@@ -215,7 +215,6 @@ public class NameTest extends VCard2JSContactTest {
                         "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testName7 - 1", "Jane Doe", jsCard.getName().getFull());
         assertEquals("testName7 - 2", true, jsCard.getName().getIsOrdered());
         assertEquals("testName7 - 3", 2, jsCard.getName().getComponents().length);
         assertEquals("testName7 - 4", "Doe", jsCard.getName().getSurname());
@@ -234,7 +233,6 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testName8 - 1", "John Philip Paul Stevenson Jr. M.D.", jsCard.getName().getFull());
         assertEquals("testName8 - 2", true, jsCard.getName().getIsOrdered());
         assertEquals("testName8 - 3", 6, jsCard.getName().getComponents().length);
         assertEquals("testName8 - 4", "John", jsCard.getName().getGiven());
@@ -262,7 +260,6 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testName9 - 1", "John Philip Paul Stevenson Jr. M.D.", jsCard.getName().getFull());
         assertEquals("testName9 - 2", true, jsCard.getName().getIsOrdered());
         assertEquals("testName9 - 3", 6, jsCard.getName().getComponents().length);
         assertEquals("testName9 - 4", "John", jsCard.getName().getGiven());
@@ -290,7 +287,6 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testName10 - 1", "John Philip Paul Stevenson-Loffredo Jr. M.D.", jsCard.getName().getFull());
         assertEquals("testName10 - 2", true, jsCard.getName().getIsOrdered());
         assertEquals("testName10 - 3", 8, jsCard.getName().getComponents().length);
         assertEquals("testName10 - 4", "John", jsCard.getName().getGiven());

@@ -322,12 +322,10 @@ The conversion is executed according to the following rules:
     a `customTimeZones` map entry whose key is prefixed the `customTimeZonesPrefix` configuration property concatenated
     with an incremental positive integer (e.g. "\tz1")
 
-22. The VCARD parameter DERIVED is ignored.
-
-23. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group
+22. The TZ and GEO properties can be associated to an ADR property by grouping them together through the group
     construct.
 
-24. Either the "ISO-3166-1-alpha-2" parameter (that maybe used in RDAP) is converted.
+23. Either the "ISO-3166-1-alpha-2" parameter (that maybe used in RDAP) is converted.
 
 ### Conversion Profiles from vCard to JSContact Card
 

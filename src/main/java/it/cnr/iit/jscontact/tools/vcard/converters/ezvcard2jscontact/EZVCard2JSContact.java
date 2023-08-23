@@ -511,6 +511,20 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+
+    private static boolean structuredNameWithAltidExists(List<ExtendedStructuredName> extendedStructuredNames, String altid) {
+
+        if (extendedStructuredNames == null || extendedStructuredNames.isEmpty())
+            return false;
+
+        for (ExtendedStructuredName esn : extendedStructuredNames) {
+            if (esn.getAltId()!= null && esn.getAltId().equals(altid))
+                return true;
+        }
+
+        return false;
+    }
+
     private void fillJSCardFullName(VCard vcard, Card jsCard) {
 
         if (vcard.getFormattedNames() == null || vcard.getFormattedNames().isEmpty())
@@ -520,6 +534,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fns.sort(vCardPropertiesAltidComparator);
         String lastAltid = null;
         for (FormattedName fn : fns) {
+
+            if (fn.getParameter(VCardParamEnum.DERIVED.getValue()) != null) {
+                if (fns.size() == 1) {
+                    if (vcard.getProperties(ExtendedStructuredName.class) != null && !vcard.getProperties(ExtendedStructuredName.class).isEmpty()) // structured name corresponding to full name exists
+                        continue;
+                } else {
+                    if (fn.getAltId()!=null && !structuredNameWithAltidExists(vcard.getProperties(ExtendedStructuredName.class), fn.getAltId())) // structured name corresponding to full name exists
+                        continue;
+                }
+            }
+
             if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
                 if (jsCard.getName() == null) //no name exists
                     jsCard.setName(Name.builder().full(fn.getValue()).build());
