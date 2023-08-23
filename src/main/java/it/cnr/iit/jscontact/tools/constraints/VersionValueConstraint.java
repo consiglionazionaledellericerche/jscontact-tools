@@ -27,7 +27,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface VersionValueConstraint {
 
-    String message() default "invalid @version value";
+    String message() default "invalid version value";
 
     Class<?>[] groups() default {};
 

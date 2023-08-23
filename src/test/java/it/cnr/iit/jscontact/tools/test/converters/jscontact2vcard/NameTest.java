@@ -178,7 +178,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"@type\" : \"Card\"," +
-                "\"@version\" : \"1.0\"," +
+                "\"version\" : \"1.0\"," +
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"name\" : { " +
                     "\"@type\" : \"Name\", " +
@@ -228,7 +228,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"@type\" : \"Card\"," +
-                "\"@version\" : \"1.0\"," +
+                "\"version\" : \"1.0\"," +
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"language\" : \"zh-Hant\"," +
                 "\"name\" : { " +
@@ -279,7 +279,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"@type\" : \"Card\"," +
-                "\"@version\" : \"1.0\"," +
+                "\"version\" : \"1.0\"," +
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"name\": { " +
                     "\"components\": [ " +
@@ -303,7 +303,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"@type\" : \"Card\"," +
-                "\"@version\" : \"1.0\"," +
+                "\"version\" : \"1.0\"," +
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"name\": { " +
                     "\"components\": [ " +
@@ -337,7 +337,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"@type\" : \"Card\"," +
-                "\"@version\" : \"1.0\"," +
+                "\"version\" : \"1.0\"," +
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"name\": { " +
                 "\"components\": [ " +
@@ -374,7 +374,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"@type\" : \"Card\"," +
-                "\"@version\" : \"1.0\"," +
+                "\"version\" : \"1.0\"," +
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"name\": { " +
                 "\"components\": [ " +
@@ -413,7 +413,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"@type\" : \"Card\"," +
-                "\"@version\" : \"1.0\"," +
+                "\"version\" : \"1.0\"," +
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"name\": { " +
                     "\"components\": [ " +
@@ -442,7 +442,7 @@ public class NameTest extends JSContact2VCardTest {
 
         String jscard = "{" +
                 "\"@type\" : \"Card\"," +
-                "\"@version\" : \"1.0\"," +
+                "\"version\" : \"1.0\"," +
                 "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
                 "\"name\": { " +
                     "\"components\": [ " +
