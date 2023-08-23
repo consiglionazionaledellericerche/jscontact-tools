@@ -24,6 +24,7 @@ import ezvcard.parameter.RelatedType;
 import ezvcard.property.*;
 import ezvcard.property.Organization;
 import ezvcard.property.Title;
+import ezvcard.util.DataUri;
 import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
@@ -463,7 +464,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static String getValue(BinaryProperty property) {
 
-        return property.getUrl();
+        if (property.getUrl()!=null)
+            return property.getUrl();
+        else
+            return new DataUri(property.getContentType().getMediaType(), property.getData()).toString();
     }
 
     private static String getValue(TextProperty property) {
