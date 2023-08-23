@@ -244,7 +244,7 @@ The conversion is executed according to the following rules:
     - `customTimeZonesPrefix = "tz"`
     - `validateCard = true`
     - `useAutoIdsProfile = true`
-    - `usePropIds = false`
+    - `usePropIds = true`
     - `setAutoFullAddress = true` 
     - `useVoiceAsDefaultPhoneFeature = true`
     - `convertGenderToSpeakToAs = true`
