@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.16.6</version>
+		  <version>0.16.7</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.6'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.16.7'
 ```
 
 # Features
@@ -237,16 +237,16 @@ The conversion is executed according to the following rules:
    PID
    GROUP
 
-5. Validation is performed before conversion if the  `setCardMustBeValidated` configuration property is set to `true`.
+5. Validation is performed before conversion if the  `validateCard` configuration property is set to `true`.
 
 6. Default values for the configuration properties are:
 
     - `customTimeZonesPrefix = "tz"`
-    - `setCardMustBeValidated = true`
-    - `setAutoIdsProfile = true`
-    - `setPropIds = false`
-    - `setAutoFullAddress = true`
-    - `setVoiceAsDefaultPhoneFeature = true`
+    - `validateCard = true`
+    - `useAutoIdsProfile = true`
+    - `usePropIds = false`
+    - `setAutoFullAddress = true` 
+    - `useVoiceAsDefaultPhoneFeature = true`
     - `convertGenderToSpeakToAs = true`
 
 7. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMGENDER is missing and
@@ -335,9 +335,9 @@ By default, where a collection of objects is mapped to a map of <key,object> ent
 This setting schema can be modified by defining a different one assigning key values based on the positions of vCard elements.
 To do that, the following steps must be followed:
 
-1. set the `setAutoIdsProfile` property of the `VCard2JSContactConfig` object to `false`
+1. set the `useAutoIdsProfile` property of the `VCard2JSContactConfig` object to `false`
 
-2. set the `setUsePropIds` property of the `VCard2JSContactConfig` object to `false`
+2. set the `usePropIds` property of the `VCard2JSContactConfig` object to `false`
 
 3. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToUse` of `VCard2JSContactConfig` object property with it
 
@@ -393,7 +393,7 @@ All the methods take in input a list of JSContact Card objects and can raise the
 
 4. Default values for the configuration properties are:
 
-    - `setCardMustBeValidated = true`
+    - `validateCard = true`
     - `setAutoAddrLabel = true`
     - `setPropIdParam = true`
     - `convertTimezoneToOffset = true`
@@ -629,7 +629,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.16.6 implements the following draft versions:
+Version 0.16.7 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-13
 * draft-ietf-calext-jscontact-vcard-11

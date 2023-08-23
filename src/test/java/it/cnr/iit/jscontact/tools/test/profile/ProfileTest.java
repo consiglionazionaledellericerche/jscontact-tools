@@ -39,7 +39,7 @@ public class ProfileTest extends JCard2JSContactTest {
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                 .config(VCard2JSContactConfig.builder()
-                        .setAutoIdsProfile(false)
+                        .useAutoIdsProfile(false)
                         .idsProfileToUse(VCard2JSContactIdsProfile.RDAP_PROFILE)
                         .build())
                 .build();
