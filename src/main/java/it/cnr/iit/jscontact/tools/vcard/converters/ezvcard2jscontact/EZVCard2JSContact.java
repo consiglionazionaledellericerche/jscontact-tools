@@ -535,7 +535,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         String lastAltid = null;
         for (FormattedName fn : fns) {
 
-            if (fn.getParameter(VCardParamEnum.DERIVED.getValue()) != null) {
+            if (fn.getParameter(VCardParamEnum.DERIVED.getValue()) != null && Boolean.parseBoolean(fn.getParameter(VCardParamEnum.DERIVED.getValue())) == Boolean.TRUE ) {
                 if (fns.size() == 1) {
                     if (vcard.getProperties(ExtendedStructuredName.class) != null && !vcard.getProperties(ExtendedStructuredName.class).isEmpty()) // structured name corresponding to full name exists
                         continue;

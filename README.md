@@ -327,6 +327,8 @@ The conversion is executed according to the following rules:
 
 23. Either the "ISO-3166-1-alpha-2" parameter (that maybe used in RDAP) is converted.
 
+24. FN property with DERIVED parameter set to true is not converted if a corresponding N property exists.
+
 ### Conversion Profiles from vCard to JSContact Card
 
 By default, where a collection of objects is mapped to a map of <key,object> entries, the key has the following format: <vCard Element Tag> + "-" + <index of the element among the vCard sibling elements (starting from 1)> (e.g. "ADR-1")
