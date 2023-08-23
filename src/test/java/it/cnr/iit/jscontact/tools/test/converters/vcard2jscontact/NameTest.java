@@ -15,7 +15,9 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
+import it.cnr.iit.jscontact.tools.dto.Name;
 import it.cnr.iit.jscontact.tools.dto.NameComponentKind;
+import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import org.junit.Test;
@@ -215,7 +217,6 @@ public class NameTest extends VCard2JSContactTest {
                         "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testName7 - 1", "Jane Doe", jsCard.getName().getFull());
         assertEquals("testName7 - 2", true, jsCard.getName().getIsOrdered());
         assertEquals("testName7 - 3", 2, jsCard.getName().getComponents().length);
         assertEquals("testName7 - 4", "Doe", jsCard.getName().getSurname());
@@ -234,7 +235,6 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testName8 - 1", "John Philip Paul Stevenson Jr. M.D.", jsCard.getName().getFull());
         assertEquals("testName8 - 2", true, jsCard.getName().getIsOrdered());
         assertEquals("testName8 - 3", 6, jsCard.getName().getComponents().length);
         assertEquals("testName8 - 4", "John", jsCard.getName().getGiven());
@@ -262,7 +262,6 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testName9 - 1", "John Philip Paul Stevenson Jr. M.D.", jsCard.getName().getFull());
         assertEquals("testName9 - 2", true, jsCard.getName().getIsOrdered());
         assertEquals("testName9 - 3", 6, jsCard.getName().getComponents().length);
         assertEquals("testName9 - 4", "John", jsCard.getName().getGiven());
@@ -290,7 +289,6 @@ public class NameTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertEquals("testName10 - 1", "John Philip Paul Stevenson-Loffredo Jr. M.D.", jsCard.getName().getFull());
         assertEquals("testName10 - 2", true, jsCard.getName().getIsOrdered());
         assertEquals("testName10 - 3", 8, jsCard.getName().getComponents().length);
         assertEquals("testName10 - 4", "John", jsCard.getName().getGiven());
@@ -312,4 +310,31 @@ public class NameTest extends VCard2JSContactTest {
 
     }
 
+    @Test
+    public void testName11() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN;DERIVED=true;ALTID=1:Mr. Ivan Petrovich Vasiliev\n" +
+                "FN;DERIVED=true;LANGUAGE=uk-Cyrl;ALTID=1:г-н Иван Петрович Васильев\n" +
+                "N;ALTID=1:Vasiliev;Ivan;Petrovich;Mr.;;;\n" +
+                "N;LANGUAGE=uk-Cyrl;ALTID=1:Васильев;Иван;Петрович;г-н;;;\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testName11 - 1", 4, jsCard.getName().getComponents().length);
+        assertEquals("testName11 - 2", "Vasiliev", jsCard.getName().getSurname());
+        assertEquals("testName11 - 3", "Ivan", jsCard.getName().getGiven());
+        assertEquals("testName11 - 4", "Petrovich", jsCard.getName().getGiven2());
+        assertTrue("testName11 - 5",  jsCard.getName().getComponents()[3].isTitle());
+        assertEquals("testName11 - 6", "Mr.", jsCard.getName().getComponents()[3].getValue());
+        assertEquals("testName11 - 7", 1, jsCard.getLocalizationsPerLanguage("uk-Cyrl").size());
+        assertNotNull("testName6 - 8",  jsCard.getLocalization("uk-Cyrl","name"));
+        Name nameLocalization = (Name) JsonNodeUtils.toObject(jsCard.getLocalization("uk-Cyrl","name"), Name.class);
+        assertEquals("testName11 - 9", "Васильев", nameLocalization.getSurname());
+        assertEquals("testName11 - 10", "Иван", nameLocalization.getGiven());
+        assertEquals("testName11 - 11", "Петрович", nameLocalization.getGiven2());
+        assertTrue("testName11 - 12",  nameLocalization.getComponents()[3].isTitle());
+        assertEquals("testName11 - 13", "г-н", nameLocalization.getComponents()[3].getValue());
+    }
 }

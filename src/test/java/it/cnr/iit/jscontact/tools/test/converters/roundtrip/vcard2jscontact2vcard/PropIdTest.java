@@ -42,7 +42,7 @@ public class PropIdTest extends RoundtripTest {
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder()
                                                         .config(VCard2JSContactConfig.builder()
                                                                 .setAutoFullAddress(false)
-                                                                .setUsePropIds(true)
+                                                                .usePropIds(true)
                                                                 .build())
                                                         .build();
 
@@ -72,7 +72,7 @@ public class PropIdTest extends RoundtripTest {
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder()
                 .config(VCard2JSContactConfig.builder()
-                        .setUsePropIds(true)
+                        .usePropIds(true)
                         .build())
                 .build();
 

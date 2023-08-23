@@ -24,6 +24,7 @@ import ezvcard.parameter.RelatedType;
 import ezvcard.property.*;
 import ezvcard.property.Organization;
 import ezvcard.property.Title;
+import ezvcard.util.DataUri;
 import ezvcard.util.GeoUri;
 import ezvcard.util.UtcOffset;
 import it.cnr.iit.jscontact.tools.dto.*;
@@ -35,6 +36,7 @@ import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.comparators.JSCardAddressesComparator;
 import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesAltidComparator;
 import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesPrefComparator;
+import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.*;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -110,10 +112,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private String getJSCardId(VCard2JSContactIdsProfile.IdType idType, int index, String id, String propId, Object... args) {
 
-        if (config.isSetUsePropIds() && propId != null)
+        if (config.isUsePropIds() && propId != null)
             return propId;
 
-        if (config.isSetAutoIdsProfile() || config.getIdsProfileToUse() == null || config.getIdsProfileToUse().getIds() == null || config.getIdsProfileToUse().getIds().size() == 0)
+        if (config.isUseAutoIdsProfile() || config.getIdsProfileToUse() == null || config.getIdsProfileToUse().getIds() == null || config.getIdsProfileToUse().getIds().size() == 0)
             return id;
 
         List<String> ids = (idType == VCard2JSContactIdsProfile.IdType.RESOURCE || idType == VCard2JSContactIdsProfile.IdType.PERSONAL_INFO) ? getVCard2JSContactProfileIds(idType,args[0]) : getVCard2JSContactProfileIds(idType);
@@ -210,7 +212,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private Map<PhoneFeature,Boolean> getJSCardDefaultPhoneFeatures() {
 
-        if (config.isSetVoiceAsDefaultPhoneFeature())
+        if (config.isUseVoiceAsDefaultPhoneFeature())
             return new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.voice(), Boolean.TRUE);}};
 
         return null;
@@ -463,7 +465,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static String getValue(BinaryProperty property) {
 
-        return property.getUrl();
+        if (property.getUrl()!=null)
+            return property.getUrl();
+        else
+            return new DataUri(property.getContentType().getMediaType(), property.getData()).toString();
     }
 
     private static String getValue(TextProperty property) {
@@ -511,6 +516,40 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+
+    private static boolean structuredNameWithAltidExists(List<ExtendedStructuredName> extendedStructuredNames, String altid, String language) {
+
+        if (extendedStructuredNames == null || extendedStructuredNames.isEmpty())
+            return false;
+
+        for (ExtendedStructuredName esn : extendedStructuredNames) {
+            if (language != null) {
+                if (esn.getAltId()!= null && esn.getAltId().equals(altid) && esn.getLanguage()!=null && esn.getLanguage().equals(language))
+                    return true;
+            }
+            else if (esn.getAltId()!= null && esn.getAltId().equals(altid))
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean isFNDerivedFromN(FormattedName fn, VCard vcard) {
+
+        List<FormattedName> fns = vcard.getFormattedNames();
+        if (fn.getParameter(VCardParamEnum.DERIVED.getValue()) != null && Boolean.parseBoolean(fn.getParameter(VCardParamEnum.DERIVED.getValue())) == Boolean.TRUE ) {
+            if (fns.size() == 1) {
+                if (vcard.getProperties(ExtendedStructuredName.class) != null && !vcard.getProperties(ExtendedStructuredName.class).isEmpty()) // structured name corresponding to full name exists
+                    return true;
+            } else {
+                if (fn.getAltId()!=null && structuredNameWithAltidExists(vcard.getProperties(ExtendedStructuredName.class), fn.getAltId(), fn.getLanguage())) // structured name corresponding to full name exists
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
     private void fillJSCardFullName(VCard vcard, Card jsCard) {
 
         if (vcard.getFormattedNames() == null || vcard.getFormattedNames().isEmpty())
@@ -520,6 +559,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fns.sort(vCardPropertiesAltidComparator);
         String lastAltid = null;
         for (FormattedName fn : fns) {
+
+            if (isFNDerivedFromN(fn,vcard))
+                continue;
+
             if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
                 if (jsCard.getName() == null) //no name exists
                     jsCard.setName(Name.builder().full(fn.getValue()).build());
@@ -678,7 +721,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return null;
 
         for (FormattedName fn : vcard.getFormattedNames()) {
-            if (fn.getLanguage().equals(language))
+
+            if (isFNDerivedFromN(fn, vcard))
+                continue;
+
+            if (fn.getLanguage()!= null && fn.getLanguage().equals(language))
                 return fn.getValue();
         }
 
@@ -826,10 +873,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloor()));
             if (!vcardAddr.isExtended() && StringUtils.isNotEmpty(vcardAddr.getStreetAddressFull()))
                 streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetAddressFull(), (isPhonetic) ? vcardAddr.getStreetAddressFull() : null));
-            if (StringUtils.isNotEmpty(vcardAddr.getStreetName()))
-                streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetName(), (isPhonetic) ? vcardAddr.getStreetName() : null));
             if (StringUtils.isNotEmpty(vcardAddr.getStreetNumber()))
                 streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumber()));
+            if (StringUtils.isNotEmpty(vcardAddr.getStreetName()))
+                streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetName(), (isPhonetic) ? vcardAddr.getStreetName() : null));
             if (StringUtils.isNotEmpty(vcardAddr.getBuilding()))
                 streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuilding(), (isPhonetic) ? vcardAddr.getBuilding() : null));
             if (StringUtils.isNotEmpty(vcardAddr.getBlock()))
@@ -890,10 +937,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         streetDetailPairs.add(AddressComponent.floor(vcardAddr.getFloors().get(index2)));
                         break;
                     case 10:
-                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetNames().get(index2), (isPhonetic) ? vcardAddr.getStreetNames().get(index2) : null));
+                        streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumbers().get(index2)));
                         break;
                     case 11:
-                        streetDetailPairs.add(AddressComponent.number(vcardAddr.getStreetNumbers().get(index2)));
+                        streetDetailPairs.add(AddressComponent.name(vcardAddr.getStreetNames().get(index2), (isPhonetic) ? vcardAddr.getStreetNames().get(index2) : null));
                         break;
                     case 12:
                         streetDetailPairs.add(AddressComponent.building(vcardAddr.getBuildings().get(index2), (isPhonetic) ? vcardAddr.getBuildings().get(index2) : null));
@@ -1331,7 +1378,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return null;
 
         for (Map.Entry<String,it.cnr.iit.jscontact.tools.dto.Organization> entry : jscardOrganizations.entrySet()) {
-            if (entry.getValue().getGroup().equals(vcardTitleGroup))
+            if (entry.getValue().getGroup()!=null && entry.getValue().getGroup().equals(vcardTitleGroup))
                 return entry.getKey();
         }
 
@@ -1444,7 +1491,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .units(orgUnits)
                 .contexts(toJSCardContexts(vcardOrg.getType()))
                 .sortAs(orgSortAs)
-                .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID))
+                .group(vcardOrg.getGroup())
+                .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.GROUP))
                 .build();
     }
 
@@ -1762,7 +1810,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         List<Card> jsCards = new ArrayList<>();
 
         for (VCard vCard : vCards) {
-            if (config.isSetCardMustBeValidated()) {
+            if (config.isValidateCard()) {
                 ValidationWarnings warnings = vCard.validate(VCardVersion.V4_0);
                 if (!warnings.isEmpty())
                     throw new CardException(warnings.toString());

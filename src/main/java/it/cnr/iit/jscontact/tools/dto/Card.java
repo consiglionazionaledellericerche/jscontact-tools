@@ -57,7 +57,7 @@ import java.util.*;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "@type", "@version", "created", "kind", "language", "members", "prodId", "relatedTo", "uid", "updated",
+        "@type", "version", "created", "kind", "language", "members", "prodId", "relatedTo", "uid", "updated",
         "name", "nicknames", "organizations", "speakToAs", "titles",
         "emails", "onlineServices", "phones", "preferredLanguages",
         "calendars", "schedulingAddresses",
@@ -92,10 +92,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
 
     // Section 2.1.2 of [draft-ietf-calext-jscontact]
     @NotNull
-    @JsonProperty("@version")
     @VersionValueConstraint
     @Builder.Default
-    String _version = "1.0";
+    String version = "1.0";
 
     // Section 2.1.3 of [draft-ietf-calext-jscontact]
     @JsonSerialize(using = UTCDateTimeSerializer.class)

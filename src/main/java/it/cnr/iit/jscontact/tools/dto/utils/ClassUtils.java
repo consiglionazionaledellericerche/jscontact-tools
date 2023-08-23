@@ -42,8 +42,8 @@ public class ClassUtils {
     /**
      * Returns the list of class names corresponding to JSContact IANA registered types.
      * @return list of class names corresponding to JSContact IANA registered types
-     * @throws ClassNotFoundException
-     * @throws IOException
+     * @throws ClassNotFoundException thrown by forName method
+     * @throws IOException thrown by readLine method
      */
     public static List<String> getIANATypes() throws ClassNotFoundException, IOException {
 

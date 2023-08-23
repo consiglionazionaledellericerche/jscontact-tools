@@ -33,15 +33,15 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private String customTimeZonesPrefix = "tz";
     @Builder.Default
-    private boolean setCardMustBeValidated = true;
+    private boolean validateCard = true;
     @Builder.Default
-    private boolean setAutoIdsProfile = true;
+    private boolean useAutoIdsProfile = true;
     @Builder.Default
-    private boolean setUsePropIds = false;
+    private boolean usePropIds = true;
     @Builder.Default
     private boolean setAutoFullAddress = true;
     @Builder.Default
-    private boolean setVoiceAsDefaultPhoneFeature = true;
+    private boolean useVoiceAsDefaultPhoneFeature = true;
     @Builder.Default
     private boolean convertGenderToSpeakToAs = true; //ignored if GRAMGENDER is present
 

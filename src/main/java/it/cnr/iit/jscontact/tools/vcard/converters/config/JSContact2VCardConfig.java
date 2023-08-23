@@ -31,7 +31,7 @@ import lombok.Data;
 public class JSContact2VCardConfig {
 
     @Builder.Default
-    private boolean setCardMustBeValidated = true;
+    private boolean validateCard = true;
     @Builder.Default
     private boolean setAutoAddrLabel = true;
     @Builder.Default

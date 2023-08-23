@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.TitleKind;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.junit.Test;
 
@@ -158,6 +159,29 @@ public class TitlesTest extends VCard2JSContactTest {
         assertEquals("testRoleWithAltid2 - 5", 1, jsCard.getLocalizationsPerLanguage("it").size());
         assertEquals("testRoleWithAltid2 - 6", "Capo Progetto", jsCard.getLocalization("it", "titles/TITLE-2").get("name").asText());
     }
+
+
+    @Test
+    public void testTitleAndOrganization() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "G-o2.ORG;PROP-ID=o2:ABC\n" +
+                "TITLE;PROP-ID=le9:Research Scientist\n" +
+                "G-o2.ROLE;PROP-ID=k2:Project Leader\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testRoleWithAltid2 - 1", jsCard.getTitles());
+        assertEquals("testRoleWithAltid2 - 2", 2, jsCard.getTitles().size());
+        assertEquals("testRoleWithAltid2 - 3", "Research Scientist", jsCard.getTitles().get("le9").getName());
+        assertEquals("testRoleWithAltid2 - 4", TitleKind.title(), jsCard.getTitles().get("le9").getKind());
+        assertEquals("testRoleWithAltid2 - 5", "Project Leader", jsCard.getTitles().get("k2").getName());
+        assertEquals("testRoleWithAltid2 - 6", TitleKind.role(), jsCard.getTitles().get("k2").getKind());
+        assertEquals("testRoleWithAltid2 - 7", "o2", jsCard.getTitles().get("k2").getOrganization());
+    }
+
 
 
 }

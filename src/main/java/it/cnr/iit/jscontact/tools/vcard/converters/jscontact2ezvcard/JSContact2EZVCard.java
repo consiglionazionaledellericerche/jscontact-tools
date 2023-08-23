@@ -1945,7 +1945,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         List<VCard> vCards = new ArrayList<>();
 
         for (Card jsCard : jsCards) {
-            if (config.isSetCardMustBeValidated()) {
+            if (config.isValidateCard()) {
                 if (!jsCard.isValid())
                     throw new CardException(jsCard.getValidationMessage());
             }

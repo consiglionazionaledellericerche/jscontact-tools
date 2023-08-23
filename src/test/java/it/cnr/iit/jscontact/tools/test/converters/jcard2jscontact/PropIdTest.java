@@ -37,7 +37,7 @@ public class PropIdTest extends VCard2JSContactTest {
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                                                         .config(VCard2JSContactConfig.builder()
-                                                                .setUsePropIds(true)
+                                                                .usePropIds(true)
                                                                 .build())
                                                         .build();
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
@@ -65,7 +65,7 @@ public class PropIdTest extends VCard2JSContactTest {
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                                                             .config(VCard2JSContactConfig.builder()
-                                                                    .setUsePropIds(true)
+                                                                    .usePropIds(true)
                                                                     .build())
                                                             .build();
         Card jsCard = jCard2JSContact.convert(jcard).get(0);

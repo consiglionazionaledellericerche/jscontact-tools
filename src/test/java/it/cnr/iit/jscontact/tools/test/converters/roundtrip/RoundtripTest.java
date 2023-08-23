@@ -18,7 +18,7 @@ public class RoundtripTest {
 
     protected final VCard2JSContact vCard2JSContact = VCard2JSContact.builder().config(VCard2JSContactConfig.builder()
                                                                                                             .setAutoFullAddress(false)
-                                                                                                            .setVoiceAsDefaultPhoneFeature(false)
+                                                                                                            .useVoiceAsDefaultPhoneFeature(false)
                                                                                                             .build())
                                                                                .build();
 
