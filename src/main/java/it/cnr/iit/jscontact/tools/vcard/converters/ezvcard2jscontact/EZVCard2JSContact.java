@@ -1360,7 +1360,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             return null;
 
         for (Map.Entry<String,it.cnr.iit.jscontact.tools.dto.Organization> entry : jscardOrganizations.entrySet()) {
-            if (entry.getValue().getGroup().equals(vcardTitleGroup))
+            if (entry.getValue().getGroup()!=null && entry.getValue().getGroup().equals(vcardTitleGroup))
                 return entry.getKey();
         }
 
@@ -1473,7 +1473,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .units(orgUnits)
                 .contexts(toJSCardContexts(vcardOrg.getType()))
                 .sortAs(orgSortAs)
-                .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID))
+                .group(vcardOrg.getGroup())
+                .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.GROUP))
                 .build();
     }
 
