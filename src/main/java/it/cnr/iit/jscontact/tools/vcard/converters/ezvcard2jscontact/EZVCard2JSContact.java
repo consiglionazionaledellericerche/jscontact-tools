@@ -1644,7 +1644,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .contexts(contexts)
                         .pref(toJSCardPref(extension.getParameter(VCardParamEnum.PREF.getValue())))
                         .label(toJSCardLabel(extension, vcard.getExtendedProperties()))
-                        .vCardParams(VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.SERVICE_TYPE))
+                        .vCardParams(VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.SERVICE_TYPE, VCardParamEnum.USERNAME))
                         .build();
 
                 if ((extension.getDataType() == null || extension.getDataType() == VCardDataType.URI) && extension.getParameter(VCardParamEnum.USERNAME.getValue()) != null)
