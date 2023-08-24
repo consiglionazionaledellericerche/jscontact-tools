@@ -112,6 +112,10 @@ public class CaseInsensitiveExtensionNamesValidator implements ConstraintValidat
 
                 String propertyName = extension.getKey();
 
+                if (propertyName.equalsIgnoreCase("extra")) {
+                    context.buildConstraintViolationWithTemplate(String.format("the property named extra cannot be used in %s; JSContact reserves it at IANA", object.getClass().getSimpleName())).addConstraintViolation();
+                    return false;
+                }
 
                 for (String key : object.getExtensions().keySet()) {
 

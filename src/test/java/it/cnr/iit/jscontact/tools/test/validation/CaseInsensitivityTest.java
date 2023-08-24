@@ -117,9 +117,62 @@ public class CaseInsensitivityTest extends AbstractTest {
         Card jsCard = Card.toJSCard(jscard);
         assertFalse("testInvalidKind-1", jsCard.isValid());
         assertTrue("testInvalidKind-2", jsCard.getValidationMessages().contains("the extension value GROUP differs only in case with an IANA registered Card.kind value"));
-
     }
 
 
+    @Test
+    public void testExtra() throws JsonProcessingException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"extra\":\"reserved\"," +
+                "\"name\":{ " +
+                "\"full\": \"Mr. John Q. Public, Esq.\"" +
+                "}" +
+                "}";
+
+        Card jsCard = Card.toJSCard(jscard);
+        assertFalse("testExtra-1", jsCard.isValid());
+        assertTrue("testExtra-2", jsCard.getValidationMessages().contains("the property named extra cannot be used in Card; JSContact reserves it at IANA"));
+    }
+
+    @Test
+    public void testExtraNested() throws JsonProcessingException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\":{ " +
+                "\"extra\":\"reserved\"," +
+                "\"full\": \"Mr. John Q. Public, Esq.\"" +
+                "}" +
+                "}";
+
+        Card jsCard = Card.toJSCard(jscard);
+        assertFalse("testExtraNested-1", jsCard.isValid());
+        assertTrue("testExtraNested-2", jsCard.getValidationMessages().contains("the property named extra cannot be used in Name; JSContact reserves it at IANA"));
+    }
+
+    @Test
+    public void testExtraPatched() throws JsonProcessingException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\":{ " +
+                    "\"full\": \"Mr. John Q. Public, Esq.\"" +
+                "}," +
+                "\"localizations\": { " +
+                    "\"de\": { " +
+                        "\"name/extra\": \"reserved\" " +
+                    "}" +
+                "}" +
+                "}";
+
+        Card jsCard = Card.toJSCard(jscard);
+        assertFalse("testExtraPatched-1", jsCard.isValid());
+        assertTrue("testExtraPatched-2", jsCard.getValidationMessages().contains("the property named extra cannot be used in the localization key name/extra; JSContact reserves it at IANA"));
+    }
 
 }

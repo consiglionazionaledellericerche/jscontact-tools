@@ -41,6 +41,15 @@ public class LocalizationsValidator implements ConstraintValidator<Localizations
         if (card.getLocalizations() == null)
             return true;
 
+        for (String language : card.getLocalizationsLanguages()) {
+            for (String key : card.getLocalizationsPerLanguage(language).keySet()) {
+                if (key.toLowerCase().endsWith("extra")) {
+                    context.buildConstraintViolationWithTemplate(String.format("the property named extra cannot be used in the localization key %s; JSContact reserves it at IANA", key)).addConstraintViolation();
+                    return false;
+                }
+            }
+        }
+
         for (String language : card.getLocalizations().keySet()) {
             try {
                 Locale locale = new Locale.Builder().setLanguageTag(language).build();
