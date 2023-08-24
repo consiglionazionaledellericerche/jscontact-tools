@@ -1211,13 +1211,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return (index > 0) ? resource.substring(index + 1) : null;
     }
 
-    private static String toJSCardMediaType(String mediaTypeParamValue, String resource) {
+    private String toJSCardMediaType(String mediaTypeParamValue, String resource) {
 
         if (mediaTypeParamValue != null)
             return mediaTypeParamValue;
 
-        String ext = getResourceExt(resource);
-        return (ext != null) ? MimeTypeUtils.lookupMimeType(ext) : null;
+        if (config.isSetAutoMediaType()) {
+            String ext = getResourceExt(resource);
+            return (ext != null) ? MimeTypeUtils.lookupMimeType(ext) : null;
+        }
+
+        return null;
     }
 
     private void fillJSCardPhones(VCard vcard, Card jsCard) {
