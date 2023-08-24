@@ -202,6 +202,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         if (jsCard.getName() == null) {
             vcard.setFormattedName(jsCard.getUid());
+            vcard.getFormattedName().setParameter(VCardParamEnum.DERIVED.getValue(),"true");
             return;
         }
 
@@ -239,8 +240,10 @@ public class JSContact2EZVCard extends AbstractConverter {
                     }
                     vcard.setFormattedNameAlt(fns.toArray(new FormattedName[0]));
                 }
-            } else
+            } else {
                 vcard.setFormattedName(toVCardFormattedName(jsCard.getUid()));
+                vcard.getFormattedName().setParameter(VCardParamEnum.DERIVED.getValue(),"true");
+            }
         }
         else {
             if (jsCard.getLocalizationsPerPath("name") != null || jsCard.getLocalizationsPerPath("name/full") != null) {
