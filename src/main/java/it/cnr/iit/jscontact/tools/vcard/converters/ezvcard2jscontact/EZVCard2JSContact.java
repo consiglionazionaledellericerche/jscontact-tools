@@ -36,7 +36,6 @@ import it.cnr.iit.jscontact.tools.dto.TimeZone;
 import it.cnr.iit.jscontact.tools.dto.comparators.JSCardAddressesComparator;
 import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesAltidComparator;
 import it.cnr.iit.jscontact.tools.dto.comparators.VCardPropertiesPrefComparator;
-import it.cnr.iit.jscontact.tools.dto.interfaces.IsComponent;
 import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.*;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -1198,7 +1197,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                             .contexts(toJSCardContexts(vcardType))
                             .pref(lang.getPref())
                             .language(getValue(lang))
-                            .vCardParams(VCardUtils.getVCardParamsOtherThan(lang, VCardParamEnum.TYPE, VCardParamEnum.PREF))
+                            .vCardParams(VCardUtils.getVCardParamsOtherThan(lang, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF))
                                                        .build()
                                         );
 
