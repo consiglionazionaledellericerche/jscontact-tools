@@ -64,6 +64,9 @@ public class NameComponent extends AbstractJSContactType implements HasKind, IsC
 
     String phonetic;
 
+    @JsonIgnore
+    int indexPerKind;
+
     private boolean isRfc(NameComponentEnum value) {
         return (kind.getRfcValue() != null && kind.getRfcValue() == value);
     }

@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Name;
 import it.cnr.iit.jscontact.tools.dto.NameComponentKind;
+import it.cnr.iit.jscontact.tools.dto.PhoneticSystem;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.dto.Card;
@@ -329,7 +330,7 @@ public class NameTest extends VCard2JSContactTest {
         assertTrue("testName11 - 5",  jsCard.getName().getComponents()[3].isTitle());
         assertEquals("testName11 - 6", "Mr.", jsCard.getName().getComponents()[3].getValue());
         assertEquals("testName11 - 7", 1, jsCard.getLocalizationsPerLanguage("uk-Cyrl").size());
-        assertNotNull("testName6 - 8",  jsCard.getLocalization("uk-Cyrl","name"));
+        assertNotNull("testName11 - 8",  jsCard.getLocalization("uk-Cyrl","name"));
         Name nameLocalization = (Name) JsonNodeUtils.toObject(jsCard.getLocalization("uk-Cyrl","name"), Name.class);
         assertEquals("testName11 - 9", "Васильев", nameLocalization.getSurname());
         assertEquals("testName11 - 10", "Иван", nameLocalization.getGiven());
@@ -337,4 +338,59 @@ public class NameTest extends VCard2JSContactTest {
         assertTrue("testName11 - 12",  nameLocalization.getComponents()[3].isTitle());
         assertEquals("testName11 - 13", "г-н", nameLocalization.getComponents()[3].getValue());
     }
+
+    @Test
+    public void testName12() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN;DERIVED=true:John Smith\n" +
+                "N;ALTID=1:Smith;John;;;;;\n" +
+                "N;PHONETIC=ipa;ALTID=1:/smɪθ/;/d͡ʒɑn/;;;;\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testName12 - 1", PhoneticSystem.ipa(), jsCard.getName().getPhoneticSystem());
+        assertNull("testName12 - 2", jsCard.getName().getPhoneticScript());
+        assertEquals("testName12 - 3", 2, jsCard.getName().getComponents().length);
+        assertTrue("testName12 - 4",  jsCard.getName().getComponents()[0].isSurname());
+        assertEquals("testName12 - 5", "Smith", jsCard.getName().getComponents()[0].getValue());
+        assertEquals("testName12 - 6", "/smɪθ/", jsCard.getName().getComponents()[0].getPhonetic());
+        assertTrue("testName12 - 7",  jsCard.getName().getComponents()[1].isGiven());
+        assertEquals("testName12 - 8", "John", jsCard.getName().getComponents()[1].getValue());
+        assertEquals("testName12 - 9", "/d͡ʒɑn/", jsCard.getName().getComponents()[1].getPhonetic());
+    }
+
+    @Test
+    public void testName13() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN;DERIVED=true:Ms. Mary Jean Elizabeth van Halen Barrientos III\\, PhD\n" +
+                "N;JSCOMPS=\";3;1;2;0;5;6;s,\\, ;4\":van Halen,Barrientos;Mary Jean;Elizabeth;Ms.;PhD,III;Barrientos;III\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testName13 - 1", 8, jsCard.getName().getComponents().length);
+        assertTrue("testName13 - 2", jsCard.getName().getIsOrdered());
+        assertTrue("testName13 - 3", jsCard.getName().getComponents()[0].isTitle());
+        assertEquals("testName13 - 4", "Ms.", jsCard.getName().getComponents()[0].getValue());
+        assertTrue("testName13 - 5", jsCard.getName().getComponents()[1].isGiven());
+        assertEquals("testName13 - 6", "Mary Jean", jsCard.getName().getComponents()[1].getValue());
+        assertTrue("testName13 - 7", jsCard.getName().getComponents()[2].isGiven2());
+        assertEquals("testName13 - 8", "Elizabeth", jsCard.getName().getComponents()[2].getValue());
+        assertTrue("testName13 - 9", jsCard.getName().getComponents()[3].isSurname());
+        assertEquals("testName13 - 10", "van Halen", jsCard.getName().getComponents()[3].getValue());
+        assertTrue("testName13 - 11", jsCard.getName().getComponents()[4].isSurname2());
+        assertEquals("testName13 - 12", "Barrientos", jsCard.getName().getComponents()[4].getValue());
+        assertTrue("testName13 - 13", jsCard.getName().getComponents()[5].isGeneration());
+        assertEquals("testName13 - 14", "III", jsCard.getName().getComponents()[5].getValue());
+        assertTrue("testName13 - 15", jsCard.getName().getComponents()[6].isSeparator());
+        assertEquals("testName13 - 16", ", ", jsCard.getName().getComponents()[6].getValue());
+        assertTrue("testName13 - 17", jsCard.getName().getComponents()[7].isCredential());
+        assertEquals("testName13 - 18", "PhD", jsCard.getName().getComponents()[7].getValue());
+
+    }
+
+
 }
