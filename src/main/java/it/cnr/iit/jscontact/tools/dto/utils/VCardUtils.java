@@ -105,7 +105,7 @@ public class VCardUtils {
         for (String parameterName : property.getParameters().keySet()) {
             if (parameterName.startsWith("X-") || !matchedAsList.contains(VCardParamEnum.getEnum(parameterName))) {
                 String parameterValue = property.getParameter(parameterName);
-                if (parameterValue.split(DelimiterUtils.COMMA_ARRAY_DELIMITER).length > 0)
+                if (parameterValue.split(DelimiterUtils.COMMA_ARRAY_DELIMITER).length > 1)
                     vCardParams.put(parameterName.toLowerCase(), VCardParam.builder().values(parameterValue.split(DelimiterUtils.COMMA_ARRAY_DELIMITER)).build());
                 else
                     vCardParams.put(parameterName.toLowerCase(), VCardParam.builder().value(parameterValue).build());
