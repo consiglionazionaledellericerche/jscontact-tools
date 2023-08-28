@@ -548,6 +548,13 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return false;
     }
 
+    private boolean isFNDerivedFromUid(FormattedName fn, VCard vcard) {
+
+        if (vcard.getUid() != null && fn.getValue().equals(vcard.getUid().getValue()))
+            return true;
+
+        return false;
+    }
 
     private void fillJSCardFullName(VCard vcard, Card jsCard) {
 
@@ -559,7 +566,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         String lastAltid = null;
         for (FormattedName fn : fns) {
 
-            if (isFNDerivedFromN(fn,vcard))
+            if (isFNDerivedFromN(fn,vcard) || isFNDerivedFromUid(fn,vcard))
                 continue;
 
             if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
@@ -729,7 +736,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         for (FormattedName fn : vcard.getFormattedNames()) {
 
-            if (isFNDerivedFromN(fn, vcard))
+            if (isFNDerivedFromN(fn, vcard)|| isFNDerivedFromUid(fn,vcard))
                 continue;
 
             if (fn.getLanguage()!= null && fn.getLanguage().equals(language))

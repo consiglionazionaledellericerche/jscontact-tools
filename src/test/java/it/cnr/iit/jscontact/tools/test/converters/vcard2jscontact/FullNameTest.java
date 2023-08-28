@@ -22,6 +22,7 @@ import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSConta
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class FullNameTest extends VCard2JSContactTest {
 
@@ -72,4 +73,21 @@ public class FullNameTest extends VCard2JSContactTest {
         assertEquals("testFullName3 - 2", "大久保 正仁", jsCard.getLocalizations().get("jp").get("name").get("full").asText());
 
     }
+
+
+    @Test
+    public void testFullNameDerivedFromUid() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "UID:86203c2f-bb2c-41c1-ac55-386d6a84919d\n" +
+                "FN;DERIVED=true:86203c2f-bb2c-41c1-ac55-386d6a84919d\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNull("testFullNameDerivedFromUid - 1", jsCard.getName());
+        assertEquals("testFullNameDerivedFromUid - 2", "86203c2f-bb2c-41c1-ac55-386d6a84919d", jsCard.getUid());
+
+    }
+
 }
