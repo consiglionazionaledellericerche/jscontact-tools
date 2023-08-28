@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.PhoneticSystem;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.DelimiterUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
@@ -487,6 +488,38 @@ public class AddressesTest extends VCard2JSContactTest {
         assertEquals("testAddresses15 - 52", "2", addressLocalization.getComponents()[5].getValue());
         assertTrue("testAddresses15 - 53", addressLocalization.getComponents()[6].isPostcode());
         assertEquals("testAddresses15 - 54", "〒100-8994", addressLocalization.getComponents()[6].getValue());
+
+    }
+
+
+    @Test
+    public void testAddresses16() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ADR;CC=IT;ALTID=1:;;Via Moruzzi;Pisa;;56124;Italia\n" +
+                "ADR;ALTID=1;PHONETIC=ipa:;;/vja morut:si/;;;;/italja/\n\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testAddresses16 - 1", jsCard.getAddresses());
+        assertEquals("testAddresses16 - 2", 1, jsCard.getAddresses().size());
+        assertEquals("testAddresses16 - 3", PhoneticSystem.ipa(), jsCard.getAddresses().get("ADR-1").getPhoneticSystem());
+        assertNull("testAddresses16 - 4", jsCard.getAddresses().get("ADR-1").getPhoneticScript());
+        assertEquals("testAddresses16 - 5", 4, jsCard.getAddresses().get("ADR-1").getComponents().length);
+        assertTrue("testAddresses16 - 6", jsCard.getAddresses().get("ADR-1").getComponents()[0].isLocality());
+        assertEquals("testAddresses16 - 7", "Pisa", jsCard.getAddresses().get("ADR-1").getComponents()[0].getValue());
+        assertNull("testAddresses16 - 8", jsCard.getAddresses().get("ADR-1").getComponents()[0].getPhonetic());
+        assertTrue("testAddresses16 - 9", jsCard.getAddresses().get("ADR-1").getComponents()[1].isPostcode());
+        assertEquals("testAddresses16 - 10", "56124", jsCard.getAddresses().get("ADR-1").getComponents()[1].getValue());
+        assertNull("testAddresses16 - 11", jsCard.getAddresses().get("ADR-1").getComponents()[1].getPhonetic());
+        assertTrue("testAddresses16 - 12", jsCard.getAddresses().get("ADR-1").getComponents()[2].isCountry());
+        assertEquals("testAddresses16 - 13", "Italia", jsCard.getAddresses().get("ADR-1").getComponents()[2].getValue());
+        assertEquals("testAddresses16 - 14", "/italja/", jsCard.getAddresses().get("ADR-1").getComponents()[2].getPhonetic());
+        assertTrue("testAddresses16 - 15", jsCard.getAddresses().get("ADR-1").getComponents()[3].isName());
+        assertEquals("testAddresses16 - 16", "Via Moruzzi", jsCard.getAddresses().get("ADR-1").getComponents()[3].getValue());
+        assertEquals("testAddresses16 - 17", "/vja morut:si/", jsCard.getAddresses().get("ADR-1").getComponents()[3].getPhonetic());
 
     }
 }
