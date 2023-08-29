@@ -1721,9 +1721,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         for (RawProperty extension : vcard.getExtendedProperties()) {
             if (!fakeExtensionsMapping.containsKey(extension.getPropertyName()) &&
                     !fakeExtensionsMapping.containsKey(extension.getPropertyName().toLowerCase())) {
+                Map<String,Object> parameters = new HashMap<>();
+                if (extension.getGroup()!=null)
+                    parameters.put(VCardParamEnum.GROUP.toString().toLowerCase(),extension.getGroup());
+                parameters.putAll(VCardUtils.getVCardPropParams(extension.getParameters()));
                 jsCard.addVCardProp(VCardProp.builder()
-                                             .name(V_Extension.toV_Extension(extension.getPropertyName()))
-                                             .parameters(VCardUtils.getVCardPropParams(extension.getParameters()))                                            .type(extension.getDataType())
+                                             .name(V_Extension.toV_Extension(extension.getPropertyName().toLowerCase()))
+                                             .parameters(parameters)
+                                             .type(extension.getDataType())
                                              .value(extension.getValue())
                                              .build());
             }
