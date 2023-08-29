@@ -69,6 +69,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private static final String CUSTOM_TIME_ZONE_ID_PREFIX = "TZ";
     public static final String CUSTOM_TIME_ZONE_RULE_START = "1900-01-01T00:00:00";
 
+    private static final long MILLIS_IN_A_DAY = 86400000;
+
     private VCardPropertiesAltidComparator vCardPropertiesAltidComparator;
     private VCardPropertiesPrefComparator vCardPropertiesPrefComparator;
 
@@ -1138,8 +1140,20 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private static  <T extends DateOrTimeProperty> AnniversaryDate toJSCardAnniversaryDate(T date) {
 
         try {
-            if (date.getDate() != null)
-                return AnniversaryDate.builder().date(Timestamp.builder().utc(date.getCalendar()).build()).build();
+            if (date.getDate() != null) {
+                java.util.Calendar calendar = java.util.Calendar.getInstance();
+                calendar.setTime(date.getDate());
+                if (!DateUtils.hasTime(calendar)) { // date doesn't have time
+                    PartialDate pd = PartialDate.builder().year(calendar.get(java.util.Calendar.YEAR))
+                            .month(calendar.get(java.util.Calendar.MONTH)+1)
+                            .day(calendar.get(java.util.Calendar.DAY_OF_MONTH))
+                            .calendarScale((date.getCalscale()!=null) ? date.getCalscale().getValue() : null)
+                            .build();
+                    return AnniversaryDate.builder().partialDate(pd).build();
+                }
+                else
+                    return AnniversaryDate.builder().date(Timestamp.builder().utc(date.getCalendar()).build()).build();
+            }
             if (date.getPartialDate() != null) {
                     PartialDate pd = PartialDate.builder().year(date.getPartialDate().getYear())
                                                           .month(date.getPartialDate().getMonth())
@@ -1721,9 +1735,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         for (RawProperty extension : vcard.getExtendedProperties()) {
             if (!fakeExtensionsMapping.containsKey(extension.getPropertyName()) &&
                     !fakeExtensionsMapping.containsKey(extension.getPropertyName().toLowerCase())) {
+                Map<String,Object> parameters = new HashMap<>();
+                if (extension.getGroup()!=null)
+                    parameters.put(VCardParamEnum.GROUP.toString().toLowerCase(),extension.getGroup());
+                parameters.putAll(VCardUtils.getVCardPropParams(extension.getParameters()));
                 jsCard.addVCardProp(VCardProp.builder()
-                                             .name(V_Extension.toV_Extension(extension.getPropertyName()))
-                                             .parameters(VCardUtils.getVCardPropParams(extension.getParameters()))                                            .type(extension.getDataType())
+                                             .name(V_Extension.toV_Extension(extension.getPropertyName().toLowerCase()))
+                                             .parameters(parameters)
+                                             .type(extension.getDataType())
                                              .value(extension.getValue())
                                              .build());
             }

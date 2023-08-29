@@ -1,6 +1,7 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
 import ezvcard.VCard;
+import ezvcard.parameter.VCardParameter;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.RawProperty;
 import ezvcard.property.VCardProperty;
@@ -64,8 +65,17 @@ public class VCardUtils {
     public static Map<String,Object> getVCardPropParams(VCardParameters vCardParameters) {
 
         Map<String,Object> vCardPropParameters = new HashMap<>();
-        for(String parameterName : vCardParameters.keySet())
-            vCardPropParameters.put(parameterName,vCardParameters.get(parameterName));
+        for(String parameterName : vCardParameters.keySet()) {
+            switch(parameterName) {
+                case VCardParameters.PREF:
+                case VCardParameters.INDEX:
+                    vCardPropParameters.put(parameterName.toLowerCase(),Integer.parseInt(vCardParameters.get(parameterName).get(0)));
+                    break;
+                default:
+                    vCardPropParameters.put(parameterName.toLowerCase(), Integer.parseInt(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,vCardParameters.get(parameterName))));
+                    break;
+            }
+        }
 
         return vCardPropParameters;
     }
