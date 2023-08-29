@@ -39,7 +39,12 @@ public class DateUtils {
 
     }
 
-    private static boolean hasTime(Calendar cal) {
+    /**
+     * Returns true if the calendar instance has time, false otherwise.
+     * @param cal the calendar instance
+     * @return true if the calendar instance has time, false otherwise.
+     */
+    public static boolean hasTime(Calendar cal) {
 
         return (cal.get(Calendar.HOUR_OF_DAY) > 0) ||
                (cal.get(Calendar.MINUTE) > 0) ||

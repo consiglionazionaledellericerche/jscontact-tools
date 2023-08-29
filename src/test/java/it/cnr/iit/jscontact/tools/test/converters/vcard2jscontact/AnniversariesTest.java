@@ -168,4 +168,29 @@ public class AnniversariesTest extends VCard2JSContactTest {
         assertTrue("testAnniversaries7 - 10",jsCard.getAnniversaries().get("ANNIVERSARY-3").getDate().isEqual("1986-02-01T19:00:00Z"));
     }
 
+    @Test
+    public void testAnniversaries8() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "UID:f19a36f0-255a-46ed-ad47-544972c50e44\n" +
+                "FN;DERIVED=true:f19a36f0-255a-46ed-ad47-544972c50e44\n" +
+                "BDAY;PROP-ID=k8:19530415\n" +
+                "DEATHDATE;PROP-ID=k9:20191016T011000+0200\n" +
+                "DEATHPLACE;PROP-ID=k9:4445 Tree Street New England, ND 58647 USA\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testAnniversaries8 - 1", jsCard.getAnniversaries());
+        assertEquals("testAnniversaries8 - 2", 2, jsCard.getAnniversaries().size());
+        assertNotNull("testAnniversaries8 - 3",jsCard.getAnniversaries().get("k8").getDate().getPartialDate());
+        assertEquals("testAnniversaries8 - 4", 1953, (long) jsCard.getAnniversaries().get("k8").getDate().getPartialDate().getYear());
+        assertEquals("testAnniversaries8 - 5", 4, (long) jsCard.getAnniversaries().get("k8").getDate().getPartialDate().getMonth());
+        assertEquals("testAnniversaries8 - 6", 15, (long) jsCard.getAnniversaries().get("k8").getDate().getPartialDate().getDay());
+        assertTrue("testAnniversaries8 - 6",jsCard.getAnniversaries().get("k9").getDate().isEqual("2019-10-15T23:10:00Z"));
+        assertTrue("testAnniversaries8 - 7",jsCard.getAnniversaries().get("k9").isDeath());
+        assertEquals("testAnniversaries8 - 8", "4445 Tree Street New England, ND 58647 USA", jsCard.getAnniversaries().get("k9").getPlace().getFull());
+
+    }
+
 }

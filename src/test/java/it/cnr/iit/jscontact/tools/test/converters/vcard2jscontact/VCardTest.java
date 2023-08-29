@@ -417,7 +417,10 @@ public class VCardTest extends VCard2JSContactTest {
 //        assertTrue("testCompleteVCard6 - 80", jsCard.getNotes()[0].equals("Notes line 1\nNotes line 2"));
         assertEquals("testCompleteVCard6 - 81", "ez-vcard 0.9.14-fc", jsCard.getProdId());
         assertEquals("testCompleteVCard6 - 82", 1, jsCard.getAnniversaries().size());
-        assertTrue("testCompleteVCard6 - 83", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("2016-08-01"));
+        assertNotNull("testCompleteVCard6 - 83.a", jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().getPartialDate());
+        assertEquals("testCompleteVCard6 - 83.b", (long) 2016, (long) jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().getPartialDate().getYear());
+        assertEquals("testCompleteVCard6 - 83.c", (long) 8, (long) jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().getPartialDate().getMonth());
+        assertEquals("testCompleteVCard6 - 83.d", (long) 1, (long) jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().getPartialDate().getDay());
         assertTrue("testCompleteVCard6 - 84", jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
         assertTrue("testCompleteVCard6 - 85", jsCard.getSpeakToAs().isMasculine());
 
