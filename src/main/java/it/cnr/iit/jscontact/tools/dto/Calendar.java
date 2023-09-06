@@ -26,6 +26,8 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -48,6 +50,8 @@ public class Calendar extends Resource implements HasKind, IsIANAType {
     @Builder.Default
     String _type = "Calendar";
 
+    @NonNull
+    @NotNull
     @JsonDeserialize(using = CalendarKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = CalendarEnum.class, getMethod = "getKind")
     CalendarKind kind;

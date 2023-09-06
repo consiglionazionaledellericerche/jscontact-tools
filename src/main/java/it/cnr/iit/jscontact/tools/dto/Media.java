@@ -25,6 +25,8 @@ import it.cnr.iit.jscontact.tools.dto.deserializers.MediaKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -47,6 +49,8 @@ public class Media extends Resource implements HasKind {
     @Builder.Default
     String _type = "Media";
 
+    @NotNull
+    @NonNull
     @JsonDeserialize(using = MediaKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = MediaEnum.class, getMethod = "getKind")
     MediaKind kind;

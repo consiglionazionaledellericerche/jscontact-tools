@@ -27,6 +27,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 
@@ -50,6 +51,8 @@ public class Directory extends Resource implements HasKind {
     @Builder.Default
     String _type = "Directory";
 
+    @NonNull
+    @NotNull
     @JsonDeserialize(using = DirectoryKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = DirectoryEnum.class, getMethod = "getKind")
     DirectoryKind kind;
