@@ -72,18 +72,18 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
 
     String label;
 
+
     /**
-     * Tests if the pheature of this phone is undefined.
+     * Tests if the pheature of this phone is not empty.
      *
-     * @return true if the features map is empty, false otherwise
+     * @return true if the features map is not empty, false otherwise
      */
-    public boolean hasNoFeature() {
-        return features != null && features.size() != 0;
+    public boolean hasFeature() {
+        return features != null && !features.isEmpty();
     }
 
-
     private boolean asFeature(PhoneFeature feature) {
-        return hasNoFeature() && features.containsKey(feature);
+        return hasFeature() && features.containsKey(feature);
     }
 
     /**

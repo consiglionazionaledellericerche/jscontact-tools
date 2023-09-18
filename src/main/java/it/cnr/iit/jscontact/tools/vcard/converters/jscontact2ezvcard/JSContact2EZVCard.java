@@ -65,7 +65,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private static String toVCardTypeParam(HasContexts o) {
 
-        if (o.hasNoContext())
+        if (!o.hasContext())
             return null;
 
         List<String> vCardTypeValues = toVCardTypeParmaValues(ContextEnum.class, Context.toEnumValues(o.getContexts().keySet()));
@@ -674,7 +674,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setGeo(toVCardGeoUri(address.getCoordinates()));
             if (address.getCountryCode() != null)
                 addr.setParameter(VCardParamEnum.CC.getValue(), address.getCountryCode());
-            if (!address.hasNoContext()) {
+            if (address.hasContext()) {
                 List<String> vCardTypeValues = toVCardTypeParmaValues(AddressContextEnum.class, AddressContext.toEnumValues(address.getContexts().keySet()));
                 for (String vCardTypeValue : vCardTypeValues)
                     addr.getTypes().add(AddressType.get(vCardTypeValue));
@@ -1010,9 +1010,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         addVCardPropIdParam(tel, phone.getPropId());
 
         List<String> vCardTypeValues = new ArrayList<>();
-        if (!phone.hasNoContext())
+        if (phone.hasContext())
             vCardTypeValues.addAll(toVCardTypeParmaValues(ContextEnum.class, Context.toEnumValues(phone.getContexts().keySet())));
-        if (phone.hasNoFeature())
+        if (phone.hasFeature())
             vCardTypeValues.addAll(toVCardTypeParmaValues(PhoneFeatureEnum.class, PhoneFeature.toEnumValues(phone.getFeatures().keySet())));
 
         for (String vCardTypeValue : vCardTypeValues)
@@ -1041,7 +1041,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         Email email = new Email(emailAddress.getAddress());
         email.setPref(emailAddress.getPref());
         addVCardPropIdParam(email, emailAddress.getPropId());
-        if (!emailAddress.hasNoContext()) {
+        if (emailAddress.hasContext()) {
             List<String> vCardTypeValues = toVCardTypeParmaValues(ContextEnum.class, Context.toEnumValues(emailAddress.getContexts().keySet()));
             for (String vCardTypeValue : vCardTypeValues)
                 email.getTypes().add(EmailType.get(vCardTypeValue));
@@ -1217,7 +1217,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         Impp impp = new Impp(onlineService.getUri());
         impp.setPref(onlineService.getPref());
-        if (!onlineService.hasNoContext()) {
+        if (onlineService.hasContext()) {
             List<String> vCardTypeValues = toVCardTypeParmaValues(ContextEnum.class, Context.toEnumValues(onlineService.getContexts().keySet()));
             for (String vCardTypeValue : vCardTypeValues)
                 impp.getTypes().add(ImppType.get(vCardTypeValue));
@@ -1293,7 +1293,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         CalendarRequestUri caladruri = new CalendarRequestUri(s.getUri());
         caladruri.setPref(s.getPref());
         addVCardPropIdParam(caladruri, s.getPropId());
-        if (!s.hasNoContext()) {
+        if (s.hasContext()) {
             String vCardTypeValue = toVCardTypeParam(s);
             if (vCardTypeValue!=null)
                 caladruri.setParameter(VCardParamEnum.TYPE.getValue(), vCardTypeValue);
