@@ -211,14 +211,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return phoneTypes;
     }
 
-    private Map<PhoneFeature,Boolean> getJSCardDefaultPhoneFeatures() {
-
-        if (config.isUseVoiceAsDefaultPhoneFeature())
-            return new HashMap<PhoneFeature,Boolean>(){{ put(PhoneFeature.voice(), Boolean.TRUE);}};
-
-        return null;
-    }
-
     private static Integer toJSCardPref(String vcardPref) {
         return (vcardPref != null) ? Integer.parseInt(vcardPref) : null;
     }
@@ -1310,7 +1302,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             if (phoneFeatures != null) exclude = ArrayUtils.addAll(exclude, EnumUtils.toStrings(PhoneFeature.toEnumValues(phoneFeatures.keySet())));
             jsCard.addPhone(getJSCardId(VCard2JSContactIdsProfile.IdType.PHONE, i,"PHONE-" + (i++), tel.getParameter(VCardParamEnum.PROP_ID.getValue())), Phone.builder()
                             .number(getValue(tel))
-                            .features((phoneFeatures == null) ? getJSCardDefaultPhoneFeatures() : phoneFeatures)
+                            .features(phoneFeatures)
                             .contexts(contexts)
                             .pref(tel.getPref())
                             .label(toJSCardLabel(tel, vcard.getExtendedProperties()))

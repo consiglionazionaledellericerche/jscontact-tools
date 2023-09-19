@@ -49,7 +49,7 @@ public class PhoneTest extends JCard2JSContactTest {
         assertEquals("testPhone2 - 1", 2, jsCard.getPhones().size());
         assertEquals("testPhone2 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone3 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
-        assertTrue("testPhone2 - 4",jsCard.getPhones().get("PHONE-1").asVoice());
+        assertFalse("testPhone2 - 4",jsCard.getPhones().get("PHONE-1").hasFeature());
         assertNull("testPhone2 - 5", jsCard.getPhones().get("PHONE-1").getLabel());
         assertEquals("testPhone2 - 6", "tel:+1-555-555-5555;ext=555", jsCard.getPhones().get("PHONE-2").getNumber());
         assertTrue("testPhone2 - 7",jsCard.getPhones().get("PHONE-2").asVoice());
@@ -101,7 +101,7 @@ public class PhoneTest extends JCard2JSContactTest {
         assertEquals("testPhone5 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone5 - 3",jsCard.getPhones().get("PHONE-1").asPrivate());
         assertTrue("testPhone5 - 4",jsCard.getPhones().get("PHONE-1").asWork());
-        assertTrue("testPhone5 - 5",jsCard.getPhones().get("PHONE-1").asVoice());
+        assertFalse("testPhone5 - 5",jsCard.getPhones().get("PHONE-1").hasFeature());
 
     }
 
@@ -117,7 +117,7 @@ public class PhoneTest extends JCard2JSContactTest {
         assertEquals("testPhone6 - 2", "tel:+33-01-23-45-6", jsCard.getPhones().get("PHONE-1").getNumber());
         assertTrue("testPhone6 - 3",jsCard.getPhones().get("PHONE-1").asWork());
         assertTrue("testPhone6 - 4",jsCard.getPhones().get("PHONE-1").asPrivate());
-        assertTrue("testPhone6 - 5",jsCard.getPhones().get("PHONE-1").asVoice());
+        assertFalse("testPhone6 - 5",jsCard.getPhones().get("PHONE-1").hasFeature());
 
     }
 

@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.17.0</version>
+		  <version>0.17.1</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.17.0'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.17.1'
 ```
 
 # Features
@@ -245,8 +245,7 @@ The conversion is executed according to the following rules:
     - `validateCard = true`
     - `useAutoIdsProfile = true`
     - `usePropIds = true`
-    - `setAutoFullAddress = true` 
-    - `useVoiceAsDefaultPhoneFeature = true`
+    - `setAutoFullAddress = true`
     - `setAutoMediaType = true`
     - `convertGenderToSpeakToAs = true`
 
@@ -630,10 +629,10 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.17.0 implements the following draft versions:
+Version 0.17.1 implements the following draft versions:
 
-* draft-ietf-calext-jscontact-14
-* draft-ietf-calext-jscontact-vcard-12
+* draft-ietf-calext-jscontact-15
+* draft-ietf-calext-jscontact-vcard-13
 * draft-ietf-calext-vcard-jscontact-extensions-10
 
 # Build Instructions

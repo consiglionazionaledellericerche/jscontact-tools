@@ -149,12 +149,14 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
     public boolean asExtContext(String extValue) {
         return asContext(AddressContext.ext(extValue));
     }
+
+
     /**
-     * Tests if the context of this address is undefined.
+     * Tests if the context of this address is not empty.
      *
-     * @return true if the context map is empty, false otherwise
+     * @return true if the context map is not empty, false otherwise
      */
-    public boolean hasNoContext() { return contexts == null || contexts.size() ==  0; }
+    public boolean hasContext() { return contexts != null && contexts.isEmpty(); }
 
     private List<String> getStreetAddressDetails(List<AddressComponentEnum> componentsToCheck) {
         if (components == null)

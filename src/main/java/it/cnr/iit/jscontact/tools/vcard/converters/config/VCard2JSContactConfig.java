@@ -41,8 +41,6 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private boolean setAutoFullAddress = true;
     @Builder.Default
-    private boolean useVoiceAsDefaultPhoneFeature = true;
-    @Builder.Default
     private boolean setAutoMediaType = true;
     @Builder.Default
     private boolean convertGenderToSpeakToAs = true; //ignored if GRAMGENDER is present

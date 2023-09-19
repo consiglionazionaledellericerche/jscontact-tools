@@ -20,7 +20,7 @@ public interface HasContexts {
      * @param context the given context to check
      * @return true if the context map includes the given context, false otherwise
      */
-    default boolean asContext(Context context) { return !hasNoContext() && getContexts().containsKey(context); }
+    default boolean asContext(Context context) { return hasContext() && getContexts().containsKey(context); }
     /**
      * Tests if the context map includes the "work" context.
      *
@@ -41,12 +41,14 @@ public interface HasContexts {
      * @return true if the context map includes a custom context, false otherwise
      */
     default boolean asExtContext(String extValue) { return asContext(Context.ext(extValue)); }
+
+
     /**
-     * Tests if the context map is empty.
+     * Tests if the context map is not empty.
      *
-     * @return true if the context map is empty, false otherwise
+     * @return true if the context map is not empty, false otherwise
      */
-    default boolean hasNoContext() { return getContexts() == null || getContexts().size() == 0; }
+    default boolean hasContext() { return getContexts() != null && !getContexts().isEmpty(); }
 
     /**
      * This method will be used to get the context map.

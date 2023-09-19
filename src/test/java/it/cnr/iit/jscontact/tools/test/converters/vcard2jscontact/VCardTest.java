@@ -207,10 +207,10 @@ public class VCardTest extends VCard2JSContactTest {
         assertNull("testCompleteVCard3 - 7", jsCard.getEmails());
         assertEquals("testCompleteVCard3 - 10", 2, jsCard.getPhones().size());
         assertTrue("testCompleteVCard3 - 11", jsCard.getPhones().get("PHONE-1").asVoice());
-        assertTrue("testCompleteVCard3 - 12", jsCard.getPhones().get("PHONE-1").hasNoContext());
+        assertFalse("testCompleteVCard3 - 12", jsCard.getPhones().get("PHONE-1").hasContext());
         assertTrue("testCompleteVCard3 - 13", jsCard.getPhones().get("PHONE-1").getNumber().isEmpty());
         assertTrue("testCompleteVCard3 - 14", jsCard.getPhones().get("PHONE-2").asFax());
-        assertTrue("testCompleteVCard3 - 15", jsCard.getPhones().get("PHONE-2").hasNoContext());
+        assertFalse("testCompleteVCard3 - 15", jsCard.getPhones().get("PHONE-2").hasContext());
         assertTrue("testCompleteVCard3 - 16", jsCard.getPhones().get("PHONE-2").getNumber().isEmpty());
         assertTrue("testCompleteVCard3 - 17", StringUtils.isNotEmpty(jsCard.getUid()));
     }
@@ -365,15 +365,15 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 22", "555-555-1112", jsCard.getPhones().get("PHONE-2").getNumber());
         assertNull("testCompleteVCard6 - 23", jsCard.getPhones().get("PHONE-2").getLabel());
         assertTrue("testCompleteVCard6 - 24", jsCard.getPhones().get("PHONE-3").asVoice());
-        assertTrue("testCompleteVCard6 - 25", jsCard.getPhones().get("PHONE-3").hasNoContext());
+        assertFalse("testCompleteVCard6 - 25", jsCard.getPhones().get("PHONE-3").hasContext());
         assertEquals("testCompleteVCard6 - 26", "555-555-1113", jsCard.getPhones().get("PHONE-3").getNumber());
         assertTrue("testCompleteVCard6 - 27", jsCard.getPhones().get("PHONE-3").asMobile());
         assertTrue("testCompleteVCard6 - 29", jsCard.getPhones().get("PHONE-4").asVoice());
-        assertTrue("testCompleteVCard6 - 30", jsCard.getPhones().get("PHONE-4").hasNoContext());
+        assertFalse("testCompleteVCard6 - 30", jsCard.getPhones().get("PHONE-4").hasContext());
         assertEquals("testCompleteVCard6 - 31", "555-555-1114", jsCard.getPhones().get("PHONE-4").getNumber());
         assertTrue("testCompleteVCard6 - 32", jsCard.getPhones().get("PHONE-4").asMobile());
         assertTrue("testCompleteVCard6 - 34", jsCard.getPhones().get("PHONE-5").asVoice());
-        assertTrue("testCompleteVCard6 - 35", jsCard.getPhones().get("PHONE-5").hasNoContext());
+        assertFalse("testCompleteVCard6 - 35", jsCard.getPhones().get("PHONE-5").hasContext());
         assertEquals("testCompleteVCard6 - 36", "555-555-1115", jsCard.getPhones().get("PHONE-5").getNumber());
         assertNull("testCompleteVCard6 - 37", jsCard.getPhones().get("PHONE-5").getLabel());
         assertTrue("testCompleteVCard6 - 38", jsCard.getPhones().get("PHONE-6").asFax());
@@ -385,11 +385,11 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 44", "555-555-1117", jsCard.getPhones().get("PHONE-7").getNumber());
         assertNull("testCompleteVCard6 - 45", jsCard.getPhones().get("PHONE-7").getLabel());
         assertTrue("testCompleteVCard6 - 46", jsCard.getPhones().get("PHONE-8").asVoice());
-        assertTrue("testCompleteVCard6 - 47", jsCard.getPhones().get("PHONE-8").hasNoContext());
+        assertFalse("testCompleteVCard6 - 47", jsCard.getPhones().get("PHONE-8").hasContext());
         assertEquals("testCompleteVCard6 - 48", "555-555-1118", jsCard.getPhones().get("PHONE-8").getNumber());
         assertNull("testCompleteVCard6 - 49", jsCard.getPhones().get("PHONE-8").getLabel());
         assertTrue("testCompleteVCard6 - 50", jsCard.getPhones().get("PHONE-9").asVoice());
-        assertTrue("testCompleteVCard6 - 51", jsCard.getPhones().get("PHONE-9").hasNoContext());
+        assertFalse("testCompleteVCard6 - 51", jsCard.getPhones().get("PHONE-9").hasContext());
         assertEquals("testCompleteVCard6 - 52", "555-555-1119", jsCard.getPhones().get("PHONE-9").getNumber());
         assertNull("testCompleteVCard6 - 53", jsCard.getPhones().get("PHONE-9").getLabel());
         assertEquals("testCompleteVCard6 - 54", 5, jsCard.getEmails().size());
@@ -397,11 +397,11 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 56", "home@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertTrue("testCompleteVCard6 - 58", jsCard.getEmails().get("EMAIL-2").asWork());
         assertEquals("testCompleteVCard6 - 59", "work@example.com", jsCard.getEmails().get("EMAIL-2").getAddress());
-        assertTrue("testCompleteVCard6 - 60", jsCard.getEmails().get("EMAIL-3").hasNoContext());
+        assertFalse("testCompleteVCard6 - 60", jsCard.getEmails().get("EMAIL-3").hasContext());
         assertEquals("testCompleteVCard6 - 61", "school@example.com", jsCard.getEmails().get("EMAIL-3").getAddress());
-        assertTrue("testCompleteVCard6 - 64", jsCard.getEmails().get("EMAIL-4").hasNoContext());
+        assertFalse("testCompleteVCard6 - 64", jsCard.getEmails().get("EMAIL-4").hasContext());
         assertEquals("testCompleteVCard6 - 65", "other@example.com", jsCard.getEmails().get("EMAIL-4").getAddress());
-        assertTrue("testCompleteVCard6 - 67", jsCard.getEmails().get("EMAIL-5").hasNoContext());
+        assertFalse("testCompleteVCard6 - 67", jsCard.getEmails().get("EMAIL-5").hasContext());
         assertEquals("testCompleteVCard6 - 68", "custom@example.com", jsCard.getEmails().get("EMAIL-5").getAddress());
         assertEquals("testCompleteVCard6 - 71", 2, jsCard.getOrganizations().size());
         assertEquals("testCompleteVCard6 - 72", "Organization1", jsCard.getOrganizations().get("ORG-1").getName());
@@ -465,7 +465,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 155", "WorkState", jsCard.getAddresses().get("ADR-2").getRegion());
         assertEquals("testCompleteVCard6 - 156", "WorkCountry", jsCard.getAddresses().get("ADR-2").getCountry());
         assertEquals("testCompleteVCard6 - 157", "WorkPostal", jsCard.getAddresses().get("ADR-2").getPostcode());
-        assertTrue("testCompleteVCard6 - 158", jsCard.getAddresses().get("ADR-3").hasNoContext());
+        assertFalse("testCompleteVCard6 - 158", jsCard.getAddresses().get("ADR-3").hasContext());
         assertEquals("testCompleteVCard6 - 159", "OtherExtended\nOtherStreet\nOtherCity\nOtherState\nOtherPostal\nOtherCountry", jsCard.getAddresses().get("ADR-3").getFull());
         assertEquals("testCompleteVCard6 - 160", "OtherExtended", jsCard.getAddresses().get("ADR-3").getStreetExtendedAddress());
         assertEquals("testCompleteVCard6 - 161", "OtherStreet", jsCard.getAddresses().get("ADR-3").getStreetName());
@@ -473,7 +473,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 163", "OtherState", jsCard.getAddresses().get("ADR-3").getRegion());
         assertEquals("testCompleteVCard6 - 164", "OtherCountry", jsCard.getAddresses().get("ADR-3").getCountry());
         assertEquals("testCompleteVCard6 - 165", "OtherPostal", jsCard.getAddresses().get("ADR-3").getPostcode());
-        assertTrue("testCompleteVCard6 - 166", jsCard.getAddresses().get("ADR-4").hasNoContext());
+        assertFalse("testCompleteVCard6 - 166", jsCard.getAddresses().get("ADR-4").hasContext());
         assertEquals("testCompleteVCard6 - 167", "CustomExtended\nCustomStreet\nCustomCity\nCustomState\nCustomPostal\nCustomCountry", jsCard.getAddresses().get("ADR-4").getFull());
         assertEquals("testCompleteVCard6 - 168", "CustomExtended", jsCard.getAddresses().get("ADR-4").getStreetExtendedAddress());
         assertEquals("testCompleteVCard6 - 169", "CustomStreet", jsCard.getAddresses().get("ADR-4").getStreetAddress());
