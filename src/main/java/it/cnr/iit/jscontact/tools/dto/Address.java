@@ -79,6 +79,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
 
     String timeZone;
 
+    @Pattern(regexp="[a-zA-Z]{4}", message = "invalid phoneticScript in Address")
     String phoneticScript;
 
     @JsonDeserialize(using = PronounceSystemDeserializer.class)
