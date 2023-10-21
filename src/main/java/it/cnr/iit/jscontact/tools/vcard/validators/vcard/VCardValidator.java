@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.vcard.validators.vcard;
 
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardReader;
 import it.cnr.iit.jscontact.tools.vcard.validators.ezvcard.EZVCardValidator;
 import lombok.Builder;
 
@@ -41,7 +41,7 @@ public class VCardValidator extends EZVCardValidator {
      */
     public void validate(String vCard) throws CardException {
 
-        List<VCard> vcards = VCardParser.parse(vCard);
+        List<VCard> vcards = VCardReader.parse(vCard);
         validate(vcards);
     }
 

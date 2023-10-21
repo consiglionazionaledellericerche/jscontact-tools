@@ -19,7 +19,7 @@ import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.test.converters.roundtrip.RoundtripTest;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardReader;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -39,7 +39,7 @@ public class PreferredLanguagesTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPreferredLanguages1 - 1", vcard2, VCardParser.parse(vcard).get(0));
+        assertEquals("testPreferredLanguages1 - 1", vcard2, VCardReader.parse(vcard).get(0));
     }
 
 
@@ -57,7 +57,7 @@ public class PreferredLanguagesTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertEquals("testPreferredLanguages2 - 1", vcard2, VCardParser.parse(vcard).get(0));
+        assertEquals("testPreferredLanguages2 - 1", vcard2, VCardReader.parse(vcard).get(0));
     }
 
 

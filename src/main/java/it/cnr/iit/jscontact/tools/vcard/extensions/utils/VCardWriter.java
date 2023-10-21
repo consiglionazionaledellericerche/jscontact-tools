@@ -12,6 +12,7 @@ public class VCardWriter {
     public static String write(VCard... cards) {
 
         return Ezvcard.write(cards)
+                      .caretEncoding(true)
                       .register(new ExtendedAddressScribe())
                       .register(new ExtendedStructuredNameScribe())
                       .go();
@@ -20,6 +21,7 @@ public class VCardWriter {
     public static String write(Collection<VCard> cards) {
 
         return Ezvcard.write(cards)
+                .caretEncoding(true)
                 .register(new ExtendedAddressScribe())
                 .register(new ExtendedStructuredNameScribe())
                 .go();

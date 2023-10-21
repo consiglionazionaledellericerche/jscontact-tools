@@ -580,6 +580,9 @@ Here in the following two examples of conversion between JSContact Card and a vC
 
 ```
 
+### VCard Reading/Writing
+
+VCards can be read/written through the methods of the VCardReader/VCardWiter classes which make use of the encoding scheme descirbed in [RFC6868](https://datatracker.ietf.org/doc/rfc6868/).
 
 <a name="testing"></a>
 ## Testing
