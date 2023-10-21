@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-public class VCardReader {
+public class VCardParser {
 
     public static List<VCard> parse(String str) {
 
