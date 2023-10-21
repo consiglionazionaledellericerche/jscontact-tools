@@ -10,11 +10,12 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-public class VCardParser {
+public class VCardReader {
 
     public static List<VCard> parse(String str) {
 
         return Ezvcard.parse(str)
+                      .caretDecoding(true)
                       .register(new ExtendedAddressScribe())
                       .register(new ExtendedStructuredNameScribe())
                       .all();
@@ -23,6 +24,7 @@ public class VCardParser {
     public static List<VCard> parse(File file) throws IOException {
 
         return Ezvcard.parse(file)
+                .caretDecoding(true)
                 .register(new ExtendedAddressScribe())
                 .register(new ExtendedStructuredNameScribe())
                 .all();
@@ -31,6 +33,7 @@ public class VCardParser {
     public static List<VCard> parse(Reader reader) throws IOException {
 
         return Ezvcard.parse(reader)
+                .caretDecoding(true)
                 .register(new ExtendedAddressScribe())
                 .register(new ExtendedStructuredNameScribe())
                 .all();

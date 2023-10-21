@@ -15,11 +15,15 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.util.GeoUri;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
+import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -432,7 +436,6 @@ public class AddressesTest extends JSContact2VCardTest {
     }
 
 
-
     @Test
     public void testAddresses11() throws IOException, CardException {
 
@@ -543,5 +546,39 @@ public class AddressesTest extends JSContact2VCardTest {
 
     }
 
+    @Test
+    public void testAddresses13() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"name\": { \"full\": \"test\"}," +
+                "\"language\":\"en\"," +
+                "\"addresses\":{" +
+                "\"ADR-1\": {" +
+                "\"@type\":\"Address\"," +
+                "\"components\":[ " +
+                "{\"kind\":\"number\",\"value\":\"54321\"}," +
+                "{\"kind\":\"separator\",\"value\":\" \"}," +
+                "{\"kind\":\"name\",\"value\":\"Oak St\"}," +
+                "{\"kind\":\"locality\",\"value\":\"Reston\"}" +
+                "]," +
+                "\"isOrdered\": true," +
+                "\"defaultSeparator\":\"\\n\"" +
+                "}" +
+                "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testAddresses13 - 1", 1, vcard.getProperties(ExtendedAddress.class).size());
+        assertEquals("testAddresses13 - 1", "54321 Oak St\nReston", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses13 - 2", "en", vcard.getProperties(ExtendedAddress.class).get(0).getLanguage());
+        assertEquals("testAddresses13 - 3", "s,\n;10;s, ;11;3", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSCOMPS.getValue()));
+        assertEquals("testAddresses13 - 4", "54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(0));
+        assertEquals("testAddresses13 - 4", "Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(1));
+        assertEquals("testAddresses13 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
+        assertEquals("testAddresses13 - 6", "Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetName());
+        assertEquals("testAddresses13 - 7", "54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetNumber());
+    }
 
 }

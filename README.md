@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.17.1</version>
+		  <version>0.17.2</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.17.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.17.2'
 ```
 
 # Features
@@ -580,6 +580,9 @@ Here in the following two examples of conversion between JSContact Card and a vC
 
 ```
 
+### VCard Reading/Writing
+
+VCards can be read/written through the methods of the VCardReader/VCardWiter classes which make use of the encoding scheme descirbed in [RFC6868](https://datatracker.ietf.org/doc/rfc6868/).
 
 <a name="testing"></a>
 ## Testing
@@ -629,7 +632,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.17.1 implements the following draft versions:
+Version 0.17.2 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-15
 * draft-ietf-calext-jscontact-vcard-13

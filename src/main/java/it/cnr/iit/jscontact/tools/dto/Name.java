@@ -81,6 +81,7 @@ public class Name extends AbstractJSContactType implements HasComponents, IsIANA
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<NameComponentKind, String> sortAs;
 
+    @Pattern(regexp="[a-zA-Z]{4}", message = "invalid phoneticScript in Name")
     String phoneticScript;
 
     @JsonDeserialize(using = PronounceSystemDeserializer.class)

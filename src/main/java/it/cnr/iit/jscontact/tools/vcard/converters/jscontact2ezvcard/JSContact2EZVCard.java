@@ -133,7 +133,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
         }
 
-        return (components.isEmpty()) ? null : new FormattedName(String.join("",components.subList(0,components.size()-1)));
+        return (components.isEmpty()) ? null : new FormattedName(String.join(StringUtils.EMPTY,components.subList(0,components.size()-1)));
     }
 
     private static FormattedName toVCardFormattedName(String name) {
@@ -159,7 +159,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         break;
                     default:
                         int j = enums.indexOf(component.getKind().getRfcValue());
-                        jscomps.add((count[j] == 0) ? ""+j : j + "," + count[j]);
+                        jscomps.add((count[j] == 0) ? StringUtils.EMPTY+j : j + DelimiterUtils.COMMA_ARRAY_DELIMITER + count[j]);
                         count[j]++;
                         break;
                 }
@@ -188,7 +188,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         break;
                     default:
                         int j = enums.indexOf(component.getKind().getRfcValue());
-                        jscomps.add((count[j] == 0) ? ""+j : j + "," + count[j]);
+                        jscomps.add((count[j] == 0) ? StringUtils.EMPTY+j : j + DelimiterUtils.COMMA_ARRAY_DELIMITER + count[j]);
                         count[j]++;
                         break;
                 }
@@ -566,7 +566,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             }
         }
 
-        return (components.isEmpty()) ? null : String.join("",components.subList(0,components.size()-1));
+        return (components.isEmpty()) ? null : String.join(StringUtils.EMPTY,components.subList(0,components.size()-1));
 
     }
 
@@ -1765,8 +1765,8 @@ public class JSContact2EZVCard extends AbstractConverter {
             if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.VERSION.getValue())))
                 vcard.setVersion(VCardVersion.valueOfByStr((String) vCardProp.getValue()));
             else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.CLIENTPIDMAP.getValue()))) {
-                String pid = ((String) vCardProp.getValue()).split(",")[0];
-                String uri = ((String) vCardProp.getValue()).split(",")[1];
+                String pid = ((String) vCardProp.getValue()).split(DelimiterUtils.COMMA_ARRAY_DELIMITER)[0];
+                String uri = ((String) vCardProp.getValue()).split(DelimiterUtils.COMMA_ARRAY_DELIMITER)[1];
                 ClientPidMap pidmap = toVCardCliendPidMap(pid, uri);
                 pidmap.setGroup(vCardProp.getGroupParameterValue());
                 pidmap.setParameters(vCardProp.getVCardParameters());
