@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardReader;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
 import it.cnr.iit.jscontact.tools.vcard.validators.ezvcard.EZVCardValidator;
 import lombok.Builder;
 
@@ -45,7 +45,7 @@ public class JCardValidator extends EZVCardValidator {
      */
     public void validate(String jCard) throws CardException {
 
-        List<VCard> vcards = VCardReader.parseJson(jCard);
+        List<VCard> vcards = VCardParser.parseJson(jCard);
         validate(vcards);
     }
 

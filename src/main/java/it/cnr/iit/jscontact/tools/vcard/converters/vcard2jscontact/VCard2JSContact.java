@@ -20,7 +20,7 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.ezvcard2jscontact.EZVCard2JSContact;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardReader;
+import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardParser;
 import lombok.Builder;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class VCard2JSContact extends EZVCard2JSContact {
      */
     public List<Card> convert(String vCard) throws CardException {
 
-        List<VCard> vcards = VCardReader.parse(vCard);
+        List<VCard> vcards = VCardParser.parse(vCard);
         if (vcards.size() == 0)
             throw new CardException("Bad vCard format");
         return convert(vcards.toArray(new VCard[0]));
