@@ -1456,11 +1456,11 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static ezvcard.property.Title toVCardTitle(Title jsTitle, VCard vcard) {
 
         ezvcard.property.Title title = new ezvcard.property.Title(jsTitle.getName());
-        if (jsTitle.getOrganization()!=null) {
-            ezvcard.property.Organization vcardOrg = findOrganizationByPropId(vcard.getOrganizations(), jsTitle.getOrganization());
+        if (jsTitle.getOrganizationId()!=null) {
+            ezvcard.property.Organization vcardOrg = findOrganizationByPropId(vcard.getOrganizations(), jsTitle.getOrganizationId());
             if (vcardOrg!=null) {
                 if (vcardOrg.getGroup()==null)
-                    vcardOrg.setGroup("G-" + jsTitle.getOrganization());
+                    vcardOrg.setGroup("G-" + jsTitle.getOrganizationId());
                 title.setGroup(vcardOrg.getGroup());
             }
         }
@@ -1471,11 +1471,11 @@ public class JSContact2EZVCard extends AbstractConverter {
     private static ezvcard.property.Role toVCardRole(Title jsTitle, VCard vcard) {
 
         ezvcard.property.Role role = new ezvcard.property.Role(jsTitle.getName());
-        if (jsTitle.getOrganization()!=null) {
-            ezvcard.property.Organization vcardOrg = findOrganizationByPropId(vcard.getOrganizations(), jsTitle.getOrganization());
+        if (jsTitle.getOrganizationId()!=null) {
+            ezvcard.property.Organization vcardOrg = findOrganizationByPropId(vcard.getOrganizations(), jsTitle.getOrganizationId());
             if (vcardOrg!=null) {
                 if (vcardOrg.getGroup()==null)
-                    vcardOrg.setGroup("G-" + jsTitle.getOrganization());
+                    vcardOrg.setGroup("G-" + jsTitle.getOrganizationId());
                 role.setGroup(vcardOrg.getGroup());
             }
         }

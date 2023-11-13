@@ -34,12 +34,12 @@ public class TitleOrganizationValidator implements ConstraintValidator<TitleOrga
 
         for (Title title : jsCard.getTitles().values()) {
 
-            if (title.getOrganization() != null) {
+            if (title.getOrganizationId() != null) {
 
                 if (jsCard.getOrganizations() == null)
                     return false;
 
-                if (jsCard.getOrganizations().get(title.getOrganization()) == null)
+                if (jsCard.getOrganizations().get(title.getOrganizationId()) == null)
                     return false;
 
             }
