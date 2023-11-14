@@ -15,18 +15,19 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.util.GeoUri;
+import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedAddressScribe;
-import it.cnr.iit.jscontact.tools.vcard.extensions.io.scribe.ExtendedStructuredNameScribe;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
 import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -579,6 +580,20 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses13 - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
         assertEquals("testAddresses13 - 6", "Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetName());
         assertEquals("testAddresses13 - 7", "54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetNumber());
+    }
+
+    @Test
+    public void testAddresses14() throws IOException, CardException {
+
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-addresses_defaultseparator_rfc6868.json")), StandardCharsets.UTF_8);
+        Card jsCard = Card.toJSCard(json);
+        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        System.out.println(vcard);
+        assertEquals("testAddresses14 - 1", 1, vcard.getProperties(ExtendedAddress.class).size());
+        assertEquals("testAddresses14 - 2", "name\nx^y\"zregion", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAddresses14 - 3", "s,\nx^y\"z;11;4", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSCOMPS.getValue()));
+        assertEquals("testAddresses14 - 4", "region", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
+        assertEquals("testAddresses14 - 5", "name", vcard.getProperties(ExtendedAddress.class).get(0).getStreetName());
     }
 
 }
