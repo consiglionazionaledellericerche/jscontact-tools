@@ -1,0 +1,21 @@
+{
+  "@type": "Card",
+  "addresses": {
+    "a1": {
+      "components": [
+        {
+          "kind": "name",
+          "value": "name"
+        },
+        {
+          "kind": "region",
+          "value": "region"
+        }
+      ],
+      "defaultSeparator": "\nx^y\"z",
+      "isOrdered": true
+    }
+  },
+  "uid": "86c12c1e-3014-4053-bee4-33f4a65cdca1",
+  "version": "1.0"
+}

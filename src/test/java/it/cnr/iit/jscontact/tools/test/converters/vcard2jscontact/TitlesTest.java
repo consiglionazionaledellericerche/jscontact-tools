@@ -179,7 +179,7 @@ public class TitlesTest extends VCard2JSContactTest {
         assertEquals("testRoleWithAltid2 - 4", TitleKind.title(), jsCard.getTitles().get("le9").getKind());
         assertEquals("testRoleWithAltid2 - 5", "Project Leader", jsCard.getTitles().get("k2").getName());
         assertEquals("testRoleWithAltid2 - 6", TitleKind.role(), jsCard.getTitles().get("k2").getKind());
-        assertEquals("testRoleWithAltid2 - 7", "o2", jsCard.getTitles().get("k2").getOrganization());
+        assertEquals("testRoleWithAltid2 - 7", "o2", jsCard.getTitles().get("k2").getOrganizationId());
     }
 
 

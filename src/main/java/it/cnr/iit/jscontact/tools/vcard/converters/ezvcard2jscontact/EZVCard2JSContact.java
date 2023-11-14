@@ -1459,7 +1459,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return it.cnr.iit.jscontact.tools.dto.Title.builder()
                 .name(vcardTitle.getValue())
                 .kind(TitleKind.title())
-                .organization(findJSCardOrganizationIdByGroup(jsCard.getOrganizations(), vcardTitle.getGroup()))
+                .organizationId(findJSCardOrganizationIdByGroup(jsCard.getOrganizations(), vcardTitle.getGroup()))
                 .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardTitle, VCardParamEnum.PROP_ID, VCardParamEnum.ALTID, VCardParamEnum.LANGUAGE))
                 .build();
     }
@@ -1469,7 +1469,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return it.cnr.iit.jscontact.tools.dto.Title.builder()
                 .name(vcardRole.getValue())
                 .kind(TitleKind.role())
-                .organization(findJSCardOrganizationIdByGroup(jsCard.getOrganizations(), vcardRole.getGroup()))
+                .organizationId(findJSCardOrganizationIdByGroup(jsCard.getOrganizations(), vcardRole.getGroup()))
                 .vCardParams(VCardUtils.getVCardParamsOtherThan(vcardRole, VCardParamEnum.PROP_ID, VCardParamEnum.ALTID, VCardParamEnum.LANGUAGE))
                 .build();
     }

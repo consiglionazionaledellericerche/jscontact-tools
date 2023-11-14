@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.6">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type","name","kind","organization"})
+@JsonPropertyOrder({"@type","name","kind","organizationId"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -46,6 +46,6 @@ public class Title extends AbstractJSContactType implements HasKind, HasOptional
     @ContainsExtensibleEnum(enumClass = TitleEnum.class, getMethod = "getKind")
     TitleKind kind;
 
-    String organization;
+    String organizationId;
 
 }
