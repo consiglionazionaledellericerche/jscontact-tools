@@ -522,4 +522,26 @@ public class AddressesTest extends VCard2JSContactTest {
         assertEquals("testAddresses16 - 17", "/vja morut:si/", jsCard.getAddresses().get("ADR-1").getComponents()[3].getPhonetic());
 
     }
+
+
+    @Test
+    public void testAddresses17() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ADR;JSCOMPS=\"s,^nx^^y^'z;11;4\";PROP-ID=ADR-1:;;name;;region;;;;;;;name;;;;;;\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testAddresses17 - 1", jsCard.getAddresses());
+        assertEquals("testAddresses17 - 2", 1, jsCard.getAddresses().size());
+        assertEquals("testAddresses17 - 3", 2, jsCard.getAddresses().get("ADR-1").getComponents().length);
+        assertTrue("testAddresses17 - 4", jsCard.getAddresses().get("ADR-1").getComponents()[0].isName());
+        assertEquals("testAddresses17 - 5", "name", jsCard.getAddresses().get("ADR-1").getComponents()[0].getValue());
+        assertTrue("testAddresses17 - 6", jsCard.getAddresses().get("ADR-1").getComponents()[1].isRegion());
+        assertEquals("testAddresses17 - 7", "region", jsCard.getAddresses().get("ADR-1").getComponents()[1].getValue());
+        assertTrue("testAddresses17 - 8",  jsCard.getAddresses().get("ADR-1").getIsOrdered());
+        assertTrue("testAddresses17 - 9", jsCard.getAddresses().get("ADR-1").getDefaultSeparator().equals("\r\nx^y\"z") || jsCard.getAddresses().get("ADR-1").getDefaultSeparator().equals("\nx^y\"z"));
+    }
 }

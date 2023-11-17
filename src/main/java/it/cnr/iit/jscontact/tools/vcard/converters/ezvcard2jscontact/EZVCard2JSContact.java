@@ -1867,6 +1867,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
        return jsCard;
     }
 
+    private boolean warningIsAboutNonPrintableCharacters(String warning) {
+
+        if (warning.contains("Parameter values may contain printable characters, with the exception of: [ \\n \\r \" ]"))
+            return true;
+
+        return false;
+    }
+
     /**
      * Converts a list of vCard v4.0 instances [RFC6350] into a list of Card objects.
      * JSContact is defined in draft-ietf-calext-jscontact.
@@ -1886,7 +1894,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         for (VCard vCard : vCards) {
             if (config.isValidateCard()) {
                 ValidationWarnings warnings = vCard.validate(VCardVersion.V4_0);
-                if (!warnings.isEmpty())
+                if (!warnings.isEmpty() && !warningIsAboutNonPrintableCharacters(warnings.toString()))
                     throw new CardException(warnings.toString());
             }
             jsCards.add(convert(vCard));

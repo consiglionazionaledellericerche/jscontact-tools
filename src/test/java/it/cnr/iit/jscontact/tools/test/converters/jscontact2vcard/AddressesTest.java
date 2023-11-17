@@ -21,7 +21,6 @@ import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
-import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -588,7 +587,6 @@ public class AddressesTest extends JSContact2VCardTest {
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jsCard-addresses_defaultseparator_rfc6868.json")), StandardCharsets.UTF_8);
         Card jsCard = Card.toJSCard(json);
         VCard vcard = jsContact2VCard.convert(jsCard).get(0);
-        System.out.println(vcard);
         assertEquals("testAddresses14 - 1", 1, vcard.getProperties(ExtendedAddress.class).size());
         assertEquals("testAddresses14 - 2", "name\nx^y\"zregion", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses14 - 3", "s,\nx^y\"z;11;4", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSCOMPS.getValue()));
