@@ -98,7 +98,7 @@ public class DateUtils {
                         calendar.get(Calendar.HOUR_OF_DAY),
                         calendar.get(Calendar.MINUTE),
                         calendar.get(Calendar.SECOND)
-                ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+((dateTimeType==DateTimeType.UTC_TIME) ? "Z" : StringUtils.EMPTY);
+                ).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+((dateTimeType==DateTimeType.UTC_TIME) ? "Z" : StringUtils.EMPTY).replace("Z",(calendar.get(Calendar.MILLISECOND)!=0) ? String.format(".%03dZ", calendar.get(Calendar.MILLISECOND)) : "Z");
             } else {
                 OffsetDateTime offsetDateTime = OffsetDateTime.of(calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH) + 1,

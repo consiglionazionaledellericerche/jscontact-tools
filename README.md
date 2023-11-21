@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.18.1</version>
+		  <version>0.18.2</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.18.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.18.2'
 ```
 
 # Features
@@ -139,6 +139,8 @@ At present, the following validation methods are available:
 
 All the methods can raise a `CardException`.
 `JsonNode` represents the root node in Jackson library (`com.fasterxml.jackson.databind.JsonNode`).
+
+With regard to UTCDateTime type validation, values including trailing zeros in fractional second values are not signaled as invalid but automatically converted in values not including milliseconds (e.g. "2010-10-10T10:10:10.000Z" is encoded and serialized as "2010-10-10T10:10:10Z") 
 
 <a name="serialization-deserialization"></a>
 ## Serialization/Deserialization
@@ -632,7 +634,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.18.1 implements the following draft versions:
+Version 0.18.2 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-16
 * draft-ietf-calext-jscontact-vcard-14

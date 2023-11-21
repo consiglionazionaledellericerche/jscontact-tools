@@ -88,4 +88,35 @@ public class SerializationTest {
 
     }
 
+    @Test
+    public void testSerialization6() throws IOException, CardException {
+
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"created\":\"2010-10-10T10:10:10.000Z\"" +
+                "}";
+
+        Card[] jsCards = Card.toJSCards(jscard);
+        String serialized = Card.toJson(jsCards[0]);
+        assertEquals("testSerialization6", "{\"@type\":\"Card\",\"version\":\"1.0\",\"created\":\"2010-10-10T10:10:10Z\",\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"}", serialized);
+    }
+
+
+    @Test
+    public void testSerialization7() throws IOException, CardException {
+
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"created\":\"2010-10-10T10:10:10.003Z\"" +
+                "}";
+
+        Card[] jsCards = Card.toJSCards(jscard);
+        String serialized = Card.toJson(jsCards[0]);
+        assertEquals("testSerialization6", "{\"@type\":\"Card\",\"version\":\"1.0\",\"created\":\"2010-10-10T10:10:10.003Z\",\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"}", serialized);
+    }
+
 }
