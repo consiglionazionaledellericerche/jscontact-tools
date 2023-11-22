@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 
 /**
@@ -22,7 +23,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AnniversaryDate implements Serializable {
 
+    @Valid
     Timestamp date;
+    @Valid
     PartialDate partialDate;
 
     /**
