@@ -32,9 +32,9 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the AddressComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the AddressComponent type as defined in section 2.5.1.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","kind", "value", "phonetic"})
