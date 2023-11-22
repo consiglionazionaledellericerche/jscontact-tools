@@ -28,7 +28,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null member between name and units is required in Organization")
-@JsonPropertyOrder({"@type", "name", "sortAs", "units", "contexts"})
+@JsonPropertyOrder({"@type", "name", "units", "sortAs", "contexts"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -44,10 +44,10 @@ public class Organization extends AbstractJSContactType implements HasContexts, 
 
     String name;
 
-    String sortAs;
-
     @Valid
     OrgUnit[] units;
+
+    String sortAs;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)
