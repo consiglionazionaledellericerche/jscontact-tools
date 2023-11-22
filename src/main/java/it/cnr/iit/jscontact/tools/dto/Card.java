@@ -64,7 +64,7 @@ import java.util.*;
         "addresses",
         "cryptoKeys", "directories", "links", "media",
         "localizations",
-        "anniversaries", "keywords", "personalInfo", "notes",
+        "anniversaries", "keywords", "notes", "personalInfo",
         "vCardProps"})
 @TitleOrganizationConstraint
 @MembersVsCardKindValueConstraint
