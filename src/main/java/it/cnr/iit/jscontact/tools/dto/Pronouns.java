@@ -23,10 +23,10 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Pronouns type as defined in section 2.2.5 of [draft-ietf-calext-jscontact].
+ * Class mapping the Pronouns type as defined in section 2.2.3 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.5">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.3">draft-ietf-calext-jscontact</a>
  */
 @JsonPropertyOrder({"@type","pronouns","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
