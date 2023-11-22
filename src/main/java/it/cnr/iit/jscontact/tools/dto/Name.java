@@ -51,7 +51,7 @@ import java.util.Map;
 @NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"sortAs","defaultSeparator"})
 @ComponentsConstraint
 @NameSortAsConstraint
-@JsonPropertyOrder({"@type", "full", "components", "isOrdered", "defaultSeparator", "pronounce", "sortAs", "phoneticSystem", "phoneticScript"})
+@JsonPropertyOrder({"@type", "components", "isOrdered", "defaultSeparator", "full", "sortAs", "phoneticScript", "phoneticSystem"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -65,8 +65,6 @@ public class Name extends AbstractJSContactType implements HasComponents, IsIANA
     @Builder.Default
     String _type = "Name";
 
-    String full;
-
     @JSContactCollection(addMethod = "addComponent", itemClass = NameComponent.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Valid
@@ -75,6 +73,8 @@ public class Name extends AbstractJSContactType implements HasComponents, IsIANA
     Boolean isOrdered = Boolean.FALSE;
 
     String defaultSeparator;
+
+    String full;
 
     @JsonSerialize(using = NameSortAsSerializer.class)
     @JsonDeserialize(using = NameSortAsDeserializer.class)
