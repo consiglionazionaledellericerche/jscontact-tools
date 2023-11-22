@@ -160,7 +160,7 @@ public class DateUtils {
 
         String result = "";
         String timestampAsString = toString(timestamp);
-        String items[] = timestampAsString.split("T");
+        String[] items = timestampAsString.split("T");
         result = result + items[0].replace("-", StringUtils.EMPTY) + "T";
         result = result + items[1].replace(":", StringUtils.EMPTY);
 
