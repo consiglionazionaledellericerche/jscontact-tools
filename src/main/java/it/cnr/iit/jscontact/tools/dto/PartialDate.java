@@ -21,7 +21,7 @@ import javax.validation.constraints.Pattern;
  */
 @NotNullAnyConstraint(fieldNames = {"year", "month"}, message = "at least one not null member between year and month is required in PartialDate")
 @DayVsMonthInPartialDateConstraint
-@JsonPropertyOrder({"@type", "year", "month", "day", "calscale"})
+@JsonPropertyOrder({"@type", "year", "month", "day", "calendarScale"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
