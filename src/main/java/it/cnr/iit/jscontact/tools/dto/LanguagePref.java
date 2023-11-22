@@ -43,7 +43,7 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","langiage", "contexts","pref"})
+@JsonPropertyOrder({"@type", "language", "contexts","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
