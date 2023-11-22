@@ -28,7 +28,7 @@ import java.util.Map;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.3">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type","pronouns","contexts","pref","label"})
+@JsonPropertyOrder({"@type","pronouns","contexts","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
