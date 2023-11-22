@@ -28,7 +28,7 @@ import java.util.Map;
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null member between name and units is required in Organization")
-@JsonPropertyOrder({"@type", "name", "sortAs", "units", "contexts", "pref", "label"})
+@JsonPropertyOrder({"@type", "name", "sortAs", "units", "contexts"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
