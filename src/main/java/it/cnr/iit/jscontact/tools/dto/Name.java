@@ -48,10 +48,10 @@ import java.util.Map;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
  */
 @NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null member between full and components is required in Name")
-@NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"sortAs"})
+@NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"sortAs","defaultSeparator"})
 @ComponentsConstraint
 @NameSortAsConstraint
-@JsonPropertyOrder({"@type", "full", "components", "isOrdered", "pronounce", "sortAs", "phoneticSystem", "phoneticScript"})
+@JsonPropertyOrder({"@type", "full", "components", "isOrdered", "defaultSeparator", "pronounce", "sortAs", "phoneticSystem", "phoneticScript"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
