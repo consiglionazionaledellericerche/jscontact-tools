@@ -33,7 +33,7 @@ public class AnniversaryDate implements Serializable {
      *
      * @param text the date in text format
      * @return true if this anniversary date is equal to the given date in text format, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.1">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
      */
     public boolean isEqual(String text) {
 

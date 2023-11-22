@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "kind" property of the Link type as defined in section 2.6.43 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the Link type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
  *
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.3">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo

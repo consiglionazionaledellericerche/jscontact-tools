@@ -22,9 +22,9 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the "kind" property as defined in section 2.1.6 of [draft-ietf-calext-jscontact].
+ * Class mapping the "kind" property as defined in section 2.1.4 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.1.6">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.1.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @Getter

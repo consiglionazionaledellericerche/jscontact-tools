@@ -22,10 +22,10 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the NameComponent type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "kind" property of the NameComponent type as defined in section 2.2.1.2 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1.2">draft-ietf-calext-jscontact</a>
  */
 @AllArgsConstructor
 public enum NameComponentEnum implements IsExtensibleEnum {
