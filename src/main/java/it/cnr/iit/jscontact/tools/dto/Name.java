@@ -42,10 +42,10 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Name type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Name type as defined in section 2.2.1.1 of [draft-ietf-calext-jscontact].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1.1">draft-ietf-calext-jscontact</a>
  */
 @NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null member between full and components is required in Name")
 @NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"sortAs","defaultSeparator"})
