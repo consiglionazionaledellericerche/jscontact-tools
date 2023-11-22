@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.4">draft-ietf-calext-jscontact</a>
  */
-@JsonPropertyOrder({"@type","name","kind","organizationId"})
+@JsonPropertyOrder({"@type","kind","name","organizationId"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
