@@ -44,9 +44,9 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Class mapping the Address type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Address type as defined in section 2.5.1.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames = {"full", "components","coordinates","countryCode", "timeZone"}, message = "at least one not null member between full, components, coordinates, countryCode and timeZone is required in Address")
