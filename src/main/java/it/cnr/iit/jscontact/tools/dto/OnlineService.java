@@ -46,7 +46,7 @@ import java.util.Map;
  */
 
 @NotNullAnyConstraint(fieldNames = {"uri", "user"}, message = "at least one not null member between uri and user is required in OnlineService")
-@JsonPropertyOrder({"@type", "service", "user", "kind", "contexts", "pref", "label"})
+@JsonPropertyOrder({"@type", "service", "uri", "user", "contexts", "pref", "label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
