@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","value", "kind", "phonetic"})
+@JsonPropertyOrder({"@type","kind", "value", "phonetic"})
 @Builder
 @Data
 @AllArgsConstructor
@@ -50,15 +50,15 @@ public class AddressComponent extends AbstractJSContactType implements HasKind, 
     @Builder.Default
     String _type = "AddressComponent";
 
-    @NotNull(message = "value is missing in AddressComponent")
-    @NonNull
-    String value;
-
     @NotNull(message = "kind is missing in AddressComponent")
     @NonNull
     @JsonDeserialize(using = AddressComponentKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = AddressComponentEnum.class, getMethod = "getKind")
     AddressComponentKind kind;
+
+    @NotNull(message = "value is missing in AddressComponent")
+    @NonNull
+    String value;
 
     String phonetic;
 
