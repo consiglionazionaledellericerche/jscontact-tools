@@ -17,9 +17,14 @@ package it.cnr.iit.jscontact.tools.test.validation;
 
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
+import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
 
-public class AnniversaryTest {
+import java.util.HashMap;
+
+import static org.junit.Assert.*;
+
+public class AnniversaryTest extends AbstractTest  {
 
     @Test
     public void testValidAnniversaryBuild1() {
@@ -37,6 +42,8 @@ public class AnniversaryTest {
                 .build();
     }
 
+
+
     @Test(expected = NullPointerException.class)
     public void testInvalidAnniversaryBuild2() {
 
@@ -46,5 +53,39 @@ public class AnniversaryTest {
                 .build();
     }
 
+    @Test
+    public void testInvalidAnniversaryBuild3() {
+
+        Anniversary anniversary = Anniversary.builder()
+                .kind(AnniversaryKind.wedding())
+                .date(AnniversaryDate.builder().partialDate(PartialDate.builder().year(2020).day(10).build()).build())
+                .build();
+
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .anniversaries(new HashMap<String, Anniversary>() {{ put("AN-1", anniversary); }})
+                .build();
+
+        assertFalse("testInvalidAnniversaryBuild3-1", jsCard.isValid());
+        assertTrue("testValidAnniversaryBuild3-2", jsCard.getValidationMessage().contains("if day is set, month must be set"));
+    }
+
+    @Test
+    public void testInvalidAnniversaryBuild4() {
+
+        Anniversary anniversary = Anniversary.builder()
+                .kind(AnniversaryKind.wedding())
+                .date(AnniversaryDate.builder().partialDate(PartialDate.builder().day(10).build()).build())
+                .build();
+
+        Card jsCard = Card.builder()
+                .uid(getUUID())
+                .anniversaries(new HashMap<String, Anniversary>() {{ put("AN-1", anniversary); }})
+                .build();
+
+        assertFalse("testInvalidAnniversaryBuild4-1", jsCard.isValid());
+        assertTrue("testValidAnniversaryBuild4-2", jsCard.getValidationMessage().contains("if day is set, month must be set"));
+        assertTrue("testValidAnniversaryBuild4-3", jsCard.getValidationMessage().contains("at least one not null member between year and month is required in PartialDate"));
+    }
 
 }

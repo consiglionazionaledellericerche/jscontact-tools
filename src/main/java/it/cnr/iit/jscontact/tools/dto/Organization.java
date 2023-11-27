@@ -22,13 +22,13 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Organization type as defined in section 2.2.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the Organization type as defined in section 2.2.2 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null member between name and units is required in Organization")
-@JsonPropertyOrder({"@type", "name", "sortAs", "units", "contexts", "pref", "label"})
+@JsonPropertyOrder({"@type", "name", "units", "sortAs", "contexts"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -44,10 +44,10 @@ public class Organization extends AbstractJSContactType implements HasContexts, 
 
     String name;
 
-    String sortAs;
-
     @Valid
     OrgUnit[] units;
+
+    String sortAs;
 
     @JsonSerialize(using = ContextsSerializer.class)
     @JsonDeserialize(using = ContextsDeserializer.class)

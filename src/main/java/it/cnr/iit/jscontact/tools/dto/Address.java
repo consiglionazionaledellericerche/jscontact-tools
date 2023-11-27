@@ -23,6 +23,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
+import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
@@ -42,14 +44,16 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Class mapping the Address type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Address type as defined in section 2.5.1.1 of [draft-ietf-calext-jscontact].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1.1">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
+@NotNullAnyConstraint(fieldNames = {"full", "components","coordinates","countryCode", "timeZone"}, message = "at least one not null member between full, components, coordinates, countryCode and timeZone is required in Address")
+@NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"defaultSeparator"})
 @ComponentsConstraint
-@JsonPropertyOrder({"@type","full","components","isOrdered","countryCode","coordinates","timeZone","phoneticScript","phoneticSystem",
-                     "contexts","pref","label"})
+@JsonPropertyOrder({"@type","components","isOrdered","defaultSeparator","full","countryCode","coordinates","timeZone","phoneticScript","phoneticSystem",
+                     "contexts","pref"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
@@ -63,13 +67,15 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
     @Builder.Default
     String _type = "Address";
 
-    String full;
-
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JSContactCollection(addMethod = "addComponent", itemClass = AddressComponent.class)
     AddressComponent[] components;
 
     Boolean isOrdered = Boolean.FALSE;
+
+    String defaultSeparator;
+
+    String full;
 
     @Pattern(regexp="[a-zA-Z]{2}", message = "invalid countryCode in Address")
     String countryCode;
@@ -84,8 +90,6 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
 
     @JsonDeserialize(using = PronounceSystemDeserializer.class)
     PhoneticSystem phoneticSystem;
-
-    String defaultSeparator;
 
     @JsonSerialize(using = AddressContextsSerializer.class)
     @JsonDeserialize(using = AddressContextsDeserializer.class)

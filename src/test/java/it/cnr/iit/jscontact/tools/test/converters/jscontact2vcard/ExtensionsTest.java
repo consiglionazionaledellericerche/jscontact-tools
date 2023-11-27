@@ -177,7 +177,7 @@ public class ExtensionsTest extends JSContact2VCardTest {
         assertEquals("testExtendedJSContact5 - 6", "JSPROP", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testExtendedJSContact5 - 7", "name/components/2", vcard.getExtendedProperties().get(0).getParameter("JSPTR"));
         assertEquals("testExtendedJSContact5 - 8", VCardDataType.TEXT, vcard.getExtendedProperties().get(0).getDataType());
-        assertEquals("testExtendedJSContact5 - 9", "{\"@type\":\"NameComponent\",\"value\":\"extvalue\",\"kind\":\"example.com:exttype\"}", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testExtendedJSContact5 - 9", "{\"@type\":\"NameComponent\",\"kind\":\"example.com:exttype\",\"value\":\"extvalue\"}", vcard.getExtendedProperties().get(0).getValue());
     }
 
 

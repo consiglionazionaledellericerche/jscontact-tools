@@ -35,7 +35,7 @@ import javax.validation.constraints.Pattern;
  * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.4">draft-ietf-calext-jscontact</a>
  * @author Mario Loffredo
  */
-@JsonPropertyOrder({"@type","uri","kind","mediaType","contexts","pref","label"})
+@JsonPropertyOrder({"@type","kind","uri","mediaType","contexts","pref","label"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @Data
