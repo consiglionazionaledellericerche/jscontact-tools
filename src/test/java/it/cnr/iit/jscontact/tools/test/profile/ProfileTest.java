@@ -17,9 +17,9 @@ package it.cnr.iit.jscontact.tools.test.profile;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.rdap.RdapJSContactIdsProfile;
 import it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact.JCard2JSContactTest;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
-import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactIdsProfile;
 import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -38,9 +38,8 @@ public class ProfileTest extends JCard2JSContactTest {
     public void testRDAPProfile() throws IOException, CardException {
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
-                .config(VCard2JSContactConfig.builder()
-                        .useAutoIdsProfile(false)
-                        .idsProfileToUse(VCard2JSContactIdsProfile.RDAP_PROFILE)
+                        .config(VCard2JSContactConfig.builder()
+                        .idsProfileToUse(RdapJSContactIdsProfile.getInstance())
                         .build())
                 .build();
         String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json")), StandardCharsets.UTF_8);
