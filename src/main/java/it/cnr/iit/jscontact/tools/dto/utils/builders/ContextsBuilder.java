@@ -17,6 +17,10 @@ public class ContextsBuilder {
         map = new HashMap<>();
     }
 
+    public static ContextsBuilder builder() {
+        return new ContextsBuilder();
+    }
+
     /**
      * Adds the work context.
      * @return the contexts builder updated by adding the work context

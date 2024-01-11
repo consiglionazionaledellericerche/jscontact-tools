@@ -35,8 +35,6 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private boolean validateCard = true;
     @Builder.Default
-    private boolean useAutoIdsProfile = true;
-    @Builder.Default
     private boolean usePropIds = true;
     @Builder.Default
     private boolean setAutoFullAddress = true;
@@ -47,6 +45,6 @@ public class VCard2JSContactConfig {
 
     private String defaultLanguage;
 
-    private VCard2JSContactIdsProfile idsProfileToUse;
+    private JSContactIdsProfile idsProfileToUse;
 
 }
