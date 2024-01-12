@@ -1,27 +1,18 @@
 package it.cnr.iit.jscontact.tools.rdap;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.utils.builders.PhoneFeaturesBuilder;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.UUID;
 
 @AllArgsConstructor
 public class JSContactForRdapBuilder {
-
-    private static final String ADDRESS_ID = "addr";
-    private static final String ORG_ID = "org";
-    private static final String VOICE_ID = "voice";
-    private static final String FAX_ID = "fax";
-    private static final String EMAIL_ID = "email";
-    private static final String URL_ID = "url";
-    private static final String ORG_LOCALIZATION_ID = "organizations/org";
-    private static final String NAME_LOCALIZATION_ID = "name";
-    private static final String ADDRESS_LOCALIZATION_ID = "addresses/addr";
-    private static final String EMAIL_LOCALIZATION_ID = "emails/email";
 
     private Card jsCard;
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -41,52 +32,52 @@ public class JSContactForRdapBuilder {
     }
 
     public JSContactForRdapBuilder org(String org) {
-        this.jsCard.addOrganization(ORG_ID,Organization.builder().name(org).build());
+        this.jsCard.addOrganization(JSContactForRdapMapId.ORG_ID.getValue(),Organization.builder().name(org).build());
         return this;
     }
 
     public JSContactForRdapBuilder email(String email) {
-        this.jsCard.addEmailAddress(EMAIL_ID, EmailAddress.builder().address(email).build());
+        this.jsCard.addEmailAddress(JSContactForRdapMapId.EMAIL_ID.getValue(), EmailAddress.builder().address(email).build());
         return this;
     }
 
     public JSContactForRdapBuilder voice(String voice) {
-        this.jsCard.addPhone(VOICE_ID, Phone.builder().number(voice).features(PhoneFeaturesBuilder.builder().voice().build()).build());
+        this.jsCard.addPhone(JSContactForRdapMapId.VOICE_ID.getValue(), Phone.builder().number(voice).features(PhoneFeaturesBuilder.builder().voice().build()).build());
         return this;
     }
 
     public JSContactForRdapBuilder fax(String fax) {
-        this.jsCard.addPhone(FAX_ID, Phone.builder().number(fax).features(PhoneFeaturesBuilder.builder().fax().build()).build());
+        this.jsCard.addPhone(JSContactForRdapMapId.FAX_ID.getValue(), Phone.builder().number(fax).features(PhoneFeaturesBuilder.builder().fax().build()).build());
         return this;
     }
 
     public JSContactForRdapBuilder url(String url) {
-        this.jsCard.addLinkResource(URL_ID, Link.builder().uri(url).build());
+        this.jsCard.addLinkResource(JSContactForRdapMapId.URL_ID.getValue(), Link.builder().uri(url).build());
         return this;
     }
 
     public JSContactForRdapBuilder addr(Address address) {
-        this.jsCard.addAddress(ADDRESS_ID, address);
+        this.jsCard.addAddress(JSContactForRdapMapId.ADDRESS_ID.getValue(), address);
         return this;
     }
 
     public JSContactForRdapBuilder nameLocalization(String language, Name name) {
-        this.jsCard.addLocalization(language, NAME_LOCALIZATION_ID, mapper.convertValue(name, JsonNode.class));
+        this.jsCard.addLocalization(language, JSContactForRdapMapId.NAME_LOCALIZATION_ID.getValue(), mapper.convertValue(name, JsonNode.class));
         return this;
     }
 
     public JSContactForRdapBuilder orgLocalization(String language, String org) {
-        this.jsCard.addLocalization(language, ORG_LOCALIZATION_ID, mapper.convertValue(Organization.builder().name(org).build(), JsonNode.class));
+        this.jsCard.addLocalization(language, JSContactForRdapMapId.ORG_LOCALIZATION_ID.getValue(), mapper.convertValue(Organization.builder().name(org).build(), JsonNode.class));
         return this;
     }
 
     public JSContactForRdapBuilder addrLocalization(String language, Address address) {
-        this.jsCard.addLocalization(language, ADDRESS_LOCALIZATION_ID, mapper.convertValue(address, JsonNode.class));
+        this.jsCard.addLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue(), mapper.convertValue(address, JsonNode.class));
         return this;
     }
 
     public JSContactForRdapBuilder emailLocalization(String language, String email) {
-        this.jsCard.addLocalization(language, EMAIL_LOCALIZATION_ID, mapper.convertValue(EmailAddress.builder().address(email).build(), JsonNode.class));
+        this.jsCard.addLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue(), mapper.convertValue(EmailAddress.builder().address(email).build(), JsonNode.class));
         return this;
     }
 
