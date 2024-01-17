@@ -4,6 +4,8 @@ import it.cnr.iit.jscontact.tools.dto.Address;
 import it.cnr.iit.jscontact.tools.dto.AddressComponent;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class JSContactAddressForRdapBuilder {
 
@@ -45,6 +47,13 @@ public class JSContactAddressForRdapBuilder {
 
     public JSContactAddressForRdapBuilder street(String street) {
         this.address.addComponent(AddressComponent.name(street));
+        return this;
+    }
+
+    public JSContactAddressForRdapBuilder streets(List<String> streets) {
+        if (streets == null) return this;
+        for (String street : streets)
+            this.address.addComponent(AddressComponent.name(street));
         return this;
     }
 

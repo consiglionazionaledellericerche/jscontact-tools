@@ -20,9 +20,9 @@ package it.cnr.iit.jscontact.tools.rdap;
  *
  * @author Mario Loffredo
  */
-public class MissingFieldsException extends Exception {
+public class MissingFieldException extends Exception {
 
-    public MissingFieldsException(String message) {
+    public MissingFieldException(String message) {
         super(message);
     }
 }

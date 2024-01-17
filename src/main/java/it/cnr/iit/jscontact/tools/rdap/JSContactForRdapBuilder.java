@@ -1,13 +1,11 @@
 package it.cnr.iit.jscontact.tools.rdap;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.utils.builders.PhoneFeaturesBuilder;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 import java.util.UUID;
 
@@ -56,32 +54,32 @@ public class JSContactForRdapBuilder {
         return this;
     }
 
-    public JSContactForRdapBuilder addr(Address address) {
+    public JSContactForRdapBuilder address(Address address) {
         this.jsCard.addAddress(JSContactForRdapMapId.ADDRESS_ID.getValue(), address);
         return this;
     }
 
-    public JSContactForRdapBuilder nameLocalization(String language, Name name) {
+    public JSContactForRdapBuilder nameLoc(String language, Name name) {
         this.jsCard.addLocalization(language, JSContactForRdapMapId.NAME_LOCALIZATION_ID.getValue(), mapper.convertValue(name, JsonNode.class));
         return this;
     }
 
-    public JSContactForRdapBuilder orgLocalization(String language, String org) {
+    public JSContactForRdapBuilder orgLoc(String language, String org) {
         this.jsCard.addLocalization(language, JSContactForRdapMapId.ORG_LOCALIZATION_ID.getValue(), mapper.convertValue(Organization.builder().name(org).build(), JsonNode.class));
         return this;
     }
 
-    public JSContactForRdapBuilder addrLocalization(String language, Address address) {
+    public JSContactForRdapBuilder addrLoc(String language, Address address) {
         this.jsCard.addLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue(), mapper.convertValue(address, JsonNode.class));
         return this;
     }
 
-    public JSContactForRdapBuilder emailLocalization(String language, String email) {
+    public JSContactForRdapBuilder emailLoc(String language, String email) {
         this.jsCard.addLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue(), mapper.convertValue(EmailAddress.builder().address(email).build(), JsonNode.class));
         return this;
     }
 
-    public Card build() throws MissingFieldsException, CardException {
+    public Card build() throws MissingFieldException, CardException {
 
         if (jsCard.getName() == null &&
             jsCard.getOrganizations() == null &&
@@ -89,7 +87,7 @@ public class JSContactForRdapBuilder {
             jsCard.getPhones() == null &&
             jsCard.getEmails() == null &&
             jsCard.getLinks() == null)
-            throw new MissingFieldsException("At least one between name, organizations, addresses, phones, emails and links must be set in JSCard");
+            throw new MissingFieldException("At least one between name, organizations, addresses, phones, emails and links must be set in JSCard");
 
         if (!jsCard.isValid())
             throw new CardException(jsCard.getValidationMessage());
