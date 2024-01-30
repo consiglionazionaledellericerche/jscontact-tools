@@ -89,7 +89,7 @@ public class SerializationTest {
     }
 
     @Test
-    public void testSerialization6() throws IOException, CardException {
+    public void testSerialization6() throws IOException {
 
 
         String jscard="{" +
@@ -105,7 +105,7 @@ public class SerializationTest {
 
 
     @Test
-    public void testSerialization7() throws IOException, CardException {
+    public void testSerialization7() throws IOException {
 
 
         String jscard="{" +

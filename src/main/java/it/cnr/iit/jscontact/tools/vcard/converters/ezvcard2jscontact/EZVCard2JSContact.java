@@ -600,7 +600,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return sortAs;
     }
 
-    private Name toJSCardName(ExtendedStructuredName vcardName) throws CardException {
+    private Name toJSCardName(ExtendedStructuredName vcardName) {
 
         NameComponent[] components = null;
 
