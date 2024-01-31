@@ -21,7 +21,7 @@ public class JSContactForRdapBuilder {
      * @return the JSContactForRdapBuilder object
      */
     public static JSContactForRdapBuilder builder() {
-        return new JSContactForRdapBuilder(Card.builder().uid(UUID.randomUUID().toString()).build());
+        return new JSContactForRdapBuilder(Card.builder().uid("urn:uuid:" + UUID.randomUUID()).build());
     }
 
     /**
