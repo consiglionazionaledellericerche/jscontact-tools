@@ -170,7 +170,7 @@ To pretty print serialized Card objects, use the following:
 
 ```
 
-        String json = "{"uid": \"c642b718-7c89-49f4-9497-d9fb279bb437\"}";
+        String json = "{"uid": \"urn:uuid:c642b718-7c89-49f4-9497-d9fb279bb437\"}";
         ObjectMapper mapper = new ObjectMapper();
         Card jsCard = mapper.readValue(json, Card.class);
 
@@ -491,7 +491,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
 
         String jscard = "{" +
                 "\@type\": \"Card\","
-                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"uid\":\"urn:uuid:7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
@@ -532,7 +532,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
         String jsCards = "[" +
                          "{" +
                              "\@type\": \"Card\","
-                             "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
+                             "\"uid\":\"urn:uuid:2feb4102-f15f-4047-b521-190d4acd0d29\"," +
                              "\"kind\":\"group\"," +
                              "\"name\":{\"full\":\"The Doe family\"}," +
                              "\"members\": {" +
