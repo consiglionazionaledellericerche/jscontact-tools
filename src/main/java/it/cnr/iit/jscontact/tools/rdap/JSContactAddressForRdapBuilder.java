@@ -17,7 +17,7 @@ public class JSContactAddressForRdapBuilder {
      * @return the JSContactAddressForRdapBuilder object
      */
     public static JSContactAddressForRdapBuilder builder() {
-        return new JSContactAddressForRdapBuilder(Address.builder().isOrdered(null).build());
+        return new JSContactAddressForRdapBuilder(Address.builder().build());
     }
 
     /**
