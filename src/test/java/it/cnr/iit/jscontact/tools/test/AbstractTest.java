@@ -20,7 +20,7 @@ import java.util.UUID;
 public abstract class AbstractTest {
 
     protected String getUUID() {
-        return UUID.randomUUID().toString();
+        return "urn:uuid:" + UUID.randomUUID().toString();
     }
 
 }
