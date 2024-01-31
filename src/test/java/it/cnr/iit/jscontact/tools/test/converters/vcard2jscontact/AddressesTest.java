@@ -406,7 +406,7 @@ public class AddressesTest extends VCard2JSContactTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testAddresses14 - 1", jsCard.getAddresses());
         assertEquals("testAddresses14 - 2", 1, jsCard.getAddresses().size());
-        assertEquals("testAddresses14 - 3", Boolean.TRUE, jsCard.getAddresses().get("ADR-1").getIsOrdered());
+        assertTrue("testAddresses14 - 3", jsCard.getAddresses().get("ADR-1").getIsOrdered());
         assertEquals("testAddresses14 - 4", DelimiterUtils.COMMA_ARRAY_DELIMITER, jsCard.getAddresses().get("ADR-1").getDefaultSeparator());
         assertEquals("testAddresses14 - 5", 4, jsCard.getAddresses().get("ADR-1").getComponents().length);
         assertTrue("testAddresses14 - 6", jsCard.getAddresses().get("ADR-1").getComponents()[2].isNumber());
@@ -435,7 +435,7 @@ public class AddressesTest extends VCard2JSContactTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testAddresses15 - 1", jsCard.getAddresses());
         assertEquals("testAddresses15 - 2", 2, jsCard.getAddresses().size());
-        assertEquals("testAddresses15 - 3", Boolean.TRUE, jsCard.getAddresses().get("ADR-1").getIsOrdered());
+        assertTrue("testAddresses15 - 3", jsCard.getAddresses().get("ADR-1").getIsOrdered());
         assertEquals("testAddresses15 - 4", DelimiterUtils.COMMA_ARRAY_DELIMITER, jsCard.getAddresses().get("ADR-1").getDefaultSeparator());
         assertEquals("testAddresses15 - 5", 4, jsCard.getAddresses().get("ADR-1").getComponents().length);
         assertTrue("testAddresses15 - 6", jsCard.getAddresses().get("ADR-1").getComponents()[0].isName());
@@ -446,7 +446,7 @@ public class AddressesTest extends VCard2JSContactTest {
         assertEquals("testAddresses15 - 11", "54321", jsCard.getAddresses().get("ADR-1").getComponents()[2].getValue());
         assertTrue("testAddresses15 - 12", jsCard.getAddresses().get("ADR-1").getComponents()[3].isLocality());
         assertEquals("testAddresses15 - 13", "Reston", jsCard.getAddresses().get("ADR-1").getComponents()[3].getValue());
-        assertEquals("testAddresses15 - 14", Boolean.TRUE, jsCard.getAddresses().get("k26").getIsOrdered());
+        assertTrue("testAddresses15 - 14", jsCard.getAddresses().get("k26").getIsOrdered());
         assertEquals("testAddresses15 - 15", ", ", jsCard.getAddresses().get("k26").getDefaultSeparator());
         assertEquals("testAddresses15 - 16", "2-7-2 Marunouchi, Chiyoda-ku, Tokyo 100-8994", jsCard.getAddresses().get("k26").getFull());
         assertEquals("testAddresses15 - 17", 9, jsCard.getAddresses().get("k26").getComponents().length);
@@ -470,7 +470,7 @@ public class AddressesTest extends VCard2JSContactTest {
         assertEquals("testAddresses15 - 35", "100-8994", jsCard.getAddresses().get("k26").getComponents()[8].getValue());
         assertNotNull("testAddresses15 - 36",  jsCard.getLocalization("jp","addresses/k26"));
         Address addressLocalization = (Address) JsonNodeUtils.toObject(jsCard.getLocalization("jp","addresses/k26"), Address.class);
-        assertEquals("testAddresses15 - 37", Boolean.TRUE, addressLocalization.getIsOrdered());
+        assertTrue("testAddresses15 - 37", addressLocalization.getIsOrdered());
         assertEquals("testAddresses15 - 38", StringUtils.EMPTY, addressLocalization.getDefaultSeparator());
         assertEquals("testAddresses15 - 39", "〒100-8994東京都千代田区丸ノ内2-7-2", addressLocalization.getFull());
         assertEquals("testAddresses15 - 40", 7, addressLocalization.getComponents().length);

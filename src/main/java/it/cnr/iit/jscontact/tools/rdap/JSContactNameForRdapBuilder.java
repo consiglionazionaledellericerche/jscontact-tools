@@ -15,7 +15,7 @@ public class JSContactNameForRdapBuilder {
      * @return the JSContactNameForRdapBuilder object
      */
     public static JSContactNameForRdapBuilder builder() {
-        return new JSContactNameForRdapBuilder(Name.builder().build());
+        return new JSContactNameForRdapBuilder(Name.builder().isOrdered(null).build());
     }
 
     /**

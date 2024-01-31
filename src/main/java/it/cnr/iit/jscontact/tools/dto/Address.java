@@ -71,7 +71,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
     @JSContactCollection(addMethod = "addComponent", itemClass = AddressComponent.class)
     AddressComponent[] components;
 
-    Boolean isOrdered = Boolean.FALSE;
+    Boolean isOrdered;
 
     String defaultSeparator;
 
