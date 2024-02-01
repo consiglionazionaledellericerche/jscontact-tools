@@ -70,7 +70,7 @@ public class Name extends AbstractJSContactType implements HasComponents, IsIANA
     @Valid
     NameComponent[] components;
 
-    Boolean isOrdered = Boolean.FALSE;
+    Boolean isOrdered;
 
     String defaultSeparator;
 

@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.18.3</version>
+		  <version>0.18.4</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.18.3'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.18.4'
 ```
 
 # Features
@@ -170,7 +170,7 @@ To pretty print serialized Card objects, use the following:
 
 ```
 
-        String json = "{"uid": \"c642b718-7c89-49f4-9497-d9fb279bb437\"}";
+        String json = "{"uid": \"urn:uuid:c642b718-7c89-49f4-9497-d9fb279bb437\"}";
         ObjectMapper mapper = new ObjectMapper();
         Card jsCard = mapper.readValue(json, Card.class);
 
@@ -491,7 +491,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
 
         String jscard = "{" +
                 "\@type\": \"Card\","
-                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"uid\":\"urn:uuid:7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"name\":{\"full\":\"test\"}," +
                 "\"addresses\":{" +
                     "\"ADR-1\": {" +
@@ -532,7 +532,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
         String jsCards = "[" +
                          "{" +
                              "\@type\": \"Card\","
-                             "\"uid\":\"2feb4102-f15f-4047-b521-190d4acd0d29\"," +
+                             "\"uid\":\"urn:uuid:2feb4102-f15f-4047-b521-190d4acd0d29\"," +
                              "\"kind\":\"group\"," +
                              "\"name\":{\"full\":\"The Doe family\"}," +
                              "\"members\": {" +
@@ -575,7 +575,9 @@ VCards can be parsed/written through the methods of the VCardParser/VCardWiter c
 <a name="using-jscontact-in-rdap"></a>
 ## Using JSContact in RDAP
 
-Using JSContact in RDAP is supported and make it very easy through JSContactForRdapBuilder and JSContactForRdapGetter classes as it is shown in the following example:
+Using JSContact in RDAP is supported through JSContactForRdapBuilder and JSContactForRdapGetter classes as it is shown in the following example.
+The uid property is set to a random value by default.
+My apologizes for the misuse of the Japanese language.
 
 ```
 
@@ -618,35 +620,37 @@ Using JSContact in RDAP is supported and make it very easy through JSContactForR
                 .build();
 
         JSContactForRdapGetter rdapJSContactGetter = JSContactForRdapGetter.of(jsCard);
+        assertNotNull("testJSContactForRdapBuilderAndGetter - 1", rdapJSContactGetter.uid());
         JSContactNameForRdapGetter rdapJSContactNameGetter = JSContactNameForRdapGetter.of(rdapJSContactGetter.name());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 1", "Mario Loffredo", rdapJSContactNameGetter.full());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 2", "Loffredo", rdapJSContactNameGetter.surname());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 3", "Mario", rdapJSContactNameGetter.given());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 4", ".it Registry", rdapJSContactGetter.org());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 5", "mario.loffredo@iit.cnr.it", rdapJSContactGetter.email());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 6", "+39.0503139811", rdapJSContactGetter.voice());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 7", "+39.0503139800", rdapJSContactGetter.fax());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 8", "https://www.nic.it", rdapJSContactGetter.url());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 2", "Mario Loffredo", rdapJSContactNameGetter.full());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 3", "Loffredo", rdapJSContactNameGetter.surname());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 4", "Mario", rdapJSContactNameGetter.given());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 5", ".it Registry", rdapJSContactGetter.org());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 6", "mario.loffredo@iit.cnr.it", rdapJSContactGetter.email());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 7", "+39.0503139811", rdapJSContactGetter.voice());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 8", "+39.0503139800", rdapJSContactGetter.fax());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 9", "https://www.nic.it", rdapJSContactGetter.url());
         JSContactAddressForRdapGetter rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.address());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 9", "it", rdapJSContactAddressGetter.cc());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 10", "Italy", rdapJSContactAddressGetter.country());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 11", "PI", rdapJSContactAddressGetter.sp());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 12", "Pisa", rdapJSContactAddressGetter.city());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 13", "56124", rdapJSContactAddressGetter.pc());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 14", "Via Moruzzi, 1", rdapJSContactAddressGetter.street());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 10", "it", rdapJSContactAddressGetter.cc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 11", "Italy", rdapJSContactAddressGetter.country());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 12", "PI", rdapJSContactAddressGetter.sp());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 13", "Pisa", rdapJSContactAddressGetter.city());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 14", "56124", rdapJSContactAddressGetter.pc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 15", "Via Moruzzi, 1", rdapJSContactAddressGetter.street());
         JSContactNameForRdapGetter rdapJSContactNameLocGetter = JSContactNameForRdapGetter.of(rdapJSContactGetter.nameLoc("jp"));
-        assertEquals("testJSContactForRdapBuilderAndGetter - 15", "マリオ ロフレド", rdapJSContactNameLocGetter.full());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 16", "ロフレド", rdapJSContactNameLocGetter.surname());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 17", "マリオ", rdapJSContactNameLocGetter.given());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 17", "マリオ", rdapJSContactNameLocGetter.given());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 16", "マリオ ロフレド", rdapJSContactNameLocGetter.full());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 17", "ロフレド", rdapJSContactNameLocGetter.surname());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 18", "マリオ", rdapJSContactNameLocGetter.given());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 19", "マリオ", rdapJSContactNameLocGetter.given());
         JSContactAddressForRdapGetter rdapJSContactAddressLocGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addressLoc("jp"));
-        assertEquals("testJSContactForRdapBuilderAndGetter - 18", "it", rdapJSContactAddressLocGetter.cc());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 19", "イタリア", rdapJSContactAddressLocGetter.country());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 20", "PI", rdapJSContactAddressLocGetter.sp());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 21", "ピサ", rdapJSContactAddressLocGetter.city());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 22", "56124", rdapJSContactAddressLocGetter.pc());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 23", "モルッツィ通り、1", rdapJSContactAddressLocGetter.street());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 20", "it", rdapJSContactAddressLocGetter.cc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 21", "イタリア", rdapJSContactAddressLocGetter.country());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 22", "PI", rdapJSContactAddressLocGetter.sp());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 23", "ピサ", rdapJSContactAddressLocGetter.city());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 24", "56124", rdapJSContactAddressLocGetter.pc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 25", "モルッツィ通り、1", rdapJSContactAddressLocGetter.street());
     }
+
 ```
 
 <a name="testing"></a>
@@ -697,7 +701,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.18.3 implements the following draft versions:
+Version 0.18.4 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-16
 * draft-ietf-calext-jscontact-vcard-14

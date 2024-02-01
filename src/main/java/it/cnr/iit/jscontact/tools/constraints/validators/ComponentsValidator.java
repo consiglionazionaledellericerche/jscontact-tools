@@ -33,7 +33,7 @@ public class ComponentsValidator implements ConstraintValidator<ComponentsConstr
         if (object == null)
             return true;
 
-        if (object.getIsOrdered()!=null && object.getIsOrdered()==Boolean.FALSE && object.getDefaultSeparator()!=null) {
+        if (object.getIsOrdered()!=null && !object.getIsOrdered() && object.getDefaultSeparator()!=null) {
             context.buildConstraintViolationWithTemplate("defaultSeparator must not be set if the isOrdered property value is false").addConstraintViolation();
             return false;
         }
@@ -54,7 +54,7 @@ public class ComponentsValidator implements ConstraintValidator<ComponentsConstr
                 return false;
             }
 
-            if (object.getIsOrdered()!=null && object.getIsOrdered() == Boolean.FALSE && component.getKind().toJson().equals("separator")) {
+            if (object.getIsOrdered()!=null && !object.getIsOrdered() && component.getKind().toJson().equals("separator")) {
                 context.buildConstraintViolationWithTemplate("if a separator component is set, the isOrdered member of the parent object must be true").addConstraintViolation();
                 return false;
             }

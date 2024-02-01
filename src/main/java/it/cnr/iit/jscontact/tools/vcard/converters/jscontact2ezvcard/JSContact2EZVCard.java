@@ -117,7 +117,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         List<String> components = new ArrayList<>();
         String separator = (defaultSeparator != null) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER;
-        boolean applySeparator = (isOrdered == Boolean.TRUE);
+        boolean applySeparator = (isOrdered!=null && isOrdered == Boolean.TRUE);
         for (NameComponent pair : nameComponents) {
             if (pair.getKind().isRfcValue()) {
                 switch (pair.getKind().getRfcValue()) {
@@ -386,7 +386,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             ExtendedStructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
             sn.setLanguage(jsCard.getLanguage());
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs())); // did this way because Ez-vcard allows to sort only for surname and given name
-            if (jsCard.getName().getIsOrdered())
+            if (jsCard.getName().getIsOrdered()!=null && jsCard.getName().getIsOrdered())
                 sn.setParameter(VCardParamEnum.JSCOMPS.getValue(), toVCardJSCompsParam(jsCard.getName().getComponents(),jsCard.getName().getDefaultSeparator())); // did this way because Ez-vcard allows to sort only for surname and given name
             VCardUtils.addVCardUnmatchedParams(sn,jsCard.getName());
             sns.add(sn);
@@ -399,7 +399,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     NameComponent[] components = asJSCardNameComponentArray(localization.getValue().get("components"));
                     sn = toVCardStructuredName(components);
                     JsonNode isOrdered = (localization.getValue().get("components").get("isOrdered"));
-                    if (isOrdered != null && isOrdered.asBoolean() == Boolean.TRUE) {
+                    if (isOrdered != null && isOrdered.asBoolean()) {
                         JsonNode defaultSeparator = (localization.getValue().get("components").get("defaultSeparator"));
                         sn.setParameter(VCardParamEnum.JSCOMPS.getValue(), toVCardJSCompsParam(asJSCardNameComponentArray(localization.getValue().get("components")), (defaultSeparator!=null) ? defaultSeparator.asText() : null)); // did this way because Ez-vcard allows to sort only for surname and given name
                     }
@@ -438,7 +438,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         else {
             ExtendedStructuredName sn = toVCardStructuredName(jsCard.getName().getComponents());
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs()));
-            if (jsCard.getName().getIsOrdered() != null && jsCard.getName().getIsOrdered() == Boolean.TRUE)
+            if (jsCard.getName().getIsOrdered() != null && jsCard.getName().getIsOrdered())
                 sn.setParameter(VCardParamEnum.JSCOMPS.getValue(), toVCardJSCompsParam(jsCard.getName().getComponents(),jsCard.getName().getDefaultSeparator())); // did this way because Ez-vcard allows to sort only for surname and given name
             VCardUtils.addVCardUnmatchedParams(sn,jsCard.getName());
             sns.add(sn);
@@ -550,7 +550,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         List<String> components = new ArrayList<>();
         String separator = (StringUtils.isNotEmpty(addr.getDefaultSeparator())) ? addr.getDefaultSeparator() : DelimiterUtils.SPACE_DELIMITER;
-        boolean applySeparator = (addr.getIsOrdered() == Boolean.TRUE) ;
+        boolean applySeparator = (addr.getIsOrdered()!=null) && addr.getIsOrdered();
         for (AddressComponent pair : addr.getComponents()) {
             if (pair.getKind().isRfcValue()) {
                 switch (pair.getKind().getRfcValue()) {
@@ -679,7 +679,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 for (String vCardTypeValue : vCardTypeValues)
                     addr.getTypes().add(AddressType.get(vCardTypeValue));
             }
-            if (address.getIsOrdered()!= null && address.getIsOrdered() == Boolean.TRUE)
+            if (address.getIsOrdered()!= null && address.getIsOrdered())
                 addr.setParameter(VCardParamEnum.JSCOMPS.getValue(), toVCardJSCompsParam(address.getComponents(),address.getDefaultSeparator()));
 
         }
