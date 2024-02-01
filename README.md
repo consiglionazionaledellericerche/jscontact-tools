@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.18.2</version>
+		  <version>0.18.3</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.18.2'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:0.18.3'
 ```
 
 # Features
@@ -30,11 +30,12 @@ Validation and conversion of vCard formats leverage the features provided by [ez
 4. [Localization](#localization)
 5. [vCard Conversion](#vcard-conversion)
 6. [JSContact Conversion](#jscontact-conversion)
-7. [Testing](#testing)
-8. [ez-vcard extensions](#ez-vcard-extensions)
-9. [ez-vcard bugs](#ez-vcard-bugs)
-10. [JSContact Compliance](#jscontact-compliance)
-11. [References](#references)
+7. [Using JSContact in RDAP](#using-jscontact-in-rdap)
+8. [Testing](#testing)
+9. [ez-vcard extensions](#ez-vcard-extensions)
+10. [ez-vcard bugs](#ez-vcard-bugs)
+11. [JSContact Compliance](#jscontact-compliance)
+12. [References](#references)
 
 
 <a name="creation"></a>
@@ -58,7 +59,7 @@ Here in the following a successful creation of an EmailAddress instance is shown
 
         EmailAddress email = EmailAddress.builder()
                                         .address("mario.loffredo@iit.cnr.it")
-                                        .contexts(new ContextsBuilder().work().private_().build())
+                                        .contexts(ContextsBuilder.builder().work().private_().build())
                                         .build();
 
 ```
@@ -69,7 +70,7 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 ```
 
         // address is missing in EmailAddress
-        EmailAddress.builder().contexts(new ContextsBuilder().work().build()).build();
+        EmailAddress.builder().contexts(ContextsBuilder.builder().work().build()).build();
 
 ```
 
@@ -245,7 +246,6 @@ The conversion is executed according to the following rules:
 
     - `customTimeZonesPrefix = "tz"`
     - `validateCard = true`
-    - `useAutoIdsProfile = true`
     - `usePropIds = true`
     - `setAutoFullAddress = true`
     - `setAutoMediaType = true`
@@ -337,30 +337,16 @@ By default, where a collection of objects is mapped to a map of <key,object> ent
 This setting schema can be modified by defining a different one assigning key values based on the positions of vCard elements.
 To do that, the following steps must be followed:
 
-1. set the `useAutoIdsProfile` property of the `VCard2JSContactConfig` object to `false`
+1. set the `usePropIds` property of the `VCard2JSContactConfig` object to `false`
 
-2. set the `usePropIds` property of the `VCard2JSContactConfig` object to `false`
-
-3. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToUse` of `VCard2JSContactConfig` object property with it
+2. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToUse` of `VCard2JSContactConfig` object property with it
 
 
 ### RDAP Conversion Profile from jCard to JSContact Card
 
 A pre-defined conversion profile to convert a jCard instance inside an RDAP response [RFC9083](https://datatracker.ietf.org/doc/rfc9083/) is available.
 The values of the map keys used in such profile are defined in [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/).
-Additional setting rules are shown in the following code:
-
-```
-
-    public static final VCard2JSContactIdsProfile RDAP_PROFILE = VCard2JSContactIdsProfile.builder()
-                                                                                    .id(JSContactId.organizationsId("org"))
-                                                                                    .id(JSContactId.emailsId("email"))
-                                                                                    .id(JSContactId.phonesId("voice"))  // 1st jCard phone number
-                                                                                    .id(JSContactId.phonesId("fax"))    // 2nd jCard phone number
-                                                                                    .id(JSContactId.addressesId("addr")) // 1st jCard address
-                                                                                    .build();                                                                                    
-
-```
+Additional setting rules are shown in the class RdapJSContactIdsProfile.
 
 <a name="jscontact-conversion"></a>
 ## JSContact Card Conversion
@@ -586,6 +572,83 @@ Here in the following two examples of conversion between JSContact Card and a vC
 
 VCards can be parsed/written through the methods of the VCardParser/VCardWiter classes which make use of the encoding scheme descirbed in [RFC6868](https://datatracker.ietf.org/doc/rfc6868/).
 
+<a name="using-jscontact-in-rdap"></a>
+## Using JSContact in RDAP
+
+Using JSContact in RDAP is supported and make it very easy through JSContactForRdapBuilder and JSContactForRdapGetter classes as it is shown in the following example:
+
+```
+
+    @Test
+    public void testJSContactForRdapBuilderAndGetter() throws MissingFieldException, CardException {
+
+        Card jsCard = JSContactForRdapBuilder.builder()
+                .name(JSContactNameForRdapBuilder.builder()
+                        .full("Mario Loffredo")
+                        .surname("Loffredo")
+                        .given("Mario")
+                        .build())
+                .org(".it Registry")
+                .email("mario.loffredo@iit.cnr.it")
+                .voice("+39.0503139811")
+                .fax("+39.0503139800")
+                .address(JSContactAddressForRdapBuilder.builder()
+                        .cc("it")
+                        .country("Italy")
+                        .sp("PI")
+                        .city("Pisa")
+                        .pc("56124")
+                        .street("Via Moruzzi, 1")
+                        .build())
+                .url("https://www.nic.it")
+                .nameLoc("jp", JSContactNameForRdapBuilder.builder()
+                        .full("マリオ ロフレド")
+                        .surname("ロフレド")
+                        .given("マリオ")
+                        .build())
+                .orgLoc("jp", ".itレジストリ")
+                .addrLoc("jp", JSContactAddressForRdapBuilder.builder()
+                        .cc("it")
+                        .country("イタリア")
+                        .sp("PI")
+                        .city("ピサ")
+                        .pc("56124")
+                        .street("モルッツィ通り、1")
+                        .build())
+                .build();
+
+        JSContactForRdapGetter rdapJSContactGetter = JSContactForRdapGetter.of(jsCard);
+        JSContactNameForRdapGetter rdapJSContactNameGetter = JSContactNameForRdapGetter.of(rdapJSContactGetter.name());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 1", "Mario Loffredo", rdapJSContactNameGetter.full());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 2", "Loffredo", rdapJSContactNameGetter.surname());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 3", "Mario", rdapJSContactNameGetter.given());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 4", ".it Registry", rdapJSContactGetter.org());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 5", "mario.loffredo@iit.cnr.it", rdapJSContactGetter.email());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 6", "+39.0503139811", rdapJSContactGetter.voice());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 7", "+39.0503139800", rdapJSContactGetter.fax());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 8", "https://www.nic.it", rdapJSContactGetter.url());
+        JSContactAddressForRdapGetter rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.address());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 9", "it", rdapJSContactAddressGetter.cc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 10", "Italy", rdapJSContactAddressGetter.country());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 11", "PI", rdapJSContactAddressGetter.sp());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 12", "Pisa", rdapJSContactAddressGetter.city());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 13", "56124", rdapJSContactAddressGetter.pc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 14", "Via Moruzzi, 1", rdapJSContactAddressGetter.street());
+        JSContactNameForRdapGetter rdapJSContactNameLocGetter = JSContactNameForRdapGetter.of(rdapJSContactGetter.nameLoc("jp"));
+        assertEquals("testJSContactForRdapBuilderAndGetter - 15", "マリオ ロフレド", rdapJSContactNameLocGetter.full());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 16", "ロフレド", rdapJSContactNameLocGetter.surname());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 17", "マリオ", rdapJSContactNameLocGetter.given());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 17", "マリオ", rdapJSContactNameLocGetter.given());
+        JSContactAddressForRdapGetter rdapJSContactAddressLocGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addressLoc("jp"));
+        assertEquals("testJSContactForRdapBuilderAndGetter - 18", "it", rdapJSContactAddressLocGetter.cc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 19", "イタリア", rdapJSContactAddressLocGetter.country());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 20", "PI", rdapJSContactAddressLocGetter.sp());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 21", "ピサ", rdapJSContactAddressLocGetter.city());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 22", "56124", rdapJSContactAddressLocGetter.pc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 23", "モルッツィ通り、1", rdapJSContactAddressLocGetter.street());
+    }
+```
+
 <a name="testing"></a>
 ## Testing
 
@@ -634,7 +697,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
 * [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
 
-Version 0.18.2 implements the following draft versions:
+Version 0.18.3 implements the following draft versions:
 
 * draft-ietf-calext-jscontact-16
 * draft-ietf-calext-jscontact-vcard-14

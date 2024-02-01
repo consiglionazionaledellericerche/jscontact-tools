@@ -33,7 +33,7 @@ public class ResourceTest extends AbstractTest {
         Link resource = Link.builder()
                 .uri("mailto:mario.loffredo@iit.cnr.it")
                 .kind(LinkKind.contact())
-                .contexts(new ContextsBuilder().work().build())
+                .contexts(ContextsBuilder.builder().work().build())
                 .build();
 
         Card jsCard = Card.builder()
@@ -50,7 +50,7 @@ public class ResourceTest extends AbstractTest {
 
         // value missing
         Link.builder()
-                .contexts(new ContextsBuilder().work().build())
+                .contexts(ContextsBuilder.builder().work().build())
                 .kind(LinkKind.contact())
                 .build();
     }
@@ -62,7 +62,7 @@ public class ResourceTest extends AbstractTest {
                 .kind(LinkKind.contact())
                 .uri(" ")
                 .label("url")
-                .contexts(new ContextsBuilder().work().build())
+                .contexts(ContextsBuilder.builder().work().build())
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())

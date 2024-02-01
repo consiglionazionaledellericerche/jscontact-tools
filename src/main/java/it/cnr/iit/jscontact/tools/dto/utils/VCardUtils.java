@@ -1,7 +1,6 @@
 package it.cnr.iit.jscontact.tools.dto.utils;
 
 import ezvcard.VCard;
-import ezvcard.parameter.VCardParameter;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.RawProperty;
 import ezvcard.property.VCardProperty;

@@ -18,6 +18,10 @@ public class PhoneFeaturesBuilder {
     }
 
 
+    public static PhoneFeaturesBuilder builder() {
+        return new PhoneFeaturesBuilder();
+    }
+
     /**
      * Adds the voice phone feature.
      * @return the phone features builder updated by adding the voice phone feature

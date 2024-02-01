@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-public class VCard2JSContactIdsProfile {
+public class JSContactIdsProfile {
 
     public enum IdType {
         NICKNAME,
@@ -107,15 +107,6 @@ public class VCard2JSContactIdsProfile {
             return personalInfoId(null, id);
         }
     }
-
-
-    public static final VCard2JSContactIdsProfile RDAP_PROFILE = VCard2JSContactIdsProfile.builder()
-                                                                                    .id(JSContactId.organizationsId("org"))
-                                                                                    .id(JSContactId.emailsId("email"))
-                                                                                    .id(JSContactId.phonesId("voice"))  // 1st jCard phone number
-                                                                                    .id(JSContactId.phonesId("fax"))    // 2nd jCard phone number
-                                                                                    .id(JSContactId.addressesId("addr")) // 1st jCard address
-                                                                                    .build();
 
     @Singular(ignoreNullCollections = true)
     List<JSContactId> ids;

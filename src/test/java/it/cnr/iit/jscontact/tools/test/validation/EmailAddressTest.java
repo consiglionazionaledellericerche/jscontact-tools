@@ -40,7 +40,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testInvalidEmailBuild2() {
 
         // email missing
-        EmailAddress.builder().contexts(new ContextsBuilder().work().build()).build();
+        EmailAddress.builder().contexts(ContextsBuilder.builder().work().build()).build();
     }
 
 
@@ -70,7 +70,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testValidEmail2() {
 
         EmailAddress email = EmailAddress.builder()
-                .contexts(new ContextsBuilder().work().build())
+                .contexts(ContextsBuilder.builder().work().build())
                 .address("mario.loffredo@iit.cnr.it")
                 .build();
         Card jsCard = Card.builder()
@@ -85,7 +85,7 @@ public class EmailAddressTest extends AbstractTest {
     public void testValidEmail3() {
 
         EmailAddress email = EmailAddress.builder()
-                .contexts(new ContextsBuilder().work().build())
+                .contexts(ContextsBuilder.builder().work().build())
                 .address("mario.loffredo@iit.cnr.it")
                 .pref(1)
                 .build();
@@ -137,7 +137,7 @@ public class EmailAddressTest extends AbstractTest {
 
         //invalid pref
         EmailAddress email = EmailAddress.builder()
-                .contexts(new ContextsBuilder().work().build())
+                .contexts(ContextsBuilder.builder().work().build())
                 .address("mario.loffredo@iit.cnr.it")
                 .pref(0)
                 .build();
