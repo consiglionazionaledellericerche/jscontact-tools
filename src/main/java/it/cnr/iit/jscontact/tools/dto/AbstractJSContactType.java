@@ -30,10 +30,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract class mapping the vCard counterparts of JSContact extensions  as defined in section 2.15 of [draft-ietf-calext-jscontact-vcard].
+ * Abstract class mapping the vCard counterparts of JSContact extensions  as defined in section 2.15 of [RFC9554].
  * The class contains two other properties shared by all JSContact types.
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.15">draft-ietf-calext-jscontact-vcard</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.15">RFC9554</a>
  * @author Mario Loffredo
  */
 
@@ -50,14 +50,14 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     @Setter
     String propId;
 
-    // Section 2.15.2 of [draft-ietf-calext-jscontact-vcard]
+    // Section 2.15.2 of [RFC9554]
     @JsonProperty("vCardParams")
     @JsonSerialize(using = VCardParamsSerializer.class)
     @JsonDeserialize(using = VCardParamsDeserializer.class)
     @Valid
     Map<String, VCardParam> vCardParams;
 
-    // Section 2.15.3 of [draft-ietf-calext-jscontact-vcard]
+    // Section 2.15.3 of [RFC9554]
     @JsonProperty("vCardName")
     @Getter
     @Setter

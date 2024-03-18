@@ -22,9 +22,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the EmailAddress type as defined in section 2.3.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the EmailAddress type as defined in section 2.3.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.1">RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type", "address", "contexts", "pref", "label"})

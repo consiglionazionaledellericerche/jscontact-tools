@@ -29,9 +29,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class mapping the Phone type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the Phone type as defined in section 2.3.3 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.3">RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","number","features","contexts","pref","label"})

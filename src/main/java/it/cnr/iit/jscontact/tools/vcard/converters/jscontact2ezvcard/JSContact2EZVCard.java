@@ -1812,8 +1812,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    //TODO: replace XXXX with RFC number after draft-ietf-calext-vcard-jscontact-extensions
-    private void fillVCardRFCXXXXProps(VCard vCard, Card jsCard) {
+    private void fillVCardRFC9555Props(VCard vCard, Card jsCard) {
 
         if (jsCard.getCreated() != null) {
             vCard.addExtendedProperty(VCardPropEnum.CREATED.getValue(), VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsCard.getCreated().getTime()), VCardDataType.TIMESTAMP);
@@ -1884,14 +1883,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a Card object into a basic vCard v4.0 [RFC6350].
-     * JSContact objects are defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * JSContact objects are defined in RFC9553.
+     * Conversion rules are defined in RFC9554.
      *
      * @param jsCard a Card object (Card or CardGroup)
      * @return a vCard as an instance of the ez-vcard library VCard class
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
      */
     protected VCard convert(Card jsCard) {
 
@@ -1925,7 +1924,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillVCardCategories(vCard, jsCard);
         fillVCardNotes(vCard, jsCard);
         fillVCardRelations(vCard, jsCard);
-        fillVCardRFCXXXXProps(vCard, jsCard);
+        fillVCardRFC9555Props(vCard, jsCard);
         fillVCardExtensions(vCard, jsCard);
         fillVCardPropsFromJSCardExtensions(vCard,jsCard);
 
@@ -1934,14 +1933,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a list of Card objects into a list of vCard v4.0 instances [RFC6350].
-     * JSContact is defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * JSContact is defined in RFC9553.
+     * Conversion rules are defined in RFC9554.
      * @param jsCards a list of Card objects
      * @return a list of instances of the ez-vcard library VCard class
      * @throws CardException if one of Card objects is not valid
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
      */
     public List<VCard> convert(Card... jsCards) throws CardException {
 
@@ -1961,15 +1960,15 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a JSON array of Card objects into a list of vCard v4.0 instances [RFC6350].
-     * JSContact is defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * JSContact is defined in RFC9553.
+     * Conversion rules are defined in RFC9554.
      * @param json a JSON array of Card objects
      * @return a list of instances of the ez-vcard library VCard class
      * @throws CardException if one of Card objects is not valid
      * @throws JsonProcessingException if json cannot be processed
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
      */
     public List<VCard> convert(String json) throws CardException, JsonProcessingException {
 

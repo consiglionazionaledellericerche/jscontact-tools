@@ -19,10 +19,10 @@ import java.io.Serializable;
 
 
 /**
- * Class mapping the Title type as defined in section 2.2.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the Title type as defined in section 2.2.4 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.4">RFC9553</a>
  */
 @JsonPropertyOrder({"@type","kind","name","organizationId"})
 @JsonInclude(JsonInclude.Include.NON_NULL)

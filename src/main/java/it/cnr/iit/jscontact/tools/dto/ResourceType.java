@@ -18,9 +18,9 @@ package it.cnr.iit.jscontact.tools.dto;
 import lombok.AllArgsConstructor;
 
 /**
- * Class supporting the processing the subtypes of the Resource type as defined in section 1.4.4 of [draft-ietf-calext-jscontact].
+ * Class supporting the processing the subtypes of the Resource type as defined in section 1.4.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.4.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.4.4">RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

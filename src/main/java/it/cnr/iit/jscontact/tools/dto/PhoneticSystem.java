@@ -25,9 +25,9 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the pronounce system values as defined in section 1.5.5 of [draft-ietf-calext-jscontact].
+ * Class mapping the pronounce system values as defined in section 1.5.5 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.5.5">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.5.5">RFC9553</a>
  * @author Mario Loffredo
  */
 @Getter

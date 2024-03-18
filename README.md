@@ -1,7 +1,7 @@
 # jscontact-tools
 
-Java tools for **JSContact** [draft-ietf-calext-jscontact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/) creation, validation, serialization/deserialization and conversion from and to vCard 4.0 [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
-Conversion from JSContact to vCard formats and viceversa is based on the rules described in [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
+Java tools for **JSContact** [RFC9553](https://datatracker.ietf.org/doc/RFC9553/) creation, validation, serialization/deserialization and conversion from and to vCard 4.0 [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
+Conversion from JSContact to vCard formats and viceversa is based on the rules described in [RFC9554](https://datatracker.ietf.org/doc/RFC9554/)
 Validation and conversion of vCard formats leverage the features provided by [ez-vcard](https://github.com/mangstadt/ez-vcard) Java library.
 
 
@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>0.18.4</version>
+		  <version>1.0.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:0.18.4'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:1.0.0'
 ```
 
 # Features
@@ -101,7 +101,7 @@ Here in the following a test assessing a successful creation of a cloned Card in
 
 Even if a JSContact **Card** is correctly created by builder, it might need to be validated as it were obtained from an external producer through deserialization.
 Validation is performed on JSContact Card by invoking the method `isValid`.
-This method returns a boolean value: `true` if the object satisfies all the constraints included in [draft-ietf-calext-jscontact], `false` otherwise.
+This method returns a boolean value: `true` if the object satisfies all the constraints included in [RFC9553], `false` otherwise.
 If the validation process doesn't end successfully, the list of error messages can be obtained by calling the `getValidationMessages` method.  
 Here in the following a method testing an unsuccessfully ended validation is shown.
 
@@ -228,7 +228,7 @@ The conversion is executed according to the following rules:
 
 1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
 
-2. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/) are matched.
+2. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [RFC9555](https://datatracker.ietf.org/doc/RFC9555/) are matched.
 
 3. An unmatched property is converted into an entry of the topmost Card `vCardProps` map. The following unmatched properties are considered:    
     CLIENTPIDMAP
@@ -661,7 +661,7 @@ Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all 
 <a name="ez-vcard-extensions"></a>
 ## ez-vcard extensions
 
-New scribers and properties have been defined to support the implementation of the extensions to vCard name and address components as dfined in [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/).
+New scribers and properties have been defined to support the implementation of the extensions to vCard name and address components as dfined in [RFC9555](https://datatracker.ietf.org/doc/RFC9555/).
 To parse and write vCard instances having such extensions, the methods provided by ez-vcard in the Ezvcard class cannot be used.
 Similar methods considering those extensions have been defined in the classes VCardParser and VCardWriter.
 
@@ -697,15 +697,9 @@ This jscontact-tools version is compliant with JSContact specification version -
 <a name="drafts"></a>
 ### JSContact I-Ds
 
-* [draft-ietf-calext-jscontact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/)
-* [draft-ietf-calext-jscontact-vcard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/)
-* [draft-ietf-calext-vcard-jscontact-extensions](https://datatracker.ietf.org/doc/draft-ietf-calext-vcard-jscontact-extensions/)
-
-Version 0.18.4 implements the following draft versions:
-
-* draft-ietf-calext-jscontact-16
-* draft-ietf-calext-jscontact-vcard-14
-* draft-ietf-calext-vcard-jscontact-extensions-11
+* [RFC9553](https://datatracker.ietf.org/doc/RFC9553/)
+* [RFC9554](https://datatracker.ietf.org/doc/RFC9554/)
+* [RFC9555](https://datatracker.ietf.org/doc/RFC9555/)
 
 # Build Instructions
 

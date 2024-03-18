@@ -17,10 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class mapping the SpeakToAs type as defined in section 2.2.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the SpeakToAs type as defined in section 2.2.3 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.3">RFC9553</a>
  */
 @JsonPropertyOrder({"@type","grammaticalGender","pronouns"})
 @NotNullAnyConstraint(fieldNames={"grammaticalGender","pronouns"}, message = "at least one not null member between grammaticalGender and pronouns is required in SpeakToAs")

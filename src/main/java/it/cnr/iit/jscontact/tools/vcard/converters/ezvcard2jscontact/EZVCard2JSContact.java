@@ -1646,7 +1646,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    //Fill JSContact properties mapping the VCard properties defined in draft-ietf-calext-vcard-jscontact-extensions
+    //Fill JSContact properties mapping the VCard properties defined in RFC9555
     private void fillJSCardPropsFromVCardJSContactExtensions(VCard vcard, Card jsCard) {
 
         int i = 1;
@@ -1877,15 +1877,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     /**
      * Converts a list of vCard v4.0 instances [RFC6350] into a list of Card objects.
-     * JSContact is defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * JSContact is defined in RFC9553.
+     * Conversion rules are defined in RFC9554.
      *
      * @param vCards a list of instances of the ez-vcard library VCard class
      * @return a list of Card objects
      * @throws CardException if one of the vCard instances is not v4.0 compliant
      * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
      */
     public List<Card> convert(VCard... vCards) throws CardException {
 

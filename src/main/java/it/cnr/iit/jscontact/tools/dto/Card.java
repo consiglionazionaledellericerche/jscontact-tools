@@ -49,10 +49,10 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Class mapping the Card object as defined in section 2 of [draft-ietf-calext-jscontact].
+ * Class mapping the Card object as defined in section 2 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2">draft-ietf-calext-jscontact</a>
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard#section-2.15.1">draft-ietf-calext-jscontact-vcard</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9554#section-2.15.1">RFC9554</a>
  * @author Mario Loffredo
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -83,54 +83,54 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Metadata properties
      */
 
-    // Section 2.1.1 of [draft-ietf-calext-jscontact]
+    // Section 2.1.1 of [RFC9553]
     @NotNull
     @Pattern(regexp = "Card", message = "invalid @type value in Card")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Card";
 
-    // Section 2.1.2 of [draft-ietf-calext-jscontact]
+    // Section 2.1.2 of [RFC9553]
     @NotNull
     @VersionValueConstraint
     @Builder.Default
     String version = "1.0";
 
-    // Section 2.1.3 of [draft-ietf-calext-jscontact]
+    // Section 2.1.3 of [RFC9553]
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     java.util.Calendar created;
 
-    // Section 2.1.4 of [draft-ietf-calext-jscontact]
+    // Section 2.1.4 of [RFC9553]
     @JsonDeserialize(using = CardKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = KindEnum.class, getMethod = "getKind")
     KindType kind;
 
-    // Section 2.1.5 of [draft-ietf-calext-jscontact]
+    // Section 2.1.5 of [RFC9553]
     @LanguageTagConstraint
     String language;
 
-    // Section 2.1.6 of [draft-ietf-calext-jscontact]
+    // Section 2.1.6 of [RFC9553]
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in JSContact - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Boolean> members;
 
-    // Section 2.1.7 of [draft-ietf-calext-jscontact]
+    // Section 2.1.7 of [RFC9553]
     String prodId;
 
-    // Section 2.1.8 of [draft-ietf-calext-jscontact]
+    // Section 2.1.8 of [RFC9553]
     @JSContactCollection(addMethod = "addRelation", itemClass = Relation.class)
     @JsonPropertyOrder(alphabetic = true)
     @RelatedToConstraint
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Relation> relatedTo;
 
-    // Section 2.1.9 of [draft-ietf-calext-jscontact]
+    // Section 2.1.9 of [RFC9553]
     @NotNull(message = "uid is missing in Card")
     @NonNull
     String uid;
 
-    // Section 2.1.10 of [draft-ietf-calext-jscontact]
+    // Section 2.1.10 of [RFC9553]
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     java.util.Calendar updated;
@@ -139,11 +139,11 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Name and Organization properties
      */
 
-    // Section 2.2.1 of [draft-ietf-calext-jscontact]
+    // Section 2.2.1 of [RFC9553]
     @Valid
     Name name;
 
-    // Section 2.2.1 of [draft-ietf-calext-jscontact]
+    // Section 2.2.1 of [RFC9553]
     @JSContactCollection(addMethod = "addNickName", itemClass = Nickname.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -151,7 +151,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Nickname> nicknames;
 
-    // Section 2.2.2 of [draft-ietf-calext-jscontact]
+    // Section 2.2.2 of [RFC9553]
     @JSContactCollection(addMethod = "addOrganization", itemClass = Organization.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -159,11 +159,11 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Organization> organizations;
 
-    // Section 2.2.3 of [draft-ietf-calext-jscontact]
+    // Section 2.2.3 of [RFC9553]
     @Valid
     SpeakToAs speakToAs;
 
-    // Section 2.2.4 of [draft-ietf-calext-jscontact]
+    // Section 2.2.4 of [RFC9553]
     @JSContactCollection(addMethod = "addTitle", itemClass = Title.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -175,7 +175,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Contact and Resource properties
      */
 
-    // Section 2.3.1 of [draft-ietf-calext-jscontact]
+    // Section 2.3.1 of [RFC9553]
     @JSContactCollection(addMethod = "addEmailAddress", itemClass = EmailAddress.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -183,7 +183,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, EmailAddress> emails;
 
-    // Section 2.3.2 of [draft-ietf-calext-jscontact]
+    // Section 2.3.2 of [RFC9553]
     @JSContactCollection(addMethod = "addOnlineService", itemClass = OnlineService.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -191,7 +191,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,OnlineService> onlineServices;
 
-    // Section 2.3.3 of [draft-ietf-calext-jscontact]
+    // Section 2.3.3 of [RFC9553]
     @JSContactCollection(addMethod = "addPhone", itemClass = Phone.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -199,7 +199,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,Phone> phones;
 
-    // Section 2.3.4 of [draft-ietf-calext-jscontact]
+    // Section 2.3.4 of [RFC9553]
     @JSContactCollection(addMethod = "addLanguagePref", itemClass = LanguagePref.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -212,7 +212,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      Calendaring and Scheduling properties
      */
 
-    // Section 2.4.1 of [draft-ietf-calext-jscontact]
+    // Section 2.4.1 of [RFC9553]
     @JSContactCollection(addMethod = "addCalendar", itemClass = Calendar.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -220,7 +220,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Calendar> calendars;
 
-    // Section 2.4.2 of [draft-ietf-calext-jscontact]
+    // Section 2.4.2 of [RFC9553]
     @JSContactCollection(addMethod = "addSchedulingAddress", itemClass = SchedulingAddress.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -233,7 +233,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Address and Location properties
      */
 
-    // Section 2.5.1 of [draft-ietf-calext-jscontact]
+    // Section 2.5.1 of [RFC9553]
     @JSContactCollection(addMethod = "addAddress", itemClass = Address.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -245,7 +245,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Resource properties
      */
 
-    // Section 2.6.1 of [draft-ietf-calext-jscontact]
+    // Section 2.6.1 of [RFC9553]
     @JSContactCollection(addMethod = "addCryptoResource", itemClass = CryptoKey.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -253,7 +253,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, CryptoKey> cryptoKeys;
 
-    // Section 2.6.2 of [draft-ietf-calext-jscontact]
+    // Section 2.6.2 of [RFC9553]
     @JSContactCollection(addMethod = "addDirectoryResource", itemClass = Directory.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -261,7 +261,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Directory> directories;
 
-    // Section 2.6.3 of [draft-ietf-calext-jscontact]
+    // Section 2.6.3 of [RFC9553]
     @JSContactCollection(addMethod = "addLinkResource", itemClass = Link.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -269,7 +269,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Link> links;
 
-    // Section 2.6.4 of [draft-ietf-calext-jscontact]
+    // Section 2.6.4 of [RFC9553]
     @JSContactCollection(addMethod = "addMediaResource", itemClass = Media.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -282,7 +282,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Multilingual properties
      */
 
-    // Section 2.7.1 of [draft-ietf-calext-jscontact]
+    // Section 2.7.1 of [RFC9553]
     @JsonPropertyOrder(alphabetic = true)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Map<String, JsonNode>> localizations;
@@ -292,7 +292,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Additional properties
      */
 
-    // Section 2.8.1 of [draft-ietf-calext-jscontact]
+    // Section 2.8.1 of [RFC9553]
     @JSContactCollection(addMethod = "addAnniversary", itemClass = Anniversary.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -300,17 +300,17 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Anniversary> anniversaries;
 
-    // Section 2.8.2 of [draft-ietf-calext-jscontact]
+    // Section 2.8.2 of [RFC9553]
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Boolean> keywords;
 
-    // Section 2.8.3 of [draft-ietf-calext-jscontact]
+    // Section 2.8.3 of [RFC9553]
     @IdMapConstraint(message = "invalid Id in Map<Id,Note>")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Note> notes;
 
-    // Section 2.8.4 of [draft-ietf-calext-jscontact]
+    // Section 2.8.4 of [RFC9553]
     @JSContactCollection(addMethod = "addPersonalInfo", itemClass = PersonalInfo.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -318,7 +318,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, PersonalInfo> personalInfo;
 
-    // Section 2.15.1 of [draft-ietf-calext-jscontact-vcard]
+    // Section 2.15.1 of [RFC9554]
     @JsonProperty("vCardProps")
     @JsonSerialize(using = VCardPropsSerializer.class)
     @JsonDeserialize(using = VCardPropsDeserializer.class)

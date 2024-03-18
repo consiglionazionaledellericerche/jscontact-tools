@@ -37,9 +37,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Resource type as defined in section 1.4.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the Resource type as defined in section 1.4.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.4.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.4.4">RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","kind","uri","mediaType","contexts","pref","label"})

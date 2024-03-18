@@ -22,9 +22,9 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "kind" property of the Link type as defined in section 2.6.3 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the values of the "kind" property of the Link type as defined in section 2.6.3 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.6.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.3">RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

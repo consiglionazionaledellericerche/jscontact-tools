@@ -13,9 +13,9 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
- * Class mapping the OrgUnit type as defined in section 2.2.2 of [draft-ietf-calext-jscontact].
+ * Class mapping the OrgUnit type as defined in section 2.2.2 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.2">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.2">RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","name","sortAs"})

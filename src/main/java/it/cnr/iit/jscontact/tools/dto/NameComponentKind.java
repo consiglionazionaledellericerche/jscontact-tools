@@ -21,10 +21,10 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "kind" property of the NameComponent type as defined in section 2.2.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the NameComponent type as defined in section 2.2.1 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.1">RFC9553</a>
  */
 @Getter
 @Setter
