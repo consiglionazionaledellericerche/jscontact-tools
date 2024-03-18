@@ -1,7 +1,7 @@
 # jscontact-tools
 
 Java tools for **JSContact** [RFC9553](https://datatracker.ietf.org/doc/RFC9553/) creation, validation, serialization/deserialization and conversion from and to vCard 4.0 [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
-Conversion from JSContact to vCard formats and viceversa is based on the rules described in [RFC9554](https://datatracker.ietf.org/doc/RFC9554/)
+Conversion from JSContact to vCard formats and viceversa is based on the rules described in [RFC9555](https://datatracker.ietf.org/doc/RFC9555/)
 Validation and conversion of vCard formats leverage the features provided by [ez-vcard](https://github.com/mangstadt/ez-vcard) Java library.
 
 
@@ -228,7 +228,7 @@ The conversion is executed according to the following rules:
 
 1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
 
-2. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [RFC9555](https://datatracker.ietf.org/doc/RFC9555/) are matched.
+2. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [RFC9554](https://datatracker.ietf.org/doc/RFC9554/) are matched.
 
 3. An unmatched property is converted into an entry of the topmost Card `vCardProps` map. The following unmatched properties are considered:    
     CLIENTPIDMAP
@@ -661,7 +661,7 @@ Test cases are executed using [JUnit4](https://junit.org/junit4/) and cover all 
 <a name="ez-vcard-extensions"></a>
 ## ez-vcard extensions
 
-New scribers and properties have been defined to support the implementation of the extensions to vCard name and address components as dfined in [RFC9555](https://datatracker.ietf.org/doc/RFC9555/).
+New scribers and properties have been defined to support the implementation of the extensions to vCard name and address components as dfined in [RFC9554](https://datatracker.ietf.org/doc/RFC9554/).
 To parse and write vCard instances having such extensions, the methods provided by ez-vcard in the Ezvcard class cannot be used.
 Similar methods considering those extensions have been defined in the classes VCardParser and VCardWriter.
 

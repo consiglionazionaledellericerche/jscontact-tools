@@ -19,11 +19,11 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping some VCard properties as defined in section 6 of [RFC6350] and section 3 of [RFC9555] .
+ * Enum class mapping some VCard properties as defined in section 6 of [RFC6350] and section 3 of [RFC9554] .
  *
  * @author Mario Loffredo
  * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-6">https://www.rfc-editor.org/rfc/rfc6350</a>
- * @see <a href="https://datatracker.ietf.org/doc/RFC9555#section-3">RFC9555</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9554#section-3">RFC9554</a>
  */
 @AllArgsConstructor
 public enum VCardPropEnum {

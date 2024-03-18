@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * Class mapping the VCardProp type as defined in section 2.15.1 of [RFC9554].
+ * Class mapping the VCardProp type as defined in section 2.15.1 of [RFC9555].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.15.1">RFC9554</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.15.1">RFC9555</a>
  */
 @NoArgsConstructor
 @AllArgsConstructor

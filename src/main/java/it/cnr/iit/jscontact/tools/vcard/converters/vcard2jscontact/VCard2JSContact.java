@@ -47,7 +47,7 @@ public class VCard2JSContact extends EZVCard2JSContact {
      * @return a list of Card objects
      * @throws CardException if the vCard is not v4.0 compliant
      * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
-     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
      */
     public List<Card> convert(String vCard) throws CardException {

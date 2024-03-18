@@ -46,7 +46,7 @@ public class JSContact2XCard extends JSContact2EZVCard {
      * @return an xCard as an XML string
      * @throws CardException if one of the Card objects is not valid
      * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
-     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
      */
     public String convertToXml(Card... jsCards) throws CardException {

@@ -52,7 +52,7 @@ import java.util.*;
  * Class mapping the Card object as defined in section 2 of [RFC9553].
  *
  * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2">RFC9553</a>
- * @see <a href="https://datatracker.ietf.org/doc/RFC9554#section-2.15.1">RFC9554</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9555#section-2.15.1">RFC9555</a>
  * @author Mario Loffredo
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -318,7 +318,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, PersonalInfo> personalInfo;
 
-    // Section 2.15.1 of [RFC9554]
+    // Section 2.15.1 of [RFC9555]
     @JsonProperty("vCardProps")
     @JsonSerialize(using = VCardPropsSerializer.class)
     @JsonDeserialize(using = VCardPropsDeserializer.class)

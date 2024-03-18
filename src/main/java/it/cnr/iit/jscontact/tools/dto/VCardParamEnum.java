@@ -19,10 +19,10 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the VCard parameters as defined in section 5 of [RFC6350] and section 4 of [RFC9555] .
+ * Enum class mapping the VCard parameters as defined in section 5 of [RFC6350] and section 4 of [RFC9554] .
  *
  * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-5">https://www.rfc-editor.org/rfc/rfc6350</a>
- * @see <a href="https://datatracker.ietf.org/doc/RFC9555#section-4">RFC9555</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9554#section-4">RFC9554</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
