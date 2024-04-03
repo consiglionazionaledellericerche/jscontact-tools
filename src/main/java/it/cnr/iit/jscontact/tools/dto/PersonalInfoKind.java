@@ -90,9 +90,9 @@ public class PersonalInfoKind extends ExtensibleEnumType<PersonalInfoEnum> imple
     }
 
     /**
-     * Returns a "expertise" personal information type.
+     * Returns an "expertise" personal information type.
      *
-     * @return a "expertise" personal information type
+     * @return an "expertise" personal information type
      */
     public static PersonalInfoKind expertise() {
         return rfc(PersonalInfoEnum.EXPERTISE);

@@ -102,7 +102,7 @@ public class JSContactForRdapGetter {
      *
      * @param language the localization language
      * @return the name localization as JSContact Name object if it is set, null otherwise
-     * @throws InternalErrorException if the localization cannot be casted to a JSContact Name object
+     * @throws InternalErrorException if the localization cannot be cast to a JSContact Name object
      */
     public Name nameLoc(String language) throws InternalErrorException {
         try {
@@ -113,11 +113,11 @@ public class JSContactForRdapGetter {
     }
 
     /**
-     * Returns a organization localization of this JSContactForRdapGetter object
+     * Returns an organization localization of this JSContactForRdapGetter object
      *
      * @param language the localization language
      * @return the organization localization if it is set, null otherwise
-     * @throws InternalErrorException if the localization cannot be casted to a JSContact Organization object
+     * @throws InternalErrorException if the localization cannot be cast to a JSContact Organization object
      */
     public String orgLoc(String language) {
         try {
@@ -132,7 +132,7 @@ public class JSContactForRdapGetter {
      *
      * @param language the localization language
      * @return the address localization as JSContact Address object if it is set, null otherwise
-     * @throws InternalErrorException if the localization cannot be casted to a JSContact Address object
+     * @throws InternalErrorException if the localization cannot be cast to a JSContact Address object
      */
     public Address addressLoc(String language) throws InternalErrorException {
         try {
@@ -147,7 +147,7 @@ public class JSContactForRdapGetter {
      *
      * @param language the localization language
      * @return the email address localization if it is set, null otherwise
-     * @throws InternalErrorException if the localization cannot be casted to a JSContact EmailAddress object
+     * @throws InternalErrorException if the localization cannot be cast to a JSContact EmailAddress object
      */
     public String emailLoc(String language) {
         try {

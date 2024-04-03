@@ -34,10 +34,10 @@ import java.io.Serializable;
 public class AddressComponentKind extends ExtensibleEnumType<AddressComponentEnum> implements Serializable {
 
     /**
-     * Returns a address component type whose enum value is pre-defined.
+     * Returns an address component type whose enum value is pre-defined.
      *
      * @param rfcValue a pre-defined address component type
-     * @return a address component type
+     * @return an address component type
      */
     public static AddressComponentKind rfc(AddressComponentEnum rfcValue) { return AddressComponentKind.builder().rfcValue(rfcValue).build();}
     /**
@@ -126,9 +126,9 @@ public class AddressComponentKind extends ExtensibleEnumType<AddressComponentEnu
      */
     public static AddressComponentKind room() { return rfc(AddressComponentEnum.ROOM);}
     /**
-     * Returns an "landmark" address component type.
+     * Returns a "landmark" address component type.
      *
-     * @return an "landmark" address component type
+     * @return a "landmark" address component type
      */
     public static AddressComponentKind landmark() { return rfc(AddressComponentEnum.LANDMARK);}
     /**

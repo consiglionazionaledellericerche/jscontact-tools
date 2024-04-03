@@ -28,7 +28,7 @@ import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneticSystemDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IdMapValue;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
@@ -88,7 +88,7 @@ public class Address extends AbstractJSContactType implements IdMapValue, HasCom
     @Pattern(regexp="[a-zA-Z]{4}", message = "invalid phoneticScript in Address")
     String phoneticScript;
 
-    @JsonDeserialize(using = PronounceSystemDeserializer.class)
+    @JsonDeserialize(using = PhoneticSystemDeserializer.class)
     PhoneticSystem phoneticSystem;
 
     @JsonSerialize(using = AddressContextsSerializer.class)

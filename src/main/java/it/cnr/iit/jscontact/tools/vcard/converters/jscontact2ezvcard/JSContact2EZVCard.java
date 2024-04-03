@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
  * Utility class for converting a Card object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object [ez-vcard]
  *
  * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
- * @see <a https://github.com/mangstadt/ez-vcard</a>
+ * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor
@@ -118,7 +118,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         List<String> components = new ArrayList<>();
         String separator = (defaultSeparator != null) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER;
-        boolean applySeparator = (isOrdered!=null && isOrdered == Boolean.TRUE);
+        boolean applySeparator = (isOrdered == Boolean.TRUE);
         for (NameComponent pair : nameComponents) {
             if (pair.getKind().isRfcValue()) {
                 switch (pair.getKind().getRfcValue()) {

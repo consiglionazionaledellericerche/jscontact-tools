@@ -760,7 +760,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return name;
     }
 
-    private void fillJSCardNames(VCard vcard, Card jsCard) throws CardException {
+    private void fillJSCardNames(VCard vcard, Card jsCard) {
 
         if (vcard.getProperties(ExtendedStructuredName.class) == null || vcard.getProperties(ExtendedStructuredName.class).isEmpty())
             return;
@@ -1299,9 +1299,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String vcardType = VCardUtils.getVCardParamValue(tel.getParameters(), VCardParamEnum.TYPE);
             Map<Context,Boolean> contexts = toJSCardContexts(vcardType);
             Map<PhoneFeature,Boolean> phoneFeatures = toJSCardPhoneFeatures(vcardType);
-            String[] exclude = null;
-            if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())));
-            if (phoneFeatures != null) exclude = ArrayUtils.addAll(exclude, EnumUtils.toStrings(PhoneFeature.toEnumValues(phoneFeatures.keySet())));
             jsCard.addPhone(getJSCardId(JSContactIdsProfile.IdType.PHONE, i,"PHONE-" + (i++), tel.getParameter(VCardParamEnum.PROP_ID.getValue())), Phone.builder()
                             .number(getValue(tel))
                             .features(phoneFeatures)
