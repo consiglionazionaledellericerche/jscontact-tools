@@ -22,9 +22,9 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the "system" values of the Pronounce type as defined in section 1.5.5 of [RFC9553].
+ * Enum class mapping the "phoneticSystem" values as defined in section 1.5.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.5.5">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.5.4">Section 1.5.4 of RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

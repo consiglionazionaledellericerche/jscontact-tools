@@ -28,9 +28,10 @@ import lombok.Builder;
 import java.util.*;
 
 /**
- * Utility class for converting a jCard [RFC7095] into a JSContact object.
+ * Utility class for converting a jCard [RFC7095] into a JSContact object [RFC9553].
  *
  * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
+ * @see <a href="https://tools.ietf.org/html/rfc7095">RFC9553</a>
  * @author Mario Loffredo
  */
 public class JCard2JSContact extends EZVCard2JSContact {
@@ -42,16 +43,19 @@ public class JCard2JSContact extends EZVCard2JSContact {
     }
 
     /**
-     * Converts a complete vCard v4.0 in JSON format, namely jCard [RFC7095], into a list of Card objects
-     * JSContact is defined in RFC9553.
-     * Conversion rules are defined in RFC9555.
+     * Converts a complete vCard v4.0 [RFC6350] in JSON format, namely jCard [RFC7095], into a list of Card objects
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
      *
      * @param jCard a jCard as a JSON string
      * @return a list of Card objects
      * @throws CardException if the jCard is not v4.0 compliant
+     * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
-     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      */
     public List<Card> convert(String jCard) throws CardException {
 
@@ -71,9 +75,9 @@ public class JCard2JSContact extends EZVCard2JSContact {
      * @throws CardException if the jCard is not v4.0 compliant
      * @throws JsonProcessingException if the jCard cannot be serialized
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
-     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
      */
     public List<Card> convert(JsonNode jCard) throws CardException, JsonProcessingException {
 

@@ -20,9 +20,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the values of the "grammaticalGender" property as defined in section 2.2.3 of [RFC9553].
+ * Enum class mapping the values of the "grammaticalGender" property as defined in section 2.2.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.3">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.4">Section 2.2.4 of RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

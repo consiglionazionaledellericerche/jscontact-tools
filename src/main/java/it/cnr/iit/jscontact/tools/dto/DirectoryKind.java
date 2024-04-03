@@ -27,7 +27,7 @@ import java.io.Serializable;
 /**
  * Class mapping the values of the "kind" property of the DirectoryResource type as defined in section 2.6.2 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.2">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.2">Section 2.6.2 of RFC9553</a>
  * @author Mario Loffredo
  */
 @Getter

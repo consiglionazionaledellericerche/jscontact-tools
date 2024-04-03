@@ -19,9 +19,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Nickname type as defined in section 2.2.1.3 of [RFC9553].
+ * Class mapping the Nickname type as defined in section 2.2.2 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.1.3">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.2">Section 2.2.2 of RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","name","contexts","pref"})

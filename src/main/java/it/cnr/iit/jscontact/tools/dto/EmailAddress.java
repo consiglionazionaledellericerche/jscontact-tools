@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Class mapping the EmailAddress type as defined in section 2.3.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.1">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.1">Section 2.3.1 of RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type", "address", "contexts", "pref", "label"})

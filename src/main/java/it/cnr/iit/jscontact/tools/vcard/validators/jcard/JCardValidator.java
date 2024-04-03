@@ -52,11 +52,11 @@ public class JCardValidator extends EZVCardValidator {
     /**
      * Validates a complete vCard v4.0 in JSON format, namely jCard [RFC7095].
      *
-     * @param jCard a jCard as an istance of Jackson library JsonNode class
+     * @param jCard a jCard as an istance of Jackson library JsonNode class [Jackson Project]
      * @throws CardException if the jCard is not v4.0 compliant
      * @throws JsonProcessingException if the JsonNode object cannot be serialized
      * @see <a href="https://tools.ietf.org/html/rfc7095">RFC7095</a>
-     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project</a>
      */
     public void validate(JsonNode jCard) throws CardException, JsonProcessingException {
 

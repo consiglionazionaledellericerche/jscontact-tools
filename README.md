@@ -226,9 +226,9 @@ All the methods return a list of JSContact Card objects and can raise a `CardExc
 
 The conversion is executed according to the following rules:
 
-1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
+1. The conversion is based on the content of the [JSContact RFCs](#jscontact-rfcs).
 
-2. The card components (i.e. properties, parameters or values) considered in the [RFCs](#rfcs) as well as the additonal components defined in [RFC9554](https://datatracker.ietf.org/doc/RFC9554/) are matched.
+2. The card components (i.e. properties, parameters or values) considered in the [Other RFCs](#other-rfcs) as well as the additonal components defined in [RFC9554](https://datatracker.ietf.org/doc/RFC9554/) are matched.
 
 3. An unmatched property is converted into an entry of the topmost Card `vCardProps` map. The following unmatched properties are considered:    
     CLIENTPIDMAP
@@ -370,7 +370,7 @@ All the methods take in input a list of JSContact Card objects and can raise the
 
 ### Conversion Rules from JSContact Card to vCard 
 
-1. The conversion is based on the content of the [JSContact I-Ds](#drafts).
+1. The conversion is based on the content of the [JSContact RFCs](#jscontact-rfcs).
  
 2. An entry of the topmost Card/CardGroup `vCardProps` map is converted into the related vCard property  . The following properties are considered:
     CLIENTPIDMAP
@@ -680,26 +680,31 @@ This jscontact-tools version is compliant with JSContact specification version -
 <a name="references"></a>
 ## References
 
-<a name="rfcs"></a>
-### RFCs
-
-*   [RFC6350](https://datatracker.ietf.org/doc/rfc6350/)
-*   [RFC6351](https://datatracker.ietf.org/doc/rfc6351/)
-*   [RFC6473](https://datatracker.ietf.org/doc/rfc6473/)
-*   [RFC6474](https://datatracker.ietf.org/doc/rfc6474/)
-*   [RFC6715](https://datatracker.ietf.org/doc/rfc6715/)
-*   [RFC6869](https://datatracker.ietf.org/doc/rfc6869/)
-*   [RFC6901](https://datatracker.ietf.org/doc/rfc6901/)
-*   [RFC7095](https://datatracker.ietf.org/doc/rfc7095/)
-*   [RFC8605](https://datatracker.ietf.org/doc/rfc8605/)
-*   [RFC9083](https://datatracker.ietf.org/doc/rfc9083/)
-
-<a name="drafts"></a>
-### JSContact I-Ds
+<a name="jscontact-rfcs"></a>
+### JSContact RFCs
 
 * [RFC9553](https://datatracker.ietf.org/doc/RFC9553/)
 * [RFC9554](https://datatracker.ietf.org/doc/RFC9554/)
 * [RFC9555](https://datatracker.ietf.org/doc/RFC9555/)
+
+<a name="other-rfcs"></a>
+### Other RFCs
+
+* [RFC6350](https://datatracker.ietf.org/doc/rfc6350/)
+* [RFC6351](https://datatracker.ietf.org/doc/rfc6351/)
+* [RFC6473](https://datatracker.ietf.org/doc/rfc6473/)
+* [RFC6474](https://datatracker.ietf.org/doc/rfc6474/)
+* [RFC6715](https://datatracker.ietf.org/doc/rfc6715/)
+* [RFC6869](https://datatracker.ietf.org/doc/rfc6869/)
+* [RFC6901](https://datatracker.ietf.org/doc/rfc6901/)
+* [RFC7095](https://datatracker.ietf.org/doc/rfc7095/)
+* [RFC8605](https://datatracker.ietf.org/doc/rfc8605/)
+* [RFC9083](https://datatracker.ietf.org/doc/rfc9083/)
+
+<a name="drafts"></a>
+### Drafts
+
+* [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/)
 
 # Build Instructions
 

@@ -21,7 +21,7 @@ import java.util.Calendar;
 /**
  * Class mapping the Note type as defined in section 2.8.3 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.3">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.3">Section 2.8.3 of RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","note","created","author"})

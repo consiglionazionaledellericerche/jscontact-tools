@@ -33,9 +33,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Relation type as defined in section 2.1.7 of [RFC9553].
+ * Class mapping the Relation type as defined in section 2.1.8 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.7">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.8">Section 2.1.8 of RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","relation"})

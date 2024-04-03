@@ -28,7 +28,7 @@ import java.io.Serializable;
  * Class mapping the values of the "level" property of the PersonalInfo type as defined in section 2.8.4 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.4">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.4">Section 2.8.4 of RFC9553</a>
  */
 @Getter
 @Setter

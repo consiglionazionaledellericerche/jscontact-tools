@@ -25,7 +25,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class RFCXXXXPropertiesTest extends JSContact2VCardTest {
+public class RFC9554PropertiesTest extends JSContact2VCardTest {
 
     @Test
     public void testCreated() throws IOException, CardException {

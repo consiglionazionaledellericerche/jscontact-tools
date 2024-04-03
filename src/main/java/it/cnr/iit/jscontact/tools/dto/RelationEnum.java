@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 /**
  * Enum class mapping the "relation" map keys of the Relation type as defined in section 2.1.8 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.8">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.8">Section 2.1.8 of RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

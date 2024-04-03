@@ -10,7 +10,7 @@ import java.util.Arrays;
  * Class mapping the vendor-extension values as defined in section 1.8 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.8">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.8">Section 1.8 of RFC9553</a>
  */
 @Data
 @Builder

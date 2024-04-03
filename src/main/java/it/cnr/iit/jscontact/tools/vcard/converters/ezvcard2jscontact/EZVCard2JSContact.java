@@ -55,9 +55,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class for converting a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object into a JSContact object.
+ * Utility class for converting a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object [ez-vcard] into a JSContact object [RFC9553].
  *
  * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC9553</a>
+ * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor
@@ -1877,15 +1879,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     /**
      * Converts a list of vCard v4.0 instances [RFC6350] into a list of Card objects.
-     * JSContact is defined in RFC9553.
-     * Conversion rules are defined in RFC9555.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
      *
-     * @param vCards a list of instances of the ez-vcard library VCard class
+     * @param vCards a list of instances of the ez-vcard library VCard class [ez-vcard]
      * @return a list of Card objects
      * @throws CardException if one of the vCard instances is not v4.0 compliant
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
      */
     public List<Card> convert(VCard... vCards) throws CardException {
 

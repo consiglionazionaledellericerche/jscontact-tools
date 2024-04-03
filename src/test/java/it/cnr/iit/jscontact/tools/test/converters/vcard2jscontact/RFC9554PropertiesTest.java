@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RFCXXXXPropertiesTest extends VCard2JSContactTest {
+public class RFC9554PropertiesTest extends VCard2JSContactTest {
 
     @Test
     public void testCreated() throws CardException {

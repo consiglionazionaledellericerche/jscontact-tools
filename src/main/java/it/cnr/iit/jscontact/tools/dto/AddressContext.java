@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Class mapping the keys of "contexts" map of the Address type as defined in section 2.5.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.5.1">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.5.1">Section 2.5.1 of RFC9553</a>
  * @author Mario Loffredo
  */
 @Getter

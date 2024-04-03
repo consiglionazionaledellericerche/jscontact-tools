@@ -7,7 +7,7 @@ import lombok.*;
  * Class mapping the VCard parameters as defined in section 2.15.2 of [RFC9555].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.15.2">RFC9555</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.15.2">Section 2.15.2 of RFC9555</a>
  */
 @NotNullAnyConstraint(fieldNames={"value","values"}, message = "at least one not null member between value and values is required in VCardParam")
 @NoArgsConstructor

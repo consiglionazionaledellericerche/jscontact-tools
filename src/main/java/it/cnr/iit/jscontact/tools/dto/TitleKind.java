@@ -28,7 +28,7 @@ import java.io.Serializable;
  * Class mapping the "kind" property as defined in section 2.2.6 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.6">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.5">Section 2.2.5 of RFC9553</a>
  */
 @Getter
 @Setter

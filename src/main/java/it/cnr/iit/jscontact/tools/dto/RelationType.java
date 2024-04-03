@@ -22,10 +22,10 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the relation types as defined in section 2.1.7 of [RFC9553]. The relation types map those presented for the vCard 4.0 RELATED property as defined in section 6.6.4 of [RFC6350]
+ * Class mapping the relation types as defined in section 2.1.8 of [RFC9553]. The relation types map those presented for the vCard 4.0 RELATED property as defined in section 6.6.4 of [RFC6350]
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.7">RFC9553</a>
- * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.4">RFC6350</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.8">Section 2.1.8 of RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/rfc6350#section-6.6.4">Section 6.6.4 of RFC6350</a>
  * @author Mario Loffredo
  */
 @Getter

@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 /**
  * Enum class mapping the "kind" property values as defined in section 2.1.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.4">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.4">Section 2.1.4 of RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

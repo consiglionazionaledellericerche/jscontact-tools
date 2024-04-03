@@ -41,13 +41,17 @@ public class JSContact2VCard extends JSContact2EZVCard {
 
     /**
      * Converts one or more Card objects into a complete vCard v4.0 [RFC6350].
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
      *
      * @param jsCards a list of Card objects
      * @return a vCard as a text
      * @throws CardException if one of the Card objects is not valid
      * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
-     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      */
     public String convertToText(Card... jsCards) throws CardException {
 

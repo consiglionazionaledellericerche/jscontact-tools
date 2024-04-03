@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Class mapping the SchedulingAddress type as defined in section 2.4.2 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.4.2">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.4.2">Section 2.4.2 of RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type", "uri", "contexts", "pref", "label"})

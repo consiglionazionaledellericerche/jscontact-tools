@@ -41,7 +41,7 @@ import java.util.Map;
 /**
  * Class mapping the OnlineService type as defined in section 2.3.2 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.2">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.2">Section 2.3.2 of RFC9553</a>
  * @author Mario Loffredo
  */
 

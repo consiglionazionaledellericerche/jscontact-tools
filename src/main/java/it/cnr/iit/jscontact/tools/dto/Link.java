@@ -31,7 +31,7 @@ import javax.validation.constraints.Pattern;
 /**
  * Class mapping the Link type as defined in section 2.6.3 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.3">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.3">Section 2.6.3 of RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","kind","uri","mediaType","contexts","pref","label"})

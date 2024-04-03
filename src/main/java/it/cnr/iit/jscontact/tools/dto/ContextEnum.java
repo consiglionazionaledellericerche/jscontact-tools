@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * Enum class mapping the "contexts" map keys of the Context type as defined in section 1.5.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.5.1">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.5.1">Section 1.5.1 of RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

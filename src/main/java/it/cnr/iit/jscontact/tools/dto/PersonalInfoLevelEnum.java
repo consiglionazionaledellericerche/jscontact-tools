@@ -29,7 +29,7 @@ import java.util.Map;
  * Enum class mapping the values of the PersonalInfo "level" member as defined in section 2.8.4 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.4">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.4">Section 2.8.4 of RFC9553</a>
  */
 @AllArgsConstructor
 public enum PersonalInfoLevelEnum implements IsExtensibleEnum {

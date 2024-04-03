@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 /**
  * Class supporting the processing the subtypes of the Resource type as defined in section 1.4.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.4.4">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.4.4">Section 1.4.4 of RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

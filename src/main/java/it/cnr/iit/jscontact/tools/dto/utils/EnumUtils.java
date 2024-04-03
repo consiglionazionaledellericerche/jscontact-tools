@@ -66,7 +66,7 @@ public class EnumUtils {
      * @param <E> a generic enum
      * @param context the context value
      * @return the value of vCard 4.0 TYPE parameter
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">Section 5.6 of RFC6350</a>
      */
     public static <E extends Enum <E>> String toVCardTypeParam(E context) {
 

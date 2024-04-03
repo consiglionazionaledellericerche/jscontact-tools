@@ -49,9 +49,9 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Class mapping the Card object as defined in section 2 of [RFC9553].
+ * Class mapping the Card object as defined in section 2 of [RFC9553] and section 2.15.1 of [RFC9555].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2">Section 2 of RFC9553</a>
  * @see <a href="https://datatracker.ietf.org/doc/RFC9555#section-2.15.1">RFC9555</a>
  * @author Mario Loffredo
  */
@@ -80,57 +80,77 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     private static ObjectMapper mapper = new ObjectMapper();
 
     /*
-    Metadata properties
+    Metadata Properties
      */
 
-    // Section 2.1.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.1">Section 2.1.1 of RFC9553</a>
+     */
     @NotNull
     @Pattern(regexp = "Card", message = "invalid @type value in Card")
     @JsonProperty("@type")
     @Builder.Default
     String _type = "Card";
 
-    // Section 2.1.2 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.2">Section 2.1.2 of RFC9553</a>
+     */
     @NotNull
     @VersionValueConstraint
     @Builder.Default
     String version = "1.0";
 
-    // Section 2.1.3 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.3">Section 2.1.3 of RFC9553</a>
+     */
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     java.util.Calendar created;
 
-    // Section 2.1.4 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.4">Section 2.1.4 of RFC9553</a>
+     */
     @JsonDeserialize(using = CardKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = KindEnum.class, getMethod = "getKind")
     KindType kind;
 
-    // Section 2.1.5 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.5">Section 2.1.5 of RFC9553</a>
+     */
     @LanguageTagConstraint
     String language;
 
-    // Section 2.1.6 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.6">Section 2.1.6 of RFC9553</a>
+     */
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> members in JSContact - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Boolean> members;
 
-    // Section 2.1.7 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.7">Section 2.1.7 of RFC9553</a>
+     */
     String prodId;
 
-    // Section 2.1.8 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.8">Section 2.1.8 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addRelation", itemClass = Relation.class)
     @JsonPropertyOrder(alphabetic = true)
     @RelatedToConstraint
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Relation> relatedTo;
 
-    // Section 2.1.9 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.9">Section 2.1.9 of RFC9553</a>
+     */
     @NotNull(message = "uid is missing in Card")
     @NonNull
     String uid;
 
-    // Section 2.1.10 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.10">Section 2.1.10 of RFC9553</a>
+     */
     @JsonSerialize(using = UTCDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializers.CalendarDeserializer.class)
     java.util.Calendar updated;
@@ -139,11 +159,15 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Name and Organization properties
      */
 
-    // Section 2.2.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.1">Section 2.2.1 of RFC9553</a>
+     */
     @Valid
     Name name;
 
-    // Section 2.2.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.2">Section 2.2.2 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addNickName", itemClass = Nickname.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -151,7 +175,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Nickname> nicknames;
 
-    // Section 2.2.2 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.3">Section 2.2.3 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addOrganization", itemClass = Organization.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -159,11 +185,15 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Organization> organizations;
 
-    // Section 2.2.3 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.4">Section 2.2.4 of RFC9553</a>
+     */
     @Valid
     SpeakToAs speakToAs;
 
-    // Section 2.2.4 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.5">Section 2.2.5 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addTitle", itemClass = Title.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -172,10 +202,12 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Map<String, Title> titles;
 
     /*
-    Contact and Resource properties
+    Contact Properties
      */
 
-    // Section 2.3.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.1">Section 2.3.1 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addEmailAddress", itemClass = EmailAddress.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -183,7 +215,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, EmailAddress> emails;
 
-    // Section 2.3.2 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.2">Section 2.3.2 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addOnlineService", itemClass = OnlineService.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -191,7 +225,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,OnlineService> onlineServices;
 
-    // Section 2.3.3 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.3">Section 2.3.3 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addPhone", itemClass = Phone.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -199,7 +235,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,Phone> phones;
 
-    // Section 2.3.4 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.4">Section 2.3.4 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addLanguagePref", itemClass = LanguagePref.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -207,12 +245,13 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, LanguagePref> preferredLanguages;
 
-
     /*
      Calendaring and Scheduling properties
      */
 
-    // Section 2.4.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.4.1">Section 2.4.1 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addCalendar", itemClass = Calendar.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -220,7 +259,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Calendar> calendars;
 
-    // Section 2.4.2 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.4.2">Section 2.4.2 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addSchedulingAddress", itemClass = SchedulingAddress.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -228,12 +269,13 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, SchedulingAddress> schedulingAddresses;
 
-
     /*
     Address and Location properties
      */
 
-    // Section 2.5.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.5.1">Section 2.5.1 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addAddress", itemClass = Address.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -245,7 +287,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     Resource properties
      */
 
-    // Section 2.6.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.1">Section 2.6.1 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addCryptoResource", itemClass = CryptoKey.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -253,7 +297,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, CryptoKey> cryptoKeys;
 
-    // Section 2.6.2 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.2">Section 2.6.2 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addDirectoryResource", itemClass = Directory.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -261,7 +307,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Directory> directories;
 
-    // Section 2.6.3 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.3">Section 2.6.3 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addLinkResource", itemClass = Link.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -269,7 +317,9 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Link> links;
 
-    // Section 2.6.4 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.4">Section 2.6.4 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addMediaResource", itemClass = Media.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -277,22 +327,24 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Media> media;
 
-
     /*
     Multilingual properties
      */
 
-    // Section 2.7.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.7.1">Section 2.7.1 of RFC9553</a>
+     */
     @JsonPropertyOrder(alphabetic = true)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Map<String, JsonNode>> localizations;
-
 
     /*
     Additional properties
      */
 
-    // Section 2.8.1 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.1">Section 2.8.1 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addAnniversary", itemClass = Anniversary.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -300,17 +352,23 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Anniversary> anniversaries;
 
-    // Section 2.8.2 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.2">Section 2.8.2 of RFC9553</a>
+     */
     @BooleanMapConstraint(message = "invalid Map<String,Boolean> keywords in JSContact - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Boolean> keywords;
 
-    // Section 2.8.3 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.3">Section 2.8.3 of RFC9553</a>
+     */
     @IdMapConstraint(message = "invalid Id in Map<Id,Note>")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Note> notes;
 
-    // Section 2.8.4 of [RFC9553]
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.4">Section 2.8.4 of RFC9553</a>
+     */
     @JSContactCollection(addMethod = "addPersonalInfo", itemClass = PersonalInfo.class)
     @JsonPropertyOrder(alphabetic = true)
     @Valid
@@ -318,7 +376,13 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, PersonalInfo> personalInfo;
 
-    // Section 2.15.1 of [RFC9555]
+    /*
+     New JSContact Properties
+    */
+
+    /**
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555#section-2.15.1">Section 2.15.1 of RFC9555</a>
+     */
     @JsonProperty("vCardProps")
     @JsonSerialize(using = VCardPropsSerializer.class)
     @JsonDeserialize(using = VCardPropsDeserializer.class)
@@ -332,8 +396,6 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonIgnore
     @Getter
     private List<String> validationMessages;
-
-//Methods for adding items to a mutable collection
 
 
     /**
@@ -650,10 +712,10 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      *
      * @param language the localization language tag [RFC5646]
      * @param path the JSON pointer [RFC6901] to the property
-     * @param object the Jackson library JsonNode object representing the localization for the property
+     * @param object the Jackson library JsonNode object [Jackson Project] representing the localization for the property
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
-     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project</a>
      */
     public void addLocalization(String language, String path, JsonNode object) {
 
@@ -684,10 +746,10 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      * Returns all the localizations of this object for a given property.
      *
      * @param path the JSON pointer [RFC6901] to the property
-     * @return a map of language tags [RFC5646] to Jackson library JsonNode objects representing the localizations for the property
+     * @return a map of language tags [RFC5646] to Jackson library JsonNode objects [Jackson Project] representing the localizations for the property
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
-     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project</a>
      */
     @JsonIgnore
     public Map<String,JsonNode> getLocalizationsPerPath(String path) {
@@ -711,10 +773,10 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      * Returns all the localizations of this object for a given property.
      *
      * @param language the localization language tag [RFC5646]
-     * @return a map of JSON pointers [RFC6901] to Jackson library JsonNode objects representing the localizations for the property
+     * @return a map of JSON pointers [RFC6901] to Jackson library JsonNode objects [Jackson Project] representing the localizations for the property
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
-     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project</a>
      */
     @JsonIgnore
     public Map<String,JsonNode> getLocalizationsPerLanguage(String language) {
@@ -730,10 +792,10 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      *
      * @param language the localization language tag [RFC5646]
      * @param path the JSON pointer [RFC6901] to the property
-     * @return the Jackson library JsonNode object representing the localization for the property
+     * @return the Jackson library JsonNode object [Jackson Project] representing the localization for the property
      * @see <a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>
      * @see <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>
-     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project Home</a>
+     * @see <a href="https://github.com/FasterXML/jackson">Jackson Project</a>
      */
     @JsonIgnore
     public JsonNode getLocalization(String language, String path) {

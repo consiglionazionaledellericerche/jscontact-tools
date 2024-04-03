@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 /**
  * Enum class mapping the values of the "kind" property of the AddressComponent type as defined in section 2.5.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.5.1">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.5.1">Section 2.5.1 of RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor

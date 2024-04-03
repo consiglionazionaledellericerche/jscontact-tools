@@ -41,9 +41,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class for converting a Card object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object.
+ * Utility class for converting a Card object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object [ez-vcard]
  *
  * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ * @see <a https://github.com/mangstadt/ez-vcard</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor
@@ -1883,14 +1884,16 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a Card object into a basic vCard v4.0 [RFC6350].
-     * JSContact objects are defined in RFC9553.
-     * Conversion rules are defined in RFC9555.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
      *
      * @param jsCard a Card object (Card or CardGroup)
-     * @return a vCard as an instance of the ez-vcard library VCard class
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @return a vCard as an instance of the ez-vcard library VCard class [ez-vcard]
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
      */
     protected VCard convert(Card jsCard) {
 
@@ -1933,14 +1936,17 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a list of Card objects into a list of vCard v4.0 instances [RFC6350].
-     * JSContact is defined in RFC9553.
-     * Conversion rules are defined in RFC9555.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
+     *
      * @param jsCards a list of Card objects
-     * @return a list of instances of the ez-vcard library VCard class
+     * @return a list of instances of the ez-vcard library VCard class [ez-vcard]
      * @throws CardException if one of Card objects is not valid
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
      */
     public List<VCard> convert(Card... jsCards) throws CardException {
 
@@ -1960,15 +1966,18 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a JSON array of Card objects into a list of vCard v4.0 instances [RFC6350].
-     * JSContact is defined in RFC9553.
-     * Conversion rules are defined in RFC9555.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
+     *
      * @param json a JSON array of Card objects
-     * @return a list of instances of the ez-vcard library VCard class
+     * @return a list of instances of the ez-vcard library VCard class [ez-vcard]
      * @throws CardException if one of Card objects is not valid
      * @throws JsonProcessingException if json cannot be processed
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
      */
     public List<VCard> convert(String json) throws CardException, JsonProcessingException {
 

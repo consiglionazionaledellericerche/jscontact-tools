@@ -22,9 +22,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Organization type as defined in section 2.2.2 of [RFC9553].
+ * Class mapping the Organization type as defined in section 2.2.3 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.2">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.3">Section 2.2.3 of RFC9553</a>
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames = {"name", "units"}, message = "at least one not null member between name and units is required in Organization")

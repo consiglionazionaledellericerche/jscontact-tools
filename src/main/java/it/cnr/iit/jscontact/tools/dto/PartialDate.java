@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
 /**
  * Class mapping the PartialDate type as defined in section 2.8.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.1">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.1">Section 2.8.1 of RFC9553</a>
  * @author Mario Loffredo
  */
 @NotNullAnyConstraint(fieldNames = {"year", "month"}, message = "at least one not null member between year and month is required in PartialDate")

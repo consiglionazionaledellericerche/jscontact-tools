@@ -32,7 +32,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 /**
- * Abstract class mapping the vCard extensions in section 1.8.1 of [RFC9553].
+ * Abstract class mapping the vCard extensions as defined in section 1.8.1 of [RFC9553].
  *
  * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.8.1">RFC9553</a>
  * @author Mario Loffredo

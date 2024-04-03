@@ -22,10 +22,10 @@ import it.cnr.iit.jscontact.tools.dto.utils.EnumUtils;
 import lombok.AllArgsConstructor;
 
 /**
- * Enum class mapping the "kind" property values as defined in section 2.2.4 of [RFC9553].
+ * Enum class mapping the "kind" property values as defined in section 2.2.5 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.4">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.5">Section 2.2.5 of RFC9553</a>
  */
 @AllArgsConstructor
 public enum TitleEnum implements IsExtensibleEnum {

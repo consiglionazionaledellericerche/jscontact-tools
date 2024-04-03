@@ -32,7 +32,7 @@ import javax.validation.constraints.Pattern;
 /**
  * Class mapping the Media type as defined in section 2.6.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.4">RFC9553</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.6.4">Section 2.6.4 of RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type","kind","uri","mediaType","contexts","pref","label"})
