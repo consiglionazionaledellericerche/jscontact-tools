@@ -1649,6 +1649,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
     private void fillJSCardPropsFromVCardJSContactExtensions(VCard vcard, Card jsCard) {
 
         int i = 1;
+        String lastAltid = null;
+        String lastMapid = null;
         for (RawProperty extension : vcard.getExtendedProperties()) {
 
             String language = extension.getParameter(VCardParamEnum.LANGUAGE.getValue());
@@ -1664,7 +1666,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String jsonPointer = fakeExtensionsMapping.get(extension.getPropertyName().toLowerCase());
 
             if (jsonPointer == null)
-                continue; //vcard extension already treated elsewhere
+                continue; //vcard extension already handled elsewhere
 
             if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.LANGUAGE.getValue()))
                 continue; // has already been set
@@ -1672,29 +1674,46 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 jsCard.setCreated(DateUtils.toCalendar(extension.getValue()));
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.GRAMGENDER.getValue())) {
                 GrammaticalGenderType gender = GrammaticalGenderType.getEnum(extension.getValue().toLowerCase());
-                if (jsCard.getSpeakToAs() != null)
-                    jsCard.getSpeakToAs().setGrammaticalGender(gender);
-                else
-                    jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(gender).build());
+                if (language == null ||
+                        (jsCard.getLanguage() != null && jsCard.getLanguage().equalsIgnoreCase(language)) ||
+                        (config.getDefaultLanguage() !=null && config.getDefaultLanguage().equalsIgnoreCase(language))
+               ) {
+                    if (jsCard.getSpeakToAs() != null)
+                        jsCard.getSpeakToAs().setGrammaticalGender(gender);
+                    else
+                        jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(gender).build());
+                } else {
+                    jsCard.addLocalization(language, jsonPointer, JsonNodeUtils.textNode(gender.getValue()));
+                }
             }
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.PRONOUNS.getValue())) {
-                String id = getJSCardId(JSContactIdsProfile.IdType.PRONOUNS, i, "PRONOUNS-" + (i++), extension.getParameter(VCardParamEnum.PROP_ID.getValue()));
                 Pronouns pronouns = Pronouns.builder()
                         .pronouns(extension.getValue())
                         .contexts(contexts)
                         .pref(pref)
-                        .vCardParams(VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.ALTID))
+                        .vCardParams(VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.ALTID, VCardParamEnum.LANGUAGE))
                         .build();
-                jsonPointer = String.format("%s/%s", jsonPointer, id);
-                if (language == null || config.getDefaultLanguage().equalsIgnoreCase(language)) {
-                    if (jsCard.getSpeakToAs() != null) {
-                        jsCard.getSpeakToAs().addPronouns(id, pronouns);
-                    } else {
-                        jsCard.setSpeakToAs(SpeakToAs.builder().pronouns(new HashMap<String, Pronouns>() {{
-                            put(id, pronouns);
-                        }}).build());
+
+                String altid = extension.getParameter(VCardParamEnum.ALTID.getValue());
+                if (altid == null || lastAltid == null || !altid.equals(lastAltid)) {
+                    String propId = extension.getParameter(VCardParamEnum.PROP_ID.getValue());
+                    String id = getJSCardId(JSContactIdsProfile.IdType.PRONOUNS, i, "PRONOUNS-" + (i++), propId);
+                    lastAltid = altid;
+                    lastMapid = (propId!=null) ? propId : id;
+                    if (language == null ||
+                            (jsCard.getLanguage() != null && jsCard.getLanguage().equalsIgnoreCase(language)) ||
+                            (config.getDefaultLanguage() != null && config.getDefaultLanguage().equalsIgnoreCase(language))
+                    ) {
+                        if (jsCard.getSpeakToAs() != null) {
+                            jsCard.getSpeakToAs().addPronouns(id, pronouns);
+                        } else {
+                            jsCard.setSpeakToAs(SpeakToAs.builder().pronouns(new HashMap<String, Pronouns>() {{
+                                put(id, pronouns);
+                            }}).build());
+                        }
                     }
                 } else {
+                    jsonPointer = String.format("%s/%s", jsonPointer, lastMapid);
                     jsCard.addLocalization(language, jsonPointer, mapper.convertValue(pronouns, JsonNode.class));
                 }
             }

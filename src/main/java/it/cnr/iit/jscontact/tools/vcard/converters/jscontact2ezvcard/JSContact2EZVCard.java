@@ -1827,23 +1827,30 @@ public class JSContact2EZVCard extends AbstractConverter {
             String propertyName = VCardPropEnum.PRONOUNS.getValue();
             String jsonPointer = fakeExtensionsMapping.get(propertyName.toLowerCase());
             Map<String,Pronouns> pronouns = jsCard.getSpeakToAs().getPronouns();
+            int altid = 0;
             for (Map.Entry<String,Pronouns> entry : pronouns.entrySet()) {
+                jsonPointer = String.format("%s/%s", jsonPointer, entry.getKey());
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath(jsonPointer);
+
                 RawProperty raw = new RawProperty(propertyName, entry.getValue().getPronouns());
                 String vCardTypeValue = toVCardTypeParam(entry.getValue());
                 if (vCardTypeValue!=null)
                     raw.setParameter(VCardParamEnum.TYPE.getValue(), vCardTypeValue);
                 if (entry.getValue().getPref()!=null)
                     raw.setParameter(VCardParamEnum.PREF.getValue(), entry.getValue().getPref().toString());
+                if (localizations!=null) {
+                    altid ++;
+                    raw.setParameter(VCardParamEnum.ALTID.getValue(), Integer.toString(altid));
+                }
                 raw.setDataType(VCardDataType.TEXT);
                 addVCardPropIdParam(raw,entry.getKey());
                 vCard.addProperty(raw);
 
-                jsonPointer = String.format("%s/%s", jsonPointer, entry.getKey());
-                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath(jsonPointer);
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> entry2 : localizations.entrySet()) {
                         RawProperty raw2 = new RawProperty(propertyName, asJSCardPronouns(entry2.getValue()).getPronouns());
                         raw2.setParameter(VCardParamEnum.LANGUAGE.getValue(), entry2.getKey());
+                        raw2.setParameter(VCardParamEnum.ALTID.getValue(), Integer.toString(altid));
                         raw2.setDataType(VCardDataType.TEXT);
                         vCard.addProperty(raw2);
                     }
@@ -1858,7 +1865,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath(jsonPointer);
             if (localizations != null) {
                 for (Map.Entry<String,JsonNode> entry : localizations.entrySet()) {
-                    RawProperty raw = new RawProperty(propertyName, entry.getValue().asText());
+                    RawProperty raw = new RawProperty(propertyName, entry.getValue().asText().toUpperCase());
                     raw.setParameter(VCardParamEnum.LANGUAGE.getValue(),entry.getKey());
                     raw.setDataType(VCardDataType.TEXT);
                     vCard.addProperty(raw);

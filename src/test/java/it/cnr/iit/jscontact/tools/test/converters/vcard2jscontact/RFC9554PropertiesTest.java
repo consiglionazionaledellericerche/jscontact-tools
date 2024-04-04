@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.GrammaticalGenderType;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
@@ -87,7 +88,7 @@ public class RFC9554PropertiesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testSpeakTo1() throws CardException {
+    public void testSpeakToAs1() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -101,7 +102,7 @@ public class RFC9554PropertiesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testSpeakTo2() throws CardException {
+    public void testSpeakToAs2() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -115,7 +116,7 @@ public class RFC9554PropertiesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testSpeakTo3() throws CardException {
+    public void testSpeakToAs3() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -129,7 +130,7 @@ public class RFC9554PropertiesTest extends VCard2JSContactTest {
     }
 
     @Test
-    public void testSpeakTo4() throws CardException {
+    public void testSpeakToAs4() throws CardException {
 
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
@@ -143,4 +144,62 @@ public class RFC9554PropertiesTest extends VCard2JSContactTest {
         assertTrue("testSpeakToAs4 - 2", jsCard.getSpeakToAs().isMasculine());
     }
 
+
+    @Test
+    public void testSpeakToAs5() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "LANGUAGE;VALUE=language-tag:en\n" +
+                "GRAMGENDER;VALUE=text:INANIMATE\n" +
+                "GRAMGENDER;LANGUAGE=it;VALUE=text:MASCULINE\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertTrue("testSpeakToAs5 - 1",jsCard.getSpeakToAs().isInanimate());
+        assertNull("testSpeakToAs5 - 2", jsCard.getSpeakToAs().getPronouns());
+        assertEquals("testSpeakToAs5 - 3", 1, jsCard.getLocalizations().size());
+        assertEquals("testSpeakToAs5 - 4", GrammaticalGenderType.MASCULINE, GrammaticalGenderType.getEnum(jsCard.getLocalizations().get("it").get("speakToAs/grammaticalGender").asText().toLowerCase()));
+    }
+
+    @Test
+    public void testSpeakToAs6() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "LANGUAGE;VALUE=language-tag:en\n" +
+                "PRONOUNS;ALTID=1;PROP-ID=PRONOUNS-1;VALUE=text:he/him\n" +
+                "PRONOUNS;LANGUAGE=it;ALTID=1;VALUE=text:egli/lui\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testSpeakToAs6 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
+        assertNull("testSpeakToAs6 - 2", jsCard.getSpeakToAs().getGrammaticalGender());
+        assertEquals("testSpeakToAs6 - 3", 1, jsCard.getLocalizations().size());
+        assertEquals("testSpeakToAs6 - 4", "egli/lui", jsCard.getLocalizations().get("it").get("speakToAs/pronouns/PRONOUNS-1").get("pronouns").asText());
+    }
+
+
+    @Test
+    public void testSpeakToAs7() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "LANGUAGE;VALUE=language-tag:en\n" +
+                "PRONOUNS;ALTID=1;PROP-ID=PRONOUNS-1;VALUE=text:he/him\n" +
+                "PRONOUNS;LANGUAGE=it;ALTID=1;VALUE=text:egli/lui\n" +
+                "GRAMGENDER;VALUE=text:INANIMATE\n" +
+                "GRAMGENDER;LANGUAGE=it;VALUE=text:MASCULINE\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testSpeakToAs7 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
+        assertTrue("testSpeakToAs7 - 2", jsCard.getSpeakToAs().isInanimate());
+        assertEquals("testSpeakToAs7 - 3", 1, jsCard.getLocalizations().size());
+        assertEquals("testSpeakToAs7 - 4", "egli/lui", jsCard.getLocalizations().get("it").get("speakToAs/pronouns/PRONOUNS-1").get("pronouns").asText());
+        assertEquals("testSpeakToAs7 - 5", GrammaticalGenderType.MASCULINE, GrammaticalGenderType.getEnum(jsCard.getLocalizations().get("it").get("speakToAs/grammaticalGender").asText().toLowerCase()));
+    }
 }
