@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.VCardPropEnum;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.vcard2jscontact.VCard2JSContact;
@@ -90,4 +91,18 @@ public class FullNameTest extends VCard2JSContactTest {
 
     }
 
+    @Test
+    public void testFullName4() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN;PREF=1:Jane Doe\n" +
+                "FN:Jane\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testFullName4 - 1", "Jane Doe", jsCard.getName().getFull());
+        assertEquals("testFullName4 - 2", VCardPropEnum.FN.getValue(), jsCard.getVCardProps()[0].getName().toString().toUpperCase());
+        assertEquals("testFullName4 - 3", "Jane", jsCard.getVCardProps()[0].getValue());
+    }
 }

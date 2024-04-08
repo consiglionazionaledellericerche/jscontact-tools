@@ -560,19 +560,54 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         List<FormattedName> fns = vcard.getFormattedNames();
         fns.sort(vCardPropertiesAltidComparator);
         String lastAltid = null;
+
+        FormattedName candidateFn = null;
+        int candidatePref = 101;
+        for (FormattedName fn : fns) {
+            if (fn.getLanguage() == null) {
+                if (candidateFn == null) {
+                    candidateFn = fn;
+                    if (fn.getPref()!=null)
+                        candidatePref = fn.getPref();
+                }
+                else if (fn.getPref()!=null && (candidatePref == 101 || fn.getPref() < candidatePref)) {
+                    candidateFn = fn;
+                    candidatePref = candidateFn.getPref();
+                } else if (candidatePref == 101 && fn.getParameters().size() < candidateFn.getParameters().size())
+                    candidateFn = fn;
+            }
+        }
+
         for (FormattedName fn : fns) {
 
             if (isFNDerivedFromN(fn,vcard) || isFNDerivedFromUid(fn,vcard))
                 continue;
 
-            if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
-                if (jsCard.getName() == null) //no name exists
+            if (candidateFn != null && candidateFn.getValue().equals(fn.getValue())) {
+                if (jsCard.getName() == null) //no N property exists
                     jsCard.setName(Name.builder().full(fn.getValue()).build());
                 else
                     jsCard.getName().setFull(fn.getValue());
-                lastAltid = fn.getAltId();
+                continue;
+            }
+
+            if (fn.getLanguage() == null) {
+                jsCard.addVCardProp(VCardProp.builder()
+                        .name(V_Extension.toV_Extension(VCardPropEnum.FN.getValue().toLowerCase()))
+                        .parameters(VCardUtils.getVCardPropParams(fn.getParameters()))
+                        .type(VCardDataType.TEXT)
+                        .value(fn.getValue())
+                        .build());
             } else {
-                jsCard.addLocalization(fn.getLanguage(), "name", mapper.convertValue(Name.builder().full(fn.getValue()).build(), JsonNode.class));
+                if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
+                    if (jsCard.getName() == null) //no N property exists
+                        jsCard.setName(Name.builder().full(fn.getValue()).build());
+                    else
+                        jsCard.getName().setFull(fn.getValue());
+                    lastAltid = fn.getAltId();
+                } else {
+                    jsCard.addLocalization(fn.getLanguage(), "name", mapper.convertValue(Name.builder().full(fn.getValue()).build(), JsonNode.class));
+                }
             }
         }
     }

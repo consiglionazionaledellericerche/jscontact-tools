@@ -1765,6 +1765,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.VERSION.getValue())))
                 vcard.setVersion(VCardVersion.valueOfByStr((String) vCardProp.getValue()));
+            else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.FN.getValue()))) {
+                //multiple FNs
+                if (vcard.getFormattedNames()!=null && vcard.getFormattedNames().size() == 1 && vcard.getFormattedName().getPref()==null)
+                    vcard.getFormattedName().setPref(1);
+                FormattedName fn = new FormattedName((String) vCardProp.getValue());
+                fn.setParameters(vCardProp.getVCardParameters());
+                vcard.addFormattedName(fn);
+            }
             else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.CLIENTPIDMAP.getValue()))) {
                 String pid = ((String) vCardProp.getValue()).split(DelimiterUtils.COMMA_ARRAY_DELIMITER)[0];
                 String uri = ((String) vCardProp.getValue()).split(DelimiterUtils.COMMA_ARRAY_DELIMITER)[1];

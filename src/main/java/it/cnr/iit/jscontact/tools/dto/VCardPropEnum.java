@@ -29,6 +29,7 @@ import lombok.AllArgsConstructor;
 public enum VCardPropEnum {
 
     VERSION("VERSION"),
+    FN("FN"),
     TZ("TZ"),
     GEO("GEO"),
     XML("XML"),
