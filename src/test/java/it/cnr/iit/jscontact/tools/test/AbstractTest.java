@@ -15,12 +15,12 @@
  */
 package it.cnr.iit.jscontact.tools.test;
 
-import java.util.UUID;
+import it.cnr.iit.jscontact.tools.dto.utils.UuidUtils;
 
 public abstract class AbstractTest {
 
     protected String getUUID() {
-        return "urn:uuid:" + UUID.randomUUID();
+        return UuidUtils.getRandomV4UuidPrefixedByNamespace();
     }
 
 }
