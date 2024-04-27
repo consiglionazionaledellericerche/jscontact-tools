@@ -6,8 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 /**
- * Utility class for generating UUIDs.
+ * Utility class for generating UUIDs (V4, V5 and Nil UUIDs) [RFC9562]
  *
+ * @see <a href="https://tools.ietf.org/html/rfc9562">RFC9562</a>
  * @author Mario Loffredo
  */
 public class UuidUtils {
