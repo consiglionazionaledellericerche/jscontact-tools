@@ -28,6 +28,7 @@ public class UuidUtils {
      * Returns a name based V5 UUID as a string value prefixed by the "urn:uuid" namespace.
      * @param name the name the UUID is based upon
      * @return the name based V5 UUID
+     * @throws NoSuchAlgorithmException
      */
     public static UUID getNameBasedV5Uuid(String name) throws NoSuchAlgorithmException {
 
