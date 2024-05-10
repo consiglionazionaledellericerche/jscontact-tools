@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact;
 
 import ezvcard.VCardDataType;
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.GrammaticalGenderType;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
@@ -25,7 +26,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
+public class RFC9554PropertiesTest extends JCard2JSContactTest {
 
     @Test
     public void testCreated() throws CardException {
@@ -136,6 +137,57 @@ public class RFCXXXXPropertiesTest extends JCard2JSContactTest {
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertEquals("testSpeakToAs4 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
         assertTrue("testSpeakToAs4 - 2", jsCard.getSpeakToAs().isMasculine());
+    }
+
+    @Test
+    public void testSpeakToAs5() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"gramgender\",{},\"text\",\"INANIMATE\"], " +
+                "[\"gramgender\",{\"language\":\"it\"},\"text\",\"MASCULINE\"]" +
+                "]]";
+
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
+        assertTrue("testSpeakToAs5 - 1",jsCard.getSpeakToAs().isInanimate());
+        assertNull("testSpeakToAs5 - 2", jsCard.getSpeakToAs().getPronouns());
+        assertEquals("testSpeakToAs5 - 3", 1, jsCard.getLocalizations().size());
+        assertEquals("testSpeakToAs5 - 4", GrammaticalGenderType.MASCULINE, GrammaticalGenderType.getEnum(jsCard.getLocalizations().get("it").get("speakToAs/grammaticalGender").asText().toLowerCase()));
+    }
+
+    @Test
+    public void testSpeakToAs6() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"pronouns\",{\"prop-id\":\"PRONOUNS-1\",\"altid\":\"1\"},\"text\",\"he/him\"], " +
+                "[\"pronouns\",{\"altid\":\"1\",\"language\":\"it\"},\"text\",\"egli/lui\"] " +
+                "]]";
+
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
+        assertEquals("testSpeakToAs6 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
+        assertNull("testSpeakToAs6 - 2", jsCard.getSpeakToAs().getGrammaticalGender());
+        assertEquals("testSpeakToAs6 - 3", 1, jsCard.getLocalizations().size());
+        assertEquals("testSpeakToAs6 - 4", "egli/lui", jsCard.getLocalizations().get("it").get("speakToAs/pronouns/PRONOUNS-1").get("pronouns").asText());
+    }
+
+    @Test
+    public void testSpeakToAs7() throws CardException {
+
+        String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
+                "[\"fn\", {}, \"text\", \"test\"], " +
+                "[\"pronouns\",{\"prop-id\":\"PRONOUNS-1\",\"altid\":\"1\"},\"text\",\"he/him\"], " +
+                "[\"pronouns\",{\"altid\":\"1\",\"language\":\"it\"},\"text\",\"egli/lui\"], " +
+                "[\"gramgender\",{},\"text\",\"INANIMATE\"], " +
+                "[\"gramgender\",{\"language\":\"it\"},\"text\",\"MASCULINE\"]" +
+                "]]";
+
+        Card jsCard = jCard2JSContact.convert(jcard).get(0);
+        assertEquals("testSpeakToAs7 - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
+        assertTrue("testSpeakToAs7 - 2", jsCard.getSpeakToAs().isInanimate());
+        assertEquals("testSpeakToAs7 - 3", 1, jsCard.getLocalizations().size());
+        assertEquals("testSpeakToAs7 - 4", "egli/lui", jsCard.getLocalizations().get("it").get("speakToAs/pronouns/PRONOUNS-1").get("pronouns").asText());
+        assertEquals("testSpeakToAs7 - 5", GrammaticalGenderType.MASCULINE, GrammaticalGenderType.getEnum(jsCard.getLocalizations().get("it").get("speakToAs/grammaticalGender").asText().toLowerCase()));
     }
 
 }

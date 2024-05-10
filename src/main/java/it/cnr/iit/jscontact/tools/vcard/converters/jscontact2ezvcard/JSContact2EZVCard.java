@@ -41,9 +41,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class for converting a Card object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object.
+ * Utility class for converting a Card object into a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object [ez-vcard]
  *
  * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor
@@ -117,7 +118,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         List<String> components = new ArrayList<>();
         String separator = (defaultSeparator != null) ? defaultSeparator : DelimiterUtils.SPACE_DELIMITER;
-        boolean applySeparator = (isOrdered!=null && isOrdered == Boolean.TRUE);
+        boolean applySeparator = (isOrdered == Boolean.TRUE);
         for (NameComponent pair : nameComponents) {
             if (pair.getKind().isRfcValue()) {
                 switch (pair.getKind().getRfcValue()) {
@@ -1764,6 +1765,14 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.VERSION.getValue())))
                 vcard.setVersion(VCardVersion.valueOfByStr((String) vCardProp.getValue()));
+            else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.FN.getValue()))) {
+                //multiple FNs
+                if (vcard.getFormattedNames()!=null && vcard.getFormattedNames().size() == 1 && vcard.getFormattedName().getPref()==null)
+                    vcard.getFormattedName().setPref(1);
+                FormattedName fn = new FormattedName((String) vCardProp.getValue());
+                fn.setParameters(vCardProp.getVCardParameters());
+                vcard.addFormattedName(fn);
+            }
             else if (vCardProp.getName().equals(V_Extension.toV_Extension(VCardPropEnum.CLIENTPIDMAP.getValue()))) {
                 String pid = ((String) vCardProp.getValue()).split(DelimiterUtils.COMMA_ARRAY_DELIMITER)[0];
                 String uri = ((String) vCardProp.getValue()).split(DelimiterUtils.COMMA_ARRAY_DELIMITER)[1];
@@ -1812,8 +1821,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         }
     }
 
-    //TODO: replace XXXX with RFC number after draft-ietf-calext-vcard-jscontact-extensions
-    private void fillVCardRFCXXXXProps(VCard vCard, Card jsCard) {
+    private void fillVCardRFC9554Props(VCard vCard, Card jsCard) {
 
         if (jsCard.getCreated() != null) {
             vCard.addExtendedProperty(VCardPropEnum.CREATED.getValue(), VCardDateFormat.UTC_DATE_TIME_BASIC.format(jsCard.getCreated().getTime()), VCardDataType.TIMESTAMP);
@@ -1827,23 +1835,30 @@ public class JSContact2EZVCard extends AbstractConverter {
             String propertyName = VCardPropEnum.PRONOUNS.getValue();
             String jsonPointer = fakeExtensionsMapping.get(propertyName.toLowerCase());
             Map<String,Pronouns> pronouns = jsCard.getSpeakToAs().getPronouns();
+            int altid = 0;
             for (Map.Entry<String,Pronouns> entry : pronouns.entrySet()) {
+                jsonPointer = String.format("%s/%s", jsonPointer, entry.getKey());
+                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath(jsonPointer);
+
                 RawProperty raw = new RawProperty(propertyName, entry.getValue().getPronouns());
                 String vCardTypeValue = toVCardTypeParam(entry.getValue());
                 if (vCardTypeValue!=null)
                     raw.setParameter(VCardParamEnum.TYPE.getValue(), vCardTypeValue);
                 if (entry.getValue().getPref()!=null)
                     raw.setParameter(VCardParamEnum.PREF.getValue(), entry.getValue().getPref().toString());
+                if (localizations!=null) {
+                    altid ++;
+                    raw.setParameter(VCardParamEnum.ALTID.getValue(), Integer.toString(altid));
+                }
                 raw.setDataType(VCardDataType.TEXT);
                 addVCardPropIdParam(raw,entry.getKey());
                 vCard.addProperty(raw);
 
-                jsonPointer = String.format("%s/%s", jsonPointer, entry.getKey());
-                Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath(jsonPointer);
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> entry2 : localizations.entrySet()) {
                         RawProperty raw2 = new RawProperty(propertyName, asJSCardPronouns(entry2.getValue()).getPronouns());
                         raw2.setParameter(VCardParamEnum.LANGUAGE.getValue(), entry2.getKey());
+                        raw2.setParameter(VCardParamEnum.ALTID.getValue(), Integer.toString(altid));
                         raw2.setDataType(VCardDataType.TEXT);
                         vCard.addProperty(raw2);
                     }
@@ -1858,7 +1873,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath(jsonPointer);
             if (localizations != null) {
                 for (Map.Entry<String,JsonNode> entry : localizations.entrySet()) {
-                    RawProperty raw = new RawProperty(propertyName, entry.getValue().asText());
+                    RawProperty raw = new RawProperty(propertyName, entry.getValue().asText().toUpperCase());
                     raw.setParameter(VCardParamEnum.LANGUAGE.getValue(),entry.getKey());
                     raw.setDataType(VCardDataType.TEXT);
                     vCard.addProperty(raw);
@@ -1884,14 +1899,16 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a Card object into a basic vCard v4.0 [RFC6350].
-     * JSContact objects are defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
      *
      * @param jsCard a Card object (Card or CardGroup)
-     * @return a vCard as an instance of the ez-vcard library VCard class
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @return a vCard as an instance of the ez-vcard library VCard class [ez-vcard]
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
      */
     protected VCard convert(Card jsCard) {
 
@@ -1925,7 +1942,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         fillVCardCategories(vCard, jsCard);
         fillVCardNotes(vCard, jsCard);
         fillVCardRelations(vCard, jsCard);
-        fillVCardRFCXXXXProps(vCard, jsCard);
+        fillVCardRFC9554Props(vCard, jsCard);
         fillVCardExtensions(vCard, jsCard);
         fillVCardPropsFromJSCardExtensions(vCard,jsCard);
 
@@ -1934,14 +1951,17 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a list of Card objects into a list of vCard v4.0 instances [RFC6350].
-     * JSContact is defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
+     *
      * @param jsCards a list of Card objects
-     * @return a list of instances of the ez-vcard library VCard class
+     * @return a list of instances of the ez-vcard library VCard class [ez-vcard]
      * @throws CardException if one of Card objects is not valid
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
      */
     public List<VCard> convert(Card... jsCards) throws CardException {
 
@@ -1961,15 +1981,18 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     /**
      * Converts a JSON array of Card objects into a list of vCard v4.0 instances [RFC6350].
-     * JSContact is defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
+     *
      * @param json a JSON array of Card objects
-     * @return a list of instances of the ez-vcard library VCard class
+     * @return a list of instances of the ez-vcard library VCard class [ez-vcard]
      * @throws CardException if one of Card objects is not valid
      * @throws JsonProcessingException if json cannot be processed
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
      */
     public List<VCard> convert(String json) throws CardException, JsonProcessingException {
 

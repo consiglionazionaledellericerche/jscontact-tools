@@ -28,9 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.3 of [draft-ietf-calext-jscontact].
+ * Enum class mapping the "features" map keys of the Phone type as defined in section 2.3.3 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.3.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.3.3">Section 2.3.3 of RFC9553</a>
  * @author Mario Loffredo
  */
 @AllArgsConstructor
@@ -75,7 +75,7 @@ public enum PhoneFeatureEnum implements IsExtensibleEnum,VCardTypeDerivedEnum {
      *
      * @param phoneFeature the phone feature
      * @return the vCard 4.0 TYPE parameter value
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-5.6">Section 5.6 of RFC6350</a>
      */
     @JsonIgnore
     public static String toVCardTypeParam(PhoneFeatureEnum phoneFeature) {

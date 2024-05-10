@@ -25,12 +25,13 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 
 /**
- * Custom JSON deserializer for the PronounceSystem value.
+ * Custom JSON deserializer for the phoneticSystem value as defined in section 1.5.4 of [RFC9553].
  *
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.5.4">Section 1.5.4 of RFC9553</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class PronounceSystemDeserializer extends JsonDeserializer<PhoneticSystem> {
+public class PhoneticSystemDeserializer extends JsonDeserializer<PhoneticSystem> {
 
     @Override
     public PhoneticSystem deserialize(JsonParser jp, DeserializationContext ctxt)

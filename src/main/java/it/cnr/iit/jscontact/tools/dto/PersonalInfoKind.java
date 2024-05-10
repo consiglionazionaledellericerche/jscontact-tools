@@ -25,10 +25,10 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "kind" property of the PersonalInfo type as defined in section 2.8.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the PersonalInfo type as defined in section 2.8.4 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.4">Section 2.8.4 of RFC9553</a>
  */
 @Getter
 @Setter
@@ -90,9 +90,9 @@ public class PersonalInfoKind extends ExtensibleEnumType<PersonalInfoEnum> imple
     }
 
     /**
-     * Returns a "expertise" personal information type.
+     * Returns an "expertise" personal information type.
      *
-     * @return a "expertise" personal information type
+     * @return an "expertise" personal information type
      */
     public static PersonalInfoKind expertise() {
         return rfc(PersonalInfoEnum.EXPERTISE);

@@ -28,9 +28,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class mapping the keys of the "contexts" map as defined in section 1.5.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the keys of the "contexts" map as defined in section 1.5.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.5.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.5.1">Section 1.5.1 of RFC9553</a>
  * @author Mario Loffredo
  */
 @Getter

@@ -25,9 +25,9 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the pronounce system values as defined in section 1.5.5 of [draft-ietf-calext-jscontact].
+ * Class mapping the phoneticSystem values as defined in section 1.5.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-1.5.5">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-1.5.4">Section 1.5.4 of RFC9553</a>
  * @author Mario Loffredo
  */
 @Getter
@@ -38,62 +38,62 @@ import java.io.Serializable;
 public class PhoneticSystem extends ExtensibleEnumType<PhoneticSystemEnum> implements Serializable {
 
     /**
-     * Tests if the pronounce system is "ipa".
+     * Tests if the phonetic system is "ipa".
      *
-     * @return true if the pronounce system is "ipa", false otherwise
+     * @return true if the phonetic system is "ipa", false otherwise
      */
     @JsonIgnore
     public boolean isIpa() { return isRfc(PhoneticSystemEnum.IPA); }
 
     /**
-     * Tests if the pronounce system is "piny".
+     * Tests if the phonetic system is "piny".
      *
-     * @return true if the pronounce system is "piny", false otherwise
+     * @return true if the phonetic system is "piny", false otherwise
      */
     @JsonIgnore
     public boolean isPiny() { return isRfc(PhoneticSystemEnum.PINY); }
 
     /**
-     * Tests if the pronounce system is "jyut".
+     * Tests if the phonetic system is "jyut".
      *
-     * @return true if the pronounce system is "jyut", false otherwise
+     * @return true if the phonetic system is "jyut", false otherwise
      */
     @JsonIgnore
     public boolean isJyut() { return isRfc(PhoneticSystemEnum.JYUT); }
 
     /**
-     * Returns a pronounce system whose enum value is pre-defined.
+     * Returns a phonetic system whose enum value is pre-defined.
      *
-     * @param rfcValue the pre-defined pronounce system
-     * @return a pre-defined pronounce system
+     * @param rfcValue the pre-defined phonetic system
+     * @return a pre-defined phonetic system
      */
     public static PhoneticSystem rfc(PhoneticSystemEnum rfcValue) { return PhoneticSystem.builder().rfcValue(rfcValue).build();}
 
     /**
-     * Returns a "ipa" pronounce system.
+     * Returns an "ipa" phonetic system.
      *
-     * @return a "ipa" pronounce system
+     * @return an "ipa" phonetic system
      */
     public static PhoneticSystem ipa() { return rfc(PhoneticSystemEnum.IPA);}
 
     /**
-     * Returns a "piny" pronounce system.
+     * Returns a "piny" phonetic system.
      *
-     * @return a "piny" pronounce system
+     * @return a "piny" phonetic system
      */
     public static PhoneticSystem piny() { return rfc(PhoneticSystemEnum.PINY);}
 
     /**
-     * Returns a "jyut" pronounce system.
+     * Returns a "jyut" phonetic system.
      *
-     * @return a "jyut" pronounce system
+     * @return a "jyut" phonetic system
      */
     public static PhoneticSystem jyut() { return rfc(PhoneticSystemEnum.JYUT);}
     /**
-     * Returns a custom relation type.
+     * Returns a custom phonetic system.
      *
-     * @param extValue the custom relation type
-     * @return a custom relation type
+     * @param extValue the custom phonetic system
+     * @return a custom phonetic system
      */
     public static PhoneticSystem ext(String extValue) { return PhoneticSystem.builder().extValue(V_Extension.toV_Extension(extValue)).build(); }
 

@@ -28,7 +28,7 @@ import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
-import it.cnr.iit.jscontact.tools.dto.deserializers.PronounceSystemDeserializer;
+import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneticSystemDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasComponents;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.NameSortAsSerializer;
@@ -42,10 +42,10 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Class mapping the Name type as defined in section 2.2.1.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Name type as defined in section 2.2.1 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.1.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.1">Section 2.2.1 of RFC9553</a>
  */
 @NotNullAnyConstraint(fieldNames = {"full", "components"}, message = "at least one not null member between full and components is required in Name")
 @NotNullDependencyConstraint(fieldName="components", dependingFieldNames = {"sortAs","defaultSeparator"})
@@ -84,7 +84,7 @@ public class Name extends AbstractJSContactType implements HasComponents, IsIANA
     @Pattern(regexp="[a-zA-Z]{4}", message = "invalid phoneticScript in Name")
     String phoneticScript;
 
-    @JsonDeserialize(using = PronounceSystemDeserializer.class)
+    @JsonDeserialize(using = PhoneticSystemDeserializer.class)
     @ContainsExtensibleEnum(enumClass = PhoneticSystemEnum.class, getMethod = "getPhoneticSystem")
     PhoneticSystem phoneticSystem;
 

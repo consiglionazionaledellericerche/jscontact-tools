@@ -55,9 +55,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class for converting a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object into a JSContact object.
+ * Utility class for converting a vCard 4.0 [RFC6350] instance represented as an Ezvcard VCard object [ez-vcard] into a JSContact object [RFC9553].
  *
  * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
+ * @see <a href="https://tools.ietf.org/html/rfc6350">RFC9553</a>
+ * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
  * @author Mario Loffredo
  */
 @NoArgsConstructor
@@ -558,19 +560,54 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         List<FormattedName> fns = vcard.getFormattedNames();
         fns.sort(vCardPropertiesAltidComparator);
         String lastAltid = null;
+
+        FormattedName candidateFn = null;
+        int candidatePref = 101;
+        for (FormattedName fn : fns) {
+            if (fn.getLanguage() == null) {
+                if (candidateFn == null) {
+                    candidateFn = fn;
+                    if (fn.getPref()!=null)
+                        candidatePref = fn.getPref();
+                }
+                else if (fn.getPref()!=null && (candidatePref == 101 || fn.getPref() < candidatePref)) {
+                    candidateFn = fn;
+                    candidatePref = candidateFn.getPref();
+                } else if (candidatePref == 101 && fn.getParameters().size() < candidateFn.getParameters().size())
+                    candidateFn = fn;
+            }
+        }
+
         for (FormattedName fn : fns) {
 
             if (isFNDerivedFromN(fn,vcard) || isFNDerivedFromUid(fn,vcard))
                 continue;
 
-            if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
-                if (jsCard.getName() == null) //no name exists
+            if (candidateFn != null && candidateFn.getValue().equals(fn.getValue())) {
+                if (jsCard.getName() == null) //no N property exists
                     jsCard.setName(Name.builder().full(fn.getValue()).build());
                 else
                     jsCard.getName().setFull(fn.getValue());
-                lastAltid = fn.getAltId();
+                continue;
+            }
+
+            if (fn.getLanguage() == null) {
+                jsCard.addVCardProp(VCardProp.builder()
+                        .name(V_Extension.toV_Extension(VCardPropEnum.FN.getValue().toLowerCase()))
+                        .parameters(VCardUtils.getVCardPropParams(fn.getParameters()))
+                        .type(VCardDataType.TEXT)
+                        .value(fn.getValue())
+                        .build());
             } else {
-                jsCard.addLocalization(fn.getLanguage(), "name", mapper.convertValue(Name.builder().full(fn.getValue()).build(), JsonNode.class));
+                if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
+                    if (jsCard.getName() == null) //no N property exists
+                        jsCard.setName(Name.builder().full(fn.getValue()).build());
+                    else
+                        jsCard.getName().setFull(fn.getValue());
+                    lastAltid = fn.getAltId();
+                } else {
+                    jsCard.addLocalization(fn.getLanguage(), "name", mapper.convertValue(Name.builder().full(fn.getValue()).build(), JsonNode.class));
+                }
             }
         }
     }
@@ -758,7 +795,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         return name;
     }
 
-    private void fillJSCardNames(VCard vcard, Card jsCard) throws CardException {
+    private void fillJSCardNames(VCard vcard, Card jsCard) {
 
         if (vcard.getProperties(ExtendedStructuredName.class) == null || vcard.getProperties(ExtendedStructuredName.class).isEmpty())
             return;
@@ -1297,9 +1334,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String vcardType = VCardUtils.getVCardParamValue(tel.getParameters(), VCardParamEnum.TYPE);
             Map<Context,Boolean> contexts = toJSCardContexts(vcardType);
             Map<PhoneFeature,Boolean> phoneFeatures = toJSCardPhoneFeatures(vcardType);
-            String[] exclude = null;
-            if (contexts != null) exclude = ArrayUtils.addAll(null, EnumUtils.toStrings(Context.toEnumValues(contexts.keySet())));
-            if (phoneFeatures != null) exclude = ArrayUtils.addAll(exclude, EnumUtils.toStrings(PhoneFeature.toEnumValues(phoneFeatures.keySet())));
             jsCard.addPhone(getJSCardId(JSContactIdsProfile.IdType.PHONE, i,"PHONE-" + (i++), tel.getParameter(VCardParamEnum.PROP_ID.getValue())), Phone.builder()
                             .number(getValue(tel))
                             .features(phoneFeatures)
@@ -1646,10 +1680,12 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
-    //Fill JSContact properties mapping the VCard properties defined in draft-ietf-calext-vcard-jscontact-extensions
+    //Fill JSContact properties mapping the VCard properties defined in RFC9554
     private void fillJSCardPropsFromVCardJSContactExtensions(VCard vcard, Card jsCard) {
 
         int i = 1;
+        String lastAltid = null;
+        String lastMapid = null;
         for (RawProperty extension : vcard.getExtendedProperties()) {
 
             String language = extension.getParameter(VCardParamEnum.LANGUAGE.getValue());
@@ -1665,7 +1701,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String jsonPointer = fakeExtensionsMapping.get(extension.getPropertyName().toLowerCase());
 
             if (jsonPointer == null)
-                continue; //vcard extension already treated elsewhere
+                continue; //vcard extension already handled elsewhere
 
             if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.LANGUAGE.getValue()))
                 continue; // has already been set
@@ -1673,29 +1709,46 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 jsCard.setCreated(DateUtils.toCalendar(extension.getValue()));
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.GRAMGENDER.getValue())) {
                 GrammaticalGenderType gender = GrammaticalGenderType.getEnum(extension.getValue().toLowerCase());
-                if (jsCard.getSpeakToAs() != null)
-                    jsCard.getSpeakToAs().setGrammaticalGender(gender);
-                else
-                    jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(gender).build());
+                if (language == null ||
+                        (jsCard.getLanguage() != null && jsCard.getLanguage().equalsIgnoreCase(language)) ||
+                        (config.getDefaultLanguage() !=null && config.getDefaultLanguage().equalsIgnoreCase(language))
+               ) {
+                    if (jsCard.getSpeakToAs() != null)
+                        jsCard.getSpeakToAs().setGrammaticalGender(gender);
+                    else
+                        jsCard.setSpeakToAs(SpeakToAs.builder().grammaticalGender(gender).build());
+                } else {
+                    jsCard.addLocalization(language, jsonPointer, JsonNodeUtils.textNode(gender.getValue()));
+                }
             }
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.PRONOUNS.getValue())) {
-                String id = getJSCardId(JSContactIdsProfile.IdType.PRONOUNS, i, "PRONOUNS-" + (i++), extension.getParameter(VCardParamEnum.PROP_ID.getValue()));
                 Pronouns pronouns = Pronouns.builder()
                         .pronouns(extension.getValue())
                         .contexts(contexts)
                         .pref(pref)
-                        .vCardParams(VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.ALTID))
+                        .vCardParams(VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.ALTID, VCardParamEnum.LANGUAGE))
                         .build();
-                jsonPointer = String.format("%s/%s", jsonPointer, id);
-                if (language == null || config.getDefaultLanguage().equalsIgnoreCase(language)) {
-                    if (jsCard.getSpeakToAs() != null) {
-                        jsCard.getSpeakToAs().addPronouns(id, pronouns);
-                    } else {
-                        jsCard.setSpeakToAs(SpeakToAs.builder().pronouns(new HashMap<String, Pronouns>() {{
-                            put(id, pronouns);
-                        }}).build());
+
+                String altid = extension.getParameter(VCardParamEnum.ALTID.getValue());
+                if (altid == null || lastAltid == null || !altid.equals(lastAltid)) {
+                    String propId = extension.getParameter(VCardParamEnum.PROP_ID.getValue());
+                    String id = getJSCardId(JSContactIdsProfile.IdType.PRONOUNS, i, "PRONOUNS-" + (i++), propId);
+                    lastAltid = altid;
+                    lastMapid = (propId!=null) ? propId : id;
+                    if (language == null ||
+                            (jsCard.getLanguage() != null && jsCard.getLanguage().equalsIgnoreCase(language)) ||
+                            (config.getDefaultLanguage() != null && config.getDefaultLanguage().equalsIgnoreCase(language))
+                    ) {
+                        if (jsCard.getSpeakToAs() != null) {
+                            jsCard.getSpeakToAs().addPronouns(id, pronouns);
+                        } else {
+                            jsCard.setSpeakToAs(SpeakToAs.builder().pronouns(new HashMap<String, Pronouns>() {{
+                                put(id, pronouns);
+                            }}).build());
+                        }
                     }
                 } else {
+                    jsonPointer = String.format("%s/%s", jsonPointer, lastMapid);
                     jsCard.addLocalization(language, jsonPointer, mapper.convertValue(pronouns, JsonNode.class));
                 }
             }
@@ -1823,7 +1876,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (vCard.getUid()!=null)
             uid = vCard.getUid().getValue();
         else
-            uid = "urn:uuid:" + UUID.randomUUID();
+            uid = UuidUtils.getRandomV4UuidPrefixedByNamespace();
 
         jsCard = Card.builder().uid(uid).build();
         jsCard.setKind(toJSCardKind(vCard.getKind()));
@@ -1877,15 +1930,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     /**
      * Converts a list of vCard v4.0 instances [RFC6350] into a list of Card objects.
-     * JSContact is defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
      *
-     * @param vCards a list of instances of the ez-vcard library VCard class
+     * @param vCards a list of instances of the ez-vcard library VCard class [ez-vcard]
      * @return a list of Card objects
      * @throws CardException if one of the vCard instances is not v4.0 compliant
-     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard library</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
+     * @see <a href="https://github.com/mangstadt/ez-vcard">ez-vcard</a>
      */
     public List<Card> convert(VCard... vCards) throws CardException {
 

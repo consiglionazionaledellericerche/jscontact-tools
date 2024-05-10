@@ -21,9 +21,9 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the values of the "kind" property of the AddressComponent type as defined in section 2.5.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the values of the "kind" property of the AddressComponent type as defined in section 2.5.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.5.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.5.1">Section 2.5.1 of RFC9553</a>
  * @author Mario Loffredo
  */
 @Getter
@@ -34,10 +34,10 @@ import java.io.Serializable;
 public class AddressComponentKind extends ExtensibleEnumType<AddressComponentEnum> implements Serializable {
 
     /**
-     * Returns a address component type whose enum value is pre-defined.
+     * Returns an address component type whose enum value is pre-defined.
      *
      * @param rfcValue a pre-defined address component type
-     * @return a address component type
+     * @return an address component type
      */
     public static AddressComponentKind rfc(AddressComponentEnum rfcValue) { return AddressComponentKind.builder().rfcValue(rfcValue).build();}
     /**
@@ -126,9 +126,9 @@ public class AddressComponentKind extends ExtensibleEnumType<AddressComponentEnu
      */
     public static AddressComponentKind room() { return rfc(AddressComponentEnum.ROOM);}
     /**
-     * Returns an "landmark" address component type.
+     * Returns a "landmark" address component type.
      *
-     * @return an "landmark" address component type
+     * @return a "landmark" address component type
      */
     public static AddressComponentKind landmark() { return rfc(AddressComponentEnum.LANDMARK);}
     /**

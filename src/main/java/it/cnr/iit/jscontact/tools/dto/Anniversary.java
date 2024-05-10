@@ -38,9 +38,9 @@ import java.io.Serializable;
 
 
 /**
- * Class mapping the Anniversary type as defined in section 2.8.1 of [draft-ietf-calext-jscontact].
+ * Class mapping the Anniversary type as defined in section 2.8.1 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.8.1">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.8.1">Section 2.8.1 of RFC9553</a>
  * @author Mario Loffredo
  */
 @JsonPropertyOrder({"@type", "kind", "date", "place"})
@@ -76,16 +76,16 @@ public class Anniversary extends AbstractJSContactType implements HasKind, IdMap
      * Tests if this anniversary is a birthday. See vCard 4.0 BDAY property as defined in section 6.2.5 of [RFC6350].
      *
      * @return true if this anniversary is a birthday, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5">Section 6.2.5 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isBirth() { return kind.isBirth(); }
 
     /**
-     * Tests if this anniversary is a date of death. See vCard 4.0 DEATHDATE property as defined in section 6.2.5 of [RFC6474].
+     * Tests if this anniversary is a date of death. See vCard 4.0 DEATHDATE property as defined in section 2.3 of [RFC6474].
      *
      * @return true if this anniversary is a date of death, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">RFC6474</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6474#section-2.3">Section 2.3 of RFC6474</a>
      */
     @JsonIgnore
     public boolean isDeath() { return kind.isDeath(); }
@@ -94,7 +94,7 @@ public class Anniversary extends AbstractJSContactType implements HasKind, IdMap
      * Tests if this anniversary is a date of wedding, or equivalent. See vCard 4.0 ANNIVERSARY property as defined in section 6.2.6 of [RFC6350].
      *
      * @return true if this anniversary is a date of wedding, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.6">Section 2.6.2 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isWedding() { return kind.isWedding(); }

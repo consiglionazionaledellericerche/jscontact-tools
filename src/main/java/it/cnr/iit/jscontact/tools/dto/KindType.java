@@ -22,9 +22,9 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * Class mapping the "kind" property as defined in section 2.1.4 of [draft-ietf-calext-jscontact].
+ * Class mapping the "kind" property as defined in section 2.1.4 of [RFC9553].
  *
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.1.4">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.4">Section 2.1.4 of RFC9553</a>
  * @author Mario Loffredo
  */
 @Getter
@@ -38,7 +38,7 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      * Tests if this kind of contact card is "individual". See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
      * @return true if this kind of contact card is "individual", false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isIndividual() { return isRfc(KindEnum.INDIVIDUAL); }
@@ -47,7 +47,7 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      * Tests if this kind of contact card is "group". See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
      * @return true if this kind of contact card is "group", false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isGroup() { return isRfc(KindEnum.GROUP); }
@@ -56,13 +56,13 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      * Tests if this kind of contact card is "org". See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
      * @return true if this kind of contact card is "org", false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isOrg() { return isRfc(KindEnum.ORG); }
 
     /**
-     * Tests if this kind of contact card is "device". See vCard KIND property as defined in section 6.1.4 of [RFC6869].
+     * Tests if this kind of contact card is "device". See vCard KIND property as defined in [RFC6869].
      *
      * @return true if this kind of contact card is "device", false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6869">RFC6869</a>
@@ -71,7 +71,7 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
     public boolean isDevice() { return isRfc(KindEnum.DEVICE); }
 
     /**
-     * Tests if this kind of contact card is "application". See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6473].
+     * Tests if this kind of contact card is "application". See vCard 4.0 KIND property as defined in [RFC6473].
      *
      * @return true if this kind of contact card is "application", false otherwise
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6473">RFC6473</a>
@@ -83,7 +83,7 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      * Tests if this kind of contact card is "location". See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
      * @return true if this kind of contact card is "location", false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isLocation() { return isRfc(KindEnum.LOCATION); }
@@ -95,7 +95,7 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      * Returns an "individual" kind of contact card. See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
      * @return an "individual" kind of contact card
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
      */
     public static KindType individual() { return rfc(KindEnum.INDIVIDUAL);}
 
@@ -103,7 +103,7 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      * Returns a "group" kind of contact card. See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
      * @return an object  representing a "group" kind of contact card
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
      */
     public static KindType group() { return rfc(KindEnum.GROUP);}
 
@@ -111,12 +111,12 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      * Returns an "org" kind of contact card. See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
      * @return "org" as kind of contact card
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
      */
     public static KindType org() { return rfc(KindEnum.ORG);}
 
     /**
-     * Returns a "device" kind of contact card. See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6869].
+     * Returns a "device" kind of contact card. See vCard 4.0 KIND property as defined in [RFC6869].
      *
      * @return a "device" kind of contact card
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6869">RFC6869</a>
@@ -127,12 +127,12 @@ public class KindType extends ExtensibleEnumType<KindEnum> implements Serializab
      * Returns a "location" kind of contact card. See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6350].
      *
      * @return a "location" kind of contact card
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.1.4">Section 6.1.4 of RFC6350</a>
      */
     public static KindType location() { return rfc(KindEnum.LOCATION);}
 
     /**
-     * Returns an "application" kind of contact card. See vCard 4.0 KIND property as defined in section 6.1.4 of [RFC6473].
+     * Returns an "application" kind of contact card. See vCard 4.0 KIND property as defined in [RFC6473].
      *
      * @return an "application" kind of contact card
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc6473">RFC6473</a>

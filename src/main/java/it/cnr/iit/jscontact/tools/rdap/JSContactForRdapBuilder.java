@@ -3,11 +3,10 @@ package it.cnr.iit.jscontact.tools.rdap;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.utils.UuidUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.builders.PhoneFeaturesBuilder;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import lombok.AllArgsConstructor;
-
-import java.util.UUID;
 
 @AllArgsConstructor
 public class JSContactForRdapBuilder {
@@ -21,7 +20,7 @@ public class JSContactForRdapBuilder {
      * @return the JSContactForRdapBuilder object
      */
     public static JSContactForRdapBuilder builder() {
-        return new JSContactForRdapBuilder(Card.builder().uid("urn:uuid:" + UUID.randomUUID()).build());
+        return new JSContactForRdapBuilder(Card.builder().uid(UuidUtils.getRandomV4UuidPrefixedByNamespace()).build());
     }
 
     /**

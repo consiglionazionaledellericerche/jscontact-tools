@@ -9,8 +9,9 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.TextNode;
 
 /**
- * Utility class for handling Jackson JsonNode objects.
+ * Utility class for handling Jackson JsonNode objects [Jackson Project].
  *
+ * @see <a href="https://github.com/FasterXML/jackson">Jackson Project</a>
  * @author Mario Loffredo
  */
 public class JsonNodeUtils {

@@ -40,16 +40,19 @@ public class XCard2JSContact extends EZVCard2JSContact {
     }
 
     /**
-     * Converts a complete vCard v4.0 in XML format, namely xCard [RFC6351], into a list of Card objects.
-     * JSContact is defined in draft-ietf-calext-jscontact.
-     * Conversion rules are defined in draft-ietf-calext-jscontact-vcard.
+     * Converts a complete vCard v4.0 [RFC6350] in XML format, namely xCard [RFC6351], into a list of Card objects.
+     * JSContact is defined in [RFC9553].
+     * JSContact extensions to vCard are defined in [RFC9554]
+     * Conversion rules are defined in [RFC9555].
      *
      * @param xCard an xCard as an XML string
      * @return the list of Card objects
      * @throws CardException if the xCard is not v4.0 compliant
+     * @see <a href="https://tools.ietf.org/html/rfc6350">RFC6350</a>
      * @see <a href="https://tools.ietf.org/html/rfc6351">RFC6351</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/">draft-ietf-calext-jscontact-vcard</a>
-     * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/">draft-ietf-calext-jscontact</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9553/">RFC9553</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9554/">RFC9554</a>
+     * @see <a href="https://datatracker.ietf.org/doc/RFC9555/">RFC9555</a>
      */
     public List<Card> convert(String xCard) throws CardException {
 

@@ -138,4 +138,22 @@ public class FullNameTest extends JSContact2VCardTest {
         assertEquals("testFullName2 - 5", "en", vcard.getFormattedNames().get(1).getLanguage());
         assertEquals("testFullName2 - 6", "1", vcard.getFormattedNames().get(1).getAltId());
     }
+
+
+    @Test
+    public void testFullName4() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\": { \"full\":\"Jane Doe\"}," +
+                 "\"vCardProps\" : [ [ \"fn\", { }, \"text\", \"Jane\" ], [ \"version\", { }, \"text\", \"4.0\" ] ]" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testFullName4 - 1", 2, vcard.getFormattedNames().size());
+        assertEquals("testFullName4 - 2", "Jane Doe", vcard.getFormattedNames().get(0).getValue());
+        assertEquals("testFullName4 - 3", 1, (long) vcard.getFormattedNames().get(0).getPref());
+        assertEquals("testFullName4 - 4", "Jane", vcard.getFormattedNames().get(1).getValue());
+    }
+
 }

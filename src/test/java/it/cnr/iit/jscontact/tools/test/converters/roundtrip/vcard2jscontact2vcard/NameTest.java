@@ -42,7 +42,7 @@ public class NameTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertTrue("testName1 - 1", ((ExtendedStructuredName) vcard2.getProperty(ExtendedStructuredName.class)).equalsStructuredName(vcardInit.getStructuredName()));
+        assertTrue("testName1 - 1", vcard2.getProperty(ExtendedStructuredName.class).equalsStructuredName(vcardInit.getStructuredName()));
     }
 
 
@@ -60,7 +60,7 @@ public class NameTest extends RoundtripTest {
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        assertTrue("testName2 - 1", ((ExtendedStructuredName) vcard2.getProperty(ExtendedStructuredName.class)).equalsStructuredName(vcardInit.getStructuredName()));
+        assertTrue("testName2 - 1", vcard2.getProperty(ExtendedStructuredName.class).equalsStructuredName(vcardInit.getStructuredName()));
     }
 
     //TODO -UNDISCERNIBLE

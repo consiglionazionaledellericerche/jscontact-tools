@@ -17,10 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class mapping the SpeakToAs type as defined in section 2.2.3 of [draft-ietf-calext-jscontact].
+ * Class mapping the SpeakToAs type as defined in section 2.2.4 of [RFC9553].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact#section-2.2.3">draft-ietf-calext-jscontact</a>
+ * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.2.4">Section 2.2.4 of RFC9553</a>
  */
 @JsonPropertyOrder({"@type","grammaticalGender","pronouns"})
 @NotNullAnyConstraint(fieldNames={"grammaticalGender","pronouns"}, message = "at least one not null member between grammaticalGender and pronouns is required in SpeakToAs")
@@ -50,7 +50,7 @@ public class SpeakToAs extends AbstractJSContactType implements IsIANAType, Seri
      * Tests if the grammatical gender is masculine. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
      * @return true if the grammatical gender is masculine, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">Section 6.2.7 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isMasculine() { return isRfc(GrammaticalGenderType.MASCULINE); }
@@ -59,7 +59,7 @@ public class SpeakToAs extends AbstractJSContactType implements IsIANAType, Seri
      * Tests if the grammatical gender is feminine. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
      * @return true if the grammatical gender is feminine, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">Section 6.2.7 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isFeminine() { return isRfc(GrammaticalGenderType.FEMININE); }
@@ -68,7 +68,7 @@ public class SpeakToAs extends AbstractJSContactType implements IsIANAType, Seri
      * Tests if the grammatical gender is animate. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
      * @return true if the grammatical gender is animate, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">Section 6.2.7 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isAnimate() { return isRfc(GrammaticalGenderType.ANIMATE); }
@@ -77,7 +77,7 @@ public class SpeakToAs extends AbstractJSContactType implements IsIANAType, Seri
      * Tests if the grammatical gender is inanimate. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
      * @return true if the grammatical gender is inanimate, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">Section 6.2.7 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isInanimate() { return isRfc(GrammaticalGenderType.INANIMATE); }
@@ -86,7 +86,7 @@ public class SpeakToAs extends AbstractJSContactType implements IsIANAType, Seri
      * Tests if the grammatical gender is common. See vCard 4.0 GENDER property as defined in section 6.2.7 of [RFC6350].
      *
      * @return true if the grammatical gender is common, false otherwise
-     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">RFC6350</a>
+     * @see <a href="https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.7">Section 6.2.7 of RFC6350</a>
      */
     @JsonIgnore
     public boolean isCommon() { return isRfc(GrammaticalGenderType.COMMON); }
