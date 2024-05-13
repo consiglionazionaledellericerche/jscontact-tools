@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>1.0.0</version>
+		  <version>1.0.1</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:1.0.0'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:1.0.1'
 ```
 
 # Features

@@ -53,9 +53,10 @@ public class UuidUtils {
      * Returns a name based V5 UUID as a string value prefixed by the "urn:uuid" namespace.
      * @param name the name the UUID is based upon
      * @return the name based V5 UUID as a string value
+     * @throws NoSuchAlgorithmException never thrown
      */
-    public static String getNameBasedV5UuidPrefixedByNamespace(String name) {
-        return UUID_NAMESPACE_PREFIX + getNameBasedV5UuidPrefixedByNamespace(name);
+    public static String getNameBasedV5UuidPrefixedByNamespace(String name) throws NoSuchAlgorithmException {
+        return UUID_NAMESPACE_PREFIX + getNameBasedV5Uuid(name);
     }
 
     /**
