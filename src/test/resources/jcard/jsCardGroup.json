@@ -1,6 +1,7 @@
 [
   {
     "@type": "Card",
+    "version": "1.0",
     "uid": "6ecbcdac-c88c-4dc2-ada6-3210790c4196",
     "name": {"full": "a group"},
     "kind": "group",
@@ -12,6 +13,7 @@
   },
   {
     "@type": "Card",
+    "version": "1.0",
     "uid": "4f0a5931-9cca-4c5d-b9bc-be73317ae2e8",
     "name": {"full": "Joe User"},
     "kind": "individual",
@@ -39,7 +41,7 @@
       "ADR-1": {
         "@type": "Address",
         "contexts": {"work": true},
-        "components": [{"@type": "AddressComponent","kind": "name","value": "4321 Rue Somewhere"},{"@type": "AddressComponent","kind": "extension","value": "Suite 1234"}],
+        "components": [{"@type": "AddressComponent","kind": "name","value": "4321 Rue Somewhere"},{"@type": "AddressComponent","kind": "room","value": "Suite 1234"}],
         "locality": "Quebec",
         "region": "QC",
         "postcode": "G1V 2M2",
@@ -95,6 +97,7 @@
   },
   {
     "@type": "Card",
+    "version": "1.0",
     "uid": "8626d863-8c3f-405c-a2cb-bbbb3e3b359f",
     "name": {"full": "大久保 正仁"},
     "titles": {
@@ -117,6 +120,7 @@
   },
   {
     "@type": "Card",
+    "version": "1.0",
     "uid": "a6801118-385c-414f-9fc0-e43ed1ec0713",
     "name": {"full": "Taiwan Fixed Network CO.,LTD."},
     "kind": "org",
