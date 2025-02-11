@@ -705,7 +705,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 
 ## Java
 
-jscontact-tools can be run on Java 8 or 11.
+jscontact-tools can be run on Java 8 or 11 or 17.
 
 ## Maven
 
