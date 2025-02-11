@@ -35,6 +35,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
 import it.cnr.iit.jscontact.tools.dto.serializers.VCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
@@ -97,8 +98,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      */
     @NotNull
     @VersionValueConstraint
-    @Builder.Default
-    String version = "1.0";
+    String version = VersionUtils.getDefaultVersion();
 
     /**
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.3">Section 2.1.3 of RFC9553</a>

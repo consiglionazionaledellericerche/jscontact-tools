@@ -37,6 +37,7 @@ public class AddressTest extends AbstractTest {
                                                                         }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
         assertFalse("testInvalidCountryCode-1", jsCard.isValid());
@@ -52,6 +53,7 @@ public class AddressTest extends AbstractTest {
                                                                        }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
 
@@ -68,6 +70,7 @@ public class AddressTest extends AbstractTest {
                                                                     }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
 
@@ -84,6 +87,7 @@ public class AddressTest extends AbstractTest {
                                                                        }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
 
@@ -100,6 +104,7 @@ public class AddressTest extends AbstractTest {
         }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
         assertFalse("testInvalidAddressId-1", jsCard.isValid());
@@ -118,6 +123,7 @@ public class AddressTest extends AbstractTest {
         }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
         assertFalse("testInvalidPhonetic-1", jsCard.isValid());
@@ -139,6 +145,7 @@ public class AddressTest extends AbstractTest {
         }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
         assertFalse("testInvalidSeparators1-1", jsCard.isValid());
@@ -159,6 +166,7 @@ public class AddressTest extends AbstractTest {
         }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
         assertFalse("testInvalidSeparators2-1", jsCard.isValid());
@@ -177,6 +185,7 @@ public class AddressTest extends AbstractTest {
         }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .addresses(addresses)
                 .build();
 

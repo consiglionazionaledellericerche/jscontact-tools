@@ -18,6 +18,7 @@ public class OrganizationTest extends AbstractTest {
         Map<String, Organization> organizations = new HashMap<String,Organization>() {{ put("ORG-1", Organization.builder().build()); }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .organizations(organizations)
                 .build();
         assertFalse("testInvalidOrganization1-1", jsCard.isValid());

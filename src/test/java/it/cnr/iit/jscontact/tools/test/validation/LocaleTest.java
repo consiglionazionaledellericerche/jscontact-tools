@@ -29,6 +29,7 @@ public class LocaleTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .language("it")
                 .build();
 
@@ -40,6 +41,7 @@ public class LocaleTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .language("@@@@")
                 .build();
 

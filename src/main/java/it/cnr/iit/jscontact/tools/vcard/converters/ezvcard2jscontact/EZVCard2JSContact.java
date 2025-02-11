@@ -1878,7 +1878,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         else
             uid = UuidUtils.getRandomV4UuidPrefixedByNamespace();
 
-        jsCard = Card.builder().uid(uid).build();
+        jsCard = Card.builder().uid(uid).version(VersionUtils.getDefaultVersion()).build();
         jsCard.setKind(toJSCardKind(vCard.getKind()));
         jsCard.setProdId(getValue(vCard.getProductId()));
         jsCard.setUpdated(toJSCardUpdated(vCard.getRevision()));

@@ -38,6 +38,7 @@ public class ResourceTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .links(new HashMap<String, Link>(){{ put("CONTACT-1", resource);}})
                 .build();
 
@@ -66,6 +67,7 @@ public class ResourceTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .links(new HashMap<String, Link>(){{ put("CONTACT-1", resource);}})
                 .build();
 
