@@ -1129,7 +1129,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 ImageType imageType = toVCardImageTypeValue(data.getContentType());
                 object = constructor.newInstance(data.getData(), imageType);
                 if (data.getText() != null)
-                    classs.getDeclaredMethod("setText", String.class, SoundType.class).invoke(object, data.getText(), imageType);
+                    classs.getDeclaredMethod("setText", String.class, ImageType.class).invoke(object, data.getText(), imageType);
             } else {
                 constructor = classs.getDeclaredConstructor(String.class, ImageType.class);
                 object = constructor.newInstance(resource.getUri(), toVCardImageTypeValue(resource.getMediaType()));
