@@ -52,6 +52,7 @@ public class PhotoTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .media(new HashMap<String, Media>() {{ put("PHOTO-1", photo); }})
                 .build();
 
@@ -69,6 +70,7 @@ public class PhotoTest extends AbstractTest {
                          .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .media(new HashMap<String, Media>() {{ put("PHOTO-1", photo); }})
                 .build();
 
@@ -88,6 +90,7 @@ public class PhotoTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .media(new HashMap<String, Media>() {{ put("PHOTO-1", photo); }})
                 .build();
 

@@ -30,6 +30,7 @@ public class KindTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .kind(KindType.group())
                 .build();
 

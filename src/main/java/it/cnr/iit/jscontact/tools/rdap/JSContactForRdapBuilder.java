@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.*;
 import it.cnr.iit.jscontact.tools.dto.utils.UuidUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.builders.PhoneFeaturesBuilder;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class JSContactForRdapBuilder {
      * @return the JSContactForRdapBuilder object
      */
     public static JSContactForRdapBuilder builder() {
-        return new JSContactForRdapBuilder(Card.builder().uid(UuidUtils.getRandomV4UuidPrefixedByNamespace()).build());
+        return new JSContactForRdapBuilder(Card.builder().uid(UuidUtils.getRandomV4UuidPrefixedByNamespace()).version(VersionUtils.getDefaultVersion()).build());
     }
 
     /**

@@ -60,6 +60,7 @@ public class EmailAddressTest extends AbstractTest {
         Map<String, EmailAddress> emailsMap = new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }};
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .emails(emailsMap)
                 .build();
 
@@ -75,6 +76,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
@@ -91,6 +93,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
@@ -106,6 +109,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
@@ -124,6 +128,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 
@@ -143,6 +148,7 @@ public class EmailAddressTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .emails(new HashMap<String, EmailAddress>() {{ put("EMAIL-1", email); }})
                 .build();
 

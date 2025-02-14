@@ -38,6 +38,7 @@ public class PhoneTest extends AbstractTest {
                 .build();
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .phones(new HashMap<String,Phone>(){{ put("PHONE-1", phone);}})
                 .build();
 

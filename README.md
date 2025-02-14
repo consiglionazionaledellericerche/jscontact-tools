@@ -701,16 +701,11 @@ This jscontact-tools version is compliant with JSContact specification version -
 * [RFC8605](https://datatracker.ietf.org/doc/rfc8605/)
 * [RFC9083](https://datatracker.ietf.org/doc/rfc9083/)
 
-<a name="drafts"></a>
-### Drafts
-
-* [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/)
-
 # Build Instructions
 
 ## Java
 
-jscontact-tools can be run on Java 8 or 11.
+jscontact-tools can be run on Java 8 or 11 or 17.
 
 ## Maven
 

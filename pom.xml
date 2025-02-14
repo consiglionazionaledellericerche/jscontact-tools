@@ -21,7 +21,7 @@
 
     <groupId>it.cnr.iit.jscontact</groupId>
     <artifactId>jscontact-tools</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>jscontact-tools</name>
     <url>https://github.com/consiglionazionaledellericerche/jscontact-tools</url>
     <organization>
@@ -30,7 +30,7 @@
     <description>Java tools for JSContact building, validation, serialization/deserialization and conversion from vCard 4.0 (RFC6350) and its transliterations, namely xCard (RFC6351) and jCard (RFC7095).</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <ezvcard.version>0.11.3</ezvcard.version>
     </properties>
@@ -95,7 +95,7 @@
         </plugin>
         <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.13.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -105,7 +105,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -131,7 +131,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.12.4</version>
+                <version>2.19.1</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
@@ -152,7 +152,29 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.6</version>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <packageName>it.cnr.iit.jscontact.tools</packageName>
+                        </manifest>
+                        <manifestEntries>
+                            <Created-By>Mario Loffredo</Created-By>
+                            <Add-Opens>java.base/java.util</Add-Opens>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -165,7 +187,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>2.4</version>
+                        <version>3.2.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -196,13 +218,21 @@
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
+                                <configuration>
+                                    <keyname>0xBF9F97AD</keyname>
+                                    <passphraseServerId>0xBF9F97AD</passphraseServerId>
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.8</version>
+                        <version>1.6.13</version>
                         <executions>
                             <execution>
                                 <id>default-deploy</id>
@@ -270,7 +300,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
+            <version>2.18.0</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>

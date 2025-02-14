@@ -36,6 +36,7 @@ public class TitleTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .titles(jobTiles)
                 .build();
 
@@ -53,6 +54,7 @@ public class TitleTest extends AbstractTest {
         organizations.put("organization-1", Organization.builder().name("an organization").build());
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .titles(jobTiles)
                 .organizations(organizations)
                 .build();

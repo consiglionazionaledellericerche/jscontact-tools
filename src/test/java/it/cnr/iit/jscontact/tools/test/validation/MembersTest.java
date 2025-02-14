@@ -32,6 +32,7 @@ public class MembersTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .kind(KindType.group())
                 .members(new HashMap<String,Boolean>(){{ put(getUUID(), Boolean.TRUE);}})
                 .build();
@@ -44,6 +45,7 @@ public class MembersTest extends AbstractTest {
 
         Card jsCard = Card.builder()
                 .uid(getUUID())
+                .version(getVersion())
                 .members(new HashMap<String,Boolean>(){{ put(getUUID(), Boolean.TRUE);}})
                 .build();
 

@@ -32,6 +32,9 @@ public class VersionValueValidator implements ConstraintValidator<VersionValueCo
 
     public boolean isValid(String versionValue, ConstraintValidatorContext context) {
 
+        if (versionValue == null)
+            return false;
+
         Matcher matcher = VERSION_VALUE_PATTERN.matcher(versionValue);
         return matcher.matches();
     }

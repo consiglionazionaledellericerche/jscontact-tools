@@ -16,11 +16,16 @@
 package it.cnr.iit.jscontact.tools.test;
 
 import it.cnr.iit.jscontact.tools.dto.utils.UuidUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 
 public abstract class AbstractTest {
 
     protected String getUUID() {
         return UuidUtils.getRandomV4UuidPrefixedByNamespace();
+    }
+
+    protected String getVersion() {
+        return VersionUtils.getDefaultVersion();
     }
 
 }
