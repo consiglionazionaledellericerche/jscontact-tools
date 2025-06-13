@@ -74,10 +74,27 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 
 ```
 
-### Building considering versions and profiles
+### Building depending on versions and profiles
 
+Default JSContact version for building is 2.0 introduced by [draft-ietf-calext-jscontact-uid](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-uid/).
+Use VersionUtils.setDefaultVersion method, to set another version as the default version for building.
+Note that the uid property is mandatory in version 1.0 but optional in version 2.0.
 
+```
 
+    @Test(expected = NullPointerException.class)
+    public void testInvalidCardBuildPerVersion_1_0() {
+
+        // Version 1.0 is the default version
+        //uid missing
+        VersionUtils.setDefaultVersion(VersionUtils.VersionEnum.VERSION_1_0);
+        Card.builder()
+               .kind(KindType.individual())
+               .buildPerVersionAndProfile();
+        VersionUtils.setDefaultVersion(VersionUtils.VersionEnum.VERSION_2_0);
+    }
+
+```
 
 ### Cloning
 
@@ -130,11 +147,53 @@ Here in the following a method testing an unsuccessfully ended validation is sho
         
 ```
 
-### Validation considering versions and profiles
+### Validation depending on versions and profiles
 
+Validation depends not only on versions but also on profiles as described in [draft-ietf-calext-jscontact-profiles](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-profiles/).
+Validation leverages the groups of javax.validation. 
+Currently, three groups are defined: two groups for the JSContact versions and one group for the RDAP profile.
+Default JSContact version group for validation is 2.0 introduced by [draft-ietf-calext-jscontact-uid](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-uid/).
+Use `JSContact2VCardConfig.setVersionGroup` method or the `versionGroup` method of the JSContact2VCard builder, to set another version as the default version for validation.
+Note that the uid property is mandatory in version 1.0 but optional in version 2.0.
 
+```
 
+    @Test(expected = CardException.class)
+    public void testUidInvalid() throws IOException, CardException {
 
+        JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder().versionGroup(Version_1_0.class).build()).build();
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"name\": { \"full\": \"test\"}" +
+                "}";
+        jsContact2VCard.convert(jscard);
+    }
+
+```
+
+To validate a JSContact Card object against the RDAP profile, invoke the `isValid` methdod both Version_2_0 and Profile_RDAP group as input. 
+
+```
+
+    public void testJSContactForRdapInvalid11() throws JsonProcessingException {
+
+        String json = "{" +
+                "\"version\":\"2.0\"," +
+                "\"organizations\":{" +
+                    "\"organization\": {" +
+                        "\"@type\":\"Organization\"," +
+                        "\"name\": \"Example\"" +
+                    "}" +
+                "}" +
+                "}";
+
+        Card jsCard =  Card.toJSCard(json);
+        boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        assertFalse("testJSContactForRdapInvalid11 - 1",isValid);
+        assertEquals("testJSContactForRdapInvalid11 - 2", jsCard.getValidationMessage(), "missing key in organizations map for RDAP profile, at least org must be present");
+    }
+
+```
 
 ### vCard validation
 
