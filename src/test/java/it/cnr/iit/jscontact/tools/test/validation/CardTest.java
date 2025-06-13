@@ -15,20 +15,39 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
+import it.cnr.iit.jscontact.tools.constraints.groups.Version_1_0;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.KindType;
+import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import it.cnr.iit.jscontact.tools.test.AbstractTest;
 import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 public class CardTest extends AbstractTest {
 
     @Test(expected = NullPointerException.class)
-    public void testInvalidCardBuild() {
+    public void testInvalidCardBuildPerVersion_1_0() {
 
+        // Version 1.0 is the default version
         //uid missing
+        VersionUtils.setDefaultVersion(VersionUtils.VersionEnum.VERSION_1_0);
         Card.builder()
                .kind(KindType.individual())
-               .build();
+               .buildPerVersionAndProfile();
+        VersionUtils.setDefaultVersion(VersionUtils.VersionEnum.VERSION_2_0);
+    }
+
+
+    public void testValidCardBuildPerVersion_2_0() {
+
+        VersionUtils.setDefaultVersion(VersionUtils.VersionEnum.VERSION_2_0);
+
+        //uid missing
+        Card card = Card.builder()
+                .kind(KindType.individual())
+                .buildPerVersionAndProfile();
+
+        assertNotNull("testValidCardBuildPerVersion_2_0", card);
     }
 
 }
