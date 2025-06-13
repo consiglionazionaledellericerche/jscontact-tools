@@ -25,6 +25,7 @@ import it.cnr.iit.jscontact.tools.constraints.NameSortAsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
+import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameSortAsDeserializer;
@@ -37,6 +38,7 @@ import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Map;
@@ -74,6 +76,7 @@ public class Name extends AbstractJSContactType implements HasComponents, IsIANA
 
     String defaultSeparator;
 
+    @NotNull(message = "full is missing in Name for RDAP profile", groups={Profile_RDAP.class})
     String full;
 
     @JsonSerialize(using = NameSortAsSerializer.class)

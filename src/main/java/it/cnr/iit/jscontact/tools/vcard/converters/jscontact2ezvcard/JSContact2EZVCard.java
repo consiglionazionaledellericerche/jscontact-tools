@@ -1969,7 +1969,7 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Card jsCard : jsCards) {
             if (config.isValidateCard()) {
-                if (!jsCard.isValid())
+                if (!jsCard.isValid(config.getVersionGroup()))
                     throw new CardException(jsCard.getValidationMessage());
             }
             vCards.add(convert(jsCard));
