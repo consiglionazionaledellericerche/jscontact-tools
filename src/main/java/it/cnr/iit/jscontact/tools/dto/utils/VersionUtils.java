@@ -2,7 +2,6 @@ package it.cnr.iit.jscontact.tools.dto.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import it.cnr.iit.jscontact.tools.dto.AnniversaryEnum;
 import lombok.AllArgsConstructor;
 
 public class VersionUtils {

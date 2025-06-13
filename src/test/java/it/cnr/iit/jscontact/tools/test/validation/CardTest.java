@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.validation;
 
-import it.cnr.iit.jscontact.tools.constraints.groups.Version_1_0;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.KindType;
 import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
