@@ -37,21 +37,21 @@ public class RdapProfileMapKeysValidator implements ConstraintValidator<RdapProf
         IdMapValue idMapValue = (IdMapValue) map.values().toArray()[0];
 
         if (idMapValue instanceof EmailAddress)
-            return map.keySet().contains(JSContactForRdapMapId.EMAIL_ID.getValue());
+            return map.containsKey(JSContactForRdapMapId.EMAIL_ID.getValue());
 
         if (idMapValue instanceof Address)
-            return map.keySet().contains(JSContactForRdapMapId.ADDRESS_ID.getValue());
+            return map.containsKey(JSContactForRdapMapId.ADDRESS_ID.getValue());
 
         if (idMapValue instanceof Phone)
-            return map.keySet().contains(JSContactForRdapMapId.VOICE_ID.getValue()) ||
-                    map.keySet().contains(JSContactForRdapMapId.FAX_ID.getValue());
+            return map.containsKey(JSContactForRdapMapId.VOICE_ID.getValue()) ||
+                    map.containsKey(JSContactForRdapMapId.FAX_ID.getValue());
 
         if (idMapValue instanceof Organization)
-            return map.keySet().contains(JSContactForRdapMapId.ORG_ID.getValue());
+            return map.containsKey(JSContactForRdapMapId.ORG_ID.getValue());
 
         if (idMapValue instanceof Link)
-            return map.keySet().contains(JSContactForRdapMapId.URL_ID.getValue()) ||
-                    map.keySet().contains(JSContactForRdapMapId.CONTACT_URI_ID.getValue());
+            return map.containsKey(JSContactForRdapMapId.URL_ID.getValue()) ||
+                    map.containsKey(JSContactForRdapMapId.CONTACT_URI_ID.getValue());
 
         return true;
     }

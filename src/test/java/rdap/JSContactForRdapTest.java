@@ -22,7 +22,7 @@ public class JSContactForRdapTest {
     public void testJSContactForRdapInvalid2() {
         try {
             JSContactForRdapBuilder.builder().name(JSContactNameForRdapBuilder.builder().build()).build();
-            assertFalse(true);
+            fail();
         } catch(MissingFieldException | CardException e) {
             assertEquals("testJSContactForRdapInvalid2", e.getMessage(), "At least one between name, organizations, addresses, phones, emails and links must be set in JSCard");
         }
@@ -31,7 +31,7 @@ public class JSContactForRdapTest {
     public void testJSContactForRdapInvalid3() {
         try {
             JSContactForRdapBuilder.builder().name(JSContactNameForRdapBuilder.builder().given("Mario").surname("Loffredo").build()).build();
-            assertFalse(true);
+            fail();
         } catch(MissingFieldException | CardException e) {
             assertEquals("testJSContactForRdapInvalid3", e.getMessage(), "full is missing in Name for RDAP profile");
         }
@@ -40,7 +40,7 @@ public class JSContactForRdapTest {
     public void testJSContactForRdapInvalid4() {
         try {
             JSContactForRdapBuilder.builder().name(JSContactNameForRdapBuilder.builder().full("Mario Loffredo").build()).kind(KindType.application()).build();
-            assertFalse(true);
+            fail();
         } catch(MissingFieldException | CardException e) {
             assertEquals("testJSContactForRdapInvalid4", e.getMessage(), "invalid kind value for RDAP profile");
         }
@@ -83,7 +83,7 @@ public class JSContactForRdapTest {
                         .street("モルッツィ通り、1")
                         .build())
                 .build();
-            assertFalse(true);
+            fail();
         } catch(MissingFieldException | CardException e) {
             assertEquals("testJSContactForRdapInvalid5", e.getMessage(), "the language property should be set when the localizations property is set");
         }
@@ -93,7 +93,7 @@ public class JSContactForRdapTest {
     public void testJSContactForRdapInvalid6() {
         try {
             JSContactForRdapBuilder.builder().version(VersionUtils.VersionEnum.VERSION_1_0).name(JSContactNameForRdapBuilder.builder().full("Mario Loffredo").build()).build();
-            assertFalse(true);
+            fail();
         } catch(MissingFieldException | CardException e) {
             assertEquals("testJSContactForRdapInvalid6", e.getMessage(), "invalid version value for RDAP profile");
         }

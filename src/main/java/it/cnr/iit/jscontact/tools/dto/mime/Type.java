@@ -8,7 +8,7 @@ public class Type {
     @Builder.Default
     String typeParam = "card";
     @Builder.Default
-    String versionParam = "1.0";
+    String versionParam = "2.0";
 
     @Override
     public String toString() {
