@@ -83,7 +83,7 @@ import java.util.*;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@EqualsAndHashCode(of = {"uid,name"}, callSuper = false)
+@EqualsAndHashCode(of = {"uid","name"}, callSuper = false)
 @SuperBuilder
 public class Card extends AbstractExtensibleJSContactType implements IsIANAType, Serializable {
 
