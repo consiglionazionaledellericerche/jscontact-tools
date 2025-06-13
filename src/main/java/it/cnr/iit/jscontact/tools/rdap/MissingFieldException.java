@@ -16,7 +16,7 @@
 package it.cnr.iit.jscontact.tools.rdap;
 
 /**
- * Thrown when uid is missing fields in JSContact object
+ * Thrown when an expected field in a JSContact object is missing
  *
  * @author Mario Loffredo
  */
