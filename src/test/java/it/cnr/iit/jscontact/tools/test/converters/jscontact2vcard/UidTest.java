@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UidTest extends JSContact2VCardTest {
 
-    //jscard version 1.0 doesn't include uid
+    //jscard version 2.0 doesn't include uid
     @Test(expected = CardException.class)
     public void testUidInvalid() throws IOException, CardException {
 
