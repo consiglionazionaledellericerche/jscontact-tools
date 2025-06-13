@@ -139,10 +139,12 @@ public class NameTest extends JSContact2VCardTest {
                 "}, " +
                 "\"localizations\" : {" +
                     "\"en\": {" +
-                        "\"name/components\":[ " +
-                            "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
-                            "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
-                        "]" +
+                        "\"name\":{ " +
+                            "\"components\":[ " +
+                                "{ \"value\":\"Masahito\", \"kind\": \"given\" }," +
+                                "{ \"value\":\"Okubo\", \"kind\": \"surname\" }" +
+                            "]" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";
