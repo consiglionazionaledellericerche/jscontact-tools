@@ -320,6 +320,8 @@ The conversion is executed according to the following rules:
     - `setAutoFullAddress = true`
     - `setAutoMediaType = true`
     - `convertGenderToSpeakToAs = true`
+    - `defaultLanguage = null`
+    - `idsProfileToUse = null`
 
 7. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMGENDER is missing and
    if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
@@ -452,9 +454,10 @@ All the methods take in input a list of JSContact Card objects and can raise the
 4. Default values for the configuration properties are:
 
     - `validateCard = true`
+    - `versionGroup = Version_2_0.class`
     - `setAutoAddrLabel = true`
     - `setPropIdParam = true`
-    - `convertTimezoneToOffset = true`
+    - `convertTimezoneToOffset = false`
 
 5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
 
