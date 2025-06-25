@@ -270,4 +270,6 @@ public abstract class AbstractExtensibleJSContactType {
             throw new InternalErrorException(String.format("Internal Error: addExtension - message=%s", e.getMessage()));
         }
     }
+
+    public abstract static class AbstractExtensibleJSContactTypeBuilder<C,B> {};
 }
