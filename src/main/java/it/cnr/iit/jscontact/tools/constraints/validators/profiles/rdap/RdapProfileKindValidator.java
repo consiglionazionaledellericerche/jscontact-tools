@@ -13,16 +13,25 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.rdap;
+package it.cnr.iit.jscontact.tools.constraints.validators.profiles.rdap;
 
-/**
- * Thrown when an expected field in a JSContact object is missing
- *
- * @author Mario Loffredo
- */
-public class MissingFieldException extends Exception {
+import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileKindConstraint;
+import it.cnr.iit.jscontact.tools.dto.KindType;
 
-    public MissingFieldException(String message) {
-        super(message);
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class RdapProfileKindValidator implements ConstraintValidator<RdapProfileKindConstraint, KindType> {
+
+    public void initialize(RdapProfileKindConstraint constraintAnnotation) {
     }
+
+    public boolean isValid(KindType kind, ConstraintValidatorContext context) {
+
+        if (kind == null)
+            return true;
+
+        return kind.isIndividual() || kind.isOrg();
+    }
+
 }

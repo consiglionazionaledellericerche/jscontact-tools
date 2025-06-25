@@ -1,8 +1,10 @@
 package it.cnr.iit.jscontact.tools.rdap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
 import lombok.AllArgsConstructor;
 
@@ -32,6 +34,33 @@ public class JSContactForRdapGetter {
      */
     public String uid() {
         return jsCard.getUid();
+    }
+
+    /**
+     * Returns the language of this JSContactForRdapGetter object
+     *
+     * @return the language
+     */
+    public String language() {
+        return jsCard.getLanguage();
+    }
+
+    /**
+     * Returns the kind of this JSContactForRdapGetter object
+     *
+     * @return the kind
+     */
+    public KindType kind() {
+        return jsCard.getKind();
+    }
+
+    /**
+     * Returns the version of this JSContactForRdapGetter object
+     *
+     * @return the version
+     */
+    public VersionUtils.VersionEnum version() {
+        return VersionUtils.VersionEnum.getEnum(jsCard.getVersion());
     }
 
     /**
@@ -88,6 +117,16 @@ public class JSContactForRdapGetter {
         return (jsCard.getLinks()!=null && jsCard.getLinks().get(JSContactForRdapMapId.URL_ID.getValue())!=null) ? jsCard.getLinks().get(JSContactForRdapMapId.URL_ID.getValue()).getUri() : null;
     }
 
+
+    /**
+     * Returns the contact uri value of this JSContactForRdapGetter object if it is set, null otherwise
+     *
+     * @return the contact uri value
+     */
+    public String contactUri() {
+        return (jsCard.getLinks()!=null && jsCard.getLinks().get(JSContactForRdapMapId.CONTACT_URI_ID.getValue())!=null) ? jsCard.getLinks().get(JSContactForRdapMapId.CONTACT_URI_ID.getValue()).getUri() : null;
+    }
+
     /**
      * Returns the address as JSContact Address object of this JSContactForRdapGetter object
      *
@@ -121,7 +160,8 @@ public class JSContactForRdapGetter {
      */
     public String orgLoc(String language) {
         try {
-            return (jsCard.getLocalization(language, JSContactForRdapMapId.ORG_LOCALIZATION_ID.getValue())!=null) ? mapper.treeToValue(jsCard.getLocalization(language, JSContactForRdapMapId.ORG_LOCALIZATION_ID.getValue()), Organization.class).getName() : null;
+            JsonNode node = (jsCard.getLocalization(language, JSContactForRdapMapId.ORG_LOCALIZATION_ID.getValue())!=null) ? jsCard.getLocalization(language, JSContactForRdapMapId.ORG_LOCALIZATION_ID.getValue()) : null;
+            return (node!=null) ? mapper.treeToValue(node.get(JSContactForRdapMapId.ORG_ID.getValue()), Organization.class).getName() : null;
         } catch (JsonProcessingException e) {
             throw new InternalErrorException("Unable to cast localization to JSContact Organization object");
         }
@@ -136,7 +176,8 @@ public class JSContactForRdapGetter {
      */
     public Address addressLoc(String language) throws InternalErrorException {
         try {
-            return (jsCard.getLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue())!=null) ? mapper.treeToValue(jsCard.getLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue()), Address.class) : null;
+            JsonNode node = (jsCard.getLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue())!=null) ? jsCard.getLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue()) : null;
+            return (node!=null) ? mapper.treeToValue(node.get(JSContactForRdapMapId.ADDRESS_ID.getValue()),Address.class) : null;
         } catch (JsonProcessingException e) {
             throw new InternalErrorException("Unable to cast localization to JSContact Address object");
         }
@@ -151,7 +192,8 @@ public class JSContactForRdapGetter {
      */
     public String emailLoc(String language) {
         try {
-            return (jsCard.getLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue())!=null) ? mapper.treeToValue(jsCard.getLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue()), EmailAddress.class).getAddress() : null;
+            JsonNode node = (jsCard.getLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue())!=null) ? jsCard.getLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue()) : null;
+            return (node !=null) ? mapper.treeToValue(node.get(JSContactForRdapMapId.EMAIL_ID.getValue()), EmailAddress.class).getAddress() : null;
         } catch (JsonProcessingException e) {
             throw new InternalErrorException("Unable to cast localization to JSContact Address object");
         }

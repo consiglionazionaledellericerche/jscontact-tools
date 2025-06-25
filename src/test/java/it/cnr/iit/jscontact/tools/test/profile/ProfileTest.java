@@ -94,10 +94,10 @@ public class ProfileTest extends JCard2JSContactTest {
         assertNull("testRDAPProfile - 47", jsCard.getCryptoKeys().get("KEY-1").getPref());
         assertTrue("testRDAPProfile - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
         assertEquals("testRDAPProfile - 45", 1, jsCard.getLinks().size());
-        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getLinks().get("LINK-1").getUri());
-        assertNull("testRDAPProfile - 51", jsCard.getLinks().get("LINK-1").getPref());
-        assertTrue("testRDAPProfile - 52", jsCard.getLinks().get("LINK-1").asPrivate());
-        assertTrue("testRDAPProfile - 53", jsCard.getLinks().get("LINK-1").isGenericLink());
+        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getLinks().get("url").getUri());
+        assertNull("testRDAPProfile - 51", jsCard.getLinks().get("url").getPref());
+        assertTrue("testRDAPProfile - 52", jsCard.getLinks().get("url").asPrivate());
+        assertTrue("testRDAPProfile - 53", jsCard.getLinks().get("url").isGenericLink());
         assertTrue("testRDAPProfile - 54", StringUtils.isNotEmpty(jsCard.getUid()));
 
     }

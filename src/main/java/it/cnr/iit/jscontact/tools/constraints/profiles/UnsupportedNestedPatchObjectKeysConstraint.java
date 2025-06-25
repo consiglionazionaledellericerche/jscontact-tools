@@ -13,16 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.rdap;
+package it.cnr.iit.jscontact.tools.constraints.profiles;
 
-/**
- * Thrown when an expected field in a JSContact object is missing
- *
- * @author Mario Loffredo
- */
-public class MissingFieldException extends Exception {
+import it.cnr.iit.jscontact.tools.constraints.validators.profiles.UnsupportedNestedPatchObjectKeysValidator;
 
-    public MissingFieldException(String message) {
-        super(message);
-    }
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
+
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {UnsupportedNestedPatchObjectKeysValidator.class})
+@Documented
+public @interface UnsupportedNestedPatchObjectKeysConstraint {
+
+    String message() default "profile does not support nested PatchObject keys in localizations";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
 }
+

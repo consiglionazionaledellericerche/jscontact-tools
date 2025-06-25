@@ -9,10 +9,11 @@ public enum JSContactForRdapMapId {
     FAX_ID("fax"),
     EMAIL_ID("email"),
     URL_ID("url"),
-    ORG_LOCALIZATION_ID("organizations/org"),
+    CONTACT_URI_ID("contact-uri"),
+    ORG_LOCALIZATION_ID("organizations"),
     NAME_LOCALIZATION_ID("name"),
-    ADDRESS_LOCALIZATION_ID("addresses/addr"),
-    EMAIL_LOCALIZATION_ID("emails/email");
+    ADDRESS_LOCALIZATION_ID("addresses"),
+    EMAIL_LOCALIZATION_ID("emails");
 
     @Getter
     private final String value;

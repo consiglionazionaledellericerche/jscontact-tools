@@ -13,16 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.rdap;
+package it.cnr.iit.jscontact.tools.constraints.profiles.rdap;
 
-/**
- * Thrown when an expected field in a JSContact object is missing
- *
- * @author Mario Loffredo
- */
-public class MissingFieldException extends Exception {
+import it.cnr.iit.jscontact.tools.constraints.validators.profiles.rdap.RdapProfileMapKeysValidator;
 
-    public MissingFieldException(String message) {
-        super(message);
-    }
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
+
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {RdapProfileMapKeysValidator.class})
+@Documented
+public @interface RdapProfileMapKeysConstraint {
+
+    String message() default "invalid map key for RDAP profile";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
 }
+

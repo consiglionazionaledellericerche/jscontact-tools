@@ -21,7 +21,7 @@
 
     <groupId>it.cnr.iit.jscontact</groupId>
     <artifactId>jscontact-tools</artifactId>
-    <version>1.0.2</version>
+    <version>2.0.0</version>
     <name>jscontact-tools</name>
     <url>https://github.com/consiglionazionaledellericerche/jscontact-tools</url>
     <organization>
@@ -150,14 +150,13 @@
                 <version>1.6</version>
             </plugin>
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
             <plugin>

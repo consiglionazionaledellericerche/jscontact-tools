@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>1.0.1</version>
+		  <version>2.0.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:1.0.1'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:2.0.0'
 ```
 
 # Features
@@ -74,6 +74,28 @@ Here in the following an unsuccessful creation of an `EmailAddress` instance is 
 
 ```
 
+### Building depending on versions and profiles
+
+Default JSContact version for building is 2.0 introduced by [draft-ietf-calext-jscontact-uid](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-uid/).
+Use VersionUtils.setDefaultVersion method, to set another version as the default version for building.
+Note that the uid property is mandatory in version 1.0 but optional in version 2.0.
+
+```
+
+    @Test(expected = NullPointerException.class)
+    public void testInvalidCardBuildPerVersion_1_0() {
+
+        // Version 1.0 is the default version
+        //uid missing
+        VersionUtils.setDefaultVersion(VersionUtils.VersionEnum.VERSION_1_0);
+        Card.builder()
+               .kind(KindType.individual())
+               .buildPerVersionAndProfile();
+        VersionUtils.setDefaultVersion(VersionUtils.VersionEnum.VERSION_2_0);
+    }
+
+```
+
 ### Cloning
 
 Creation can be achieved through cloning as well.
@@ -123,6 +145,54 @@ Here in the following a method testing an unsuccessfully ended validation is sho
         assertTrue("testInvalidCountryCode-2", jsCard.getValidationMessage().equals("invalid countryCode in Address"));
     }
         
+```
+
+### Validation depending on versions and profiles
+
+Validation depends not only on versions but also on profiles as described in [draft-ietf-calext-jscontact-profiles](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-profiles/).
+Validation leverages the groups of javax.validation. 
+Currently, three groups are defined: two groups for the JSContact versions and one group for the RDAP profile.
+Default JSContact version group for validation is 2.0 introduced by [draft-ietf-calext-jscontact-uid](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-uid/).
+Use `JSContact2VCardConfig.setVersionGroup` method or the `versionGroup` method of the JSContact2VCard builder, to set another version as the default version for validation.
+Note that the uid property is mandatory in version 1.0 but optional in version 2.0.
+
+```
+
+    @Test(expected = CardException.class)
+    public void testUidInvalid() throws IOException, CardException {
+
+        JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder().versionGroup(Version_1_0.class).build()).build();
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"name\": { \"full\": \"test\"}" +
+                "}";
+        jsContact2VCard.convert(jscard);
+    }
+
+```
+
+To validate a JSContact Card object against the RDAP profile, invoke the `isValid` methdod both Version_2_0 and Profile_RDAP group as input. 
+
+```
+
+    public void testJSContactForRdapInvalid11() throws JsonProcessingException {
+
+        String json = "{" +
+                "\"version\":\"2.0\"," +
+                "\"organizations\":{" +
+                    "\"organization\": {" +
+                        "\"@type\":\"Organization\"," +
+                        "\"name\": \"Example\"" +
+                    "}" +
+                "}" +
+                "}";
+
+        Card jsCard =  Card.toJSCard(json);
+        boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        assertFalse("testJSContactForRdapInvalid11 - 1",isValid);
+        assertEquals("testJSContactForRdapInvalid11 - 2", jsCard.getValidationMessage(), "missing key in organizations map for RDAP profile, at least org must be present");
+    }
+
 ```
 
 ### vCard validation
@@ -250,6 +320,8 @@ The conversion is executed according to the following rules:
     - `setAutoFullAddress = true`
     - `setAutoMediaType = true`
     - `convertGenderToSpeakToAs = true`
+    - `defaultLanguage = null`
+    - `idsProfileToUse = null`
 
 7. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMGENDER is missing and
    if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
@@ -382,9 +454,10 @@ All the methods take in input a list of JSContact Card objects and can raise the
 4. Default values for the configuration properties are:
 
     - `validateCard = true`
+    - `versionGroup = Version_2_0.class`
     - `setAutoAddrLabel = true`
     - `setPropIdParam = true`
-    - `convertTimezoneToOffset = true`
+    - `convertTimezoneToOffset = false`
 
 5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
 
@@ -576,7 +649,6 @@ VCards can be parsed/written through the methods of the VCardParser/VCardWiter c
 ## Using JSContact in RDAP
 
 Using JSContact in RDAP is supported through JSContactForRdapBuilder and JSContactForRdapGetter classes as it is shown in the following example.
-The uid property is set to a random value by default.
 My apologizes for the misuse of the Japanese language.
 
 ```
@@ -585,6 +657,7 @@ My apologizes for the misuse of the Japanese language.
     public void testJSContactForRdapBuilderAndGetter() throws MissingFieldException, CardException {
 
         Card jsCard = JSContactForRdapBuilder.builder()
+                .language("it")
                 .name(JSContactNameForRdapBuilder.builder()
                         .full("Mario Loffredo")
                         .surname("Loffredo")
@@ -620,35 +693,37 @@ My apologizes for the misuse of the Japanese language.
                 .build();
 
         JSContactForRdapGetter rdapJSContactGetter = JSContactForRdapGetter.of(jsCard);
-        assertNotNull("testJSContactForRdapBuilderAndGetter - 1", rdapJSContactGetter.uid());
+        // JSContactForRdapBuilder uses JSContact Version 2.0 that doesn't mandate the uid property
+        assertNull("testJSContactForRdapBuilderAndGetter - 1", rdapJSContactGetter.uid());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 2", "it", rdapJSContactGetter.language());
         JSContactNameForRdapGetter rdapJSContactNameGetter = JSContactNameForRdapGetter.of(rdapJSContactGetter.name());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 2", "Mario Loffredo", rdapJSContactNameGetter.full());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 3", "Loffredo", rdapJSContactNameGetter.surname());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 4", "Mario", rdapJSContactNameGetter.given());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 5", ".it Registry", rdapJSContactGetter.org());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 6", "mario.loffredo@iit.cnr.it", rdapJSContactGetter.email());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 7", "+39.0503139811", rdapJSContactGetter.voice());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 8", "+39.0503139800", rdapJSContactGetter.fax());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 9", "https://www.nic.it", rdapJSContactGetter.url());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 3", "Mario Loffredo", rdapJSContactNameGetter.full());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 4", "Loffredo", rdapJSContactNameGetter.surname());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 5", "Mario", rdapJSContactNameGetter.given());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 6", ".it Registry", rdapJSContactGetter.org());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 7", "mario.loffredo@iit.cnr.it", rdapJSContactGetter.email());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 8", "+39.0503139811", rdapJSContactGetter.voice());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 9", "+39.0503139800", rdapJSContactGetter.fax());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 10", "https://www.nic.it", rdapJSContactGetter.url());
         JSContactAddressForRdapGetter rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.address());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 10", "it", rdapJSContactAddressGetter.cc());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 11", "Italy", rdapJSContactAddressGetter.country());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 12", "PI", rdapJSContactAddressGetter.sp());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 13", "Pisa", rdapJSContactAddressGetter.city());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 14", "56124", rdapJSContactAddressGetter.pc());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 15", "Via Moruzzi, 1", rdapJSContactAddressGetter.street());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 11", "it", rdapJSContactAddressGetter.cc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 12", "Italy", rdapJSContactAddressGetter.country());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 13", "PI", rdapJSContactAddressGetter.sp());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 14", "Pisa", rdapJSContactAddressGetter.city());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 15", "56124", rdapJSContactAddressGetter.pc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 16", "Via Moruzzi, 1", rdapJSContactAddressGetter.street());
         JSContactNameForRdapGetter rdapJSContactNameLocGetter = JSContactNameForRdapGetter.of(rdapJSContactGetter.nameLoc("jp"));
-        assertEquals("testJSContactForRdapBuilderAndGetter - 16", "マリオ ロフレド", rdapJSContactNameLocGetter.full());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 17", "ロフレド", rdapJSContactNameLocGetter.surname());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 18", "マリオ", rdapJSContactNameLocGetter.given());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 17", "マリオ ロフレド", rdapJSContactNameLocGetter.full());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 18", "ロフレド", rdapJSContactNameLocGetter.surname());
         assertEquals("testJSContactForRdapBuilderAndGetter - 19", "マリオ", rdapJSContactNameLocGetter.given());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 20", "マリオ", rdapJSContactNameLocGetter.given());
         JSContactAddressForRdapGetter rdapJSContactAddressLocGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addressLoc("jp"));
-        assertEquals("testJSContactForRdapBuilderAndGetter - 20", "it", rdapJSContactAddressLocGetter.cc());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 21", "イタリア", rdapJSContactAddressLocGetter.country());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 22", "PI", rdapJSContactAddressLocGetter.sp());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 23", "ピサ", rdapJSContactAddressLocGetter.city());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 24", "56124", rdapJSContactAddressLocGetter.pc());
-        assertEquals("testJSContactForRdapBuilderAndGetter - 25", "モルッツィ通り、1", rdapJSContactAddressLocGetter.street());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 22", "it", rdapJSContactAddressLocGetter.cc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 22", "イタリア", rdapJSContactAddressLocGetter.country());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 23", "PI", rdapJSContactAddressLocGetter.sp());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 24", "ピサ", rdapJSContactAddressLocGetter.city());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 25", "56124", rdapJSContactAddressLocGetter.pc());
+        assertEquals("testJSContactForRdapBuilderAndGetter - 26", "モルッツィ通り、1", rdapJSContactAddressLocGetter.street());
     }
 
 ```

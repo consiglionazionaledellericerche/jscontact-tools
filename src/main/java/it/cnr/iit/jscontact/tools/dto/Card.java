@@ -26,6 +26,13 @@ import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
+import it.cnr.iit.jscontact.tools.constraints.groups.Version_1_0;
+import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
+import it.cnr.iit.jscontact.tools.constraints.profiles.UnsupportedNestedPatchObjectKeysConstraint;
+import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileKindConstraint;
+import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileLanguageVsLocalizationsConstraint;
+import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileMapKeysConstraint;
+import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileVersionConstraint;
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
@@ -46,6 +53,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.groups.Default;
 import java.io.Serializable;
 import java.util.*;
 
@@ -70,11 +78,12 @@ import java.util.*;
 @TitleOrganizationConstraint
 @MembersVsCardKindValueConstraint
 @LocalizationsConstraint
+@RdapProfileLanguageVsLocalizationsConstraint(groups = {Profile_RDAP.class})
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString(callSuper = true)
-@EqualsAndHashCode(of = {"uid"}, callSuper = false)
+@EqualsAndHashCode(of = {"uid","name"}, callSuper = false)
 @SuperBuilder
 public class Card extends AbstractExtensibleJSContactType implements IsIANAType, Serializable {
 
@@ -98,6 +107,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      */
     @NotNull
     @VersionValueConstraint
+    @RdapProfileVersionConstraint(groups = {Profile_RDAP.class})
     String version = VersionUtils.getDefaultVersion();
 
     /**
@@ -112,6 +122,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      */
     @JsonDeserialize(using = CardKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = KindEnum.class, getMethod = "getKind")
+    @RdapProfileKindConstraint(groups = {Profile_RDAP.class})
     KindType kind;
 
     /**
@@ -144,8 +155,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     /**
      * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.1.9">Section 2.1.9 of RFC9553</a>
      */
-    @NotNull(message = "uid is missing in Card")
-    @NonNull
+    @NotNull(message = "uid is missing in Card", groups = {Version_1_0.class})
     String uid;
 
     /**
@@ -182,6 +192,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
+    @RdapProfileMapKeysConstraint(message = "missing key in organizations map for RDAP profile, at least org must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Organization> organizations;
 
@@ -212,6 +223,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
+    @RdapProfileMapKeysConstraint(message = "missing key in emails map for RDAP profile, at least email must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, EmailAddress> emails;
 
@@ -232,6 +244,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
+    @RdapProfileMapKeysConstraint(message = "missing key in phones map for RDAP profile, at least one between voice and fax must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,Phone> phones;
 
@@ -280,6 +293,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
+    @RdapProfileMapKeysConstraint(message = "missing key in addresses map for RDAP profile, at least addr must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Address> addresses;
 
@@ -314,6 +328,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Link>")
+    @RdapProfileMapKeysConstraint(message = "missing key in links map for RDAP profile, at least one between url and contact-uri must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Link> links;
 
@@ -336,6 +351,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      */
     @JsonPropertyOrder(alphabetic = true)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @UnsupportedNestedPatchObjectKeysConstraint(groups={Profile_RDAP.class})
     Map<String, Map<String, JsonNode>> localizations;
 
     /*
@@ -954,17 +970,17 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
 
 
     /**
-     * Tests if a JSContact Card is valid.
-     *
-     * @return true if the validation check ends successfully, false otherwise
-     */
+         * Tests if a JSContact Card is valid.
+         *
+         * @return true if the validation check ends successfully, false otherwise
+         */
     @JsonIgnore
-    public boolean isValid() {
+    public boolean isValid(Class<? extends Default>... versionAndProfileGroups) {
 
         validationMessages = new ArrayList<>();
 
         Set<ConstraintViolation<Card>> constraintViolations;
-        constraintViolations = ValidatorBuilder.getValidator().validate(this);
+        constraintViolations = ValidatorBuilder.getValidator().validate(this, versionAndProfileGroups);
         if (constraintViolations.size() > 0) {
             for (ConstraintViolation<Card> constraintViolation : constraintViolations)
                 validationMessages.add(constraintViolation.getMessage());
@@ -988,4 +1004,22 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
         return String.join("\n", validationMessages);
     }
 
+
+    /**
+     * Customizing builder methods. Rest of the builder code will be auto generated by Lombok.
+     *
+     * @param <C> a class that extends Card
+     * @param <B> a class that extends CardBuilder
+     */
+    public static abstract class CardBuilder<C extends Card, B extends CardBuilder<C, B>>
+            extends AbstractExtensibleJSContactTypeBuilder<C, B> {
+
+        public C buildPerVersionAndProfile() {
+
+            if (VersionUtils.getDefaultVersion().startsWith("1.") && uid == null)
+                throw new NullPointerException(String.format("uid is required in version %s but is null", VersionUtils.getDefaultVersion()));
+
+            return build();
+        }
+    }
 }

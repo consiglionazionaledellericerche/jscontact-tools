@@ -84,7 +84,7 @@ public class SerializationTest {
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         jsCard.setUid("549e9dd2-ecb1-46af-8df1-09e98329d0ff");
         String serialized = Card.toJson(jsCard);
-        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"version\":\"1.0\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"name\":{\"@type\":\"Name\",\"full\":\"test\"},\"vCardProps\":[[\"version\",{},\"text\",\"4.0\"],[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
+        assertEquals("testSerialization5", "{\"@type\":\"Card\",\"version\":\"2.0\",\"uid\":\"549e9dd2-ecb1-46af-8df1-09e98329d0ff\",\"name\":{\"@type\":\"Name\",\"full\":\"test\"},\"vCardProps\":[[\"version\",{},\"text\",\"4.0\"],[\"myext\",{},\"text\",\"extvalue\"]]}", serialized);
 
     }
 
@@ -100,7 +100,7 @@ public class SerializationTest {
 
         Card[] jsCards = Card.toJSCards(jscard);
         String serialized = Card.toJson(jsCards[0]);
-        assertEquals("testSerialization6", "{\"@type\":\"Card\",\"version\":\"1.0\",\"created\":\"2010-10-10T10:10:10Z\",\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"}", serialized);
+        assertEquals("testSerialization6", "{\"@type\":\"Card\",\"version\":\"2.0\",\"created\":\"2010-10-10T10:10:10Z\",\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"}", serialized);
     }
 
 
@@ -116,7 +116,7 @@ public class SerializationTest {
 
         Card[] jsCards = Card.toJSCards(jscard);
         String serialized = Card.toJson(jsCards[0]);
-        assertEquals("testSerialization6", "{\"@type\":\"Card\",\"version\":\"1.0\",\"created\":\"2010-10-10T10:10:10.003Z\",\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"}", serialized);
+        assertEquals("testSerialization6", "{\"@type\":\"Card\",\"version\":\"2.0\",\"created\":\"2010-10-10T10:10:10.003Z\",\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"}", serialized);
     }
 
 }

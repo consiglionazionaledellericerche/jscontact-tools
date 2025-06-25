@@ -15,9 +15,12 @@
  */
 package it.cnr.iit.jscontact.tools.vcard.converters.config;
 
+import it.cnr.iit.jscontact.tools.constraints.groups.Version_2_0;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+
+import javax.validation.groups.Default;
 
 /**
  * Class for configuring the conversion from a JSContact object to a vCard 4.0 [RFC6350] and its transliterations.
@@ -32,6 +35,8 @@ public class JSContact2VCardConfig {
 
     @Builder.Default
     private boolean validateCard = true;
+    @Builder.Default
+    private Class<? extends Default> versionGroup = Version_2_0.class;
     @Builder.Default
     private boolean setAutoAddrLabel = true;
     @Builder.Default

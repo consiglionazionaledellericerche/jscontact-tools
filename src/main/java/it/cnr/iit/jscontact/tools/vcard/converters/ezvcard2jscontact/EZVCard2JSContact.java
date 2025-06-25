@@ -437,9 +437,9 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String minutes = offset.substring(3,5);
             if (minutes.equals("00"))
                 return String.format("Etc/GMT%s%s%s",
-                                               (hours.equals("00") && minutes.equals("00")) ? StringUtils.EMPTY : (sign.equals("+") ? "-" : "+") ,
-                                               (hours.equals("00") && minutes.equals("00")) ? StringUtils.EMPTY : String.valueOf(Integer.parseInt(hours)),
-                                               (minutes.equals("00") ? StringUtils.EMPTY : ":" + minutes));
+                                               (hours.equals("00")) ? StringUtils.EMPTY : (sign.equals("+") ? "-" : "+") ,
+                                               (hours.equals("00")) ? StringUtils.EMPTY : String.valueOf(Integer.parseInt(hours)),
+                                               StringUtils.EMPTY);
             else {
                 String timeZoneName = String.format("%s%d", config.getCustomTimeZonesPrefix(), ++customTimeZoneCounter);
                 customTimeZones.put(timeZoneName, TimeZone.builder()
@@ -645,11 +645,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         boolean isPhonetic = (vcardName.getParameter(VCardParamEnum.PHONETIC.getValue())!=null) || (vcardName.getParameter(VCardParamEnum.SCRIPT.getValue())!=null);
 
-        int indexPerKind;
+        int indexPerKind=0;
         if (jscomps == null || jscomps.length < 2) {
 
             if (vcardName.getFamilyNames() != null) {
-                indexPerKind = 0;
                 for (String surname : vcardName.getFamilyNames()) {
                     if (vcardName.getSurname2().contains(surname))
                         continue;
@@ -658,32 +657,26 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             }
 
             if (vcardName.getGiven() != null) {
-                indexPerKind = 0;
                 String[] names = vcardName.getGiven().split(DelimiterUtils.COMMA_ARRAY_DELIMITER);
                 for (String name : names)
                     components = Name.addComponent(components, NameComponent.builder().kind(NameComponentKind.given()).value(name).phonetic((isPhonetic) ? name : null).indexPerKind(indexPerKind).build());
             }
 
-            indexPerKind = 0;
             for (String an : vcardName.getAdditionalNames())
                 components = Name.addComponent(components, NameComponent.builder().kind(NameComponentKind.given2()).value(an).phonetic((isPhonetic) ? an : null).indexPerKind(indexPerKind).build());
 
-            indexPerKind = 0;
             for (String px : vcardName.getPrefixes())
                 components = Name.addComponent(components, NameComponent.builder().kind(NameComponentKind.title()).value(px).phonetic((isPhonetic) ? px : null).indexPerKind(indexPerKind).build());
 
-            indexPerKind = 0;
             for (String sx : vcardName.getSuffixes()) {
                 if (vcardName.getGeneration().contains(sx))
                     continue;
                 components = Name.addComponent(components, NameComponent.builder().kind(NameComponentKind.credential()).value(sx).phonetic((isPhonetic) ? sx : null).indexPerKind(indexPerKind).build());
             }
 
-            indexPerKind = 0;
             for (String sx : vcardName.getSurname2())
                 components = Name.addComponent(components, NameComponent.builder().kind(NameComponentKind.surname2()).value(sx).phonetic((isPhonetic) ? sx : null).indexPerKind(indexPerKind).build());
 
-            indexPerKind = 0;
             for (String sx : vcardName.getGeneration())
                 components = Name.addComponent(components, NameComponent.builder().kind(NameComponentKind.generation()).value(sx).phonetic((isPhonetic) ? sx : null).indexPerKind(indexPerKind).build());
         }

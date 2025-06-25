@@ -16,7 +16,10 @@
 package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 
 import ezvcard.VCard;
+import it.cnr.iit.jscontact.tools.constraints.groups.Version_1_0;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContact2VCardConfig;
+import it.cnr.iit.jscontact.tools.vcard.converters.jscontact2vcard.JSContact2VCard;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -25,10 +28,11 @@ import static org.junit.Assert.assertEquals;
 
 public class UidTest extends JSContact2VCardTest {
 
-    //jscard doesn't include uid
+    //jscard version 2.0 doesn't include uid
     @Test(expected = CardException.class)
     public void testUidInvalid() throws IOException, CardException {
 
+        JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder().versionGroup(Version_1_0.class).build()).build();
         String jscard="{" +
                 "\"@type\":\"Card\"," +
                 "\"name\": { \"full\": \"test\"}" +
