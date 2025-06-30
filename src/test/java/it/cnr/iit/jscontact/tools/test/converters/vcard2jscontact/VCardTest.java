@@ -64,7 +64,7 @@ public class VCardTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testVCard - 1", jsCard);
-        assertTrue("testVCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testVCard - 2", StringUtils.isEmpty(jsCard.getUid()));
         assertEquals("testVCard - 3", "test", jsCard.getName().getFull());
 
     }
@@ -80,7 +80,7 @@ public class VCardTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testExtendedVCard1 - 1", jsCard);
-        assertTrue("testExtendedVCard1 - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testExtendedVCard1 - 2", StringUtils.isEmpty(jsCard.getUid()));
         assertEquals("testExtendedVCard1 - 3", "test", jsCard.getName().getFull());
         assertEquals("testExtendedJCard1 - 4", 2, jsCard.getVCardProps().length); //including VERSION
         assertEquals("testExtendedJCard1 - 5", "myext", jsCard.getVCardProps()[1].getName().toString());
@@ -170,7 +170,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertNull("testCompleteVCard1 - 52", jsCard.getLinks().get("LINK-1").getPref());
         assertTrue("testCompleteVCard1 - 53", jsCard.getLinks().get("LINK-1").asPrivate());
         assertTrue("testCompleteVCard1 - 54", jsCard.getLinks().get("LINK-1").isGenericLink());
-        assertTrue("testCompleteVCard1 - 55", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteVCard1 - 55", StringUtils.isEmpty(jsCard.getUid()));
 
     }
 
@@ -191,7 +191,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard2 - 12", 2, (int) jsCard.getPreferredLanguages().get("LANG-2").getPref());
         assertEquals("testCompleteVCard2 - 11", "jp", jsCard.getPreferredLanguages().get("LANG-1").getLanguage());
         assertEquals("testCompleteVCard2 - 12", "en", jsCard.getPreferredLanguages().get("LANG-2").getLanguage());
-        assertTrue("testCompleteVCard2 - 13", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteVCard2 - 13", StringUtils.isEmpty(jsCard.getUid()));
     }
 
     @Test
@@ -212,7 +212,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard3 - 14", jsCard.getPhones().get("PHONE-2").asFax());
         assertFalse("testCompleteVCard3 - 15", jsCard.getPhones().get("PHONE-2").hasContext());
         assertTrue("testCompleteVCard3 - 16", jsCard.getPhones().get("PHONE-2").getNumber().isEmpty());
-        assertTrue("testCompleteVCard3 - 17", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteVCard3 - 17", StringUtils.isEmpty(jsCard.getUid()));
     }
 
 
@@ -276,7 +276,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertTrue("testCompleteVCard4 - 51", jsCard.getLinks().get("LINK-1").asPrivate());
         assertTrue("testCompleteVCard4 - 52", jsCard.getLinks().get("LINK-1").isGenericLink());
         assertEquals("testCompleteVCard4 - 53", "http://nomis80.org", jsCard.getLinks().get("LINK-1").getUri());
-        assertTrue("testCompleteVCard4 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteVCard4 - 54", StringUtils.isEmpty(jsCard.getUid()));
     }
 
     @Test
@@ -332,7 +332,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard5 - 47", 0, jsCard.getVCardProps()[1].getParameters().size());
         assertNull("testCompleteVCard5 - 48",  jsCard.getVCardProps()[1].getType());
         assertEquals("testCompleteVCard5 - 49", "21588891", jsCard.getVCardProps()[1].getValue());
-        assertTrue("testCompleteVCard5 - 50", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteVCard5 - 50", StringUtils.isEmpty(jsCard.getUid()));
     }
 
 

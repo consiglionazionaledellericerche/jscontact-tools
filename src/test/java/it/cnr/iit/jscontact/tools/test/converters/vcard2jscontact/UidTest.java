@@ -32,7 +32,7 @@ public class UidTest extends VCard2JSContactTest {
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
-        assertNotNull("testUid1 - 1", jsCard.getUid());
+        assertNull("testUid1 - 1", jsCard.getUid());
 
     }
 

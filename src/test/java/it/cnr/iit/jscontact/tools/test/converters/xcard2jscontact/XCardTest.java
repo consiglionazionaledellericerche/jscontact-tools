@@ -88,7 +88,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertTrue("testCompleteXCard1 - 51", jsCard.getLinks().get("LINK-1").asPrivate());
         assertTrue("testCompleteXCard1 - 52", jsCard.getLinks().get("LINK-1").isGenericLink());
         assertEquals("testCompleteXCard1 - 53", "http://nomis80.org", jsCard.getLinks().get("LINK-1").getUri());
-        assertTrue("testCompleteXCard1 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteXCard1 - 54", StringUtils.isEmpty(jsCard.getUid()));
 
     }
 
@@ -140,7 +140,7 @@ public class XCardTest extends XCard2JSContactTest {
         assertEquals("testCompleteXCard2 - 42", 1, jsCard.getEmails().size());
         assertEquals("testCompleteXCard2 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteXCard2 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
-        assertTrue("testCompleteXCard2 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteXCard2 - 45", StringUtils.isEmpty(jsCard.getUid()));
     }
 
 }
