@@ -35,18 +35,50 @@ public class VersionUtils {
 
     private static VersionEnum defaultVersionForRdap = VersionEnum.VERSION_2_0;
 
-
+    /**
+     * Returns the default JSContact version.
+     * @return default JSContact version as string
+     */
     public static String getDefaultVersion() {
         return defaultVersion.getValue();
     }
 
+    /**
+     * Returns the default JSContact version.
+     * @return default JSContact version as enum
+     */
+    public static VersionEnum getDefaultVersionEnum() {
+        return defaultVersion;
+    }
+
+    /**
+     * Sets the default JSContact version.
+     * @param version the JSContact version enum to use as default
+     */
     public static void setDefaultVersion(VersionEnum version) {
         defaultVersion = version;
     }
 
+    /**
+     * Returns the default JSContact version for RDAP
+     * @return default JSContact version for RDAP as string
+     */
     public static String getDefaultVersionForRdap() {
         return defaultVersionForRdap.getValue();
     }
+
+    /**
+     * Returns the default JSContact version for RDAP
+     * @return default JSContact version for RDAP as enum
+     */
+    public static VersionEnum getDefaultVersionEnumForRdap() {
+        return defaultVersionForRdap;
+    }
+
+    /**
+     * Sets the default JSContact version for RDAP.
+     * @param version the JSContact version enum to use for RDAP as default
+     */
     public static void setDefaultVersionForRdap(VersionEnum version) {
         defaultVersionForRdap = version;
     }
