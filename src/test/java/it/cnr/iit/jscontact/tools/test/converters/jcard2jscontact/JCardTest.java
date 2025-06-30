@@ -111,7 +111,7 @@ public class JCardTest extends JCard2JSContactTest {
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"]]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testJCard - 1", jsCard);
-        assertTrue("testJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testJCard - 2", StringUtils.isEmpty(jsCard.getUid()));
         assertEquals("testJCard - 3", "test", jsCard.getName().getFull());
 
     }
@@ -122,7 +122,7 @@ public class JCardTest extends JCard2JSContactTest {
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], [\"fn\", {}, \"text\", \"test\"], [\"myext\", {}, \"text\", \"extvalue\"]]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
         assertNotNull("testExtendedJCard - 1", jsCard);
-        assertTrue("testExtendedJCard - 2", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testExtendedJCard - 2", StringUtils.isEmpty(jsCard.getUid()));
         assertEquals("testExtendedJCard - 3", "test", jsCard.getName().getFull());
         assertEquals("testExtendedJCard - 4", 2, jsCard.getVCardProps().length); // including VERSION
         assertEquals("testExtendedJCard - 5", "myext", jsCard.getVCardProps()[1].getName().toString());
@@ -189,7 +189,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard1 - 50", "http://example.org", jsCard.getLinks().get("LINK-1").getUri());
         assertNull("testCompleteJCard1 - 51", jsCard.getLinks().get("LINK-1").getPref());
         assertTrue("testCompleteJCard1 - 52", jsCard.getLinks().get("LINK-1").asPrivate());
-        assertTrue("testCompleteJCard1 - 54", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteJCard1 - 54", StringUtils.isEmpty(jsCard.getUid()));
 
     }
 
@@ -210,7 +210,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard2 - 12", 2, (int) jsCard.getPreferredLanguages().get("LANG-2").getPref());
         assertEquals("testCompleteJCard2 - 11", "jp", jsCard.getPreferredLanguages().get("LANG-1").getLanguage());
         assertEquals("testCompleteJCard2 - 12", "en", jsCard.getPreferredLanguages().get("LANG-2").getLanguage());
-        assertTrue("testCompleteJCard2 - 13", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteJCard2 - 13", StringUtils.isEmpty(jsCard.getUid()));
     }
 
     @Test
@@ -231,7 +231,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertTrue("testCompleteJCard3 - 14", jsCard.getPhones().get("PHONE-2").asFax());
         assertFalse("testCompleteJCard3 - 15", jsCard.getPhones().get("PHONE-2").hasContext());
         assertTrue("testCompleteJCard3 - 16", jsCard.getPhones().get("PHONE-2").getNumber().isEmpty());
-        assertTrue("testCompleteJCard3 - 17", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteJCard3 - 17", StringUtils.isEmpty(jsCard.getUid()));
     }
 
 
@@ -293,7 +293,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard4 - 50", 1, jsCard.getLinks().size());
         assertTrue("testCompleteJCard4 - 51", jsCard.getLinks().get("LINK-1").asPrivate());
         assertEquals("testCompleteJCard4 - 52", "http://nomis80.org", jsCard.getLinks().get("LINK-1").getUri());
-        assertTrue("testCompleteJCard4 - 53", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteJCard4 - 53", StringUtils.isEmpty(jsCard.getUid()));
     }
 
 
@@ -345,7 +345,7 @@ public class JCardTest extends JCard2JSContactTest {
         assertEquals("testCompleteJCard5 - 42", 1, jsCard.getEmails().size());
         assertEquals("testCompleteJCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteJCard5 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
-        assertTrue("testCompleteJCard5 - 45", StringUtils.isNotEmpty(jsCard.getUid()));
+        assertTrue("testCompleteJCard5 - 45", StringUtils.isEmpty(jsCard.getUid()));
     }
 
 }

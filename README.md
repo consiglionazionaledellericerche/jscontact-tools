@@ -539,7 +539,7 @@ Here in the following two examples of conversion between vCard and JSContact Car
         assertEquals("testJCardGroup1 - 1", 3, jsCards.size());
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testJCardGroup1 - 2", jsCardGroup.getCard().getKind().isGroup());
-        assertTrue("testJCardGroup1 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testJCardGroup1 - 3",StringUtils.isEmpty(jsCardGroup.getUid()));
         assertEquals("testJCardGroup1 - 4", "The Doe family", jsCardGroup.getCard().getName().getFull());
         assertEquals("testJCardGroup1 - 5", 2, jsCardGroup.getMembers().size());
         assertSame("testJCardGroup1 - 6", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
@@ -667,7 +667,7 @@ My apologizes for the misuse of the Japanese language.
                 .email("mario.loffredo@iit.cnr.it")
                 .voice("+39.0503139811")
                 .fax("+39.0503139800")
-                .address(JSContactAddressForRdapBuilder.builder()
+                .addr(JSContactAddressForRdapBuilder.builder()
                         .cc("it")
                         .country("Italy")
                         .sp("PI")
@@ -705,7 +705,7 @@ My apologizes for the misuse of the Japanese language.
         assertEquals("testJSContactForRdapBuilderAndGetter - 8", "+39.0503139811", rdapJSContactGetter.voice());
         assertEquals("testJSContactForRdapBuilderAndGetter - 9", "+39.0503139800", rdapJSContactGetter.fax());
         assertEquals("testJSContactForRdapBuilderAndGetter - 10", "https://www.nic.it", rdapJSContactGetter.url());
-        JSContactAddressForRdapGetter rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.address());
+        JSContactAddressForRdapGetter rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addr());
         assertEquals("testJSContactForRdapBuilderAndGetter - 11", "it", rdapJSContactAddressGetter.cc());
         assertEquals("testJSContactForRdapBuilderAndGetter - 12", "Italy", rdapJSContactAddressGetter.country());
         assertEquals("testJSContactForRdapBuilderAndGetter - 13", "PI", rdapJSContactAddressGetter.sp());
@@ -717,7 +717,7 @@ My apologizes for the misuse of the Japanese language.
         assertEquals("testJSContactForRdapBuilderAndGetter - 18", "ロフレド", rdapJSContactNameLocGetter.surname());
         assertEquals("testJSContactForRdapBuilderAndGetter - 19", "マリオ", rdapJSContactNameLocGetter.given());
         assertEquals("testJSContactForRdapBuilderAndGetter - 20", "マリオ", rdapJSContactNameLocGetter.given());
-        JSContactAddressForRdapGetter rdapJSContactAddressLocGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addressLoc("jp"));
+        JSContactAddressForRdapGetter rdapJSContactAddressLocGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addrLoc("jp"));
         assertEquals("testJSContactForRdapBuilderAndGetter - 22", "it", rdapJSContactAddressLocGetter.cc());
         assertEquals("testJSContactForRdapBuilderAndGetter - 22", "イタリア", rdapJSContactAddressLocGetter.country());
         assertEquals("testJSContactForRdapBuilderAndGetter - 23", "PI", rdapJSContactAddressLocGetter.sp());

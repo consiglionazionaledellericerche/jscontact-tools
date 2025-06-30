@@ -30,7 +30,7 @@ public class UidTest extends JCard2JSContactTest {
                 "[\"fn\", {}, \"text\", \"test\"] " +
                 "]]";
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
-        assertNotNull("testUid1 - 1", jsCard.getUid());
+        assertNull("testUid1 - 1", jsCard.getUid());
 
     }
 

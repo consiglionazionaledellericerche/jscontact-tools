@@ -69,7 +69,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
         assertEquals("testVCardGroup1 - 1", 3, jsCards.size());
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testVCardGroup1 - 2", jsCardGroup.getKind().isGroup());
-        assertTrue("testVCardGroup1 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testVCardGroup1 - 3",StringUtils.isEmpty(jsCardGroup.getUid()));
         assertEquals("testVCardGroup1 - 4", "The Doe family", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup1 - 5", 2, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup1 - 6", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
@@ -101,7 +101,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
         assertEquals("testVCardGroup2 - 1", 1, jsCards.size());
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testVCardGroup2 - 2", jsCardGroup.getKind().isGroup());
-        assertTrue("testVCardGroup2 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testVCardGroup2 - 3",StringUtils.isEmpty(jsCardGroup.getUid()));
         assertEquals("testVCardGroup2 - 4", "Funky distribution list", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup2 - 5", 4, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup2 - 6", jsCardGroup.getMembers().get("mailto:subscriber1@example.com"), Boolean.TRUE);
@@ -136,7 +136,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
         assertEquals("testVCardGroup3 - 1", 3, jsCards.size());
         Card jsCardGroup = jsCards.get(2);
         assertTrue("testVCardGroup3 - 2", jsCardGroup.getKind().isGroup());
-        assertTrue("testVCardGroup3 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testVCardGroup3 - 3",StringUtils.isEmpty(jsCardGroup.getUid()));
         assertEquals("testVCardGroup3 - 4", "The Doe family", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup3 - 5", 2, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup3 - 6", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
@@ -167,7 +167,7 @@ public class VCardGroupTest extends VCard2JSContactTest {
         assertEquals("testVCardGroup4 - 1", 1, jsCards.size());
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testVCardGroup4 - 2", jsCardGroup.getKind().isGroup());
-        assertTrue("testVCardGroup4 - 3",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testVCardGroup4 - 3",StringUtils.isEmpty(jsCardGroup.getUid()));
         assertEquals("testVCardGroup4 - 4", "Funky distribution list", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup4 - 5", 4, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup4 - 6", jsCardGroup.getMembers().get("mailto:subscriber1@example.com"), Boolean.TRUE);

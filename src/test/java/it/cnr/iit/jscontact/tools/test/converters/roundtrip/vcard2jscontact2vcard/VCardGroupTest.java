@@ -76,7 +76,7 @@ public class VCardGroupTest extends RoundtripTest {
         assertEquals("testVCardGroup2 - 1", 1, jsCards.size());
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testVCardGroup2 - 3", jsCardGroup.getKind().isGroup());
-        assertTrue("testVCardGroup2 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testVCardGroup2 - 4",StringUtils.isEmpty(jsCardGroup.getUid()));
         assertEquals("testVCardGroup2 - 5", "Funky distribution list", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup2 - 6", 4, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup2 - 7", jsCardGroup.getMembers().get("mailto:subscriber1@example.com"), Boolean.TRUE);
@@ -111,7 +111,7 @@ public class VCardGroupTest extends RoundtripTest {
         assertEquals("testVCardGroup3 - 1", 3, jsCards.size());
         Card jsCardGroup = jsCards.get(2);
         assertTrue("testVCardGroup3 - 3", jsCardGroup.getKind().isGroup());
-        assertTrue("testVCardGroup3 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testVCardGroup3 - 4",StringUtils.isEmpty(jsCardGroup.getUid()));
         assertEquals("testVCardGroup3 - 5", "The Doe family", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup3 - 6", 2, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup3 - 7", jsCardGroup.getMembers().get("urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af"), Boolean.TRUE);
@@ -142,7 +142,7 @@ public class VCardGroupTest extends RoundtripTest {
         assertEquals("testVCardGroup4 - 1", 1, jsCards.size());
         Card jsCardGroup = jsCards.get(0);
         assertTrue("testVCardGroup4 - 3", jsCardGroup.getKind().isGroup());
-        assertTrue("testVCardGroup4 - 4",StringUtils.isNotEmpty(jsCardGroup.getUid()));
+        assertTrue("testVCardGroup4 - 4",StringUtils.isEmpty(jsCardGroup.getUid()));
         assertEquals("testVCardGroup4 - 5", "Funky distribution list", jsCardGroup.getName().getFull());
         assertEquals("testVCardGroup4 - 6", 4, jsCardGroup.getMembers().size());
         assertSame("testVCardGroup4 - 7", jsCardGroup.getMembers().get("mailto:subscriber1@example.com"), Boolean.TRUE);

@@ -273,7 +273,7 @@ public class JSContactForRdapTest {
         assertEquals("testJSContactForRdapAndGetter - 8", "+39.0503139811", rdapJSContactGetter.voice());
         assertEquals("testJSContactForRdapAndGetter - 9", "+39.0503139800", rdapJSContactGetter.fax());
         assertEquals("testJSContactForRdapAndGetter - 10", "https://www.nic.it", rdapJSContactGetter.url());
-        JSContactAddressForRdapGetter rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.address());
+        JSContactAddressForRdapGetter rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addr());
         assertEquals("testJSContactForRdapAndGetter - 11", "it", rdapJSContactAddressGetter.cc());
         assertEquals("testJSContactForRdapAndGetter - 12", "Italy", rdapJSContactAddressGetter.country());
         assertEquals("testJSContactForRdapAndGetter - 13", "PI", rdapJSContactAddressGetter.sp());
@@ -285,7 +285,7 @@ public class JSContactForRdapTest {
         assertEquals("testJSContactForRdapAndGetter - 18", "ロフレド", rdapJSContactNameLocGetter.surname());
         assertEquals("testJSContactForRdapAndGetter - 19", "マリオ", rdapJSContactNameLocGetter.given());
         assertEquals("testJSContactForRdapAndGetter - 20", "マリオ", rdapJSContactNameLocGetter.given());
-        JSContactAddressForRdapGetter rdapJSContactAddressLocGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addressLoc("jp"));
+        JSContactAddressForRdapGetter rdapJSContactAddressLocGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addrLoc("jp"));
         assertEquals("testJSContactForRdapAndGetter - 22", "it", rdapJSContactAddressLocGetter.cc());
         assertEquals("testJSContactForRdapAndGetter - 22", "イタリア", rdapJSContactAddressLocGetter.country());
         assertEquals("testJSContactForRdapAndGetter - 23", "PI", rdapJSContactAddressLocGetter.sp());
