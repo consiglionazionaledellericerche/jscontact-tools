@@ -132,7 +132,7 @@ public class JSContactForRdapGetter {
      *
      * @return the address as JSContact Address object
      */
-    public Address address() {
+    public Address addr() {
         return (jsCard.getAddresses()!=null) ? jsCard.getAddresses().get(JSContactForRdapMapId.ADDRESS_ID.getValue()) : null;
     }
 
@@ -174,7 +174,7 @@ public class JSContactForRdapGetter {
      * @return the address localization as JSContact Address object if it is set, null otherwise
      * @throws InternalErrorException if the localization cannot be cast to a JSContact Address object
      */
-    public Address addressLoc(String language) throws InternalErrorException {
+    public Address addrLoc(String language) throws InternalErrorException {
         try {
             JsonNode node = (jsCard.getLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue())!=null) ? jsCard.getLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue()) : null;
             return (node!=null) ? mapper.treeToValue(node.get(JSContactForRdapMapId.ADDRESS_ID.getValue()),Address.class) : null;
