@@ -1,5 +1,7 @@
 package it.cnr.iit.jscontact.tools.rdap;
 
+import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
+import it.cnr.iit.jscontact.tools.dto.utils.ProfileUtils;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContactProfileIds;
 
 public class RdapJSContactProfileIds {
@@ -7,6 +9,7 @@ public class RdapJSContactProfileIds {
     public static JSContactProfileIds getInstance() {
 
         return JSContactProfileIds.builder()
+                .additionalIdsAsSequentialNumber(true)
                 .id(JSContactProfileIds.JSContactId.organizationsId("org"))
                 .id(JSContactProfileIds.JSContactId.emailsId("email")) // 1st email
                 .id(JSContactProfileIds.JSContactId.phonesId("voice"))  // 1st jCard phone number

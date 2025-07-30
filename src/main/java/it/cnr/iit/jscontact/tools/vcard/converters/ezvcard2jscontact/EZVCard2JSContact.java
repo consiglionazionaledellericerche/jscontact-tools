@@ -40,6 +40,7 @@ import it.cnr.iit.jscontact.tools.dto.interfaces.VCardTypeDerivedEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.*;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.exceptions.InternalErrorException;
+import it.cnr.iit.jscontact.tools.rdap.RdapJSContactProfileIds;
 import it.cnr.iit.jscontact.tools.vcard.converters.AbstractConverter;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContactProfileIds;
@@ -123,11 +124,15 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         List<String> ids = (idType == JSContactProfileIds.IdType.RESOURCE || idType == JSContactProfileIds.IdType.PERSONAL_INFO) ? getVCard2JSContactProfileIds(idType,args[0]) : getVCard2JSContactProfileIds(idType);
 
-        if (ids.size() == 0)
-            return id;
+        int count = config.getProfileIdsToUse().countIdsPerIdType(idType);
+        if (ids.size() == 0 || index > count) {
+            if (!config.getProfileIdsToUse().isAdditionalIdsAsSequentialNumber())
+                return id;
+            else
+                return Integer.toString(index-count);
+        }
 
         return (ids.get(index-1) == null) ? id : ids.get(index-1);
-
     }
 
     private static <E extends Enum<E> & VCardTypeDerivedEnum> E getJSCardEnumFromVCardTypeParam(Class<E> enumType, String vcardTypeParam, List<String> exclude, Map<String,E> aliases) {

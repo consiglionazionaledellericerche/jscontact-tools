@@ -111,4 +111,20 @@ public class JSContactProfileIds {
     @Singular(ignoreNullCollections = true)
     List<JSContactId> ids;
 
+    boolean additionalIdsAsSequentialNumber = false;
+
+
+    public int countIdsPerIdType(IdType idType) {
+
+        if (ids == null)
+            return 0;
+
+        int count = 0;
+        for (JSContactId id : ids) {
+            if (id.idType == idType) count++;
+        }
+
+        return count;
+    }
+
 }
