@@ -188,7 +188,9 @@ To validate a JSContact Card object against the RDAP profile, invoke the `isVali
                 "}";
 
         Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
         boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
         assertFalse("testJSContactForRdapInvalid11 - 1",isValid);
         assertEquals("testJSContactForRdapInvalid11 - 2", jsCard.getValidationMessage(), "missing key in organizations map for RDAP profile, at least org must be present");
     }
@@ -321,7 +323,7 @@ The conversion is executed according to the following rules:
     - `setAutoMediaType = true`
     - `convertGenderToSpeakToAs = true`
     - `defaultLanguage = null`
-    - `idsProfileToUse = null`
+    - `profileIdsToUse = null`
 
 7. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMGENDER is missing and
    if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
@@ -411,14 +413,14 @@ To do that, the following steps must be followed:
 
 1. set the `usePropIds` property of the `VCard2JSContactConfig` object to `false`
 
-2. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToUse` of `VCard2JSContactConfig` object property with it
+2. create a `VCard2JSContactProfileIds` object and assign the `profileIdsToUse` of `VCard2JSContactConfig` object property with it
 
 
 ### RDAP Conversion Profile from jCard to JSContact Card
 
 A pre-defined conversion profile to convert a jCard instance inside an RDAP response [RFC9083](https://datatracker.ietf.org/doc/rfc9083/) is available.
 The values of the map keys used in such profile are defined in [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/).
-Additional setting rules are shown in the class RdapJSContactIdsProfile.
+Additional setting rules are shown in the class RdapProfileJSContactIds.
 
 <a name="jscontact-conversion"></a>
 ## JSContact Card Conversion

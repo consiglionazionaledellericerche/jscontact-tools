@@ -45,6 +45,6 @@ public class VCard2JSContactConfig {
 
     private String defaultLanguage;
 
-    private JSContactIdsProfile idsProfileToUse;
+    private JSContactProfileIds profileIdsToUse;
 
 }

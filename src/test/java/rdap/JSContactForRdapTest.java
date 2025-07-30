@@ -5,6 +5,7 @@ import it.cnr.iit.jscontact.tools.constraints.groups.Version_2_0;
 import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.KindType;
+import it.cnr.iit.jscontact.tools.dto.utils.ProfileUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import it.cnr.iit.jscontact.tools.rdap.*;
@@ -24,7 +25,7 @@ public class JSContactForRdapTest {
             JSContactForRdapBuilder.builder().name(JSContactNameForRdapBuilder.builder().build()).build();
             fail();
         } catch(MissingFieldException | CardException e) {
-            assertEquals("testJSContactForRdapInvalid2", e.getMessage(), "At least one between name, organizations, addresses, phones, emails and links must be set in JSCard");
+            assertEquals("testJSContactForRdapInvalid2", e.getMessage(), "At least one between name, organizations, addresses, phones, emails and links must be set in JSContact Card");
         }
     }
 
@@ -124,7 +125,9 @@ public class JSContactForRdapTest {
             "}";
 
             Card jsCard =  Card.toJSCard(json);
+            ProfileUtils.setProfileName(Profile_RDAP.class.getName());
             boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+            ProfileUtils.unsetProfileName();
             assertFalse("testJSContactForRdapInvalid7 - 1",isValid);
             assertEquals("testJSContactForRdapInvalid7 - 2", jsCard.getValidationMessage(), "profile does not support nested PatchObject keys in localizations");
     }
@@ -144,7 +147,9 @@ public class JSContactForRdapTest {
                 "}";
 
         Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
         boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
         assertFalse("testJSContactForRdapInvalid8 - 1",isValid);
         assertEquals("testJSContactForRdapInvalid8 - 2", jsCard.getValidationMessage(), "missing key in addresses map for RDAP profile, at least addr must be present");
     }
@@ -162,7 +167,9 @@ public class JSContactForRdapTest {
                 "}";
 
         Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
         boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
         assertFalse("testJSContactForRdapInvalid9 - 1",isValid);
         assertEquals("testJSContactForRdapInvalid9 - 2", jsCard.getValidationMessage(), "missing key in emails map for RDAP profile, at least email must be present");
     }
@@ -180,7 +187,9 @@ public class JSContactForRdapTest {
                 "}";
 
         Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
         boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
         assertFalse("testJSContactForRdapInvalid10 - 1",isValid);
         assertEquals("testJSContactForRdapInvalid10 - 2", jsCard.getValidationMessage(), "missing key in phones map for RDAP profile, at least one between voice and fax must be present");
     }
@@ -198,7 +207,9 @@ public class JSContactForRdapTest {
                 "}";
 
         Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
         boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
         assertFalse("testJSContactForRdapInvalid11 - 1",isValid);
         assertEquals("testJSContactForRdapInvalid11 - 2", jsCard.getValidationMessage(), "missing key in organizations map for RDAP profile, at least org must be present");
     }
@@ -216,11 +227,61 @@ public class JSContactForRdapTest {
                 "}";
 
         Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
         boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
         assertFalse("testJSContactForRdapInvalid12 - 1",isValid);
         assertEquals("testJSContactForRdapInvalid12 - 2", jsCard.getValidationMessage(), "missing key in links map for RDAP profile, at least one between url and contact-uri must be present");
     }
-    
+
+
+    public void testJSContactForRdapInvalid13() throws JsonProcessingException {
+
+        String json = "{" +
+                "\"version\":\"2.0\"," +
+                "\"addresses\":{" +
+                    "\"addr\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"coordinates\":\"geo:46.772673,-71.282945\"," +
+                        "\"components\":[ " +
+                                "{\"kind\":\"locality\",\"value\":\"Osaka\"}" +
+                            "]" +
+                        "}" +
+                    "}" +
+                "}";
+
+        Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
+        boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
+        assertFalse("testJSContactForRdapInvalid13 - 1",isValid);
+        assertEquals("testJSContactForRdapInvalid13 - 2", jsCard.getValidationMessage(), "the property coordinates of type Address is not included in the profile rdap");
+    }
+
+    public void testJSContactForRdapInvalid14() throws JsonProcessingException {
+
+        String json = "{" +
+                "\"version\":\"2.0\"," +
+                "\"addresses\":{" +
+                    "\"addr\": {" +
+                        "\"@type\":\"Address\"," +
+                            "\"extension-1\":\"extension\"," +
+                            "\"components\":[ " +
+                                "{\"kind\":\"locality\",\"value\":\"Osaka\"}" +
+                            "]" +
+                    "}" +
+                    "}" +
+                "}";
+
+        Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
+        boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
+        assertFalse("testJSContactForRdapInvalid14 - 1",isValid);
+        assertEquals("testJSContactForRdapInvalid14 - 2", jsCard.getValidationMessage(), "the extension extension-1 of type Address is not included in the profile rdap");
+    }
+
+
     @Test
     public void testJSContactForRdapAndGetter() throws MissingFieldException, CardException {
 

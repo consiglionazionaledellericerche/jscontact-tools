@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-public class JSContactIdsProfile {
+public class JSContactProfileIds {
 
     public enum IdType {
         NICKNAME,

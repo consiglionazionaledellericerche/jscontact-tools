@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
 import it.cnr.iit.jscontact.tools.constraints.groups.Version_2_0;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.utils.ProfileUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.builders.PhoneFeaturesBuilder;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -242,9 +243,12 @@ public class JSContactForRdapBuilder {
             jsCard.getPhones() == null &&
             jsCard.getEmails() == null &&
             jsCard.getLinks() == null)
-            throw new MissingFieldException("At least one between name, organizations, addresses, phones, emails and links must be set in JSCard");
+            throw new MissingFieldException("At least one between name, organizations, addresses, phones, emails and links must be set in JSContact Card");
 
-        if (!jsCard.isValid(Version_2_0.class, Profile_RDAP.class))
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
+        boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
+        if (!isValid)
             throw new CardException(jsCard.getValidationMessage());
 
         return jsCard;
