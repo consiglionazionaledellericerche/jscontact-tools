@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
-import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileNameComponentKindConstraint;
+import it.cnr.iit.jscontact.tools.constraints.profiles.ProfileEnumValuesConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.NameComponentKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
@@ -58,7 +58,7 @@ public class NameComponent extends AbstractJSContactType implements HasKind, IsC
     @NonNull
     @JsonDeserialize(using = NameComponentKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = NameComponentEnum.class, getMethod = "getKind")
-    @RdapProfileNameComponentKindConstraint(groups = {Profile_RDAP.class})
+    @ProfileEnumValuesConstraint(groups = {Profile_RDAP.class})
     NameComponentKind kind;
 
     @NotNull(message = "value is missing in NameComponent")

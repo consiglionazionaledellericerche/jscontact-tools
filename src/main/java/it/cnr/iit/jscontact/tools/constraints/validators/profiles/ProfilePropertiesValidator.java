@@ -36,12 +36,16 @@ public class ProfilePropertiesValidator implements ConstraintValidator<ProfilePr
         String className =  type.getClass().getName();
         String profileClassName = ProfileUtils.getProfileName();
         Map<String, List<String>> profileProperties = ProfileUtils.getProfileProperties().get(profileClassName);
+
+        if (profileProperties == null)
+            return true;
+
         for(Field field : type.getClass().getFields()) {
             if (field.getName().equals("_type") || (className.equals("Card") && field.getName().equals("version")))
                 continue;
 
             if (!profileProperties.get(className).contains(field.getName())) {
-                context.buildConstraintViolationWithTemplate(String.format("the property %s of type %s is not included in the profile %s", field.getName(), className, ProfileUtils.getProfileNames().get(profileClassName))).addConstraintViolation();
+                context.buildConstraintViolationWithTemplate(String.format("the property %s of type %s is not included in the %s profile", field.getName(), className, ProfileUtils.getProfileNames().get(profileClassName))).addConstraintViolation();
                 return false;
             }
         }
@@ -49,7 +53,7 @@ public class ProfilePropertiesValidator implements ConstraintValidator<ProfilePr
         if (type.getExtensions()!= null) {
             for (String extension : type.getExtensions().keySet()) {
                 if (type.getExtensions() != null && !profileProperties.get(className).contains(extension)) {
-                    context.buildConstraintViolationWithTemplate(String.format("the extension %s of type %s is not included in the profile %s", extension, className, ProfileUtils.getProfileNames().get(profileClassName))).addConstraintViolation();
+                    context.buildConstraintViolationWithTemplate(String.format("the extension %s of type %s is not included in the %s profile", extension, className, ProfileUtils.getProfileNames().get(profileClassName))).addConstraintViolation();
                     return false;
                 }
             }

@@ -151,7 +151,7 @@ Here in the following a method testing an unsuccessfully ended validation is sho
 
 Validation depends not only on versions but also on profiles as described in [draft-ietf-calext-jscontact-profiles](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-profiles/).
 Validation leverages the groups of javax.validation. 
-Currently, three groups are defined: two groups for the JSContact versions and one group for the RDAP profile.
+Currently, three groups are defined: two groups for the JSContact versions and one group for the "rdap" profile.
 Default JSContact version group for validation is 2.0 introduced by [draft-ietf-calext-jscontact-uid](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-uid/).
 Use `JSContact2VCardConfig.setVersionGroup` method or the `versionGroup` method of the JSContact2VCard builder, to set another version as the default version for validation.
 Note that the uid property is mandatory in version 1.0 but optional in version 2.0.
@@ -171,7 +171,7 @@ Note that the uid property is mandatory in version 1.0 but optional in version 2
 
 ```
 
-To validate a JSContact Card object against the RDAP profile, invoke the `isValid` methdod both Version_2_0 and Profile_RDAP group as input. 
+To validate a JSContact Card object against the "rdap" profile, invoke the `isValid` methdod both Version_2_0 and Profile_RDAP group as input. 
 
 ```
 
@@ -192,7 +192,7 @@ To validate a JSContact Card object against the RDAP profile, invoke the `isVali
         boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
         ProfileUtils.unsetProfileName();
         assertFalse("testJSContactForRdapInvalid11 - 1",isValid);
-        assertEquals("testJSContactForRdapInvalid11 - 2", jsCard.getValidationMessage(), "missing key in organizations map for RDAP profile, at least org must be present");
+        assertEquals("testJSContactForRdapInvalid11 - 2", jsCard.getValidationMessage(), "missing key in organizations map for rdap profile, at least org must be present");
     }
 
 ```

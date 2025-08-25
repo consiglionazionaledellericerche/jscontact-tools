@@ -27,7 +27,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface ProfilePropertiesConstraint {
 
-    String message() default "invalid property for RDAP profile";
+    String message() default "invalid property for profile";
 
     Class<?>[] groups() default { };
 

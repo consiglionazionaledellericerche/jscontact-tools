@@ -25,6 +25,7 @@ import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.ComponentsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullAnyConstraint;
 import it.cnr.iit.jscontact.tools.constraints.NotNullDependencyConstraint;
+import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.deserializers.AddressContextsDeserializer;
@@ -41,6 +42,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.lang.annotation.Documented;
 import java.util.*;
 
 /**

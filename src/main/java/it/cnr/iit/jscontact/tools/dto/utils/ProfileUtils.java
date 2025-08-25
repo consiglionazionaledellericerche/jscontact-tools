@@ -23,11 +23,27 @@ public class ProfileUtils {
         put(Link.class.getName(), List.of("kind","uri"));
     }};
 
+
+    private static final Map<String, List<String>> rdapProfileEnumValues = new HashMap<>() {{
+        put(KindType.class.getName(), List.of(KindEnum.INDIVIDUAL.getValue(),KindEnum.ORG.getValue()));
+        put(LinkKind.class.getName(), List.of(LinkEnum.CONTACT.getValue()));
+        put(NameComponentKind.class.getName(), List.of(NameComponentEnum.GIVEN.getValue(),NameComponentEnum.SURNAME.getValue()));
+        put(AddressComponentKind.class.getName(), List.of(AddressComponentEnum.NAME.getValue(),AddressComponentEnum.LOCALITY.getValue(),AddressComponentEnum.REGION.getValue(),AddressComponentEnum.POSTCODE.getValue()));
+        put(PhoneFeature.class.getName(), List.of(PhoneFeatureEnum.VOICE.getValue(),PhoneFeatureEnum.FAX.getValue()));
+    }};
+
     @Getter
     private static final Map<String, Map> profileProperties = new HashMap<>()
     {{
         put(Profile_RDAP.class.getName(),rdapProfileProperties);
     }};
+
+    @Getter
+    private static final Map<String, Map> profileEnumValues = new HashMap<>()
+    {{
+        put(Profile_RDAP.class.getName(),rdapProfileEnumValues);
+    }};
+
 
     @Getter
     private static final Map<String, String> profileNames = new HashMap<>()

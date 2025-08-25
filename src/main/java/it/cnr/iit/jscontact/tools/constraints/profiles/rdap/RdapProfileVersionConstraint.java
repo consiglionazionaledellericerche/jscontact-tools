@@ -27,7 +27,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface RdapProfileVersionConstraint {
 
-    String message() default "invalid version value for RDAP profile";
+    String message() default "invalid version value for rdap profile";
 
     Class<?>[] groups() default { };
 

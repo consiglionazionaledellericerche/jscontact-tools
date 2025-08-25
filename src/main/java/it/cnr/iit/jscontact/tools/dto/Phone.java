@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.cnr.iit.jscontact.tools.constraints.BooleanMapConstraint;
 import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
-import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfilePhoneFeaturesConstraint;
+import it.cnr.iit.jscontact.tools.constraints.profiles.ProfileEnumValueMapKeysConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.ContextsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.PhoneFeaturesDeserializer;
@@ -59,7 +59,7 @@ public class Phone extends AbstractJSContactType implements HasLabel, IdMapValue
     @BooleanMapConstraint(message = "invalid Map<PhoneFeature,Boolean> features in Phone - Only Boolean.TRUE allowed")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ContainsExtensibleEnum(enumClass = PhoneFeatureEnum.class, getMethod = "getFeatures")
-    @RdapProfilePhoneFeaturesConstraint(groups = {Profile_RDAP.class})
+    @ProfileEnumValueMapKeysConstraint(groups = {Profile_RDAP.class})
     Map<PhoneFeature,Boolean> features;
 
     @JsonSerialize(using = ContextsSerializer.class)
