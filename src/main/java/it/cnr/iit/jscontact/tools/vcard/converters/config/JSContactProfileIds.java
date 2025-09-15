@@ -1,9 +1,11 @@
 package it.cnr.iit.jscontact.tools.vcard.converters.config;
 
+import it.cnr.iit.jscontact.tools.dto.PhoneFeatureEnum;
 import it.cnr.iit.jscontact.tools.dto.ResourceType;
 import it.cnr.iit.jscontact.tools.dto.PersonalInfoEnum;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +50,8 @@ public class JSContactProfileIds {
         public static JSContactId emailsId(String id) { return jsContactId(IdType.EMAIL,id); }
         public static JSContactId addressesId(String id) { return jsContactId(IdType.ADDRESS,id); }
         public static JSContactId phonesId(String id) { return jsContactId(IdType.PHONE,id); }
+        public static JSContactId phonesId(PhoneId id) { return jsContactId(IdType.PHONE,id); }
+
         public static JSContactId languagesId(String id) { return jsContactId(IdType.LANGUAGE,id); }
         public static JSContactId schedulingAddressId(String id) { return jsContactId(IdType.SCHEDULING,id); }
         public static JSContactId onlineServicesId(String id) { return jsContactId(IdType.ONLINE_SERVICE,id); }
@@ -108,23 +112,75 @@ public class JSContactProfileIds {
         }
     }
 
+
+    @Builder
+    @Data
+    @AllArgsConstructor
+    public static class PhoneId {
+
+        PhoneFeatureEnum phoneFeatureEnum;
+        String id;
+
+        private static PhoneId phoneId(PhoneFeatureEnum phoneFeatureEnum, String id) {
+            return PhoneId.builder().phoneFeatureEnum(phoneFeatureEnum).id(id).build();
+        }
+
+        public static PhoneId voicesId(String id) {
+            return phoneId(PhoneFeatureEnum.VOICE, id);
+        }
+
+        public static PhoneId faxesId(String id) {
+            return phoneId(PhoneFeatureEnum.FAX, id);
+        }
+    }
+
     @Singular(ignoreNullCollections = true)
     List<JSContactId> ids;
 
-    boolean additionalIdsAsSequentialNumber = false;
 
+    private List<String> getJSContactProfileIds(JSContactProfileIds.IdType idType, Object... args) {
 
-    public int countIdsPerIdType(IdType idType) {
+        List<String> ids = new ArrayList<>();
+        for (JSContactProfileIds.JSContactId jsContactId : getIds()) {
 
-        if (ids == null)
-            return 0;
-
-        int count = 0;
-        for (JSContactId id : ids) {
-            if (id.idType == idType) count++;
+            if (jsContactId.getIdType() == idType) {
+                switch (idType) {
+                    case RESOURCE:
+                        JSContactProfileIds.ResourceId resourceId = (JSContactProfileIds.ResourceId) jsContactId.getId();
+                        ResourceType type = (ResourceType) args[0];
+                        if (resourceId.getType() == type)
+                            ids.add(resourceId.getId());
+                        break;
+                    case PERSONAL_INFO:
+                        JSContactProfileIds.PersonalInfoId piId = (JSContactProfileIds.PersonalInfoId) jsContactId.getId();
+                        PersonalInfoEnum piType = (PersonalInfoEnum) args[0];
+                        if (piId.getPersonalInfoEnum() == piType)
+                            ids.add(piId.getId());
+                        break;
+                    case PHONE:
+                        if (jsContactId.getId() instanceof JSContactProfileIds.PhoneId) {
+                            JSContactProfileIds.PhoneId phoneId = (JSContactProfileIds.PhoneId) jsContactId.getId();
+                            PhoneFeatureEnum phoneFeatureEnum = (PhoneFeatureEnum) args[0];
+                            if (phoneId.getPhoneFeatureEnum() == phoneFeatureEnum)
+                                ids.add(phoneId.getId());
+                        } else {
+                            ids.add((String) jsContactId.getId());
+                        }
+                        break;
+                    default:
+                        ids.add((String) jsContactId.getId());
+                        break;
+                }
+            }
         }
 
-        return count;
+        return ids;
+    }
+
+    public String getMapId(JSContactProfileIds.IdType idType, int index, Object... args) {
+
+        List<String> ids = (idType == JSContactProfileIds.IdType.RESOURCE || idType == JSContactProfileIds.IdType.PERSONAL_INFO || idType == JSContactProfileIds.IdType.PHONE) ? getJSContactProfileIds(idType,args[0]) : getJSContactProfileIds(idType);
+        return ids.get(index-1);
     }
 
 }

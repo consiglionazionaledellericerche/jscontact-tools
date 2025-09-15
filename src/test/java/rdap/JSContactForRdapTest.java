@@ -5,6 +5,7 @@ import it.cnr.iit.jscontact.tools.constraints.groups.Version_2_0;
 import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.KindType;
+import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.ProfileUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -354,4 +355,74 @@ public class JSContactForRdapTest {
         assertEquals("testJSContactForRdapAndGetter - 25", "56124", rdapJSContactAddressLocGetter.pc());
         assertEquals("testJSContactForRdapAndGetter - 26", "モルッツィ通り、1", rdapJSContactAddressLocGetter.street());
     }
+
+
+    @Test
+    public void testJSContactForRdapAndGetter2() throws MissingFieldException, CardException {
+
+        Card jsCard = JSContactForRdapBuilder.builder()
+                .name(JSContactNameForRdapBuilder.builder()
+                        .full("Mario Loffredo")
+                        .build())
+                .org(".it Registry")
+                .email("mario.loffredo@iit.cnr.it")
+                .email("mario.loffredo@nic.it")
+                .voice("+39.0503139811")
+                .voice("+39.0503139812")
+                .fax("+39.0503139800")
+                .fax("+39.0503139801")
+                .addr(JSContactAddressForRdapBuilder.builder()
+                        .cc("it")
+                        .country("Italy")
+                        .sp("PI")
+                        .city("Pisa")
+                        .pc("56124")
+                        .street("Via Moruzzi, 1")
+                        .build())
+                .addr(JSContactAddressForRdapBuilder.builder()
+                        .cc("it")
+                        .country("Italy")
+                        .sp("LI")
+                        .city("Livorno")
+                        .pc("57122")
+                        .street("Via Nulla, 1")
+                        .build())
+                .url("https://www.nic.it")
+                .url("https://www.iit.cnr.it")
+                .contactUri("mailto:mario.loffredo@iit.cnr.it")
+                .contactUri("mailto:mario.loffredo@nic.it")
+                .build();
+
+        JSContactForRdapGetter rdapJSContactGetter = JSContactForRdapGetter.of(jsCard);
+        // JSContactForRdapBuilder uses JSContact Version 2.0 that doesn't mandate the uid property
+        assertNull("testJSContactForRdapAndGetter2 - 1", rdapJSContactGetter.uid());
+        JSContactNameForRdapGetter rdapJSContactNameGetter = JSContactNameForRdapGetter.of(rdapJSContactGetter.name());
+        assertEquals("testJSContactForRdapAndGetter2 - 2", "Mario Loffredo", rdapJSContactNameGetter.full());
+        assertEquals("testJSContactForRdapAndGetter2 - 3", ".it Registry", rdapJSContactGetter.org());
+        assertEquals("testJSContactForRdapAndGetter2 - 4", "mario.loffredo@iit.cnr.it", rdapJSContactGetter.email());
+        assertEquals("testJSContactForRdapAndGetter2 - 5", "mario.loffredo@nic.it", rdapJSContactGetter.email("email-1"));
+        assertEquals("testJSContactForRdapAndGetter2 - 6", "+39.0503139811", rdapJSContactGetter.voice());
+        assertEquals("testJSContactForRdapAndGetter2 - 7", "+39.0503139812", rdapJSContactGetter.voice("voice-1"));
+        assertEquals("testJSContactForRdapAndGetter2 - 8", "+39.0503139800", rdapJSContactGetter.fax());
+        assertEquals("testJSContactForRdapAndGetter2 - 9", "+39.0503139801", rdapJSContactGetter.fax("fax-1"));
+        assertEquals("testJSContactForRdapAndGetter2 - 10", "https://www.nic.it", rdapJSContactGetter.url());
+        assertEquals("testJSContactForRdapAndGetter2 - 11", "https://www.iit.cnr.it", rdapJSContactGetter.url("url-1"));
+        assertEquals("testJSContactForRdapAndGetter2 - 12", "mailto:mario.loffredo@iit.cnr.it", rdapJSContactGetter.contactUri());
+        assertEquals("testJSContactForRdapAndGetter2 - 13", "mailto:mario.loffredo@nic.it", rdapJSContactGetter.contactUri("contact-uri-1"));
+        JSContactAddressForRdapGetter rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addr());
+        assertEquals("testJSContactForRdapAndGetter2 - 14", "it", rdapJSContactAddressGetter.cc());
+        assertEquals("testJSContactForRdapAndGetter2 - 15", "Italy", rdapJSContactAddressGetter.country());
+        assertEquals("testJSContactForRdapAndGetter2 - 16", "PI", rdapJSContactAddressGetter.sp());
+        assertEquals("testJSContactForRdapAndGetter2 - 17", "Pisa", rdapJSContactAddressGetter.city());
+        assertEquals("testJSContactForRdapAndGetter2 - 18", "56124", rdapJSContactAddressGetter.pc());
+        assertEquals("testJSContactForRdapAndGetter2 - 19", "Via Moruzzi, 1", rdapJSContactAddressGetter.street());
+        rdapJSContactAddressGetter = JSContactAddressForRdapGetter.of(rdapJSContactGetter.addr("addr-1"));
+        assertEquals("testJSContactForRdapAndGetter2 - 14", "it", rdapJSContactAddressGetter.cc());
+        assertEquals("testJSContactForRdapAndGetter2 - 15", "Italy", rdapJSContactAddressGetter.country());
+        assertEquals("testJSContactForRdapAndGetter2 - 16", "LI", rdapJSContactAddressGetter.sp());
+        assertEquals("testJSContactForRdapAndGetter2 - 17", "Livorno", rdapJSContactAddressGetter.city());
+        assertEquals("testJSContactForRdapAndGetter2 - 18", "57122", rdapJSContactAddressGetter.pc());
+        assertEquals("testJSContactForRdapAndGetter2 - 19", "Via Nulla, 1", rdapJSContactAddressGetter.street());
+    }
+
 }

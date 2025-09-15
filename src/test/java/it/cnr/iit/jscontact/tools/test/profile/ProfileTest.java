@@ -62,7 +62,7 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 16", "G1V 2M2", jsCard.getAddresses().get("addr").getPostcode());
         assertEquals("testRDAPProfile - 17", 2, jsCard.getEmails().size());
         assertEquals("testRDAPProfile - 18", "joe.user@example.com", jsCard.getEmails().get("email").getAddress());
-        assertEquals("testRDAPProfile - 19", "joe.user@example.net", jsCard.getEmails().get("1").getAddress());
+        assertEquals("testRDAPProfile - 19", "joe.user@example.net", jsCard.getEmails().get("email-1").getAddress());
         assertEquals("testRDAPProfile - 20", 2, jsCard.getPhones().size());
         assertTrue("testRDAPProfile - 21", jsCard.getPhones().get("voice").asVoice());
         assertEquals("testRDAPProfile - 22", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("voice").getNumber());
@@ -72,7 +72,6 @@ public class ProfileTest extends JCard2JSContactTest {
         assertEquals("testRDAPProfile - 26", "http://example.org", jsCard.getLinks().get("url").getUri());
         assertTrue("testRDAPProfile - 27", jsCard.getLinks().get("url").isGenericLink());
         assertTrue("testRDAPProfile - 28", StringUtils.isEmpty(jsCard.getUid()));
-
     }
 
 

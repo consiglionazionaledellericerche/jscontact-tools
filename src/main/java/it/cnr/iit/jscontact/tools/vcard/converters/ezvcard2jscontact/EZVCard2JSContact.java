@@ -85,34 +85,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
     private static final Map<String, PhoneFeatureEnum> phoneFeatureAliases = new HashMap<String, PhoneFeatureEnum>() {{ put ("cell", PhoneFeatureEnum.MOBILE);}};
 
-    private List<String> getVCard2JSContactProfileIds(JSContactProfileIds.IdType idType, Object... args) {
-
-        List<String> ids = new ArrayList<>();
-        for (JSContactProfileIds.JSContactId jsContactId : config.getProfileIdsToUse().getIds()) {
-
-            if (jsContactId.getIdType() == idType) {
-                switch (idType) {
-                    case RESOURCE:
-                        JSContactProfileIds.ResourceId resourceId = (JSContactProfileIds.ResourceId) jsContactId.getId();
-                        ResourceType type = (ResourceType) args[0];
-                        if (resourceId.getType() == type)
-                            ids.add(resourceId.getId());
-                        break;
-                    case PERSONAL_INFO:
-                        JSContactProfileIds.PersonalInfoId piId = (JSContactProfileIds.PersonalInfoId) jsContactId.getId();
-                        PersonalInfoEnum piType = (PersonalInfoEnum) args[0];
-                        if (piId.getPersonalInfoEnum() == piType)
-                            ids.add(piId.getId());
-                        break;
-                    default:
-                        ids.add((String) jsContactId.getId());
-                        break;
-                }
-            }
-        }
-
-        return ids;
-    }
 
     private String getJSCardId(JSContactProfileIds.IdType idType, int index, String id, String propId, Object... args) {
 
@@ -122,17 +94,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         if (config.getProfileIdsToUse() == null || config.getProfileIdsToUse().getIds() == null || config.getProfileIdsToUse().getIds().size() == 0)
             return id;
 
-        List<String> ids = (idType == JSContactProfileIds.IdType.RESOURCE || idType == JSContactProfileIds.IdType.PERSONAL_INFO) ? getVCard2JSContactProfileIds(idType,args[0]) : getVCard2JSContactProfileIds(idType);
-
-        int count = config.getProfileIdsToUse().countIdsPerIdType(idType);
-        if (ids.size() == 0 || index > count) {
-            if (!config.getProfileIdsToUse().isAdditionalIdsAsSequentialNumber())
-                return id;
-            else
-                return Integer.toString(index-count);
-        }
-
-        return (ids.get(index-1) == null) ? id : ids.get(index-1);
+        return config.getProfileIdsToUse().getMapId(idType, index, args);
     }
 
     private static <E extends Enum<E> & VCardTypeDerivedEnum> E getJSCardEnumFromVCardTypeParam(Class<E> enumType, String vcardTypeParam, List<String> exclude, Map<String,E> aliases) {
@@ -1332,7 +1294,18 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
             String vcardType = VCardUtils.getVCardParamValue(tel.getParameters(), VCardParamEnum.TYPE);
             Map<Context,Boolean> contexts = toJSCardContexts(vcardType);
             Map<PhoneFeature,Boolean> phoneFeatures = toJSCardPhoneFeatures(vcardType);
-            jsCard.addPhone(getJSCardId(JSContactProfileIds.IdType.PHONE, i,"PHONE-" + (i++), tel.getParameter(VCardParamEnum.PROP_ID.getValue())), Phone.builder()
+           PhoneFeatureEnum phoneFeatureEnum = null;
+           int voicesCount = 0;
+           int faxesCount = 0;
+            if (phoneFeatures == null || phoneFeatures.containsKey(PhoneFeature.voice())) {
+                phoneFeatureEnum = PhoneFeatureEnum.VOICE;
+                voicesCount++;
+            }
+            else if (phoneFeatures.containsKey(PhoneFeature.fax())) {
+                phoneFeatureEnum = PhoneFeatureEnum.FAX;
+                faxesCount++;
+            }
+            jsCard.addPhone(getJSCardId(JSContactProfileIds.IdType.PHONE, (config.getProfileIdsToUse() == null) ? i : ((phoneFeatureEnum == PhoneFeatureEnum.VOICE) ? voicesCount : faxesCount),"PHONE-" + (i++), tel.getParameter(VCardParamEnum.PROP_ID.getValue()), phoneFeatureEnum), Phone.builder()
                             .number(getValue(tel))
                             .features(phoneFeatures)
                             .contexts(contexts)
