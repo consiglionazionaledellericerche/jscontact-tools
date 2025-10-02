@@ -584,7 +584,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         List<Member> members = vcard.getMembers();
         members.sort(vCardPropertiesPrefComparator);
         for (Member member : members)
-            jsCard.addMember(member.getValue());
+            jsCard.addMember(member.getUri());
     }
 
 
