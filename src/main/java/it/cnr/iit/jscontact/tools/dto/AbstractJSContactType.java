@@ -48,7 +48,7 @@ public abstract class AbstractJSContactType extends AbstractExtensibleJSContactT
     @JsonIgnore
     @Getter
     @Setter
-    String propId;
+    String jsid;
 
     /**
      * @see <a href="https://datatracker.ietf.org/doc/RFC9555#section-2.15.2">Section 2.15.2 of RFC9555</a>

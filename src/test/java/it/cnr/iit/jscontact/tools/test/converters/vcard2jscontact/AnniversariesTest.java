@@ -175,9 +175,9 @@ public class AnniversariesTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "UID:f19a36f0-255a-46ed-ad47-544972c50e44\n" +
                 "FN;DERIVED=true:f19a36f0-255a-46ed-ad47-544972c50e44\n" +
-                "BDAY;PROP-ID=k8:19530415\n" +
-                "DEATHDATE;PROP-ID=k9:20191016T011000+0200\n" +
-                "DEATHPLACE;PROP-ID=k9:4445 Tree Street New England, ND 58647 USA\n" +
+                "BDAY;JSID=k8:19530415\n" +
+                "DEATHDATE;JSID=k9:20191016T011000+0200\n" +
+                "DEATHPLACE;JSID=k9:4445 Tree Street New England, ND 58647 USA\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

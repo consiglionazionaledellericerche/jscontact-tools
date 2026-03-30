@@ -155,10 +155,10 @@ public class RFC9554PropertiesTest extends JSContact2VCardTest {
         assertEquals("testSpeakToAs5 - 1","NEUTER", vcard.getExtendedProperty("GRAMGENDER").getValue());
         assertEquals("testSpeakToAs5 - 2", "they/them", vcard.getExtendedProperties("PRONOUNS").get(0).getValue());
         assertEquals("testSpeakToAs5 - 3", "2", vcard.getExtendedProperties("PRONOUNS").get(0).getParameter(VCardParamEnum.PREF.getValue()));
-        assertEquals("testSpeakToAs5 - 4", "k19", vcard.getExtendedProperties("PRONOUNS").get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testSpeakToAs5 - 4", "k19", vcard.getExtendedProperties("PRONOUNS").get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testSpeakToAs5 - 5", "xe/xir", vcard.getExtendedProperties("PRONOUNS").get(1).getValue());
         assertEquals("testSpeakToAs5 - 6", "1", vcard.getExtendedProperties("PRONOUNS").get(1).getParameter(VCardParamEnum.PREF.getValue()));
-        assertEquals("testSpeakToAs5 - 7", "k32", vcard.getExtendedProperties("PRONOUNS").get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testSpeakToAs5 - 7", "k32", vcard.getExtendedProperties("PRONOUNS").get(1).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
 

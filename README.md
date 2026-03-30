@@ -318,7 +318,7 @@ The conversion is executed according to the following rules:
 
     - `customTimeZonesPrefix = "tz"`
     - `validateCard = true`
-    - `usePropIds = true`
+    - `useJsds = true`
     - `setAutoFullAddress = true`
     - `setAutoMediaType = true`
     - `convertGenderToSpeakToAs = true`
@@ -411,7 +411,7 @@ By default, where a collection of objects is mapped to a map of <key,object> ent
 This setting schema can be modified by defining a different one assigning key values based on the positions of vCard elements.
 To do that, the following steps must be followed:
 
-1. set the `usePropIds` property of the `VCard2JSContactConfig` object to `false`
+1. set the `useJsids` property of the `VCard2JSContactConfig` object to `false`
 
 2. create a `VCard2JSContactProfileIds` object and assign the `profileIdsToUse` of `VCard2JSContactConfig` object property with it
 
@@ -458,7 +458,7 @@ All the methods take in input a list of JSContact Card objects and can raise the
     - `validateCard = true`
     - `versionGroup = Version_2_0.class`
     - `setAutoAddrLabel = true`
-    - `setPropIdParam = true`
+    - `setJsidParam = true`
     - `convertTimezoneToOffset = false`
 
 5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
@@ -475,7 +475,7 @@ All the methods take in input a list of JSContact Card objects and can raise the
    address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL
    parameter can result from the newline-delimited concatenation of the non-empty "Address" members or.
 
-10. The "PROP-ID" parameter can be mapped to the value of a map key based on the value of the `setPropIdParam` mapping 
+10. The "JSID" parameter can be mapped to the value of a map key based on the value of the `setJsidParam` mapping 
     configuration parameter.
 
 10. The "countryCode" member of the Address type always converts to the vCard CC parameter.
@@ -593,7 +593,7 @@ Here in the following two examples of conversion between JSContact Card and a vC
         assertEquals("testAddresses4 - 7", "54321 Oak St", vcard.getAddresses().get(0).getStreetAddress());
         assertEquals("testAddresses4 - 8", "54321 Oak St\nReston\nVA\n20190\nUSA", vcard.getAddresses().get(0).getLabel());
         assertEquals("testAddresses4 - 9", vcard.getAddresses().get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));           
-        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getAddresses().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         
     }
 

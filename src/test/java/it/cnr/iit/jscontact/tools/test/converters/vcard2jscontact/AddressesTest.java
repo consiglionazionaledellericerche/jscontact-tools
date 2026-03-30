@@ -400,7 +400,7 @@ public class AddressesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;JSCOMPS=\"s,\\,;11;s, ;10;3\";LANGUAGE=en;PROP-ID=ADR-1:;;54321 Oak St;Reston;;;;;;;54321;Oak St;;;;;;\n" +
+                "ADR;JSCOMPS=\"s,\\,;11;s, ;10;3\";LANGUAGE=en;JSID=ADR-1:;;54321 Oak St;Reston;;;;;;;54321;Oak St;;;;;;\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -427,9 +427,9 @@ public class AddressesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;JSCOMPS=\"s,\\, ;13;s,-;10;s, ;15;3;4;s, ;5\";LABEL=\"2-7-2 Marunouchi, Chiyoda-ku, Tokyo 100-8994\";PROP-ID=k26;ALTID=1:;;2,2-7,Marunouchi;Chiyoda-ku;Tokyo;100-8994;;;;;2;;;2-7;;Marunouchi;;\n" +
-                "ADR;JSCOMPS=\"s,;4;3;15;13;s,-;10;5\";LABEL=〒100-8994東京都千代田区丸ノ内2-7-2;LANGUAGE=jp;PROP-ID=k26;ALTID=1:;;2,2-7,丸ノ内;千代田区;東京都;〒100-8994;;;;;2;;;2-7;;丸ノ内;;\n" +
-                "ADR;JSCOMPS=\"s,\\,;11;s, ;10;3\";LANGUAGE=en;PROP-ID=ADR-1:;;54321 Oak St;Reston;;;;;;;54321;Oak St;;;;;;\n" +
+                "ADR;JSCOMPS=\"s,\\, ;13;s,-;10;s, ;15;3;4;s, ;5\";LABEL=\"2-7-2 Marunouchi, Chiyoda-ku, Tokyo 100-8994\";JSID=k26;ALTID=1:;;2,2-7,Marunouchi;Chiyoda-ku;Tokyo;100-8994;;;;;2;;;2-7;;Marunouchi;;\n" +
+                "ADR;JSCOMPS=\"s,;4;3;15;13;s,-;10;5\";LABEL=〒100-8994東京都千代田区丸ノ内2-7-2;LANGUAGE=jp;JSID=k26;ALTID=1:;;2,2-7,丸ノ内;千代田区;東京都;〒100-8994;;;;;2;;;2-7;;丸ノ内;;\n" +
+                "ADR;JSCOMPS=\"s,\\,;11;s, ;10;3\";LANGUAGE=en;JSID=ADR-1:;;54321 Oak St;Reston;;;;;;;54321;Oak St;;;;;;\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -530,7 +530,7 @@ public class AddressesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;JSCOMPS=\"s,^nx^^y^'z;11;4\";PROP-ID=ADR-1:;;name;;region;;;;;;;name;;;;;;\n" +
+                "ADR;JSCOMPS=\"s,^nx^^y^'z;11;4\";JSID=ADR-1:;;name;;region;;;;;;;name;;;;;;\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

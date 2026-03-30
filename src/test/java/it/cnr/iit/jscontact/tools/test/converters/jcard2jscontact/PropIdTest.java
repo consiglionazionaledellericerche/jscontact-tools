@@ -32,12 +32,12 @@ public class PropIdTest extends VCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\", \"prop-id\": \"TEST\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]]" +
+                "[\"adr\", {\"cc\": \"US\", \"jsid\": \"TEST\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]]" +
                 "]]";
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                                                         .config(VCard2JSContactConfig.builder()
-                                                                .usePropIds(true)
+                                                                .useJsds(true)
                                                                 .build())
                                                         .build();
         Card jsCard = jCard2JSContact.convert(jcard).get(0);
@@ -59,13 +59,13 @@ public class PropIdTest extends VCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"adr\", {\"cc\": \"US\", \"prop-id\": \"TEST\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]]," +
+                "[\"adr\", {\"cc\": \"US\", \"jsid\": \"TEST\"}, \"text\", [\"\", \"\", \"54321 Oak St\", \"Reston\", \"VA\", \"20190\", \"USA\"]]," +
                 "[\"adr\", {\"cc\": \"US\"}, \"text\", [\"\", \"\", \"12345 Elm St\", \"Reston\", \"VA\", \"20190\", \"USA\"]]" +
                 "]]";
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                                                             .config(VCard2JSContactConfig.builder()
-                                                                    .usePropIds(true)
+                                                                    .useJsds(true)
                                                                     .build())
                                                             .build();
         Card jsCard = jCard2JSContact.convert(jcard).get(0);

@@ -167,9 +167,9 @@ public class TitlesTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "G-o2.ORG;PROP-ID=o2:ABC\n" +
-                "TITLE;PROP-ID=le9:Research Scientist\n" +
-                "G-o2.ROLE;PROP-ID=k2:Project Leader\n" +
+                "G-o2.ORG;JSID=o2:ABC\n" +
+                "TITLE;JSID=le9:Research Scientist\n" +
+                "G-o2.ROLE;JSID=k2:Project Leader\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

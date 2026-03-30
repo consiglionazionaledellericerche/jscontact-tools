@@ -50,7 +50,7 @@ public class OnlineServiceTest extends JSContact2VCardTest {
         assertEquals("testOnlineService1 - 2", "xmpp:alice@example.com", vcard.getImpps().get(0).getUri().toString());
         assertEquals("testOnlineService1 - 3", "home", vcard.getImpps().get(0).getParameter(VCardParamEnum.TYPE.getValue()));
         assertEquals("testOnlineService1 - 4", 1, (int) vcard.getImpps().get(0).getPref());
-        assertEquals("testOnlineService1 - 5", "OS-1", vcard.getImpps().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testOnlineService1 - 5", "OS-1", vcard.getImpps().get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class OnlineServiceTest extends JSContact2VCardTest {
         assertEquals("testOnlineService2 - 2", VCardPropEnum.SOCIALPROFILE.getValue(), vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testOnlineService2 - 3", "home", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.TYPE.getValue()));
         assertEquals("testOnlineService2 - 4", "1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PREF.getValue()));
-        assertEquals("testOnlineService2 - 5", "OS-1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testOnlineService2 - 5", "OS-1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testOnlineService2 - 6", "Twitter", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.SERVICE_TYPE.getValue()));
         assertEquals("testOnlineService2 - 7", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
     }

@@ -40,7 +40,7 @@ public class JSContact2VCardConfig {
     @Builder.Default
     private boolean setAutoAddrLabel = true;
     @Builder.Default
-    private boolean setPropIdParam = true;
+    private boolean setJsidParam = true;
     @Builder.Default
     private boolean convertTimezoneToOffset = false;
 

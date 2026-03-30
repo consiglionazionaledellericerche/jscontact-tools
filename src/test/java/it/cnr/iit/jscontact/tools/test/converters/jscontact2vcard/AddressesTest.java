@@ -63,7 +63,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses1 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses1 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
         assertEquals("testAddresses1 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
-        assertEquals("testAddresses1 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses1 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses2 - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
         assertEquals("testAddresses2 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
         assertEquals("testAddresses2 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
-        assertEquals("testAddresses2 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses2 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -147,8 +147,8 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses3 - 13", "VA", vcard.getProperties(ExtendedAddress.class).get(1).getRegion());
         assertEquals("testAddresses3 - 14", "12345 Elm St", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddress());
         assertEquals("testAddresses3 - 15", "12345 Elm St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
-        assertEquals("testAddresses3 - 16", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testAddresses3 - 17", "ADR-2", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses3 - 16", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
+        assertEquals("testAddresses3 - 17", "ADR-2", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -183,7 +183,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses4 - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
         assertEquals("testAddresses4 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses4 - 9", vcard.getProperties(ExtendedAddress.class).get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
-        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses4 - 10", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -220,7 +220,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses5 - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses5 - 9", vcard.getProperties(ExtendedAddress.class).get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
         assertEquals("testAddresses5 - 10", "Etc/GMT+5", vcard.getProperties(ExtendedAddress.class).get(0).getTimezone());
-        assertEquals("testAddresses5 - 11", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses5 - 11", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -263,7 +263,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses6 - 9", "en", vcard.getProperties(ExtendedAddress.class).get(0).getLanguage());
         assertEquals("testAddresses6 - 10", "Via Moruzzi,1 Pisa 56124 Italia", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
         assertEquals("testAddresses6 - 11", "it", vcard.getProperties(ExtendedAddress.class).get(1).getLanguage());
-        assertEquals("testAddresses6 - 12", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses6 - 12", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -298,7 +298,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses7 - 7", "54321", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(0));
         assertEquals("testAddresses7 - 7", "Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddresses().get(1));
         assertEquals("testAddresses7 - 8", "Oak St 54321 Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
-        assertEquals("testAddresses7 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses7 - 9", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -337,7 +337,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses8 - 8", "100", vcard.getProperties(ExtendedAddress.class).get(0).getExtendedAddresses().get(0));
         assertEquals("testAddresses8 - 8", "5", vcard.getProperties(ExtendedAddress.class).get(0).getExtendedAddresses().get(1));
         assertEquals("testAddresses8 - 9", "5 100 Oak St 54321 Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
-        assertEquals("testAddresses8 - 10", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses8 - 10", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
 
@@ -375,7 +375,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses9 - 8", "54321 Oak St Reston VA USA 20190", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
         assertEquals("testAddresses9 - 9", vcard.getProperties(ExtendedAddress.class).get(0).getGeo(), GeoUri.parse("geo:46.772673,-71.282945"));
         assertEquals("testAddresses9 - 10", "-0530", vcard.getProperties(ExtendedAddress.class).get(0).getTimezone());
-        assertEquals("testAddresses9 - 11", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses9 - 11", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
 
@@ -432,7 +432,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses10 - 14", "Via Moruzzi,1", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddress());
         assertEquals("testAddresses10 - 15", "Via Moruzzi,1 Pisa 56124 Italia", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
         assertEquals("testAddresses10 - 16", "it", vcard.getProperties(ExtendedAddress.class).get(1).getLanguage());
-        assertEquals("testAddresses10 - 17", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses10 - 17", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
 
@@ -529,7 +529,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses12 - 10", "2", vcard.getProperties(ExtendedAddress.class).get(0).getStreetNumber());
         assertEquals("testAddresses12 - 11", "2-7", vcard.getProperties(ExtendedAddress.class).get(0).getBlock());
         assertEquals("testAddresses12 - 12", "Marunouchi", vcard.getProperties(ExtendedAddress.class).get(0).getDistrict());
-        assertEquals("testAddresses12 - 13", "k26", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses12 - 13", "k26", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testAddresses12 - 14", "jp", vcard.getProperties(ExtendedAddress.class).get(1).getLanguage());
         assertEquals("testAddresses12 - 15", "〒100-8994東京都千代田区丸ノ内2-7-2", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
         assertEquals("testAddresses12 - 16", "s,\\, ;4;3;15;13;s,-;10;5", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.JSCOMPS.getValue()));
@@ -542,7 +542,7 @@ public class AddressesTest extends JSContact2VCardTest {
         assertEquals("testAddresses12 - 23", "2", vcard.getProperties(ExtendedAddress.class).get(1).getStreetNumber());
         assertEquals("testAddresses12 - 24", "2-7", vcard.getProperties(ExtendedAddress.class).get(1).getBlock());
         assertEquals("testAddresses12 - 25", "丸ノ内", vcard.getProperties(ExtendedAddress.class).get(1).getDistrict());
-        assertEquals("testAddresses12 - 26", "k26", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testAddresses12 - 26", "k26", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.JSID.getValue()));
 
     }
 

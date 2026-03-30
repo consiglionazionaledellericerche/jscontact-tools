@@ -73,7 +73,7 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations1 - 12", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
         assertEquals("testOrganizations1 - 13", "it", vcard.getOrganizations().get(1).getLanguage());
         assertEquals("testOrganizations1 - 14", "1", vcard.getOrganizations().get(1).getAltId());
-        assertEquals("testOrganizations1 - 15", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testOrganizations1 - 15", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -128,8 +128,8 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations2 - 15", "University of North America", vcard.getOrganizations().get(2).getValues().get(0));
         assertNull("testOrganizations2 - 16", vcard.getOrganizations().get(2).getLanguage());
         assertNull("testOrganizations2 - 17", vcard.getOrganizations().get(2).getAltId());
-        assertEquals("testOrganizations2 - 18", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testOrganizations2 - 20", "ORG-2", vcard.getOrganizations().get(2).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testOrganizations2 - 18", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.JSID.getValue()));
+        assertEquals("testOrganizations2 - 20", "ORG-2", vcard.getOrganizations().get(2).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -192,8 +192,8 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations3 - 19", "Università del Nord America", vcard.getOrganizations().get(3).getValues().get(0));
         assertEquals("testOrganizations3 - 20", "it", vcard.getOrganizations().get(3).getLanguage());
         assertEquals("testOrganizations3 - 21", "2", vcard.getOrganizations().get(3).getAltId());
-        assertEquals("testOrganizations3 - 22", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
-        assertEquals("testOrganizations3 - 23", "ORG-2", vcard.getOrganizations().get(2).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testOrganizations3 - 22", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.JSID.getValue()));
+        assertEquals("testOrganizations3 - 23", "ORG-2", vcard.getOrganizations().get(2).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
 
@@ -239,7 +239,7 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations5 - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
         assertEquals("testOrganizations5 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
         assertEquals("testOrganizations5 - 13", "1", vcard.getOrganizations().get(1).getAltId());
-        assertEquals("testOrganizations5 - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testOrganizations5 - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test
@@ -282,7 +282,7 @@ public class OrganizationsTest extends JSContact2VCardTest {
         assertEquals("testOrganizations6 - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
         assertEquals("testOrganizations6 - 12", "it", vcard.getOrganizations().get(1).getLanguage());
         assertEquals("testOrganizations6 - 13", "1", vcard.getOrganizations().get(1).getAltId());
-        assertEquals("testOrganizations6 - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.PROP_ID.getValue()));
+        assertEquals("testOrganizations6 - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
 }

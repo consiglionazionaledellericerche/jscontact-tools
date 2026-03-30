@@ -1,6 +1,8 @@
 package it.cnr.iit.jscontact.tools.vcard.converters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ezvcard.property.VCardProperty;
+import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,4 +28,13 @@ public abstract class AbstractConverter {
     }};
 
     protected static final ObjectMapper mapper = new ObjectMapper();
+
+    protected static String getJSIDParameter(VCardProperty property) {
+        String JSIDValue = property.getParameter(VCardParamEnum.JSID.getValue());
+        if (JSIDValue != null)
+            return JSIDValue;
+        else
+            return property.getParameter(VCardParamEnum.PROP_ID.getValue());
+    }
+
 }

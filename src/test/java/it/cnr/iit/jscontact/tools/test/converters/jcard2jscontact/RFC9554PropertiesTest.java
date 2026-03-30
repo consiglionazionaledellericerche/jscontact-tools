@@ -160,7 +160,7 @@ public class RFC9554PropertiesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"pronouns\",{\"prop-id\":\"PRONOUNS-1\",\"altid\":\"1\"},\"text\",\"he/him\"], " +
+                "[\"pronouns\",{\"jsid\":\"PRONOUNS-1\",\"altid\":\"1\"},\"text\",\"he/him\"], " +
                 "[\"pronouns\",{\"altid\":\"1\",\"language\":\"it\"},\"text\",\"egli/lui\"] " +
                 "]]";
 
@@ -176,7 +176,7 @@ public class RFC9554PropertiesTest extends JCard2JSContactTest {
 
         String jcard="[\"vcard\",[ [\"version\", {}, \"text\", \"4.0\"], " +
                 "[\"fn\", {}, \"text\", \"test\"], " +
-                "[\"pronouns\",{\"prop-id\":\"PRONOUNS-1\",\"altid\":\"1\"},\"text\",\"he/him\"], " +
+                "[\"pronouns\",{\"jsid\":\"PRONOUNS-1\",\"altid\":\"1\"},\"text\",\"he/him\"], " +
                 "[\"pronouns\",{\"altid\":\"1\",\"language\":\"it\"},\"text\",\"egli/lui\"], " +
                 "[\"gramgender\",{},\"text\",\"INANIMATE\"], " +
                 "[\"gramgender\",{\"language\":\"it\"},\"text\",\"MASCULINE\"]" +

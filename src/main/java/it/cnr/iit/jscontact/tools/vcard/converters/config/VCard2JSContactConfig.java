@@ -35,7 +35,7 @@ public class VCard2JSContactConfig {
     @Builder.Default
     private boolean validateCard = true;
     @Builder.Default
-    private boolean usePropIds = true;
+    private boolean useJsds = true;
     @Builder.Default
     private boolean setAutoFullAddress = true;
     @Builder.Default

@@ -138,7 +138,7 @@ public class AddressesTest extends RoundtripTest {
 
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                         .setAutoAddrLabel(false)
-                        .setPropIdParam(false)
+                        .setJsidParam(false)
                         .build())
                 .build();
 
@@ -178,7 +178,7 @@ public class AddressesTest extends RoundtripTest {
 
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                         .setAutoAddrLabel(false)
-                        .setPropIdParam(false)
+                        .setJsidParam(false)
                         .convertTimezoneToOffset(true)
                         .build())
                 .build();
@@ -202,7 +202,7 @@ public class AddressesTest extends RoundtripTest {
 
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                         .setAutoAddrLabel(false)
-                        .setPropIdParam(false)
+                        .setJsidParam(false)
                         .build())
                 .build();
 

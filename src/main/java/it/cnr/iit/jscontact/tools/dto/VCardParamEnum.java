@@ -45,6 +45,7 @@ public enum VCardParamEnum  {
     SORT_AS("SORT-AS"),
     LABEL("LABEL"),
     PROP_ID("PROP-ID"),
+    JSID("JSID"),
     DERIVED("DERIVED"),
     AUTHOR("AUTHOR"),
     AUTHOR_NAME("AUTHOR-NAME"),

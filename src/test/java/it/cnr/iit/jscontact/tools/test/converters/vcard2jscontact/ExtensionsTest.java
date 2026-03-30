@@ -78,7 +78,7 @@ public class ExtensionsTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "G-PHONE-1.TEL;PROP-ID=PHONE-1;TYPE=home,voice;VALUE=uri:tel:+33-01-23-45-6\n" +
+                "G-PHONE-1.TEL;JSID=PHONE-1;TYPE=home,voice;VALUE=uri:tel:+33-01-23-45-6\n" +
                 "G-PHONE-1.X-ABLabel;VALUE=text:a label\n" +
                 "END:VCARD";
 

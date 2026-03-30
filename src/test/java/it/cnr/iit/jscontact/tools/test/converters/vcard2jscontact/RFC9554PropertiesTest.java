@@ -170,7 +170,7 @@ public class RFC9554PropertiesTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "FN:test\n" +
                 "LANGUAGE;VALUE=language-tag:en\n" +
-                "PRONOUNS;ALTID=1;PROP-ID=PRONOUNS-1;VALUE=text:he/him\n" +
+                "PRONOUNS;ALTID=1;JSID=PRONOUNS-1;VALUE=text:he/him\n" +
                 "PRONOUNS;LANGUAGE=it;ALTID=1;VALUE=text:egli/lui\n" +
                 "END:VCARD";
 
@@ -189,7 +189,7 @@ public class RFC9554PropertiesTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "FN:test\n" +
                 "LANGUAGE;VALUE=language-tag:en\n" +
-                "PRONOUNS;ALTID=1;PROP-ID=PRONOUNS-1;VALUE=text:he/him\n" +
+                "PRONOUNS;ALTID=1;JSID=PRONOUNS-1;VALUE=text:he/him\n" +
                 "PRONOUNS;LANGUAGE=it;ALTID=1;VALUE=text:egli/lui\n" +
                 "GRAMGENDER;VALUE=text:INANIMATE\n" +
                 "GRAMGENDER;LANGUAGE=it;VALUE=text:MASCULINE\n" +

@@ -36,19 +36,19 @@ public class PropIdTest extends RoundtripTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;PROP-ID=TEST;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "ADR;JSID=TEST;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder()
                                                         .config(VCard2JSContactConfig.builder()
                                                                 .setAutoFullAddress(false)
-                                                                .usePropIds(true)
+                                                                .useJsds(true)
                                                                 .build())
                                                         .build();
 
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                         .setAutoAddrLabel(false)
-                        .setPropIdParam(true)
+                        .setJsidParam(true)
                         .build())
                 .build();
 
@@ -66,19 +66,19 @@ public class PropIdTest extends RoundtripTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "ADR;PROP-ID=TEST;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "ADR;JSID=TEST;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
                 "ADR;CC=US:;;12345 Elm St;Reston;VA;20190;USA\n" +
                 "END:VCARD";
 
         VCard2JSContact vCard2JSContact = VCard2JSContact.builder()
                 .config(VCard2JSContactConfig.builder()
-                        .usePropIds(true)
+                        .useJsds(true)
                         .build())
                 .build();
 
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                         .setAutoAddrLabel(false)
-                        .setPropIdParam(true)
+                        .setJsidParam(true)
                         .build())
                 .build();
 
