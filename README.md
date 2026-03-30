@@ -475,7 +475,7 @@ All the methods take in input a list of JSContact Card objects and can raise the
    address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL
    parameter can result from the newline-delimited concatenation of the non-empty "Address" members or.
 
-10. The "JSID" parameter can be mapped to the value of a map key based on the value of the `setJsidParam` mapping 
+10. The "JSID" parameter, or the "PROP-ID" parameter if the "JSID" parameter is missing, can be mapped to the value of a map key based on the value of the `setJsidParam` mapping 
     configuration parameter.
 
 10. The "countryCode" member of the Address type always converts to the vCard CC parameter.
