@@ -13,25 +13,24 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.constraints.validators.profiles.rdap;
+package it.cnr.iit.jscontact.tools.constraints.profiles;
 
-import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileKindConstraint;
-import it.cnr.iit.jscontact.tools.dto.KindType;
+import it.cnr.iit.jscontact.tools.constraints.validators.profiles.ProfileEnumValuesValidator;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
 
-public class RdapProfileKindValidator implements ConstraintValidator<RdapProfileKindConstraint, KindType> {
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = {ProfileEnumValuesValidator.class})
+@Documented
+public @interface ProfileEnumValuesConstraint {
 
-    public void initialize(RdapProfileKindConstraint constraintAnnotation) {
-    }
+    String message() default "invalid enum value for profile";
 
-    public boolean isValid(KindType kind, ConstraintValidatorContext context) {
+    Class<?>[] groups() default { };
 
-        if (kind == null)
-            return true;
-
-        return kind.isIndividual() || kind.isOrg();
-    }
-
+    Class<? extends Payload>[] payload() default { };
 }
+

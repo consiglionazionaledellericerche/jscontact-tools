@@ -1,0 +1,26 @@
+[
+   "vcard",
+   [
+     ["version", {}, "text", "4.0"],
+     ["fn", {}, "text", "Joe User"],
+     ["n", {}, "text", ["User", "Joe", "", "", ""]],
+     ["kind", {}, "text", "individual"],
+     ["org", {}, "text", "Example"],
+     ["adr", {}, "text",
+       [
+         "",
+         "Suite 1234",
+         "4321 Rue Somewhere",
+         "Quebec",
+         "QC",
+         "G1V 2M2",
+         "Canada"
+       ]
+     ],
+     ["tel", { "type":["voice"] }, "uri", "tel:+1-555-555-1234;ext=102"],
+     ["tel", { "type":["fax"] }, "uri", "tel:+1-555-555-4321"],
+     ["email", { }, "text", "joe.user@example.com"],
+     ["email", { }, "text", "joe.user@example.net"],
+     ["url", { }, "uri", "http://example.org"]
+   ]
+ ]

@@ -17,7 +17,7 @@ package it.cnr.iit.jscontact.tools.test.profile;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
-import it.cnr.iit.jscontact.tools.rdap.RdapJSContactIdsProfile;
+import it.cnr.iit.jscontact.tools.rdap.RdapJSContactProfileIds;
 import it.cnr.iit.jscontact.tools.test.converters.jcard2jscontact.JCard2JSContactTest;
 import it.cnr.iit.jscontact.tools.vcard.converters.config.VCard2JSContactConfig;
 import it.cnr.iit.jscontact.tools.vcard.converters.jcard2jsontact.JCard2JSContact;
@@ -39,67 +39,39 @@ public class ProfileTest extends JCard2JSContactTest {
 
         JCard2JSContact jCard2JSContact = JCard2JSContact.builder()
                         .config(VCard2JSContactConfig.builder()
-                        .idsProfileToUse(RdapJSContactIdsProfile.getInstance())
+                        .profileIdsToUse(RdapJSContactProfileIds.getInstance())
                         .build())
                 .build();
-        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RFC7483.json")), StandardCharsets.UTF_8);
+        String json = IOUtils.toString(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("jcard/jCard-RDAP-profile.json")), StandardCharsets.UTF_8);
         Card jsCard = jCard2JSContact.convert(json).get(0);
         assertEquals("testRDAPProfile - 1", "Joe User", jsCard.getName().getFull());
         assertTrue("testRDAPProfile - 2", jsCard.getKind().isIndividual());
-        assertEquals("testRDAPProfile - 3", 4, jsCard.getName().getComponents().length);
+        assertEquals("testRDAPProfile - 3", 2, jsCard.getName().getComponents().length);
         assertTrue("testRDAPProfile - 4", jsCard.getName().getComponents()[1].isGiven());
         assertEquals("testRDAPProfile - 5", "Joe", jsCard.getName().getGiven());
         assertTrue("testRDAPProfile - 6", jsCard.getName().getComponents()[0].isSurname());
         assertEquals("testRDAPProfile - 7", "User", jsCard.getName().getSurname());
-        assertTrue("testRDAPProfile - 8", jsCard.getName().getComponents()[2].isCredential());
-        assertEquals("testRDAPProfile - 9", "ing. jr", jsCard.getName().getComponents()[2].getValue());
-        assertTrue("testRDAPProfile - 10", jsCard.getName().getComponents()[3].isCredential());
-        assertEquals("testRDAPProfile - 11", "M.Sc.", jsCard.getName().getComponents()[3].getValue());
-        assertEquals("testRDAPProfile - 12", 2, jsCard.getPreferredLanguages().size());
-        assertEquals("testRDAPProfile - 13", 1, (int) jsCard.getPreferredLanguages().get("LANG-1").getPref());
-        assertEquals("testRDAPProfile - 14", 2, (int) jsCard.getPreferredLanguages().get("LANG-2").getPref());
-        assertEquals("testRDAPProfile - 13", "fr", jsCard.getPreferredLanguages().get("LANG-1").getLanguage());
-        assertEquals("testRDAPProfile - 14", "en", jsCard.getPreferredLanguages().get("LANG-2").getLanguage());
-        assertEquals("testRDAPProfile - 15", "Example", jsCard.getOrganizations().get("org").getName());
-        assertEquals("testRDAPProfile - 16", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
-        assertEquals("testRDAPProfile - 17", "Project Lead", jsCard.getTitles().get("TITLE-2").getName());
-        assertEquals("testRDAPProfile - 18", 1, jsCard.getAddresses().size());
-        assertEquals("testRDAPProfile - 19", "Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("addr").getFull());
-        assertEquals("testRDAPProfile - 20", "Suite 1234", jsCard.getAddresses().get("addr").getStreetExtendedAddress());
-        assertEquals("testRDAPProfile - 21", "4321 Rue Somewhere", jsCard.getAddresses().get("addr").getStreetAddress());
-        assertEquals("testRDAPProfile - 22", "Quebec", jsCard.getAddresses().get("addr").getLocality());
-        assertEquals("testRDAPProfile - 23", "QC", jsCard.getAddresses().get("addr").getRegion());
-        assertEquals("testRDAPProfile - 24", "Canada", jsCard.getAddresses().get("addr").getCountry());
-        assertEquals("testRDAPProfile - 25", "G1V 2M2", jsCard.getAddresses().get("addr").getPostcode());
-        assertEquals("testRDAPProfile - 26", "geo:46.772673,-71.282945", jsCard.getAddresses().get("addr").getCoordinates());
-        assertEquals("testRDAPProfile - 27", "Etc/GMT+5", jsCard.getAddresses().get("addr").getTimeZone());
-        assertEquals("testRDAPProfile - 29", 1, jsCard.getEmails().size());
-        assertTrue("testRDAPProfile - 30", jsCard.getEmails().get("email").asWork());
-        assertEquals("testRDAPProfile - 31", "joe.user@example.com", jsCard.getEmails().get("email").getAddress());
-        assertEquals("testRDAPProfile - 32", 2, jsCard.getPhones().size());
-        assertTrue("testRDAPProfile - 33", jsCard.getPhones().get("voice").asVoice());
-        assertEquals("testRDAPProfile - 34", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("voice").getNumber());
-        assertEquals("testRDAPProfile - 35", 1, (int) jsCard.getPhones().get("voice").getPref());
-        assertTrue("testRDAPProfile - 36", jsCard.getPhones().get("voice").asWork());
-        assertNull("testRDAPProfile - 37", jsCard.getPhones().get("voice").getLabel());
-        assertTrue("testRDAPProfile - 38", jsCard.getPhones().get("fax").asVoice());
-        assertEquals("testRDAPProfile - 39", "tel:+1-555-555-4321", jsCard.getPhones().get("fax").getNumber());
-        assertNull("testRDAPProfile - 40", jsCard.getPhones().get("fax").getPref());
-        assertTrue("testRDAPProfile - 41", jsCard.getPhones().get("fax").asWork());
-        assertTrue("testRDAPProfile - 42", jsCard.getPhones().get("fax").asMobile());
-        assertTrue("testRDAPProfile - 43", jsCard.getPhones().get("fax").asVideo());
-        assertTrue("testRDAPProfile - 44", jsCard.getPhones().get("fax").asText());
-        assertEquals("testRDAPProfile - 45", 1, jsCard.getCryptoKeys().size());
-        assertEquals("testRDAPProfile - 46", "http://www.example.com/joe.user/joe.asc", jsCard.getCryptoKeys().get("KEY-1").getUri());
-        assertNull("testRDAPProfile - 47", jsCard.getCryptoKeys().get("KEY-1").getPref());
-        assertTrue("testRDAPProfile - 48", jsCard.getCryptoKeys().get("KEY-1").asWork());
-        assertEquals("testRDAPProfile - 45", 1, jsCard.getLinks().size());
-        assertEquals("testRDAPProfile - 50", "http://example.org", jsCard.getLinks().get("url").getUri());
-        assertNull("testRDAPProfile - 51", jsCard.getLinks().get("url").getPref());
-        assertTrue("testRDAPProfile - 52", jsCard.getLinks().get("url").asPrivate());
-        assertTrue("testRDAPProfile - 53", jsCard.getLinks().get("url").isGenericLink());
-        assertTrue("testRDAPProfile - 54", StringUtils.isEmpty(jsCard.getUid()));
-
+        assertEquals("testRDAPProfile - 8", "Example", jsCard.getOrganizations().get("org").getName());
+        assertEquals("testRDAPProfile - 9", 1, jsCard.getAddresses().size());
+        assertEquals("testRDAPProfile - 10", "Suite 1234\n4321 Rue Somewhere\nQuebec\nQC\nG1V 2M2\nCanada", jsCard.getAddresses().get("addr").getFull());
+        assertEquals("testRDAPProfile - 11", "Suite 1234", jsCard.getAddresses().get("addr").getStreetExtendedAddress());
+        assertEquals("testRDAPProfile - 12", "4321 Rue Somewhere", jsCard.getAddresses().get("addr").getStreetAddress());
+        assertEquals("testRDAPProfile - 13", "Quebec", jsCard.getAddresses().get("addr").getLocality());
+        assertEquals("testRDAPProfile - 14", "QC", jsCard.getAddresses().get("addr").getRegion());
+        assertEquals("testRDAPProfile - 15", "Canada", jsCard.getAddresses().get("addr").getCountry());
+        assertEquals("testRDAPProfile - 16", "G1V 2M2", jsCard.getAddresses().get("addr").getPostcode());
+        assertEquals("testRDAPProfile - 17", 2, jsCard.getEmails().size());
+        assertEquals("testRDAPProfile - 18", "joe.user@example.com", jsCard.getEmails().get("email").getAddress());
+        assertEquals("testRDAPProfile - 19", "joe.user@example.net", jsCard.getEmails().get("email-1").getAddress());
+        assertEquals("testRDAPProfile - 20", 2, jsCard.getPhones().size());
+        assertTrue("testRDAPProfile - 21", jsCard.getPhones().get("voice").asVoice());
+        assertEquals("testRDAPProfile - 22", "tel:+1-555-555-1234;ext=102", jsCard.getPhones().get("voice").getNumber());
+        assertTrue("testRDAPProfile - 23", jsCard.getPhones().get("fax").asFax());
+        assertEquals("testRDAPProfile - 24", "tel:+1-555-555-4321", jsCard.getPhones().get("fax").getNumber());
+        assertEquals("testRDAPProfile - 25", 1, jsCard.getLinks().size());
+        assertEquals("testRDAPProfile - 26", "http://example.org", jsCard.getLinks().get("url").getUri());
+        assertTrue("testRDAPProfile - 27", jsCard.getLinks().get("url").isGenericLink());
+        assertTrue("testRDAPProfile - 28", StringUtils.isEmpty(jsCard.getUid()));
     }
 
 

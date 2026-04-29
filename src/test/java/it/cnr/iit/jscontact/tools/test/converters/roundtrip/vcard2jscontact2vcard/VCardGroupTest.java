@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -156,5 +157,30 @@ public class VCardGroupTest extends RoundtripTest {
 
     }
 
+
+    @Test
+    public void testVCardGroup5() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "KIND:group\n" +
+                "FN:Funky distribution list\n" +
+                "MEMBER;VALUE=uri:member1\n" +
+                "MEMBER:member2\n" +
+                "MEMBER:member3\n" +
+                "END:VCARD";
+
+        List<Card> jsCards = vCard2JSContact.convert(vcard);
+        assertEquals("testVCardGroup5 - 1", 1, jsCards.size());
+        Card jsCardGroup = jsCards.get(0);
+        assertTrue("testVCardGroup5 - 3", jsCardGroup.getKind().isGroup());
+        assertTrue("testVCardGroup5 - 4",StringUtils.isEmpty(jsCardGroup.getUid()));
+        assertEquals("testVCardGroup5 - 5", "Funky distribution list", jsCardGroup.getName().getFull());
+        assertEquals("testVCardGroup5 - 6", 3, jsCardGroup.getMembers().size());
+        assertSame("testVCardGroup5 - 7", jsCardGroup.getMembers().get("member1"), Boolean.TRUE);
+        assertSame("testVCardGroup5 - 8", jsCardGroup.getMembers().get("member2"), Boolean.TRUE);
+        assertSame("testVCardGroup5 - 9", jsCardGroup.getMembers().get("member3"), Boolean.TRUE);
+
+    }
 
 }

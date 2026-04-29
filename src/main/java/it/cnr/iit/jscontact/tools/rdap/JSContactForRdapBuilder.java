@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
 import it.cnr.iit.jscontact.tools.constraints.groups.Version_2_0;
 import it.cnr.iit.jscontact.tools.dto.*;
+import it.cnr.iit.jscontact.tools.dto.utils.ProfileUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.builders.PhoneFeaturesBuilder;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.converters.config.JSContactProfileIds;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
@@ -18,6 +20,13 @@ public class JSContactForRdapBuilder {
 
     private Card jsCard;
     private static final ObjectMapper mapper = new ObjectMapper();
+
+    private static final JSContactProfileIds rdapJSContactProfileIds = RdapJSContactProfileIds.getInstance();
+
+    private int countKeysByPrefix(Map map, String keyPrefix) {
+        if (map == null) return 0;
+        return (int) map.keySet().stream().filter(key -> ((String)key).startsWith(keyPrefix)).count();
+    }
 
     /**
      * Returns a JSContactForRdapBuilder object used to build a JSContact Card object.
@@ -96,7 +105,7 @@ public class JSContactForRdapBuilder {
      */
     public JSContactForRdapBuilder org(String org) {
         if (org == null) return this;
-        this.jsCard.addOrganization(JSContactForRdapMapId.ORG_ID.getValue(),Organization.builder().name(org).build());
+        this.jsCard.addOrganization(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.ORGANIZATION, 1),Organization.builder().name(org).build());
         return this;
     }
 
@@ -108,7 +117,7 @@ public class JSContactForRdapBuilder {
      */
     public JSContactForRdapBuilder email(String email) {
         if (email == null) return this;
-        this.jsCard.addEmailAddress(JSContactForRdapMapId.EMAIL_ID.getValue(), EmailAddress.builder().address(email).build());
+        this.jsCard.addEmailAddress(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.EMAIL,countKeysByPrefix(this.jsCard.getEmails(),JSContactForRdapMapId.EMAIL_ID.getValue()) +1), EmailAddress.builder().address(email).build());
         return this;
     }
 
@@ -120,7 +129,7 @@ public class JSContactForRdapBuilder {
      */
     public JSContactForRdapBuilder voice(String voice) {
         if (voice == null) return this;
-        this.jsCard.addPhone(JSContactForRdapMapId.VOICE_ID.getValue(), Phone.builder().number(voice).features(PhoneFeaturesBuilder.builder().voice().build()).build());
+        this.jsCard.addPhone(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.PHONE,countKeysByPrefix(this.jsCard.getPhones(),JSContactForRdapMapId.VOICE_ID.getValue()) +1, PhoneFeatureEnum.VOICE), Phone.builder().number(voice).features(PhoneFeaturesBuilder.builder().voice().build()).build());
         return this;
     }
 
@@ -132,7 +141,7 @@ public class JSContactForRdapBuilder {
      */
     public JSContactForRdapBuilder fax(String fax) {
         if (fax == null) return this;
-        this.jsCard.addPhone(JSContactForRdapMapId.FAX_ID.getValue(), Phone.builder().number(fax).features(PhoneFeaturesBuilder.builder().fax().build()).build());
+        this.jsCard.addPhone(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.PHONE,countKeysByPrefix(this.jsCard.getPhones(),JSContactForRdapMapId.FAX_ID.getValue()) +1, PhoneFeatureEnum.FAX), Phone.builder().number(fax).features(PhoneFeaturesBuilder.builder().voice().build()).build());
         return this;
     }
 
@@ -144,7 +153,7 @@ public class JSContactForRdapBuilder {
      */
     public JSContactForRdapBuilder url(String url) {
         if (url == null) return this;
-        this.jsCard.addLinkResource(JSContactForRdapMapId.URL_ID.getValue(), Link.builder().uri(url).build());
+        this.jsCard.addLinkResource(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.RESOURCE,countKeysByPrefix(this.jsCard.getLinks(),"url") +1, ResourceType.LINK), Link.builder().uri(url).build());
         return this;
     }
 
@@ -156,7 +165,7 @@ public class JSContactForRdapBuilder {
      */
     public JSContactForRdapBuilder contactUri(String contactUri) {
         if (contactUri == null) return this;
-        this.jsCard.addLinkResource(JSContactForRdapMapId.CONTACT_URI_ID.getValue(), Link.builder().uri(contactUri).build());
+        this.jsCard.addLinkResource(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.RESOURCE,countKeysByPrefix(this.jsCard.getLinks(),JSContactForRdapMapId.CONTACT_URI_ID.getValue()) +1, ResourceType.CONTACT), Link.builder().uri(contactUri).build());
         return this;
     }
 
@@ -168,7 +177,7 @@ public class JSContactForRdapBuilder {
      */
     public JSContactForRdapBuilder addr(Address address) {
         if (address == null) return this;
-        this.jsCard.addAddress(JSContactForRdapMapId.ADDRESS_ID.getValue(), address);
+        this.jsCard.addAddress(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.ADDRESS,countKeysByPrefix(this.jsCard.getAddresses(),JSContactForRdapMapId.ADDRESS_ID.getValue()) +1), address);
         return this;
     }
 
@@ -200,31 +209,68 @@ public class JSContactForRdapBuilder {
     }
 
     /**
-     * Sets an address localization as a JSContact Address object and returns this JSContactForRdapBuilder object updated.
+     * Sets a postal address localization and returns this JSContactForRdapBuilder object updated.
      *
      * @param language the localization language
-     * @param address the Address object in the given language to be assigned
+     * @param key the key of the address localization
+     * @param address the localization of the "addresses" map entry to localize
+     * @return this JSContactForRdapBuilder object updated
+     */
+    public JSContactForRdapBuilder addrLoc(String language, String key, Address address) {
+        if (language == null || address == null) return this;
+        JsonNode addressesLocalizations = this.jsCard.getLocalization(language,JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue());
+        Map<String, Address> addresses = null;
+        if (addressesLocalizations == null)
+            addresses = new HashMap<String, Address>();
+        else
+            addresses = mapper.convertValue(addressesLocalizations, Map.class);
+        addresses.put(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.ADDRESS,countKeysByPrefix(this.jsCard.getAddresses(),JSContactForRdapMapId.ADDRESS_ID.getValue())), address);
+        this.jsCard.addLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue(), mapper.convertValue(addresses, JsonNode.class));
+        return this;
+    }
+
+    /**
+     * Sets the localization of the primary postal address and returns this JSContactForRdapBuilder object updated.
+     *
+     * @param language the localization language
+     * @param address the localization of the primary postal address
      * @return this JSContactForRdapBuilder object updated
      */
     public JSContactForRdapBuilder addrLoc(String language, Address address) {
-        if (language == null || address == null) return this;
-        Map<String,Address> addresses =  new HashMap<String,Address>() {{ put(JSContactForRdapMapId.ADDRESS_ID.getValue(), address); }};
-        this.jsCard.addLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue(), mapper.convertValue(addresses, JsonNode.class));
-        return this;
+        return addrLoc(language, null, address);
     }
 
     /**
      * Sets an email address localization and returns this JSContactForRdapBuilder object updated.
      *
      * @param language the localization language
-     * @param email the email address in the given language to be assigned
+     * @param key the key of the email localization
+     * @param email the localization of the "emails" map entry to localize
+     * @return this JSContactForRdapBuilder object updated
+     */
+    public JSContactForRdapBuilder emailLoc(String language, String key, String email) {
+        if (language == null || email == null) return this;
+        JsonNode emailsLocalizations = this.jsCard.getLocalization(language,JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue());
+        Map<String, EmailAddress> emails = null;
+        if (emailsLocalizations == null)
+            emails = new HashMap<String, EmailAddress>();
+        else
+            emails = mapper.convertValue(emailsLocalizations, Map.class);
+        emails.put(rdapJSContactProfileIds.getMapId(JSContactProfileIds.IdType.EMAIL,countKeysByPrefix(this.jsCard.getEmails(),JSContactForRdapMapId.EMAIL_ID.getValue())), EmailAddress.builder().address(email).build());
+        this.jsCard.addLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue(), mapper.convertValue(emails, JsonNode.class));
+
+        return this;
+    }
+
+    /**
+     * Sets the localization of the primary email address and returns this JSContactForRdapBuilder object updated.
+     *
+     * @param language the localization language
+     * @param email the localization of the primary email address
      * @return this JSContactForRdapBuilder object updated
      */
     public JSContactForRdapBuilder emailLoc(String language, String email) {
-        if (language == null || email == null) return this;
-        Map<String,EmailAddress> emails =  new HashMap<String,EmailAddress>() {{ put(JSContactForRdapMapId.EMAIL_ID.getValue(), EmailAddress.builder().address(email).build()); }};
-        this.jsCard.addLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue(), mapper.convertValue(emails, JsonNode.class));
-        return this;
+        return emailLoc(language, null, email);
     }
 
     /**
@@ -242,9 +288,12 @@ public class JSContactForRdapBuilder {
             jsCard.getPhones() == null &&
             jsCard.getEmails() == null &&
             jsCard.getLinks() == null)
-            throw new MissingFieldException("At least one between name, organizations, addresses, phones, emails and links must be set in JSCard");
+            throw new MissingFieldException("At least one between name, organizations, addresses, phones, emails and links must be set in JSContact Card");
 
-        if (!jsCard.isValid(Version_2_0.class, Profile_RDAP.class))
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
+        boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
+        if (!isValid)
             throw new CardException(jsCard.getValidationMessage());
 
         return jsCard;

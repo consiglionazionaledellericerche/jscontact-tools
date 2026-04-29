@@ -13,21 +13,21 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.constraints.profiles.rdap;
+package it.cnr.iit.jscontact.tools.constraints.profiles;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.profiles.rdap.RdapProfileVersionValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.profiles.ProfilePropertiesValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {RdapProfileVersionValidator.class})
+@Constraint(validatedBy = {ProfilePropertiesValidator.class})
 @Documented
-public @interface RdapProfileVersionConstraint {
+public @interface ProfilePropertiesConstraint {
 
-    String message() default "invalid version value for rdap profile";
+    String message() default "invalid property for profile";
 
     Class<?>[] groups() default { };
 

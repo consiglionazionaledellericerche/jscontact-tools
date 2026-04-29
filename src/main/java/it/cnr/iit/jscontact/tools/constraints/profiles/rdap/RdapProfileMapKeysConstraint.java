@@ -27,7 +27,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface RdapProfileMapKeysConstraint {
 
-    String message() default "invalid map key for RDAP profile";
+    String message() default "invalid map key for rdap profile";
 
     Class<?>[] groups() default { };
 

@@ -76,7 +76,7 @@ public class Name extends AbstractJSContactType implements HasComponents, IsIANA
 
     String defaultSeparator;
 
-    @NotNull(message = "full is missing in Name for RDAP profile", groups={Profile_RDAP.class})
+    @NotNull(message = "full is missing in Name for rdap profile", groups={Profile_RDAP.class})
     String full;
 
     @JsonSerialize(using = NameSortAsSerializer.class)
