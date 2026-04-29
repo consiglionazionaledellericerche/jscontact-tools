@@ -28,8 +28,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.cnr.iit.jscontact.tools.constraints.*;
 import it.cnr.iit.jscontact.tools.constraints.groups.Version_1_0;
 import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
+import it.cnr.iit.jscontact.tools.constraints.profiles.ProfileEnumValuesConstraint;
 import it.cnr.iit.jscontact.tools.constraints.profiles.UnsupportedNestedPatchObjectKeysConstraint;
-import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileKindConstraint;
 import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileLanguageVsLocalizationsConstraint;
 import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileMapKeysConstraint;
 import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileVersionConstraint;
@@ -122,7 +122,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
      */
     @JsonDeserialize(using = CardKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = KindEnum.class, getMethod = "getKind")
-    @RdapProfileKindConstraint(groups = {Profile_RDAP.class})
+    @ProfileEnumValuesConstraint(groups = {Profile_RDAP.class})
     KindType kind;
 
     /**
@@ -192,7 +192,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Organization>")
-    @RdapProfileMapKeysConstraint(message = "missing key in organizations map for RDAP profile, at least org must be present", groups={Profile_RDAP.class})
+    @RdapProfileMapKeysConstraint(message = "missing key in organizations map for rdap profile, at least org must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Organization> organizations;
 
@@ -223,7 +223,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Email>")
-    @RdapProfileMapKeysConstraint(message = "missing key in emails map for RDAP profile, at least email must be present", groups={Profile_RDAP.class})
+    @RdapProfileMapKeysConstraint(message = "missing key in emails map for rdap profile, at least email must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, EmailAddress> emails;
 
@@ -244,7 +244,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Phone>")
-    @RdapProfileMapKeysConstraint(message = "missing key in phones map for RDAP profile, at least one between voice and fax must be present", groups={Profile_RDAP.class})
+    @RdapProfileMapKeysConstraint(message = "missing key in phones map for rdap profile, at least one between voice and fax must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String,Phone> phones;
 
@@ -293,7 +293,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Address>")
-    @RdapProfileMapKeysConstraint(message = "missing key in addresses map for RDAP profile, at least addr must be present", groups={Profile_RDAP.class})
+    @RdapProfileMapKeysConstraint(message = "missing key in addresses map for rdap profile, at least addr must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Address> addresses;
 
@@ -328,7 +328,7 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     @JsonPropertyOrder(alphabetic = true)
     @Valid
     @IdMapConstraint(message = "invalid Id in Map<Id,Link>")
-    @RdapProfileMapKeysConstraint(message = "missing key in links map for RDAP profile, at least one between url and contact-uri must be present", groups={Profile_RDAP.class})
+    @RdapProfileMapKeysConstraint(message = "missing key in links map for rdap profile, at least one between url and contact-uri must be present", groups={Profile_RDAP.class})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Map<String, Link> links;
 

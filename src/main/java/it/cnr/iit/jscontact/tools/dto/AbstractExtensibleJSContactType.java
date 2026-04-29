@@ -19,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.CaseInsensitiveExtensionNamesConstraint;
+import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
+import it.cnr.iit.jscontact.tools.constraints.profiles.ProfilePropertiesConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasContexts;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
@@ -42,6 +44,7 @@ import java.util.*;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@ProfilePropertiesConstraint(groups = {Profile_RDAP.class})
 public abstract class AbstractExtensibleJSContactType {
 
     private static final ObjectMapper mapper = new ObjectMapper();

@@ -47,7 +47,7 @@ public class OnlineServiceTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "SOCIALPROFILE;SERVICE-TYPE=Twitter;TYPE=home;PREF=1:https://twitter.com/ietf\n" +
+                "SOCIALPROFILE;SERVICE-TYPE=\"Twitter\";TYPE=home;PREF=1:https://twitter.com/ietf\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
@@ -64,7 +64,7 @@ public class OnlineServiceTest extends VCard2JSContactTest {
         String vcard = "BEGIN:VCARD\n" +
                 "VERSION:4.0\n" +
                 "FN:test\n" +
-                "SOCIALPROFILE;VALUE=text;SERVICE-TYPE=Twitter;TYPE=home;PREF=1:https://twitter.com/ietf\n" +
+                "SOCIALPROFILE;VALUE=text;SERVICE-TYPE=\"Twitter\";TYPE=home;PREF=1:https://twitter.com/ietf\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

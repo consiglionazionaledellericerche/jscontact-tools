@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>2.0.0</version>
+		  <version>2.1.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:2.0.0'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:2.1.0'
 ```
 
 # Features
@@ -151,7 +151,7 @@ Here in the following a method testing an unsuccessfully ended validation is sho
 
 Validation depends not only on versions but also on profiles as described in [draft-ietf-calext-jscontact-profiles](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-profiles/).
 Validation leverages the groups of javax.validation. 
-Currently, three groups are defined: two groups for the JSContact versions and one group for the RDAP profile.
+Currently, three groups are defined: two groups for the JSContact versions and one group for the "rdap" profile.
 Default JSContact version group for validation is 2.0 introduced by [draft-ietf-calext-jscontact-uid](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-uid/).
 Use `JSContact2VCardConfig.setVersionGroup` method or the `versionGroup` method of the JSContact2VCard builder, to set another version as the default version for validation.
 Note that the uid property is mandatory in version 1.0 but optional in version 2.0.
@@ -171,7 +171,7 @@ Note that the uid property is mandatory in version 1.0 but optional in version 2
 
 ```
 
-To validate a JSContact Card object against the RDAP profile, invoke the `isValid` methdod both Version_2_0 and Profile_RDAP group as input. 
+To validate a JSContact Card object against the "rdap" profile, invoke the `isValid` methdod both Version_2_0 and Profile_RDAP group as input. 
 
 ```
 
@@ -188,9 +188,11 @@ To validate a JSContact Card object against the RDAP profile, invoke the `isVali
                 "}";
 
         Card jsCard =  Card.toJSCard(json);
+        ProfileUtils.setProfileName(Profile_RDAP.class.getName());
         boolean isValid = jsCard.isValid(Version_2_0.class, Profile_RDAP.class);
+        ProfileUtils.unsetProfileName();
         assertFalse("testJSContactForRdapInvalid11 - 1",isValid);
-        assertEquals("testJSContactForRdapInvalid11 - 2", jsCard.getValidationMessage(), "missing key in organizations map for RDAP profile, at least org must be present");
+        assertEquals("testJSContactForRdapInvalid11 - 2", jsCard.getValidationMessage(), "missing key in organizations map for rdap profile, at least org must be present");
     }
 
 ```
@@ -321,7 +323,7 @@ The conversion is executed according to the following rules:
     - `setAutoMediaType = true`
     - `convertGenderToSpeakToAs = true`
     - `defaultLanguage = null`
-    - `idsProfileToUse = null`
+    - `profileIdsToUse = null`
 
 7. The sex information of the GENDER property can be mapped to the SpeakToAs object if GRAMGENDER is missing and
    if the `convertGenderToSpeakToAs` configuration value is set to true as in the following:
@@ -411,14 +413,14 @@ To do that, the following steps must be followed:
 
 1. set the `usePropIds` property of the `VCard2JSContactConfig` object to `false`
 
-2. create a `VCard2JSContactIdsProfile` object and assign the `idsProfileToUse` of `VCard2JSContactConfig` object property with it
+2. create a `VCard2JSContactProfileIds` object and assign the `profileIdsToUse` of `VCard2JSContactConfig` object property with it
 
 
 ### RDAP Conversion Profile from jCard to JSContact Card
 
 A pre-defined conversion profile to convert a jCard instance inside an RDAP response [RFC9083](https://datatracker.ietf.org/doc/rfc9083/) is available.
 The values of the map keys used in such profile are defined in [draft-ietf-regext-rdap-jscontact](https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-jscontact/).
-Additional setting rules are shown in the class RdapJSContactIdsProfile.
+Additional setting rules are shown in the class RdapProfileJSContactIds.
 
 <a name="jscontact-conversion"></a>
 ## JSContact Card Conversion

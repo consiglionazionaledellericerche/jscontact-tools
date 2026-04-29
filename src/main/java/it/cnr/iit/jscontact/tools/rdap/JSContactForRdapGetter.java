@@ -84,57 +84,125 @@ public class JSContactForRdapGetter {
     /**
      * Returns the email address of this JSContactForRdapGetter object if it is set, null otherwise
      *
-     * @return the email address
+     * @param key the key identifying the email address to return
+     * @return the email address identified by the key or the primary email address if key is null
+     */
+    public String email(String key) {
+        if (key == null) key = JSContactForRdapMapId.EMAIL_ID.getValue();
+        return (jsCard.getEmails()!=null && jsCard.getEmails().get(key)!=null) ? jsCard.getEmails().get(key).getAddress() : null;
+    }
+
+    /**
+     * Returns the primary email address of this JSContactForRdapGetter object if it is set, null otherwise
+     *
+     * @return the primary email address
      */
     public String email() {
-        return (jsCard.getEmails()!=null && jsCard.getEmails().get(JSContactForRdapMapId.EMAIL_ID.getValue())!=null) ? jsCard.getEmails().get(JSContactForRdapMapId.EMAIL_ID.getValue()).getAddress() : null;
+        return email(null);
     }
 
     /**
      * Returns the voice number of this JSContactForRdapGetter object if it is set, null otherwise
      *
-     * @return the voice number
+     * @param key the key identifying the voice number to return
+     * @return the voice number identified by the key or the primary voice number if key is null
+     */
+    public String voice(String key) {
+        if (key == null) key = JSContactForRdapMapId.VOICE_ID.getValue();
+        return (jsCard.getPhones()!=null && jsCard.getPhones().get(key)!=null) ? jsCard.getPhones().get(key).getNumber() : null;
+    }
+
+    /**
+     * Returns the primary voice number of this JSContactForRdapGetter object if it is set, null otherwise
+     *
+     * @return the primary voice number
      */
     public String voice() {
-        return (jsCard.getPhones()!=null && jsCard.getPhones().get(JSContactForRdapMapId.VOICE_ID.getValue())!=null) ? jsCard.getPhones().get(JSContactForRdapMapId.VOICE_ID.getValue()).getNumber() : null;
+        return voice(null);
     }
 
     /**
      * Returns the fax number of this JSContactForRdapGetter object if it is set, null otherwise
      *
-     * @return the fax number
+     * @param key the key identifying the fax number to return
+     * @return the fax number identified by the key or the primary fax number if key is null
+     */
+    public String fax(String key) {
+        if (key == null) key = JSContactForRdapMapId.FAX_ID.getValue();
+        return (jsCard.getPhones()!=null && jsCard.getPhones().get(key)!=null) ? jsCard.getPhones().get(key).getNumber() : null;
+    }
+
+    /**
+     * Returns the primary fax number of this JSContactForRdapGetter object if it is set, null otherwise
+     *
+     * @return the primary fax number
      */
     public String fax() {
-        return (jsCard.getPhones()!=null && jsCard.getPhones().get(JSContactForRdapMapId.FAX_ID.getValue())!=null) ? jsCard.getPhones().get(JSContactForRdapMapId.FAX_ID.getValue()).getNumber() : null;
+        return fax(null);
     }
 
     /**
      * Returns the url value of this JSContactForRdapGetter object if it is set, null otherwise
      *
-     * @return the url value
+     * @param key the key identifying the url to return
+     * @return the url identified by the key or the primary url if key is null
      */
-    public String url() {
-        return (jsCard.getLinks()!=null && jsCard.getLinks().get(JSContactForRdapMapId.URL_ID.getValue())!=null) ? jsCard.getLinks().get(JSContactForRdapMapId.URL_ID.getValue()).getUri() : null;
+    public String url(String key) {
+        if (key == null) key = JSContactForRdapMapId.URL_ID.getValue();
+        return (jsCard.getLinks()!=null && jsCard.getLinks().get(key)!=null) ? jsCard.getLinks().get(key).getUri() : null;
     }
 
 
     /**
+     * Returns the primary url value of this JSContactForRdapGetter object if it is set, null otherwise
+     *
+     * @return the primary url value
+     */
+    public String url() {
+        return url(null);
+    }
+
+    /**
      * Returns the contact uri value of this JSContactForRdapGetter object if it is set, null otherwise
      *
-     * @return the contact uri value
+     * @param key the key identifying the contact uri to return
+     * @return the contact uri identified by the key or the primary contact uri if key is null
+     */
+    public String contactUri(String key) {
+        if (key == null) key = JSContactForRdapMapId.CONTACT_URI_ID.getValue();
+        return (jsCard.getLinks()!=null && jsCard.getLinks().get(key)!=null) ? jsCard.getLinks().get(key).getUri() : null;
+    }
+
+    /**
+     * Returns the primary contact uri value of this JSContactForRdapGetter object if it is set, null otherwise
+     *
+     * @return the primary contact uri value
      */
     public String contactUri() {
-        return (jsCard.getLinks()!=null && jsCard.getLinks().get(JSContactForRdapMapId.CONTACT_URI_ID.getValue())!=null) ? jsCard.getLinks().get(JSContactForRdapMapId.CONTACT_URI_ID.getValue()).getUri() : null;
+        return contactUri(null);
     }
 
     /**
      * Returns the address as JSContact Address object of this JSContactForRdapGetter object
      *
-     * @return the address as JSContact Address object
+     * @param key the key identifying the address to return
+     * @return the address identified by the key or the primary address if key is null
+     */
+    public Address addr(String key) {
+        if (key == null) key = JSContactForRdapMapId.ADDRESS_ID.getValue();
+        return (jsCard.getAddresses()!=null) ? jsCard.getAddresses().get(key) : null;
+    }
+
+
+    /**
+     * Returns the primary address as JSContact Address object of this JSContactForRdapGetter object
+     *
+     * @return the primary address as JSContact Address object
      */
     public Address addr() {
-        return (jsCard.getAddresses()!=null) ? jsCard.getAddresses().get(JSContactForRdapMapId.ADDRESS_ID.getValue()) : null;
+        return addr(null);
     }
+
 
     /**
      * Returns a name localization as JSContact Name object of this JSContactForRdapGetter object
@@ -167,36 +235,61 @@ public class JSContactForRdapGetter {
         }
     }
 
+
     /**
      * Returns an address localization as JSContact Address object of this JSContactForRdapGetter object
      *
      * @param language the localization language
-     * @return the address localization as JSContact Address object if it is set, null otherwise
+     * @param key the key identifying the address localization to return
+     * @return the address localization identified by the key or the primary address if key is null, null otherwise
      * @throws InternalErrorException if the localization cannot be cast to a JSContact Address object
      */
-    public Address addrLoc(String language) throws InternalErrorException {
+    public Address addrLoc(String language, String key) throws InternalErrorException {
         try {
             JsonNode node = (jsCard.getLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue())!=null) ? jsCard.getLocalization(language, JSContactForRdapMapId.ADDRESS_LOCALIZATION_ID.getValue()) : null;
-            return (node!=null) ? mapper.treeToValue(node.get(JSContactForRdapMapId.ADDRESS_ID.getValue()),Address.class) : null;
+            return (node!=null) ? mapper.treeToValue(node.get((key == null) ? JSContactForRdapMapId.ADDRESS_ID.getValue() : key),Address.class) : null;
         } catch (JsonProcessingException e) {
             throw new InternalErrorException("Unable to cast localization to JSContact Address object");
         }
     }
 
     /**
+     * Returns the primary address localization as JSContact Address object of this JSContactForRdapGetter object
+     *
+     * @param language the localization language
+     * @return the primary address localization as JSContact Address object if it is set, null otherwise
+     * @throws InternalErrorException if the localization cannot be cast to a JSContact Address object
+     */
+    public Address addrLoc(String language) throws InternalErrorException {
+        return addrLoc(language, null);
+    }
+
+    /**
      * Returns an email address localization of this JSContactForRdapGetter object
      *
      * @param language the localization language
-     * @return the email address localization if it is set, null otherwise
+     * @param key the key identifying the email address localization to return
+     * @return the email address localization identified by the key or the primary email address if key is null, null otherwise
      * @throws InternalErrorException if the localization cannot be cast to a JSContact EmailAddress object
      */
-    public String emailLoc(String language) {
+    public String emailLoc(String language, String key) {
         try {
             JsonNode node = (jsCard.getLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue())!=null) ? jsCard.getLocalization(language, JSContactForRdapMapId.EMAIL_LOCALIZATION_ID.getValue()) : null;
-            return (node !=null) ? mapper.treeToValue(node.get(JSContactForRdapMapId.EMAIL_ID.getValue()), EmailAddress.class).getAddress() : null;
+            return (node !=null) ? mapper.treeToValue(node.get((key == null) ? JSContactForRdapMapId.EMAIL_ID.getValue() : key), EmailAddress.class).getAddress() : null;
         } catch (JsonProcessingException e) {
             throw new InternalErrorException("Unable to cast localization to JSContact Address object");
         }
+    }
+
+    /**
+     * Returns the primary email address localization of this JSContactForRdapGetter object
+     *
+     * @param language the localization language
+     * @return the primary email address localization if it is set, null otherwise
+     * @throws InternalErrorException if the localization cannot be cast to a JSContact EmailAddress object
+     */
+    public String emailLoc(String language) {
+        return emailLoc(language, null);
     }
 
 }

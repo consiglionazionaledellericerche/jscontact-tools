@@ -20,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
+import it.cnr.iit.jscontact.tools.constraints.profiles.ProfileEnumValuesConstraint;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.deserializers.LinkKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.HasKind;
@@ -50,6 +52,7 @@ public class Link extends Resource implements HasKind, HasOptionalKind {
 
     @JsonDeserialize(using = LinkKindDeserializer.class)
     @ContainsExtensibleEnum(enumClass = LinkEnum.class, getMethod = "getKind")
+    @ProfileEnumValuesConstraint(groups = {Profile_RDAP.class})
     LinkKind kind;
 
     @JsonIgnore

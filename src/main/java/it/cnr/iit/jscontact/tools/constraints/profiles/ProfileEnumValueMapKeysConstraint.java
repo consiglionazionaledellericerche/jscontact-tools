@@ -13,9 +13,9 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.constraints.profiles.rdap;
+package it.cnr.iit.jscontact.tools.constraints.profiles;
 
-import it.cnr.iit.jscontact.tools.constraints.validators.profiles.rdap.RdapProfileKindValidator;
+import it.cnr.iit.jscontact.tools.constraints.validators.profiles.ProfileEnumValueMapKeysValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -23,11 +23,11 @@ import java.lang.annotation.*;
 
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {RdapProfileKindValidator.class})
+@Constraint(validatedBy = {ProfileEnumValueMapKeysValidator.class})
 @Documented
-public @interface RdapProfileKindConstraint {
+public @interface ProfileEnumValueMapKeysConstraint {
 
-    String message() default "invalid kind value for RDAP profile";
+    String message() default "invalid enum value as map key for profile";
 
     Class<?>[] groups() default { };
 
