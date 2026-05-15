@@ -18,45 +18,23 @@ package it.cnr.iit.jscontact.tools.dto.serializers;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import it.cnr.iit.jscontact.tools.dto.VCardProp;
+import ezvcard.VCardDataType;
 import lombok.NoArgsConstructor;
-
 import java.io.IOException;
-import java.util.Map;
 
 /**
- * Custom JSON serializer for the VCardProp array.
+ * Custom JSON serializer for the VCardDataType value..
  *
  * @author Mario Loffredo
  */
 @NoArgsConstructor
-public class VCardPropsSerializer extends JsonSerializer<VCardProp[]> {
+public class VCardDataTypeSerializer extends JsonSerializer<VCardDataType> {
 
     @Override
     public void serialize(
-            VCardProp[] vCardProps, JsonGenerator jgen, SerializerProvider provider)
+            VCardDataType dataType, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-        if (vCardProps == null)
-            return;
-
-        if (vCardProps.length == 0)
-            return;
-
-        jgen.writeStartArray();
-        for (VCardProp vCardProp : vCardProps) {
-            jgen.writeStartArray();
-            jgen.writeString(vCardProp.getName().toString());
-            jgen.writeStartObject();
-            for(Map.Entry<String,Object> entry : vCardProp.getParameters().entrySet()) {
-                jgen.writeFieldName(entry.getKey().toLowerCase());
-                jgen.writeObject(entry.getValue());
-            }
-            jgen.writeEndObject();
-            jgen.writeString((vCardProp.getType() == null) ? "unknown" : vCardProp.getType().getName());
-            jgen.writeObject(vCardProp.getValue());
-            jgen.writeEndArray();
-        }
-        jgen.writeEndArray();
+            jgen.writeString(dataType.getName());
     }
 }

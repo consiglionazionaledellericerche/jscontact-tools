@@ -15,6 +15,7 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.jscontact2vcard2jscontact;
 
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -37,12 +38,18 @@ public class OnlineServiceTest extends RoundtripTest {
                 "\"onlineServices\": {"+
                     "\"OS-1\": {" +
                         "\"@type\":\"OnlineService\"," +
-                        "\"kind\": \"impp\", " +
                         "\"contexts\": {\"private\": true}," +
                         "\"pref\": 1, " +
-                        "\"user\": \"xmpp:alice@example.com\"" +
+                        "\"uri\": \"xmpp:alice@example.com\"" +
                     "}" +
-                 "}" +
+                "}," +
+                "\"vCard\": { " +
+                    "\"convertedProperties\": { " +
+                        "\"onlineServices/OS-1\": { " +
+                            "\"name\": \"impp\" " +
+                        "}" +
+                    "}" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         Card jscard2 = vCard2JSContact.convert(vcard).get(0);

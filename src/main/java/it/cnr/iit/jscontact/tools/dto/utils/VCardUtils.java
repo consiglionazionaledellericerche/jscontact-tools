@@ -56,28 +56,51 @@ public class VCardUtils {
     }
 
     /**
-     * Gets VCardProp "parameters" map corresponding to the Ezvcard VCardParameters object.
+     * Gets VCardUnconvertedProperty "parameters" map corresponding to the Ezvcard VCardParameters object.
      *
      * @param vCardParameters the Ezvcard VCardParameters object
-     * @return the VCardProp "parameters" map corresponding to the Ezvcard VCardParameters object
+     * @return the VCardUnconvertedProperty "parameters" map corresponding to the Ezvcard VCardParameters object
      */
-    public static Map<String,Object> getVCardPropParams(VCardParameters vCardParameters) {
+    public static Map<String,Object> getVCardUnconvertedPropParams(VCardParameters vCardParameters) {
 
-        Map<String,Object> vCardPropParameters = new HashMap<>();
+        Map<String,Object> vCardUnconvertedPropParameters = new HashMap<>();
         for(String parameterName : vCardParameters.keySet()) {
             switch(parameterName) {
                 case VCardParameters.PREF:
                 case VCardParameters.INDEX:
-                    vCardPropParameters.put(parameterName.toLowerCase(),Integer.parseInt(vCardParameters.get(parameterName).get(0)));
+                    vCardUnconvertedPropParameters.put(parameterName.toLowerCase(),Integer.parseInt(vCardParameters.get(parameterName).get(0)));
                     break;
                 default:
-                    vCardPropParameters.put(parameterName.toLowerCase(), Integer.parseInt(String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,vCardParameters.get(parameterName))));
+                    vCardUnconvertedPropParameters.put(parameterName.toLowerCase(), String.join(DelimiterUtils.COMMA_ARRAY_DELIMITER,vCardParameters.get(parameterName)));
                     break;
             }
         }
 
-        return vCardPropParameters;
+        return vCardUnconvertedPropParameters;
     }
+
+
+    /**
+     * Gets VCardConvertedProperty "parameters" map corresponding to the Ezvcard VCardParameters object.
+     *
+     * @param vCardParameters the Ezvcard VCardParameters object
+     * @return the VCardConvertedProperty "parameters" map corresponding to the Ezvcard VCardParameters object
+     */
+    public static Map<String,VCardParam> getVCardConvertedPropParams(VCardParameters vCardParameters) {
+
+        Map<String,VCardParam> vCardConvertedPropParameters = new HashMap<>();
+        for(String parameterName : vCardParameters.keySet()) {
+            List<String> parameterValues = vCardParameters.get(parameterName);
+            if (parameterValues.size() > 1)
+                vCardConvertedPropParameters.put(parameterName.toLowerCase(), VCardParam.builder().values(parameterValues.toArray(new String[0])).build());
+            else
+                vCardConvertedPropParameters.put(parameterName.toLowerCase(), VCardParam.builder().value(parameterValues.get(0)).build());
+        }
+
+        return vCardConvertedPropParameters;
+    }
+
+
 
     /**
      * Gets the list of the Ezvcard RawProperty objects of a VCard with a given property name.
@@ -141,10 +164,6 @@ public class VCardUtils {
                     property.addParameter(vCardParam.getKey().toUpperCase(),vCardParam.getValue().getValue());
             }
         }
-    }
-
-    public static void addVCardUnmatchedParams(VCardProperty property, AbstractJSContactType jsContactType) {
-        addVCardUnmatchedParams(property, jsContactType.getVCardParams());
     }
 
 }

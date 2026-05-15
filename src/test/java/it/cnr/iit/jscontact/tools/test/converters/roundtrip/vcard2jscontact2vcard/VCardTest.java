@@ -15,7 +15,6 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.roundtrip.vcard2jscontact2vcard;
 
-import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
@@ -41,7 +40,6 @@ public class VCardTest extends RoundtripTest {
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        System.out.println(Ezvcard.write(vcard2).go());
         assertEquals("testCompleteVCard1 - 1", vcard2, VCardParser.parse(vcard).get(0));
 
     }
@@ -54,7 +52,6 @@ public class VCardTest extends RoundtripTest {
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        System.out.println(Ezvcard.write(vcard2).go());
         assertEquals("testCompleteVCard2 - 1", vcard2, VCardParser.parse(vcard).get(0));
     }
 
@@ -66,7 +63,6 @@ public class VCardTest extends RoundtripTest {
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        System.out.println(Ezvcard.write(vcard2).go());
         assertEquals("testCompleteVCard1 - 3", vcard2, VCardParser.parse(vcard).get(0));
     }
 
@@ -79,7 +75,6 @@ public class VCardTest extends RoundtripTest {
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        System.out.println(Ezvcard.write(vcard2).go());
         assertEquals("testCompleteVCard1 - 4", vcard2, VCardParser.parse(vcard).get(0));
     }
 
@@ -91,7 +86,6 @@ public class VCardTest extends RoundtripTest {
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        System.out.println(Ezvcard.write(vcard2).go());
         assertEquals("testCompleteVCard5 - 1", vcard2, VCardParser.parse(vcard).get(0));
     }
 
@@ -104,7 +98,6 @@ public class VCardTest extends RoundtripTest {
         System.out.println(PrettyPrintSerializer.print(jsCard));
         VCard vcard2 = jsContact2VCard.convert(jsCard).get(0);
         pruneVCard(vcard2);
-        System.out.println(Ezvcard.write(vcard2).go());
         assertEquals("testCompleteVCard6 - 1", vcard2, VCardParser.parse(vcard).get(0));
     }
 

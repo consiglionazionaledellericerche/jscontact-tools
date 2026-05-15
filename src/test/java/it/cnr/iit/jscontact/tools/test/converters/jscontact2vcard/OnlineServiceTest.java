@@ -38,13 +38,19 @@ public class OnlineServiceTest extends JSContact2VCardTest {
                 "\"onlineServices\": {"+
                     "\"OS-1\": {" +
                         "\"@type\":\"OnlineService\"," +
-                        "\"vCardName\": \"impp\", " +
                         "\"contexts\": {\"private\": true}," +
                         "\"pref\": 1, " +
                         "\"uri\": \"xmpp:alice@example.com\"" +
                     "}" +
-                 "}" +
-                "}";
+                "}," +
+                "\"vCard\": { " +
+                    "\"convertedProperties\": { " +
+                        "\"onlineServices/OS-1\": { " +
+                            "\"name\": \"impp\" " +
+                        "}" +
+                    "}" +
+                "}" +
+            "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testOnlineService1 - 1", 1, vcard.getImpps().size());
         assertEquals("testOnlineService1 - 2", "xmpp:alice@example.com", vcard.getImpps().get(0).getUri().toString());

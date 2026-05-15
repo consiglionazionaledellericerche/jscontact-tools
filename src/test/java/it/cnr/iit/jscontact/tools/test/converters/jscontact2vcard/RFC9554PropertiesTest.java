@@ -256,25 +256,27 @@ public class RFC9554PropertiesTest extends JSContact2VCardTest {
     }
 
     @Test
-    public void testVCardProps() throws IOException, CardException {
+    public void testVCardUnconvertedProps() throws IOException, CardException {
 
         String jscard = "{" +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
                 "\"name\": { \"full\": \"test\"}," +
-                "\"vCardProps\": [ " +
-                    "[\"x-foo1\", {\"x-bar\":\"Hello\",\"group\":\"item1\"}, \"unknown\", \"World!\"], " +
-                    "[\"x-foo2\", {\"pref\": 1}, \"integer\", 100 ] " +
-                "]" +
+                "\"vCard\": { " +
+                    "\"properties\": [ " +
+                        "[\"x-foo1\", {\"x-bar\":\"Hello\",\"group\":\"item1\"}, \"unknown\", \"World!\"], " +
+                        "[\"x-foo2\", {\"pref\": 1}, \"integer\", 100 ] " +
+                    "]" +
+                "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testVCardProps - 1",2, vcard.getExtendedProperties().size());
-        assertEquals("testVCardProps - 2","World!", vcard.getExtendedProperty("X-FOO1").getValue());
-        assertEquals("testVCardProps - 3","Hello", vcard.getExtendedProperty("X-FOO1").getParameter("X-BAR"));
-        assertEquals("testVCardProps - 4","item1", vcard.getExtendedProperty("X-FOO1").getGroup());
-        assertEquals("testVCardProps - 5","100", vcard.getExtendedProperty("X-FOO2").getValue());
-        assertEquals("testVCardProps - 6","1", vcard.getExtendedProperty("X-FOO2").getParameter("PREF"));
-        assertEquals("testVCardProps - 7",VCardDataType.INTEGER, vcard.getExtendedProperty("X-FOO2").getDataType());
+        assertEquals("testVCardUnconvertedProps - 1",2, vcard.getExtendedProperties().size());
+        assertEquals("testVCardUnconvertedProps - 2","World!", vcard.getExtendedProperty("X-FOO1").getValue());
+        assertEquals("testVCardUnconvertedProps - 3","Hello", vcard.getExtendedProperty("X-FOO1").getParameter("X-BAR"));
+        assertEquals("testVCardUnconvertedProps - 4","item1", vcard.getExtendedProperty("X-FOO1").getGroup());
+        assertEquals("testVCardUnconvertedProps - 5","100", vcard.getExtendedProperty("X-FOO2").getValue());
+        assertEquals("testVCardUnconvertedProps - 6","1", vcard.getExtendedProperty("X-FOO2").getParameter("PREF"));
+        assertEquals("testVCardUnconvertedProps - 7",VCardDataType.INTEGER, vcard.getExtendedProperty("X-FOO2").getDataType());
 
     }
 

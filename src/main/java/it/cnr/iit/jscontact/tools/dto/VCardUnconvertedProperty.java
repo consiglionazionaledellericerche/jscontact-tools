@@ -9,18 +9,18 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * Class mapping the VCardProp type as defined in section 2.15.1 of [RFC9555].
+ * Class mapping the unconverted properties as defined in section 4.1.1 of [RFC9555bis].
  *
  * @author Mario Loffredo
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.15.1">Section 2.15.1 of RFC9555</a>
+ * @see <a href="https://www.ietf.org/archive/id/draft-stepanek-rfc9555bis-00.html#name-vcard">Section 4.1.1 of RFC9555bis</a>
  */
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class VCardProp {
+public class VCardUnconvertedProperty {
 
-    @NotNull(message = "name is missing in VCardProp")
+    @NotNull(message = "name is missing in VCardUnconvertedProperty")
     @NonNull
     V_Extension name;
 
@@ -29,7 +29,7 @@ public class VCardProp {
 
     VCardDataType type;
 
-    @NotNull(message = "value is missing in VCardProp")
+    @NotNull(message = "value is missing in VCardUnconvertedProperty")
     @NonNull
     Object value;
 

@@ -36,16 +36,13 @@ import it.cnr.iit.jscontact.tools.constraints.profiles.rdap.RdapProfileVersionCo
 import it.cnr.iit.jscontact.tools.constraints.validators.builder.ValidatorBuilder;
 import it.cnr.iit.jscontact.tools.dto.annotations.ContainsExtensibleEnum;
 import it.cnr.iit.jscontact.tools.dto.annotations.JSContactCollection;
-import it.cnr.iit.jscontact.tools.dto.deserializers.VCardPropsDeserializer;
 import it.cnr.iit.jscontact.tools.dto.deserializers.CardKindDeserializer;
 import it.cnr.iit.jscontact.tools.dto.interfaces.IsIANAType;
-import it.cnr.iit.jscontact.tools.dto.serializers.VCardPropsSerializer;
 import it.cnr.iit.jscontact.tools.dto.serializers.UTCDateTimeSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.JsonPointerUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.VersionUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -74,7 +71,7 @@ import java.util.*;
         "cryptoKeys", "directories", "links", "media",
         "localizations",
         "anniversaries", "keywords", "notes", "personalInfo",
-        "vCardProps"})
+        "vCard"})
 @TitleOrganizationConstraint
 @MembersVsCardKindValueConstraint
 @LocalizationsConstraint
@@ -399,12 +396,10 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
     /**
      * @see <a href="https://datatracker.ietf.org/doc/RFC9555#section-2.15.1">Section 2.15.1 of RFC9555</a>
      */
-    @JsonProperty("vCardProps")
-    @JsonSerialize(using = VCardPropsSerializer.class)
-    @JsonDeserialize(using = VCardPropsDeserializer.class)
+    @JsonProperty("vCard")
     @Valid
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    VCardProp[] vCardProps;
+    VCardData vCard;
 
     @JsonIgnore
     Map<String,TimeZone> customTimeZones;
@@ -937,37 +932,34 @@ public class Card extends AbstractExtensibleJSContactType implements IsIANAType,
         return mapper.writeValueAsString(jsCards);
     }
 
-    /**
-     * Adds a VCardProp object to this object.
-     *
-     * @param o the VCardProp object
-     */
-    public void addVCardProp(VCardProp o) {
 
-        vCardProps = ArrayUtils.add(vCardProps, o);
+    /**
+     * Adds a VCardProperty object to this object.
+     *
+     * @param path the converted property path
+     * @param o the VCardProperty object
+     */
+    public void addVCardConvertedProp(String path, VCardProperty o) {
+
+        if (vCard == null)
+            vCard = VCardData.builder().build();
+
+        vCard.addConvertedProperty(path, o);
     }
 
 
     /**
-     * Convert the vCardProps array into a map
-     * where the keys are the extnsion names and
-     * the values are the extension values in text format
+     * Adds a VCardUnconvertedProperty object to this object.
      *
-     * @return vCardProps array converted into a map
+     * @param o the VCardUnconvertedProperty object
      */
-    @JsonIgnore
-    public Map<String,String> getVCardPropsAsMap() {
+    public void addVCardUnconvertedProp(VCardUnconvertedProperty o) {
 
-        Map<String,String> map = new HashMap<>();
-        if (this.getVCardProps() == null)
-            return map;
+        if (vCard == null)
+            vCard = VCardData.builder().build();
 
-        for (VCardProp jCardExtension : this.getVCardProps())
-            map.put(jCardExtension.getName().toString(),jCardExtension.getValue().toString());
-
-        return map;
+        vCard.addUnconvertedProperty(o);
     }
-
 
     /**
          * Tests if a JSContact Card is valid.

@@ -45,10 +45,17 @@ public class PropertyGroupTest extends JSContact2VCardTest {
                             "{\"kind\":\"country\",\"value\":\"USA\"}," +
                             "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
                         "]," +
-                        "\"countryCode\":\"US\"," +
-                        "\"vCardParams\" : { " +
-                            "\"group\" : \"CONTACT\"" +
-                       "}" +
+                        "\"countryCode\":\"US\"" +
+                    "}" +
+                "}, " +
+                "\"vCard\": { " +
+                    "\"convertedProperties\": { " +
+                        "\"addresses/ADR-1\": { " +
+                            "\"name\": \"adr\", " +
+                            "\"parameters\": { " +
+                               "\"group\" : \"CONTACT\"" +
+                            "}" +
+                        "}" +
                     "}" +
                 "}" +
                 "}";

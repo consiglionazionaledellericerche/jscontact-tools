@@ -137,7 +137,6 @@ public class JSContactProfileIds {
     @Singular(ignoreNullCollections = true)
     List<JSContactId> ids;
 
-
     private List<String> getJSContactProfileIds(JSContactProfileIds.IdType idType, Object... args) {
 
         List<String> ids = new ArrayList<>();
@@ -181,6 +180,16 @@ public class JSContactProfileIds {
 
         List<String> ids = (idType == JSContactProfileIds.IdType.RESOURCE || idType == JSContactProfileIds.IdType.PERSONAL_INFO || idType == JSContactProfileIds.IdType.PHONE) ? getJSContactProfileIds(idType,args[0]) : getJSContactProfileIds(idType);
         return ids.get(index-1);
+    }
+
+    public boolean isPhoneFeatureSpecific() {
+
+        for (JSContactId id : ids) {
+            if (id.getId() instanceof PhoneId)
+                return true;
+        }
+
+        return false;
     }
 
 }

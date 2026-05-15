@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cnr.iit.jscontact.tools.constraints.CaseInsensitiveExtensionNamesConstraint;
 import it.cnr.iit.jscontact.tools.constraints.groups.profiles.Profile_RDAP;
@@ -40,7 +41,7 @@ import java.util.*;
  * @author Mario Loffredo
  */
 @CaseInsensitiveExtensionNamesConstraint
-@ToString
+@Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,6 +51,35 @@ public abstract class AbstractExtensibleJSContactType {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     Map<String,Object> extensions;
+
+    @JsonIgnore
+    String vCardPropNameOfUnconvertedParams;
+
+    @JsonIgnore
+    Map<String, VCardParam> vCardUnconvertedParams;
+
+    public void buildAllVCardUnconvertedParmsOfConvertedPropertiesMap(Map<String,VCardProperty> map, String jsonPointer) {
+
+        if (vCardUnconvertedParams != null) {
+                map.put(jsonPointer,
+                        VCardProperty.builder()
+                                .name(vCardPropNameOfUnconvertedParams)
+                                .parameters(vCardUnconvertedParams)
+                                .build());
+        }
+
+        for (Field field : this.getClass().getDeclaredFields()) {
+            if (Map.class.isAssignableFrom(field.getType())) {
+                try {
+                    Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
+                    if (submap != null) {
+                        for (Map.Entry<String, AbstractExtensibleJSContactType> entry : submap.entrySet())
+                            entry.getValue().buildAllVCardUnconvertedParmsOfConvertedPropertiesMap(map, String.format("%s%s/%s", jsonPointer, getSafeJsonPointerFieldName(field.getName()), entry.getKey()));
+                    }
+                } catch (Exception e) { }
+            }
+        }
+    }
 
     @JsonAnyGetter
     public Map<String, Object> getExtensions() {
@@ -79,7 +109,7 @@ public abstract class AbstractExtensibleJSContactType {
     }
 
 
-    private String getSafeJsonPointerFieldName(String fieldName) {
+    protected String getSafeJsonPointerFieldName(String fieldName) {
 
         return fieldName.replaceAll(DelimiterUtils.SLASH_DELIMITER,DelimiterUtils.SLASH_DELIMITER_IN_JSON_POINTER);
 

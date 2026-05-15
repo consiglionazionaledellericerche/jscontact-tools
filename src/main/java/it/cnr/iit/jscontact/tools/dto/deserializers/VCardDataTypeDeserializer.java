@@ -13,34 +13,33 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package it.cnr.iit.jscontact.tools.dto;
+package it.cnr.iit.jscontact.tools.dto.deserializers;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
 import ezvcard.VCardDataType;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Field;
-import java.util.Map;
+import java.io.IOException;
 
 /**
- * Abstract class mapping the vCard counterparts of JSContact extensions  as defined in section 2.15 of [RFC9555].
- * The class contains two other properties shared by all JSContact types.
+ * Custom JSON deserializer for the VCardDataType value.
  *
- * @see <a href="https://datatracker.ietf.org/doc/RFC9553#section-2.15">Section 2.15 of RFC9555</a>
  * @author Mario Loffredo
  */
+public class VCardDataTypeDeserializer extends JsonDeserializer<VCardDataType> {
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@SuperBuilder
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public abstract class AbstractJSContactType extends AbstractExtensibleJSContactType {
-
-    @JsonIgnore
-    String jsid;
-
+    @Override
+    public VCardDataType deserialize(JsonParser jp, DeserializationContext ctxt)
+            throws IOException {
+        JsonNode node = jp.getCodec().readTree(jp);
+        String value = node.asText();
+        try {
+            return VCardDataType.get(value);
+        } catch (Exception e) {
+            return VCardDataType.get("unknown");
+        }
+    }
 }

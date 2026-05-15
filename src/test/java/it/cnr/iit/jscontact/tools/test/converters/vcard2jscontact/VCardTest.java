@@ -82,10 +82,10 @@ public class VCardTest extends VCard2JSContactTest {
         assertNotNull("testExtendedVCard1 - 1", jsCard);
         assertTrue("testExtendedVCard1 - 2", StringUtils.isEmpty(jsCard.getUid()));
         assertEquals("testExtendedVCard1 - 3", "test", jsCard.getName().getFull());
-        assertEquals("testExtendedJCard1 - 4", 2, jsCard.getVCardProps().length); //including VERSION
-        assertEquals("testExtendedJCard1 - 5", "myext", jsCard.getVCardProps()[1].getName().toString());
-        assertNull("testExtendedJCard1 - 6", jsCard.getVCardProps()[1].getType());
-        assertEquals("testExtendedJCard1 - 7", "extvalue", jsCard.getVCardProps()[1].getValue());
+        assertEquals("testExtendedJCard1 - 4", 2, jsCard.getVCard().getProperties().length); //including VERSION
+        assertEquals("testExtendedJCard1 - 5", "myext", jsCard.getVCard().getProperties()[1].getName().toString());
+        assertNull("testExtendedJCard1 - 6", jsCard.getVCard().getProperties()[1].getType());
+        assertEquals("testExtendedJCard1 - 7", "extvalue", jsCard.getVCard().getProperties()[1].getValue());
     }
 
 
@@ -101,13 +101,13 @@ public class VCardTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testExtendedVCard2 - 1", jsCard);
-        assertEquals("testExtendedJCard2 - 2", 2, jsCard.getVCardProps().length); //including VERSION
-        assertEquals("testExtendedJCard2 - 3", "x-foo", jsCard.getVCardProps()[1].getName().toString());
-        assertNull("testExtendedJCard2 - 4", jsCard.getVCardProps()[1].getType());
-        assertEquals("testExtendedJCard2 - 5", 2, jsCard.getVCardProps()[1].getParameters().size());
-        assertEquals("testExtendedJCard2 - 6", 1, jsCard.getVCardProps()[1].getParameters().get(VCardParamEnum.PREF.getValue().toLowerCase()));
-        assertEquals("testExtendedJCard2 - 7", "item2", jsCard.getVCardProps()[1].getParameters().get(VCardParamEnum.GROUP.getValue().toLowerCase()));
-        assertEquals("testExtendedJCard2 - 8", "bar", jsCard.getVCardProps()[1].getValue().toString());
+        assertEquals("testExtendedJCard2 - 2", 2, jsCard.getVCard().getProperties().length); //including VERSION
+        assertEquals("testExtendedJCard2 - 3", "x-foo", jsCard.getVCard().getProperties()[1].getName().toString());
+        assertNull("testExtendedJCard2 - 4", jsCard.getVCard().getProperties()[1].getType());
+        assertEquals("testExtendedJCard2 - 5", 2, jsCard.getVCard().getProperties()[1].getParameters().size());
+        assertEquals("testExtendedJCard2 - 6", 1, jsCard.getVCard().getProperties()[1].getParameters().get(VCardParamEnum.PREF.getValue().toLowerCase()));
+        assertEquals("testExtendedJCard2 - 7", "item2", jsCard.getVCard().getProperties()[1].getParameters().get(VCardParamEnum.GROUP.getValue().toLowerCase()));
+        assertEquals("testExtendedJCard2 - 8", "bar", jsCard.getVCard().getProperties()[1].getValue().toString());
     }
 
     @Test
@@ -327,11 +327,11 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard5 - 42", 1, jsCard.getEmails().size());
         assertEquals("testCompleteVCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteVCard5 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
-        assertEquals("testCompleteVCard5 - 45", 2, jsCard.getVCardProps().length); //including VERSION
-        assertEquals("testCompleteVCard5 - 46", "x-qq", jsCard.getVCardProps()[1].getName().toString());
-        assertEquals("testCompleteVCard5 - 47", 0, jsCard.getVCardProps()[1].getParameters().size());
-        assertNull("testCompleteVCard5 - 48",  jsCard.getVCardProps()[1].getType());
-        assertEquals("testCompleteVCard5 - 49", "21588891", jsCard.getVCardProps()[1].getValue());
+        assertEquals("testCompleteVCard5 - 45", 2, jsCard.getVCard().getProperties().length); //including VERSION
+        assertEquals("testCompleteVCard5 - 46", "x-qq", jsCard.getVCard().getProperties()[1].getName().toString());
+        assertEquals("testCompleteVCard5 - 47", 0, jsCard.getVCard().getProperties()[1].getParameters().size());
+        assertNull("testCompleteVCard5 - 48",  jsCard.getVCard().getProperties()[1].getType());
+        assertEquals("testCompleteVCard5 - 49", "21588891", jsCard.getVCard().getProperties()[1].getValue());
         assertTrue("testCompleteVCard5 - 50", StringUtils.isEmpty(jsCard.getUid()));
     }
 
@@ -481,29 +481,29 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 171", "CustomState", jsCard.getAddresses().get("ADR-4").getRegion());
         assertEquals("testCompleteVCard6 - 172", "CustomCountry", jsCard.getAddresses().get("ADR-4").getCountry());
         assertEquals("testCompleteVCard6 - 173", "CustomPostal", jsCard.getAddresses().get("ADR-4").getPostcode());
-        assertEquals("testCompleteVCard6 - 174", 23, jsCard.getVCardPropsAsMap().size()); //including VERSION
-        assertEquals("testCompleteVCard6 - 176", "male", jsCard.getVCardPropsAsMap().get("X-GENDER".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 177", "14f9aba0c9422da9ae376fe28bd89c2a.0", jsCard.getVCardPropsAsMap().get("X-ID".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 178", "fffffea9056d8166e2b7a427977e570c87dd51279d11d9b137c593eb", jsCard.getVCardPropsAsMap().get("X-ETAG".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 179", "579c773f-736d-11e6-8dff-0ac8448704fb", jsCard.getVCardPropsAsMap().get("X-FC-TAGS".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 180", "8ad23200aa3e1984736b11e688dc0add41994b95", jsCard.getVCardPropsAsMap().get("X-FC-LIST-ID".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 181", "Mother", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4D6F74686572".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 182", "Father", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A466174686572".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 183", "Parent", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A506172656E74".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 184", "Brother", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A42726F74686572".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 185", "Sister", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A536973746572".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 186", "Child", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4368696C64".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 187", "Friend", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A467269656E64".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 188", "Spouse", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A53706F757365".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 189", "Fiance", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4669616E63C3A9".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 190", "Partner", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A506172746E6572".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 191", "Assistant", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A417373697374616E74".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 192", "Manager", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4D616E61676572".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 193", "Other", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4F74686572".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 194", "Custom", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A437573746F6D54595045".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 195", "2016-08-02", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D4F7468657244617465733A416E6E6976657273617279".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 196", "2016-08-03", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D4F7468657244617465733A4F74686572".toLowerCase()));
-        assertEquals("testCompleteVCard6 - 197", "2016-08-04", jsCard.getVCardPropsAsMap().get("X-FCENCODED-582D46432D4F7468657244617465733A437573746F6D54595045".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 174", 23, jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().size()); //including VERSION
+        assertEquals("testCompleteVCard6 - 176", "male", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-GENDER".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 177", "14f9aba0c9422da9ae376fe28bd89c2a.0", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-ID".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 178", "fffffea9056d8166e2b7a427977e570c87dd51279d11d9b137c593eb", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-ETAG".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 179", "579c773f-736d-11e6-8dff-0ac8448704fb", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FC-TAGS".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 180", "8ad23200aa3e1984736b11e688dc0add41994b95", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FC-LIST-ID".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 181", "Mother", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4D6F74686572".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 182", "Father", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A466174686572".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 183", "Parent", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A506172656E74".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 184", "Brother", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A42726F74686572".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 185", "Sister", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A536973746572".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 186", "Child", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4368696C64".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 187", "Friend", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A467269656E64".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 188", "Spouse", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A53706F757365".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 189", "Fiance", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4669616E63C3A9".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 190", "Partner", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A506172746E6572".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 191", "Assistant", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A417373697374616E74".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 192", "Manager", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4D616E61676572".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 193", "Other", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A4F74686572".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 194", "Custom", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D52656C617465644E616D65733A437573746F6D54595045".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 195", "2016-08-02", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D4F7468657244617465733A416E6E6976657273617279".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 196", "2016-08-03", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D4F7468657244617465733A4F74686572".toLowerCase()));
+        assertEquals("testCompleteVCard6 - 197", "2016-08-04", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-FCENCODED-582D46432D4F7468657244617465733A437573746F6D54595045".toLowerCase()));
 
     }
 

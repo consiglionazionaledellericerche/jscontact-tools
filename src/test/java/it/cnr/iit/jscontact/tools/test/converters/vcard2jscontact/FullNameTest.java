@@ -102,7 +102,7 @@ public class FullNameTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testFullName4 - 1", "Jane Doe", jsCard.getName().getFull());
-        assertEquals("testFullName4 - 2", VCardPropEnum.FN.getValue(), jsCard.getVCardProps()[0].getName().toString().toUpperCase());
-        assertEquals("testFullName4 - 3", "Jane", jsCard.getVCardProps()[0].getValue());
+        assertEquals("testFullName4 - 2", VCardPropEnum.FN.getValue(), jsCard.getVCard().getProperties()[0].getName().toString().toUpperCase());
+        assertEquals("testFullName4 - 3", "Jane", jsCard.getVCard().getProperties()[0].getValue());
     }
 }

@@ -147,7 +147,7 @@ public class FullNameTest extends JSContact2VCardTest {
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
                 "\"name\": { \"full\":\"Jane Doe\"}," +
-                 "\"vCardProps\" : [ [ \"fn\", { }, \"text\", \"Jane\" ], [ \"version\", { }, \"text\", \"4.0\" ] ]" +
+                 "\"vCard\":{ \"@type\":\"VCard\",\"properties\": [ [ \"fn\", { }, \"text\", \"Jane\" ], [ \"version\", { }, \"text\", \"4.0\" ] ] }" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testFullName4 - 1", 2, vcard.getFormattedNames().size());
