@@ -17,12 +17,8 @@ package it.cnr.iit.jscontact.tools.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import ezvcard.VCardDataType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.lang.reflect.Field;
-import java.util.Map;
 
 /**
  * Abstract class mapping the vCard counterparts of JSContact extensions  as defined in section 2.15 of [RFC9555].

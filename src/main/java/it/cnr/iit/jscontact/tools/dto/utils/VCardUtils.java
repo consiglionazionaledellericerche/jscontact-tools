@@ -4,7 +4,6 @@ import ezvcard.VCard;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.RawProperty;
 import ezvcard.property.VCardProperty;
-import it.cnr.iit.jscontact.tools.dto.AbstractJSContactType;
 import it.cnr.iit.jscontact.tools.dto.VCardParam;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 

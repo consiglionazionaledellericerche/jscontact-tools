@@ -24,7 +24,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -40,9 +39,7 @@ public class NameSortAsDeserializer extends JsonDeserializer<Map<NameComponentKi
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         Map<NameComponentKind, String> sortAs = new HashMap<>();
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
-        while (iter.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iter.next();
+        for (Map.Entry<String, JsonNode> entry : node.properties()) {
             NameComponentKind nct;
             try {
                 nct = NameComponentKind.builder().rfcValue(NameComponentEnum.getEnum(entry.getKey())).build();
