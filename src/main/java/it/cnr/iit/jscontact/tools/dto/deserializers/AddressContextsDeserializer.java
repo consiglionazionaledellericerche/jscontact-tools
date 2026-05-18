@@ -42,9 +42,7 @@ public class AddressContextsDeserializer extends JsonDeserializer<Map<AddressCon
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         Map<AddressContext,Boolean> contexts = new HashMap<>();
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
-        while (iter.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iter.next();
+        for (Map.Entry<String, JsonNode> entry : node.properties()) {
             AddressContext context;
             try {
                 context = AddressContext.builder().rfcValue(AddressContextEnum.getEnum(entry.getKey())).build();

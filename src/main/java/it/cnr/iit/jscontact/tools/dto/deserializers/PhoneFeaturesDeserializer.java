@@ -42,9 +42,7 @@ public class PhoneFeaturesDeserializer extends JsonDeserializer<Map<PhoneFeature
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         Map<PhoneFeature,Boolean> contexts = new HashMap<>();
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
-        while (iter.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iter.next();
+        for (Map.Entry<String, JsonNode> entry : node.properties()) {
             String type = entry.getKey();
             Boolean value = entry.getValue().asBoolean();
             PhoneFeature feature;

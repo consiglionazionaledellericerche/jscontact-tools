@@ -42,9 +42,7 @@ public class RelationDeserializer extends JsonDeserializer<Map<RelationType,Bool
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         Map<RelationType,Boolean> relation = new HashMap<>();
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
-        while (iter.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iter.next();
+        for (Map.Entry<String, JsonNode> entry : node.properties()) {
             String type = entry.getKey();
             Boolean value = entry.getValue().asBoolean();
             RelationType relationType;

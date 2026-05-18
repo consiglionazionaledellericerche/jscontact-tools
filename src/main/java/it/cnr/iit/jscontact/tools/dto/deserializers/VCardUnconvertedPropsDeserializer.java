@@ -42,11 +42,9 @@ public class VCardUnconvertedPropsDeserializer extends JsonDeserializer<VCardUnc
         if (node == null || !node.isObject())
             return parameters;
 
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
-        while (iter.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iter.next();
+        for (Map.Entry<String, JsonNode> entry : node.properties())
             parameters.put(entry.getKey(),JsonNodeUtils.toObject(entry.getValue()));
-        }
+
         return parameters;
     }
 
@@ -61,7 +59,7 @@ public class VCardUnconvertedPropsDeserializer extends JsonDeserializer<VCardUnc
         for (JsonNode subnode : node) {
             if (subnode == null || !subnode.isArray())
                 return null;
-            Map<String,String> parameters = new HashMap<>();
+
             list.add(VCardUnconvertedProperty.builder()
                               .name(V_Extension.toV_Extension(subnode.get(0).asText()))
                               .parameters(getParameters(subnode.get(1)))

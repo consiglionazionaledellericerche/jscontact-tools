@@ -44,9 +44,7 @@ public class VCardParamsDeserializer extends JsonDeserializer<Map<String, VCardP
             throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         Map<String, VCardParam> vCardParams = new HashMap<>();
-        Iterator<Map.Entry<String, JsonNode>> iter = node.fields();
-        while (iter.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iter.next();
+        for (Map.Entry<String, JsonNode> entry : node.properties()) {
             String paramName = entry.getKey();
             VCardParam vCardParam;
             if (entry.getValue().isArray()) {
