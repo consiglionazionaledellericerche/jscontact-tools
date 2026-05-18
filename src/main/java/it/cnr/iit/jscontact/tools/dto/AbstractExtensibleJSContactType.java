@@ -69,14 +69,32 @@ public abstract class AbstractExtensibleJSContactType {
         }
 
         for (Field field : this.getClass().getDeclaredFields()) {
-            if (Map.class.isAssignableFrom(field.getType())) {
+            if (field.getName().equals("mapper") ||
+                    field.getName().equals("vCardUnconvertedParams") ||
+                    VCardData.class.isAssignableFrom(field.getType()) ||
+                    List.class.isAssignableFrom(field.getType()) ||
+                    String.class.isAssignableFrom(field.getType()))
+                continue;
+            else if (Map.class.isAssignableFrom(field.getType())) {
                 try {
                     Map<String, AbstractExtensibleJSContactType> submap = (Map<String, AbstractExtensibleJSContactType>) field.get(this);
                     if (submap != null) {
                         for (Map.Entry<String, AbstractExtensibleJSContactType> entry : submap.entrySet())
                             entry.getValue().buildAllVCardUnconvertedParmsOfConvertedPropertiesMap(map, String.format("%s%s/%s", jsonPointer, getSafeJsonPointerFieldName(field.getName()), entry.getKey()));
                     }
-                } catch (Exception e) { }
+                } catch (Exception e) {
+                }
+            } else if (field.getType().isArray() || field.getType().isPrimitive())
+                continue;
+            else {
+                try {
+                    if (field.get(this) != null && field.get(this) instanceof AbstractExtensibleJSContactType) {
+                        AbstractExtensibleJSContactType o = ((AbstractExtensibleJSContactType) field.get(this));
+                        o.buildAllVCardUnconvertedParmsOfConvertedPropertiesMap(map, String.format("%s%s/", jsonPointer, getSafeJsonPointerFieldName(field.getName())));
+                    }
+                } catch (Exception e) {
+                    throw new InternalErrorException(String.format("Internal Error: buildAllVCardUnconvertedParmsOfConvertedPropertiesMap - field=%s message=%s",field.getName(), e.getMessage()));
+                }
             }
         }
     }

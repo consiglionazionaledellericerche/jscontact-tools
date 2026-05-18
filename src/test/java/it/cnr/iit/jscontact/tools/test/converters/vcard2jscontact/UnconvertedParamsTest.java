@@ -16,6 +16,7 @@
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
+import it.cnr.iit.jscontact.tools.dto.GrammaticalGenderType;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -481,7 +482,7 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertTrue("testImppUnconvertedParams - 3",jsCard.getOnlineServices().get("OS-1").asPrivate());
         assertEquals("testImppUnconvertedParams - 4", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
         assertEquals("testImppUnconvertedParams - 5", "1",jsCard.getVCard().getConvertedProperties().get("onlineServices/OS-1").getParameters().get("pid").getValue());
-        assertEquals("testImppUnconvertedParams - 6",jsCard.getVCard().getConvertedProperties().get("onlineServices/OS-1").getName(), "impp");
+        assertEquals("testImppUnconvertedParams - 6", "impp", jsCard.getVCard().getConvertedProperties().get("onlineServices/OS-1").getName());
     }
 
     @Test
@@ -500,7 +501,7 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testSocialProfileUnconvertedParams - 4", 1, (int) jsCard.getOnlineServices().get("OS-1").getPref());
         assertEquals("testSocialProfileUnconvertedParams - 5", "Twitter", jsCard.getOnlineServices().get("OS-1").getService());
         assertEquals("testSocialProfileUnconvertedParams - 6", "1",jsCard.getVCard().getConvertedProperties().get("onlineServices/OS-1").getParameters().get("pid").getValue());
-        assertEquals("testSocialProfileUnconvertedParams - 7",jsCard.getVCard().getConvertedProperties().get("onlineServices/OS-1").getName(), "socialprofile");
+        assertEquals("testSocialProfileUnconvertedParams - 7", "socialprofile",jsCard.getVCard().getConvertedProperties().get("onlineServices/OS-1").getName());
     }
 
     @Test
@@ -514,9 +515,262 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertEquals("testCreatedUnconvertedParams - 1", 0, jsCard.getCreated().compareTo(DateUtils.toCalendar("2010-10-10T10:10:10Z")));
-        assertEquals("testCreatedUnconvertedParams - 6", "1",jsCard.getVCard().getConvertedProperties().get("created").getParameters().get("pid").getValue());
-        assertEquals("testCreatedUnconvertedParams - 7",jsCard.getVCard().getConvertedProperties().get("created").getName(), "created");
+        assertEquals("testCreatedUnconvertedParams - 2", "1",jsCard.getVCard().getConvertedProperties().get("created").getParameters().get("pid").getValue());
+        assertEquals("testCreatedUnconvertedParams - 3", "created",jsCard.getVCard().getConvertedProperties().get("created").getName());
     }
 
+    @Test
+    public void testLanguageUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "LANGUAGE;X-PARAM=test:it\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testLanguageUnconvertedParams - 1", "it", jsCard.getLanguage());
+        assertEquals("testLanguageUnconvertedParams - 2", "test",jsCard.getVCard().getConvertedProperties().get("language").getParameters().get("x-param").getValue());
+        assertEquals("testLanguageUnconvertedParams - 3", "language",jsCard.getVCard().getConvertedProperties().get("language").getName());
+    }
+    
+    @Test
+    public void testBdayUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "BDAY;X-PARAM=test:19531015T231000Z\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testBdayUnconvertedParams - 1", jsCard.getAnniversaries());
+        assertEquals("testBdayUnconvertedParams - 2", 1, jsCard.getAnniversaries().size());
+        assertTrue("testBdayUnconvertedParams - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testBdayUnconvertedParams - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertEquals("testBdayUnconvertedParams - 5", "test",jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-1").getParameters().get("x-param").getValue());
+        assertEquals("testBdayUnconvertedParams - 6","bday", jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-1").getName());
+    }
+
+    @Test
+    public void testBirthplaceUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "BDAY:19531015T231000Z\n" +
+                "BIRTHPLACE;X-PARAM=test:Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testBirthplaceUnconvertedParams - 1", jsCard.getAnniversaries());
+        assertEquals("testBirthplaceUnconvertedParams - 2", 1, jsCard.getAnniversaries().size());
+        assertTrue("testBirthplaceUnconvertedParams - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testBirthplaceUnconvertedParams - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertEquals("testBirthplaceUnconvertedParams - 5", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", jsCard.getAnniversaries().get("ANNIVERSARY-1").getPlace().getFull());
+        assertEquals("testBirthplaceUnconvertedParams - 6", "test",jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-1/place").getParameters().get("x-param").getValue());
+        assertEquals("testBirthplaceUnconvertedParams - 7","birthplace", jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-1/place").getName());
+    }
+
+    @Test
+    public void testDeathdateUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "DEATHDATE;X-PARAM=test:19531015T231000Z\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testDeathdateUnconvertedParams - 1", jsCard.getAnniversaries());
+        assertEquals("testDeathdateUnconvertedParams - 2", 1, jsCard.getAnniversaries().size());
+        assertTrue("testDeathdateUnconvertedParams - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testDeathdateUnconvertedParams - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isDeath());
+        assertEquals("testDeathdateUnconvertedParams - 5", "test",jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-1").getParameters().get("x-param").getValue());
+        assertEquals("testDeathdateUnconvertedParams - 6","deathdate", jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-1").getName());
+    }
+
+    @Test
+    public void testDeathplaceUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "DEATHDATE:19931015T231000Z\n" +
+                "DEATHPLACE;X-PARAM=test:Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testDeathplaceUnconvertedParams - 1", jsCard.getAnniversaries());
+        assertEquals("testDeathplaceUnconvertedParams - 2", 1, jsCard.getAnniversaries().size());
+        assertTrue("testDeathplaceUnconvertedParams - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1993-10-15T23:10:00Z"));
+        assertTrue("testDeathplaceUnconvertedParams - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isDeath());
+        assertEquals("testDeathplaceUnconvertedParams - 5", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", jsCard.getAnniversaries().get("ANNIVERSARY-1").getPlace().getFull());
+        assertEquals("testDeathplaceUnconvertedParams - 6", "test",jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-1/place").getParameters().get("x-param").getValue());
+        assertEquals("testDeathplaceUnconvertedParams - 7","deathplace", jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-1/place").getName());
+    }
+
+    @Test
+    public void testAnniversaryUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "BDAY:19531015T231000Z\n" +
+                "BIRTHPLACE;VALUE=uri:geo:34.15876,-118.45728\n" +
+                "DEATHDATE:19931015T231000Z\n" +
+                "DEATHPLACE:Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA\n" +
+                "ANNIVERSARY;X-PARAM=test:19860201T190000Z\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testAnniversaryUnconvertedParams - 1", jsCard.getAnniversaries());
+        assertEquals("testAnniversaryUnconvertedParams - 2", 3, jsCard.getAnniversaries().size());
+        assertTrue("testAnniversaryUnconvertedParams - 3",jsCard.getAnniversaries().get("ANNIVERSARY-1").getDate().isEqual("1953-10-15T23:10:00Z"));
+        assertTrue("testAnniversaryUnconvertedParams - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isBirth());
+        assertEquals("testAnniversaryUnconvertedParams - 5", "geo:34.15876,-118.45728", jsCard.getAnniversaries().get("ANNIVERSARY-1").getPlace().getCoordinates());
+        assertTrue("testAnniversaryUnconvertedParams - 6",jsCard.getAnniversaries().get("ANNIVERSARY-2").getDate().isEqual("1993-10-15T23:10:00Z"));
+        assertTrue("testAnniversaryUnconvertedParams - 7",jsCard.getAnniversaries().get("ANNIVERSARY-2").isDeath());
+        assertEquals("testAnniversaryUnconvertedParams - 8", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", jsCard.getAnniversaries().get("ANNIVERSARY-2").getPlace().getFull());
+        assertTrue("testAnniversaryUnconvertedParams - 9",jsCard.getAnniversaries().get("ANNIVERSARY-3").isWedding());
+        assertTrue("testAnniversaryUnconvertedParams - 10",jsCard.getAnniversaries().get("ANNIVERSARY-3").getDate().isEqual("1986-02-01T19:00:00Z"));
+        assertEquals("testAnniversaryUnconvertedParams - 11", "test",jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-3").getParameters().get("x-param").getValue());
+        assertEquals("testAnniversaryUnconvertedParams - 12","anniversary", jsCard.getVCard().getConvertedProperties().get("anniversaries/ANNIVERSARY-3").getName());
+    }
+
+    @Test
+    public void testGramgenderPronounsUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "LANGUAGE;VALUE=language-tag:en\n" +
+                "PRONOUNS;X-PARAM1=test1;ALTID=1;JSID=PRONOUNS-1;VALUE=text:he/him\n" +
+                "PRONOUNS;X-PARAM1IT=test1IT;LANGUAGE=it;ALTID=1;VALUE=text:egli/lui\n" +
+                "GRAMGENDER;X-PARAM2=test2;VALUE=text:INANIMATE\n" +
+                "GRAMGENDER;X-PARAM2IT=test2IT;LANGUAGE=it;VALUE=text:MASCULINE\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testGramgenderPronounsUnconvertedParams - 1","he/him",jsCard.getSpeakToAs().getPronouns().get("PRONOUNS-1").getPronouns());
+        assertTrue("testGramgenderPronounsUnconvertedParams - 2", jsCard.getSpeakToAs().isInanimate());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 3", 1, jsCard.getLocalizations().size());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 4", "egli/lui", jsCard.getLocalizations().get("it").get("speakToAs/pronouns/PRONOUNS-1").get("pronouns").asText());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 5", GrammaticalGenderType.MASCULINE, GrammaticalGenderType.getEnum(jsCard.getLocalizations().get("it").get("speakToAs/grammaticalGender").asText().toLowerCase()));
+        assertEquals("testGramgenderPronounsUnconvertedParams - 6", "test1",jsCard.getVCard().getConvertedProperties().get("speakToAs/pronouns/PRONOUNS-1").getParameters().get("x-param1").getValue());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 7","pronouns", jsCard.getVCard().getConvertedProperties().get("speakToAs/pronouns/PRONOUNS-1").getName());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 8", "test1IT",jsCard.getVCard().getConvertedProperties().get("localizations/it/speakToAs~1pronouns~1PRONOUNS-1").getParameters().get("x-param1it").getValue());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 9","pronouns", jsCard.getVCard().getConvertedProperties().get("localizations/it/speakToAs~1pronouns~1PRONOUNS-1").getName());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 10", "test2",jsCard.getVCard().getConvertedProperties().get("speakToAs/grammaticalGender").getParameters().get("x-param2").getValue());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 11","gramgender", jsCard.getVCard().getConvertedProperties().get("speakToAs/grammaticalGender").getName());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 12", "test2IT",jsCard.getVCard().getConvertedProperties().get("localizations/it/speakToAs~1grammaticalGender").getParameters().get("x-param2it").getValue());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 13","gramgender", jsCard.getVCard().getConvertedProperties().get("localizations/it/speakToAs~1grammaticalGender").getName());
+    }
+
+    @Test
+    public void testTitleUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "TITLE;PID=1;ALTID=1:Research Scientist\n" +
+                "TITLE;PID=2;ALTID=1;LANGUAGE=it:Ricercatore\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testTitleUnconvertedParams - 1", jsCard.getTitles());
+        assertEquals("testTitleUnconvertedParams - 2", 1, jsCard.getTitles().size());
+        assertEquals("testTitleUnconvertedParams - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testTitleUnconvertedParams - 4", 1, jsCard.getLocalizationsPerLanguage("it").size());
+        assertEquals("testTitleUnconvertedParams - 5", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
+        assertEquals("testTitleUnconvertedParams - 6", "1",jsCard.getVCard().getConvertedProperties().get("titles/TITLE-1").getParameters().get("pid").getValue());
+        assertEquals("testTitleUnconvertedParams - 7","title", jsCard.getVCard().getConvertedProperties().get("titles/TITLE-1").getName());
+        assertEquals("testTitleUnconvertedParams - 8", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/titles~1TITLE-1").getParameters().get("pid").getValue());
+        assertEquals("testTitleUnconvertedParams - 9","title", jsCard.getVCard().getConvertedProperties().get("localizations/it/titles~1TITLE-1").getName());
+    }
+
+    @Test
+    public void testRoleUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ROLE;PID=1;ALTID=1:Project Leader\n" +
+                "ROLE;PID=2;ALTID=1;LANGUAGE=it:Capo Progetto\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testRoleUnconvertedParams - 1", jsCard.getTitles());
+        assertEquals("testRoleUnconvertedParams - 2", 1, jsCard.getTitles().size());
+        assertEquals("testRoleUnconvertedParams - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getName());
+        assertEquals("testRoleUnconvertedParams - 4", 1, jsCard.getLocalizationsPerLanguage("it").size());
+        assertEquals("testRoleUnconvertedParams - 5", "Capo Progetto", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
+        assertEquals("testTitleUnconvertedParams - 6", "1",jsCard.getVCard().getConvertedProperties().get("titles/TITLE-1").getParameters().get("pid").getValue());
+        assertEquals("testTitleUnconvertedParams - 7","role", jsCard.getVCard().getConvertedProperties().get("titles/TITLE-1").getName());
+        assertEquals("testTitleUnconvertedParams - 8", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/titles~1TITLE-1").getParameters().get("pid").getValue());
+        assertEquals("testTitleUnconvertedParams - 9","role", jsCard.getVCard().getConvertedProperties().get("localizations/it/titles~1TITLE-1").getName());
+    }
+
+    @Test
+    public void testNoteUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "NOTE;PID=2;ALTID=1:This fax number is operational 0800 to 1715 EST, Mon-Fri\n" +
+                "NOTE;ALTID=1;LANGUAGE=it:Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven\n" +
+                "NOTE;PID=1:This is another note\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testNoteUnconvertedParams - 1", 2, jsCard.getNotes().size());
+        assertEquals("testNoteUnconvertedParams - 2", "This is another note", jsCard.getNotes().get("NOTE-1").getNote());
+        assertEquals("testNoteUnconvertedParams - 3", "This fax number is operational 0800 to 1715 EST, Mon-Fri", jsCard.getNotes().get("NOTE-2").getNote());
+        assertEquals("testNoteUnconvertedParams - 4", 1, jsCard.getLocalizations().size());
+        assertEquals("testNoteUnconvertedParams - 5", "Note", jsCard.getLocalizations().get("it").get("notes/NOTE-2").get("@type").asText());
+        assertEquals("testNoteUnconvertedParams - 6", "Questo numero di fax e' operativo dalle 8.00 alle 17.15, Lun-Ven", jsCard.getLocalizations().get("it").get("notes/NOTE-2").get("note").asText());
+        assertEquals("testNoteUnconvertedParams - 7", "1",jsCard.getVCard().getConvertedProperties().get("notes/NOTE-1").getParameters().get("pid").getValue());
+        assertEquals("testNoteUnconvertedParams - 8","note", jsCard.getVCard().getConvertedProperties().get("notes/NOTE-1").getName());
+        assertEquals("testNoteUnconvertedParams - 9", "2",jsCard.getVCard().getConvertedProperties().get("notes/NOTE-2").getParameters().get("pid").getValue());
+        assertEquals("testNoteUnconvertedParams - 10","note", jsCard.getVCard().getConvertedProperties().get("notes/NOTE-2").getName());
+    }
+
+
+    @Test
+    public void testNicknameUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:John Q. Public, Esq.\n" +
+                "N:Public;John;Quinlan;Mr.;Esq.\n" +
+                "NICKNAME;PID=1;ALTID=1:Johnny\n" +
+                "NICKNAME;PREF=1;ALTID=2:Kid\n" +
+                "NICKNAME;PID=2;LANGUAGE=it;ALTID=1:Giovannino\n" +
+                "NICKNAME;PREF=1;LANGUAGE=it;ALTID=2:Ragazzo\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testNicknameUnconvertedParams - 1", "John Q. Public, Esq.", jsCard.getName().getFull());
+        assertEquals("testNicknameUnconvertedParams - 2", 5, jsCard.getName().getComponents().length);
+        assertTrue("testNicknameUnconvertedParams - 3",jsCard.getName().getComponents()[3].isTitle());
+        assertEquals("testNicknameUnconvertedParams - 4", "Mr.", jsCard.getName().getComponents()[3].getValue());
+        assertTrue("testNicknameUnconvertedParams - 5",jsCard.getName().getComponents()[1].isGiven());
+        assertEquals("testNicknameUnconvertedParams - 6", "John", jsCard.getName().getGiven());
+        assertTrue("testNicknameUnconvertedParams - 7",jsCard.getName().getComponents()[0].isSurname());
+        assertEquals("testNicknameUnconvertedParams - 8", "Public", jsCard.getName().getSurname());
+        assertTrue("testNicknameUnconvertedParams - 9",jsCard.getName().getComponents()[2].isGiven2());
+        assertEquals("testNicknameUnconvertedParams - 10", "Quinlan", jsCard.getName().getGiven2());
+        assertTrue("testNicknameUnconvertedParams - 11",jsCard.getName().getComponents()[4].isCredential());
+        assertEquals("testNicknameUnconvertedParams - 12", "Esq.", jsCard.getName().getComponents()[4].getValue());
+        assertEquals("testNicknameUnconvertedParams - 12", 2, jsCard.getNicknames().size());
+        assertEquals("testNicknameUnconvertedParams - 13", "Johnny", jsCard.getNicknames().get("NICK-1").getName());
+        assertEquals("testNicknameUnconvertedParams - 14", "Kid", jsCard.getNicknames().get("NICK-2").getName());
+        assertEquals("testNicknameUnconvertedParams - 15", "Giovannino", jsCard.getLocalization("it", "nicknames/NICK-1").get("name").asText());
+        assertEquals("testNicknameUnconvertedParams - 16", "Ragazzo", jsCard.getLocalization("it", "nicknames/NICK-2").get("name").asText());
+        assertEquals("testNicknameUnconvertedParams - 17", "1",jsCard.getVCard().getConvertedProperties().get("nicknames/NICK-1").getParameters().get("pid").getValue());
+        assertEquals("testNicknameUnconvertedParams - 18","nickname", jsCard.getVCard().getConvertedProperties().get("nicknames/NICK-1").getName());
+        assertEquals("testNicknameUnconvertedParams - 19", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/nicknames~1NICK-1").getParameters().get("pid").getValue());
+        assertEquals("testNicknameUnconvertedParams - 20","nickname", jsCard.getVCard().getConvertedProperties().get("localizations/it/nicknames~1NICK-1").getName());
+    }
 
 }

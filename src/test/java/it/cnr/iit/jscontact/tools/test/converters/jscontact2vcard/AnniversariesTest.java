@@ -220,7 +220,7 @@ public class AnniversariesTest extends JSContact2VCardTest {
         assertEquals("testAnniversaries6 - 5", 0, vcard.getAnniversary().getDate().compareTo(VCardDateFormat.parse("1986-02-01T19:00:00Z")));
         assertEquals("testAnniversaries6 - 6", "ANNIVERSARY-1", vcard.getBirthday().getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testAnniversaries6 - 7", "ANNIVERSARY-2", vcard.getDeathdate().getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testAnniversaries6 - 7", "ANNIVERSARY-3", vcard.getAnniversary().getParameter(VCardParamEnum.JSID.getValue()));
+        assertEquals("testAnniversaries6 - 8", "ANNIVERSARY-3", vcard.getAnniversary().getParameter(VCardParamEnum.JSID.getValue()));
     }
 
     @Test

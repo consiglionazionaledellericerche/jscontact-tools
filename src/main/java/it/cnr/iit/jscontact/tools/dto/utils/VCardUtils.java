@@ -130,6 +130,9 @@ public class VCardUtils {
      */
     public static Map<String, VCardParam> getVCardParamsOtherThan(VCardProperty property, VCardParamEnum... matchedParameters) {
 
+        if (property == null)
+            return null;
+
         Map<String, VCardParam> vCardParams = new HashMap<>();
         List<VCardParamEnum> matchedAsList = Arrays.asList(matchedParameters);
         if (property.getGroup() != null)

@@ -73,7 +73,6 @@ public class AnniversariesTest extends VCard2JSContactTest {
         assertTrue("testAnniversaries3 - 4",jsCard.getAnniversaries().get("ANNIVERSARY-1").isDeath());
     }
 
-
     @Test
     public void testAnniversaries4() throws CardException {
 
