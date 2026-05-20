@@ -1707,8 +1707,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
-                        entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/organizations/%s", localization.getKey(), entry.getKey())));
-                        org = toVCardOrganization(asJSCardOrganization(localization.getValue()));
+                        Organization organization2 = asJSCardOrganization(localization.getValue());
+                        organization2.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/organizations~1%s", localization.getKey(), entry.getKey())));
+                        org = toVCardOrganization(organization2);
                         org.setLanguage(localization.getKey());
                         addVCardJsidParam(org, entry.getKey());
                         organizations.add(org);
@@ -1724,6 +1725,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                             org.getValues().addAll(Arrays.asList(asJSCardOrgUnitValuesArray(units)));
                         org.setLanguage(localization.getKey());
                         addVCardJsidParam(org, entry.getKey());
+                        VCardUtils.addVCardUnmatchedParams(org,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/organizations~1%s~1name", localization.getKey(), entry.getKey())));
                         organizations.add(org);
                     }
                 }
@@ -1737,6 +1739,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         org.getValues().addAll(Arrays.asList(asJSCardOrgUnitValuesArray(localization.getValue())));
                         org.setLanguage(localization.getKey());
                         addVCardJsidParam(org, entry.getKey());
+                        VCardUtils.addVCardUnmatchedParams(org,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/organizations~1%s~1units", localization.getKey(), entry.getKey())));
                         organizations.add(org);
                     }
                 }

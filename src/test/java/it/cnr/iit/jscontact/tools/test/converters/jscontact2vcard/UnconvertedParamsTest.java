@@ -1443,4 +1443,66 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testAdrUnconvertedParams - 19","2", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.PID.getValue()));
     }
 
+    @Test
+    public void testOrgUnconvertedParams() throws IOException, CardException {
+
+        String jscard="{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\": { \"full\": \"test\"}," +
+                "\"organizations\": {" +
+                    "\"ORG-1\": {" +
+                        "\"@type\":\"Organization\"," +
+                        "\"units\": [ " +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"North American Division\"}," +
+                            "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
+                    "}" +
+                "}," +
+                "\"localizations\": { " +
+                    "\"it\" : { " +
+                        "\"organizations/ORG-1\" : { " +
+                            "\"@type\":\"Organization\"," +
+                            "\"units\": [ " +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                            "]" +
+                        "}" +
+                    "}" +
+                "}," +
+                "\"vCard\": { " +
+                    "\"convertedProperties\": { " +
+                        "\"organizations/ORG-1\": { " +
+                            "\"name\": \"org\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"1\" " +
+                            "}" +
+                        "}," +
+                        "\"localizations/it/organizations~1ORG-1\": { " +
+                            "\"name\": \"org\", " +
+                            "\"parameters\" : { " +
+                            "\"pid\" : \"2\" " +
+                                "}" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testOrgUnconvertedParams - 1", 2, vcard.getOrganizations().size());
+        assertEquals("testOrgUnconvertedParams - 2", 3, vcard.getOrganizations().get(0).getValues().size());
+        assertTrue("testOrgUnconvertedParams - 3",  vcard.getOrganizations().get(0).getValues().get(0).isEmpty());
+        assertEquals("testOrgUnconvertedParams - 4", "North American Division", vcard.getOrganizations().get(0).getValues().get(1));
+        assertEquals("testOrgUnconvertedParams - 5", "Marketing", vcard.getOrganizations().get(0).getValues().get(2));
+        assertNull("testOrgUnconvertedParams - 6", vcard.getOrganizations().get(0).getLanguage());
+        assertEquals("testOrgUnconvertedParams - 7", "1", vcard.getOrganizations().get(0).getAltId());
+        assertEquals("testOrgUnconvertedParams - 8", 3, vcard.getOrganizations().get(1).getValues().size());
+        assertTrue("testOrgUnconvertedParams - 9", vcard.getOrganizations().get(1).getValues().get(0).isEmpty());
+        assertEquals("testOrgUnconvertedParams - 10", "Divisione Nord America", vcard.getOrganizations().get(1).getValues().get(1));
+        assertEquals("testOrgUnconvertedParams - 11", "Marketing", vcard.getOrganizations().get(1).getValues().get(2));
+        assertEquals("testOrgUnconvertedParams - 12", "it", vcard.getOrganizations().get(1).getLanguage());
+        assertEquals("testOrgUnconvertedParams - 13", "1", vcard.getOrganizations().get(1).getAltId());
+        assertEquals("testOrgUnconvertedParams - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.JSID.getValue()));
+    }
+
+
 }

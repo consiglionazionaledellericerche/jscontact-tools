@@ -104,7 +104,7 @@ public class OrganizationsTest extends VCard2JSContactTest {
                 "VERSION:4.0\n" +
                 "FN:test\n" +
                 "ORG;ALTID=1:;North American Division;Marketing\n" +
-                "ORG;;ALTID=1;LANGUAGE=it:;Divisione Nord America;Marketing\n" +
+                "ORG;ALTID=1;LANGUAGE=it:;Divisione Nord America;Marketing\n" +
                 "END:VCARD";
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);

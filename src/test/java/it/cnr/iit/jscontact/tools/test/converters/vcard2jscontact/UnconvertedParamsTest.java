@@ -812,4 +812,30 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testAdrUnconvertedParams1 - 23","adr", jsCard.getVCard().getConvertedProperties().get("localizations/it/addresses~1ADR-2").getName());
     }
 
+    @Test
+    public void testOrgUnconvertedParams() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ORG;PID=1;ALTID=1:;North American Division;Marketing\n" +
+                "ORG;PID=2;ALTID=1;LANGUAGE=it:;Divisione Nord America;Marketing\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testOrgUnconvertedParams - 1", jsCard.getOrganizations());
+        assertEquals("testOrgUnconvertedParams - 2", 1, jsCard.getOrganizations().size());
+        assertNull("testOrgUnconvertedParams - 3", jsCard.getOrganizations().get("ORG-1").getName());
+        assertEquals("testOrgUnconvertedParams - 4", 2, jsCard.getOrganizations().get("ORG-1").getUnits().length);
+        assertEquals("testOrgUnconvertedParams - 5", "North American Division", jsCard.getOrganizations().get("ORG-1").getUnits()[0].getName());
+        assertEquals("testOrgUnconvertedParams - 6", "Marketing", jsCard.getOrganizations().get("ORG-1").getUnits()[1].getName());
+        assertNull("testOrgUnconvertedParams - 7", jsCard.getLocalization("it", "organizations/ORG-1").get("name"));
+        assertEquals("testOrgUnconvertedParams - 8", "Divisione Nord America", jsCard.getLocalization("it", "organizations/ORG-1").get("units").get(0).get("name").asText());
+        assertEquals("testOrgUnconvertedParams - 9", "Marketing", jsCard.getLocalization("it", "organizations/ORG-1").get("units").get(1).get("name").asText());
+        assertEquals("testOrgUnconvertedParams - 10", "1",jsCard.getVCard().getConvertedProperties().get("organizations/ORG-1").getParameters().get("pid").getValue());
+        assertEquals("testOrgUnconvertedParams - 11","org", jsCard.getVCard().getConvertedProperties().get("organizations/ORG-1").getName());
+        assertEquals("testOrgUnconvertedParams - 12", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/organizations~1ORG-1").getParameters().get("pid").getValue());
+        assertEquals("testOrgUnconvertedParams - 13","org", jsCard.getVCard().getConvertedProperties().get("localizations/it/organizations~1ORG-1").getName());
+    }
+
 }

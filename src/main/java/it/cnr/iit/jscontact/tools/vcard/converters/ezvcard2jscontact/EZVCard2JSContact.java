@@ -1694,8 +1694,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .contexts(toJSCardContexts(vcardOrg.getType()))
                 .sortAs(orgSortAs)
                 .group(vcardOrg.getGroup())
-                .vCardPropNameOfUnconvertedParams(getVCardPropertyNameFromClassName(vcardOrg.getClass().getName()))
-                .vCardUnconvertedParams(VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID))
                 .build();
     }
 
@@ -1717,8 +1715,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 jsCard.addOrganization(id, toJSCardOrganization(vcardOrg, vcard));
                 lastAltid = vcardOrg.getAltId();
                 lastMapId = id;
+                addVCardUnconvertedParams(jsCard,"organizations/"+id,"org", VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID));
             } else {
                 jsCard.addLocalization(vcardOrg.getLanguage(), "organizations/" + lastMapId, mapper.convertValue(toJSCardOrganization(vcardOrg, vcard), JsonNode.class));
+                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/organizations~1%s", vcardOrg.getLanguage(), lastMapId),"org", VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID));
             }
         }
     }
