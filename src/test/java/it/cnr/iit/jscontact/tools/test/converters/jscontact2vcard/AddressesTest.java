@@ -555,17 +555,17 @@ public class AddressesTest extends JSContact2VCardTest {
                 "\"name\": { \"full\": \"test\"}," +
                 "\"language\":\"en\"," +
                 "\"addresses\":{" +
-                "\"ADR-1\": {" +
-                "\"@type\":\"Address\"," +
-                "\"components\":[ " +
-                "{\"kind\":\"number\",\"value\":\"54321\"}," +
-                "{\"kind\":\"separator\",\"value\":\" \"}," +
-                "{\"kind\":\"name\",\"value\":\"Oak St\"}," +
-                "{\"kind\":\"locality\",\"value\":\"Reston\"}" +
-                "]," +
-                "\"isOrdered\": true," +
-                "\"defaultSeparator\":\"\\n\"" +
-                "}" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"number\",\"value\":\"54321\"}," +
+                            "{\"kind\":\"separator\",\"value\":\" \"}," +
+                            "{\"kind\":\"name\",\"value\":\"Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}" +
+                        "]," +
+                        "\"isOrdered\": true," +
+                        "\"defaultSeparator\":\"\\n\"" +
+                    "}" +
                 "}" +
                 "}";
 

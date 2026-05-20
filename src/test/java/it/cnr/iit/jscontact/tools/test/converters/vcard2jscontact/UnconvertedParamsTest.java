@@ -17,6 +17,7 @@ package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.GrammaticalGenderType;
+import it.cnr.iit.jscontact.tools.dto.PhoneticSystem;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -771,6 +772,44 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testNicknameUnconvertedParams - 18","nickname", jsCard.getVCard().getConvertedProperties().get("nicknames/NICK-1").getName());
         assertEquals("testNicknameUnconvertedParams - 19", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/nicknames~1NICK-1").getParameters().get("pid").getValue());
         assertEquals("testNicknameUnconvertedParams - 20","nickname", jsCard.getVCard().getConvertedProperties().get("localizations/it/nicknames~1NICK-1").getName());
+    }
+
+
+    @Test
+    public void testAdrUnconvertedParams1() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN:test\n" +
+                "ADR;PID=1;CC=US:;;54321 Oak St;Reston;VA;20190;USA\n" +
+                "ADR;PID=2;CC=US;ALTID=1;LANGUAGE=en:;;12345 Elm St;Reston;VA;20190;USA\n" +
+                "ADR;PID=3;CC=IT;ALTID=1;LANGUAGE=it:;;Via Moruzzi,1;Pisa;;56124;Italy\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertNotNull("testAdrUnconvertedParams1 - 1", jsCard.getAddresses());
+        assertEquals("testAdrUnconvertedParams1 - 2", 2, jsCard.getAddresses().size());
+        assertEquals("testAdrUnconvertedParams1 - 3", "US", jsCard.getAddresses().get("ADR-1").getCountryCode());
+        assertEquals("testAdrUnconvertedParams1 - 4", "USA", jsCard.getAddresses().get("ADR-1").getCountry());
+        assertEquals("testAdrUnconvertedParams1 - 5", "20190", jsCard.getAddresses().get("ADR-1").getPostcode());
+        assertEquals("testAdrUnconvertedParams1 - 6", "Reston", jsCard.getAddresses().get("ADR-1").getLocality());
+        assertEquals("testAdrUnconvertedParams1 - 7", "VA", jsCard.getAddresses().get("ADR-1").getRegion());
+        assertEquals("testAdrUnconvertedParams1 - 8", "54321 Oak St", jsCard.getAddresses().get("ADR-1").getStreetName());
+        assertEquals("testAdrUnconvertedParams1 - 9", "54321 Oak St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-1").getFull());
+        assertEquals("testAdrUnconvertedParams1 - 10", "US", jsCard.getAddresses().get("ADR-2").getCountryCode());
+        assertEquals("testAdrUnconvertedParams1 - 11", "USA", jsCard.getAddresses().get("ADR-2").getCountry());
+        assertEquals("testAdrUnconvertedParams1 - 12", "20190", jsCard.getAddresses().get("ADR-2").getPostcode());
+        assertEquals("testAdrUnconvertedParams1 - 13", "Reston", jsCard.getAddresses().get("ADR-2").getLocality());
+        assertEquals("testAdrUnconvertedParams1 - 14", "VA", jsCard.getAddresses().get("ADR-2").getRegion());
+        assertEquals("testAdrUnconvertedParams1 - 15", "12345 Elm St", jsCard.getAddresses().get("ADR-2").getStreetName());
+        assertEquals("testAdrUnconvertedParams1 - 16", "12345 Elm St\nReston\nVA\n20190\nUSA", jsCard.getAddresses().get("ADR-2").getFull());
+        assertNotNull("testAdrUnconvertedParams1 - 17", jsCard.getLocalization("it", "addresses/ADR-2"));
+        assertEquals("testAdrUnconvertedParams1 - 18", "1",jsCard.getVCard().getConvertedProperties().get("addresses/ADR-1").getParameters().get("pid").getValue());
+        assertEquals("testAdrUnconvertedParams1 - 19","adr", jsCard.getVCard().getConvertedProperties().get("addresses/ADR-1").getName());
+        assertEquals("testAdrUnconvertedParams1 - 20", "2",jsCard.getVCard().getConvertedProperties().get("addresses/ADR-2").getParameters().get("pid").getValue());
+        assertEquals("testAdrUnconvertedParams1 - 21","adr", jsCard.getVCard().getConvertedProperties().get("addresses/ADR-2").getName());
+        assertEquals("testAdrUnconvertedParams1 - 22", "3",jsCard.getVCard().getConvertedProperties().get("localizations/it/addresses~1ADR-2").getParameters().get("pid").getValue());
+        assertEquals("testAdrUnconvertedParams1 - 23","adr", jsCard.getVCard().getConvertedProperties().get("localizations/it/addresses~1ADR-2").getName());
     }
 
 }

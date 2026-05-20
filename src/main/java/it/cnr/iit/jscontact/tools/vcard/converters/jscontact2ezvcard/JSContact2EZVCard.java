@@ -852,8 +852,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey());
                 if (localizations != null) {
                     for (Map.Entry<String, JsonNode> localization : localizations.entrySet()) {
-                        entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/addresses/%s", localization.getKey(), entry.getKey())));
-                        addr = toVCardAddress(asJSCardAddress(localization.getValue()), jsCard.getCustomTimeZones(), localization.getKey());
+                        Address address2 = asJSCardAddress(localization.getValue());
+                        address2.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/addresses~1%s", localization.getKey(), entry.getKey())));
+                        addr = toVCardAddress(address2, jsCard.getCustomTimeZones(), localization.getKey());
                         addVCardJsidParam(addr, entry.getKey());
                         addrs.add(addr);
                     }
@@ -861,7 +862,9 @@ public class JSContact2EZVCard extends AbstractConverter {
                 localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/full");
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
-                        addr = toVCardAddress(Address.builder().full(localization.getValue().asText()).build(), jsCard.getCustomTimeZones(), localization.getKey());
+                        Address address2 = Address.builder().full(localization.getValue().asText()).build();
+                        address2.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/addresses~1%s~1full", localization.getKey(), entry.getKey())));
+                        addr = toVCardAddress(address2, jsCard.getCustomTimeZones(), localization.getKey());
                         addVCardJsidParam(addr, entry.getKey());
                         addrs.add(addr);
                     }

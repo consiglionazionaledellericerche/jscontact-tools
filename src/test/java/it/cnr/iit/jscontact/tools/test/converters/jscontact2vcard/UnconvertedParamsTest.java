@@ -24,6 +24,7 @@ import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
 import it.cnr.iit.jscontact.tools.dto.VCardPropEnum;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
+import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedAddress;
 import it.cnr.iit.jscontact.tools.vcard.extensions.property.ExtendedStructuredName;
 import it.cnr.iit.jscontact.tools.vcard.extensions.utils.VCardWriter;
 import org.junit.Test;
@@ -371,9 +372,9 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testPersonalInfoUnconvertedParams - 19", "PERSINFO-4", vcard.getHobbies().get(1).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testPersonalInfoUnconvertedParams - 20", "PERSINFO-5", vcard.getInterests().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testPersonalInfoUnconvertedParams - 21", "PERSINFO-6", vcard.getInterests().get(1).getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testPersonalInfoUnconvertedParams - 22","1", vcard.getHobbies().get(0).getParameter("PID"));
+        assertEquals("testPersonalInfoUnconvertedParams - 22","1", vcard.getHobbies().get(0).getParameter(VCardParamEnum.PID.getValue()));
         assertEquals("testPersonalInfoUnconvertedParams - 23","test", vcard.getExpertise().get(0).getParameter("X-PARAM"));
-        assertEquals("testPersonalInfoUnconvertedParams - 24","2", vcard.getInterests().get(1).getParameter("PID"));
+        assertEquals("testPersonalInfoUnconvertedParams - 24","2", vcard.getInterests().get(1).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     public void testSourceUnconvertedParams() throws IOException, CardException {
@@ -628,7 +629,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testOrgDirectoryUnconvertedParams - 1", 1, vcard.getSources().size());
         assertEquals("testOrgDirectoryUnconvertedParams - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", vcard.getSources().get(0).getValue());
         assertEquals("testOrgDirectoryUnconvertedParams - 3", "ENTRY-1", vcard.getOrgDirectories().get(0).getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testOrgDirectoryUnconvertedParams - 4","1", vcard.getOrgDirectories().get(0).getParameter("PID"));
+        assertEquals("testOrgDirectoryUnconvertedParams - 4","1", vcard.getOrgDirectories().get(0).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     @Test
@@ -671,7 +672,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testFbUrlUnconvertedParams - 5", "text/calendar", vcard.getFbUrls().get(1).getMediaType());
         assertEquals("testFbUrlUnconvertedParams - 6", "FREEBUSY-1", vcard.getFbUrls().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testFbUrlUnconvertedParams - 7", "FREEBUSY-2", vcard.getFbUrls().get(1).getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testFbUrlUnconvertedParams - 8","1", vcard.getFbUrls().get(0).getParameter("PID"));
+        assertEquals("testFbUrlUnconvertedParams - 8","1", vcard.getFbUrls().get(0).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     @Test
@@ -714,7 +715,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testCaluriUnconvertedParams - 5", "text/calendar", vcard.getCalendarUris().get(1).getMediaType());
         assertEquals("testCaluriUnconvertedParams - 6", "CALENDAR-1", vcard.getCalendarUris().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testCaluriUnconvertedParams - 7", "CALENDAR-2", vcard.getCalendarUris().get(1).getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testCaluriUnconvertedParams - 8","1", vcard.getCalendarUris().get(0).getParameter("PID"));
+        assertEquals("testCaluriUnconvertedParams - 8","1", vcard.getCalendarUris().get(0).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     @Test
@@ -753,7 +754,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testCaladruriUnconvertedParams - 4", "http://example.com/calendar/jdoe", vcard.getCalendarRequestUris().get(1).getValue());
         assertEquals("testCaladruriUnconvertedParams - 5", "SCHEDULING-1", vcard.getCalendarRequestUris().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testCaladruriUnconvertedParams - 6", "SCHEDULING-2", vcard.getCalendarRequestUris().get(1).getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testCaladruriUnconvertedParams - 7","1", vcard.getCalendarRequestUris().get(0).getParameter("PID"));
+        assertEquals("testCaladruriUnconvertedParams - 7","1", vcard.getCalendarRequestUris().get(0).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     @Test
@@ -788,7 +789,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testImppUnconvertedParams - 3", "home", vcard.getImpps().get(0).getParameter(VCardParamEnum.TYPE.getValue()));
         assertEquals("testImppUnconvertedParams - 4", 1, (int) vcard.getImpps().get(0).getPref());
         assertEquals("testImppUnconvertedParams - 5", "OS-1", vcard.getImpps().get(0).getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testImppUnconvertedParams - 6","1", vcard.getImpps().get(0).getParameter("PID"));
+        assertEquals("testImppUnconvertedParams - 6","1", vcard.getImpps().get(0).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     @Test
@@ -826,7 +827,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testSocialProfileUnconvertedParams - 5", "OS-1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testSocialProfileUnconvertedParams - 6", "Twitter", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.SERVICE_TYPE.getValue()));
         assertEquals("testSocialProfileUnconvertedParams - 7", VCardDataType.URI, vcard.getExtendedProperties().get(0).getDataType());
-        assertEquals("testSocialProfileUnconvertedParams - 8","1", vcard.getExtendedProperties().get(0).getParameter("PID"));
+        assertEquals("testSocialProfileUnconvertedParams - 8","1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PID.getValue()));
     }
     
     @Test
@@ -852,7 +853,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testCreatedUnconvertedParams - 1", 1, vcard.getExtendedProperties().size());
         assertEquals("testCreatedUnconvertedParams - 2", "CREATED", vcard.getExtendedProperties().get(0).getPropertyName());
         assertEquals("testCreatedUnconvertedParams - 3", "20101010T101010Z", vcard.getExtendedProperties().get(0).getValue());
-        assertEquals("testCreatedUnconvertedParams - 4","1", vcard.getExtendedProperties().get(0).getParameter("PID"));
+        assertEquals("testCreatedUnconvertedParams - 4","1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     @Test
@@ -1203,8 +1204,8 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testTitleUnconvertedParams - 6", "it", vcard.getTitles().get(1).getLanguage());
         assertEquals("testTitleUnconvertedParams - 7", "1", vcard.getTitles().get(1).getAltId());
         assertEquals("testTitleUnconvertedParams - 8", "TITLE-1", vcard.getTitles().get(0).getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testTitleUnconvertedParams - 9","1", vcard.getTitles().get(0).getParameter("PID"));
-        assertEquals("testTitleUnconvertedParams - 10","2", vcard.getTitles().get(1).getParameter("PID"));
+        assertEquals("testTitleUnconvertedParams - 9","1", vcard.getTitles().get(0).getParameter(VCardParamEnum.PID.getValue()));
+        assertEquals("testTitleUnconvertedParams - 10","2", vcard.getTitles().get(1).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     @Test
@@ -1252,8 +1253,8 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testRoleUnconvertedParams - 6", "it", vcard.getRoles().get(1).getLanguage());
         assertEquals("testRoleUnconvertedParams - 7", "1", vcard.getRoles().get(1).getAltId());
         assertEquals("testRoleUnconvertedParams - 8", "TITLE-1", vcard.getRoles().get(0).getParameter(VCardParamEnum.JSID.getValue()));
-        assertEquals("testRoleUnconvertedParams - 9","1", vcard.getRoles().get(0).getParameter("PID"));
-        assertEquals("testRoleUnconvertedParams - 10","2", vcard.getRoles().get(1).getParameter("PID"));
+        assertEquals("testRoleUnconvertedParams - 9","1", vcard.getRoles().get(0).getParameter(VCardParamEnum.PID.getValue()));
+        assertEquals("testRoleUnconvertedParams - 10","2", vcard.getRoles().get(1).getParameter(VCardParamEnum.PID.getValue()));
     }
     
     @Test
@@ -1293,8 +1294,8 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testNoteUnconvertedParams - 6", "Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven", vcard.getNotes().get(1).getValue());
         assertEquals("testNoteUnconvertedParams - 7", "it", vcard.getNotes().get(1).getLanguage());
         assertEquals("testNoteUnconvertedParams - 8", "1", vcard.getNotes().get(1).getAltId());
-        assertEquals("testNoteUnconvertedParams - 9","1", vcard.getNotes().get(0).getParameter("PID"));
-        assertEquals("testNoteUnconvertedParams - 10","2", vcard.getNotes().get(1).getParameter("PID"));
+        assertEquals("testNoteUnconvertedParams - 9","1", vcard.getNotes().get(0).getParameter(VCardParamEnum.PID.getValue()));
+        assertEquals("testNoteUnconvertedParams - 10","2", vcard.getNotes().get(1).getParameter(VCardParamEnum.PID.getValue()));
     }
 
     @Test
@@ -1364,8 +1365,82 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testNicknameUnconvertedParams - 19", "Giò", vcard.getNicknames().get(3).getValues().get(0));
         assertEquals("testNicknameUnconvertedParams - 20", "it", vcard.getNicknames().get(3).getLanguage());
         assertEquals("testNicknameUnconvertedParams - 21", "2", vcard.getNicknames().get(3).getAltId());
-        assertEquals("testNicknameUnconvertedParams - 22","1", vcard.getNicknames().get(0).getParameter("PID"));
-        assertEquals("testNicknameUnconvertedParams - 23","2", vcard.getNicknames().get(1).getParameter("PID"));
+        assertEquals("testNicknameUnconvertedParams - 22","1", vcard.getNicknames().get(0).getParameter(VCardParamEnum.PID.getValue()));
+        assertEquals("testNicknameUnconvertedParams - 23","2", vcard.getNicknames().get(1).getParameter(VCardParamEnum.PID.getValue()));
+    }
+
+    @Test
+    public void testAdrUnconvertedParams() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"7e0636f5-e48f-4a32-ab96-b57e9c07c7aa\"," +
+                "\"name\": { \"full\": \"test\"}," +
+                "\"language\":\"en\"," +
+                "\"addresses\":{" +
+                    "\"ADR-1\": {" +
+                        "\"@type\":\"Address\"," +
+                        "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"54321 Oak St\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Reston\"}," +
+                            "{\"kind\":\"region\",\"value\":\"VA\"}," +
+                            "{\"kind\":\"country\",\"value\":\"USA\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"20190\"}" +
+                        "]," +
+                        "\"countryCode\":\"US\"" +
+                    "}" +
+                "}," +
+                "\"localizations\":{" +
+                    "\"it\":{" +
+                        "\"addresses/ADR-1\":{" +
+                            "\"@type\":\"Address\"," +
+                            "\"components\":[ " +
+                                "{\"kind\":\"name\",\"value\":\"Via Moruzzi,1\"}," +
+                                "{\"kind\":\"locality\",\"value\":\"Pisa\"}," +
+                                "{\"kind\":\"postcode\",\"value\":\"56124\"}," +
+                                "{\"kind\":\"country\",\"value\":\"Italia\"}" +
+                            "]," +
+                            "\"countryCode\":\"IT\"" +
+                        "}" +
+                    "}" +
+                "}," +
+                "\"vCard\": { " +
+                    "\"convertedProperties\": { " +
+                        "\"addresses/ADR-1\": { " +
+                            "\"name\": \"adr\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"1\" " +
+                            "}" +
+                        "}," +
+                        "\"localizations/it/addresses~1ADR-1\": { " +
+                            "\"name\": \"adr\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"2\" " +
+                            "}" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testAdrUnconvertedParams - 1", 2, vcard.getProperties(ExtendedAddress.class).size());
+        assertEquals("testAdrUnconvertedParams - 2", "US", vcard.getProperties(ExtendedAddress.class).get(0).getParameter("CC"));
+        assertEquals("testAdrUnconvertedParams - 3", "USA", vcard.getProperties(ExtendedAddress.class).get(0).getCountry());
+        assertEquals("testAdrUnconvertedParams - 4", "20190", vcard.getProperties(ExtendedAddress.class).get(0).getPostalCode());
+        assertEquals("testAdrUnconvertedParams - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
+        assertEquals("testAdrUnconvertedParams - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
+        assertEquals("testAdrUnconvertedParams - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
+        assertEquals("testAdrUnconvertedParams - 8", "54321 Oak St Reston VA USA 20190", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testAdrUnconvertedParams - 9", "en", vcard.getProperties(ExtendedAddress.class).get(0).getLanguage());
+        assertEquals("testAdrUnconvertedParams - 10", "IT", vcard.getProperties(ExtendedAddress.class).get(1).getParameter("CC"));
+        assertEquals("testAdrUnconvertedParams - 11", "Italia", vcard.getProperties(ExtendedAddress.class).get(1).getCountry());
+        assertEquals("testAdrUnconvertedParams - 12", "56124", vcard.getProperties(ExtendedAddress.class).get(1).getPostalCode());
+        assertEquals("testAdrUnconvertedParams - 13", "Pisa", vcard.getProperties(ExtendedAddress.class).get(1).getLocality());
+        assertEquals("testAdrUnconvertedParams - 14", "Via Moruzzi,1", vcard.getProperties(ExtendedAddress.class).get(1).getStreetAddress());
+        assertEquals("testAdrUnconvertedParams - 15", "Via Moruzzi,1 Pisa 56124 Italia", vcard.getProperties(ExtendedAddress.class).get(1).getLabel());
+        assertEquals("testAdrUnconvertedParams - 16", "it", vcard.getProperties(ExtendedAddress.class).get(1).getLanguage());
+        assertEquals("testAdrUnconvertedParams - 17", "ADR-1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.JSID.getValue()));
+        assertEquals("testAdrUnconvertedParams - 18","1", vcard.getProperties(ExtendedAddress.class).get(0).getParameter(VCardParamEnum.PID.getValue()));
+        assertEquals("testAdrUnconvertedParams - 19","2", vcard.getProperties(ExtendedAddress.class).get(1).getParameter(VCardParamEnum.PID.getValue()));
     }
 
 }

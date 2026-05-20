@@ -1108,8 +1108,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .jsid(getJSIDParameter(vcardAddr))
                 .phoneticSystem(phoneticSystem)
                 .phoneticScript(vcardAddr.getParameter(VCardParamEnum.SCRIPT.getValue()))
-                .vCardPropNameOfUnconvertedParams("adr")
-                .vCardUnconvertedParams(VCardUtils.getVCardParamsOtherThan(vcardAddr, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.LABEL, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.CC, VCardParamEnum.TZ, VCardParamEnum.GEO, VCardParamEnum.DERIVED, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS))
+                .vCardUnconvertedParams(VCardUtils.getVCardParamsOtherThan(vcardAddr, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.LABEL, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.CC, VCardParamEnum.TZ, VCardParamEnum.GEO, VCardParamEnum.DERIVED, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT))
                 .build();
     }
 
@@ -1181,6 +1180,8 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
             if (address.getAltid() == null || !address.getAltid().equals(lastAltid)) {
                 String id = getJSCardId(JSContactProfileIds.IdType.ADDRESS, i, "ADR-" + (i++), address.getJsid() );
+                addVCardUnconvertedParams(jsCard,"addresses/"+id,"adr", address.getVCardUnconvertedParams());
+                address.setVCardUnconvertedParams(null);
                 jsCard.addAddress(id, address);
                 lastAltid = address.getAltid();
                 lastMapId = id;
@@ -1195,6 +1196,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         if (address.getPhoneticScript() != null)
                             jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId + "/phoneticScript", JsonNodeUtils.textNode(address.getPhoneticScript()));
 
+                        if (address.getPhoneticSystem()!=null)
+                            addVCardUnconvertedParams(jsCard,String.format("localizations/%s/addresses~1%s~1phoneticSystem", address.getLanguage(), lastMapId), "adr", address.getVCardUnconvertedParams());
+                        else {
+                            if (address.getPhoneticScript()!=null) {
+                                addVCardUnconvertedParams(jsCard,String.format("localizations/%s/addresses~1%s~1phoneticScript", address.getLanguage(), lastMapId), "adr", address.getVCardUnconvertedParams());
+                            }
+                        }
+
                         if (address.getComponents() != null) {
                             for (AddressComponent component : address.getComponents()) {
                                 if (component.getValue().equals(component.getPhonetic()))
@@ -1203,8 +1212,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         }
                     }
                 }
-                else
+                else {
+                    addVCardUnconvertedParams(jsCard, String.format("localizations/%s/addresses~1%s", address.getLanguage(), lastMapId), "adr", address.getVCardUnconvertedParams());
+                    address.setVCardUnconvertedParams(null);
                     jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId, mapper.convertValue(address, JsonNode.class));
+                }
             }
         }
     }
