@@ -1504,5 +1504,73 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testOrgUnconvertedParams - 14", "ORG-1", vcard.getOrganizations().get(0).getParameter(VCardParamEnum.JSID.getValue()));
     }
 
+    @Test
+    public void testFnAndNUnconvertedParams1() throws IOException, CardException {
+
+
+        String jscard = "{" +
+                "\"@type\" : \"Card\"," +
+                "\"version\" : \"2.0\"," +
+                "\"uid\" : \"e8e5d800-1254-4b2d-b06f-3d6fe7c9290d\"," +
+                "\"name\" : { " +
+                    "\"@type\" : \"Name\", " +
+                    "\"full\" : \"John Paul Philip Stevenson\"," +
+                    "\"components\" : [ { " +
+                            "\"kind\" : \"title\"," +
+                            "\"value\" : \"Dr.\"" +
+                        "}, {" +
+                            "\"kind\" : \"given\"," +
+                            "\"value\" : \"John\"" +
+                        "}, {" +
+                            "\"kind\" : \"surname\"," +
+                            "\"value\" : \"Stevenson\"" +
+                        "}, {" +
+                            "\"kind\" : \"given2\"," +
+                            "\"value\" : \"Philip\"" +
+                        "}, {" +
+                            "\"kind\" : \"given2\"," +
+                            "\"value\" : \"Paul\"" +
+                        "}, {" +
+                            "\"kind\" : \"generation\"," +
+                            "\"value\" : \"Jr.\"" +
+                        "}, {" +
+                            "\"kind\" : \"credential\"," +
+                            "\"value\" : \"M.D.\"" +
+                        "}, {" +
+                            "\"kind\" : \"credential\"," +
+                            "\"value\" : \"A.C.P.\"" +
+                    "} ]" +
+                "}," +
+                "\"vCard\": { " +
+                    "\"convertedProperties\": { " +
+                        "\"name/full\": { " +
+                            "\"name\": \"fn\", " +
+                            "\"parameters\" : { " +
+                                "\"pref\" : \"1\" " +
+                            "}" +
+                        "}," +
+                        "\"name/components\": { " +
+                            "\"name\": \"n\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"1\" " +
+                            "}" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testFnAndNUnconvertedParams1 - 1", "John Paul Philip Stevenson", vcard.getFormattedNames().get(0).getValue());
+        assertEquals("testFnAndNUnconvertedParams1 - 2", "Stevenson", vcard.getProperty(ExtendedStructuredName.class).getFamily());
+        assertEquals("testFnAndNUnconvertedParams1 - 3", "John", vcard.getProperty(ExtendedStructuredName.class).getGiven());
+        assertEquals("testFnAndNUnconvertedParams1 - 4", "Philip", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(0));
+        assertEquals("testFnAndNUnconvertedParams1 - 5", "Paul", vcard.getProperty(ExtendedStructuredName.class).getAdditionalNames().get(1));
+        assertEquals("testFnAndNUnconvertedParams1 - 6", "Dr.", vcard.getProperty(ExtendedStructuredName.class).getPrefixes().get(0));
+        assertEquals("testFnAndNUnconvertedParams1 - 7", "Jr.", vcard.getProperty(ExtendedStructuredName.class).getGeneration().get(0));
+        assertEquals("testFnAndNUnconvertedParams1 - 8", "M.D.", vcard.getProperty(ExtendedStructuredName.class).getSuffixes().get(0));
+        assertEquals("testFnAndNUnconvertedParams1 - 9", "A.C.P.", vcard.getProperty(ExtendedStructuredName.class).getSuffixes().get(1));
+        assertEquals("testFnAndNUnconvertedParams1 - 10","1", vcard.getFormattedNames().get(0).getParameter(VCardParamEnum.PREF.getValue()));
+        assertEquals("testFnAndNUnconvertedParams1 - 11","1", vcard.getProperties(ExtendedStructuredName.class).get(0).getParameter(VCardParamEnum.PID.getValue()));
+    }
 
 }

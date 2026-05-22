@@ -611,14 +611,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 else
                     jsCard.getName().setFull(fn.getValue());
 
-                Map<String, VCardParam> unmatchedParams = VCardUtils.getVCardParamsOtherThan(fn, VCardParamEnum.PREF, VCardParamEnum.LANGUAGE);
-                if (unmatchedParams != null)
-                    jsCard.addVCardConvertedProp("name",
-                            it.cnr.iit.jscontact.tools.dto.VCardProperty.builder()
-                                    .name("fn")
-                                    .parameters(unmatchedParams)
-                                    .build());
-
+                addVCardUnconvertedParams(jsCard, "name/full", "fn", VCardUtils.getVCardParamsOtherThan(fn, VCardParamEnum.LANGUAGE, VCardParamEnum.ALTID));
                 continue;
             }
 
@@ -630,29 +623,17 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                         .value(fn.getValue())
                         .build());
             } else {
-                Map<String, VCardParam> unmatchedParams = VCardUtils.getVCardParamsOtherThan(fn, VCardParamEnum.PREF, VCardParamEnum.LANGUAGE);
                 if (fn.getAltId() == null || lastAltid == null || !fn.getAltId().equals(lastAltid)) {
                     if (jsCard.getName() == null) //no N property exists
                         jsCard.setName(Name.builder().full(fn.getValue()).build());
                     else
                         jsCard.getName().setFull(fn.getValue());
 
-                    if (unmatchedParams != null)
-                        jsCard.addVCardConvertedProp("name",
-                                it.cnr.iit.jscontact.tools.dto.VCardProperty.builder()
-                                        .name("fn")
-                                        .parameters(unmatchedParams)
-                                        .build());
-
                     lastAltid = fn.getAltId();
+                    addVCardUnconvertedParams(jsCard, "name/full", "fn", VCardUtils.getVCardParamsOtherThan(fn, VCardParamEnum.LANGUAGE, VCardParamEnum.ALTID));
                 } else {
                     jsCard.addLocalization(fn.getLanguage(), "name", mapper.convertValue(Name.builder().full(fn.getValue()).build(), JsonNode.class));
-                    if (unmatchedParams != null)
-                        jsCard.addVCardConvertedProp(String.format("localizations/%s/name", fn.getLanguage()),
-                                it.cnr.iit.jscontact.tools.dto.VCardProperty.builder()
-                                        .name("fn")
-                                        .parameters(unmatchedParams)
-                                        .build());
+                    addVCardUnconvertedParams(jsCard, String.format("localizations/%s/name~1full", fn.getLanguage()), "fn", VCardUtils.getVCardParamsOtherThan(fn, VCardParamEnum.LANGUAGE, VCardParamEnum.ALTID));
                 }
             }
         }
@@ -796,8 +777,6 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 .isOrdered((jscomps!=null) ? Boolean.TRUE : null)
                 .phoneticSystem(phoneticSystem)
                 .phoneticScript(vcardName.getParameter(VCardParamEnum.SCRIPT.getValue()))
-                .vCardPropNameOfUnconvertedParams(getVCardPropertyNameFromClassName(vcardName.getClass().getName()))
-                .vCardUnconvertedParams(VCardUtils.getVCardParamsOtherThan(vcardName, VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS))
                 .build();
     }
 
@@ -845,15 +824,11 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         List<ExtendedStructuredName> vcardNames = vcard.getProperties(ExtendedStructuredName.class);
         vcardNames.sort(vCardPropertiesAltidComparator);
 
-        if (jsCard.getName() == null) // no full name exists
-            jsCard.setName(toJSCardName(vcardNames.get(0))); //the first N property is the name, all the others name are localizations or phonetic
-        else {
-            // full name already been set,
-            String fullName = jsCard.getName().getFull();
-            Name name = toJSCardName(vcardNames.get(0));
-            name.setFull(fullName);
-            jsCard.setName(name);
-        }
+        Name name = toJSCardName(vcardNames.get(0));
+        if (jsCard.getName() != null) // full name already been set,
+            name.setFull(jsCard.getName().getFull());
+        addVCardUnconvertedParams(jsCard,"name/components","n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(0), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
+        jsCard.setName(name);
 
         if (vcardNames.size() == 2) {
             boolean isPhonetic = (vcardNames.get(1).getParameter(VCardParamEnum.PHONETIC.getValue())!=null) || (vcardNames.get(1).getParameter(VCardParamEnum.SCRIPT.getValue())!=null);
@@ -868,13 +843,21 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         for (int i = 1; i < vcardNames.size(); i++) {
             String language = vcardNames.get(i).getLanguage();
 
-            Name name = toJSCardName(vcardNames.get(i));
+            name = toJSCardName(vcardNames.get(i));
 
             if (name.getPhoneticSystem() != null || name.getPhoneticScript() != null) {
                 if (name.getPhoneticSystem()!= null)
                     jsCard.addLocalization(language, "name/phoneticSystem", JsonNodeUtils.textNode(name.getPhoneticSystem().toJson()));
                 if (name.getPhoneticScript()!= null)
                     jsCard.addLocalization(language, "name/phoneticScript", JsonNodeUtils.textNode(name.getPhoneticScript()));
+
+                if (name.getPhoneticSystem()!=null)
+                    addVCardUnconvertedParams(jsCard,String.format("localizations/%s/name~1phoneticSystem", language), "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
+                else {
+                    if (name.getPhoneticScript()!=null) {
+                        addVCardUnconvertedParams(jsCard,String.format("localizations/%s/name~1phoneticScript", language), "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
+                    }
+                }
 
                 if (name.getComponents() != null) {
                     int j = 0;
@@ -884,11 +867,14 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     }
                 }
             }
-            else if (jsCard.getLocalization(language, "name") == null)
+            else if (jsCard.getLocalization(language, "name") == null) {
                 jsCard.addLocalization(language, "name", mapper.convertValue(name, JsonNode.class));
+                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/name~1components", language), "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
+            }
             else {
                 name.setFull(getFullNamePerLanguage(vcard, language));
                 jsCard.addLocalization(language, "name", mapper.convertValue(name, JsonNode.class));
+                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/name~1components", language), "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
             }
         }
     }

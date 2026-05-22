@@ -15,9 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.GrammaticalGenderType;
 import it.cnr.iit.jscontact.tools.dto.PhoneticSystem;
+import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
@@ -836,6 +838,40 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testOrgUnconvertedParams - 11","org", jsCard.getVCard().getConvertedProperties().get("organizations/ORG-1").getName());
         assertEquals("testOrgUnconvertedParams - 12", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/organizations~1ORG-1").getParameters().get("pid").getValue());
         assertEquals("testOrgUnconvertedParams - 13","org", jsCard.getVCard().getConvertedProperties().get("localizations/it/organizations~1ORG-1").getName());
+    }
+    
+    @Test //ez-vcard accepts only one family name and one given name
+    public void testFnAndNUnconvertedParams1() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN;PREF=1:John Paul Philip Stevenson\n" +
+                "N;PID=1:Stevenson;John;Philip,Paul;Dr.;Jr.,M.D.,A.C.P.\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testFnAndNUnconvertedParams1 - 1", 8, jsCard.getName().getComponents().length);
+        assertEquals("testFnAndNUnconvertedParams1 - 2", "Dr.", jsCard.getName().getComponents()[4].getValue());
+        assertTrue("testFnAndNUnconvertedParams1 - 3",  jsCard.getName().getComponents()[4].isTitle());
+        assertEquals("testFnAndNUnconvertedParams1 - 5", "John", jsCard.getName().getGiven());
+        assertTrue("testFnAndNUnconvertedParams1 - 6",  jsCard.getName().getComponents()[1].isGiven());
+        assertEquals("testFnAndNUnconvertedParams1 - 8", "Stevenson", jsCard.getName().getSurname());
+        assertTrue("testFnAndNUnconvertedParams1 - 9",  jsCard.getName().getComponents()[0].isSurname());
+        assertEquals("testFnAndNUnconvertedParams1 - 11", "Philip", jsCard.getName().getComponents()[2].getValue());
+        assertTrue("testFnAndNUnconvertedParams1 - 12",  jsCard.getName().getComponents()[2].isGiven2());
+        assertEquals("testFnAndNUnconvertedParams1 - 14", "Paul", jsCard.getName().getComponents()[3].getValue());
+        assertTrue("testFnAndNUnconvertedParams1 - 15",  jsCard.getName().getComponents()[3].isGiven2());
+        assertEquals("testFnAndNUnconvertedParams1 - 17", "Jr.", jsCard.getName().getComponents()[5].getValue());
+        assertTrue("testFnAndNUnconvertedParams1 - 18",  jsCard.getName().getComponents()[5].isCredential());
+        assertEquals("testFnAndNUnconvertedParams1 - 20", "M.D.", jsCard.getName().getComponents()[6].getValue());
+        assertTrue("testFnAndNUnconvertedParams1 - 21",  jsCard.getName().getComponents()[6].isCredential());
+        assertEquals("testFnAndNUnconvertedParams1 - 23", "A.C.P.", jsCard.getName().getComponents()[7].getValue());
+        assertTrue("testFnAndNUnconvertedParams1 - 24",  jsCard.getName().getComponents()[7].isCredential());
+        assertEquals("testFnAndNUnconvertedParams1 - 10", "1",jsCard.getVCard().getConvertedProperties().get("name/full").getParameters().get("pref").getValue());
+        assertEquals("testFnAndNUnconvertedParams1 - 11","fn", jsCard.getVCard().getConvertedProperties().get("name/full").getName());
+        assertEquals("testFnAndNUnconvertedParams1 - 12", "1",jsCard.getVCard().getConvertedProperties().get("name/components").getParameters().get("pid").getValue());
+        assertEquals("testFnAndNUnconvertedParams1 - 13","n", jsCard.getVCard().getConvertedProperties().get("name/components").getName());
+
     }
 
 }

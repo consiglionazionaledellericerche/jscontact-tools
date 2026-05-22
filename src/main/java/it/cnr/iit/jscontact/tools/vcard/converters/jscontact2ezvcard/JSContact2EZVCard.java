@@ -261,11 +261,13 @@ public class JSContact2EZVCard extends AbstractConverter {
                     FormattedName fn = toVCardFormattedName(jsCard.getName().getComponents(), jsCard.getName().getIsOrdered(), jsCard.getName().getDefaultSeparator());
                     fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
                     fn.setLanguage(jsCard.getLanguage());
+                    VCardUtils.addVCardUnmatchedParams(fn,getVCardUnconvertedParamsByJsonPointer(jsCard,"name/components"));
                     vcard.setFormattedName(fn);
                 } else {
                     FormattedName fn = toVCardFormattedName(jsCard.getName().getComponents(), jsCard.getName().getIsOrdered(), jsCard.getName().getDefaultSeparator());
                     fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
                     fn.setLanguage(jsCard.getLanguage());
+                    VCardUtils.addVCardUnmatchedParams(fn,getVCardUnconvertedParamsByJsonPointer(jsCard,"name/components"));
                     fns.add(fn);
                     if (jsCard.getLocalizationsPerPath("name") != null) {
                         for (Map.Entry<String, JsonNode> localization : jsCard.getLocalizationsPerPath("name").entrySet()) {
@@ -275,6 +277,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                             fn = toVCardFormattedName(nameComponents, isOrdered, defaultSeparator);
                             fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
                             fn.setLanguage(localization.getKey());
+                            VCardUtils.addVCardUnmatchedParams(fn,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/name~1components",localization.getKey())));
                             fns.add(fn);
                         }
                     } else {
@@ -283,6 +286,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                             fn = toVCardFormattedName(nameComponents, null, null);
                             fn.setParameter(VCardParamEnum.DERIVED.getValue(), "true");
                             fn.setLanguage(localization.getKey());
+                            VCardUtils.addVCardUnmatchedParams(fn,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/name~1components",localization.getKey())));
                             fns.add(fn);
                         }
                     }
@@ -298,25 +302,29 @@ public class JSContact2EZVCard extends AbstractConverter {
                 FormattedName fn = toVCardFormattedName(jsCard.getName().getFull());
                 fn.setLanguage(jsCard.getLanguage());
                 fns.add(fn);
-                VCardUtils.addVCardUnmatchedParams(fn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name", "fn"));
+                VCardUtils.addVCardUnmatchedParams(fn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name/full", "fn"));
                 vcard.setFormattedName(fn);
                 if (jsCard.getLocalizationsPerPath("name") != null) {
                     for (Map.Entry<String, JsonNode> localization : jsCard.getLocalizationsPerPath("name").entrySet()) {
                         fn = toVCardFormattedName(localization.getValue().get("full").asText());
                         fn.setLanguage(localization.getKey());
-                        VCardUtils.addVCardUnmatchedParams(fn, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/name", localization.getKey()), "fn"));
+                        VCardUtils.addVCardUnmatchedParams(fn, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/name~1full", localization.getKey()), "fn"));
                         fns.add(fn);
                     }
                 } else {
                     for (Map.Entry<String, JsonNode> localization : jsCard.getLocalizationsPerPath("name/full").entrySet()) {
                         fn = toVCardFormattedName(localization.getValue().asText());
                         fn.setLanguage(localization.getKey());
+                        VCardUtils.addVCardUnmatchedParams(fn, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/name~1full", localization.getKey()), "fn"));
                         fns.add(fn);
                     }
                 }
                 vcard.setFormattedNameAlt(fns.toArray(new FormattedName[0]));
-            } else
-                vcard.setFormattedName(toVCardFormattedName(jsCard.getName().getFull()));
+            } else {
+                FormattedName fn = toVCardFormattedName(jsCard.getName().getFull());
+                VCardUtils.addVCardUnmatchedParams(fn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name/full", "fn"));
+                vcard.setFormattedName(fn);
+            }
         }
     }
 
@@ -438,7 +446,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs())); // did this way because Ez-vcard allows to sort only for surname and given name
             if (jsCard.getName().getIsOrdered()!=null && jsCard.getName().getIsOrdered())
                 sn.setParameter(VCardParamEnum.JSCOMPS.getValue(), toVCardJSCompsParam(jsCard.getName().getComponents(),jsCard.getName().getDefaultSeparator())); // did this way because Ez-vcard allows to sort only for surname and given name
-            VCardUtils.addVCardUnmatchedParams(sn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name", "sn"));
+            VCardUtils.addVCardUnmatchedParams(sn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name", "n"));
             sns.add(sn);
             if (jsCard.getLocalizationsPerPath("name") != null) {
 
@@ -454,7 +462,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         sn.setParameter(VCardParamEnum.JSCOMPS.getValue(), toVCardJSCompsParam(asJSCardNameComponentArray(localization.getValue().get("components")), (defaultSeparator!=null) ? defaultSeparator.asText() : null)); // did this way because Ez-vcard allows to sort only for surname and given name
                     }
                     sn.setLanguage(localization.getKey());
-                    VCardUtils.addVCardUnmatchedParams(sn, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/name",localization.getKey()), "sn"));
+                    VCardUtils.addVCardUnmatchedParams(sn, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/name",localization.getKey()), "n"));
                     sns.add(sn);
 
                     if (phoneticSystem!=null || phoneticScript !=null) {
@@ -482,7 +490,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                     sn.setParameter(VCardParamEnum.PHONETIC.getValue(), (phoneticSystem == null && phoneticScript != null) ? PhoneticSystemEnum.SCRIPT.getValue() : phoneticSystem);
                     sn.setParameter(VCardParamEnum.SCRIPT.getValue(), phoneticScript);
                     sn.setLanguage(language);
-                    VCardUtils.addVCardUnmatchedParams(sn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name","sn"));
+                    VCardUtils.addVCardUnmatchedParams(sn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name","n"));
                     sns.add(sn);
                 }
             }
@@ -492,7 +500,7 @@ public class JSContact2EZVCard extends AbstractConverter {
             sn.setParameter(VCardParamEnum.SORT_AS.getValue(), toVCardSortAsParam(jsCard.getName().getSortAs()));
             if (jsCard.getName().getIsOrdered() != null && jsCard.getName().getIsOrdered())
                 sn.setParameter(VCardParamEnum.JSCOMPS.getValue(), toVCardJSCompsParam(jsCard.getName().getComponents(),jsCard.getName().getDefaultSeparator())); // did this way because Ez-vcard allows to sort only for surname and given name
-            VCardUtils.addVCardUnmatchedParams(sn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name", "sn"));
+            VCardUtils.addVCardUnmatchedParams(sn, getVCardUnconvertedParamsByJsonPointer(jsCard,"name/components", "n"));
             sns.add(sn);
 
             PhoneticSystem phoneticSystem = jsCard.getName().getPhoneticSystem();
