@@ -124,10 +124,10 @@ public class JCardTest extends JCard2JSContactTest {
         assertNotNull("testExtendedJCard - 1", jsCard);
         assertTrue("testExtendedJCard - 2", StringUtils.isEmpty(jsCard.getUid()));
         assertEquals("testExtendedJCard - 3", "test", jsCard.getName().getFull());
-        assertEquals("testExtendedJCard - 4", 2, jsCard.getVCard().getProperties().length); // including VERSION
-        assertEquals("testExtendedJCard - 5", "myext", jsCard.getVCard().getProperties()[1].getName().toString());
-        assertEquals("testExtendedJCard - 6", VCardDataType.TEXT, jsCard.getVCard().getProperties()[1].getType());
-        assertEquals("testExtendedJCard - 7", "extvalue", jsCard.getVCard().getProperties()[1].getValue());
+        assertEquals("testExtendedJCard - 4", 1, jsCard.getVCard().getProperties().length);
+        assertEquals("testExtendedJCard - 5", "myext", jsCard.getVCard().getProperties()[0].getName().toString());
+        assertEquals("testExtendedJCard - 6", VCardDataType.TEXT, jsCard.getVCard().getProperties()[0].getType());
+        assertEquals("testExtendedJCard - 7", "extvalue", jsCard.getVCard().getProperties()[0].getValue());
     }
 
 

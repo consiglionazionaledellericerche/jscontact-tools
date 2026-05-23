@@ -82,10 +82,10 @@ public class VCardTest extends VCard2JSContactTest {
         assertNotNull("testExtendedVCard1 - 1", jsCard);
         assertTrue("testExtendedVCard1 - 2", StringUtils.isEmpty(jsCard.getUid()));
         assertEquals("testExtendedVCard1 - 3", "test", jsCard.getName().getFull());
-        assertEquals("testExtendedJCard1 - 4", 2, jsCard.getVCard().getProperties().length); //including VERSION
-        assertEquals("testExtendedJCard1 - 5", "myext", jsCard.getVCard().getProperties()[1].getName().toString());
-        assertNull("testExtendedJCard1 - 6", jsCard.getVCard().getProperties()[1].getType());
-        assertEquals("testExtendedJCard1 - 7", "extvalue", jsCard.getVCard().getProperties()[1].getValue());
+        assertEquals("testExtendedJCard1 - 4", 1, jsCard.getVCard().getProperties().length);
+        assertEquals("testExtendedJCard1 - 5", "myext", jsCard.getVCard().getProperties()[0].getName().toString());
+        assertNull("testExtendedJCard1 - 6", jsCard.getVCard().getProperties()[0].getType());
+        assertEquals("testExtendedJCard1 - 7", "extvalue", jsCard.getVCard().getProperties()[0].getValue());
     }
 
 
@@ -101,13 +101,13 @@ public class VCardTest extends VCard2JSContactTest {
 
         Card jsCard = vCard2JSContact.convert(vcard).get(0);
         assertNotNull("testExtendedVCard2 - 1", jsCard);
-        assertEquals("testExtendedJCard2 - 2", 2, jsCard.getVCard().getProperties().length); //including VERSION
-        assertEquals("testExtendedJCard2 - 3", "x-foo", jsCard.getVCard().getProperties()[1].getName().toString());
-        assertNull("testExtendedJCard2 - 4", jsCard.getVCard().getProperties()[1].getType());
-        assertEquals("testExtendedJCard2 - 5", 2, jsCard.getVCard().getProperties()[1].getParameters().size());
-        assertEquals("testExtendedJCard2 - 6", 1, jsCard.getVCard().getProperties()[1].getParameters().get(VCardParamEnum.PREF.getValue().toLowerCase()));
-        assertEquals("testExtendedJCard2 - 7", "item2", jsCard.getVCard().getProperties()[1].getParameters().get(VCardParamEnum.GROUP.getValue().toLowerCase()));
-        assertEquals("testExtendedJCard2 - 8", "bar", jsCard.getVCard().getProperties()[1].getValue().toString());
+        assertEquals("testExtendedJCard2 - 2", 1, jsCard.getVCard().getProperties().length);
+        assertEquals("testExtendedJCard2 - 3", "x-foo", jsCard.getVCard().getProperties()[0].getName().toString());
+        assertNull("testExtendedJCard2 - 4", jsCard.getVCard().getProperties()[0].getType());
+        assertEquals("testExtendedJCard2 - 5", 2, jsCard.getVCard().getProperties()[0].getParameters().size());
+        assertEquals("testExtendedJCard2 - 6", 1, jsCard.getVCard().getProperties()[0].getParameters().get(VCardParamEnum.PREF.getValue().toLowerCase()));
+        assertEquals("testExtendedJCard2 - 7", "item2", jsCard.getVCard().getProperties()[0].getParameters().get(VCardParamEnum.GROUP.getValue().toLowerCase()));
+        assertEquals("testExtendedJCard2 - 8", "bar", jsCard.getVCard().getProperties()[0].getValue().toString());
     }
 
     @Test
@@ -327,11 +327,11 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard5 - 42", 1, jsCard.getEmails().size());
         assertEquals("testCompleteVCard5 - 43", "forrestgump@example.com", jsCard.getEmails().get("EMAIL-1").getAddress());
         assertEquals("testCompleteVCard5 - 44", 0, jsCard.getUpdated().compareTo(DateUtils.toCalendar("2008-04-24T19:52:43Z")));
-        assertEquals("testCompleteVCard5 - 45", 2, jsCard.getVCard().getProperties().length); //including VERSION
-        assertEquals("testCompleteVCard5 - 46", "x-qq", jsCard.getVCard().getProperties()[1].getName().toString());
-        assertEquals("testCompleteVCard5 - 47", 0, jsCard.getVCard().getProperties()[1].getParameters().size());
-        assertNull("testCompleteVCard5 - 48",  jsCard.getVCard().getProperties()[1].getType());
-        assertEquals("testCompleteVCard5 - 49", "21588891", jsCard.getVCard().getProperties()[1].getValue());
+        assertEquals("testCompleteVCard5 - 45", 1, jsCard.getVCard().getProperties().length);
+        assertEquals("testCompleteVCard5 - 46", "x-qq", jsCard.getVCard().getProperties()[0].getName().toString());
+        assertEquals("testCompleteVCard5 - 47", 0, jsCard.getVCard().getProperties()[0].getParameters().size());
+        assertNull("testCompleteVCard5 - 48",  jsCard.getVCard().getProperties()[0].getType());
+        assertEquals("testCompleteVCard5 - 49", "21588891", jsCard.getVCard().getProperties()[0].getValue());
         assertTrue("testCompleteVCard5 - 50", StringUtils.isEmpty(jsCard.getUid()));
     }
 
@@ -481,7 +481,7 @@ public class VCardTest extends VCard2JSContactTest {
         assertEquals("testCompleteVCard6 - 171", "CustomState", jsCard.getAddresses().get("ADR-4").getRegion());
         assertEquals("testCompleteVCard6 - 172", "CustomCountry", jsCard.getAddresses().get("ADR-4").getCountry());
         assertEquals("testCompleteVCard6 - 173", "CustomPostal", jsCard.getAddresses().get("ADR-4").getPostcode());
-        assertEquals("testCompleteVCard6 - 174", 23, jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().size()); //including VERSION
+        assertEquals("testCompleteVCard6 - 174", 22, jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().size());
         assertEquals("testCompleteVCard6 - 176", "male", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-GENDER".toLowerCase()));
         assertEquals("testCompleteVCard6 - 177", "14f9aba0c9422da9ae376fe28bd89c2a.0", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-ID".toLowerCase()));
         assertEquals("testCompleteVCard6 - 178", "fffffea9056d8166e2b7a427977e570c87dd51279d11d9b137c593eb", jsCard.getVCard().getVCardUnconvertedPropertiesAsMap().get("X-ETAG".toLowerCase()));
