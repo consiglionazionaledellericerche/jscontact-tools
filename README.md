@@ -1,7 +1,7 @@
 # jscontact-tools
 
 Java tools for **JSContact** [RFC9553](https://datatracker.ietf.org/doc/RFC9553/) creation, validation, serialization/deserialization and conversion from and to vCard 4.0 [RFC6350](https://datatracker.ietf.org/doc/rfc6350/), xCard [RFC6351](https://datatracker.ietf.org/doc/rfc6351/) and jCard [RFC7095](https://datatracker.ietf.org/doc/rfc7095/).
-Conversion from JSContact to vCard formats and viceversa is based on the rules described in [RFC9555](https://datatracker.ietf.org/doc/RFC9555/)
+Conversion from JSContact to vCard formats and viceversa is based on the rules described in [RFC9555bis](https://datatracker.ietf.org/doc/draft-ietf-calext-rfc9555bis/)
 Validation and conversion of vCard formats leverage the features provided by [ez-vcard](https://github.com/mangstadt/ez-vcard) Java library.
 
 
@@ -13,14 +13,14 @@ Validation and conversion of vCard formats leverage the features provided by [ez
       <dependency>
 		  <groupId>it.cnr.iit.jscontact</groupId>
 		  <artifactId>jscontact-tools</artifactId>
-		  <version>2.1.0</version>
+		  <version>3.0.0</version>
       </dependency>
 ```
 
 ## Gradle
 
 ```
-  compile 'it.cnr.iit.jscontact:jscontact-tools:2.1.0'
+  compile 'it.cnr.iit.jscontact:jscontact-tools:3.0.0'
 ```
 
 # Features
@@ -302,13 +302,12 @@ The conversion is executed according to the following rules:
 
 2. The card components (i.e. properties, parameters or values) considered in the [Other RFCs](#other-rfcs) as well as the additonal components defined in [RFC9554](https://datatracker.ietf.org/doc/RFC9554/) are matched.
 
-3. An unmatched property is converted into an entry of the topmost Card `vCardProps` map. The following unmatched properties are considered:    
+3. An unmatched property is converted into an entry of the topmost Card `vCard.properties` array. The VERSION property is not considered because it's implicitly added when converting from JSContact to VCard. The following unmatched properties are considered:    
     CLIENTPIDMAP
-    VERSION
     XML
 
-4. An unmatched parameter is converted into an entry of a `vCardParams` map. The following unmatched parameters
-   are considered:
+4. An unmatched parameter is converted into an entry of a `vCard.convertedProperties` map. The following unmatched parameters
+   are always considered along with others depending on the VCard property:
    PID
    GROUP
 
@@ -446,12 +445,9 @@ All the methods take in input a list of JSContact Card objects and can raise the
 
 1. The conversion is based on the content of the [JSContact RFCs](#jscontact-rfcs).
  
-2. An entry of the topmost Card/CardGroup `vCardProps` map is converted into the related vCard property  . The following properties are considered:
-    CLIENTPIDMAP
-    XML
+2. An entry of the topmost Card/CardGroup `vCard.properties` array is converted into the related vCard property.
  
-3. An entry of an object `vCardParams` map is converted into a vCard parameter. The following parameters are considered:
-    PID
+3. An entry of an object `vCard.convertedProperties` map is converted into a vCard parameter.
 
 4. Default values for the configuration properties are:
 
@@ -752,7 +748,7 @@ In both cases, the text values after the first value are ignored.
 <a name="jscontact-compliance"></a>
 ## JSContact Compliance
 
-This jscontact-tools version is compliant with JSContact specification version -08 and JSContact-vCard mapping version -07.
+This jscontact-tools version is compliant with JSContact specification version 2.0 and JSContact-vCard mapping described in version -00 of [RFC9555bis](https://datatracker.ietf.org/doc/draft-ietf-calext-rfc9555bis/).
 
 <a name="references"></a>
 ## References
@@ -762,7 +758,7 @@ This jscontact-tools version is compliant with JSContact specification version -
 
 * [RFC9553](https://datatracker.ietf.org/doc/RFC9553/)
 * [RFC9554](https://datatracker.ietf.org/doc/RFC9554/)
-* [RFC9555](https://datatracker.ietf.org/doc/RFC9555/)
+* [RFC9555](https://datatracker.ietf.org/doc/RFC9555/) obsoleted by [RFC9555bis](https://datatracker.ietf.org/doc/draft-ietf-calext-rfc9555bis/)
 
 <a name="other-rfcs"></a>
 ### Other RFCs
