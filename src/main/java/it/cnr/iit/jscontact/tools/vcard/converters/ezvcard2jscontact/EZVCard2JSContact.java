@@ -601,8 +601,16 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
 
         for (FormattedName fn : fns) {
 
-            if (isFNDerivedFromN(fn,vcard) || isFNDerivedFromUid(fn,vcard))
+            if (isFNDerivedFromUid(fn,vcard))
                 continue;
+
+            if (isFNDerivedFromN(fn,vcard)) {
+                if (fn.getLanguage() == null)
+                    addVCardUnconvertedParams(jsCard, "name/full", "fn", VCardUtils.getVCardParamsOtherThan(fn, VCardParamEnum.LANGUAGE, VCardParamEnum.ALTID));
+                else
+                    addVCardUnconvertedParams(jsCard, String.format("localizations/%s/name~1full", fn.getLanguage()), "fn", VCardUtils.getVCardParamsOtherThan(fn, VCardParamEnum.LANGUAGE, VCardParamEnum.ALTID));
+                continue;
+            }
 
             if (candidateFn != null && candidateFn.getValue().equals(fn.getValue())) {
 

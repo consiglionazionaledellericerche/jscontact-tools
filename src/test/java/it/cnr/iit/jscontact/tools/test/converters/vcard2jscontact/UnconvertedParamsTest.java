@@ -15,12 +15,11 @@
  */
 package it.cnr.iit.jscontact.tools.test.converters.vcard2jscontact;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import it.cnr.iit.jscontact.tools.dto.Card;
 import it.cnr.iit.jscontact.tools.dto.GrammaticalGenderType;
-import it.cnr.iit.jscontact.tools.dto.PhoneticSystem;
-import it.cnr.iit.jscontact.tools.dto.serializers.PrettyPrintSerializer;
+import it.cnr.iit.jscontact.tools.dto.Name;
 import it.cnr.iit.jscontact.tools.dto.utils.DateUtils;
+import it.cnr.iit.jscontact.tools.dto.utils.JsonNodeUtils;
 import it.cnr.iit.jscontact.tools.dto.utils.MimeTypeUtils;
 import it.cnr.iit.jscontact.tools.exceptions.CardException;
 import org.apache.commons.lang3.StringUtils;
@@ -872,6 +871,42 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testFnAndNUnconvertedParams1 - 12", "1",jsCard.getVCard().getConvertedProperties().get("name/components").getParameters().get("pid").getValue());
         assertEquals("testFnAndNUnconvertedParams1 - 13","n", jsCard.getVCard().getConvertedProperties().get("name/components").getName());
 
+    }
+    
+    @Test
+    public void testFnAndNUnconvertedParams2() throws CardException {
+
+        String vcard = "BEGIN:VCARD\n" +
+                "VERSION:4.0\n" +
+                "FN;PID=1;DERIVED=true;ALTID=1:Mr. Ivan Petrovich Vasiliev\n" +
+                "FN;PID=2;DERIVED=true;LANGUAGE=uk-Cyrl;ALTID=1:г-н Иван Петрович Васильев\n" +
+                "N;PID=3;ALTID=1:Vasiliev;Ivan;Petrovich;Mr.;;;\n" +
+                "N;PID=4;LANGUAGE=uk-Cyrl;ALTID=1:Васильев;Иван;Петрович;г-н;;;\n" +
+                "END:VCARD";
+
+        Card jsCard = vCard2JSContact.convert(vcard).get(0);
+        assertEquals("testFnAndNUnconvertedParams2 - 1", 4, jsCard.getName().getComponents().length);
+        assertEquals("testFnAndNUnconvertedParams2 - 2", "Vasiliev", jsCard.getName().getSurname());
+        assertEquals("testFnAndNUnconvertedParams2 - 3", "Ivan", jsCard.getName().getGiven());
+        assertEquals("testFnAndNUnconvertedParams2 - 4", "Petrovich", jsCard.getName().getGiven2());
+        assertTrue("testFnAndNUnconvertedParams2 - 5",  jsCard.getName().getComponents()[3].isTitle());
+        assertEquals("testFnAndNUnconvertedParams2 - 6", "Mr.", jsCard.getName().getComponents()[3].getValue());
+        assertEquals("testFnAndNUnconvertedParams2 - 7", 1, jsCard.getLocalizationsPerLanguage("uk-Cyrl").size());
+        assertNotNull("testFnAndNUnconvertedParams2 - 8",  jsCard.getLocalization("uk-Cyrl","name"));
+        Name nameLocalization = (Name) JsonNodeUtils.toObject(jsCard.getLocalization("uk-Cyrl","name"), Name.class);
+        assertEquals("testFnAndNUnconvertedParams2 - 9", "Васильев", nameLocalization.getSurname());
+        assertEquals("testFnAndNUnconvertedParams2 - 10", "Иван", nameLocalization.getGiven());
+        assertEquals("testFnAndNUnconvertedParams2 - 11", "Петрович", nameLocalization.getGiven2());
+        assertTrue("testFnAndNUnconvertedParams2 - 12",  nameLocalization.getComponents()[3].isTitle());
+        assertEquals("testFnAndNUnconvertedParams2 - 13", "г-н", nameLocalization.getComponents()[3].getValue());
+        assertEquals("testFnAndNUnconvertedParams2 - 14", "1",jsCard.getVCard().getConvertedProperties().get("name/full").getParameters().get("pid").getValue());
+        assertEquals("testFnAndNUnconvertedParams2 - 15","fn", jsCard.getVCard().getConvertedProperties().get("name/full").getName());
+        assertEquals("testFnAndNUnconvertedParams2 - 16", "2",jsCard.getVCard().getConvertedProperties().get("localizations/uk-Cyrl/name~1full").getParameters().get("pid").getValue());
+        assertEquals("testFnAndNUnconvertedParams2 - 17","fn", jsCard.getVCard().getConvertedProperties().get("localizations/uk-Cyrl/name~1full").getName());
+        assertEquals("testFnAndNUnconvertedParams2 - 18", "3",jsCard.getVCard().getConvertedProperties().get("name/components").getParameters().get("pid").getValue());
+        assertEquals("testFnAndNUnconvertedParams2 - 19","n", jsCard.getVCard().getConvertedProperties().get("name/components").getName());
+        assertEquals("testFnAndNUnconvertedParams2 - 20", "4",jsCard.getVCard().getConvertedProperties().get("localizations/uk-Cyrl/name~1components").getParameters().get("pid").getValue());
+        assertEquals("testFnAndNUnconvertedParams2 - 21","n", jsCard.getVCard().getConvertedProperties().get("localizations/uk-Cyrl/name~1components").getName());
     }
 
 }
