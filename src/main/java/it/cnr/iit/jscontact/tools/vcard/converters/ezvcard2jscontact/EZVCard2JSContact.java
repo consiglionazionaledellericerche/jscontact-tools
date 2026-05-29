@@ -860,10 +860,16 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     jsCard.addLocalization(language, "name/phoneticScript", JsonNodeUtils.textNode(name.getPhoneticScript()));
 
                 if (name.getPhoneticSystem()!=null)
-                    addVCardUnconvertedParams(jsCard,String.format("localizations/%s/name~1phoneticSystem", language), "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
+                    if (language == null)
+                        addVCardUnconvertedParams(jsCard, "name", "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
+                    else
+                        addVCardUnconvertedParams(jsCard,String.format("localizations/%s/name~1phoneticSystem", language), "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
                 else {
                     if (name.getPhoneticScript()!=null) {
-                        addVCardUnconvertedParams(jsCard,String.format("localizations/%s/name~1phoneticScript", language), "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
+                        if (language == null)
+                            addVCardUnconvertedParams(jsCard,"name", "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
+                        else
+                            addVCardUnconvertedParams(jsCard,String.format("localizations/%s/name~1phoneticScript", language), "n", VCardUtils.getVCardParamsOtherThan(vcardNames.get(i), VCardParamEnum.LANGUAGE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.JSCOMPS, VCardParamEnum.PHONETIC, VCardParamEnum.SCRIPT));
                     }
                 }
 
