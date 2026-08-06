@@ -13,6 +13,8 @@ public class RoundtripTest {
                                                                                                             .setAutoAddrLabel(false)
                                                                                                             .setJsidParam(false)
                                                                                                              .convertTimezoneToOffset(true)
+                                                                                                            .convertCoordinatesToGEOProp(true)
+                                                                                                            .convertTimeZoneToTZProp(true)
                                                                                                              .build())
                                                                                .build();
 

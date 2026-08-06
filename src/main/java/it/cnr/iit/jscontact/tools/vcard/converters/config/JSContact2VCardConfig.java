@@ -43,5 +43,9 @@ public class JSContact2VCardConfig {
     private boolean setJsidParam = true;
     @Builder.Default
     private boolean convertTimezoneToOffset = false;
+    @Builder.Default
+    private boolean convertTimeZoneToTZProp = false;
+    @Builder.Default
+    private boolean convertCoordinatesToGEOProp = false;
 
 }

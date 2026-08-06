@@ -203,6 +203,9 @@ public class AddressesTest extends RoundtripTest {
         JSContact2VCard jsContact2VCard = JSContact2VCard.builder().config(JSContact2VCardConfig.builder()
                         .setAutoAddrLabel(false)
                         .setJsidParam(false)
+                        .convertTimeZoneToTZProp(true)
+                        .convertCoordinatesToGEOProp(true)
+                        .convertTimezoneToOffset(true)
                         .build())
                 .build();
 

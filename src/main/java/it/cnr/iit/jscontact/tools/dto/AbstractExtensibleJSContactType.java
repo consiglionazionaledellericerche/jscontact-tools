@@ -56,12 +56,15 @@ public abstract class AbstractExtensibleJSContactType {
     String vCardPropNameOfUnconvertedParams;
 
     @JsonIgnore
+    String jsContactPropNameOfUnconvertedParams;
+
+    @JsonIgnore
     Map<String, VCardParam> vCardUnconvertedParams;
 
     public void buildAllVCardUnconvertedParmsOfConvertedPropertiesMap(Map<String,VCardProperty> map, String jsonPointer) {
 
         if (vCardUnconvertedParams != null) {
-                map.put(jsonPointer,
+                map.put((jsContactPropNameOfUnconvertedParams!=null) ? String.format("%s/%s",jsonPointer,jsContactPropNameOfUnconvertedParams) : jsonPointer,
                         VCardProperty.builder()
                                 .name(vCardPropNameOfUnconvertedParams)
                                 .parameters(vCardUnconvertedParams)

@@ -456,25 +456,29 @@ All the methods take in input a list of JSContact Card objects and can raise the
     - `setAutoAddrLabel = true`
     - `setJsidParam = true`
     - `convertTimezoneToOffset = false`
+    - `convertTimeZoneToTZProp = false`
+    - `convertCoordinatesToGEOProp = false`
 
-5. The "timeZone" property can be mapped to either a TZ parameter or the TZ property either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`    
+5. The "timeZone" property can be mapped to either a TZ parameter (convertTimeZoneToTZProp=false) or the TZ property (convertTimeZoneToTZProp=true) either preserving the time zone name or the time zone offset extracted from the `customTimeZones` map. Time zone names in the format "Etc/GMT(+|-).." can be mapped to offsets based on the value of mapping configuration parameter `convertTimezoneToOffset`
 
-6. If the "name.full" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
+6. The "coordinates" property can be mapped to either a GEO parameter (convertCoordinatesToGEOProp=false) or the GEO property (convertCoordinatesToGEOProp=true).
 
-7. The "street" component of ADR property results from the concatenation of "district", "block", "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "defaultSeparator"/"separator" value if present, comma otherwise.
+7. If the "name.full" property is missing, the FN value is generated starting from the "name" property. The name components are separated by the "separator" value if present, space otherwise. If the "name" property is missing as well, the FN value is set to the "uid" property.
 
-8. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room", "landmark"
+8. The "street" component of ADR property results from the concatenation of "district", "block", "name", "number" and "direction" non-empty values presented in the "street" member of the "Address" object. Such values are separated by the "defaultSeparator"/"separator" value if present, comma otherwise.
+
+9. The "extension" component of ADR property results from the concatenation of "building", "floor", "apartment", "room", "landmark"
    and "extention" non-empty values presented in the "components" member of the "Address" object. Such values are separated
    by the "defaultSeparator"/"separator" value if present, comma otherwise.
 
-9. The LABEL parameter of the ADR property is equal to the "full" property of the "Address" object. If the full
-   address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL
-   parameter can result from the newline-delimited concatenation of the non-empty "Address" members or.
+10. The LABEL parameter of the ADR property is equal to the "full" property of the "Address" object. If the full
+    address is missing, based on the value of mapping configuration parameter `setAutoAddrLabel`, the value of the LABEL
+    parameter can result from the newline-delimited concatenation of the non-empty "Address" members or.
 
-10. The "JSID" parameter, or the "PROP-ID" parameter if the "JSID" parameter is missing, can be mapped to the value of a map key based on the value of the `setJsidParam` mapping 
+11. The "JSID" parameter, or the "PROP-ID" parameter if the "JSID" parameter is missing, can be mapped to the value of a map key based on the value of the `setJsidParam` mapping 
     configuration parameter.
 
-10. The "countryCode" member of the Address type always converts to the vCard CC parameter.
+12. The "countryCode" member of the Address type always converts to the vCard CC parameter.
 
 ### Conversion examples
 

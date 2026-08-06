@@ -45,7 +45,7 @@ public class OnlineServiceTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                     "\"convertedProperties\": { " +
-                        "\"onlineServices/OS-1\": { " +
+                        "\"onlineServices/OS-1/uri\": { " +
                             "\"name\": \"impp\" " +
                         "}" +
                     "}" +

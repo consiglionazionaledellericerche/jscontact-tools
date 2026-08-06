@@ -73,7 +73,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         return null;
     }
 
-    private void addVCardX_ABLabel(HasLabel jsContactType, VCardProperty vcardProperty, VCard vcard) {
+    private void addVCardX_ABLabel(HasLabel jsContactType, VCardProperty vcardProperty, VCard vcard, Map<String, VCardParam> unconvertedParams) {
 
         if (jsContactType.getLabel()==null)
             return;
@@ -81,6 +81,7 @@ public class JSContact2EZVCard extends AbstractConverter {
         String group = (vcardProperty.getGroup() != null) ? vcardProperty.getGroup() : "G-" + getJSIDParameter(vcardProperty);
         RawProperty rawProperty = new RawProperty(VCardPropEnum.X_ABLABEL.getValue(),jsContactType.getLabel(),VCardDataType.TEXT);
         rawProperty.setGroup(group);
+        VCardUtils.addVCardUnmatchedParams(rawProperty,unconvertedParams);
         vcard.addProperty(rawProperty);
         if (vcardProperty.getGroup() == null) vcardProperty.setGroup(group);
     }
@@ -559,17 +560,17 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Map.Entry<String, Nickname> entry : jsCard.getNicknames().entrySet()) {
             if (jsCard.getLocalizationsPerPath("nicknames/"+entry.getKey()) == null &&
-                    jsCard.getLocalizationsPerPath("nicknames/"+entry.getKey()+"/name")==null) {
+                    jsCard.getLocalizationsPerPath(String.format("nicknames/%s/name",entry.getKey()))==null) {
                 ezvcard.property.Nickname nickname = toVCardNickname(entry.getValue());
                 addVCardJsidParam(nickname, entry.getKey());
-                VCardUtils.addVCardUnmatchedParams(nickname, getVCardUnconvertedParamsByJsonPointer(jsCard,"nicknames/"+entry.getKey()));
+                VCardUtils.addVCardUnmatchedParams(nickname, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("nicknames/%s/name",entry.getKey())));
                 vcard.addNickname(nickname);
             }
             else {
                 List<ezvcard.property.Nickname> nicknames = new ArrayList<>();
                 ezvcard.property.Nickname nickname = toVCardNickname(entry.getValue());
                 addVCardJsidParam(nickname, entry.getKey());
-                VCardUtils.addVCardUnmatchedParams(nickname, getVCardUnconvertedParamsByJsonPointer(jsCard,"nicknames/"+entry.getKey()));
+                VCardUtils.addVCardUnmatchedParams(nickname, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("nicknames/%s/name",entry.getKey())));
                 nicknames.add(nickname);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("nicknames/"+entry.getKey());
@@ -582,7 +583,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         nicknames.add(nickname);
                     }
                 }
-                localizations = jsCard.getLocalizationsPerPath("nicknames/"+entry.getKey()+"/name");
+                localizations = jsCard.getLocalizationsPerPath(String.format("nicknames/%s/name",entry.getKey()));
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
                         nickname = new ezvcard.property.Nickname();
@@ -681,13 +682,13 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     private String toVCardTimezoneAsTextValue(String timeZone)   {
 
-      if (timeZone == null)
-          return null;
+        if (timeZone == null)
+            return null;
 
-      if (config.isConvertTimezoneToOffset())
-          return toVCardOffsetValueFromTimezone(timeZone);
-      else
-          return timeZone;
+        if (config.isConvertTimezoneToOffset())
+            return toVCardOffsetValueFromTimezone(timeZone);
+        else
+            return timeZone;
     }
 
     private Timezone toVCardTimezone(String timeZone)   {
@@ -709,7 +710,39 @@ public class JSContact2EZVCard extends AbstractConverter {
         return (coordinates!=null) ? GeoUri.parse(coordinates) : null;
     }
 
-    private ExtendedAddress toVCardAddress(Address address, Map<String, TimeZone> timeZones, String language) {
+
+    private void convertTimezonesAndCoordinates(ExtendedAddress vCardAddress, Address jsContactAddress, String addressKey, Map<String, TimeZone> timeZones, VCard vcard, Card jsCard) {
+
+        if (jsContactAddress.getTimeZone() != null) {
+            TimeZone timeZone = null;
+            Timezone tz = null;
+            if (timeZones != null)
+                timeZone = timeZones.get(jsContactAddress.getTimeZone());
+            if (timeZone != null) {
+                if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
+                    tz = new Timezone(UtcOffset.parse((timeZone.getStandard().get(0).getOffsetFrom())));
+            } else
+                tz = toVCardTimezone(jsContactAddress.getTimeZone());
+
+            if (tz != null) {
+                if (config.isConvertTimeZoneToTZProp() || getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("addresses/%s/timeZone", addressKey)) != null) {
+                    VCardUtils.addVCardUnmatchedParams(tz, getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("addresses/%s/timeZone", addressKey)));
+                    vcard.addTimezone(tz);
+                } else
+                    vCardAddress.setTimezone(toVCardTimezoneAsTextValue(jsContactAddress.getTimeZone()));
+            }
+        }
+
+        if (jsContactAddress.getCoordinates() !=null ) {
+            if (config.isConvertCoordinatesToGEOProp() || getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("addresses/%s/coordinates", addressKey)) != null) {
+                Geo geo = new Geo(toVCardGeoUri(jsContactAddress.getCoordinates()));
+                VCardUtils.addVCardUnmatchedParams(geo, getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("addresses/%s/coordinates", addressKey)));
+                vcard.addGeo(geo);
+            } else
+                vCardAddress.setGeo(toVCardGeoUri(jsContactAddress.getCoordinates()));
+        }
+    }
+    private ExtendedAddress toVCardAddress(Address address,  String language) {
 
         ExtendedAddress addr = new ExtendedAddress();
         if (!isVCardNullAddress(address)) {
@@ -736,17 +769,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             addr.setSubDistrict(address.getSubDistrict());
             addr.setDistrict(address.getDistrict());
             addr.setPref(address.getPref());
-            if (address.getTimeZone() != null) {
-                TimeZone timeZone = null;
-                if (timeZones != null)
-                    timeZone = timeZones.get(address.getTimeZone());
-                if (timeZone != null) {
-                    if (timeZone.getStandard() != null && timeZone.getStandard().size() > 0)
-                        addr.setTimezone(timeZone.getStandard().get(0).getOffsetFrom());
-                } else
-                    addr.setTimezone(toVCardTimezoneAsTextValue(address.getTimeZone()));
-            }
-            addr.setGeo(toVCardGeoUri(address.getCoordinates()));
             if (address.getCountryCode() != null)
                 addr.setParameter(VCardParamEnum.CC.getValue(), address.getCountryCode());
             if (address.hasContext()) {
@@ -842,7 +864,6 @@ public class JSContact2EZVCard extends AbstractConverter {
 
     }
 
-
     private void fillVCardAddresses(VCard vcard, Card jsCard) {
 
         if (jsCard.getAddresses() == null)
@@ -855,16 +876,18 @@ public class JSContact2EZVCard extends AbstractConverter {
                 continue;
 
             if (jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/full")==null) {
-                entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"addresses/"+entry.getKey()));
-                ExtendedAddress addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
+                jsCard.getLocalizationsPerPath(String.format("addresses/%s/full",entry.getKey()))==null) {
+                entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("addresses/%s/components",entry.getKey())));
+                ExtendedAddress addr = toVCardAddress(address, jsCard.getLanguage());
+                convertTimezonesAndCoordinates(addr, address, entry.getKey(), jsCard.getCustomTimeZones(), vcard, jsCard);
                 addVCardJsidParam(addr, entry.getKey());
                 vcard.addProperty(addr);
             }
             else {
                 List<ExtendedAddress> addrs = new ArrayList<>();
-                entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"addresses/"+entry.getKey()));
-                ExtendedAddress addr = toVCardAddress(address, jsCard.getCustomTimeZones(), jsCard.getLanguage());
+                entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("addresses/%s/components",entry.getKey())));
+                ExtendedAddress addr = toVCardAddress(address, jsCard.getLanguage());
+                convertTimezonesAndCoordinates(addr, address, entry.getKey(), jsCard.getCustomTimeZones(), vcard, jsCard);
                 addVCardJsidParam(addr, entry.getKey());
                 addrs.add(addr);
 
@@ -877,17 +900,19 @@ public class JSContact2EZVCard extends AbstractConverter {
                             address2.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/addresses~1%s~1phoneticSystem", localization.getKey(), entry.getKey())));
                         if (address2.getVCardUnconvertedParams() == null)
                             address2.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/addresses~1%s~1phoneticScript", localization.getKey(), entry.getKey())));
-                        addr = toVCardAddress(address2, jsCard.getCustomTimeZones(), localization.getKey());
+                        addr = toVCardAddress(address2, localization.getKey());
+                        convertTimezonesAndCoordinates(addr, address2, entry.getKey(), jsCard.getCustomTimeZones(), vcard, jsCard);
                         addVCardJsidParam(addr, entry.getKey());
                         addrs.add(addr);
                     }
                 }
-                localizations = jsCard.getLocalizationsPerPath("addresses/"+entry.getKey()+"/full");
+                localizations = jsCard.getLocalizationsPerPath(String.format("addresses/%s/full",entry.getKey()));
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
                         Address address2 = Address.builder().full(localization.getValue().asText()).build();
                         address2.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("localizations/%s/addresses~1%s~1full", localization.getKey(), entry.getKey())));
-                        addr = toVCardAddress(address2, jsCard.getCustomTimeZones(), localization.getKey());
+                        addr = toVCardAddress(address2, localization.getKey());
+                        convertTimezonesAndCoordinates(addr, address2, entry.getKey(), jsCard.getCustomTimeZones(), vcard, jsCard);
                         addVCardJsidParam(addr, entry.getKey());
                         addrs.add(addr);
                     }
@@ -962,7 +987,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 switch (anniversary.getKind().getRfcValue()) {
                     case BIRTH:
                         vcard.setBirthday(toVCardDateOrTimeProperty(Birthday.class, anniversary));
-                        VCardUtils.addVCardUnmatchedParams(vcard.getBirthday(),getVCardUnconvertedParamsByJsonPointer(jsCard,"anniversaries/"+entry.getKey()));
+                        VCardUtils.addVCardUnmatchedParams(vcard.getBirthday(),getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("anniversaries/%s/date",entry.getKey())));
                         addVCardJsidParam(vcard.getBirthday(), entry.getKey());
                         Birthplace birthplace = toVCardPlaceProperty(Birthplace.class, anniversary);
                         if (birthplace!=null) {
@@ -973,7 +998,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         break;
                     case DEATH:
                         vcard.setDeathdate(toVCardDateOrTimeProperty(Deathdate.class, anniversary));
-                        VCardUtils.addVCardUnmatchedParams(vcard.getDeathdate(),getVCardUnconvertedParamsByJsonPointer(jsCard,"anniversaries/"+entry.getKey()));
+                        VCardUtils.addVCardUnmatchedParams(vcard.getDeathdate(),getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("anniversaries/%s/date",entry.getKey())));
                         addVCardJsidParam(vcard.getDeathdate(), entry.getKey());
                         Deathplace deathplace = toVCardPlaceProperty(Deathplace.class, anniversary);
                         if (deathplace!=null) {
@@ -984,7 +1009,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         break;
                     case WEDDING:
                         vcard.setAnniversary(toVCardDateOrTimeProperty(ezvcard.property.Anniversary.class, anniversary));
-                        VCardUtils.addVCardUnmatchedParams(vcard.getAnniversary(),getVCardUnconvertedParamsByJsonPointer(jsCard,"anniversaries/"+entry.getKey()));
+                        VCardUtils.addVCardUnmatchedParams(vcard.getAnniversary(),getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("anniversaries/%s/date",entry.getKey())));
                         addVCardJsidParam(vcard.getAnniversary(), entry.getKey());
                         break;
                 }
@@ -1040,22 +1065,22 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String, PersonalInfo> entry : jsCard.getPersonalInfo().entrySet()) {
             PersonalInfo pi = entry.getValue();
             pi.setJsid(entry.getKey());
-            pi.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard, "personalInfo/"+entry.getKey()));
+            pi.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("personalInfo/%s/value", entry.getKey())));
             if (pi.getKind() != null && pi.getKind().isRfcValue()) {
                 switch (pi.getKind().getRfcValue()) {
                     case EXPERTISE:
                         Expertise e = toVCardExpertise(pi);
-                        addVCardX_ABLabel(pi, e, vcard);
+                        addVCardX_ABLabel(pi,e,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("personalInfo/%s/label", entry.getKey())));
                         vcard.getExpertise().add(e);
                         break;
                     case HOBBY:
                         Hobby h = toVCardHobby(pi);
-                        addVCardX_ABLabel(pi,h,vcard);
+                        addVCardX_ABLabel(pi,h,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("personalInfo/%s/label", entry.getKey())));
                         vcard.getHobbies().add(h);
                         break;
                     case INTEREST:
                         Interest i = toVCardInterest(pi);
-                        addVCardX_ABLabel(pi,i,vcard);
+                        addVCardX_ABLabel(pi,i,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("personalInfo/%s/label", entry.getKey())));
                         vcard.getInterests().add(i);
                         break;
                 }
@@ -1118,9 +1143,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String, Phone> entry : jsCard.getPhones().entrySet()) {
             Phone phone = entry.getValue();
             phone.setJsid(entry.getKey());
-            phone.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard, "phones/"+entry.getKey()));
+            phone.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("phones/%s/number",entry.getKey())));
             Telephone vcardPhone = toVCardTelephone(phone);
-            addVCardX_ABLabel(phone,vcardPhone,vcard);
+            addVCardX_ABLabel(phone,vcardPhone,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("phones/%s/label",entry.getKey())));
             vcard.getTelephoneNumbers().add(vcardPhone);
         }
     }
@@ -1147,9 +1172,9 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,EmailAddress> entry : jsCard.getEmails().entrySet()) {
             EmailAddress email = entry.getValue();
             email.setJsid(entry.getKey());
-            email.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard, "emails/"+entry.getKey()));
+            email.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("emails/%s/address", entry.getKey())));
             Email vcardEmail = toVCardEmail(email);
-            addVCardX_ABLabel(email,vcardEmail,vcard);
+            addVCardX_ABLabel(email,vcardEmail,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard, String.format("emails/%s/label", entry.getKey())));
             vcard.getEmails().add(vcardEmail);
         }
     }
@@ -1199,7 +1224,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             fillVCardProperty(object,resource);
             VCardUtils.addVCardUnmatchedParams(object,resource.getVCardUnconvertedParams());
             addVCardJsidParam(object, resource.getJsid());
-            addVCardX_ABLabel(resource, object, vcard);
             return object;
         } catch (Exception e) {
             throw new InternalErrorException(e.getMessage());
@@ -1292,7 +1316,6 @@ public class JSContact2EZVCard extends AbstractConverter {
             fillVCardProperty(object,resource);
             VCardUtils.addVCardUnmatchedParams(object,resource.getVCardUnconvertedParams());
             addVCardJsidParam(object, resource.getJsid());
-            addVCardX_ABLabel(resource, object, vcard);
             return object;
         } catch (Exception e) {
             throw new InternalErrorException(e.getMessage());
@@ -1368,20 +1391,20 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for(Map.Entry<String, OnlineService> entry : jsCard.getOnlineServices().entrySet()) {
             OnlineService onlineService = entry.getValue();
-            onlineService.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"onlineServices/"+entry.getKey()));
+            onlineService.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("onlineServices/%s/uri", entry.getKey())));
             if (jsCard.getVCard()!=null &&
                 !jsCard.getVCard().getConvertedProperties().isEmpty() &&
-                jsCard.getVCard().getConvertedProperties().get("onlineServices/"+entry.getKey())!=null &&
-                jsCard.getVCard().getConvertedProperties().get("onlineServices/"+entry.getKey()).getName().equals("impp")) {
+                jsCard.getVCard().getConvertedProperties().get(String.format("onlineServices/%s/uri",entry.getKey()))!=null &&
+                jsCard.getVCard().getConvertedProperties().get(String.format("onlineServices/%s/uri",entry.getKey())).getName().equals("impp")) {
 
                 Impp impp = toVCardImpp(onlineService);
                 addVCardJsidParam(impp, entry.getKey());
-                addVCardX_ABLabel(onlineService, impp, vcard);
+                addVCardX_ABLabel(onlineService, impp, vcard, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("onlineServices/%s/label", entry.getKey())));
                 vcard.getImpps().add(impp);
             } else {
                 RawProperty rawProperty = toVCardSocialProfile(onlineService);
                 addVCardJsidParam(rawProperty, entry.getKey());
-                addVCardX_ABLabel(onlineService, rawProperty, vcard);
+                addVCardX_ABLabel(onlineService, rawProperty, vcard, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("onlineServices/%s/label", entry.getKey())));
                 vcard.addProperty(rawProperty);
             }
         }
@@ -1410,8 +1433,8 @@ public class JSContact2EZVCard extends AbstractConverter {
             SchedulingAddress s = entry.getValue();
             s.setJsid(entry.getKey());
             CalendarRequestUri vcardCaladruri = toVCardCaladruri(s);
-            VCardUtils.addVCardUnmatchedParams(vcardCaladruri, getVCardUnconvertedParamsByJsonPointer(jsCard,"schedulingAddresses/"+entry.getKey()));
-            addVCardX_ABLabel(s,vcardCaladruri,vcard);
+            VCardUtils.addVCardUnmatchedParams(vcardCaladruri, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("schedulingAddresses/%s/uri",entry.getKey())));
+            addVCardX_ABLabel(s,vcardCaladruri,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("schedulingAddresses/%s/label",entry.getKey())));
             vcard.getCalendarRequestUris().add(vcardCaladruri);
         }
     }
@@ -1425,14 +1448,18 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             Calendar resource = entry.getValue();
             resource.setJsid(entry.getKey());
-            resource.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"calendars/"+entry.getKey()));
+            resource.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("calendars/%s/uri", entry.getKey())));
             if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                 switch (resource.getKind().getRfcValue()) {
                     case FREEBUSY:
-                        vcard.getFbUrls().add(toVCardUriProperty(FreeBusyUrl.class, resource, vcard));
+                        FreeBusyUrl fburl = toVCardUriProperty(FreeBusyUrl.class, resource, vcard);
+                        addVCardX_ABLabel(resource, fburl, vcard, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("calendars/%s/label", entry.getKey())));
+                        vcard.getFbUrls().add(fburl);
                         break;
                     case CALENDAR:
-                        vcard.getCalendarUris().add(toVCardUriProperty(CalendarUri.class, resource, vcard));
+                        CalendarUri caluri = toVCardUriProperty(CalendarUri.class, resource, vcard);
+                        addVCardX_ABLabel(resource, caluri, vcard, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("calendars/%s/label", entry.getKey())));
+                        vcard.getCalendarUris().add(caluri);
                         break;
                 }
             }
@@ -1447,9 +1474,9 @@ public class JSContact2EZVCard extends AbstractConverter {
 
         for (Map.Entry<String, CryptoKey> entry : jsCard.getCryptoKeys().entrySet()) {
             Key key = toVCardKeyProperty(Key.class, entry.getValue());
-            VCardUtils.addVCardUnmatchedParams(key,getVCardUnconvertedParamsByJsonPointer(jsCard,"cryptoKeys/"+entry.getKey()));
+            VCardUtils.addVCardUnmatchedParams(key,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("cryptoKeys/%s/uri",entry.getKey())));
             addVCardJsidParam(key, entry.getKey());
-            addVCardX_ABLabel(entry.getValue(),key,vcard);
+            addVCardX_ABLabel(entry.getValue(),key,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("cryptoKeys/%s/label",entry.getKey())));
             vcard.getKeys().add(key);
         }
     }
@@ -1463,9 +1490,12 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             Link resource = entry.getValue();
             resource.setJsid(entry.getKey());
-            resource.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"links/"+ entry.getKey()));
-            if (resource.isGenericLink())
-                vcard.getUrls().add(toVCardUriProperty(Url.class,resource,vcard));
+            resource.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("links/%s/uri",entry.getKey())));
+            if (resource.isGenericLink()) {
+                Url url = toVCardUriProperty(Url.class, resource, vcard);
+                addVCardX_ABLabel(resource,url,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("links/%s/label",entry.getKey())));
+                vcard.getUrls().add(url);
+            }
             else {
                 if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                     switch (resource.getKind().getRfcValue()) {
@@ -1474,6 +1504,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                             fillVCardProperty(rp, resource);
                             addVCardJsidParam(rp, resource.getJsid());
                             VCardUtils.addVCardUnmatchedParams(rp,resource.getVCardUnconvertedParams());
+                            addVCardX_ABLabel(resource,rp,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("links/%s/label",entry.getKey())));
                             vcard.getExtendedProperties().add(rp);
                             break;
                     }
@@ -1491,23 +1522,24 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             Media resource = entry.getValue();
             resource.setJsid(entry.getKey());
-            resource.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"media/"+entry.getKey()));
+            resource.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("media/%s/uri",entry.getKey())));
             if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                 switch (resource.getKind().getRfcValue()) {
                     case SOUND:
                         Sound sound = toVCardSoundProperty(Sound.class, resource);
                         addVCardJsidParam(sound, resource.getJsid());
-                        addVCardX_ABLabel(resource, sound, vcard);
+                        addVCardX_ABLabel(resource,sound,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("media/%s/label",entry.getKey())));
                         vcard.getSounds().add(sound);
                         break;
                     case LOGO:
-                        vcard.getLogos().add(toVCardImageProperty(Logo.class, resource, vcard));
+                        Logo logo = toVCardImageProperty(Logo.class, resource, vcard);
+                        addVCardX_ABLabel(resource,logo,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("media/%s/label",entry.getKey())));
+                        vcard.getLogos().add(logo);
                         break;
                     case PHOTO:
                         Photo photo = toVCardPhoto(resource);
-                        if (photo == null) continue;
                         addVCardJsidParam(photo, entry.getKey());
-                        addVCardX_ABLabel(resource, photo, vcard);
+                        addVCardX_ABLabel(resource,photo,vcard,getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("media/%s/label",entry.getKey())));
                         vcard.getPhotos().add(photo);
                 }
             }
@@ -1523,14 +1555,17 @@ public class JSContact2EZVCard extends AbstractConverter {
 
             Directory resource = entry.getValue();
             resource.setJsid(entry.getKey());
-            resource.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"directories/"+entry.getKey()));
+            resource.setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("directories/%s/uri", entry.getKey())));
             if (resource.getKind()!=null && resource.getKind().isRfcValue()) {
                 switch (resource.getKind().getRfcValue()) {
                     case ENTRY:
-                        vcard.getSources().add(toVCardUriProperty(Source.class, resource, vcard));
+                        Source source = toVCardUriProperty(Source.class, resource, vcard);
+                        addVCardX_ABLabel(resource, source, vcard, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("directories/%s/label", entry.getKey())));
+                        vcard.getSources().add(source);
                         break;
                     case DIRECTORY:
                         OrgDirectory od = toVCardUriProperty(OrgDirectory.class, resource, vcard);
+                        addVCardX_ABLabel(resource, od, vcard, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("directories/%s/label", entry.getKey())));
                         od.setIndex(resource.getListAs());
                         vcard.getOrgDirectories().add(od);
                         break;
@@ -1596,12 +1631,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (entry.getValue().getKind() == null || entry.getValue().getKind().isTitle()) {
                     ezvcard.property.Title title = toVCardTitle(entry.getValue(), vcard);
                     addVCardJsidParam(title, entry.getKey());
-                    VCardUtils.addVCardUnmatchedParams(title, getVCardUnconvertedParamsByJsonPointer(jsCard,"titles/"+entry.getKey()));
+                    VCardUtils.addVCardUnmatchedParams(title, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("titles/%s/name",entry.getKey())));
                     vcard.addTitle(title);
                 } else {
                     ezvcard.property.Role role = toVCardRole(entry.getValue(), vcard);
                     addVCardJsidParam(role, entry.getKey());
-                    VCardUtils.addVCardUnmatchedParams(role, getVCardUnconvertedParamsByJsonPointer(jsCard,"titles/"+entry.getKey()));
+                    VCardUtils.addVCardUnmatchedParams(role, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("titles/%s/name",entry.getKey())));
                     vcard.addRole(role);
                 }
             }
@@ -1612,12 +1647,12 @@ public class JSContact2EZVCard extends AbstractConverter {
                 if (entry.getValue().getKind() == null || entry.getValue().getKind().isTitle()) {
                     ezvcard.property.Title title = toVCardTitle(entry.getValue(), vcard);
                     addVCardJsidParam(title, entry.getKey());
-                    VCardUtils.addVCardUnmatchedParams(title, getVCardUnconvertedParamsByJsonPointer(jsCard,"titles/"+entry.getKey()));
+                    VCardUtils.addVCardUnmatchedParams(title, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("titles/%s/name",entry.getKey())));
                     titles.add(title);
                 } else {
                     ezvcard.property.Role role = toVCardRole(entry.getValue(), vcard);
                     addVCardJsidParam(role, entry.getKey());
-                    VCardUtils.addVCardUnmatchedParams(role, getVCardUnconvertedParamsByJsonPointer(jsCard,"titles/"+entry.getKey()));
+                    VCardUtils.addVCardUnmatchedParams(role, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("titles/%s/name",entry.getKey())));
                     roles.add(role);
                 }
 
@@ -1640,7 +1675,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         }
                     }
                 }
-                localizations = jsCard.getLocalizationsPerPath("titles/"+entry.getKey()+"/name");
+                localizations = jsCard.getLocalizationsPerPath(String.format("titles/%s/name",entry.getKey()));
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
                         if (jsCard.getTitles().get(entry.getKey()).getKind() == null || jsCard.getTitles().get(entry.getKey()).getKind().isTitle()) {
@@ -1709,16 +1744,16 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,Organization> entry : jsCard.getOrganizations().entrySet()) {
 
             if (jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()) == null &&
-                jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name")==null &&
-                jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/units")==null) {
-                entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"organizations/"+entry.getKey()));
+                jsCard.getLocalizationsPerPath(String.format("organizations/%s/name",entry.getKey()))==null &&
+                jsCard.getLocalizationsPerPath(String.format("organizations/%s/units",entry.getKey()))==null) {
+                entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("organizations/%s/name",entry.getKey())));
                 ezvcard.property.Organization org = toVCardOrganization(entry.getValue());
                 addVCardJsidParam(org, entry.getKey());
                 vcard.getOrganizations().add(org);
             }
             else {
                 List<ezvcard.property.Organization> organizations = new ArrayList<>();
-                entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,"organizations/"+entry.getKey()));
+                entry.getValue().setVCardUnconvertedParams(getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("organizations/%s/name",entry.getKey())));
                 ezvcard.property.Organization org = toVCardOrganization(entry.getValue());
                 addVCardJsidParam(org, entry.getKey());
                 organizations.add(org);
@@ -1734,10 +1769,10 @@ public class JSContact2EZVCard extends AbstractConverter {
                         organizations.add(org);
                    }
                 }
-                localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/name");
+                localizations = jsCard.getLocalizationsPerPath(String.format("organizations/%s/name",entry.getKey()));
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
-                        ArrayNode units = (ArrayNode) jsCard.getLocalization(localization.getKey(),"organizations/"+entry.getKey()+"/units");
+                        ArrayNode units = (ArrayNode) jsCard.getLocalization(localization.getKey(),String.format("organizations/%s/units",entry.getKey()));
                         org = new ezvcard.property.Organization();
                         org.getValues().add(localization.getValue().asText());
                         if (units!=null)
@@ -1748,10 +1783,10 @@ public class JSContact2EZVCard extends AbstractConverter {
                         organizations.add(org);
                     }
                 }
-                localizations = jsCard.getLocalizationsPerPath("organizations/"+entry.getKey()+"/units"); // check for only org units localized
+                localizations = jsCard.getLocalizationsPerPath(String.format("organizations/%s/units",entry.getKey())); // check for only org units localized
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
-                        if (jsCard.getLocalization(localization.getKey(),"organizations/"+entry.getKey()+"/name") != null)
+                        if (jsCard.getLocalization(localization.getKey(),String.format("organizations/%s/name",entry.getKey())) != null)
                             continue; //skip because already done
                         org = new ezvcard.property.Organization();
                         org.getValues().add(StringUtils.EMPTY);
@@ -1790,17 +1825,17 @@ public class JSContact2EZVCard extends AbstractConverter {
         for (Map.Entry<String,Note> entry : jsCard.getNotes().entrySet()) {
 
             if (jsCard.getLocalizationsPerPath("notes/"+entry.getKey()) == null &&
-                    jsCard.getLocalizationsPerPath("notes/"+entry.getKey()+"/note")==null) {
+                    jsCard.getLocalizationsPerPath(String.format("notes/%s/note",entry.getKey()))==null) {
                 ezvcard.property.Note note = toVCardNote(entry.getValue());
                 addVCardJsidParam(note, entry.getKey());
-                VCardUtils.addVCardUnmatchedParams(note, getVCardUnconvertedParamsByJsonPointer(jsCard,"notes/"+entry.getKey()));
+                VCardUtils.addVCardUnmatchedParams(note, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("notes/%s/note",entry.getKey())));
                 vcard.addNote(note);
             }
             else {
                 List<ezvcard.property.Note> notes = new ArrayList<>();
                 ezvcard.property.Note note = toVCardNote(entry.getValue());
                 addVCardJsidParam(note, entry.getKey());
-                VCardUtils.addVCardUnmatchedParams(note, getVCardUnconvertedParamsByJsonPointer(jsCard,"notes/"+entry.getKey()));
+                VCardUtils.addVCardUnmatchedParams(note, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("notes/%s/note",entry.getKey())));
                 notes.add(note);
 
                 Map<String,JsonNode> localizations = jsCard.getLocalizationsPerPath("notes/"+entry.getKey());
@@ -1814,7 +1849,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                         notes.add(note);
                     }
                 }
-                localizations = jsCard.getLocalizationsPerPath("notes/"+entry.getKey()+"/note");
+                localizations = jsCard.getLocalizationsPerPath(String.format("notes/%s/note",entry.getKey()));
                 if (localizations != null) {
                     for (Map.Entry<String,JsonNode> localization : localizations.entrySet()) {
                         note = new ezvcard.property.Note(localization.getValue().asText());
@@ -1978,7 +2013,7 @@ public class JSContact2EZVCard extends AbstractConverter {
                 }
                 raw.setDataType(VCardDataType.TEXT);
                 addVCardJsidParam(raw,entry.getKey());
-                VCardUtils.addVCardUnmatchedParams(raw, getVCardUnconvertedParamsByJsonPointer(jsCard,"speakToAs/pronouns/"+entry.getKey()));
+                VCardUtils.addVCardUnmatchedParams(raw, getVCardUnconvertedParamsByJsonPointer(jsCard,String.format("speakToAs/pronouns/%s/pronouns",entry.getKey())));
                 vCard.addProperty(raw);
 
                 if (localizations != null) {

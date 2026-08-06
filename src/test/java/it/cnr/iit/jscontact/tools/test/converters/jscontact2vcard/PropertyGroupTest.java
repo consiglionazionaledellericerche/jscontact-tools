@@ -50,7 +50,7 @@ public class PropertyGroupTest extends JSContact2VCardTest {
                 "}, " +
                 "\"vCard\": { " +
                     "\"convertedProperties\": { " +
-                        "\"addresses/ADR-1\": { " +
+                        "\"addresses/ADR-1/components\": { " +
                             "\"name\": \"adr\", " +
                             "\"parameters\": { " +
                                "\"group\" : \"CONTACT\"" +

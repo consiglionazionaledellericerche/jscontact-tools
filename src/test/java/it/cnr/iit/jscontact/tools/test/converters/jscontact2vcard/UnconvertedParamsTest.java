@@ -18,6 +18,7 @@ package it.cnr.iit.jscontact.tools.test.converters.jscontact2vcard;
 import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.parameter.*;
+import ezvcard.util.GeoUri;
 import ezvcard.util.TelUri;
 import ezvcard.util.VCardDateFormat;
 import it.cnr.iit.jscontact.tools.dto.VCardParamEnum;
@@ -235,7 +236,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"emails\":{ \"EMAIL-1\": {\"@type\":\"EmailAddress\",\"contexts\": {\"work\": true},\"address\":\"jqpublic@xyz.example.com\"}}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"emails/EMAIL-1\" : { " +
+                "\"emails/EMAIL-1/address\" : { " +
                 "\"name\" : \"email\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -264,7 +265,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"phones\":{\"PHONE-1\": {\"@type\":\"Phone\",\"contexts\":{\"private\": true},\"features\":{\"voice\": true},\"number\":\"tel:+33-01-23-45-6\"}}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"phones/PHONE-1\" : { " +
+                "\"phones/PHONE-1/number\" : { " +
                 "\"name\" : \"tel\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -329,19 +330,19 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"personalInfo/PERSINFO-3\" : { " +
+                "\"personalInfo/PERSINFO-3/value\" : { " +
                 "\"name\" : \"hobby\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
                 "}" +
                 "}," +
-                "\"personalInfo/PERSINFO-6\" : { " +
+                "\"personalInfo/PERSINFO-6/value\" : { " +
                 "\"name\" : \"interest\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"2\" " +
                 "}" +
                 "}," +
-                "\"personalInfo/PERSINFO-1\" : { " +
+                "\"personalInfo/PERSINFO-1/value\" : { " +
                 "\"name\" : \"expertise\", " +
                 "\"parameters\" : { " +
                 "\"x-param\" : \"test\" " +
@@ -392,7 +393,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"directories/ENTRY-1\" : { " +
+                "\"directories/ENTRY-1/uri\" : { " +
                 "\"name\" : \"source\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -424,7 +425,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"media/LOGO-1\" : { " +
+                "\"media/LOGO-1/uri\" : { " +
                 "\"name\" : \"logo\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -457,7 +458,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"media/PHOTO-1\" : { " +
+                "\"media/PHOTO-1/uri\" : { " +
                 "\"name\" : \"photo\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -491,7 +492,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"media/SOUND-1\" : { " +
+                "\"media/SOUND-1/uri\" : { " +
                 "\"name\" : \"sound\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -524,7 +525,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"links/CONTACT-1\" : { " +
+                "\"links/CONTACT-1/uri\" : { " +
                 "\"name\" : \"contact-uri\", " +
                 "\"parameters\" : { " +
                 "\"x-param\" : \"test\" " +
@@ -536,7 +537,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testContactUriUnconvertedParams - 1", 1, vcard.getExtendedProperties().size());
         assertEquals("testContactUriUnconvertedParams - 2", "CONTACT-URI", vcard.getExtendedProperties().get(0).getPropertyName());
-        assertEquals("testContactUriUnconvertedParams - 2", "mailto:contact@example.com", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testContactUriUnconvertedParams - 3", "mailto:contact@example.com", vcard.getExtendedProperties().get(0).getValue());
         assertEquals("testContactUriUnconvertedParams - 4", "CONTACT-1", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testContactUriUnconvertedParams - 5", "test", vcard.getExtendedProperties().get(0).getParameter("X-PARAM"));
     }
@@ -555,7 +556,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"links/LINK-1\" : { " +
+                "\"links/LINK-1/uri\" : { " +
                 "\"name\" : \"url\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -585,7 +586,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"cryptoKeys/KEY-1\" : { " +
+                "\"cryptoKeys/KEY-1/uri\" : { " +
                 "\"name\" : \"key\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -616,7 +617,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"directories/ENTRY-1\" : { " +
+                "\"directories/ENTRY-1/uri\" : { " +
                 "\"name\" : \"org-directory\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -655,7 +656,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"calendars/FREEBUSY-1\" : { " +
+                "\"calendars/FREEBUSY-1/uri\" : { " +
                 "\"name\" : \"fburl\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -698,7 +699,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"calendars/CALENDAR-1\" : { " +
+                "\"calendars/CALENDAR-1/uri\" : { " +
                 "\"name\" : \"fburl\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -738,7 +739,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"schedulingAddresses/SCHEDULING-1\" : { " +
+                "\"schedulingAddresses/SCHEDULING-1/uri\" : { " +
                 "\"name\" : \"caladruri\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -774,7 +775,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"onlineServices/OS-1\": { " +
+                "\"onlineServices/OS-1/uri\": { " +
                 "\"name\": \"impp\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -810,7 +811,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"onlineServices/OS-1\": { " +
+                "\"onlineServices/OS-1/uri\": { " +
                 "\"name\": \"socialprofile\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -902,7 +903,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"anniversaries/ANNIVERSARY-1\": { " +
+                "\"anniversaries/ANNIVERSARY-1/date\": { " +
                 "\"name\": \"bday\", " +
                 "\"parameters\" : { " +
                 "\"x-param\" : \"test\" " +
@@ -976,7 +977,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"anniversaries/ANNIVERSARY-1\": { " +
+                "\"anniversaries/ANNIVERSARY-1/date\": { " +
                 "\"name\": \"deathdate\", " +
                 "\"parameters\" : { " +
                 "\"x-param\" : \"test\" " +
@@ -1069,7 +1070,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"anniversaries/ANNIVERSARY-3\": { " +
+                "\"anniversaries/ANNIVERSARY-3/date\": { " +
                 "\"name\": \"anniversary\", " +
                 "\"parameters\" : { " +
                 "\"x-param\" : \"test\" " +
@@ -1126,7 +1127,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"x-param2it\" : \"test2IT\"" +
                 "}" +
                 "}," +
-                "\"speakToAs/pronouns/PRONOUNS-1\" : { " +
+                "\"speakToAs/pronouns/PRONOUNS-1/pronouns\" : { " +
                 "\"name\" : \"pronouns\"," +
                 "\"parameters\" : {" +
                 "\"x-param1\" : \"test1\"" +
@@ -1180,7 +1181,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"titles/TITLE-1\": { " +
+                "\"titles/TITLE-1/name\": { " +
                 "\"name\": \"title\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -1229,7 +1230,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"titles/TITLE-1\": { " +
+                "\"titles/TITLE-1/name\": { " +
                 "\"name\": \"title\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -1270,7 +1271,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"localizations\": { \"it\": { \"notes/NOTE-1\": { \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" } } }," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"notes/NOTE-1\": { " +
+                "\"notes/NOTE-1/note\": { " +
                 "\"name\": \"note\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -1328,7 +1329,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"nicknames/NICK-1\": { " +
+                "\"nicknames/NICK-1/name\": { " +
                 "\"name\": \"nickname\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -1406,7 +1407,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"addresses/ADR-1\": { " +
+                "\"addresses/ADR-1/components\": { " +
                 "\"name\": \"adr\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -1472,7 +1473,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
-                "\"organizations/ORG-1\": { " +
+                "\"organizations/ORG-1/name\": { " +
                 "\"name\": \"org\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
@@ -1680,6 +1681,125 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testFnAndNUnconvertedParams2 - 14", "4", vcard.getProperties(ExtendedStructuredName.class).get(1).getParameter(VCardParamEnum.PID.getValue()));
         assertEquals("testFnAndNUnconvertedParams2 - 15", "1", vcard.getProperties(ExtendedStructuredName.class).get(1).getParameter(VCardParamEnum.ALTID.getValue()));
         assertEquals("testFnAndNUnconvertedParams2 - 16", "uk-Cyrl", vcard.getProperties(ExtendedStructuredName.class).get(1).getParameter(VCardParamEnum.LANGUAGE.getValue()));
+    }
+
+
+    @Test
+    public void testGeoAndTzUnconvertedParams() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\" : \"Card\"," +
+                "\"version\" : \"2.0\"," +
+                "\"name\" : { " +
+                    "\"@type\" : \"Name\", " +
+                    "\"full\" : \"test\" " +
+                "}," +
+                "\"addresses\" : { " +
+                    "\"ADR-1\" : { " +
+                        "\"@type\" : \"Address\", " +
+                        "\"components\" : [ { " +
+                            "\"@type\" : \"AddressComponent\", " +
+                            "\"kind\" : \"locality\", " +
+                            "\"value\" : \"Reston\" " +
+                        "}, { " +
+                            "\"@type\" : \"AddressComponent\", " +
+                            "\"kind\" : \"region\", " +
+                            "\"value\" : \"VA\" " +
+                        "}, { " +
+                            "\"@type\" : \"AddressComponent\", " +
+                            "\"kind\" : \"postcode\", " +
+                            "\"value\" : \"20190\" " +
+                        "}, { " +
+                            "\"@type\" : \"AddressComponent\", " +
+                            "\"kind\" : \"country\", " +
+                            "\"value\" : \"USA\" " +
+                        "}, { " +
+                            "\"@type\" : \"AddressComponent\", " +
+                            "\"kind\" : \"name\", " +
+                            "\"value\" : \"54321 Oak St\" " +
+                        "} ], " +
+                        "\"full\" : \"54321 Oak St Reston VA 20190 USA\", " +
+                        "\"countryCode\" : \"US\", " +
+                        "\"coordinates\" : \"geo:46.772673,-71.282945\", " +
+                        "\"timeZone\" : \"Etc/GMT+5\"" +
+                    "}" +
+                "}," +
+                "\"vCard\": { " +
+                    "\"convertedProperties\": { " +
+                        "\"addresses/ADR-1/coordinates\": { " +
+                            "\"name\": \"geo\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"1\" " +
+                            "}" +
+                        "}," +
+                        "\"addresses/ADR-1/timeZone\": { " +
+                            "\"name\": \"tz\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"2\" " +
+                            "}" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testGeoAndTzUnconvertedParams - 1", 1, vcard.getProperties(ExtendedAddress.class).size());
+        assertEquals("testGeoAndTzUnconvertedParams - 2", "US", vcard.getProperties(ExtendedAddress.class).get(0).getParameter("CC"));
+        assertEquals("testGeoAndTzUnconvertedParams - 3", "USA", vcard.getProperties(ExtendedAddress.class).get(0).getCountry());
+        assertEquals("testGeoAndTzUnconvertedParams - 4", "20190", vcard.getProperties(ExtendedAddress.class).get(0).getPostalCode());
+        assertEquals("testGeoAndTzUnconvertedParams - 5", "Reston", vcard.getProperties(ExtendedAddress.class).get(0).getLocality());
+        assertEquals("testGeoAndTzUnconvertedParams - 6", "VA", vcard.getProperties(ExtendedAddress.class).get(0).getRegion());
+        assertEquals("testGeoAndTzUnconvertedParams - 7", "54321 Oak St", vcard.getProperties(ExtendedAddress.class).get(0).getStreetAddress());
+        assertEquals("testGeoAndTzUnconvertedParams - 8", "54321 Oak St Reston VA 20190 USA", vcard.getProperties(ExtendedAddress.class).get(0).getLabel());
+        assertEquals("testGeoAndTzUnconvertedParams - 9", vcard.getGeo().getGeoUri(), GeoUri.parse("geo:46.772673,-71.282945"));
+        assertEquals("testGeoAndTzUnconvertedParams - 10", "1", vcard.getGeo().getPids().get(0).toString());
+        assertEquals("testGeoAndTzUnconvertedParams - 11", "Etc/GMT+5", vcard.getTimezone().getText());
+        assertEquals("testGeoAndTzUnconvertedParams - 12", "2", vcard.getTimezone().getPids().get(0).toString());
+    }
+
+
+    @Test
+    public void testX_ABLabelUnconvertedParams() throws IOException, CardException {
+
+        String jscard = "{" +
+                "\"@type\":\"Card\"," +
+                "\"uid\":\"8626d863-8c3f-405c-a2cb-bbbb3e3b359f\"," +
+                "\"name\": { \"full\": \"test\"}," +
+                "\"emails\":{ \"EMAIL-1\": {\"@type\":\"EmailAddress\",\"contexts\": {\"work\": true},\"address\":\"jqpublic@xyz.example.com\",\"label\" : \"a label\"}}," +
+                "\"vCard\": { " +
+                    "\"convertedProperties\": { " +
+                        "\"emails/EMAIL-1/address\" : { " +
+                            "\"name\" : \"email\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"1\", " +
+                                "\"group\" : \"GROUP1\" " +
+                            "}" +
+                        "}," +
+                        "\"emails/EMAIL-1/label\" : { " +
+                            "\"name\" : \"x-ablabel\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"2\", " +
+                                "\"group\" : \"GROUP1\" " +
+                            "}" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}";
+
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
+        assertEquals("testX_ABLabelUnconvertedParams - 1", 1, vcard.getEmails().size());
+        assertEquals("testX_ABLabelUnconvertedParams - 2", "jqpublic@xyz.example.com", vcard.getEmails().get(0).getValue());
+        assertEquals("testX_ABLabelUnconvertedParams - 3", 1, vcard.getEmails().get(0).getTypes().size());
+        assertEquals("testX_ABLabelUnconvertedParams - 4", "work", vcard.getEmails().get(0).getTypes().get(0).getValue());
+        assertEquals("testX_ABLabelUnconvertedParams - 5", "EMAIL-1", vcard.getEmails().get(0).getParameter(VCardParamEnum.JSID.getValue()));
+        assertEquals("testX_ABLabelUnconvertedParams - 6", "1", vcard.getEmails().get(0).getPids().get(0).toString());
+        assertEquals("testX_ABLabelUnconvertedParams - 7", "GROUP1", vcard.getEmails().get(0).getGroup());
+        assertEquals("testX_ABLabelUnconvertedParams - 8", 1, vcard.getExtendedProperties().size());
+        assertEquals("testX_ABLabelUnconvertedParams - 9", "X-ABLabel", vcard.getExtendedProperties().get(0).getPropertyName());
+        assertEquals("testX_ABLabelUnconvertedParams - 10", "a label", vcard.getExtendedProperties().get(0).getValue());
+        assertEquals("testX_ABLabelUnconvertedParams - 11", "GROUP1", vcard.getExtendedProperties().get(0).getGroup());
+        assertEquals("testX_ABLabelUnconvertedParams - 12", "2", vcard.getExtendedProperties().get(0).getParameter(VCardParamEnum.PID.getValue()));
+
     }
 
 }
