@@ -1110,42 +1110,42 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}," +
                 "\"localizations\":{" +
-                "\"it\":{" +
-                "\"speakToAs/grammaticalGender\":\"masculine\"," +
-                "\"speakToAs/pronouns/PRONOUNS-1\":{ " +
-                "\"@type\":\"Pronouns\"," +
-                "\"pronouns\":\"egli/lui\"" +
-                "}" +
-                "}" +
+                    "\"it\":{" +
+                        "\"speakToAs/grammaticalGender\":\"masculine\"," +
+                            "\"speakToAs/pronouns/PRONOUNS-1\":{ " +
+                            "\"@type\":\"Pronouns\"," +
+                            "\"pronouns\":\"egli/lui\"" +
+                        "}," +
+                        "\"vCard/convertedProperties/speakToAs~1grammaticalGender\" : {" +
+                            "\"name\" : \"gramgender\"," +
+                            "\"parameters\" : {" +
+                                "\"x-param2it\" : \"test2IT\"" +
+                            "}" +
+                        "}," +
+                        "\"vCard/convertedProperties/speakToAs~1pronouns~1PRONOUNS-1~1pronouns\" : {" +
+                            "\"name\" : \"pronouns\"," +
+                            "\"parameters\" : {" +
+                                "\"x-param1it\" : \"test1IT\"" +
+                            "}" +
+                        "}" +
+                    "}" +
                 "}," +
                 "\"vCard\" : { " +
-                "\"@type\" : \"VCard\", " +
-                "\"convertedProperties\" : { " +
-                "\"localizations/it/speakToAs~1grammaticalGender\" : {" +
-                "\"name\" : \"gramgender\"," +
-                "\"parameters\" : {" +
-                "\"x-param2it\" : \"test2IT\"" +
-                "}" +
-                "}," +
-                "\"speakToAs/pronouns/PRONOUNS-1/pronouns\" : { " +
-                "\"name\" : \"pronouns\"," +
-                "\"parameters\" : {" +
-                "\"x-param1\" : \"test1\"" +
-                "}" +
-                "}," +
-                "\"speakToAs/grammaticalGender\" : {" +
-                "\"name\" : \"gramgender\"," +
-                "\"parameters\" : {" +
-                "\"x-param2\" : \"test2\"" +
-                "}" +
-                "}," +
-                "\"localizations/it/speakToAs~1pronouns~1PRONOUNS-1\" : {" +
-                "\"name\" : \"pronouns\"," +
-                "\"parameters\" : {" +
-                "\"x-param1it\" : \"test1IT\"" +
-                "}" +
-                "}" +
-                "}" +
+                    "\"@type\" : \"VCard\", " +
+                    "\"convertedProperties\" : { " +
+                        "\"speakToAs/pronouns/PRONOUNS-1/pronouns\" : { " +
+                            "\"name\" : \"pronouns\"," +
+                            "\"parameters\" : {" +
+                                "\"x-param1\" : \"test1\"" +
+                            "}" +
+                        "}," +
+                        "\"speakToAs/grammaticalGender\" : {" +
+                            "\"name\" : \"gramgender\"," +
+                            "\"parameters\" : {" +
+                                "\"x-param2\" : \"test2\"" +
+                            "}" +
+                        "}" +
+                    "}" +
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
@@ -1175,9 +1175,15 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}," +
                 "\"localizations\" : {" +
-                "\"it\" : { " +
-                "\"titles/TITLE-1\": { \"@type\":\"Title\",\"name\": \"Ricercatore\" } " +
-                "}" +
+                    "\"it\" : { " +
+                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"name\": \"Ricercatore\" }, " +
+                        "\"vCard/convertedProperties/titles~1TITLE-1~1name\": { " +
+                            "\"name\": \"title\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"2\" " +
+                            "}" +
+                        "}" +
+                    "}" +
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
@@ -1185,12 +1191,6 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"name\": \"title\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
-                "}" +
-                "}," +
-                "\"localizations/it/titles~1TITLE-1\": { " +
-                "\"name\": \"title\", " +
-                "\"parameters\" : { " +
-                "\"pid\" : \"2\" " +
                 "}" +
                 "}" +
                 "}" +
@@ -1224,9 +1224,15 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}," +
                 "\"localizations\" : {" +
-                "\"it\" : { " +
-                "\"titles/TITLE-1\": { \"@type\":\"Title\",\"kind\":\"role\",\"name\": \"Direttore Area IETF\" } " +
-                "}" +
+                    "\"it\" : { " +
+                        "\"titles/TITLE-1\": { \"@type\":\"Title\",\"kind\":\"role\",\"name\": \"Direttore Area IETF\" }, " +
+                        "\"vCard/convertedProperties/titles~1TITLE-1~1name\": { " +
+                            "\"name\": \"title\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"2\" " +
+                            "}" +
+                        "}" +
+                    "}" +
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
@@ -1234,12 +1240,6 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"name\": \"title\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
-                "}" +
-                "}," +
-                "\"localizations/it/titles~1TITLE-1\": { " +
-                "\"name\": \"title\", " +
-                "\"parameters\" : { " +
-                "\"pid\" : \"2\" " +
                 "}" +
                 "}" +
                 "}" +
@@ -1268,19 +1268,23 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"notes\": {" +
                 "\"NOTE-1\": { \"@type\": \"Note\", \"created\":\"2010-10-10T10:10:10Z\", \"note\": \"This fax number is operational 0800 to 1715 EST, Mon-Fri\"}" +
                 "}," +
-                "\"localizations\": { \"it\": { \"notes/NOTE-1\": { \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" } } }," +
+                "\"localizations\": { " +
+                    "\"it\": { " +
+                        "\"notes/NOTE-1\": { \"@type\": \"Note\", \"note\": \"Questo numero di fax è operativo dalle 8.00 alle 17.15, Lun-Ven\" }, " +
+                        "\"vCard/convertedProperties/notes~1NOTE-1~1note\": { " +
+                            "\"name\": \"note\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"2\" " +
+                            "}" +
+                        "}" +
+                    "}" +
+                "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
                 "\"notes/NOTE-1/note\": { " +
                 "\"name\": \"note\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
-                "}" +
-                "}," +
-                "\"localizations/it/notes~1NOTE-1\": { " +
-                "\"name\": \"note\", " +
-                "\"parameters\" : { " +
-                "\"pid\" : \"2\" " +
                 "}" +
                 "}" +
                 "}" +
@@ -1324,7 +1328,13 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"localizations\": { " +
                 "\"it\" : { " +
                 "\"nicknames/NICK-1\" : {  \"@type\":\"Nickname\", \"name\": \"Giovannino\" }, " +
-                "\"nicknames/NICK-2\" : {  \"@type\":\"Nickname\", \"name\": \"Giò\" } " +
+                "\"nicknames/NICK-2\" : {  \"@type\":\"Nickname\", \"name\": \"Giò\" }, " +
+                "\"vCard/convertedProperties/nicknames~1NICK-1~1name\": { " +
+                    "\"name\": \"nickname\", " +
+                    "\"parameters\" : { " +
+                        "\"pid\" : \"2\" " +
+                    "}" +
+                "}" +
                 "}" +
                 "}," +
                 "\"vCard\": { " +
@@ -1333,12 +1343,6 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"name\": \"nickname\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
-                "}" +
-                "}," +
-                "\"localizations/it/nicknames~1NICK-1\": { " +
-                "\"name\": \"nickname\", " +
-                "\"parameters\" : { " +
-                "\"pid\" : \"2\" " +
                 "}" +
                 "}" +
                 "}" +
@@ -1392,18 +1396,24 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}," +
                 "\"localizations\":{" +
-                "\"it\":{" +
-                "\"addresses/ADR-1\":{" +
-                "\"@type\":\"Address\"," +
-                "\"components\":[ " +
-                "{\"kind\":\"name\",\"value\":\"Via Moruzzi,1\"}," +
-                "{\"kind\":\"locality\",\"value\":\"Pisa\"}," +
-                "{\"kind\":\"postcode\",\"value\":\"56124\"}," +
-                "{\"kind\":\"country\",\"value\":\"Italia\"}" +
-                "]," +
-                "\"countryCode\":\"IT\"" +
-                "}" +
-                "}" +
+                    "\"it\":{" +
+                        "\"addresses/ADR-1\":{" +
+                            "\"@type\":\"Address\"," +
+                            "\"components\":[ " +
+                            "{\"kind\":\"name\",\"value\":\"Via Moruzzi,1\"}," +
+                            "{\"kind\":\"locality\",\"value\":\"Pisa\"}," +
+                            "{\"kind\":\"postcode\",\"value\":\"56124\"}," +
+                            "{\"kind\":\"country\",\"value\":\"Italia\"}" +
+                            "]," +
+                            "\"countryCode\":\"IT\"" +
+                        "}," +
+                        "\"vCard/convertedProperties/addresses~1ADR-1~1components\": { " +
+                            "\"name\": \"adr\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"2\" " +
+                            "}" +
+                        "}" +
+                    "}" +
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
@@ -1411,12 +1421,6 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"name\": \"adr\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
-                "}" +
-                "}," +
-                "\"localizations/it/addresses~1ADR-1\": { " +
-                "\"name\": \"adr\", " +
-                "\"parameters\" : { " +
-                "\"pid\" : \"2\" " +
                 "}" +
                 "}" +
                 "}" +
@@ -1461,15 +1465,21 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}," +
                 "\"localizations\": { " +
-                "\"it\" : { " +
-                "\"organizations/ORG-1\" : { " +
-                "\"@type\":\"Organization\"," +
-                "\"units\": [ " +
-                "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
-                "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
-                "]" +
-                "}" +
-                "}" +
+                    "\"it\" : { " +
+                        "\"organizations/ORG-1\" : { " +
+                        "\"@type\":\"Organization\"," +
+                        "\"units\": [ " +
+                        "{\"@type\":\"OrgUnit\", \"name\":\"Divisione Nord America\"}," +
+                        "{\"@type\":\"OrgUnit\", \"name\":\"Marketing\" }" +
+                        "]" +
+                        "}," +
+                        "\"vCard/convertedProperties/organizations~1ORG-1\": { " +
+                            "\"name\": \"org\", " +
+                            "\"parameters\" : { " +
+                                "\"pid\" : \"2\" " +
+                            "}" +
+                        "}" +
+                    "}" +
                 "}," +
                 "\"vCard\": { " +
                 "\"convertedProperties\": { " +
@@ -1477,12 +1487,6 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "\"name\": \"org\", " +
                 "\"parameters\" : { " +
                 "\"pid\" : \"1\" " +
-                "}" +
-                "}," +
-                "\"localizations/it/organizations~1ORG-1\": { " +
-                "\"name\": \"org\", " +
-                "\"parameters\" : { " +
-                "\"pid\" : \"2\" " +
                 "}" +
                 "}" +
                 "}" +
@@ -1622,13 +1626,26 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                                 "\"kind\" :\"title\", " +
                                 "\"value\" :\"г-н\" " +
                             "} ] " +
-                        "}"+
+                        "},"+
+                    "\"vCard/convertedProperties/name~1full\" :{ " +
+                    "\"name\" :\"fn\", " +
+                    "\"parameters\" :{ " +
+                    "\"pid\" :\"2\", " +
+                    "\"derived\" :\"true\" " +
+                    "}"+
+                    "},"+
+                    "\"vCard/convertedProperties/name~1components\" :{ " +
+                    "\"name\" :\"n\", " +
+                    "\"parameters\" :{ " +
+                    "\"pid\" :\"4\" " +
+                    "}"+
+                    "}"+
                     "}"+
                 "},"+
                 "\"vCard\" :{" +
                     "\"@type\" :\"VCard\"," +
                     "\"convertedProperties\" :{" +
-                        "\"name\" :{" +
+                        "\"name/full\" :{" +
                             "\"name\" :\"fn\"," +
                             "\"parameters\" :{" +
                                 "\"pid\" :\"1\"," +
@@ -1639,19 +1656,6 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                             "\"name\" :\"n\", " +
                             "\"parameters\" :{ " +
                                 "\"pid\" :\"3\" " +
-                            "}"+
-                        "},"+
-                        "\"localizations/uk-Cyrl/name\" :{ " +
-                            "\"name\" :\"fn\", " +
-                            "\"parameters\" :{ " +
-                                "\"pid\" :\"2\", " +
-                                "\"derived\" :\"true\" " +
-                            "}"+
-                        "},"+
-                        "\"localizations/uk-Cyrl/name/components\" :{ " +
-                            "\"name\" :\"n\", " +
-                            "\"parameters\" :{ " +
-                                "\"pid\" :\"4\" " +
                             "}"+
                         "}"+
                     "}"+

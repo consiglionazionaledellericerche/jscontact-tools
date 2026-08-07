@@ -661,12 +661,12 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testGramgenderPronounsUnconvertedParams - 5", GrammaticalGenderType.MASCULINE, GrammaticalGenderType.getEnum(jsCard.getLocalizations().get("it").get("speakToAs/grammaticalGender").asText().toLowerCase()));
         assertEquals("testGramgenderPronounsUnconvertedParams - 6", "test1",jsCard.getVCard().getConvertedProperties().get("speakToAs/pronouns/PRONOUNS-1/pronouns").getParameters().get("x-param1").getValue());
         assertEquals("testGramgenderPronounsUnconvertedParams - 7","pronouns", jsCard.getVCard().getConvertedProperties().get("speakToAs/pronouns/PRONOUNS-1/pronouns").getName());
-        assertEquals("testGramgenderPronounsUnconvertedParams - 8", "test1IT",jsCard.getVCard().getConvertedProperties().get("localizations/it/speakToAs~1pronouns~1PRONOUNS-1").getParameters().get("x-param1it").getValue());
-        assertEquals("testGramgenderPronounsUnconvertedParams - 9","pronouns", jsCard.getVCard().getConvertedProperties().get("localizations/it/speakToAs~1pronouns~1PRONOUNS-1").getName());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 8", "test1IT",jsCard.getLocalizations().get("it").get("vCard/convertedProperties/speakToAs~1pronouns~1PRONOUNS-1~1pronouns").get("parameters").get("x-param1it").asText());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 9","pronouns", jsCard.getLocalizations().get("it").get("vCard/convertedProperties/speakToAs~1pronouns~1PRONOUNS-1~1pronouns").get("name").asText());
         assertEquals("testGramgenderPronounsUnconvertedParams - 10", "test2",jsCard.getVCard().getConvertedProperties().get("speakToAs/grammaticalGender").getParameters().get("x-param2").getValue());
         assertEquals("testGramgenderPronounsUnconvertedParams - 11","gramgender", jsCard.getVCard().getConvertedProperties().get("speakToAs/grammaticalGender").getName());
-        assertEquals("testGramgenderPronounsUnconvertedParams - 12", "test2IT",jsCard.getVCard().getConvertedProperties().get("localizations/it/speakToAs~1grammaticalGender").getParameters().get("x-param2it").getValue());
-        assertEquals("testGramgenderPronounsUnconvertedParams - 13","gramgender", jsCard.getVCard().getConvertedProperties().get("localizations/it/speakToAs~1grammaticalGender").getName());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 12", "test2IT",jsCard.getLocalizations().get("it").get("vCard/convertedProperties/speakToAs~1grammaticalGender").get("parameters").get("x-param2it").asText());
+        assertEquals("testGramgenderPronounsUnconvertedParams - 13","gramgender", jsCard.getLocalizations().get("it").get("vCard/convertedProperties/speakToAs~1grammaticalGender").get("name").asText());
     }
 
     @Test
@@ -683,12 +683,12 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertNotNull("testTitleUnconvertedParams - 1", jsCard.getTitles());
         assertEquals("testTitleUnconvertedParams - 2", 1, jsCard.getTitles().size());
         assertEquals("testTitleUnconvertedParams - 3", "Research Scientist", jsCard.getTitles().get("TITLE-1").getName());
-        assertEquals("testTitleUnconvertedParams - 4", 1, jsCard.getLocalizationsPerLanguage("it").size());
+        assertEquals("testTitleUnconvertedParams - 4", 2, jsCard.getLocalizationsPerLanguage("it").size());
         assertEquals("testTitleUnconvertedParams - 5", "Ricercatore", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
         assertEquals("testTitleUnconvertedParams - 6", "1",jsCard.getVCard().getConvertedProperties().get("titles/TITLE-1/name").getParameters().get("pid").getValue());
         assertEquals("testTitleUnconvertedParams - 7","title", jsCard.getVCard().getConvertedProperties().get("titles/TITLE-1/name").getName());
-        assertEquals("testTitleUnconvertedParams - 8", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/titles~1TITLE-1").getParameters().get("pid").getValue());
-        assertEquals("testTitleUnconvertedParams - 9","title", jsCard.getVCard().getConvertedProperties().get("localizations/it/titles~1TITLE-1").getName());
+        assertEquals("testTitleUnconvertedParams - 8", "2",jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/titles~1TITLE-1~1name").get("parameters").get("pid").asText());
+        assertEquals("testTitleUnconvertedParams - 9","title", jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/titles~1TITLE-1~1name").get("name").asText());
     }
 
     @Test
@@ -705,12 +705,12 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertNotNull("testRoleUnconvertedParams - 1", jsCard.getTitles());
         assertEquals("testRoleUnconvertedParams - 2", 1, jsCard.getTitles().size());
         assertEquals("testRoleUnconvertedParams - 3", "Project Leader", jsCard.getTitles().get("TITLE-1").getName());
-        assertEquals("testRoleUnconvertedParams - 4", 1, jsCard.getLocalizationsPerLanguage("it").size());
+        assertEquals("testRoleUnconvertedParams - 4", 2, jsCard.getLocalizationsPerLanguage("it").size());
         assertEquals("testRoleUnconvertedParams - 5", "Capo Progetto", jsCard.getLocalization("it", "titles/TITLE-1").get("name").asText());
         assertEquals("testTitleUnconvertedParams - 6", "1",jsCard.getVCard().getConvertedProperties().get("titles/TITLE-1/name").getParameters().get("pid").getValue());
         assertEquals("testTitleUnconvertedParams - 7","role", jsCard.getVCard().getConvertedProperties().get("titles/TITLE-1/name").getName());
-        assertEquals("testTitleUnconvertedParams - 8", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/titles~1TITLE-1").getParameters().get("pid").getValue());
-        assertEquals("testTitleUnconvertedParams - 9","role", jsCard.getVCard().getConvertedProperties().get("localizations/it/titles~1TITLE-1").getName());
+        assertEquals("testTitleUnconvertedParams - 8", "2",jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/titles~1TITLE-1~1name").get("parameters").get("pid").asText());
+        assertEquals("testTitleUnconvertedParams - 9","role", jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/titles~1TITLE-1~1name").get("name").asText());
     }
 
     @Test
@@ -771,8 +771,8 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testNicknameUnconvertedParams - 16", "Ragazzo", jsCard.getLocalization("it", "nicknames/NICK-2").get("name").asText());
         assertEquals("testNicknameUnconvertedParams - 17", "1",jsCard.getVCard().getConvertedProperties().get("nicknames/NICK-1/name").getParameters().get("pid").getValue());
         assertEquals("testNicknameUnconvertedParams - 18","nickname", jsCard.getVCard().getConvertedProperties().get("nicknames/NICK-1/name").getName());
-        assertEquals("testNicknameUnconvertedParams - 19", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/nicknames~1NICK-1").getParameters().get("pid").getValue());
-        assertEquals("testNicknameUnconvertedParams - 20","nickname", jsCard.getVCard().getConvertedProperties().get("localizations/it/nicknames~1NICK-1").getName());
+        assertEquals("testNicknameUnconvertedParams - 19", "2",jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/nicknames~1NICK-1~1name").get("parameters").get("pid").asText());
+        assertEquals("testNicknameUnconvertedParams - 20","nickname", jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/nicknames~1NICK-1~1name").get("name").asText());
     }
 
 
@@ -809,8 +809,8 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testAdrUnconvertedParams1 - 19","adr", jsCard.getVCard().getConvertedProperties().get("addresses/ADR-1/components").getName());
         assertEquals("testAdrUnconvertedParams1 - 20", "2",jsCard.getVCard().getConvertedProperties().get("addresses/ADR-2/components").getParameters().get("pid").getValue());
         assertEquals("testAdrUnconvertedParams1 - 21","adr", jsCard.getVCard().getConvertedProperties().get("addresses/ADR-2/components").getName());
-        assertEquals("testAdrUnconvertedParams1 - 22", "3",jsCard.getVCard().getConvertedProperties().get("localizations/it/addresses~1ADR-2").getParameters().get("pid").getValue());
-        assertEquals("testAdrUnconvertedParams1 - 23","adr", jsCard.getVCard().getConvertedProperties().get("localizations/it/addresses~1ADR-2").getName());
+        assertEquals("testAdrUnconvertedParams1 - 22", "3",jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/addresses~1ADR-2~1components").get("parameters").get("pid").asText());
+        assertEquals("testAdrUnconvertedParams1 - 23","adr", jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/addresses~1ADR-2~1components").get("name").asText());
     }
 
     @Test
@@ -835,8 +835,8 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testOrgUnconvertedParams - 9", "Marketing", jsCard.getLocalization("it", "organizations/ORG-1").get("units").get(1).get("name").asText());
         assertEquals("testOrgUnconvertedParams - 10", "1",jsCard.getVCard().getConvertedProperties().get("organizations/ORG-1/name").getParameters().get("pid").getValue());
         assertEquals("testOrgUnconvertedParams - 11","org", jsCard.getVCard().getConvertedProperties().get("organizations/ORG-1/name").getName());
-        assertEquals("testOrgUnconvertedParams - 12", "2",jsCard.getVCard().getConvertedProperties().get("localizations/it/organizations~1ORG-1").getParameters().get("pid").getValue());
-        assertEquals("testOrgUnconvertedParams - 13","org", jsCard.getVCard().getConvertedProperties().get("localizations/it/organizations~1ORG-1").getName());
+        assertEquals("testOrgUnconvertedParams - 12", "2",jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/organizations~1ORG-1~1name").get("parameters").get("pid").asText());
+        assertEquals("testOrgUnconvertedParams - 13","org", jsCard.getLocalizationsPerLanguage("it").get("vCard/convertedProperties/organizations~1ORG-1~1name").get("name").asText());
     }
     
     @Test //ez-vcard accepts only one family name and one given name
@@ -891,7 +891,7 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testFnAndNUnconvertedParams2 - 4", "Petrovich", jsCard.getName().getGiven2());
         assertTrue("testFnAndNUnconvertedParams2 - 5",  jsCard.getName().getComponents()[3].isTitle());
         assertEquals("testFnAndNUnconvertedParams2 - 6", "Mr.", jsCard.getName().getComponents()[3].getValue());
-        assertEquals("testFnAndNUnconvertedParams2 - 7", 1, jsCard.getLocalizationsPerLanguage("uk-Cyrl").size());
+        assertEquals("testFnAndNUnconvertedParams2 - 7", 3, jsCard.getLocalizationsPerLanguage("uk-Cyrl").size());
         assertNotNull("testFnAndNUnconvertedParams2 - 8",  jsCard.getLocalization("uk-Cyrl","name"));
         Name nameLocalization = (Name) JsonNodeUtils.toObject(jsCard.getLocalization("uk-Cyrl","name"), Name.class);
         assertEquals("testFnAndNUnconvertedParams2 - 9", "Васильев", nameLocalization.getSurname());
@@ -901,12 +901,12 @@ public class UnconvertedParamsTest extends VCard2JSContactTest {
         assertEquals("testFnAndNUnconvertedParams2 - 13", "г-н", nameLocalization.getComponents()[3].getValue());
         assertEquals("testFnAndNUnconvertedParams2 - 14", "1",jsCard.getVCard().getConvertedProperties().get("name/full").getParameters().get("pid").getValue());
         assertEquals("testFnAndNUnconvertedParams2 - 15","fn", jsCard.getVCard().getConvertedProperties().get("name/full").getName());
-        assertEquals("testFnAndNUnconvertedParams2 - 16", "2",jsCard.getVCard().getConvertedProperties().get("localizations/uk-Cyrl/name~1full").getParameters().get("pid").getValue());
-        assertEquals("testFnAndNUnconvertedParams2 - 17","fn", jsCard.getVCard().getConvertedProperties().get("localizations/uk-Cyrl/name~1full").getName());
+        assertEquals("testFnAndNUnconvertedParams2 - 16", "2",jsCard.getLocalizationsPerLanguage("uk-Cyrl").get("vCard/convertedProperties/name~1full").get("parameters").get("pid").asText());
+        assertEquals("testFnAndNUnconvertedParams2 - 17","fn", jsCard.getLocalizationsPerLanguage("uk-Cyrl").get("vCard/convertedProperties/name~1full").get("name").asText());
         assertEquals("testFnAndNUnconvertedParams2 - 18", "3",jsCard.getVCard().getConvertedProperties().get("name/components").getParameters().get("pid").getValue());
         assertEquals("testFnAndNUnconvertedParams2 - 19","n", jsCard.getVCard().getConvertedProperties().get("name/components").getName());
-        assertEquals("testFnAndNUnconvertedParams2 - 20", "4",jsCard.getVCard().getConvertedProperties().get("localizations/uk-Cyrl/name~1components").getParameters().get("pid").getValue());
-        assertEquals("testFnAndNUnconvertedParams2 - 21","n", jsCard.getVCard().getConvertedProperties().get("localizations/uk-Cyrl/name~1components").getName());
+        assertEquals("testFnAndNUnconvertedParams2 - 20", "4",jsCard.getLocalizationsPerLanguage("uk-Cyrl").get("vCard/convertedProperties/name~1components").get("parameters").get("pid").asText());
+        assertEquals("testFnAndNUnconvertedParams2 - 21","n", jsCard.getLocalizationsPerLanguage("uk-Cyrl").get("vCard/convertedProperties/name~1components").get("name").asText());
     }
 
 

@@ -936,7 +936,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 }
                 else {
                     jsCard.addLocalization(vcardNickName.getLanguage(), "nicknames/" + lastMapId, mapper.convertValue(toJSCardNickName(name, vcardNickName, vcard), JsonNode.class));
-                    addVCardUnconvertedParams(jsCard,String.format("localizations/%s/nicknames~1%s", vcardNickName.getLanguage(), lastMapId),"nickname", VCardUtils.getVCardParamsOtherThan(vcardNickName, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.PREF, VCardParamEnum.ALTID));
+                    addVCardUnconvertedParams(jsCard,String.format("localizations/%s/nicknames~1%s~1name", vcardNickName.getLanguage(), lastMapId),"nickname", VCardUtils.getVCardParamsOtherThan(vcardNickName, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.PREF, VCardParamEnum.ALTID));
                 }
             }
         }
@@ -1220,7 +1220,10 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                     }
                 }
                 else {
-                    addVCardUnconvertedParams(jsCard, String.format("localizations/%s/addresses~1%s", address.getLanguage(), lastMapId), "adr", address.getVCardUnconvertedParams());
+                    if (address.getComponents()!=null)
+                        addVCardUnconvertedParams(jsCard, String.format("localizations/%s/addresses~1%s~1components", address.getLanguage(), lastMapId), "adr", address.getVCardUnconvertedParams());
+                    else
+                        addVCardUnconvertedParams(jsCard, String.format("localizations/%s/addresses~1%s~1full", address.getLanguage(), lastMapId), "adr", address.getVCardUnconvertedParams());
                     address.setVCardUnconvertedParams(null);
                     jsCard.addLocalization(address.getLanguage(), "addresses/" + lastMapId, mapper.convertValue(address, JsonNode.class));
                 }
@@ -1650,7 +1653,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 addVCardUnconvertedParams(jsCard, String.format("titles/%s/name",lastMapId),"title", VCardUtils.getVCardParamsOtherThan(vcardTitle, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.PREF, VCardParamEnum.ALTID));
             } else {
                 jsCard.addLocalization(vcardTitle.getLanguage(), "titles/" + lastMapId, mapper.convertValue(toJSCardTitle(vcardTitle, vcard, jsCard), JsonNode.class));
-                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/titles~1%s", vcardTitle.getLanguage(), lastMapId),"title", VCardUtils.getVCardParamsOtherThan(vcardTitle, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.PREF, VCardParamEnum.ALTID));
+                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/titles~1%s~1name", vcardTitle.getLanguage(), lastMapId),"title", VCardUtils.getVCardParamsOtherThan(vcardTitle, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.PREF, VCardParamEnum.ALTID));
             }
         }
     }
@@ -1675,7 +1678,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 addVCardUnconvertedParams(jsCard, String.format("titles/%s/name",lastMapId),"role", VCardUtils.getVCardParamsOtherThan(vcardRole, VCardParamEnum.JSID, VCardParamEnum.LANGUAGE, VCardParamEnum.PREF, VCardParamEnum.ALTID));
             } else {
                 jsCard.addLocalization(vcardRole.getLanguage(), "titles/" + lastMapId, mapper.convertValue(toJSCardTitle(vcardRole, vcard, jsCard), JsonNode.class));
-                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/titles~1%s", vcardRole.getLanguage(), lastMapId),"role", VCardUtils.getVCardParamsOtherThan(vcardRole, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.PREF, VCardParamEnum.ALTID));
+                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/titles~1%s~1name", vcardRole.getLanguage(), lastMapId),"role", VCardUtils.getVCardParamsOtherThan(vcardRole, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.PREF, VCardParamEnum.ALTID));
             }
         }
     }
@@ -1744,7 +1747,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 addVCardUnconvertedParams(jsCard,String.format("organizations/%s/name",id),"org", VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID));
             } else {
                 jsCard.addLocalization(vcardOrg.getLanguage(), "organizations/" + lastMapId, mapper.convertValue(toJSCardOrganization(vcardOrg, vcard), JsonNode.class));
-                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/organizations~1%s", vcardOrg.getLanguage(), lastMapId),"org", VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID));
+                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/organizations~1%s~1name", vcardOrg.getLanguage(), lastMapId),"org", VCardUtils.getVCardParamsOtherThan(vcardOrg, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.SORT_AS, VCardParamEnum.ALTID, VCardParamEnum.LANGUAGE));
             }
         }
     }
@@ -1782,7 +1785,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 addVCardUnconvertedParams(jsCard, String.format("notes/%s/note",lastMapId),"note", VCardUtils.getVCardParamsOtherThan(vcardNote, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.ALTID, VCardParamEnum.CREATED, VCardParamEnum.AUTHOR, VCardParamEnum.AUTHOR_NAME));
             } else {
                 jsCard.addLocalization(vcardNote.getLanguage(), "notes/" + lastMapId, mapper.convertValue(toJSCardNote(vcardNote, vcard), JsonNode.class));
-                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/notes~1%s", vcardNote.getLanguage(), lastMapId),"note", VCardUtils.getVCardParamsOtherThan(vcardNote, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.ALTID, VCardParamEnum.CREATED, VCardParamEnum.AUTHOR, VCardParamEnum.AUTHOR_NAME));
+                addVCardUnconvertedParams(jsCard, String.format("localizations/%s/notes~1%s~1note", vcardNote.getLanguage(), lastMapId),"note", VCardUtils.getVCardParamsOtherThan(vcardNote, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.LANGUAGE, VCardParamEnum.ALTID, VCardParamEnum.CREATED, VCardParamEnum.AUTHOR, VCardParamEnum.AUTHOR_NAME));
             }
         }
     }
@@ -1885,7 +1888,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
                 } else {
                     jsonPointer = String.format("%s/%s", jsonPointer, lastMapid);
                     jsCard.addLocalization(language, jsonPointer, mapper.convertValue(pronouns, JsonNode.class));
-                    addVCardUnconvertedParams(jsCard,String.format("localizations/%s/speakToAs~1pronouns~1%s", language, lastMapid),"pronouns", VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.ALTID, VCardParamEnum.LANGUAGE));
+                    addVCardUnconvertedParams(jsCard,String.format("localizations/%s/speakToAs~1pronouns~1%s~1pronouns", language, lastMapid),"pronouns", VCardUtils.getVCardParamsOtherThan(extension, VCardParamEnum.JSID, VCardParamEnum.PROP_ID, VCardParamEnum.TYPE, VCardParamEnum.PREF, VCardParamEnum.ALTID, VCardParamEnum.LANGUAGE));
                 }
             }
             else if (extension.getPropertyName().equalsIgnoreCase(VCardPropEnum.SOCIALPROFILE.getValue())) {
@@ -2014,6 +2017,29 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         }
     }
 
+
+    private void rearrangeVCardUnconvertedParamsOfLocalizedConvertedProperties(Card jsCard) {
+
+        if (jsCard.getVCard()!=null && jsCard.getVCard().getConvertedProperties()!=null) {
+            //Removing unconverted properties of localizations from vCard and moving them to localizations
+            Map<String, it.cnr.iit.jscontact.tools.dto.VCardProperty> unlocalizedConvertedProperties = new HashMap<>();
+
+            for (Map.Entry<String, it.cnr.iit.jscontact.tools.dto.VCardProperty> entry : jsCard.getVCard().getConvertedProperties().entrySet()) {
+                if (entry.getKey().startsWith("localizations/")) {
+                    String[] pathItems = entry.getKey().split("/");
+                    jsCard.addLocalization(pathItems[1],
+                            "vCard/convertedProperties/" + entry.getKey().substring(String.format("localizations/%s/",pathItems[1]).length()),
+                            mapper.convertValue(entry.getValue(), JsonNode.class)
+                    );
+                } else
+                    unlocalizedConvertedProperties.put(entry.getKey(), entry.getValue());
+            }
+
+            if (!unlocalizedConvertedProperties.isEmpty())
+                jsCard.getVCard().setConvertedProperties(unlocalizedConvertedProperties);
+        }
+    }
+
     private void fillVCardUnconvertedParamsOfConvertedProperties(Card jsCard) {
 
         Map<String, it.cnr.iit.jscontact.tools.dto.VCardProperty> allVCardUnconvertedParmsMap = new HashMap<>();
@@ -2084,6 +2110,7 @@ public abstract class EZVCard2JSContact extends AbstractConverter {
         fillJSCardPropsFromVCardExtensions(vCard, jsCard);
         fillJSPropsFromJSCardExtensionsInVCard(vCard, jsCard);
         fillVCardUnconvertedParamsOfConvertedProperties(jsCard);
+        rearrangeVCardUnconvertedParamsOfLocalizedConvertedProperties(jsCard);
 
        return jsCard;
     }

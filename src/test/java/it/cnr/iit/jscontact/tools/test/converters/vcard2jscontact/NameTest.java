@@ -329,7 +329,7 @@ public class NameTest extends VCard2JSContactTest {
         assertEquals("testName11 - 4", "Petrovich", jsCard.getName().getGiven2());
         assertTrue("testName11 - 5",  jsCard.getName().getComponents()[3].isTitle());
         assertEquals("testName11 - 6", "Mr.", jsCard.getName().getComponents()[3].getValue());
-        assertEquals("testName11 - 7", 1, jsCard.getLocalizationsPerLanguage("uk-Cyrl").size());
+        assertEquals("testName11 - 7", 2, jsCard.getLocalizationsPerLanguage("uk-Cyrl").size());
         assertNotNull("testName11 - 8",  jsCard.getLocalization("uk-Cyrl","name"));
         Name nameLocalization = (Name) JsonNodeUtils.toObject(jsCard.getLocalization("uk-Cyrl","name"), Name.class);
         assertEquals("testName11 - 9", "Васильев", nameLocalization.getSurname());
