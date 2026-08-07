@@ -378,6 +378,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testPersonalInfoUnconvertedParams - 24", "2", vcard.getInterests().get(1).getParameter(VCardParamEnum.PID.getValue()));
     }
 
+    @Test
     public void testSourceUnconvertedParams() throws IOException, CardException {
 
         String jscard = "{" +
@@ -602,6 +603,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
         assertEquals("testUrlUnconvertedParams - 3", "1", vcard.getKeys().get(0).getPids().get(0).toString());
     }
 
+    @Test
     public void testOrgDirectoryUnconvertedParams() throws IOException, CardException {
 
         String jscard = "{" +
@@ -627,8 +629,8 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}";
         VCard vcard = jsContact2VCard.convert(jscard).get(0);
-        assertEquals("testOrgDirectoryUnconvertedParams - 1", 1, vcard.getSources().size());
-        assertEquals("testOrgDirectoryUnconvertedParams - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", vcard.getSources().get(0).getValue());
+        assertEquals("testOrgDirectoryUnconvertedParams - 1", 1, vcard.getOrgDirectories().size());
+        assertEquals("testOrgDirectoryUnconvertedParams - 2", "http://directory.example.com/addressbooks/jdoe/Jean%20Dupont.vcf", vcard.getOrgDirectories().get(0).getValue());
         assertEquals("testOrgDirectoryUnconvertedParams - 3", "ENTRY-1", vcard.getOrgDirectories().get(0).getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testOrgDirectoryUnconvertedParams - 4", "1", vcard.getOrgDirectories().get(0).getParameter(VCardParamEnum.PID.getValue()));
     }
@@ -887,7 +889,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
     @Test
     public void testBdayUnconvertedParams() throws IOException, CardException {
 
-        String jsCard = "{ " +
+        String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"name\": { \"full\": \"test\"}," +
@@ -912,7 +914,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}" +
                 "}";
-        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testBdayUnconvertedParams - 1", 0, vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
         assertEquals("testBdayUnconvertedParams - 2", "ANNIVERSARY-1", vcard.getBirthday().getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testBdayUnconvertedParams - 3", "test", vcard.getBirthday().getParameter("X-PARAM"));
@@ -921,7 +923,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
     @Test
     public void testBirthplaceUnconvertedParams() throws IOException, CardException {
 
-        String jsCard = "{ " +
+        String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"name\": { \"full\": \"test\"}," +
@@ -950,7 +952,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}" +
                 "}";
-        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testBirthplaceUnconvertedParams - 1", 0, vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
         assertEquals("testBirthplaceUnconvertedParams - 2", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getBirthplace().getText());
         assertEquals("testBirthplaceUnconvertedParams - 3", "ANNIVERSARY-1", vcard.getBirthday().getParameter(VCardParamEnum.JSID.getValue()));
@@ -961,7 +963,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
     @Test
     public void testDeathdateUnconvertedParams() throws IOException, CardException {
 
-        String jsCard = "{ " +
+        String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"name\": { \"full\": \"test\"}," +
@@ -986,7 +988,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}" +
                 "}";
-        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testDeathdateUnconvertedParams - 1", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
         assertEquals("testDeathdateUnconvertedParams - 2", "ANNIVERSARY-1", vcard.getDeathdate().getParameter(VCardParamEnum.JSID.getValue()));
         assertEquals("testDeathdateUnconvertedParams - 3", "test", vcard.getDeathdate().getParameter("X-PARAM"));
@@ -995,7 +997,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
     @Test
     public void testDeathplaceUnconvertedParams() throws IOException, CardException {
 
-        String jsCard = "{ " +
+        String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"name\": { \"full\": \"test\"}," +
@@ -1023,7 +1025,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}" +
                 "}";
-        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testDeathplaceUnconvertedParams - 1", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
         assertEquals("testDeathplaceUnconvertedParams - 2", "Mail Drop: TNE QB 123 Main Street Any Town, CA 91921-1234 USA", vcard.getDeathplace().getText());
         assertEquals("testDeathplaceUnconvertedParams - 3", "ANNIVERSARY-1", vcard.getDeathdate().getParameter(VCardParamEnum.JSID.getValue()));
@@ -1032,7 +1034,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
     @Test
     public void testAnniversaryUnconvertedParams() throws IOException, CardException {
 
-        String jsCard = "{ " +
+        String jscard = "{ " +
                 "\"@type\":\"Card\"," +
                 "\"uid\":\"ff7854c7-26e2-4adf-89b5-5bc8ac5d75ff\", " +
                 "\"name\": { \"full\": \"test\"}," +
@@ -1079,7 +1081,7 @@ public class UnconvertedParamsTest extends JSContact2VCardTest {
                 "}" +
                 "}" +
                 "}";
-        VCard vcard = jsContact2VCard.convert(jsCard).get(0);
+        VCard vcard = jsContact2VCard.convert(jscard).get(0);
         assertEquals("testAnniversaryUnconvertedParams - 1", 0, vcard.getBirthday().getDate().compareTo(VCardDateFormat.parse("1953-10-15T23:10:00Z")));
         assertEquals("testAnniversaryUnconvertedParams - 2", "Los Angeles CA USA", vcard.getBirthplace().getText());
         assertEquals("testAnniversaryUnconvertedParams - 3", 0, vcard.getDeathdate().getDate().compareTo(VCardDateFormat.parse("1993-10-15T23:10:00Z")));
